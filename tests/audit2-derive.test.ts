@@ -508,8 +508,10 @@ test('R-ADV: a vulnerable lower version linked next to a safe higher one is "aff
   // A vulnerable version recorded by a snapshot written before resolutions were recorded (the committed data) still
   // counts (see the next tests for what such a snapshot cannot show), and a graph-resolved single version reads as
   // `lock` did.
+  // R3-ADV-NOGRAPH: it counts as unknown, not affected: without a resolution it is not known to be linked (deps.ts
+  // rangeExposure() answers null), so the verdict follows rangeExposure().
   const legacy: DepsData = { snapshots: { master: { ref: 'master', commitSha: 'x', channels: ['master'], lock: { orchard: { version: '0.13.0', source: 'crates.io' } }, requirements: {}, forkPin: null, endpoints: [], retrievedAt: NOW, links: { lockfile: '', deps: '', cargo: '' } } } };
-  assert.equal(advisoryVerdicts(ADV, legacy).affected, true);
+  assert.equal(advisoryVerdicts(ADV, legacy).affected, null);
   const single = depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] }));
   const v = advisoryVerdicts(ADV, single, ONE_BUILD);
   assert.equal(v.affected, false);
@@ -534,7 +536,9 @@ test('R-ADV: a snapshot that records only the newest version in Cargo.lock canno
   assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }))).affected, null);
   // Controls: a recorded version inside the range still counts; a monitored crate absent from the recorded lock is
   // absent from Cargo.lock; graph-resolved snapshots with the same version clear the build.
-  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.13.0' })), ONE_BUILD).affected, true);
+  // R3-ADV-NOGRAPH: the in-range recorded version counts as unknown (not established as linked: deps.ts
+  // rangeExposure() answers null for a snapshot without a resolution), not as affected.
+  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.13.0' })), ONE_BUILD).affected, null);
   assert.equal(advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD).affected, false);
   const graph = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] })), ONE_BUILD);
   assert.equal(graph.affected, false);

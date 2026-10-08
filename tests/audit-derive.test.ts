@@ -101,7 +101,9 @@ test('D1: known-safe pins stay unaffected, any vulnerable checked pin stays affe
   // Vulnerable at a channel build, unknown elsewhere: affected wins.
   const mixed = { snapshots: { master: snap('master', ['master'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }), 'v1.96.61': snap('v1.96.61', ['android/release'], LOCK) } };
   const hit = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets ^0.4'] }, mixed);
-  assert.equal(hit.affected, true);
+  // R3-ADV-NOGRAPH: these snapshots record no resolution, so the in-range orchard 0.13.0 is not known to be linked
+  // (deps.ts rangeExposure() answers null for them): the pin is still reported, but the verdict is unknown.
+  assert.equal(hit.affected, null);
   assert.ok(hit.details.some((d) => /v1\.96\.61.*orchard 0\.13\.0 is in the vulnerable range/.test(d)));
   // A tracked crate that is genuinely not in the inspected lockfiles (master and the current channel build).
   const absentDeps: DepsData = { snapshots: { master: snap('master', ['master'], LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], LOCK) } };
@@ -567,8 +569,10 @@ test('D1 (repair): with the current build list, master-only evidence is never "n
   }
   // A vulnerable pin at master is still reported: any checked pin inside a range wins.
   const vuln = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], LOCK) } }, []);
-  assert.equal(vuln.affected, true);
-  assert.match(vuln.summary, /\(master\)/);
+  // R3-ADV-NOGRAPH: master here records no resolution, so its in-range pin leaves the verdict unknown (deps.ts
+  // rangeExposure() answers null); the pin is still reported in the summary.
+  assert.equal(vuln.affected, null);
+  assert.match(vuln.summary, /orchard 0\.13\.0 is in the vulnerable range at master/);
 });
 
 test('D1 (repair): every current build needs an inspected lockfile before "not affected"', () => {
@@ -594,7 +598,11 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
   const v = advisoryVerdicts(ADV, unassigned, [two[0]]);
   assert.equal(v.affected, false);
   assert.ok(v.details.some((d) => d.startsWith('v1.97.56 (desktop/release): orchard 0.15.0 is outside')), v.details.join(' | '));
-  assert.equal(advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], LOCK) } }, [two[0]]).affected, true, 'and a vulnerable pin there is found');
+  // R3-ADV-NOGRAPH: the unassigned tag's snapshot records no resolution, so its vulnerable pin is found (named in the
+  // summary) but leaves the verdict unknown rather than affected.
+  const unassignedHit = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], LOCK) } }, [two[0]]);
+  assert.equal(unassignedHit.affected, null, 'and a vulnerable pin there is found');
+  assert.match(unassignedHit.summary, /orchard 0\.13\.0 is in the vulnerable range at v1\.97\.56 \(desktop\/release\)/);
 });
 
 test('D1 (repair): the bare two-argument call names master as the only checked build', () => {
