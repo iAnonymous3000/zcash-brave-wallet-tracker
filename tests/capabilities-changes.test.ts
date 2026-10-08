@@ -64,7 +64,7 @@ test('capability cells: per-platform release notes, flags at each tag, opt-in, i
   assert.equal(br.cells.find((x) => x.platform === 'ios' && x.channel === 'beta')!.status, 'absent', 'UI hides bridge on iOS');
 });
 
-test('dependent capabilities are capped by their prerequisites', () => {
+test('prerequisites: dependent release notes lift a prerequisite; contrary build evidence caps the dependent', () => {
   const rows = buildCapabilities({
     defs: [
       { id: 'shielded', name: 'Shielded', description: 'd', releaseNoteIssues: ['brave/brave-browser#44432'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
@@ -74,10 +74,25 @@ test('dependent capabilities are capped by their prerequisites', () => {
     changelog: [note('android', '1.81.131', 'Added a "Shield Account" alert on the "Account Details" panel for Zcash accounts.', 'brave/brave-browser#46598')],
     flagsByTag: { 'v1.96.61': flags('v1.96.61', false) }, sourceChecks: {}, items: {}, groupStatus: () => null, docs: [],
   });
+  // The Android release note for a shielded-only feature implies shielded accounts shipped on Android.
   const sh = rows.find((r) => r.id === 'shielding')!.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
-  assert.equal(sh.status, 'in-build', 'cannot be more available than shielded accounts on Android');
-  assert.ok(sh.evidence.some((e) => e.kind === 'release-note'), 'release-note evidence is kept');
-  assert.ok(sh.evidence.some((e) => e.kind === 'note' && /Capped by prerequisite/.test(e.text)));
+  const base = rows.find((r) => r.id === 'shielded')!.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
+  assert.equal(sh.status, 'available');
+  assert.equal(base.status, 'available', 'prerequisite lifted by dependent release note');
+  assert.match(base.summary, /Implied by Android release notes/);
+  // Cap still applies when the prerequisite has contrary build evidence (flag off).
+  const capped = buildCapabilities({
+    defs: [
+      { id: 'iw', name: 'Ironwood', description: 'd', flags: [{ name: 'kZCashIronwoodEnabled', expect: true }] },
+      { id: 'memo', name: 'Memos', description: 'd', requires: ['iw'], releaseNoteIssues: ['brave/brave-browser#41986'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
+    ],
+    current,
+    changelog: [note('android', '1.80.1', 'Added a "Memo" field to the Zcash transaction send screen.', 'brave/brave-browser#41986')],
+    flagsByTag: { 'v1.96.61': flags('v1.96.61', false) }, sourceChecks: {}, items: {}, groupStatus: () => null, docs: [],
+  });
+  const memo = capped.find((r) => r.id === 'memo')!.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
+  assert.equal(memo.status, 'off', 'capped by a prerequisite whose flag is off at this build');
+  assert.ok(memo.evidence.some((e) => e.kind === 'note' && /Capped by prerequisite/.test(e.text)));
 });
 
 test('capability not-planned and contrary docs', () => {

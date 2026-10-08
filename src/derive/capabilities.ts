@@ -265,6 +265,26 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
   const RANK: Record<CellStatus, number> = { available: 7, 'in-build': 6, 'opt-in': 5, off: 4, 'service-off': 3, absent: 2, 'not-verified': 1, 'not-planned': 0 };
   const byId = new Map(rows.map((r) => [r.id, r]));
   const order = topoOrder(inp.defs);
+  // 1) Lift: a dependent capability listed in this platform's release notes implies its prerequisite shipped there
+  //    too (e.g. Android "Unshield funds" implies shielded accounts on Android), unless build evidence contradicts it.
+  const LIFTABLE: CellStatus[] = ['in-build', 'not-verified'];
+  for (const def of [...order].reverse()) {
+    const row = byId.get(def.id)!;
+    for (const cell of row.cells) {
+      if (cell.status !== 'available') continue;
+      const note = cell.evidence.find((e) => e.kind === 'release-note');
+      if (!note) continue;
+      for (const reqId of def.requires ?? []) {
+        const req = byId.get(reqId);
+        const rc = req?.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel);
+        if (!req || !rc || !LIFTABLE.includes(rc.status) || rc.evidence.some((e) => e.contrary && (e.kind === 'flag' || e.kind === 'source'))) continue;
+        rc.evidence.unshift({ kind: 'release-note', text: `Implied by “${row.name}”: ${note.text}`, url: note.url, version: note.version });
+        rc.status = 'available';
+        rc.summary = `Implied by ${PLATFORM_NAME[cell.platform]} release notes for “${row.name}” (${note.version}), which require it.`;
+      }
+    }
+  }
+  // 2) Cap: never more available than a prerequisite.
   for (const def of order) {
     const row = byId.get(def.id)!;
     for (const reqId of def.requires ?? []) {
