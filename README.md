@@ -96,6 +96,24 @@ Useful environment variables:
 
 Run one collector: `node src/ingest/run.ts --only=community`. Skip some: `--skip=build-inclusion`.
 
+**Privacy note for local runs.** A personal token may be able to read private repositories (for example if you
+belong to the Brave org). The collectors only fetch items from public repositories and drop references to
+anything else, but published data should still come only from the GitHub Actions refresh (built-in
+`GITHUB_TOKEN`, public data only). For local experiments, point `TRACKER_DATA_DIR` at a scratch directory and
+do not commit what it produces.
+
+## Operations
+
+* **Deploy retry.** `actions/deploy-pages` occasionally reports "Found 0 artifact(s)" right after upload;
+  the workflow waits 90 s and retries once, and fails visibly if the retry fails. Data is committed before
+  the deploy, so nothing is lost.
+* **Partial outages.** One failed source never blocks the others; its last good data stays published and the
+  Sources page shows its age, last attempt and error. The job exits non-zero only when every source fails.
+* **Rate limits.** Per-source request budgets keep a run well under the `GITHUB_TOKEN` hourly limit; long
+  backlogs (e.g. build-ancestry checks) resume on the next run.
+* **Auditing the data.** Every refresh is a commit (`data: refresh (<trigger>, run <id>)`), so `git log -p data/`
+  shows exactly what changed when.
+
 ## Refresh and deployment
 
 * Workflow: `.github/workflows/refresh.yml` — schedule `17 */2 * * *` plus manual "Run workflow".

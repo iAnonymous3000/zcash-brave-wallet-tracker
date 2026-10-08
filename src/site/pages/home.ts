@@ -2,7 +2,7 @@ import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent, Channel, Platform } from '../../lib/types.ts';
 import { CHANNEL_NAME, PLATFORM_NAME, cellBadge, ext, html, itemHref, raw, shortRef, time, u } from '../components.ts';
 import { jsonForScript, type SafeHtml } from '../html.ts';
-import { eventCard } from './changes.ts';
+import { eventCard, eventScope } from './changes.ts';
 
 const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
 const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
@@ -110,8 +110,8 @@ export function homePage(d: SiteData, events: ChangeEvent[]): SafeHtml {
 </section>
 
 <section class="block recent-block" aria-labelledby="recent-h">
-  <div class="block-head"><h2 id="recent-h">Latest changes</h2><p class="muted">Newest first, by source timestamp. <a href="${u('changes/')}">Full history and filters</a>.</p></div>
-  <ol class="feed">${events.slice(0, 8).map((e) => eventCard(e, d))}</ol>
+  <div class="block-head"><h2 id="recent-h">Latest changes in Brave</h2><p class="muted">Newest first, by source timestamp. Upstream releases, advisories and community reports are on the <a href="${u('changes/?scope=upstream')}">Changes</a> page.</p></div>
+  <ol class="feed">${events.filter((e) => eventScope(e) === 'brave').slice(0, 8).map((e) => eventCard(e, d))}</ol>
 </section>
 `;
 }
