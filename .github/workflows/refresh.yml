@@ -119,6 +119,9 @@ jobs:
             const reason = !run ? "no run record was written"
               : `last recorded run ${run.id} started ${run.startedAt}: ` + (run.derive && run.derive.outcome === "failed" ? `derivation failed: ${run.derive.error}`
               : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
-            console.log(`::error::Refresh failed (${reason.replace(/[\r\n]+/g, " ")}). The published site keeps the previously derived data and its original generation time.`);
+            const site = !run ? ""
+              : run.derive && run.derive.outcome === "failed" ? " The published site keeps the previously derived data and its original generation time."
+              : " The site was derived from the last stored source data and carries a failed-refresh banner.";
+            console.log(`::error::Refresh failed (${reason.replace(/[\r\n]+/g, " ")}).${site}`);
           '
           exit 1

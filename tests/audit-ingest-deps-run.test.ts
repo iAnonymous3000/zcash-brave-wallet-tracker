@@ -767,7 +767,8 @@ test('EXTRA-3: the workflow fails visibly with the recorded reason (derivation f
   assert.match(derive.out, /^::error::Refresh failed \(last recorded run abc123 started 2026-10-08T20:00:00Z: derivation failed: Error: boom second line\)\. The published site keeps the previously derived data/m);
   const sources = runIn({ lastRun: { id: 'def456', startedAt: NOW, outcome: 'failed', sources: { alpha: 'failed', beta: 'skipped', gamma: 'ok' }, derive: { outcome: 'ok', error: null } }, sources: {} });
   assert.equal(sources.status, 1);
-  assert.match(sources.out, /outcome failed; sources not ok: alpha=failed, beta=skipped\)/);
+  assert.match(sources.out, /outcome failed; sources not ok: alpha=failed, beta=skipped\)\. The site was derived from the last stored source data and carries a failed-refresh banner\./);
+  assert.doesNotMatch(sources.out, /keeps the previously derived data/, 'derivation ran, so the site is not the previously derived one');
   const none = runIn(null);
   assert.equal(none.status, 1);
   assert.match(none.out, /::error::Refresh failed \(no run record was written\)/);
