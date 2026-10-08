@@ -7,7 +7,11 @@ import { isReleaseBranch } from '../ingest/parsers.ts';
 export interface Relations {
   upliftOf: Map<string, string[]>;   // uplift PR -> the PR(s) it directly uplifts (a master PR or another uplift)
   uplifts: Map<string, string[]>;    // PR -> uplift PRs that directly uplift it
-  /** uplift PR -> root PR(s) reached by following uplift links transitively (cycle-safe); empty for a pure cycle. */
+  /**
+   * uplift PR -> the PR(s) whose group it belongs to: the root PR(s) reached by following uplift links transitively
+   * (PRs that uplift nothing themselves). When the ancestry ends only in a cycle (contradictory data), the cycle's
+   * lowest id stands in as the root; that representative itself has no roots and leads its own group.
+   */
   upliftRoots: Map<string, string[]>;
   /** PR -> every uplift PR descending from it, at any depth (cycle-safe, never includes the PR itself). */
   upliftDescendants: Map<string, string[]>;
@@ -45,6 +49,11 @@ function reachable(start: string, next: (id: string) => string[]): string[] {
     }
   }
   return out;
+}
+
+/** Deterministic "lowest id" for contradictory cycles: by repository, then by number. */
+export function lowestId(ids: string[]): string {
+  return [...ids].sort((a, b) => a.localeCompare(b, 'en', { numeric: true }))[0];
 }
 
 const time = (at: string): number => {
@@ -174,7 +183,18 @@ export function buildRelations(items: Record<string, WorkItem>): Relations {
   }
   // Transitive ancestry, resolved after all direct links exist so input order cannot matter.
   const ancestorsOf = (id: string) => reachable(id, (x) => r.upliftOf.get(x) ?? []);
-  for (const up of r.upliftOf.keys()) r.upliftRoots.set(up, ancestorsOf(up).filter((a) => !(r.upliftOf.get(a)?.length)));
+  const inCycle = (id: string) => ancestorsOf(id).some((a) => (r.upliftOf.get(a) ?? []).includes(id));
+  for (const up of r.upliftOf.keys()) {
+    const ancestors = ancestorsOf(up);
+    const roots = ancestors.filter((a) => !(r.upliftOf.get(a)?.length));
+    if (roots.length) {
+      r.upliftRoots.set(up, roots);
+      continue;
+    }
+    // Ancestry ends only in a cycle: the lowest id among the cycle members reached stands in as the root.
+    const rep = lowestId([up, ...ancestors].filter(inCycle));
+    r.upliftRoots.set(up, rep && rep !== up ? [rep] : []);
+  }
   for (const pr of r.uplifts.keys()) r.upliftDescendants.set(pr, reachable(pr, (x) => r.uplifts.get(x) ?? []));
 
   // PR -> issues (closing refs from GraphQL for master PRs; body closing keywords for all PRs).
@@ -292,7 +312,7 @@ export function buildGroups(items: Record<string, WorkItem>, r: Relations): Work
       }
       const i = path.indexOf(next);
       if (i !== -1) {
-        root = path.slice(i).sort()[0];
+        root = lowestId(path.slice(i));
         break;
       }
       path.push(next);
@@ -332,10 +352,10 @@ export function buildGroups(items: Record<string, WorkItem>, r: Relations): Work
     });
     members.forEach((m) => covered.add(m));
   }
-  // PRs without a tracked issue lead their own group with every uplift descending from them. An uplift whose
-  // ancestry reaches a root PR is placed under that root, whichever comes first in input order.
+  // PRs without a tracked issue lead their own group with the uplifts descending from them whose root it is
+  // (see Relations.upliftRoots), so every uplift's place depends on the relations only, never on input order.
   const prGroup = (pr: WorkItem) => {
-    const ups = r.upliftDescendants.get(pr.id) ?? [];
+    const ups = (r.upliftDescendants.get(pr.id) ?? []).filter((u) => (r.upliftRoots.get(u) ?? []).includes(pr.id));
     groups.push({ id: pr.id, lead: pr.id, issues: [], masterPrs: [pr.id], uplifts: ups, duplicates: [], mentions: [], epic: null, children: [] });
     covered.add(pr.id);
     ups.forEach((u) => covered.add(u));

@@ -359,4 +359,10 @@ export interface ChangeEvent {
   channel: Channel | null;
   links: { label: string; url: string }[];
   evidence: string[];  // short quoted facts (plain text), e.g. "state: open → closed (completed)"
+  /**
+   * Set when the derivation rules changed and this event could not be regenerated under the new rules in that run
+   * (e.g. its item was missing from a partial read): its text predates the current rules. The next run that
+   * regenerates it replaces the text and clears this flag. Absent otherwise.
+   */
+  rulesOutdated?: boolean;
 }

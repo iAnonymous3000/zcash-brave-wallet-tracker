@@ -10,7 +10,7 @@ import { CRATES } from '../../config/upstream.ts';
 import { RETRACTED_EVENTS } from '../../config/retractions.ts';
 import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { isReleaseBranch } from '../ingest/parsers.ts';
-import type { ChangeEvent, ChangeKind, Channel, CommunityTopic, DocPage, Platform, WorkItem, Advisory, EvidenceRecord } from '../lib/types.ts';
+import type { ChangeEvent, ChangeKind, Channel, ChannelVersion, CommunityTopic, DocPage, Platform, WorkItem, Advisory, EvidenceRecord } from '../lib/types.ts';
 import { compareSemver, compareVersions, itemUrl, satisfiesRange, shortHash } from '../lib/util.ts';
 import type { GroupStatus } from './status.ts';
 import type { WorkGroup } from './relations.ts';
@@ -25,8 +25,11 @@ export const HISTORY_DAYS = 365;
  * source checks, build presence rules). Diff-only events are suppressed for the first run after a
  * bump, because differences would come from the tracker, not from the sources, and history is rebuilt:
  * regenerated events replace their recorded text (see mergeHistory).
- * v12: transitive uplift/duplicate grouping, reconciled duplicate timelines, unknown-preserving advisory
- * verdicts and required source checks, release-note version bounds, repository/branch-specific merge text.
+ * The blanket diff suppression on that run is deliberate: collector parsers may change in the same release, and a
+ * tag/value difference produced by a parser change must not be reported as a change in Brave's sources.
+ * v12: transitive uplift/duplicate grouping (order-independent, cycle-safe), reconciled duplicate timelines,
+ * unknown-preserving advisory verdicts (coverage of every current build) and required source checks, release-note
+ * version bounds, repository/branch-specific merge text.
  */
 export const DERIVE_RULES_VERSION = 12;
 export const MAX_EVENTS = 2500;
@@ -75,6 +78,11 @@ export interface ChangeInputs {
   capabilityNames: Record<string, string>;
   /** current channel line labels, e.g. { '1.97': 'Release', '1.98': 'Beta' } */
   lineChannel: Record<string, string>;
+  /**
+   * Current platform/channel builds. When given (the derive pipeline always gives it, possibly empty), advisory
+   * verdicts require dependency evidence for shipped builds before saying "not affected" (see advisoryVerdicts).
+   */
+  channels?: ChannelVersion[];
 }
 
 const PLATFORM_NAME: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
@@ -103,9 +111,22 @@ function highlightFor(topic: string | null, status: GroupStatus | null, kind: Ch
   return null;
 }
 
-/** Generate all candidate events from current data (+ previous snapshot for diffs). */
-export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string })[] {
-  const out: (ChangeEvent & { key: string })[] = [];
+/** A generated event before it is merged into history. */
+export type CandidateEvent = ChangeEvent & {
+  key: string;
+  /**
+   * Refresh-only: generated for an item whose work is not shown in the feed (description-only mention or no
+   * group). It never adds history; it only repairs the text of an event already recorded (see mergeHistory).
+   */
+  refreshOnly?: true;
+};
+
+/**
+ * Generate all candidate events from current data (+ previous snapshot for diffs). With `refreshCandidates`,
+ * items whose work stays out of the feed also yield refresh-only candidates.
+ */
+export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: boolean } = {}): CandidateEvent[] {
+  const out: CandidateEvent[] = [];
   const cutoff = Date.parse(inp.now) - HISTORY_DAYS * 86_400_000;
   const recent = (t: string | null) => !t || Date.parse(t) >= cutoff;
   const gv = new Map(inp.groups.map((g) => [g.group.id, g]));
@@ -117,7 +138,9 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   // 1. Item timelines (only for work that is about Zcash; description-only mentions stay browsable but quiet).
   for (const it of Object.values(inp.items)) {
     const g = ctxOf(it.id);
-    if (!g || g.relevance === 'mention') continue;
+    const quiet = !g || g.relevance === 'mention';
+    if (quiet && !opts.refreshCandidates) continue;
+    const first = out.length;
     const topic = g?.topic.id ?? null;
     const st = g?.status ?? null;
     const platforms = st?.platforms ?? [];
@@ -156,6 +179,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
     } else if (it.kind === 'pr' && it.state === 'closed' && it.closedAt && recent(it.closedAt) && !it.isDraft) {
       out.push(ev({ key: `${it.id}|closed-unmerged`, kind: 'pr-closed-unmerged', sourceAt: it.closedAt, title: `PR closed without merging: ${it.title}`, impact: 'This pull request was closed without being merged, so its change did not land through it.', highlight: null, ...base, links: [link(it.id, inp.items)], evidence: [`closed ${it.closedAt}`, 'merged: no'] }));
     }
+    if (quiet) for (let i = first; i < out.length; i++) out[i].refreshOnly = true;
   }
 
   // 2. Release notes (platform changelogs).
@@ -231,7 +255,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   // 7. Advisories.
   for (const a of inp.advisories) {
     if (a.publishedAt && !recent(a.publishedAt) && !a.updatedAt) continue;
-    const verdicts = advisoryVerdicts(a, inp.deps);
+    const verdicts = advisoryVerdicts(a, inp.deps, inp.channels);
     out.push(ev({ key: `${a.id}`, kind: 'advisory', sourceAt: a.publishedAt, title: `Security advisory ${a.id}${a.aliases[0] ? ` (${a.aliases[0]})` : ''}: ${a.summary}`, impact: verdicts.summary, highlight: 'security', itemIds: [], topic: 'security', platforms: [], channel: null, links: [{ label: a.id, url: a.url }], evidence: [...a.vulnerableRanges.slice(0, 4), ...verdicts.details.slice(0, 4)] }));
   }
 
@@ -328,7 +352,9 @@ function fmtBool(v: boolean | null | undefined): string {
 
 function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp: ChangeInputs): string {
   if (reason === 'not_planned') return 'Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.';
-  if (reason === 'duplicate' || st?.duplicate) return `Closed as a duplicate${st?.duplicate?.canonical ? ` of ${shortRef(st.duplicate.canonical)}` : ''}; follow the canonical issue for status.`;
+  if (reason === 'duplicate' || st?.duplicate) {
+    return st?.duplicate?.canonical ? `Closed as a duplicate of ${shortRef(st.duplicate.canonical)}; follow the canonical issue for status.` : 'Closed as a duplicate, but no other canonical issue is recorded for it; see the item for the recorded duplicate state.';
+  }
   if (!st) return 'Closed. No linked implementation was found.';
   if (st.releaseNotes.length) {
     const n = st.releaseNotes[0];
@@ -351,8 +377,14 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
  * is missing or unparseable, a crate this tracker does not read from Cargo.lock, or a non-Rust package. Only when
  * every package was checked is the verdict "not affected" (false). A crate counts as absent only when it is one
  * of the crates read from Brave's Cargo.lock and none of the inspected lockfiles resolves it.
+ *
+ * `channels` (the current platform/channel builds) makes the check strict about coverage, and every production
+ * caller passes it (an empty list included): "not affected" then also needs at least one inspected Release, Beta
+ * or Nightly build, master alone being no shipped build, and an inspected lockfile at the tag of every current
+ * build; a current build without a brave-core tag (an App Store marketing version) leaves the verdict unknown.
+ * Without `channels` the caller has no build list, so only the inspected builds are named in the summary.
  */
-export function advisoryVerdicts(a: Advisory, deps: DepsData | null): { summary: string; details: string[]; affected: boolean | null } {
+export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: ChannelVersion[]): { summary: string; details: string[]; affected: boolean | null } {
   const details: string[] = [];
   const pkgs = a.packages.join(', ');
   if (a.packages.some((p) => /lightwalletd|zaino/i.test(p))) return serverAdvisoryVerdict(a, deps, details);
@@ -374,24 +406,56 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null): { summary:
   if (!named.size) return { summary: `The advisory names no affected package, so whether Brave is exposed is unknown.`, details, affected: null };
 
   const readCrates = new Set(CRATES.map((c) => c.crate));
-  const builds = Object.values(deps?.snapshots ?? {}).filter((s) => s.ref === 'master' || s.channels.length);
-  const inspected = builds.filter((s) => Object.keys(s.lock).length);
-  const label = (s: (typeof builds)[number]) => `${s.ref}${s.channels.length ? ` (${s.channels.join(', ')})` : ''}`;
+  const strict = channels !== undefined;
+  const current = (channels ?? []).filter((c) => c.platform !== 'all');
+  const currentTags = new Set(current.map((c) => c.tag).filter((t): t is string => Boolean(t)));
+  type Snap = DepsData['snapshots'][string];
+  const all: Snap[] = Object.values(deps?.snapshots ?? {});
+  // Builds to check: master, the tags the collector assigned to a channel, and (strict) every current build's tag.
+  const builds = all.filter((s) => s.ref === 'master' || s.channels.length || currentTags.has(s.ref));
+  const hasLock = (s: Snap) => Object.keys(s.lock).length > 0;
+  const inspected = builds.filter(hasLock);
+  const channelsOf = (s: Snap) => (s.channels.length ? s.channels : current.filter((c) => c.tag === s.ref).map((c) => `${c.platform}/${c.channel}`));
+  const label = (s: Snap) => `${s.ref}${s.ref !== 'master' && channelsOf(s).length ? ` (${channelsOf(s).join(', ')})` : ''}`;
+  const where = (list: Snap[]) => {
+    const tags = list.filter((s) => s.ref !== 'master').map((s) => s.ref);
+    const parts = [list.some((s) => s.ref === 'master') ? 'master' : '', tags.length ? `${tags.length} channel build${tags.length > 1 ? 's' : ''} (${tags.join(', ')})` : ''].filter(Boolean);
+    return parts.join(' and ');
+  };
   const unknown = new Map<string, string>(); // reason key -> text
-  const outside = new Set<string>();
-  const absent: string[] = [];
-  let anyAffected = false;
-  for (const s of builds) if (!Object.keys(s.lock).length) unknown.set(`lock|${s.ref}`, `Brave's lockfile could not be read at ${label(s)}`);
-  for (const [pkg, eco] of named) {
-    if (eco && eco !== 'rust') {
-      unknown.set(`eco|${pkg}`, `${eco}:${pkg} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
-      continue;
+  for (const s of builds) if (!hasLock(s)) unknown.set(`lock|${s.ref}`, `Brave's lockfile could not be read at ${label(s)}`);
+  if (strict) {
+    // Coverage: every current build must have been read, and master alone is no shipped build.
+    const missing = new Map<string, string[]>();
+    for (const c of current) {
+      const who = `${PLATFORM_NAME[c.platform as Platform]} ${CHANNEL_NAME[c.channel]} ${c.version}`;
+      if (!c.tag) {
+        unknown.set(`tagless|${c.platform}/${c.channel}`, `${who} is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read`);
+        continue;
+      }
+      if (!all.some((s) => s.ref === c.tag && hasLock(s))) missing.set(c.tag, [...(missing.get(c.tag) ?? []), `${c.platform}/${c.channel}`]);
     }
-    let seen = false;
-    for (const s of inspected) {
+    for (const [tag, who] of missing) unknown.set(`lock|${tag}`, `Brave's Cargo.lock has not been read at ${tag} (${who.join(', ')})`);
+    if (inspected.length && !inspected.some((s) => s.ref !== 'master')) {
+      unknown.set('channels', 'only master was checked: no Release, Beta or Nightly build’s Cargo.lock was read, so exposure of shipped builds is unknown');
+    }
+  }
+
+  // Rust packages to check; other ecosystems cannot be judged from Cargo.lock.
+  const rustPkgs: string[] = [];
+  for (const [pkg, eco] of named) {
+    if (eco && eco !== 'rust') unknown.set(`eco|${pkg}`, `${eco}:${pkg} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
+    else rustPkgs.push(pkg);
+  }
+  const seen = new Set<string>();
+  const outside = new Set<string>();
+  const hitAt: string[] = [];
+  // Details are listed build by build (packages within a build) so the first lines show one build's full picture.
+  for (const s of inspected) {
+    for (const pkg of rustPkgs) {
       const v = s.lock[pkg]?.version;
       if (!v) continue;
-      seen = true;
+      seen.add(pkg);
       const rs = ranges.get(pkg) ?? [];
       if (!rs.length) {
         details.push(`${label(s)}: ${pkg} ${v} could not be checked: the advisory gives no parseable vulnerable range`);
@@ -412,33 +476,39 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null): { summary:
         if (hit) hitAny = true;
         details.push(`${label(s)}: ${pkg} ${v} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
       }
-      if (hitAny) anyAffected = true;
-      else if (!unparsed) outside.add(pkg);
+      if (hitAny) {
+        if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
+      } else if (!unparsed) outside.add(pkg);
     }
-    if (seen || !inspected.length) continue;
+  }
+  const absent: string[] = [];
+  for (const pkg of rustPkgs) {
+    if (seen.has(pkg) || !inspected.length) continue;
     if (readCrates.has(pkg)) {
       absent.push(pkg);
       details.push(`${pkg}: not in Brave's resolved dependencies at ${inspected.map(label).join('; ')}`);
     } else {
       unknown.set(`unread|${pkg}`, `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`);
+      details.push(`${pkg}: not checked (not among the crates this tracker reads from Brave's Cargo.lock)`);
     }
   }
   const unknownText = [...unknown.values()];
-  if (anyAffected) {
-    return { summary: `Affects ${pkgs}. At least one checked Brave build resolves a version inside the vulnerable range — see details.${unknownText.length ? ` Not everything could be checked: ${unknownText.join('; ')}.` : ''}`, details, affected: true };
+  if (hitAt.length) {
+    return { summary: `Affects ${pkgs}. At least one checked Brave build resolves a version inside the vulnerable range (${hitAt.join(', ')}) — see details.${unknownText.length ? ` Not everything could be checked: ${unknownText.join('; ')}.` : ''}`, details, affected: true };
   }
   if (!inspected.length) {
     return { summary: `Affects ${pkgs}. Brave's resolved dependency versions are not available${unknownText.some((t) => t.startsWith("Brave's lockfile")) ? ' (lockfile reads failed)' : ''}, so whether Brave is exposed is unknown.`, details, affected: null };
   }
+  const at = where(inspected);
   const checked = [
-    outside.size ? `Brave's checked pins of ${[...outside].join(', ')} at master and the checked channel builds are outside the vulnerable ranges` : '',
-    absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at the checked builds` : '',
+    outside.size ? `Brave's pins of ${[...outside].join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
   ].filter(Boolean);
   if (unknownText.length) {
     return { summary: `Affects ${pkgs}. ${checked.length ? `${checked.join('; ')}, but the` : 'The'} assessment is incomplete: ${unknownText.join('; ')}. Whether Brave is exposed is unknown.`, details, affected: null };
   }
-  if (!outside.size) return { summary: `Affects ${pkgs}. ${checked.join('; ')}.`, details, affected: false };
-  return { summary: `Affects ${pkgs}. Brave's resolved versions at master and the checked channel builds are outside the vulnerable ranges.${absent.length ? ` ${checked[1]}.` : ''}`, details, affected: false };
+  const masterOnly = !inspected.some((s) => s.ref !== 'master');
+  return { summary: `Affects ${pkgs}. ${checked.join('; ')}.${masterOnly ? ' Only master was checked; no Release, Beta or Nightly build was compared.' : ''}`, details, affected: false };
 }
 
 /** Server software (lightwalletd, Zaino) is not shipped in Brave; exposure of Brave's proxy is not public. */
@@ -458,36 +528,78 @@ function serverAdvisoryVerdict(a: Advisory, deps: DepsData | null, details: stri
   return { summary: `Affects ${server} servers (${a.vulnerableRanges.join('; ')}). Brave Wallet does not ship ${server}; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.${methodNote}`, details, affected: null };
 }
 
+/** Kinds produced only by diffing two snapshots: a rules rebuild never regenerates them (diffs are suppressed). */
+const DIFF_KINDS = new Set<ChangeKind>(['in-build', 'flag-changed', 'dependency-bumped', 'capability-changed', 'doc-changed', 'release-evidence-changed']);
+function diffOnly(e: ChangeEvent): boolean {
+  return DIFF_KINDS.has(e.kind) || (e.kind === 'upstream-release' && e.sourceAt === null);
+}
+
+/**
+ * Were the inputs that generate this event read in this run? Used on a rules rebuild: an event the current rules
+ * do not regenerate is dropped only when they had the chance to (its items are tracked and its source was read
+ * without a partial result). Otherwise the event is kept and repaired when it is next regenerated.
+ */
+export function eventInputsRead(e: ChangeEvent, ctx: { items: Record<string, WorkItem>; sourceRead: (sourceId: string) => boolean }): boolean {
+  switch (e.kind) {
+    case 'released':
+      return ctx.sourceRead('brave-changelogs') && ctx.sourceRead('brave-releases');
+    case 'advisory':
+      return ctx.sourceRead('advisories');
+    case 'upstream-release':
+      return ctx.sourceRead('upstream');
+    case 'community-report':
+      return ctx.sourceRead('community');
+    default:
+      // Item timeline events are regenerated from the items themselves, so every one of them must be tracked now.
+      return e.itemIds.every((id) => Boolean(ctx.items[id]));
+  }
+}
+
 /**
  * Merge new candidate events into history: keep first detection time, mark backfill vs observed, bound size.
  *
  * On a normal run an event already in history keeps the text it was recorded with. After a rules change
- * (`rebuildBackfill`), events are regenerated under the current rules: backfilled events that are no longer
- * generated are dropped, observed events are kept, and an event regenerated with the same id gets the new
- * title/impact/evidence/links (and other content) while keeping its first detection time and basis. Retracted
- * ids are removed and never re-added.
+ * (`rebuildBackfill`), events are regenerated under the current rules: an event regenerated with the same id gets
+ * the new title/impact/evidence/links (and other content) while keeping its first detection time and basis.
+ * Backfilled events the current rules no longer generate are dropped, but only when `inputsRead` confirms their
+ * inputs were read in this run (without it nothing is dropped); events kept without being regenerated (observed events, diff-only events excepted, and
+ * events whose items or source were missing) are marked `rulesOutdated`, and any later run that regenerates them
+ * replaces their text. Refresh-only candidates repair text the same way but never add events. Retracted ids are
+ * removed and never re-added.
  */
-export function mergeHistory(history: ChangeEvent[], candidates: (ChangeEvent & { key: string })[], now: string, lastRunAt: string | null, retracted: Record<string, string> = RETRACTED_EVENTS, opts: { rebuildBackfill?: boolean } = {}): { events: ChangeEvent[]; added: number } {
+export function mergeHistory(history: ChangeEvent[], candidates: CandidateEvent[], now: string, lastRunAt: string | null, retracted: Record<string, string> = RETRACTED_EVENTS, opts: { rebuildBackfill?: boolean; inputsRead?: (e: ChangeEvent) => boolean } = {}): { events: ChangeEvent[]; added: number } {
   const kept = history.filter((e) => !retracted[e.id]);
-  const candidateIds = new Set(candidates.map((c) => c.id));
-  const base = opts.rebuildBackfill ? kept.filter((e) => e.basis === 'observed' || candidateIds.has(e.id)) : kept;
+  const generated = new Set(candidates.filter((c) => !c.refreshOnly).map((c) => c.id));
+  // Without positive knowledge that an event's inputs were read, a rebuild keeps it (a partial read never erases history).
+  const inputsRead = opts.inputsRead ?? (() => false);
+  const base = opts.rebuildBackfill ? kept.filter((e) => e.basis === 'observed' || generated.has(e.id) || diffOnly(e) || !inputsRead(e)) : kept;
   const prior = new Map(base.map((e) => [e.id, e]));
   const byId = new Map(prior);
   const seen = new Set<string>();
+  const replaced = new Set<string>();
   let added = 0;
   for (const c of candidates) {
-    const { key: _key, ...e } = c;
+    const { key: _key, refreshOnly, ...e } = c;
     if (retracted[e.id] || seen.has(e.id)) continue; // first candidate with an id wins within a run
-    seen.add(e.id);
     const old = prior.get(e.id);
     if (old) {
-      if (opts.rebuildBackfill) byId.set(e.id, { ...e, detectedAt: old.detectedAt, basis: old.basis });
+      seen.add(e.id);
+      if (opts.rebuildBackfill || old.rulesOutdated) {
+        const { rulesOutdated: _o, ...fresh } = { ...e, detectedAt: old.detectedAt, basis: old.basis };
+        byId.set(e.id, fresh);
+        replaced.add(e.id);
+      }
       continue;
     }
+    if (refreshOnly) continue; // repairs recorded text only; never adds history
+    seen.add(e.id);
     // Observed = it happened after our previous run (or has no source time and was found by a diff).
     const observed = lastRunAt !== null && (e.sourceAt === null || Date.parse(e.sourceAt) >= Date.parse(lastRunAt) - 6 * 3_600_000);
     byId.set(e.id, { ...e, detectedAt: now, basis: observed ? 'observed' : 'backfill' });
     added += 1;
+  }
+  if (opts.rebuildBackfill) {
+    for (const [id, e] of prior) if (!replaced.has(id) && !diffOnly(e)) byId.set(id, { ...e, rulesOutdated: true });
   }
   const cutoff = Date.parse(now) - HISTORY_DAYS * 86_400_000;
   const events = [...byId.values()]

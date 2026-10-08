@@ -106,6 +106,8 @@ const CHANNEL_NAME: Record<Channel, string> = { release: 'Release', beta: 'Beta'
 
 export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
   const rows: CapabilityRow[] = [];
+  /** "capability|platform|channel" -> required source checks left unknown at that cell's build. */
+  const incompleteRequired = new Map<string, string[]>();
   for (const def of inp.defs) {
     const cells: Cell[] = [];
     const notes: string[] = [...(def.notes ?? [])];
@@ -132,6 +134,15 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         if (newerNote && stable) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${newerNote.version} release notes list it, which is newer than the current ${PLATFORM_NAME[platform]} Stable version ${stable.version}, so they are not evidence for it.`, url: newerNote.permalink, version: newerNote.version });
         if (pendingNote && stable) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it (“${pendingNote.text}”), but ${stable.version} is a marketing version that does not identify the live build, so it is not known whether it includes ${pendingNote.version}.`, url: pendingNote.permalink, version: pendingNote.version });
         if (!bound && matching.length) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${matching[0].version} release notes list it, but the current ${PLATFORM_NAME[platform]} Stable version is ${stable ? `not a recognised version (“${stable.version}”)` : 'unknown'}, so they cannot establish current availability.`, url: matching[0].permalink, version: matching[0].version });
+        // When matching notes exist but none is admitted, summaries say why instead of denying that a note lists it.
+        const noteGap = firstNote || !matching.length
+          ? null
+          : pendingNote && stable
+            ? `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it, but the store version ${stable.version} does not say which ${stable.version} build is live`
+            : newerNote && stable
+              ? `${PLATFORM_NAME[platform]} release notes list it first in ${newerNote.version}, newer than the current ${PLATFORM_NAME[platform]} Stable ${stable.version}`
+              : `${PLATFORM_NAME[platform]} release notes list it (first in ${matching[0].version}), but the current ${PLATFORM_NAME[platform]} Stable version is ${stable ? `not a recognised version (“${stable.version}”)` : 'unknown'}, so they cannot establish current availability`;
+        const noNote = (lead: boolean) => noteGap ?? `${lead ? 'No' : 'no'} ${PLATFORM_NAME[platform]} release note lists it`;
 
         // Flags at this build's tag.
         const snap = cv?.tag ? inp.flagsByTag[cv.tag] : undefined;
@@ -158,6 +169,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         let platformCodeMissing = false;
         let blocked = false;
         const requiredUnknown: string[] = [];
+        incompleteRequired.set(`${def.id}|${platform}|${channel}`, requiredUnknown);
         for (const sc of def.sourceChecks ?? []) {
           if (sc.platforms && !sc.platforms.includes(platform)) continue;
           const res = cv?.tag ? inp.sourceChecks[cv.tag]?.find((x) => x.id === sc.id) : undefined;
@@ -246,22 +258,22 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           status = channel === 'release' && firstNote ? 'available' : 'in-build';
           summary = firstNote
             ? `${channel === 'release' ? '' : 'Stable shipped it; '}flag on at ${cv?.tag ?? 'build'}.`
-            : `Flag on and code present at ${cv?.tag ?? 'build'}; no ${PLATFORM_NAME[platform]} release note.`;
+            : `Flag on and code present at ${cv?.tag ?? 'build'}; ${noteGap ?? `no ${PLATFORM_NAME[platform]} release note`}.`;
           if (requiredUnknown.length) ev.push({ kind: 'note', text: `Required check not completed at ${cv?.tag ?? 'this build'} (${requiredUnknown.join('; ')}); ${firstNote ? 'the Stable release note' : 'the implementing PRs being in this build'} is used as the evidence.`, url: null });
         } else if (!def.flags?.length && cv?.tag && channel !== 'release' && (firstNote ? built !== false && compareVersions(cv.version, firstNote.version) >= 0 : built === true)) {
           status = 'in-build';
-          summary = firstNote ? `Shipped in ${PLATFORM_NAME[platform]} Stable; implementing code present at ${cv?.tag ?? 'build'}.` : `Implementing code present at ${cv?.tag ?? 'build'}; no release note.`;
+          summary = firstNote ? `Shipped in ${PLATFORM_NAME[platform]} Stable; implementing code present at ${cv?.tag ?? 'build'}.` : `Implementing code present at ${cv?.tag ?? 'build'}; ${noteGap ?? 'no release note'}.`;
         } else if (!def.flags?.length && channel === 'release' && built === true && !firstNote) {
           status = 'in-build';
-          summary = `Implementing code is in ${where}, but no ${PLATFORM_NAME[platform]} release note lists it.`;
+          summary = `Implementing code is in ${where}, but ${noNote(false)}.`;
         } else {
           status = 'not-verified';
           if (!cv) summary = `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`;
           else if (channel === 'release' && pendingNote) summary = `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it, but the store version ${cv.version} does not say which ${cv.version} build is live, so availability is not verified.`;
           else if (channel === 'release' && newerNote) summary = `${PLATFORM_NAME[platform]} release notes list it first in ${newerNote.version}, newer than the current ${cv.version}, so it is not verified for this version.`;
-          else if (!cv.tag) summary = `No ${PLATFORM_NAME[platform]} release note lists it, and the ${cv.version} store build number is not published, so its code and flags cannot be checked.`;
+          else if (!cv.tag) summary = `${noNote(true)}, and ${platform === 'ios' && channel === 'release' ? `the ${cv.version} store build number is not published` : `no brave-core tag is known for ${cv.version}`}, so its code and flags cannot be checked.`;
           else if (flagState === 'on' && requiredUnknown.length) summary = `Flag on at ${cv.tag}, but the required check could not be completed (${requiredUnknown.join('; ')}), so it is not verified that this build contains it.`;
-          else summary = `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
+          else summary = noteGap ? `${noteGap}; no other ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.` : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
         // Marketing-only versions: describe the likely build without upgrading the status.
         if (status === 'not-verified' && cv && !cv.tag && cv.inferredTag) {
@@ -307,6 +319,10 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         const rc = req?.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel);
         if (!req || !rc || !LIFTABLE.includes(rc.status) || rc.evidence.some((e) => e.contrary && (e.kind === 'flag' || e.kind === 'source'))) continue;
         rc.evidence.unshift({ kind: 'release-note', text: `Implied by “${row.name}”: ${note.text}`, url: note.url, version: note.version });
+        // Same precedence as a direct note: an unknown required check does not block it, but it is disclosed
+        // (an explicit negative check makes the cell "absent", which is never lifted).
+        const pending = incompleteRequired.get(`${reqId}|${rc.platform}|${rc.channel}`) ?? [];
+        if (pending.length) rc.evidence.push({ kind: 'note', text: `Required check not completed at ${inp.current.find((c) => c.platform === rc.platform && c.channel === rc.channel)?.tag ?? 'this build'} (${pending.join('; ')}); the release note for “${row.name}”, which requires it, is used as the evidence. An explicit negative check would mark it absent.`, url: null });
         rc.status = 'available';
         rc.since = note.version ?? null;
         rc.summary = `Implied by ${PLATFORM_NAME[cell.platform]} release notes for “${row.name}” (${note.version}), which require it.`;

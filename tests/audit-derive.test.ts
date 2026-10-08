@@ -3,13 +3,17 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { buildCapabilities, type CapabilityInputs, type Cell } from '../src/derive/capabilities.ts';
-import { advisoryVerdicts, DERIVE_RULES_VERSION, generateEvents, mergeHistory, type GroupView, type Snapshot } from '../src/derive/changes.ts';
+import { advisoryVerdicts, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, type GroupView, type Snapshot } from '../src/derive/changes.ts';
+import { deriveAll } from '../src/derive/index.ts';
+import { writeJson } from '../src/lib/store.ts';
 import { buildGroups, buildRelations, type WorkGroup } from '../src/derive/relations.ts';
 import { computeGroupStatus } from '../src/derive/status.ts';
 import { CAPABILITIES, type CapabilityDef } from '../config/capabilities.ts';
-import type { Advisory, ChangeEvent, ChangelogEntry, ChannelVersion, FlagSnapshot, Platform, WorkItem } from '../src/lib/types.ts';
+import type { Advisory, ChangeEvent, ChangelogEntry, ChannelVersion, FlagSnapshot, Platform, SourceEnvelope, WorkItem } from '../src/lib/types.ts';
 import type { DepsData } from '../src/ingest/sources/deps.ts';
 import type { PrInclusion } from '../src/ingest/sources/build-inclusion.ts';
 import { byId, tl, wi } from './helpers.ts';
@@ -87,8 +91,9 @@ test('D1: known-safe pins stay unaffected, any vulnerable checked pin stays affe
   const hit = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets ^0.4'] }, mixed);
   assert.equal(hit.affected, true);
   assert.ok(hit.details.some((d) => /v1\.96\.61.*orchard 0\.13\.0 is in the vulnerable range/.test(d)));
-  // A tracked crate that is genuinely not in the inspected lockfiles.
-  const absent = advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: [] }, DEPS);
+  // A tracked crate that is genuinely not in the inspected lockfiles (master and the current channel build).
+  const absentDeps: DepsData = { snapshots: { master: snap('master', ['master'], LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], LOCK) } };
+  const absent = advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: [] }, absentDeps, [cv('desktop', 'release', '1.97.56', 'v1.97.56')]);
   assert.equal(absent.affected, false);
   assert.match(absent.summary, /sinsemilla/);
   assert.match(absent.summary, /not (?:in|present|resolved)|does not resolve|do(?:es)? not appear/i);
@@ -525,4 +530,274 @@ test('EXTRA-1/D3: a rebuild repairs the persisted false master/Nightly claim for
   assert.equal(fixed.detectedAt, persisted.detectedAt);
   assert.equal(fixed.basis, 'backfill');
   assert.ok(DERIVE_RULES_VERSION > 11, 'rules version bumped so the next refresh rebuilds history');
+});
+
+// ===========================================================================
+// Repair round: D1 coverage of shipped builds, D5 wording, rebuild robustness, contradictory-data edges
+// ===========================================================================
+
+const SAFE_LOCK: Lock = { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } };
+
+test('D1 (repair): with the current build list, master-only evidence is never "not affected"', () => {
+  const masterOnly: DepsData = { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } };
+  for (const [label, channels] of [['no current builds known', []], ['current builds known', CURRENT]] as [string, ChannelVersion[]][]) {
+    const safe = advisoryVerdicts(ADV, masterOnly, channels);
+    assert.equal(safe.affected, null, `${label}: safe pins at master only`);
+    assert.match(safe.summary, /only master was checked/i, label);
+    assert.doesNotMatch(safe.summary, /checked channel builds/, label);
+    const gone = advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, masterOnly, channels);
+    assert.equal(gone.affected, null, `${label}: a tracked crate missing at master only is not "absent from Brave"`);
+    assert.doesNotMatch(gone.summary, /at the checked builds\./, label);
+    assert.match(gone.summary, /incomplete/, label);
+  }
+  // A vulnerable pin at master is still reported: any checked pin inside a range wins.
+  const vuln = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], LOCK) } }, []);
+  assert.equal(vuln.affected, true);
+  assert.match(vuln.summary, /\(master\)/);
+});
+
+test('D1 (repair): every current build needs an inspected lockfile before "not affected"', () => {
+  const deps: DepsData = { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } };
+  const two = [cv('desktop', 'release', '1.97.56', 'v1.97.56'), cv('desktop', 'beta', '1.98.52', 'v1.98.52')];
+  const ok = advisoryVerdicts(ADV, deps, two);
+  assert.equal(ok.affected, false);
+  assert.match(ok.summary, /at every checked build \(master and 2 channel builds \(v1\.97\.56, v1\.98\.52\)\)/);
+  // A current build whose tag was never read (e.g. dependency data older than a new release).
+  const newer = advisoryVerdicts(ADV, deps, [...two, cv('desktop', 'nightly', '1.99.25', 'v1.99.25')]);
+  assert.equal(newer.affected, null);
+  assert.match(newer.summary, /not been read at v1\.99\.25 \(desktop\/nightly\)/);
+  // A current build known only by a marketing version cannot be read either.
+  const tagless = advisoryVerdicts(ADV, deps, [...two, cv('ios', 'release', '1.96', null)]);
+  assert.equal(tagless.affected, null);
+  assert.match(tagless.summary, /iOS Release 1\.96 is not pinned to a brave-core tag/);
+  // A snapshot at a current tag counts even when the collector no longer lists a channel for it.
+  const unassigned: DepsData = { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], SAFE_LOCK) } };
+  const v = advisoryVerdicts(ADV, unassigned, [two[0]]);
+  assert.equal(v.affected, false);
+  assert.ok(v.details.some((d) => d.startsWith('v1.97.56 (desktop/release): orchard 0.15.0 is outside')), v.details.join(' | '));
+  assert.equal(advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], LOCK) } }, [two[0]]).affected, true, 'and a vulnerable pin there is found');
+});
+
+test('D1 (repair): the bare two-argument call names master as the only checked build', () => {
+  // tests/capabilities-changes.test.ts pins master-only → false for callers that pass no build list (no production
+  // caller does); the wording must still not claim channel builds were checked.
+  const v = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } });
+  assert.doesNotMatch(v.summary, /checked channel builds/);
+  assert.match(v.summary, /Only master was checked/);
+});
+
+test('D1 (repair): the event pipeline passes the build list, so master-only evidence yields an unknown advisory event', () => {
+  const inputs = { ...eventInputs({}), deps: { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } } as DepsData, advisories: [ADV] };
+  for (const channels of [[], CURRENT]) {
+    const e = generateEvents({ ...inputs, channels }).find((x) => x.kind === 'advisory')!;
+    assert.match(e.impact, /unknown/i, JSON.stringify(channels));
+    assert.doesNotMatch(e.impact, /outside the vulnerable ranges at every checked build \(master\)\./);
+  }
+});
+
+test('D1 (repair): committed GHSA-ww9q is unknown only because zebrad is not read; its evidence shows one build’s checked pins (read-only)', (t) => {
+  const read = <T>(name: string): T | null => {
+    const path = new URL(`../data/sources/${name}.json`, import.meta.url);
+    return existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')) as { data: T }).data : null;
+  };
+  const advisories = read<{ advisories: Advisory[] }>('advisories')?.advisories ?? [];
+  const deps = read<DepsData>('brave-deps');
+  const current = read<{ current: ChannelVersion[] }>('brave-versions')?.current ?? null;
+  const a = advisories.find((x) => x.id === 'GHSA-ww9q-8r59-xv46');
+  if (!a || !deps || !current || !a.packages.includes('rust:zebrad')) return t.skip('committed data does not have this advisory shape');
+  const v = advisoryVerdicts(a, deps, current);
+  assert.equal(v.affected, null, 'zebrad is not among the crates read from Cargo.lock, so its absence is not established');
+  assert.match(v.summary, /zebrad is not among the crates this tracker reads/);
+  assert.match(v.summary, /halo2_gadgets/);
+  assert.match(v.summary, /orchard/);
+  assert.match(v.summary, /zcash_primitives/);
+  assert.match(v.summary, /are outside the vulnerable ranges at every checked build \(master and \d+ channel builds/);
+  const ev = generateEvents({ ...eventInputs({}), deps, advisories: [a], channels: current }).find((e) => e.kind === 'advisory')!;
+  const pins = ev.evidence.filter((x) => / is (?:in|outside) the vulnerable range /.test(x));
+  for (const crate of ['halo2_gadgets', 'orchard', 'zcash_primitives']) assert.ok(pins.some((x) => x.includes(`: ${crate} `)), `${crate} pin shown in event evidence: ${ev.evidence.join(' | ')}`);
+  assert.equal(new Set(pins.slice(0, 3).map((x) => x.split(':')[0])).size, 1, 'the first lines describe one build');
+});
+
+test('D5 (repair): with a missing or invalid Stable pointer, summaries do not deny the release note the evidence shows', () => {
+  const cases: [string, ChannelVersion[], Platform, string][] = [
+    ['unknown iOS pointer', [cv('ios', 'release', 'unknown', null)], 'ios', 'release'],
+    ['4-part iOS pointer', [cv('ios', 'release', '1.96.62.1', null)], 'ios', 'release'],
+    ['Desktop Beta without Stable (no tag)', [cv('desktop', 'beta', '1.98.52', null)], 'desktop', 'beta'],
+    ['Desktop Beta without Stable (tagged)', [cv('desktop', 'beta', '1.98.52', 'v1.98.52')], 'desktop', 'beta'],
+  ];
+  for (const [label, current, platform, channel] of cases) {
+    const note: ChangelogEntry = { ...iosNote('1.81.134'), platform };
+    const c = cellOf(buildCapabilities(capInputs({ defs: [ACCOUNTS], current, changelog: [note] })), 'accounts', platform, channel);
+    assert.equal(c.status, 'not-verified', label);
+    assert.ok(c.evidence.some((e) => e.kind === 'note' && /release notes list it/.test(e.text)), `${label}: evidence shows the note`);
+    assert.doesNotMatch(c.summary, /\bno \w+ release note\b/i, `${label}: ${c.summary}`);
+    assert.match(c.summary, /release notes list it \(first in 1\.81\.134\)/, label);
+    if (platform === 'desktop') assert.doesNotMatch(c.summary, /store build number/, `${label}: Desktop has no store build number`);
+  }
+  // Notes newer than the current Stable version are explained the same way on in-build cells.
+  const flagged = buildCapabilities(capInputs({ defs: [ACCOUNTS], current: CURRENT, changelog: [{ ...iosNote('1.98.52'), platform: 'desktop' }], flagsByTag: { 'v1.98.52': zecFlags('v1.98.52') } }));
+  const beta = cellOf(flagged, 'accounts', 'desktop', 'beta');
+  assert.equal(beta.status, 'in-build');
+  assert.match(beta.summary, /release notes list it first in 1\.98\.52, newer than the current Desktop Stable 1\.97\.56/);
+});
+
+// --- history rebuild robustness (EXTRA-1 follow-ups) ---
+
+const PERSISTED_37122: ChangeEvent = { kind: 'pr-merged', sourceAt: '2026-06-10T18:59:30Z', title: 'Merged: Update zcash code to work with orchard 0.14', impact: 'Merged into brave-core master. Nightly builds made after 2026-06-10 include it; Beta and Release get it only after a branch cut or an uplift.', highlight: null, itemIds: ['brave/brave-core#37122'], topic: 'shielded', platforms: [], channel: null, links: [{ label: 'brave-core#37122', url: 'https://github.com/brave/brave-core/pull/37122' }], evidence: ['merged 2026-06-10T18:59:30Z', 'base branch update_orchard_14'], id: '4aec3f0e10479c9a', detectedAt: '2026-10-08T14:35:45.102Z', basis: 'backfill' };
+const PR_37122 = wi('brave/brave-core#37122', { title: 'Update zcash code to work with orchard 0.14', baseRef: 'update_orchard_14', headRef: 'update_orchard_14_1', state: 'merged', mergedAt: '2026-06-10T18:59:30Z', mergeCommitSha: '22e7f4a1' });
+const readAll = (items: Record<string, WorkItem>, unread: string[] = []) => (e: ChangeEvent) => eventInputsRead(e, { items, sourceRead: (id) => !unread.includes(id) });
+
+test('EXTRA-1 (repair): a rebuild keeps events whose inputs were not read, and a later run repairs them in place', () => {
+  // Rules-bump run with the PR missing from a partial github-items read: the event is kept, not dropped.
+  const bump = mergeHistory([PERSISTED_37122], generateEvents(eventInputs({})), '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll({}) });
+  const kept = bump.events.find((e) => e.id === PERSISTED_37122.id)!;
+  assert.ok(kept, 'kept although not regenerated');
+  assert.equal(kept.detectedAt, PERSISTED_37122.detectedAt);
+  assert.equal(kept.rulesOutdated, true, 'marked as text from older rules');
+  assert.equal(bump.added, 0);
+  // Next normal run: the PR is read again; the regenerated text replaces the old one, first detection and basis kept.
+  const next = mergeHistory(bump.events, generateEvents(eventInputs(byId(PR_37122))), '2026-10-09T06:00:00Z', '2026-10-09T00:00:00Z', {});
+  const fixed = next.events.find((e) => e.id === PERSISTED_37122.id)!;
+  assert.equal(next.added, 0, 'a repair is not a new event');
+  assert.doesNotMatch(fixed.impact, /Merged into brave-core master|Nightly builds made after/);
+  assert.match(fixed.impact, /feature branch update_orchard_14/);
+  assert.equal(fixed.detectedAt, PERSISTED_37122.detectedAt);
+  assert.equal(fixed.basis, 'backfill');
+  assert.equal(fixed.rulesOutdated, undefined, 'flag cleared once regenerated');
+  // When the inputs were read and the current rules no longer generate it, a backfilled event is still dropped.
+  assert.equal(mergeHistory([PERSISTED_37122], [], '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll(byId(PR_37122)) }).events.length, 0);
+  // Without positive knowledge that the inputs were read, nothing is dropped (the reviewer's partial-read probe).
+  const unknownRead = mergeHistory([PERSISTED_37122], [], '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true }).events;
+  assert.deepEqual(unknownRead.map((e) => [e.id, e.detectedAt, e.rulesOutdated]), [[PERSISTED_37122.id, PERSISTED_37122.detectedAt, true]]);
+  // Source-level events: a partial advisory read keeps advisory events; a complete read lets them be rebuilt.
+  const adv: ChangeEvent = { ...PERSISTED_37122, id: 'adv-1', kind: 'advisory', itemIds: [] };
+  assert.equal(mergeHistory([adv], [], '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll({}, ['advisories']) }).events.length, 1);
+  assert.equal(mergeHistory([adv], [], '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll({}) }).events.length, 0);
+  // Diff-only events are never regenerated by a rebuild run (diffs are suppressed), so they stay as recorded.
+  const diff: ChangeEvent = { ...PERSISTED_37122, id: 'diff-1', kind: 'in-build', itemIds: [] };
+  const d = mergeHistory([diff], [], '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll({}) }).events;
+  assert.deepEqual(d, [diff]);
+  // Without a rules change, unflagged events keep the text they were recorded with.
+  assert.equal(mergeHistory([PERSISTED_37122], generateEvents(eventInputs(byId(PR_37122))), '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}).events[0].impact, PERSISTED_37122.impact);
+});
+
+test('EXTRA-1 (repair): observed events of work that left the feed are repaired by refresh-only candidates, which never add events', () => {
+  const inp = eventInputs(byId(PR_37122));
+  inp.groups = inp.groups.map((g) => ({ ...g, relevance: 'mention' as const }));
+  assert.equal(generateEvents(inp).length, 0, 'description-only mentions stay quiet by default');
+  const cands = generateEvents(inp, { refreshCandidates: true });
+  assert.ok(cands.length > 0 && cands.every((c) => c.refreshOnly), 'refresh-only candidates are marked');
+  const none = mergeHistory([], cands, '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {});
+  assert.equal(none.added, 0);
+  assert.equal(none.events.length, 0, 'refresh-only candidates never add history');
+  const observed: ChangeEvent = { ...PERSISTED_37122, basis: 'observed' };
+  const r = mergeHistory([observed], cands, '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll(byId(PR_37122)) });
+  const e = r.events[0];
+  assert.equal(r.added, 0);
+  assert.doesNotMatch(e.impact, /Nightly builds made after/);
+  assert.equal(e.basis, 'observed');
+  assert.equal(e.detectedAt, observed.detectedAt);
+  assert.equal('refreshOnly' in e || 'key' in e || 'rulesOutdated' in e, false, 'internal markers are stripped');
+  // A backfilled event of work that left the feed is dropped on a rebuild: the current rules do not show it.
+  assert.equal(mergeHistory([PERSISTED_37122], cands, '2026-10-09T00:00:00Z', '2026-10-08T18:00:00Z', {}, { rebuildBackfill: true, inputsRead: readAll(byId(PR_37122)) }).events.length, 0);
+});
+
+test('D1/EXTRA-1 (repair): deriveAll end to end — master-only deps give an unknown advisory; a partial read during a rules rebuild loses nothing', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'zbt-derive-audit-'));
+  process.env.TRACKER_DATA_DIR = dir;
+  try {
+    const envelope = <T>(sourceId: string, data: T): SourceEnvelope<T> => ({ sourceId, schema: 1, retrievedAt: '2026-10-08T00:00:00Z', data });
+    const envs = (items: Record<string, WorkItem>): Record<string, SourceEnvelope<unknown>> => ({
+      'github-items': envelope('github-items', { items, pathHistory: {}, excluded: {}, externalRefs: [], stats: {} }),
+      'brave-deps': envelope('brave-deps', { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } }),
+      advisories: envelope('advisories', { advisories: [ADV] }),
+    });
+    const run = (now: string, items: Record<string, WorkItem>) => deriveAll({ now, get: <T>(id: string) => (envs(items)[id] as SourceEnvelope<T> | undefined) ?? null, status: {}, trigger: 'test' });
+    const history = () => JSON.parse(readFileSync(join(dir, 'history', 'events.json'), 'utf8')) as ChangeEvent[];
+    writeJson(join(dir, 'derived', 'snapshot.json'), { ...emptySnap('2026-10-08T14:35:45.102Z'), rulesVersion: DERIVE_RULES_VERSION - 1 });
+    writeJson(join(dir, 'history', 'events.json'), [PERSISTED_37122]);
+    // Rules-bump run; the PR is missing from this (partial) read and no channel versions are known.
+    const first = run('2026-10-09T00:00:00Z', {});
+    assert.equal(first.site.upstream.advisories[0].affected, null, 'master-only dependency evidence is not "not affected"');
+    assert.match(first.site.upstream.advisories[0].verdict, /only master was checked/i);
+    const kept = history().find((e) => e.id === PERSISTED_37122.id)!;
+    assert.ok(kept, 'the event survives the partial read');
+    assert.equal(kept.detectedAt, PERSISTED_37122.detectedAt);
+    assert.equal(kept.rulesOutdated, true);
+    // Next run: the PR is back; its event is repaired in place.
+    run('2026-10-09T06:00:00Z', byId(PR_37122));
+    const fixed = history().filter((e) => e.id === PERSISTED_37122.id);
+    assert.equal(fixed.length, 1);
+    assert.doesNotMatch(fixed[0].impact, /Nightly builds made after/);
+    assert.equal(fixed[0].detectedAt, PERSISTED_37122.detectedAt);
+    assert.equal(fixed[0].basis, 'backfill');
+    assert.equal(fixed[0].rulesOutdated, undefined);
+  } finally {
+    delete process.env.TRACKER_DATA_DIR;
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// --- contradictory-data edges ---
+
+test('Edges (repair): mutual duplicates are grouped once and not staged as a duplicate of themselves', () => {
+  const x = wi('brave/brave-browser#7', { state: 'closed', stateReason: 'duplicate', timeline: [tl('marked_duplicate', NOW, { ref: 'brave/brave-browser#8' })] });
+  const y = wi('brave/brave-browser#8', { state: 'closed', stateReason: 'duplicate', timeline: [tl('marked_duplicate', NOW, { ref: x.id })] });
+  const z = wi('brave/brave-browser#9', { state: 'closed', stateReason: 'duplicate', timeline: [tl('marked_duplicate', NOW, { ref: x.id })] });
+  for (const order of permutations([x, y, z])) {
+    const items = byId(...order);
+    const r = buildRelations(items);
+    const groups = buildGroups(items, r);
+    assert.equal(groups.length, 1);
+    const g = groups[0];
+    assert.equal(g.lead, x.id, 'lowest id of the cycle leads');
+    const st = computeGroupStatus(g, items, r, { inclusion: {}, current: CURRENT, changelog: [] });
+    assert.notEqual(st.stage, 'duplicate', 'there is no other issue to follow');
+    assert.ok(st.duplicate, 'the recorded duplicate state is kept');
+    assert.equal(st.duplicate!.canonical, null, 'no canonical pointing inside its own group');
+    assert.match(st.duplicate!.basis, /contradictory/);
+  }
+  // An ordinary duplicate still points to its canonical issue, and the canonical lead is not a duplicate.
+  const c = wi('brave/brave-browser#20', { state: 'closed', stateReason: 'completed' });
+  const d = wi('brave/brave-browser#21', { state: 'closed', stateReason: 'duplicate', timeline: [tl('marked_duplicate', NOW, { ref: c.id })] });
+  const items = byId(c, d);
+  const r = buildRelations(items);
+  const groups = buildGroups(items, r);
+  assert.equal(groups.length, 1);
+  assert.notEqual(computeGroupStatus(groups[0], items, r, { inclusion: {}, current: CURRENT, changelog: [] }).stage, 'duplicate');
+  assert.equal(r.duplicateOf.get(d.id), c.id);
+});
+
+test('Edges (repair): uplifts into an uplift cycle land in exactly one group, whatever the input order', () => {
+  const c1 = wi('brave/brave-core#30', { baseRef: '1.97.x', upliftOfRefs: ['brave/brave-core#31'] });
+  const c2 = wi('brave/brave-core#31', { baseRef: '1.96.x', upliftOfRefs: ['brave/brave-core#30'] });
+  const u = wi('brave/brave-core#32', { baseRef: '1.95.x', upliftOfRefs: [c2.id] });
+  const m = wi('brave/brave-core#10', { state: 'merged', mergedAt: NOW });
+  const both = wi('brave/brave-core#33', { baseRef: '1.95.x', upliftOfRefs: [c1.id, m.id] });
+  let shape: string | null = null;
+  for (const order of permutations([c1, c2, u, m, both])) {
+    const items = byId(...order);
+    const groups = buildGroups(items, buildRelations(items));
+    const label = order.map((x) => x.number).join(',');
+    for (const id of Object.keys(items)) assert.equal(groups.filter((g) => [g.lead, ...g.masterPrs, ...g.uplifts].includes(id)).length, 1, `${id} in exactly one group (${label})`);
+    const s = JSON.stringify(groups.map((g) => [g.id, [...g.uplifts].sort()]).sort());
+    shape ??= s;
+    assert.equal(s, shape, `same grouping for every input order (${label})`);
+  }
+  const groups = JSON.parse(shape!) as [string, string[]][];
+  assert.deepEqual(groups.find(([id]) => id === c1.id)?.[1], [c2.id, u.id], 'the cycle’s lowest id leads the cycle and what uplifts into it');
+  assert.deepEqual(groups.find(([id]) => id === m.id)?.[1], [both.id], 'an uplift that also names a real root PR goes under that root');
+});
+
+test('D4 (repair): a prerequisite lifted by a dependent’s release note discloses its unknown required check; an explicit negative blocks the lift', () => {
+  const pre: CapabilityDef = { id: 'pre', name: 'Pre', description: 'd', flags: [{ name: 'kBraveWalletZCashFeature', expect: true }], sourceChecks: [{ id: 'needed', describe: 'needed code', role: 'required' }] };
+  const dep: CapabilityDef = { id: 'dep', name: 'Dep', description: 'd', requires: ['pre'], releaseNoteIssues: ['brave/brave-browser#77'] };
+  const changelog: ChangelogEntry[] = [{ platform: 'desktop', version: '1.96.10', section: 'Web3', text: 'Dep shipped.', issueRefs: ['brave/brave-browser#77'], line: 1, file: 'CHANGELOG_DESKTOP.md', commitSha: 'x', permalink: 'https://example.invalid', zcashRelated: true }];
+  const flagsByTag = { 'v1.97.56': zecFlags('v1.97.56') };
+  const lifted = cellOf(buildCapabilities(capInputs({ defs: [pre, dep], current: CURRENT, changelog, flagsByTag })), 'pre', 'desktop', 'release');
+  assert.equal(lifted.status, 'available', 'a release note (here implied) outranks an unknown required check, as for direct notes');
+  assert.ok(lifted.evidence.some((e) => e.kind === 'note' && /Required check not completed at v1\.97\.56 \(needed code\)/.test(e.text)), 'the incomplete check is disclosed');
+  const negRows = buildCapabilities(capInputs({ defs: [pre, dep], current: CURRENT, changelog, flagsByTag, sourceChecks: { 'v1.97.56': [{ id: 'needed', tag: 'v1.97.56', present: false, file: 'x.cc', line: null, url: 'https://example.invalid' }] } }));
+  assert.equal(cellOf(negRows, 'pre', 'desktop', 'release').status, 'absent', 'an explicit negative is never lifted');
+  assert.equal(cellOf(negRows, 'dep', 'desktop', 'release').status, 'absent', 'the dependent is capped by it');
 });

@@ -106,9 +106,16 @@ export function computeGroupStatus(
   }
 
   // Issue state. Duplicate state comes from the relations, which reconcile both issues' timelines.
-  const dup = issue && r.duplicateOf.has(issue.id)
+  let dup: { duplicate: boolean; canonical: string | null; basis: string | null } = issue && r.duplicateOf.has(issue.id)
     ? { duplicate: true, canonical: r.duplicateOf.get(issue.id) ?? null, basis: r.duplicateBasis.get(issue.id) ?? null }
     : { duplicate: false, canonical: null, basis: null };
+  // Contradictory records (A marked as a duplicate of B and B of A, or a longer cycle): buildGroups folds the
+  // cycle into the group led by its lowest id, so the recorded canonical sits inside this very group. There is no
+  // other issue to follow, so the lead is not staged as a duplicate; the facet keeps the record and says why.
+  const contradictory = dup.duplicate && dup.canonical !== null && (dup.canonical === g.lead || g.duplicates.includes(dup.canonical));
+  if (contradictory) {
+    dup = { duplicate: true, canonical: null, basis: `${dup.basis ?? 'duplicate'}; contradictory records: the recorded canonical ${dup.canonical!.replace('brave/', '')} is itself recorded, directly or through other duplicates, as a duplicate of this issue, so none of them is treated as canonical and this group gathers them all` };
+  }
   const issueState = issue
     ? {
         state: issue.state === 'open' ? ('open' as const) : ('closed' as const),
@@ -184,7 +191,7 @@ export function computeGroupStatus(
 
   // Stage (ordered rules; see STAGE_HELP).
   let stage: Stage;
-  if (dup.duplicate) stage = 'duplicate';
+  if (dup.duplicate && !contradictory) stage = 'duplicate';
   else if (issue && issue.state === 'closed' && issue.stateReason === 'not_planned') stage = 'not-planned';
   else if (releaseNotes.length) stage = 'released';
   else if (builds.some((b) => b.channel === 'release' && b.included)) stage = 'in-release-build';
