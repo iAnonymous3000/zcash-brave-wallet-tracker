@@ -2,8 +2,9 @@ import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { ChangeEvent, CommunityTopic, Platform, TimelineEntry, WorkItem } from '../../lib/types.ts';
 import { CHANNEL_NAME, PLATFORM_NAME, chip, ext, ghLink, glyph, html, itemHref, raw, shortRef, stageBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { fixFacts } from '../view.ts';
+import { fixFacts, gate3Facts } from '../view.ts';
 import { eventCard } from './changes.ts';
+import { gate3Clause } from './home.ts';
 
 const KIND_LABEL: Record<string, string> = { bug: 'Bug', feature: 'Feature', proposal: 'Proposal', task: 'Task', issue: 'Issue', pr: 'Pull request' };
 
@@ -163,7 +164,7 @@ ${factStrip(g, d)}
 
 ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2 id="f-builds">Where this applies</h2>
   <p>This change was merged in a Brave server-side repository (${g.members.masterPrs.map((id) => shortRef(id)).join(', ')}). It is not part of any browser build: once Brave deploys it, it applies to every platform and channel at the same time. Deployment timing is not public.</p>
-  ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current repository state: ${ext(d.upstream.services.gate3.url, 'SWAP_DISABLED_CHAINS')} ${d.upstream.services.gate3.zcashDisabled ? 'includes' : 'does not include'} <code>Chain.ZCASH</code> (checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}).</p>` : ''}
+  ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current state of the public repository: ${gate3Clause(gate3Facts(d.upstream.services.gate3.zcashDisabled).state)} (${ext(d.upstream.services.gate3.url, 'source')}, checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}). The deployed service could differ.</p>` : ''}
 </section>` : html`<section class="block" aria-labelledby="f-builds">
   <h2 id="f-builds">Build presence</h2>
   <p class="muted">Whether a merged pull request in this group is an ancestor of the brave-core tag of each platform’s current build (from versions.brave.com). Code presence is not the same as a feature being exposed on that platform.</p>
@@ -198,7 +199,7 @@ function factStrip(g: SiteGroup, d: SiteData): SafeHtml {
   const known = st.builds.filter((b) => b.included !== null);
   const yes = st.builds.filter((b) => b.included === true);
   const notePlatforms = [...new Set(st.releaseNotes.map((n) => `${PLATFORM_NAME[n.platform]} ${n.version}`))];
-  const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
+  const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : !known.length ? `Unknown for all ${st.builds.length} current builds` : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
   return html`<ul class="factstrip" aria-label="Key facts, each from its own source">
     <li><span class="fs-k">Issue</span><span class="fs-v">${st.issueState ? st.issueState.label : 'None (led by a pull request)'}</span></li>
     <li><span class="fs-k">Linked fix</span><span class="fs-v">${f.fix === 'merged' ? 'Merged' : f.fix === 'open' || f.fix === 'draft' ? 'In review' : f.fix === 'closed-unmerged' ? 'Closed without merging' : 'None linked'}</span></li>

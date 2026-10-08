@@ -68,7 +68,8 @@ test('fix facts keep issue state and fix presence separate and never say fixed',
   assert.equal(merged.summary, 'A linked fix is in Release: Desktop 1.97.56; Beta: Android 1.98.52');
   assert.doesNotMatch(merged.summary, /fixed/i);
   assert.equal(fixFacts(group({})).summary, 'No linked fix yet');
-  assert.equal(fixFacts(group({ implementation: { state: 'merged', mergedAt: null, prs: [] } })).summary, 'A linked fix is merged but not yet in a checked build');
+  // No build was checked: presence is unknown, not absent (audit UI-C5).
+  assert.equal(fixFacts(group({ implementation: { state: 'merged', mergedAt: null, prs: [] } })).summary, 'A linked fix is merged; whether it is in a current build is unknown');
 });
 
 test('known issues are open direct bugs, regressions first; coming-next only counts real progress', () => {

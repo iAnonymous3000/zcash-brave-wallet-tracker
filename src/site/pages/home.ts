@@ -2,7 +2,7 @@ import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent, Channel, Platform } from '../../lib/types.ts';
 import { ext, featureHref, glyph, html, itemHref, raw, shortRef, stageBadge, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, fixFacts, groupFeatures, knownIssues, overviewCounts, statusExplain, statusLabel, type ReleaseVersion } from '../view.ts';
+import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
 import { KIND_LABEL, eventGroup, eventScope } from './changes.ts';
 
 const DEFAULT = 'desktop/release';
@@ -11,6 +11,13 @@ const SUMMARY_ORDER = ['available', 'in-build', 'opt-in', 'off', 'service-off', 
 export function splitName(name: string): [string, string] {
   const m = name.match(/^(.*?)\s*\((.*)\)$/);
   return m ? [m[1], m[2]] : [name, ''];
+}
+
+/** What the checked gate3 file says about Zcash, as markup; an unread switch stays unknown. */
+export function gate3Clause(state: Gate3State): SafeHtml {
+  if (state === 'disabled') return html`<code>SWAP_DISABLED_CHAINS</code> includes <code>Chain.ZCASH</code>`;
+  if (state === 'not-disabled') return html`<code>SWAP_DISABLED_CHAINS</code> does not include <code>Chain.ZCASH</code>`;
+  return html`<code>SWAP_DISABLED_CHAINS</code> was not found in the checked file, so whether it includes <code>Chain.ZCASH</code> is unknown`;
 }
 
 export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersion[]): SafeHtml {
@@ -29,6 +36,8 @@ export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersi
   const affected = d.upstream.advisories.filter((a) => a.affected === true).length;
   const n = d.upstream.nextUpgrade;
   const gate3 = d.upstream.services?.gate3;
+  const g3 = gate3 ? gate3Facts(gate3.zcashDisabled) : null;
+  const nu = n ? nu7Facts(n) : null;
 
   return html`
 <section class="hero" aria-labelledby="hero-h">
@@ -94,7 +103,7 @@ export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersi
     return html`<div class="coming" data-p="${p}" ${p === 'desktop' ? '' : raw('hidden')}>
       <h3 class="fgroup-h">Ahead in ${PLATFORM_LABEL[p]} pre-release builds</h3>
       ${next.length ? html`<ul class="coming-list">${next.map((x) => html`<li><a href="${featureHref(x.id)}">${splitName(x.name)[0]}</a><span>${statusBadge(x.release.status, `Release ${x.release.version ?? ''}: ${statusLabel(x.release.status, 'release')}`)}<span class="arrow" aria-hidden="true">→</span>${statusBadge(x.ahead.status, `${CHANNEL_LABEL[x.ahead.channel]} ${x.ahead.version ?? ''}: ${statusLabel(x.ahead.status, x.ahead.channel)}`)}</span></li>`)}</ul>
-      <p class="fine">Present in a pre-release build, not yet in a Release build. Brave does not publish dates, so none are given here.</p>` : html`<p class="fine">No feature is further along in ${PLATFORM_LABEL[p]} Beta or Nightly than in Release.</p>`}
+      <p class="fine">${comingNextNote(next)}</p>` : html`<p class="fine">No feature is further along in ${PLATFORM_LABEL[p]} Beta or Nightly than in Release.</p>`}
     </div>`;
   })}
   <noscript><p class="note">Showing Desktop Release. Every platform and channel is on the <a href="${u('features/')}">Features</a> page.</p></noscript>
@@ -140,8 +149,8 @@ export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersi
   <section class="panel" aria-labelledby="ready-h">
     <div class="panel-head"><h2 id="ready-h">Network &amp; service readiness</h2><a class="head-link" href="${u('upstream/')}">Upstream</a></div>
     <ul class="facts">
-      ${gate3 ? html`<li>${glyph(gate3.zcashDisabled ? 'service-off' : 'available')}<div><strong>${gate3.zcashDisabled ? 'ZEC swaps are off server-side' : 'ZEC swaps are not disabled server-side'}</strong><p>Brave’s swap service ${ext(gate3.url, 'lists Zcash')} in <code>SWAP_DISABLED_CHAINS</code>. Applies to every platform and version. Checked ${time(gate3.checkedAt, { rel: true })}.</p></div></li>` : ''}
-      ${n ? html`<li>${glyph(n.braveHasBranchId === true ? 'available' : 'warn')}<div><strong>${n.name} network upgrade: ${n.braveHasBranchId === true ? 'Brave’s Zcash library has the branch ID' : n.braveHasBranchId === false ? 'Brave’s Zcash library lacks the branch ID' : 'readiness unknown'}</strong><p>${ext(`https://zips.z.cash/zip-${n.zip}`, `ZIP ${Number(n.zip)}`)} is ${n.zipStatus ?? 'of unknown status'}; mainnet height: ${n.mainnetHeight ?? 'unknown'}. Upstream librustzcash ${n.upstreamHasBranchId === true ? 'has it' : n.upstreamHasBranchId === false ? 'does not have it yet' : 'is unknown'}.</p></div></li>` : ''}
+      ${g3 && gate3 ? html`<li>${glyph(g3.glyph)}<div><strong>${g3.headline}</strong><p>In Brave’s public swap backend repository (${ext(gate3.url, `gate3 @ ${gate3.commitSha.slice(0, 8)}`)}), ${gate3Clause(g3.state)}. The deployed service could differ, and deployment timing is not public. A server-side switch applies to every platform and version. Checked ${time(gate3.checkedAt, { rel: true })}.</p></div></li>` : ''}
+      ${n && nu ? html`<li>${glyph(nu.glyph)}<div><strong>${nu.headline}</strong><p>${ext(`https://zips.z.cash/zip-${n.zip}`, `ZIP ${Number(n.zip)}`)} is ${n.zipStatus ?? 'of unknown status'}; mainnet height: ${n.mainnetHeight ?? 'unknown'}. Upstream librustzcash ${nu.upstream}.</p></div></li>` : ''}
     </ul>
   </section>
 </div>

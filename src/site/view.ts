@@ -196,6 +196,47 @@ export function comingNext(d: SiteData, platform: Platform): { id: string; name:
   return out;
 }
 
+/**
+ * Footnote for a comingNext() list. Keeps three facts apart: default activation in the pre-release
+ * build, announcement in release notes, and code presence in the Release build (a Release status
+ * of "Behind a flag" means the code is already there, only switched off by default).
+ */
+export function comingNextNote(items: { release: Pick<CellLike, 'status'>; ahead: Pick<CellLike, 'status'> }[]): string {
+  const rel = new Set(items.map((x) => x.release.status));
+  const q = (s: string) => `“${statusLabel(s, 'release')}”`;
+  const parts = ['Each is switched on by default in the Beta or Nightly build shown. That is not a release announcement, and pre-release builds can change.'];
+  const flagged = (['opt-in', 'off'] as const).filter((s) => rel.has(s));
+  if (flagged.length) parts.push(`${flagged.map(q).join(' or ')} in Release means the code is already in the Release build but switched off by default.`);
+  if (rel.has('in-build')) parts.push(`${q('in-build')} means the code is on by default in Release, but no release note announces it.`);
+  if (rel.has('absent')) parts.push(`${q('absent')} means the Release build does not contain it.`);
+  if (rel.has('service-off')) parts.push(`${q('service-off')} means a Brave server-side setting turns it off whatever the build.`);
+  if (rel.has('not-verified')) parts.push(`${q('not-verified')} means its presence in the Release build is unknown.`);
+  parts.push('Brave does not publish dates, so none are given here.');
+  return parts.join(' ');
+}
+
+export type Gate3State = 'disabled' | 'not-disabled' | 'unknown';
+
+/**
+ * Wording for Brave's gate3 swap-routing switch. It describes the checked public repository, not
+ * the deployed service, and keeps an unread switch (null) unknown instead of "not disabled".
+ */
+export function gate3Facts(disabled: boolean | null | undefined): { state: Gate3State; glyph: 'service-off' | 'available' | 'not-verified'; headline: string; big: string } {
+  if (disabled === true) return { state: 'disabled', glyph: 'service-off', headline: 'ZEC swaps: switched off in Brave’s swap backend code', big: 'Zcash routing is turned off in the public code' };
+  if (disabled === false) return { state: 'not-disabled', glyph: 'available', headline: 'ZEC swaps: not switched off in Brave’s swap backend code', big: 'Zcash routing is not disabled in the public code' };
+  return { state: 'unknown', glyph: 'not-verified', headline: 'ZEC swaps: unknown whether Brave’s swap backend switches them off', big: 'Unknown: the routing switch was not found' };
+}
+
+/** NU7 readiness wording: a known yes, a known no, or unknown, each with its own glyph. */
+export function nu7Facts(n: { name: string; braveHasBranchId: boolean | null; upstreamHasBranchId: boolean | null }): { glyph: 'available' | 'warn' | 'not-verified'; headline: string; upstream: string } {
+  const b = n.braveHasBranchId;
+  return {
+    glyph: b === true ? 'available' : b === false ? 'warn' : 'not-verified',
+    headline: `${n.name} network upgrade: ${b === true ? 'Brave’s Zcash library has the branch ID' : b === false ? 'Brave’s Zcash library lacks the branch ID' : 'whether Brave’s Zcash library has the branch ID is unknown'}`,
+    upstream: n.upstreamHasBranchId === true ? 'has it' : n.upstreamHasBranchId === false ? 'does not have it yet' : 'is unknown',
+  };
+}
+
 export interface ReleaseNoteLine {
   text: string;
   permalink: string;
@@ -237,10 +278,18 @@ export interface FixFacts {
   fix: 'none' | 'open' | 'merged' | 'closed-unmerged' | 'draft';
   /** The furthest channel where a linked fix is confirmed in a current build, per platform. */
   presence: { platform: Platform; channel: Channel; version: string }[];
+  /**
+   * For a merged fix: 'yes' when some current build is confirmed to include it, 'no' only when
+   * every checked build is confirmed not to, otherwise 'unknown'. null when nothing is merged.
+   */
+  inBuild: 'yes' | 'no' | 'unknown' | null;
   summary: string;
 }
 
-/** Issue state and linked-fix presence kept as separate facts. Never says "fixed". */
+/**
+ * Issue state and linked-fix presence kept as separate facts. Never says "fixed". Only explicit
+ * "not included" checks support absence; unchecked or missing builds stay unknown.
+ */
 export function fixFacts(g: SiteGroup): FixFacts {
   const st = g.status;
   const issue = st.issueState ? (st.issueState.state === 'open' ? 'Issue open on GitHub' : st.issueState.label) : 'No issue (pull request only)';
@@ -256,9 +305,17 @@ export function fixFacts(g: SiteGroup): FixFacts {
   }
   const fix = st.implementation.state;
   let summary: string;
+  let inBuild: FixFacts['inBuild'] = null;
   if (fix === 'merged') {
-    if (!presence.length) summary = 'A linked fix is merged but not yet in a checked build';
-    else {
+    const absent = st.builds.filter((b) => b.included === false).length;
+    const unknown = st.builds.length - absent - st.builds.filter((b) => b.included === true).length;
+    inBuild = presence.length ? 'yes' : st.builds.length && !unknown ? 'no' : 'unknown';
+    if (inBuild === 'no') summary = 'A linked fix is merged but not yet in a checked build';
+    else if (inBuild === 'unknown') {
+      summary = absent
+        ? `A linked fix is merged; it is not in ${absent} checked build${absent > 1 ? 's' : ''}, and whether it is in the other ${unknown} is unknown`
+        : 'A linked fix is merged; whether it is in a current build is unknown';
+    } else {
       const byChannel = new Map<Channel, string[]>();
       for (const x of presence) byChannel.set(x.channel, [...(byChannel.get(x.channel) ?? []), `${PLATFORM_LABEL[x.platform]} ${x.version}`]);
       summary = `A linked fix is in ${[...byChannel].map(([c, list]) => `${CHANNEL_LABEL[c]}: ${list.join(', ')}`).join('; ')}`;
@@ -266,7 +323,7 @@ export function fixFacts(g: SiteGroup): FixFacts {
   } else if (fix === 'open' || fix === 'draft') summary = 'A linked fix is in review (PR open)';
   else if (fix === 'closed-unmerged') summary = 'A linked PR was closed without merging';
   else summary = 'No linked fix yet';
-  return { issue, fix, presence, summary };
+  return { issue, fix, presence, inBuild, summary };
 }
 
 /** Open Zcash issues that people are likely to hit, most severe first. */
