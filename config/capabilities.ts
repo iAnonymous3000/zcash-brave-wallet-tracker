@@ -36,6 +36,8 @@ export interface CapabilityDef {
   implementedBy?: string[];
   notPlannedIssues?: string[];
   docMatch?: RegExp;
+  /** Server-side switch ids (see derive/index.ts) that can turn the capability off for everyone. */
+  serviceChecks?: string[];
   /** Open tracked issues whose title matches are listed as known open issues for the row. */
   openIssueMatch?: RegExp;
   notes?: string[];
@@ -171,6 +173,7 @@ export const CAPABILITIES: CapabilityDef[] = [
       { id: 'bridge-hidden-ios', describe: 'Bridge hidden on iOS', role: 'blocks', platforms: ['ios'] },
     ],
     implementedBy: [bb(52555)],
+    serviceChecks: ['gate3-zcash-swaps'],
     openIssueMatch: /swap|bridge|near/i,
   },
   {

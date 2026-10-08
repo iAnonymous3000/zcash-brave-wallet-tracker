@@ -109,6 +109,11 @@ export const docs: Collector<DocsData> = {
     }
     if (!pages.some((p) => p.source === 'support')) throw new Error('no Zcash articles found in the Help Center (API or category changed?)');
 
+    // Unchanged pages keep their previous record (retrieval time = when this content was first captured).
+    for (let i = 0; i < pages.length; i++) {
+      const old = prev?.pages.find((x) => x.id === pages[i].id);
+      if (old && old.contentHash === pages[i].contentHash && old.updatedAt === pages[i].updatedAt) pages[i] = old;
+    }
     // History: keep superseded statement sets so a changed page stays auditable.
     const history = [...(prev?.history ?? [])];
     for (const old of prev?.pages ?? []) {

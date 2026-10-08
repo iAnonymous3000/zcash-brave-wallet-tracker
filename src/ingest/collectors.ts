@@ -10,6 +10,7 @@ import { upstream, advisories } from './sources/upstream.ts';
 import { community } from './sources/community.ts';
 import { docs } from './sources/docs.ts';
 import { watch } from './sources/watch.ts';
+import { services } from './sources/services.ts';
 
 /** Run order matters: later collectors read earlier ones via ctx.get(). */
 export const COLLECTORS: Collector<any>[] = [
@@ -23,6 +24,7 @@ export const COLLECTORS: Collector<any>[] = [
   upstream,
   advisories,
   watch,
+  services,
   community,
   docs,
 ];

@@ -17,7 +17,10 @@ export const REPOS = {
 } as const;
 
 /** Repos whose items may be tracked (issues/PRs elsewhere are recorded as external refs only). */
-export const TRACKED_REPOS: string[] = [REPOS.browser, REPOS.core];
+export const TRACKED_REPOS: string[] = [REPOS.browser, REPOS.core, 'brave/gate3', 'brave/brave-variations'];
+
+/** Repos whose merged changes take effect on Brave's servers, not in a browser build. */
+export const SERVICE_REPOS = new Set(['brave/gate3', 'brave/brave-variations']);
 
 /**
  * Only references to these public repositories (or public upstream orgs) are stored.
@@ -53,6 +56,9 @@ export const SEARCHES: { repo: string; q: string }[] = [
   { repo: REPOS.core, q: 'orchard is:pr' },
   { repo: REPOS.core, q: 'lightwalletd is:pr' },
   { repo: REPOS.core, q: 'shielded is:pr' },
+  // Server-side: swap routing backend and field-trial configs.
+  { repo: 'brave/gate3', q: 'zcash' },
+  { repo: 'brave/brave-variations', q: 'zcash' },
 ];
 
 /** brave-core paths whose commit history identifies Zcash implementation PRs. */

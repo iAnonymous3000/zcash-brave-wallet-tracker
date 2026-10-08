@@ -18,6 +18,8 @@ export function upstreamPage(d: SiteData): SafeHtml {
   <p class="lede">Zcash libraries, protocol specifications and servers that Brave Wallet’s source actually depends on, compared with what Brave builds today. Upstream releases are not changes to Brave: a release only matters to users once Brave adopts it and ships a build.</p>
 </div>
 
+${readinessSection(d)}
+
 <section class="block" aria-labelledby="deps-h">
   <h2 id="deps-h">Rust crates: Brave’s resolved versions vs upstream</h2>
   <p class="muted">Brave’s versions come from <code>third_party/rust/chromium_crates_io/Cargo.lock</code> at each channel build’s brave-core tag and at master. “Path” means the crate is built from Brave’s own fork of librustzcash rather than crates.io, so version labels inside the fork are nominal.</p>
@@ -74,6 +76,31 @@ export function upstreamPage(d: SiteData): SafeHtml {
   </li>`)}</ul>
 </section>
 `;
+}
+
+function readinessSection(d: SiteData): SafeHtml {
+  const n = d.upstream.nextUpgrade;
+  const sv = d.upstream.services;
+  return html`<section class="block" aria-labelledby="ready-h">
+  <h2 id="ready-h">Readiness and server-side switches</h2>
+  <div class="facet-grid">
+    ${n ? html`<section class="facet" aria-labelledby="nu7-h"><h3 id="nu7-h">Next network upgrade: ${n.name} (${ext(`https://zips.z.cash/zip-${n.zip}`, `ZIP ${Number(n.zip)}`)}, ${n.zipStatus ?? 'status unknown'})</h3>
+      <p>Testnet activation: <span class="mono">${n.testnetHeight ?? '?'}</span> · Mainnet: <span class="mono">${n.mainnetHeight ?? '?'}</span></p>
+      <p><strong>Brave:</strong> ${n.braveHasBranchId === true ? 'its pinned librustzcash fork defines the final consensus branch ID' : n.braveHasBranchId === false ? html`its pinned librustzcash fork does <strong>not</strong> define the final consensus branch ID ${html`<code>${n.branchId}</code>`}${n.braveGatedUnstable ? ' (NU7 exists only behind an unstable build flag)' : ''}` : 'unknown'}. ${n.braveUrl ? ext(n.braveUrl, 'Fork source') : ''}</p>
+      <p><strong>Upstream librustzcash main:</strong> ${n.upstreamHasBranchId === true ? 'defines it' : n.upstreamHasBranchId === false ? 'does not define it yet' : 'unknown'}. ${ext(n.upstreamUrl, 'Upstream source')}</p>
+      <p class="muted">Brave takes the consensus branch ID for signing from the light-client server at runtime (GetLightdInfo), so the practical effect at activation depends on that path as well. Checked ${time(n.checkedAt, { rel: true })}.</p>
+    </section>` : ''}
+    ${sv?.gate3 ? html`<section class="facet" aria-labelledby="g3-h"><h3 id="g3-h">ZEC swaps and bridges (gate3 backend)</h3>
+      <p class="big">${sv.gate3.zcashDisabled === true ? 'Zcash routing is turned off' : sv.gate3.zcashDisabled === false ? 'Zcash routing is not disabled' : 'Switch not found'}</p>
+      <p>${ext(sv.gate3.url, `app/api/swap/constants.py @ ${sv.gate3.commitSha.slice(0, 8)}`)}: <code>SWAP_DISABLED_CHAINS</code> ${sv.gate3.zcashDisabled ? 'includes' : 'does not include'} <code>Chain.ZCASH</code>.</p>
+      <p class="muted">This is the public repository of Brave’s swap backend. The deployed service could differ; deployment timing is not public. It applies to every platform and browser version.</p>
+    </section>` : ''}
+    ${sv ? html`<section class="facet" aria-labelledby="st-h"><h3 id="st-h">Field-trial studies touching Zcash (brave-variations)</h3>
+      ${sv.studies.length ? html`<ul class="plain">${sv.studies.map((st) => html`<li>${ext(st.url, st.name)}: ${st.features.enable.length ? html`enables <code>${st.features.enable.join(', ')}</code>` : ''}${st.features.disable.length ? html` disables <code>${st.features.disable.join(', ')}</code>` : ''}${Object.keys(st.params).length ? html` with ${Object.entries(st.params).map(([k, v]) => html`<code>${k}=${v}</code> `)}` : ''}<br><span class="muted">versions ${st.minVersion ?? 'any'} – ${st.maxVersion ?? 'any'}; ${st.platforms.join(', ') || 'all platforms'}; ${st.channels.join(', ') || 'all channels'}. Applies to current builds: ${st.appliesTo.map((a) => `${a.build} ${a.applies ? 'yes' : 'no'}`).join('; ') || 'unknown'}</span></li>`)}</ul>` : html`<p class="muted">No study currently sets Zcash features or parameters.</p>`}
+      <p class="muted">Studies override compiled-in defaults at runtime when their filters match a build. ${sv.studiesCommit ? html`Read at ${ext(`https://github.com/brave/brave-variations/tree/${sv.studiesCommit}/studies`, sv.studiesCommit.slice(0, 8))}.` : ''}</p>
+    </section>` : ''}
+  </div>
+</section>`;
 }
 
 // ---------------------------------------------------------------------------

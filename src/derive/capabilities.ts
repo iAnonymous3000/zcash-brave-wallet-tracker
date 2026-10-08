@@ -15,13 +15,14 @@ import type { ChangelogEntry, Channel, ChannelVersion, DocPage, FlagSnapshot, Pl
 import { compareVersions } from '../lib/util.ts';
 import type { GroupStatus } from './status.ts';
 
-export type CellStatus = 'available' | 'in-build' | 'opt-in' | 'off' | 'absent' | 'not-planned' | 'not-verified';
+export type CellStatus = 'available' | 'in-build' | 'opt-in' | 'off' | 'service-off' | 'absent' | 'not-planned' | 'not-verified';
 
 export const CELL_LABEL: Record<CellStatus, string> = {
   available: 'Available',
   'in-build': 'In build',
   'opt-in': 'Opt-in (brave://flags)',
   off: 'Off by default',
+  'service-off': 'Off server-side',
   absent: 'Not present',
   'not-planned': 'Not planned',
   'not-verified': 'Not verified',
@@ -32,13 +33,14 @@ export const CELL_HELP: Record<CellStatus, string> = {
   'in-build': 'The code and an enabled-by-default flag are in this build (Beta/Nightly, or Stable without a release note). Not a release announcement.',
   'opt-in': 'Present but disabled by default; can be turned on in brave://flags.',
   off: 'The feature flag is disabled by default in this build.',
+  'service-off': 'The app code may be present, but a Brave backend service currently has this turned off for Zcash (per its public repository).',
   absent: 'The flag or code this capability depends on is not present in this build.',
   'not-planned': 'Brave closed the request as not planned.',
   'not-verified': 'No platform-specific evidence was found. This does not mean it is unavailable.',
 };
 
 export interface Evidence {
-  kind: 'release-note' | 'flag' | 'source' | 'build' | 'doc' | 'not-planned' | 'note';
+  kind: 'release-note' | 'flag' | 'source' | 'build' | 'doc' | 'not-planned' | 'qa' | 'service' | 'note';
   text: string;
   url: string | null;
   version?: string | null;
@@ -81,6 +83,8 @@ export interface CapabilityInputs {
   items: Record<string, WorkItem>;
   groupStatus: (issueId: string) => GroupStatus | null;
   docs: DocPage[];
+  /** Server-side switches by id (e.g. 'gate3-zcash-swaps' -> disabled?). */
+  serviceChecks?: Record<string, { disabled: boolean | null; text: string; url: string; since?: string | null; sinceUrl?: string | null }>;
 }
 
 const PLATFORM_NAME: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
@@ -155,6 +159,25 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           if (b.included !== null) ev.push({ kind: 'build', text: `${shortId(id)} ${b.included ? 'included' : 'not included'} in ${cv?.tag ?? b.version} (${b.basis})`, url: inp.items[id]?.url ?? null, version: b.version });
         }
 
+        // Brave QA validation recorded on implementing issues, per platform.
+        for (const id of def.implementedBy ?? []) {
+          const st = inp.groupStatus(id);
+          if (!st) continue;
+          const passes = st.qa.passed.filter((q) => q.platform === platform).map((q) => q.label);
+          if (passes.length) ev.push({ kind: 'qa', text: `${shortId(id)}: ${passes.join(', ')}`, url: inp.items[id]?.url ?? null });
+          else if (st.qa.passed.length) ev.push({ kind: 'qa', text: `${shortId(id)}: no ${PLATFORM_NAME[platform]} QA pass recorded (passes: ${st.qa.passed.map((q) => q.label.replace('QA Pass-', '')).join(', ')})`, url: inp.items[id]?.url ?? null, contrary: false });
+        }
+
+        // Server-side switches (apply to every platform and channel).
+        let serviceOff: { text: string; url: string } | null = null;
+        for (const sid of def.serviceChecks ?? []) {
+          const sc = inp.serviceChecks?.[sid];
+          if (!sc) continue;
+          ev.push({ kind: 'service', text: sc.text, url: sc.url, contrary: sc.disabled === true });
+          if (sc.since && sc.sinceUrl) ev.push({ kind: 'service', text: sc.since, url: sc.sinceUrl, contrary: sc.disabled === true });
+          if (sc.disabled === true) serviceOff = { text: sc.text, url: sc.url };
+        }
+
         // Docs (shown, never decisive).
         for (const d of inp.docs) {
           for (const s of d.zcashStatements) {
@@ -170,13 +193,16 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         let summary: string;
         const v = cv?.version ?? null;
         const where = `${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}${v ? ` ${v}` : ''}`;
-        if (notPlanned.length && !firstNote) {
+        if (blocked) {
+          status = 'absent';
+          summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
+        } else if (serviceOff && (firstNote || flagState === 'on')) {
+          status = 'service-off';
+          summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : 'Code present, but '}currently turned off server-side for Zcash.`;
+        } else if (notPlanned.length && !firstNote) {
           status = 'not-planned';
           summary = `Requested in ${notPlanned.map((i) => shortId(i.id)).join(', ')}; closed as not planned.`;
           ev.push(...notPlanned.map((i) => ({ kind: 'not-planned' as const, text: `${shortId(i.id)} closed as not planned${i.closedAt ? ` on ${i.closedAt.slice(0, 10)}` : ''}`, url: i.url })));
-        } else if (blocked) {
-          status = 'absent';
-          summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
         } else if (platformCodeMissing) {
           status = 'absent';
           summary = `Required ${PLATFORM_NAME[platform]} code was not found at this build.`;

@@ -47,7 +47,7 @@ export const community: Collector<CommunityData> = {
         const topics: any[] = data.topics ?? [];
         for (const t of topics) hits.set(t.id, t);
         searched.push(`${q} p${page}`);
-        await ctx.http.pause(700);
+        await ctx.http.pause(1300);
         if (!topics.length || !data.grouped_search_result?.more_full_page_results) break;
       }
     }
@@ -72,7 +72,7 @@ export const community: Collector<CommunityData> = {
       }
       detailFetches += 1;
       const { data: d } = await ctx.http.json<any>(`${BASE}/t/${t.id}.json`, { scope: 'community.brave.app' });
-      await ctx.http.pause(700);
+      await ctx.http.pause(1300);
       const first = d.post_stream?.posts?.[0];
       const cooked: string = first?.cooked ?? '';
       const allCooked = (d.post_stream?.posts ?? []).map((p: any) => p.cooked ?? '').join('\n');

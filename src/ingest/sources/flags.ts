@@ -2,7 +2,7 @@
 // Tags are immutable, so each tag's parse is cached forever.
 
 import type { Channel, FlagSnapshot } from '../../lib/types.ts';
-import { compareVersions } from '../../lib/util.ts';
+import { compareVersions, sha256 } from '../../lib/util.ts';
 import type { Collector } from '../framework.ts';
 import type { BraveVersionsData } from './brave-versions.ts';
 import type { ReleasesData } from './releases.ts';
@@ -46,7 +46,7 @@ export const flags: Collector<FlagsData> = {
     // Source checks per tag (immutable once complete).
     for (const tag of wanted.keys()) {
       const have = checks[tag] ?? [];
-      const missing = SOURCE_CHECKS.filter((sc) => !have.some((h) => h.id === sc.id && h.present !== null));
+      const missing = SOURCE_CHECKS.filter((sc) => !have.some((h) => h.id === sc.id && h.present !== null && (h as { sig?: string }).sig === checkSig(sc)));
       if (!missing.length) continue;
       const results = have.filter((h) => !missing.some((m) => m.id === h.id));
       for (const sc of missing) results.push(await runSourceCheck(ctx, tag, sc));
@@ -68,16 +68,24 @@ export const flags: Collector<FlagsData> = {
   },
 };
 
-export async function runSourceCheck(ctx: { http: import('../../lib/http.ts').Http }, tag: string, sc: (typeof SOURCE_CHECKS)[number]): Promise<SourceCheckResult> {
+/** Signature of a check definition, so cached results are recomputed when the definition changes. */
+export function checkSig(sc: (typeof SOURCE_CHECKS)[number]): string {
+  return sha256(`${sc.files.join('|')}::${sc.pattern.source}::${sc.pattern.flags}`).slice(0, 12);
+}
+
+/** Present if ANY candidate file at the tag matches (code moves between files across versions). */
+export async function runSourceCheck(ctx: { http: import('../../lib/http.ts').Http }, tag: string, sc: (typeof SOURCE_CHECKS)[number]): Promise<SourceCheckResult & { sig: string }> {
+  let firstExisting: string | null = null;
   for (const file of sc.files) {
     const src = await rawFile(ctx, tag, file);
     if (src === null) continue;
+    firstExisting ??= file;
     const lines = src.split('\n');
     const idx = lines.findIndex((l) => sc.pattern.test(l));
-    return { id: sc.id, tag, present: idx !== -1, file, line: idx === -1 ? null : idx + 1, url: `https://github.com/brave/brave-core/blob/${tag}/${file}${idx === -1 ? '' : `#L${idx + 1}`}` };
+    if (idx !== -1) return { id: sc.id, tag, present: true, file, line: idx + 1, url: `https://github.com/brave/brave-core/blob/${tag}/${file}#L${idx + 1}`, sig: checkSig(sc) };
   }
-  // None of the candidate files exist at this tag: the checked code is absent.
-  return { id: sc.id, tag, present: false, file: sc.files[0], line: null, url: `https://github.com/brave/brave-core/tree/${tag}` };
+  const file = firstExisting ?? sc.files[0];
+  return { id: sc.id, tag, present: false, file, line: null, url: firstExisting ? `https://github.com/brave/brave-core/blob/${tag}/${file}` : `https://github.com/brave/brave-core/tree/${tag}`, sig: checkSig(sc) };
 }
 
 export async function rawFile(ctx: { http: import('../../lib/http.ts').Http }, ref: string, path: string): Promise<string | null> {

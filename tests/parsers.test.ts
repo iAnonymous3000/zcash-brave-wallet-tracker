@@ -112,3 +112,44 @@ test('Brave label and milestone conventions', () => {
   assert.equal(isReleaseBranch('1.98.x'), true);
   assert.equal(isReleaseBranch('master'), false);
 });
+
+test('brave-variations JSON5 studies parse and version ranges apply', async () => {
+  const { json5ToJson, inStudyRange } = await import('../src/ingest/sources/services.ts');
+  const src = `[
+  // comment
+  {
+    name: 'ZCashStudy_EnabledWithShieldingOnNewVersions',
+    experiment: [{ name: 'EnabledWithShielding', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash',], }, param: [{ name: 'zcash_shielded_transactions_enabled', value: 'true', },], },],
+    filter: { min_version: '139.1.81.129', max_version: '152.*', channel: ['RELEASE'], platform: ['ANDROID'], },
+  },
+]`;
+  const parsed = json5ToJson(src) as any[];
+  assert.equal(parsed[0].name, 'ZCashStudy_EnabledWithShieldingOnNewVersions');
+  assert.deepEqual(parsed[0].experiment[0].feature_association.enable_feature, ['BraveWalletZCash']);
+  assert.equal(inStudyRange('155.1.97.56', '139.1.81.129', '152.*'), false, 'Chromium 155 builds are outside a 152.* cap');
+  assert.equal(inStudyRange('152.1.95.10', '139.1.81.129', '152.*'), true);
+  assert.equal(inStudyRange('139.1.81.128', '139.1.81.129', null), false);
+});
+
+test('source checks look in every candidate file (code moves between files across versions)', async () => {
+  const { runSourceCheck } = await import('../src/ingest/sources/flags.ts');
+  const { Http } = await import('../src/lib/http.ts');
+  const files: Record<string, string> = {
+    'components/brave_wallet/browser/meld_integration_service.cc': '// service without the chain list yet\n',
+    'components/brave_wallet_ui/common/slices/endpoints/meld_integration.endpoints.ts': "const chains = [\n  'BTC',\n  'ZEC',\n]\n",
+  };
+  const http = new Http({
+    sleep: async () => {},
+    fetch: async (url: string) => {
+      const path = url.replace(/^https:\/\/raw\.githubusercontent\.com\/brave\/brave-core\/[^/]+\//, '');
+      return files[path] !== undefined ? new Response(files[path]) : new Response('404', { status: 404 });
+    },
+  });
+  const sc = { id: 'meld-zec', files: Object.keys(files), pattern: /['",]ZEC['",]|,ZEC,/, describe: 'x' };
+  const r = await runSourceCheck({ http }, 'v1.97.56', sc);
+  assert.equal(r.present, true);
+  assert.equal(r.line, 3);
+  assert.match(r.url, /meld_integration\.endpoints\.ts#L3$/);
+  const none = await runSourceCheck({ http }, 'v1.97.56', { ...sc, files: ['does/not/exist.cc'] });
+  assert.equal(none.present, false, 'absent everywhere -> not present');
+});

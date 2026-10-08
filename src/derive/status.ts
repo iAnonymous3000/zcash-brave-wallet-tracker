@@ -3,6 +3,7 @@
 // filter/sort convenience and is documented on the site.
 
 import type { ChangelogEntry, Channel, ChannelVersion, Platform, WorkItem } from '../lib/types.ts';
+import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { compareVersions } from '../lib/util.ts';
 import { inclusionAt, type PrInclusion } from '../ingest/sources/build-inclusion.ts';
 import { osLabels, parseMilestone, parseQaLabels, qaPlatform } from '../ingest/parsers.ts';
@@ -14,6 +15,7 @@ export type Stage =
   | 'in-beta'
   | 'in-nightly'
   | 'merged'
+  | 'service-change'
   | 'in-progress'
   | 'open'
   | 'closed-unverified'
@@ -27,6 +29,7 @@ export const STAGE_LABEL: Record<Stage, string> = {
   'in-beta': 'In a Beta build',
   'in-nightly': 'In a Nightly build',
   merged: 'Merged, not yet in a checked build',
+  'service-change': 'Merged in a Brave service',
   'in-progress': 'PR in progress',
   open: 'Open',
   'closed-unverified': 'Closed, no linked fix found',
@@ -41,6 +44,7 @@ export const STAGE_HELP: Record<Stage, string> = {
   'in-beta': 'A merged PR is in a current Beta build. Beta is a pre-release channel.',
   'in-nightly': 'A merged PR is in a current Nightly build. Nightly is a development channel.',
   merged: 'A linked PR is merged but has not been confirmed in a published build yet.',
+  'service-change': 'Merged in a Brave server-side repository (swap backend or field-trial config). It takes effect when Brave deploys it, which is not public, and applies regardless of browser version.',
   'in-progress': 'An open (or draft) pull request exists.',
   open: 'Open issue with no merged or open PR found.',
   'closed-unverified': 'Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.',
@@ -147,7 +151,16 @@ export function computeGroupStatus(
   const qa = { required: qaRaw.required, passed: qaRaw.passed.map((p) => ({ label: `QA Pass-${p}`, platform: qaPlatform(p) })), failed: qaRaw.failed, blocked: qaRaw.blocked };
 
   const ms = (issue ?? lead).milestone;
-  const milestone = ms ? { title: ms.title, line: parseMilestone(ms.title).line, note: 'A milestone is a target set by Brave, not a release promise. Brave renames milestones as branches move from Nightly to Beta to Release.' } : null;
+  const closedIssue = issue && issue.state === 'closed';
+  const milestone = ms
+    ? {
+        title: ms.title,
+        line: parseMilestone(ms.title).line,
+        note: closedIssue
+          ? 'For closed issues Brave sets the milestone to the earliest version line it believes the change landed in, and renames milestones as branches move from Nightly to Beta to Release. This tracker shows it but relies on build ancestry and release notes for availability.'
+          : 'A milestone is a target set by Brave, not a release promise. Brave renames milestones as branches move from Nightly to Beta to Release.',
+      }
+    : null;
 
   const platforms = [...new Set(members.flatMap((m) => osLabels(m.labels)))];
   const owners = [...new Set(members.filter((m) => m.kind === 'issue').flatMap((m) => m.assignees))];
@@ -165,6 +178,7 @@ export function computeGroupStatus(
   else if (builds.some((b) => b.channel === 'release' && b.included)) stage = 'in-release-build';
   else if (builds.some((b) => b.channel === 'beta' && b.included)) stage = 'in-beta';
   else if (builds.some((b) => b.channel === 'nightly' && b.included)) stage = 'in-nightly';
+  else if (implState === 'merged' && merged.every((p) => SERVICE_REPOS.has(p.repo))) stage = 'service-change';
   else if (implState === 'merged') stage = 'merged';
   else if (implState === 'open' || implState === 'draft') stage = 'in-progress';
   else if (issue && issue.state === 'closed') stage = 'closed-unverified';

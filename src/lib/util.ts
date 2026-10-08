@@ -60,7 +60,8 @@ export function plainExcerpt(input: string | null | undefined, max = 420): strin
   s = s.replace(/!\[[^\]]*\]\([^)]*\)/g, ' [image] ');
   s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1');
   s = s.replace(/^#{1,6}\s*/gm, '');
-  s = s.replace(/[*_`>]+/g, '');
+  s = s.replace(/^\s*>+\s?/gm, '');
+  s = s.replace(/\*\*|__(?=\w)|(?<=\w)__|[*`]+/g, '');
   s = decodeEntities(s);
   s = s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
   s = s.replace(/\s+/g, ' ').trim();

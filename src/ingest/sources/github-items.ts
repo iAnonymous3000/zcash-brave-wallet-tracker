@@ -207,6 +207,12 @@ export const githubItems: Collector<GithubItemsData> = {
         mentionsDropped,
       },
     };
+    // Keep the previous record (and its retrievedAt) when nothing but the retrieval time changed,
+    // so committed history only records real source changes.
+    for (const [id, item] of Object.entries(items)) {
+      const old = prev.items[id];
+      if (old && sameContent(old, item)) items[id] = old;
+    }
     const partial = ids.some((id) => !fetched.has(id)) || targets.some((id) => !linked.has(id));
     if (partial) limitations.push('some items could not be refreshed this run; their last good copy was kept');
     return { data, partial, limitations: uniq(limitations), itemCount: Object.keys(items).length };
@@ -218,6 +224,11 @@ export function redactNonPublicLinks(s: string): string {
   return s
     .replace(/https?:\/\/github\.com\/([\w.-]+)\/([\w.-]+)(\/[^\s)>\]]*)?/gi, (m, owner: string, repo: string) => (isPublicRef(`${owner}/${repo}#1`) ? m : '[GitHub link omitted]'))
     .replace(/\b(brave\/(?:internal|reviews|security|devops)[\w.-]*)#\d+/gi, '[reference omitted]');
+}
+
+export function sameContent(a: WorkItem, b: WorkItem): boolean {
+  const strip = (x: WorkItem) => JSON.stringify({ ...x, retrievedAt: '' });
+  return strip(a) === strip(b);
 }
 
 export function stripHtmlComments(s: string): string {
@@ -242,11 +253,10 @@ export function upliftRefsOf(body: string, title: string, headRef: string | null
   const bodyRe = /^\s*[-*]?\s*uplift(?:ed)?\s+(?:of|from|for|part of)\s+(?:#(\d+)|https:\/\/github\.com\/brave\/brave-core\/pull\/(\d+))/gim;
   for (const m of body.matchAll(bodyRe)) out.add(itemId(repo, Number(m[1] ?? m[2])));
   for (const m of body.matchAll(/^- #(\d+) - /gm)) out.add(itemId(repo, Number(m[1])));
-  if (!out.size) {
-    const t = title.match(/^uplift (?:of )?#(\d+)/i);
-    if (t) out.add(itemId(repo, Number(t[1])));
-  }
-  if (!out.size && headRef) {
+  // Union of signals: body, title and head branch can each be incomplete (e.g. combined uplifts).
+  const t = title.match(/^uplift (?:of )?#(\d+)/i);
+  if (t) out.add(itemId(repo, Number(t[1])));
+  if (headRef) {
     const h = headRef.match(/^pr(\d+)_.+_\d+\.\d+\.x$/);
     if (h) out.add(itemId(repo, Number(h[1])));
   }

@@ -44,7 +44,7 @@ export const ADVISORY_QUERIES: { ecosystem: string; pkg: string }[] = [
 export const ADVISORY_REPOS = ['zcash/lightwalletd', 'zingolabs/zaino', 'zcash/orchard', 'zcash/librustzcash', 'zcash/halo2', 'zcash/incrementalmerkletree', 'zcash/zcash_note_encryption'];
 
 /** ZIPs that Brave implements or that govern wallet behaviour. */
-export const ZIPS: { num: string; topic: string }[] = [
+export const ZIPS: { num: string; topic: string; file?: string }[] = [
   { num: '0317', topic: 'Proportional transfer fee mechanism (Brave hard-codes kMarginalFee/kGraceActionsCount)' },
   { num: '0302', topic: 'Standardized memo field format' },
   { num: '0316', topic: 'Unified addresses (implemented in Brave C++)' },
@@ -54,6 +54,8 @@ export const ZIPS: { num: string; topic: string }[] = [
   { num: '0318', topic: 'Orchard to Ironwood migration (wallet)' },
   { num: '0326', topic: 'NU6.3 consequences for wallets' },
   { num: '2005', topic: 'Ironwood quantum recoverability' },
+  { num: '0259', topic: 'NU7 deployment (next network upgrade)' },
+  { num: '2009', topic: 'Reduce marginal fee to 1000 zatoshis (updates ZIP 317)', file: 'zips/2009.md' },
 ];
 
 export const BRAVE_LOCKFILE = 'third_party/rust/chromium_crates_io/Cargo.lock';

@@ -20,7 +20,7 @@ test('body parsing: closing keywords and uplift conventions (real Brave formats)
   assert.deepEqual(resolvesRefsOf('- Resolves <https://github.com/brave/brave-browser/issues/58493>.'), ['brave/brave-browser#58493']);
   assert.deepEqual(resolvesRefsOf('fix brave/brave-browser#123 and see #456'), ['brave/brave-browser#123']);
   assert.deepEqual(upliftRefsOf('Uplift of #39979\nResolves https://github.com/brave/brave-browser/issues/59049', '[ZCash] Fix (uplift to 1.97.x)', 'pr39979_x_1.97.x', 'brave/brave-core'), ['brave/brave-core#39979']);
-  assert.deepEqual(upliftRefsOf('Uplift of https://github.com/brave/brave-core/pull/36015', 't', 'pr36151_foo_1.91.x', 'brave/brave-core'), ['brave/brave-core#36015'], 'body wins over head branch');
+  assert.deepEqual(upliftRefsOf('Uplift of https://github.com/brave/brave-core/pull/36015', 't', 'pr36151_foo_1.91.x', 'brave/brave-core').sort(), ['brave/brave-core#36015', 'brave/brave-core#36151'], 'union of body and head branch (each can be incomplete)');
   assert.deepEqual(upliftRefsOf('', 't', 'pr40000_branch_1.98.x', 'brave/brave-core'), ['brave/brave-core#40000'], 'head branch fallback');
   assert.equal(prNumberFromCommitMessage('[ZCash] Enable ironwood by default. (#39726)\n\nbody'), 39726);
   assert.equal(prNumberFromCommitMessage('Merge pull request #123 from x/y'), 123);

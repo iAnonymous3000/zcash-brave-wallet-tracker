@@ -32,6 +32,8 @@ export interface Snapshot {
   capabilities: Record<string, Record<string, string>>;
   docs: Record<string, string>;
   goneEvidence: string[];
+  services?: { gate3ZcashDisabled: boolean | null; studies: string[] };
+  nu7?: { braveHasBranchId: boolean | null; mainnetHeight: string | null };
 }
 
 export interface GroupView {
@@ -241,6 +243,27 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
         const [platform, channel] = k.split('/') as [Platform, Channel];
         out.push(ev({ key: `cap|${cap}|${k}|${old}|${status}|${inp.now.slice(0, 10)}`, kind: 'capability-changed', sourceAt: null, title: `${inp.capabilityNames[cap] ?? cap} on ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}: ${old} → ${status}`, impact: `The evidence for this capability changed for ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}. See the capability matrix for the supporting evidence.`, highlight: status === 'available' ? 'release' : null, itemIds: [], topic: null, platforms: [platform], channel, links: [], evidence: [`${old} → ${status}`] }));
       }
+    }
+  }
+
+  // 11a. Server-side switches (diff).
+  if (inp.prev?.services && inp.current.services) {
+    const a = inp.prev.services.gate3ZcashDisabled;
+    const b = inp.current.services.gate3ZcashDisabled;
+    if (a !== null && b !== null && a !== b) {
+      out.push(ev({ key: `gate3|${b}|${inp.now.slice(0, 13)}`, kind: 'capability-changed', sourceAt: null, title: b ? 'Zcash swap/bridge routing turned off in gate3' : 'Zcash swap/bridge routing turned back on in gate3', impact: b ? 'Brave’s swap backend repository now excludes Zcash, so in-wallet ZEC swaps and bridges stop working once deployed, on every platform.' : 'Brave’s swap backend repository no longer excludes Zcash; ZEC swaps and bridges can work again once deployed.', highlight: b ? 'regression' : 'release', itemIds: [], topic: 'swaps', platforms: [], channel: null, links: [{ label: 'gate3 constants', url: 'https://github.com/brave/gate3/blob/master/app/api/swap/constants.py' }], evidence: [`SWAP_DISABLED_CHAINS contains ZCASH: ${a} → ${b}`] }));
+    }
+    const before = new Set(inp.prev.services.studies);
+    for (const s of inp.current.services.studies) if (!before.has(s)) out.push(ev({ key: `study|${s}`, kind: 'flag-changed', sourceAt: null, title: `New server-side study touching Zcash: ${s}`, impact: 'A Brave field-trial study that sets Zcash features or parameters was added. Whether it applies depends on its version, channel and platform filters (see Upstream).', highlight: null, itemIds: [], topic: null, platforms: [], channel: null, links: [{ label: 'brave-variations studies', url: 'https://github.com/brave/brave-variations/tree/main/studies' }], evidence: [s] }));
+  }
+
+  // 11b. Network-upgrade readiness (diff).
+  if (inp.prev?.nu7 && inp.current.nu7) {
+    if (inp.prev.nu7.braveHasBranchId === false && inp.current.nu7.braveHasBranchId === true) {
+      out.push(ev({ key: `nu7-ready|${inp.now.slice(0, 10)}`, kind: 'dependency-bumped', sourceAt: null, title: 'Brave master now knows the final NU7 consensus branch ID', impact: 'brave-core master now pins a librustzcash fork that defines NU7 (branch 0x77190AD9). It reaches users once a build with it ships.', highlight: 'migration', itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [], evidence: ['braveHasBranchId: false → true'] }));
+    }
+    if (inp.prev.nu7.mainnetHeight !== inp.current.nu7.mainnetHeight && inp.current.nu7.mainnetHeight) {
+      out.push(ev({ key: `nu7-height|${inp.current.nu7.mainnetHeight}`, kind: 'upstream-release', sourceAt: null, title: `ZIP 259: NU7 Mainnet activation height is now “${inp.current.nu7.mainnetHeight}”`, impact: 'The next Zcash network upgrade has a new Mainnet activation value. Wallets need the final consensus branch ID before activation to keep creating valid transactions.', highlight: 'migration', itemIds: [], topic: 'deps', platforms: [], channel: null, links: [{ label: 'ZIP 259', url: 'https://zips.z.cash/zip-0259' }], evidence: [`${inp.prev.nu7.mainnetHeight ?? 'unknown'} → ${inp.current.nu7.mainnetHeight}`] }));
     }
   }
 

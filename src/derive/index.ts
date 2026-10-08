@@ -19,6 +19,7 @@ import type { AdvisoriesData, UpstreamData } from '../ingest/sources/upstream.ts
 import type { CommunityData } from '../ingest/sources/community.ts';
 import type { DocsData } from '../ingest/sources/docs.ts';
 import type { WatchData } from '../ingest/sources/watch.ts';
+import type { ServicesData } from '../ingest/sources/services.ts';
 import { buildGroups, buildRelations, isEpic, isUpliftPr, type WorkGroup } from './relations.ts';
 import { computeGroupStatus, STAGE_HELP, STAGE_LABEL, type GroupStatus, type Stage } from './status.ts';
 import { buildCapabilities, CELL_HELP, CELL_LABEL, type CapabilityRow } from './capabilities.ts';
@@ -62,6 +63,8 @@ export interface SiteData {
     advisories: (AdvisoriesData['advisories'][number] & { verdict: string; verdictDetails: string[]; affected: boolean | null })[];
     watch: WatchData['items'];
     releaseRepos: typeof RELEASE_REPOS;
+    services: ServicesData | null;
+    nextUpgrade: UpstreamData['nextUpgrade'];
   };
   community: (CommunityTopic & { linkedTracked: string[] })[];
   docs: DocPage[];
@@ -96,6 +99,26 @@ export function classifyTopic(titles: string[], labels: string[]): { id: string;
   return { id: FALLBACK_TOPIC.id, name: FALLBACK_TOPIC.name };
 }
 
+/** Server-side switches used by capability rows (ids referenced from config/capabilities.ts). */
+export function serviceChecks(services: ServicesData | null, items: Record<string, WorkItem>): Record<string, { disabled: boolean | null; text: string; url: string; since?: string | null; sinceUrl?: string | null }> {
+  const out: Record<string, { disabled: boolean | null; text: string; url: string; since?: string | null; sinceUrl?: string | null }> = {};
+  const g = services?.gate3;
+  if (g) {
+    // The PR that most recently changed the switch, if tracked.
+    const pr = Object.values(items)
+      .filter((i) => i.repo === 'brave/gate3' && i.state === 'merged' && /zcash/i.test(i.title) && /disable|enable/i.test(i.title))
+      .sort((a, b) => (b.mergedAt ?? '').localeCompare(a.mergedAt ?? ''))[0];
+    out['gate3-zcash-swaps'] = {
+      disabled: g.zcashDisabled,
+      text: g.zcashDisabled === null ? `gate3 swap routing switch not found at ${g.commitSha.slice(0, 8)}` : `gate3 (swap/bridge backend) ${g.zcashDisabled ? 'lists Chain.ZCASH in SWAP_DISABLED_CHAINS' : 'does not disable Zcash'} at ${g.commitSha.slice(0, 8)}`,
+      url: g.url,
+      since: pr ? `${pr.title} (merged ${pr.mergedAt?.slice(0, 10)})` : null,
+      sinceUrl: pr?.url ?? null,
+    };
+  }
+  return out;
+}
+
 export function currentVersions(versions: BraveVersionsData | null, releases: ReleasesData | null): ChannelVersion[] {
   const out: ChannelVersion[] = [...(versions?.current ?? [])];
   // Fallback when versions.brave.com is unavailable: GitHub release names, clearly labeled.
@@ -125,6 +148,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   const community = env<CommunityData>('community');
   const docs = env<DocsData>('docs');
   const watch = env<WatchData>('watch');
+  const services = env<ServicesData>('brave-services');
 
   const current = currentVersions(versions, releases);
   const lineChannel: Record<string, string> = {};
@@ -181,6 +205,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
       return gid ? (statusOf.get(gid) ?? null) : null;
     },
     docs: docs?.pages ?? [],
+    serviceChecks: serviceChecks(services, items),
   });
   // Known open issues per capability (from tracked inventory).
   for (const row of capabilities) {
@@ -276,6 +301,8 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
     capabilities: Object.fromEntries(capabilities.map((r) => [r.id, Object.fromEntries(r.cells.map((c) => [`${c.platform}/${c.channel}`, c.status]))])),
     docs: Object.fromEntries((docs?.pages ?? []).map((d) => [d.id, d.contentHash])),
     goneEvidence: (changelogs?.evidence ?? []).filter((e) => e.goneSince).map((e) => e.id),
+    services: { gate3ZcashDisabled: services?.gate3?.zcashDisabled ?? null, studies: (services?.studies ?? []).map((s) => `${s.file}:${s.name}`).sort() },
+    nu7: upstream?.nextUpgrade ? { braveHasBranchId: upstream.nextUpgrade.braveHasBranchId, mainnetHeight: upstream.nextUpgrade.mainnetHeight } : undefined,
   };
   const snapPath = dataPath('derived', 'snapshot.json');
   const prevSnap = readJson<Snapshot | null>(snapPath, null);
@@ -337,6 +364,8 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
       advisories: advisoryViews,
       watch: watch?.items ?? [],
       releaseRepos: RELEASE_REPOS,
+      services,
+      nextUpgrade: upstream?.nextUpgrade ?? null,
     },
     community: communityViews,
     docs: docs?.pages ?? [],

@@ -32,6 +32,22 @@ export interface UpstreamData {
   releases: UpstreamRelease[];
   fork: { repo: string; sha: string; aheadBy: number | null; behindBy: number | null; mergeBase: string | null; mergeBaseDate: string | null; compareUrl: string; checkedAt: string } | null;
   zips: Record<string, ZipInfo>;
+  /** Next network upgrade readiness: does Brave's pinned zcash_protocol know the final consensus branch ID? */
+  nextUpgrade: {
+    name: string;
+    zip: string;
+    zipStatus: string | null;
+    testnetHeight: string | null;
+    mainnetHeight: string | null;
+    branchId: string;
+    braveForkSha: string | null;
+    braveHasBranchId: boolean | null;
+    braveGatedUnstable: boolean | null;
+    braveUrl: string | null;
+    upstreamHasBranchId: boolean | null;
+    upstreamUrl: string;
+    checkedAt: string;
+  } | null;
 }
 
 export const upstream: Collector<UpstreamData> = {
@@ -119,7 +135,7 @@ export const upstream: Collector<UpstreamData> = {
     // ZIPs: status from the document header + last commit touching it.
     const zips: UpstreamData['zips'] = { ...(prev?.zips ?? {}) };
     for (const z of ZIPS) {
-      const path = `zips/zip-${z.num}.md`;
+      const path = z.file ?? `zips/zip-${z.num}.md`;
       try {
         const { data: commits } = await ctx.gh.rest<any[]>(`/repos/zcash/zips/commits?path=${encodeURIComponent(path)}&per_page=1`);
         const c = commits[0];
@@ -144,8 +160,41 @@ export const upstream: Collector<UpstreamData> = {
         limitations.push(`ZIP ${z.num}: ${(err as Error).message.slice(0, 100)}`);
       }
     }
+    // NU7 readiness (ZIP 259): final branch ID 0x77190AD9 present in Brave's fork vs upstream main.
+    let nextUpgrade: UpstreamData['nextUpgrade'] = prev?.nextUpgrade ?? null;
+    try {
+      const CONSENSUS = 'components/zcash_protocol/src/consensus.rs';
+      const BRANCH = /0x7719_?0ad9/i;
+      const zipRes = await ctx.http.request('https://raw.githubusercontent.com/zcash/zips/main/zips/zip-0259.md', { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+      const zip = zipRes.status === 404 ? '' : await zipRes.text();
+      const after = zip.slice(Math.max(0, zip.indexOf('ACTIVATION_HEIGHT (NU7)')));
+      const up = await ctx.http.request(`https://raw.githubusercontent.com/zcash/librustzcash/main/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+      const upText = up.status === 404 ? null : await up.text();
+      let braveText: string | null = null;
+      if (pin) {
+        const br = await ctx.http.request(`https://raw.githubusercontent.com/${pin.repo}/${pin.sha}/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+        braveText = br.status === 404 ? null : await br.text();
+      }
+      nextUpgrade = {
+        name: 'NU7',
+        zip: '0259',
+        zipStatus: zip.match(/^\s*Status:\s*(.+)$/m)?.[1]?.trim() ?? null,
+        testnetHeight: after.match(/Testnet:\s*([^\n]+)/)?.[1]?.trim() ?? null,
+        mainnetHeight: after.match(/Mainnet:\s*([^\n]+)/)?.[1]?.trim() ?? null,
+        branchId: '0x77190AD9',
+        braveForkSha: pin?.sha ?? null,
+        braveHasBranchId: braveText === null ? null : BRANCH.test(braveText),
+        braveGatedUnstable: braveText === null ? null : /zcash_unstable\s*=\s*"nu7"/.test(braveText),
+        braveUrl: pin ? `https://github.com/${pin.repo}/blob/${pin.sha}/${CONSENSUS}` : null,
+        upstreamHasBranchId: upText === null ? null : BRANCH.test(upText),
+        upstreamUrl: `https://github.com/zcash/librustzcash/blob/main/${CONSENSUS}`,
+        checkedAt: ctx.now,
+      };
+    } catch (err) {
+      limitations.push(`NU7 readiness check failed: ${(err as Error).message.slice(0, 100)}`);
+    }
     releases.sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '') || compareSemver(b.version.replace(/^\D+/, ''), a.version.replace(/^\D+/, '')));
-    return { data: { crates, releases, fork, zips }, limitations, partial: limitations.length > 0, itemCount: releases.length };
+    return { data: { crates, releases, fork, zips, nextUpgrade }, limitations, partial: limitations.length > 0, itemCount: releases.length };
   },
 };
 
