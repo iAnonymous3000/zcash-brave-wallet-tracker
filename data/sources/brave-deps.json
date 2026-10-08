@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-deps",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:46:50.765Z",
+ "retrievedAt": "2026-10-08T14:57:35.157Z",
  "data": {
   "snapshots": {
    "v1.97.56": {
@@ -737,7 +737,7 @@
      "https://testnet.zec.rocks/",
      "https://zcash.wallet.brave.com/"
     ],
-    "retrievedAt": "2026-10-08T14:46:50.765Z",
+    "retrievedAt": "2026-10-08T14:57:35.157Z",
     "links": {
      "lockfile": "https://github.com/brave/brave-core/blob/97d6dfdfeff3e6855d4f6868e616a61454635de8/third_party/rust/chromium_crates_io/Cargo.lock",
      "deps": "https://github.com/brave/brave-core/blob/97d6dfdfeff3e6855d4f6868e616a61454635de8/DEPS",

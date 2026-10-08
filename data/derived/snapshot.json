@@ -1,5 +1,6 @@
 {
- "at": "2026-10-08T14:46:50.765Z",
+ "at": "2026-10-08T14:57:35.157Z",
+ "rulesVersion": 4,
  "builds": {
   "brave/brave-browser#59103": {
    "desktop/release": false,
@@ -4542,7 +4543,7 @@
    "desktop/release": "available",
    "desktop/beta": "in-build",
    "desktop/nightly": "in-build",
-   "android/release": "available",
+   "android/release": "in-build",
    "android/beta": "in-build",
    "android/nightly": "in-build",
    "ios/release": "not-verified",

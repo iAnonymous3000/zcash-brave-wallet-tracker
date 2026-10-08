@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-08T14:46:50.765Z",
+ "retrievedAt": "2026-10-08T14:57:35.157Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3621,6 +3621,6 @@
    }
   ],
   "pending": 0,
-  "calls": 2
+  "calls": 0
  }
 }

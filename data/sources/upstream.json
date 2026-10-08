@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:46:50.765Z",
+ "retrievedAt": "2026-10-08T14:57:35.157Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2810,6 +2810,15 @@
     "prerelease": false
    },
    {
+    "id": "zcash/lightwallet-protocol@v0.2.4",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.4",
+    "publishedAt": "2021-04-08T17:22:12Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.4",
+    "source": "github-tag"
+   },
+   {
     "id": "crates.io/zcash_note_encryption@0.0.0",
     "project": "zcash_note_encryption",
     "repo": "zcash/zcash_note_encryption",
@@ -2819,6 +2828,15 @@
     "source": "crates.io",
     "yanked": false,
     "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.3",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.3",
+    "publishedAt": "2021-03-08T19:25:02Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.3",
+    "source": "github-tag"
    },
    {
     "id": "crates.io/reddsa@0.0.0",
@@ -2832,6 +2850,33 @@
     "prerelease": false
    },
    {
+    "id": "zcash/lightwallet-protocol@v0.2.2",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.2",
+    "publishedAt": "2020-10-28T19:09:59Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.2",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.1",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.1",
+    "publishedAt": "2020-10-06T16:03:37Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.1",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.0",
+    "publishedAt": "2020-04-24T22:55:47Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.0",
+    "source": "github-tag"
+   },
+   {
     "id": "crates.io/zip32@0.0.0",
     "project": "zip32",
     "repo": "zcash/zip32",
@@ -2841,51 +2886,6 @@
     "source": "crates.io",
     "yanked": false,
     "prerelease": false
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.2.4",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.2.4",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.4",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.2.3",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.2.3",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.3",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.2.2",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.2.2",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.2",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.2.1",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.2.1",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.1",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.2.0",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.2.0",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.0",
-    "source": "github-tag"
    }
   ],
   "fork": {
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-08T14:46:50.765Z"
+   "checkedAt": "2026-10-08T14:57:35.157Z"
   },
   "zips": {
    "2005": {
@@ -3012,7 +3012,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-08T14:46:50.765Z"
+   "checkedAt": "2026-10-08T14:57:35.157Z"
   }
  }
 }
