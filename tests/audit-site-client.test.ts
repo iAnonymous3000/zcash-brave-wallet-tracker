@@ -806,3 +806,239 @@ test('UI-C4: "Off server-side" cells describe Brave’s public server-side code,
   const legend = featuresPage(site).value.match(/<li><span class="badge s-service-off"[\s\S]*?<\/li>/)![0];
   assert.match(legend, /public server-side code switches it off for everyone; the deployed service could differ/);
 });
+
+// ---------------------------------------------------------------------------
+// Repair round (UI-C4, UI-C5): the verifier read the rendered pages, so these tests render them too.
+// Capability cells come from derive's real buildCapabilities() and serviceChecks() over the committed
+// source envelopes; only the gate3 switch is varied.
+// ---------------------------------------------------------------------------
+
+const sourceData = (id: string) => JSON.parse(readFileSync(join(ROOT, 'data/sources', `${id}.json`), 'utf8')).data;
+const USABLE_STATUSES = ['available', 'in-build', 'opt-in'];
+type Services = SiteData['upstream']['services'];
+
+async function deriveCapabilities(services: Services): Promise<SiteData['capabilities']> {
+  const { buildCapabilities } = await import('../src/derive/capabilities.ts');
+  const { serviceChecks } = await import('../src/derive/index.ts');
+  const { CAPABILITIES } = await import('../config/capabilities.ts');
+  const flags = sourceData('brave-flags');
+  const items = sourceData('github-items').items;
+  const groupOf = new Map<string, SiteGroup>();
+  for (const g of site.groups) for (const id of [g.lead, ...g.members.masterPrs, ...g.members.uplifts, ...g.members.duplicates]) if (!groupOf.has(id)) groupOf.set(id, g);
+  return buildCapabilities({
+    defs: CAPABILITIES,
+    current: site.channels,
+    changelog: sourceData('brave-changelogs').entries,
+    flagsByTag: flags.snapshots,
+    sourceChecks: flags.checks,
+    items,
+    groupStatus: (id) => groupOf.get(id)?.status ?? null,
+    docs: sourceData('docs').pages,
+    serviceChecks: serviceChecks(services, items),
+  });
+}
+
+async function siteWithSwitch(disabled: boolean | null | 'no-data'): Promise<SiteData> {
+  const d = structuredClone(site);
+  d.upstream.services = disabled === 'no-data' ? null : withGate3(disabled).upstream.services;
+  d.capabilities = await deriveCapabilities(d.upstream.services);
+  return d;
+}
+
+const bridgeCard = (homeHtml: string) => {
+  const m = homeHtml.match(/<article class="fcard">(?:(?!<\/article>)[\s\S])*?features\/bridge\/[\s\S]*?<\/article>/);
+  assert.ok(m, 'bridge card rendered');
+  return m![0];
+};
+const bridgeMatrixRow = (featuresHtml: string) => {
+  const start = featuresHtml.search(/<div class="fx-row" role="row">\s*<div class="fx-name" role="rowheader"><a href="[^"]*features\/bridge\/">/);
+  assert.ok(start >= 0, 'bridge matrix row rendered');
+  const next = featuresHtml.indexOf('<div class="fx-row"', start + 10);
+  return featuresHtml.slice(start, next > 0 ? next : featuresHtml.indexOf('<p class="fine">', start));
+};
+const usableBadge = /class="badge s-(available|in-build|opt-in)"/;
+
+test('UI-C4 (repair): derive cells for the real data match the committed Bridge row (fixture sanity)', async () => {
+  const caps = await deriveCapabilities(site.upstream.services);
+  const mine = caps.find((r) => r.id === 'bridge')!.cells.map((c) => `${c.platform}/${c.channel}=${c.status}`);
+  const committed = site.capabilities.find((r) => r.id === 'bridge')!.cells.map((c) => `${c.platform}/${c.channel}=${c.status}`);
+  assert.deepEqual(mine, committed);
+});
+
+test('UI-C4 (repair): an unknown or unread gate3 switch never shows Bridge as usable on any page', async () => {
+  const { presentCapabilities, statusExplain } = await import('../src/site/view.ts');
+  const { homePage } = await import('../src/site/pages/home.ts');
+  const { featuresPage, featurePage } = await import('../src/site/pages/features.ts');
+  for (const state of [null, 'no-data'] as const) {
+    const d = await siteWithSwitch(state);
+    const raw = d.capabilities.find((r) => r.id === 'bridge')!;
+    // Rendered pages first: home card, matrix row and the feature page (given the derived row, as build.ts does).
+    const home = homePage(d, [], []).value;
+    const card = bridgeCard(home);
+    assert.doesNotMatch(card, usableBadge, `${state}: home card`);
+    assert.match(card, /Not verified/);
+    assert.match(card, /whether the server-side switch turns it off is unknown/);
+    assert.doesNotMatch(bridgeMatrixRow(featuresPage(d).value), usableBadge, `${state}: features matrix`);
+    const page = featurePage(raw, d).value;
+    assert.doesNotMatch(page, usableBadge, `${state}: feature page`);
+    assert.match(page, /could not be read from the public code/);
+    // Per-build counts on the home page agree with the cards they summarise.
+    for (const k of ['desktop/release', 'android/beta', 'ios/nightly']) {
+      const head = home.match(new RegExp(`<div class="build-head" data-k="${k}"[\\s\\S]*?</ul>`))![0];
+      const counted = Object.fromEntries([...head.matchAll(/class="badge s-([\w-]+)"[^>]*>[\s\S]*?<span>(\d+) /g)].map((m) => [m[1], Number(m[2])]));
+      const cards: Record<string, number> = {};
+      for (const m of home.matchAll(new RegExp(`<span class="fcard-b" data-k="${k}"[^>]*><span class="badge s-([\\w-]+)"`, 'g'))) cards[m[1]] = (cards[m[1]] ?? 0) + 1;
+      assert.deepEqual(counted, cards, `${state}: ${k} counts match the cards`);
+    }
+    // The presented cells behind them.
+    const shown = presentCapabilities(d).find((r) => r.id === 'bridge')!;
+    let lowered = 0;
+    shown.cells.forEach((cell, i) => {
+      const before = raw.cells[i];
+      assert.ok(!USABLE_STATUSES.includes(cell.status), `${state}: ${cell.platform}/${cell.channel} is ${cell.status}`);
+      if (USABLE_STATUSES.includes(before.status)) {
+        lowered++;
+        assert.equal(cell.status, 'not-verified');
+        assert.equal(cell.appStatus, before.status, 'the app-side status is kept');
+        assert.match(cell.summary, /whether Brave’s server-side switch turns it off for Zcash is unknown/);
+        assert.ok(cell.evidence.some((e) => e.kind === 'note' && e.text.includes('App-side status:')));
+        assert.ok(cell.evidence.some((e) => e.kind === 'service'), 'the unread switch is listed as evidence');
+        assert.doesNotMatch(statusExplain(cell), /No evidence either way/);
+        assert.match(statusExplain(cell, true), /server-side switch turns it off is unknown/);
+      } else assert.equal(cell.status, before.status, 'non-usable statuses are unchanged');
+    });
+    assert.ok(lowered > 0, `${state}: derivation left usable Bridge cells, which the site must not show as usable`);
+  }
+});
+
+test('UI-C4 (repair): a known switch keeps derived statuses, and "Off server-side" text describes the public code', async () => {
+  const { presentCapabilities } = await import('../src/site/view.ts');
+  const { featuresPage, featurePage } = await import('../src/site/pages/features.ts');
+  const { homePage } = await import('../src/site/pages/home.ts');
+  const { sourcesPage } = await import('../src/site/pages/other.ts');
+  const on = await siteWithSwitch(true);
+  const bridge = on.capabilities.find((r) => r.id === 'bridge')!;
+  assert.ok(bridge.cells.every((c) => c.status === 'service-off'));
+  const runtime = /currently turned off|turned off server-side|has this turned off/;
+  const matrix = featuresPage(on).value;
+  const page = featurePage(bridge, on).value;
+  const sources = sourcesPage(on, [], {}).value;
+  for (const [name, out] of [['features', matrix], ['feature page', page], ['home', homePage(on, [], []).value], ['sources', sources]] as const) assert.doesNotMatch(out, runtime, name);
+  const tips = [...bridgeMatrixRow(matrix).matchAll(/class="fx-line" title="([^"]*)"/g)].map((m) => m[1]);
+  assert.equal(tips.length, 9);
+  for (const t of tips) assert.match(t, /Brave’s public server-side code switches it off for Zcash, for every client\. The deployed service could differ\./);
+  const sums = [...page.matchAll(/<p class="ev-sum">([^<]*)<\/p>/g)].map((m) => m[1]);
+  assert.equal(sums.length, 9);
+  assert.ok(sums.some((s) => /^Shipped in Desktop [\d.]+, but Brave’s public server-side code switches it off for Zcash/.test(s)));
+  assert.ok(sums.every((s) => /public server-side code/.test(s)));
+  const legend = sources.match(/<dt>Off server-side<\/dt><dd>([^<]*)<\/dd>/)![1];
+  assert.match(legend, /Brave’s public server-side code \(its swap backend repository\) switches this off for Zcash/);
+  assert.match(legend, /deployed service is not public and could differ/);
+  assert.match(sources.match(/<dt>Not verified<\/dt><dd>([^<]*)<\/dd>/)![1], /server-side switch it depends on could not be read/);
+
+  const off = await siteWithSwitch(false);
+  assert.match(bridgeCard(homePage(off, [], []).value), usableBadge, 'false: Bridge keeps its derived (usable) status');
+  const statuses = (rows: { cells: { status: string }[] }[]) => rows.flatMap((r) => r.cells.map((c) => c.status));
+  assert.deepEqual(statuses(presentCapabilities(off)), statuses(off.capabilities), 'false: nothing is lowered');
+});
+
+function mergedGroup(builds: (boolean | null)[] | null): SiteGroup {
+  const base = structuredClone(site.groups[0]);
+  const all = ['desktop', 'android', 'ios'].flatMap((platform) => ['release', 'beta', 'nightly'].map((channel) => ({ platform, channel })));
+  return {
+    ...base,
+    id: 'brave/brave-core#990001',
+    status: {
+      ...base.status,
+      stage: 'merged',
+      stageLabel: 'Merged, not yet in a checked build',
+      releaseNotes: [],
+      implementation: { state: 'merged', mergedAt: '2026-01-01T00:00:00Z', prs: base.members.masterPrs },
+      builds: (builds ?? []).map((included, i) => ({ ...all[i], version: '1.0.0', included, via: null, basis: 'test' })),
+    },
+  } as unknown as SiteGroup;
+}
+const nine = (v: boolean | null) => Array.from({ length: 9 }, () => v);
+
+test('UI-C5 (repair): the stage label states absence only when every checked build confirms it', async () => {
+  const { stageView, fixFacts } = await import('../src/site/view.ts');
+  const { STAGE_LABEL } = await import('../src/derive/status.ts');
+  for (const builds of [null, nine(null)]) {
+    const v = stageView(mergedGroup(builds));
+    assert.equal(v.label, 'Merged, build presence unknown');
+    assert.equal(v.unknown, true);
+    assert.equal(v.stage, 'merged', 'filters and ?stage=merged links keep the derived id');
+  }
+  const mixedGroup = mergedGroup([false, false, ...nine(null).slice(2)]);
+  assert.equal(stageView(mixedGroup).label, 'Merged, not confirmed in a current build');
+  assert.equal(fixFacts(mixedGroup).inBuild, 'unknown');
+  const absent = stageView(mergedGroup(nine(false)));
+  assert.equal(absent.label, STAGE_LABEL.merged, 'explicit "not included" everywhere keeps the absence label');
+  assert.equal(absent.unknown, false);
+  for (const g of site.groups.filter((x) => x.status.stage !== 'merged')) assert.deepEqual(stageView(g), { stage: g.status.stage, label: g.status.stageLabel, unknown: false });
+});
+
+test('UI-C5 (repair): a merged fix with unknown build presence reads unknown on the detail, list, filter, search and legend', async () => {
+  const { detailPage, workPage, groupStageBadge } = await import('../src/site/pages/work.ts');
+  const { sourcesPage } = await import('../src/site/pages/other.ts');
+  const { searchIndex } = await import('../src/site/view.ts');
+  const g = mergedGroup(nine(null));
+  const d = structuredClone(site);
+  d.groups = [g, ...d.groups];
+  d.stages = d.stages.map((s) => (s.id === 'merged' ? { ...s, count: s.count + 1 } : s));
+  const absence = /not yet in a checked build/i;
+
+  const detail = detailPage(g, d, {}, [], []).value;
+  const head = detail.slice(detail.indexOf('<div class="page-head detail-head">'), detail.indexOf('<ul class="factstrip"'));
+  assert.match(head, /<span class="stage st-merged"\s*><svg class="g g-not-verified"[^>]*><use href="#g-not-verified"\/><\/svg>Merged, build presence unknown<\/span>/);
+  assert.doesNotMatch(detail, absence);
+  assert.match(detail, /Unknown for all 9 current builds/, 'the badge agrees with the fact strip');
+
+  const list = workPage(d).value;
+  const row = list.match(/<li class="wrow"[^>]*data-stage="merged"[\s\S]*?<\/li>/)![0];
+  assert.match(row, /Merged, build presence unknown/);
+  assert.doesNotMatch(row, absence);
+  assert.match(list, /<option value="merged">Merged, not confirmed in a current build \(\d+\)<\/option>/);
+  assert.doesNotMatch(list.slice(0, list.indexOf('<ol class="work-list"')), absence, 'filter options');
+
+  const entry = searchIndex(d, [], { feature: (id) => `/f/${id}/`, work: (id) => `/w/${id}/`, page: (p) => `/${p}` }).find((e) => e.k === 'Work' && e.u === `/w/${g.id}/`)!;
+  assert.match(entry.s, /· Merged, build presence unknown$/);
+
+  const legend = sourcesPage(d, [], {}).value.match(/<dt>Merged, not confirmed in a current build<\/dt><dd>([^<]*)<\/dd>/);
+  assert.ok(legend, 'the stage legend uses the neutral merged label');
+  assert.match(legend![1], /only when every checked build was confirmed not to include it/);
+
+  // Explicit "not included" in every checked build still reads as absence, with the derived badge.
+  const absent = groupStageBadge(mergedGroup(nine(false))).value;
+  assert.match(absent, /Merged, not yet in a checked build/);
+  assert.match(absent, /g-in-build/);
+});
+
+test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no unsupported absence label', async () => {
+  const { readdirSync, statSync } = await import('node:fs');
+  const { buildSite } = await import('../src/site/build.ts');
+  const { slug, setBase } = await import('../src/site/components.ts');
+  const out = mkdtempSync(join(tmpdir(), 'zbt-site-'));
+  try {
+    await buildSite({ outDir: out, basePath: '/' });
+    const walk = (dir: string): string[] => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
+    const pages = walk(out).filter((p) => p.endsWith('.html'));
+    assert.ok(pages.length > 100);
+    // Work pages whose derived stage legitimately states absence (every checked build says "not included").
+    const absentOk = new Set(site.groups.filter((g) => g.status.stage === 'merged' && g.status.builds.length > 0 && g.status.builds.every((b) => b.included === false)).map((g) => join(out, 'work', slug(g.id), 'index.html')));
+    for (const p of pages) {
+      // <head> is skipped: its meta description is written by src/site/build.ts (outside this group's files)
+      // from the derived stageLabel; that remaining spot is reported as a cross-group note.
+      const body = readFileSync(p, 'utf8').replace(/<head>[\s\S]*?<\/head>/, '');
+      assert.doesNotMatch(body, /currently turned off|turned off server-side|has this turned off/, p);
+      if (absentOk.has(p)) continue;
+      for (const m of body.matchAll(/not yet in a checked build/g)) {
+        assert.match(body.slice(m.index! + 20, m.index! + 120), /only when every checked build was confirmed not to include it/, `${p}: absence wording outside its definition`);
+      }
+    }
+    assert.doesNotMatch(readFileSync(join(out, 'assets', 'search.json'), 'utf8'), /not yet in a checked build|currently turned off/);
+  } finally {
+    setBase('/');
+    rmSync(out, { recursive: true, force: true });
+  }
+});

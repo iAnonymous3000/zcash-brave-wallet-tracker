@@ -2,7 +2,7 @@ import type { SiteData } from '../../derive/index.ts';
 import type { RunRecord } from '../../lib/types.ts';
 import { ext, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { gate3Facts } from '../view.ts';
+import { gate3Facts, presentSite } from '../view.ts';
 import { gate3Clause } from './home.ts';
 
 // ---------------------------------------------------------------------------
@@ -142,7 +142,8 @@ function groupFor(d: SiteData, id: string): string {
 // Sources, freshness, coverage, meanings
 // ---------------------------------------------------------------------------
 
-export function sourcesPage(d: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>): SafeHtml {
+export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>): SafeHtml {
+  const d = presentSite(data);
   const c = d.coverage.counts;
   return html`
 <div class="page-head">

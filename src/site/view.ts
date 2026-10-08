@@ -1,8 +1,10 @@
 // Pure view-model helpers: plain-language wording and page data built from derived data.
 // No markup here; every function is deterministic and unit-tested (tests/site-view.test.ts).
 
-import type { SiteData, SiteGroup } from '../derive/index.ts';
-import type { Channel, EvidenceRecord, Platform } from '../lib/types.ts';
+import { CAPABILITIES } from '../../config/capabilities.ts';
+import { serviceChecks, type SiteData, type SiteGroup } from '../derive/index.ts';
+import { STAGE_LABEL } from '../derive/status.ts';
+import type { Channel, EvidenceRecord, Platform, WorkItem } from '../lib/types.ts';
 import { compareVersions } from '../lib/util.ts';
 
 export const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
@@ -10,7 +12,11 @@ export const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
 export const PLATFORM_LABEL: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
 export const CHANNEL_LABEL: Record<Channel, string> = { release: 'Release', beta: 'Beta', nightly: 'Nightly' };
 
-type CellLike = { platform: Platform; channel: Channel; version: string | null; status: string; since?: string | null; summary: string };
+/**
+ * `appStatus` is set only by presentCapabilities(): the derived (app-side) status of a cell that the site shows as
+ * "not verified" because a server-side switch the row depends on could not be read.
+ */
+type CellLike = { platform: Platform; channel: Channel; version: string | null; status: string; since?: string | null; summary: string; appStatus?: string };
 
 /** Short status label for people. "in-build" never reads as available or announced. */
 export function statusLabel(status: string, channel: Channel): string {
@@ -47,6 +53,7 @@ export function statusExplain(cell: CellLike, short = false): string {
   const v = cell.version ? ` ${cell.version}` : '';
   const sum = cell.summary ?? '';
   let m: RegExpMatchArray | null;
+  if (cell.appStatus && cell.status === 'not-verified') return serviceUnknownExplain(cell, short);
   if ((m = sum.match(/^Limited by “([^”]+)”/))) {
     const dep = shortName(m[1]);
     return cell.status === 'opt-in'
@@ -100,6 +107,163 @@ export function statusExplain(cell: CellLike, short = false): string {
     default:
       return 'No evidence either way yet.';
   }
+}
+
+// ---------------------------------------------------------------------------
+// Capability cells as presented: server-side switches describe the public code, and an unread switch
+// keeps a usable-looking cell "not verified". The derived data (and the public data/site.json) are not
+// changed; every page renders through presentSite() so the matrix, cards, counts and evidence agree.
+// ---------------------------------------------------------------------------
+
+type CapRow = SiteData['capabilities'][number];
+type CapCell = CapRow['cells'][number];
+/** A capability cell as the site shows it (see CellLike for `appStatus`). */
+export type ShownCell = CapCell & { appStatus?: string };
+export type ShownRow = Omit<CapRow, 'cells'> & { cells: ShownCell[] };
+
+/** What an "Off server-side" status means: the checked public code, never the deployed service. */
+export const SERVICE_OFF_TEXT = 'Brave’s public server-side code switches it off for Zcash, for every client. The deployed service could differ.';
+const SERVICE_UNKNOWN_TEXT = 'whether Brave’s server-side switch turns it off for Zcash is unknown: the switch could not be read from its public code';
+/** Derived statuses that say the feature can be used (or turned on) in that build. */
+const USABLE = new Set(['available', 'in-build', 'opt-in']);
+
+/**
+ * State of each server-side switch named by a capability definition, from the checked public code:
+ * true (switched off), false (not switched off) or null (not read, or the setting was not found).
+ */
+export function serviceSwitchStates(d: Pick<SiteData, 'upstream' | 'items'>): Record<string, boolean | null> {
+  const known = serviceChecks(d.upstream.services ?? null, d.items as unknown as Record<string, WorkItem>);
+  const ids = new Set(CAPABILITIES.flatMap((c) => c.serviceChecks ?? []));
+  return Object.fromEntries([...ids].map((id) => [id, known[id] ? known[id].disabled : null]));
+}
+
+/**
+ * Capability rows as presented. Statuses come from derivation, with two presentation rules keyed on the
+ * capability definitions and the switch state (never on derived wording):
+ *  - "Off server-side" cells get a summary about the checked public code, not the deployed service;
+ *  - a usable-looking cell (available, in build, behind a flag) whose row, or a prerequisite of it, depends
+ *    on a server-side switch that could not be read becomes "not verified"; its app-side status is kept as
+ *    `appStatus` and as evidence.
+ */
+export function presentCapabilities(d: Pick<SiteData, 'capabilities' | 'upstream' | 'items'>): ShownRow[] {
+  const states = serviceSwitchStates(d);
+  const defs = new Map(CAPABILITIES.map((c) => [c.id, c]));
+  const rows = new Map(d.capabilities.map((r) => [r.id, r]));
+  const switches = (id: string) => defs.get(id)?.serviceChecks ?? [];
+  const off = (id: string) => switches(id).some((s) => states[s] === true);
+  const unknown = (id: string) => switches(id).some((s) => states[s] === null);
+  const prereqs = (id: string, seen = new Set<string>()): string[] => {
+    for (const r of defs.get(id)?.requires ?? []) {
+      if (seen.has(r)) continue;
+      seen.add(r);
+      prereqs(r, seen);
+    }
+    return [...seen];
+  };
+  return d.capabilities.map((row) => {
+    const reqRows = prereqs(row.id).map((id) => rows.get(id)).filter((r): r is CapRow => Boolean(r));
+    const offVia = off(row.id) ? null : (reqRows.find((r) => off(r.id)) ?? null);
+    const unknownVia = unknown(row.id) ? row : (reqRows.find((r) => unknown(r.id)) ?? null);
+    const cells = row.cells.map((c): ShownCell => {
+      const cell = c as ShownCell;
+      if (cell.appStatus) return cell; // already presented
+      if (cell.status === 'service-off') {
+        if (offVia) return { ...cell, summary: `Limited by “${offVia.name}” (off server-side here): ${SERVICE_OFF_TEXT}` };
+        const note = cell.evidence.find((e) => e.kind === 'release-note' && e.version);
+        return { ...cell, summary: `${note ? `Shipped in ${PLATFORM_LABEL[cell.platform]} ${note.version}, but ` : ''}${SERVICE_OFF_TEXT}` };
+      }
+      if (!unknownVia || !USABLE.has(cell.status)) return cell;
+      const read = unknownVia.cells.some((c) => c.evidence.some((e) => e.kind === 'service'));
+      const evidence = [
+        ...cell.evidence,
+        ...(read || unknownVia !== row ? [] : [{ kind: 'service' as const, text: 'Brave’s server-side switch for this feature was not read (no service data), so its state is unknown', url: null, contrary: false }]),
+        { kind: 'note' as const, text: `Shown as not verified because ${SERVICE_UNKNOWN_TEXT}${unknownVia === row ? '' : ` (it depends on “${unknownVia.name}”)`}. App-side status: ${statusLabel(cell.status, cell.channel)} — ${cell.summary}`, url: null },
+      ];
+      const summary = unknownVia === row
+        ? `${appSide(cell, true)}, but ${SERVICE_UNKNOWN_TEXT}.`
+        : `Limited by “${unknownVia.name}” (not verified here): ${SERVICE_UNKNOWN_TEXT}.`;
+      return { ...cell, status: 'not-verified', since: null, summary, evidence, appStatus: cell.status };
+    });
+    return { ...row, cells };
+  });
+}
+
+/** The app-side part of a cell whose server-side switch is unknown. */
+function appSide(cell: CellLike & { evidence?: { kind: string; version?: string | null }[] }, long: boolean): string {
+  const p = PLATFORM_LABEL[cell.platform];
+  const v = cell.version ? ` ${cell.version}` : '';
+  const app = cell.appStatus ?? cell.status;
+  if (app === 'available') {
+    const note = cell.since ?? cell.evidence?.find((e) => e.kind === 'release-note' && e.version)?.version ?? null;
+    return long ? `Shipped in the ${p} app${note ? ` (release notes ${note})` : ''}` : 'Shipped in the app';
+  }
+  if (app === 'in-build') return long ? `The code is in ${p}${v} and on by default` : 'In this build';
+  return long ? `The code is in ${p}${v} behind a brave://flags option` : 'Behind a flag in this build';
+}
+
+function serviceUnknownExplain(cell: CellLike & { evidence?: { kind: string; version?: string | null }[] }, short: boolean): string {
+  if (/^Limited by “([^”]+)”/.test(cell.summary ?? '')) {
+    const dep = shortName(cell.summary.match(/^Limited by “([^”]+)”/)![1]);
+    return short ? `Depends on ${dep}, whose server-side switch is unknown.` : `Depends on ${dep}; whether Brave’s server-side switch turns ${dep} off for Zcash is unknown.`;
+  }
+  return short
+    ? `${appSide(cell, false)}; whether the server-side switch turns it off is unknown.`
+    : `${appSide(cell, true)}. Whether Brave’s server-side switch turns it off for Zcash is unknown: it could not be read from the public code, and the deployed service is not public.`;
+}
+
+/** Legend help for capability statuses, worded about the checked public code. */
+const LEGEND_HELP: Record<string, string> = {
+  'service-off': 'The app code may be present, but Brave’s public server-side code (its swap backend repository) switches this off for Zcash, for every client. The deployed service is not public and could differ.',
+  'not-verified': 'Not enough evidence that it works on this build: no platform-specific evidence was found, or a server-side switch it depends on could not be read. This does not mean it is unavailable.',
+};
+
+/** Merged-fix build presence as the stage shows it; only explicit "not included" checks support absence. */
+export const MERGED_LABEL = {
+  /** Neutral label for the stage as a whole (filters, legend). */
+  stage: 'Merged, not confirmed in a current build',
+  unknown: 'Merged, build presence unknown',
+  partlyUnknown: 'Merged, not confirmed in a current build',
+} as const;
+
+export interface StageView {
+  /** Derived stage id (filters and links keep using it). */
+  stage: string;
+  label: string;
+  /** True when the label reports unknown build presence rather than a known state. */
+  unknown: boolean;
+}
+
+/**
+ * The stage label shown for a work group. Derivation labels every merged fix without a confirmed build
+ * "Merged, not yet in a checked build"; that is kept only when every checked build is confirmed not to
+ * include it (fixFacts().inBuild === 'no'), so the badge never contradicts the build facts beside it.
+ */
+export function stageView(g: Pick<SiteGroup, 'status'>): StageView {
+  const st = g.status;
+  if (st.stage !== 'merged') return { stage: st.stage, label: st.stageLabel, unknown: false };
+  const inBuild = fixFacts(g as SiteGroup).inBuild;
+  if (inBuild === 'no') return { stage: st.stage, label: st.stageLabel, unknown: false };
+  const known = st.builds.filter((b) => b.included !== null).length;
+  return { stage: st.stage, label: known ? MERGED_LABEL.partlyUnknown : MERGED_LABEL.unknown, unknown: true };
+}
+
+/** Stage list (filters, legend) with a merged label that does not assert absence. */
+export function presentStages(stages: SiteData['stages']): SiteData['stages'] {
+  return stages.map((s) =>
+    s.id === 'merged'
+      ? { ...s, label: MERGED_LABEL.stage, help: `A linked pull request is merged, but no current build is confirmed to include it. An item reads “${MERGED_LABEL.unknown}” when its presence could not be determined in any current build, “${MERGED_LABEL.partlyUnknown}” when some builds were confirmed not to include it and the rest could not be checked, and “${STAGE_LABEL.merged}” only when every checked build was confirmed not to include it.` }
+      : s,
+  );
+}
+
+/** Site data as every page presents it (capabilities, legends and stages); the input is not modified. */
+export function presentSite(d: SiteData): SiteData {
+  return {
+    ...d,
+    capabilities: presentCapabilities(d) as SiteData['capabilities'],
+    cellLegend: d.cellLegend.map((x) => (LEGEND_HELP[x.id] ? { ...x, help: LEGEND_HELP[x.id] } : x)),
+    stages: presentStages(d.stages),
+  };
 }
 
 /** Same "open" rule as the Work page filter: the lead issue or a linked master PR is open. */
@@ -369,7 +533,7 @@ export function searchIndex(d: SiteData, notes: ReleaseVersion[], href: { featur
   for (const g of d.groups) {
     const ref = g.lead.replace(/^brave\//, '');
     const members = [...g.members.issues, ...g.members.masterPrs, ...g.members.uplifts, ...g.members.duplicates].map((id) => `#${id.split('#')[1]} ${id.replace(/^brave\//, '')}`);
-    add({ k: 'Work', t: g.title, s: `${ref} · ${g.status.stageLabel}`, u: href.work(g.id) }, `${members.join(' ')} ${g.topic.name}`);
+    add({ k: 'Work', t: g.title, s: `${ref} · ${stageView(g).label}`, u: href.work(g.id) }, `${members.join(' ')} ${g.topic.name}`);
   }
   for (const v of notes) for (const l of v.lines) add({ k: 'Release note', t: l.text, s: `${PLATFORM_LABEL[v.platform]} ${v.version}${l.draft ? ' (draft)' : ''}`, u: `${href.page('releases/')}#${v.platform}-${v.version.replace(/\./g, '-')}` });
   for (const c of d.community) add({ k: 'Community', t: c.title, s: `Brave Community · ${c.postsCount} posts`, u: c.url });

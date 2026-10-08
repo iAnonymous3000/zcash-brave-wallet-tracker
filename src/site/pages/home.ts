@@ -1,9 +1,10 @@
 import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent, Channel, Platform } from '../../lib/types.ts';
-import { ext, featureHref, glyph, html, itemHref, raw, shortRef, stageBadge, statusBadge, time, u } from '../components.ts';
+import { ext, featureHref, glyph, html, itemHref, raw, shortRef, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
+import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, presentSite, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
 import { KIND_LABEL, eventGroup, eventScope } from './changes.ts';
+import { groupStageBadge } from './work.ts';
 
 const DEFAULT = 'desktop/release';
 const SUMMARY_ORDER = ['available', 'in-build', 'opt-in', 'off', 'service-off', 'absent', 'not-verified', 'not-planned'];
@@ -20,7 +21,8 @@ export function gate3Clause(state: Gate3State): SafeHtml {
   return html`<code>SWAP_DISABLED_CHAINS</code> was not found in the checked file, so whether it includes <code>Chain.ZCASH</code> is unknown`;
 }
 
-export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersion[]): SafeHtml {
+export function homePage(data: SiteData, events: ChangeEvent[], notes: ReleaseVersion[]): SafeHtml {
+  const d = presentSite(data);
   const version = (p: Platform, c: Channel) => d.channels.find((x) => x.platform === p && x.channel === c) ?? null;
   const builds = PLATFORMS.flatMap((p) => CHANNELS.map((c) => ({ p, c, k: `${p}/${c}`, v: version(p, c) })));
   const hidden = (k: string) => (k === DEFAULT ? '' : raw('hidden'));
@@ -162,7 +164,7 @@ export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersi
     return html`<li class="mev" data-detected="${e.detectedAt}">
       <span class="mev-when">${time(e.sourceAt ?? e.detectedAt)}</span>
       <div class="mev-body"><span class="mev-kind">${KIND_LABEL[e.kind] ?? e.kind}<span class="new-tag" hidden>New</span></span>${g ? html`<a href="${itemHref(g.id)}">${e.title}</a>` : e.links[0] ? ext(e.links[0].url, e.title) : e.title}</div>
-      ${g ? html`<span class="mev-stage">${stageBadge(g.status.stage, g.status.stageLabel)}</span>` : ''}
+      ${g ? html`<span class="mev-stage">${groupStageBadge(g)}</span>` : ''}
     </li>`;
   })}</ol>` : html`<p class="panel-empty">No Brave activity in the retained history.</p>`}
 </section>

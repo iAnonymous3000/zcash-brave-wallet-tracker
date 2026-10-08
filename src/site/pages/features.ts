@@ -1,9 +1,10 @@
 import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { Channel, Platform } from '../../lib/types.ts';
-import { ext, featureHref, glyph, html, itemHref, shortRef, stageBadge, statusBadge, u } from '../components.ts';
+import { ext, featureHref, glyph, html, itemHref, shortRef, statusBadge, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { CHANNELS, CHANNEL_LABEL, EVIDENCE_LABEL, PLATFORMS, evidenceShort, PLATFORM_LABEL, fixFacts, groupFeatures, statusExplain, statusLabel } from '../view.ts';
+import { CHANNELS, CHANNEL_LABEL, EVIDENCE_LABEL, PLATFORMS, evidenceShort, PLATFORM_LABEL, fixFacts, groupFeatures, presentSite, statusExplain, statusLabel } from '../view.ts';
 import { splitName } from './home.ts';
+import { groupStageBadge } from './work.ts';
 
 type Row = SiteData['capabilities'][number];
 
@@ -27,7 +28,8 @@ function versionOf(d: SiteData, p: Platform, c: Channel): string {
   return d.channels.find((x) => x.platform === p && x.channel === c)?.version ?? '?';
 }
 
-export function featuresPage(d: SiteData): SafeHtml {
+export function featuresPage(data: SiteData): SafeHtml {
+  const d = presentSite(data);
   return html`
 <div class="page-head">
   <h1>Features</h1>
@@ -60,7 +62,10 @@ export function featuresPage(d: SiteData): SafeHtml {
 `;
 }
 
-export function featurePage(row: Row, d: SiteData): SafeHtml {
+export function featurePage(input: Row, data: SiteData): SafeHtml {
+  const d = presentSite(data);
+  // Render the presented row (build.ts passes the derived one).
+  const row = d.capabilities.find((r) => r.id === input.id) ?? input;
   const [name, sub] = splitName(row.name);
   const byId = groupIndex(d);
   const allEv = row.cells.flatMap((c) => c.evidence);
@@ -123,7 +128,7 @@ ${row.notes.length ? html`<section class="block" aria-labelledby="nt-h"><h2 id="
 
 ${related.length ? html`<section class="panel" aria-labelledby="rw-h">
   <div class="panel-head"><h2 id="rw-h">Work referenced by the evidence</h2></div>
-  <ul class="work-mini">${related.map((g) => html`<li>${stageBadge(g.status.stage, g.status.stageLabel)}<a href="${itemHref(g.id)}">${g.title}</a><span class="mono-meta">${shortRef(g.lead)}</span></li>`)}</ul>
+  <ul class="work-mini">${related.map((g) => html`<li>${groupStageBadge(g)}<a href="${itemHref(g.id)}">${g.title}</a><span class="mono-meta">${shortRef(g.lead)}</span></li>`)}</ul>
 </section>` : ''}
 
 <section class="block" aria-labelledby="ae-h">
