@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-08T17:03:02.983Z",
+ "retrievedAt": "2026-10-08T18:31:50.651Z",
  "data": {
   "gate3": {
    "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
@@ -9,7 +9,7 @@
    "zcashDisabled": true,
    "line": 18,
    "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-   "checkedAt": "2026-10-08T17:03:02.983Z"
+   "checkedAt": "2026-10-08T18:31:50.651Z"
   },
   "studies": [
    {
@@ -48,7 +48,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],
@@ -88,7 +88,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],
@@ -125,7 +125,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],
@@ -163,7 +163,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],
@@ -199,7 +199,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],
@@ -236,7 +236,7 @@
       "applies": false
      },
      {
-      "build": "nightly 1.99.26 (155.1.99.26)",
+      "build": "nightly 1.99.27 (156.1.99.27)",
       "applies": false
      }
     ],

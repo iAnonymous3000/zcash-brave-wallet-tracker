@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-08T17:03:02.983Z",
+ "generatedAt": "2026-10-08T18:31:50.651Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -113338,15 +113338,15 @@
       "version": "0.15.0",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.15.0",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.15.0",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.15.0",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.15.0",
       "source": "crates.io"
      }
@@ -113391,15 +113391,15 @@
       "version": "0.29.0",
       "source": "path"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.29.0",
-      "source": "path"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.29.0",
       "source": "path"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.29.0",
+      "source": "path"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.29.0",
       "source": "path"
      }
@@ -113444,15 +113444,15 @@
       "version": "0.10.0",
       "source": "path"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.10.0",
-      "source": "path"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.10.0",
       "source": "path"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.10.0",
+      "source": "path"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.10.0",
       "source": "path"
      }
@@ -113497,15 +113497,15 @@
       "version": "0.24.0-rc.1",
       "source": "path"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.24.0-rc.1",
-      "source": "path"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.24.0-rc.1",
+      "source": "path"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      }
@@ -113550,15 +113550,15 @@
       "version": "0.4.0",
       "source": "path"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.4.0",
-      "source": "path"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.4.0",
       "source": "path"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.4.0",
+      "source": "path"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.4.0",
       "source": "path"
      }
@@ -113603,15 +113603,15 @@
       "version": "0.4.1",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.4.1",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.4.1",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.4.1",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.4.1",
       "source": "crates.io"
      }
@@ -113656,15 +113656,15 @@
       "version": "0.7.0",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.7.0",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.7.0",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.7.0",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.7.0",
       "source": "crates.io"
      }
@@ -113709,15 +113709,15 @@
       "version": "0.8.2",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.8.2",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.8.2",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.8.2",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.8.2",
       "source": "crates.io"
      }
@@ -113762,15 +113762,15 @@
       "version": "0.2.1",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.2.1",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.2.1",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.2.1",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.2.1",
       "source": "crates.io"
      }
@@ -113815,15 +113815,15 @@
       "version": "0.3.2",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.3.2",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.3.2",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.3.2",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.3.2",
       "source": "crates.io"
      }
@@ -113868,15 +113868,15 @@
       "version": "0.5.0",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.5.0",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.5.0",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.5.0",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.5.0",
       "source": "crates.io"
      }
@@ -113921,15 +113921,15 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.5.1",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.5.1",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -113974,15 +113974,15 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.5.1",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.5.1",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -114027,15 +114027,15 @@
       "version": "0.1.0",
       "source": "crates.io"
      },
-     "v1.99.26 (github/nightly)": {
-      "version": "0.1.0",
-      "source": "crates.io"
-     },
      "v1.96.62 (ios/release)": {
       "version": "0.1.0",
       "source": "crates.io"
      },
      "v1.99.25 (ios/nightly)": {
+      "version": "0.1.0",
+      "source": "crates.io"
+     },
+     "v1.99.27 (github/nightly)": {
       "version": "0.1.0",
       "source": "crates.io"
      }
@@ -114055,7 +114055,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-08T17:03:02.983Z"
+   "checkedAt": "2026-10-08T18:31:50.651Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -115374,9 +115374,9 @@
     "num": "2009",
     "title": "Reduce Marginal Fee to 1000 Zatoshis and Raise the Weight Ratio Cap to 10",
     "status": "Draft",
-    "lastCommitAt": "2026-10-06T23:03:22Z",
-    "lastCommitMessage": "Update zips/2009.md",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/d1c001d8b0076a8488cb25a8759ec6d3d32853ee",
+    "lastCommitAt": "2026-10-08T17:06:15Z",
+    "lastCommitMessage": "Fix fat-fingered move of ZIP 2009 to its correct location.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/51df2a4070fcf4718d995958a4809f8ab4ff8222",
     "url": "https://zips.z.cash/zip-2009"
    },
    "0317": {
@@ -115791,9 +115791,6 @@
      "v1.99.13 (android/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.13 (android/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.99.13 (android/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
-     "v1.99.26 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.99.26 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.26 (github/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
      "master (master): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "master (master): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "master (master): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
@@ -115802,7 +115799,10 @@
      "v1.96.62 (ios/release): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
      "v1.99.25 (ios/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.25 (ios/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.25 (ios/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0"
+     "v1.99.25 (ios/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.99.27 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.99.27 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.99.27 (github/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0"
     ],
     "affected": false
    },
@@ -115970,7 +115970,7 @@
     "zcashDisabled": true,
     "line": 18,
     "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-    "checkedAt": "2026-10-08T17:03:02.983Z"
+    "checkedAt": "2026-10-08T18:31:50.651Z"
    },
    "studies": [
     {
@@ -116009,7 +116009,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116049,7 +116049,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116086,7 +116086,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116124,7 +116124,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116160,7 +116160,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116197,7 +116197,7 @@
        "applies": false
       },
       {
-       "build": "nightly 1.99.26 (155.1.99.26)",
+       "build": "nightly 1.99.27 (156.1.99.27)",
        "applies": false
       }
      ],
@@ -116219,7 +116219,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-08T17:03:02.983Z"
+   "checkedAt": "2026-10-08T18:31:50.651Z"
   }
  },
  "community": [
@@ -117273,12 +117273,12 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 400,
+   "itemCount": 401,
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
@@ -117288,8 +117288,8 @@
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117303,8 +117303,8 @@
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117316,8 +117316,8 @@
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117331,12 +117331,12 @@
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 10,
+   "itemCount": 11,
    "requests": 11,
    "limitations": []
   },
@@ -117344,8 +117344,8 @@
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117357,8 +117357,8 @@
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117370,8 +117370,8 @@
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117385,8 +117385,8 @@
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117398,21 +117398,21 @@
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 190,
-   "requests": 32,
+   "requests": 33,
    "limitations": []
   },
   {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117424,8 +117424,8 @@
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117437,12 +117437,12 @@
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-10-08T17:03:02.983Z",
-   "lastSuccessAt": "2026-10-08T17:03:02.983Z",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 10,
+   "itemCount": 11,
    "requests": 11,
    "limitations": []
   }
