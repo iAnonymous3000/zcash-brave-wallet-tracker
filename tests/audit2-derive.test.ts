@@ -618,6 +618,24 @@ test('R-ADV: a Cargo.lock package list that lacks the snapshot’s own crates is
   assert.equal(ok.affected, false);
 });
 
+test('R-ADV: a dependency-bump event does not state a possibly linked version as resolved, and an inconsistent package list is not used for it', async () => {
+  const { braveResolves } = await import('../src/derive/changes.ts');
+  const bumpFor = (master: Snap) => {
+    const inputs = { now: NOW, prev: { ...emptySnap('2026-10-07T00:00:00Z'), masterDeps: { orchard: '0.15.0' } }, current: { ...emptySnap(NOW), masterDeps: { orchard: '0.16.0' } }, items: {}, groups: [], groupOfItem: new Map(), changelog: [], releaseDates: new Map(), upstream: null, deps: depsOf(master), advisories: [], community: [], docs: [], evidence: [], capabilityNames: {}, lineChannel: {} } as Parameters<typeof generateEvents>[0];
+    return generateEvents(inputs).find((e) => e.kind === 'dependency-bumped')!;
+  };
+  const maybe = bumpFor(rsnap('master', ['master'], { orchard: [cand('0.15.0', null), cand('0.16.0', null)] }, { ambiguous: ['orchard'] }));
+  assert.ok(maybe);
+  assert.doesNotMatch(maybe.impact, /now resolves/);
+  assert.match(maybe.impact, /^brave-core master's Cargo\.lock now has orchard 0\.15\.0, 0\.16\.0 \(0\.15\.0 was reported before\), but which of them Brave's Zcash crate links is not established\./);
+  assert.match(maybe.title, /^Brave master: orchard 0\.15\.0 → 0\.16\.0 \(possibly linked\)$/);
+  // Control: a version known to be linked keeps the plain wording.
+  const sure = bumpFor(rsnap('master', ['master'], { orchard: [cand('0.16.0', true, true)] }));
+  assert.match(sure.impact, /^brave-core master now resolves orchard 0\.16\.0 \(was 0\.15\.0\)\./);
+  // A package list that lacks the snapshot's own crates does not make a linked crate look absent.
+  assert.equal(braveResolves(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }, { lockPackages: ['zcash'] }), 'orchard')?.version, '0.15.0');
+});
+
 test('R-ADV: a possibly linked (ambiguous) version inside the range leaves the verdict unknown', () => {
   const amb = { orchard: [cand('0.13.0', null), cand('0.15.0', true, true)] };
   const deps = depsOf(rsnap('master', ['master'], amb, { ambiguous: ['orchard'] }), rsnap('v1.97.56', ['desktop/release'], amb, { ambiguous: ['orchard'] }));

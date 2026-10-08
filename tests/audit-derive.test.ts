@@ -598,8 +598,9 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
 });
 
 test('D1 (repair): the bare two-argument call names master as the only checked build', () => {
-  // tests/capabilities-changes.test.ts pins master-only → false for callers that pass no build list (no production
-  // caller does); the wording must still not claim channel builds were checked.
+  // Without a build list (no production caller omits it), master-only evidence whose every linked version is known
+  // and outside the ranges can be "not affected" (tests/capabilities-changes.test.ts pins that for a graph-resolved
+  // master); the wording must still not claim channel builds were checked.
   const v = advisoryVerdicts(ADV, { snapshots: { master: graphed(snap('master', ['master'], SAFE_LOCK)) } });
   assert.doesNotMatch(v.summary, /checked channel builds/);
   assert.match(v.summary, /Only master was checked/);

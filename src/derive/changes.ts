@@ -244,7 +244,13 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
     for (const [crate, v] of Object.entries(inp.current.masterDeps)) {
       const old = inp.prev.masterDeps[crate];
       if (old && old !== v) {
-        out.push(ev({ key: `master|${crate}|${old}|${v}`, kind: 'dependency-bumped', sourceAt: null, title: `Brave master: ${crate} ${old} → ${v}`, impact: `brave-core master now resolves ${crate} ${v} (was ${old}). It reaches users only once a build containing this commit ships.`, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [{ label: 'Cargo.lock (master)', url: inp.deps?.snapshots['master']?.links.lockfile ?? 'https://github.com/brave/brave-core' }], evidence: [`${crate}: ${old} → ${v}`] }));
+        // A version the dependency graph only shows as possibly linked is not stated as resolved (see braveResolves).
+        const r = braveResolves(inp.deps?.snapshots['master'], crate);
+        const maybe = r && !r.certain && r.version === v;
+        const impact = maybe
+          ? `brave-core master's Cargo.lock now has ${crate} ${r.linked.join(', ')} (${old} was reported before), but which of them Brave's Zcash crate links is not established. It reaches users only once a build containing this commit ships.`
+          : `brave-core master now resolves ${crate} ${v} (was ${old}). It reaches users only once a build containing this commit ships.`;
+        out.push(ev({ key: `master|${crate}|${old}|${v}`, kind: 'dependency-bumped', sourceAt: null, title: `Brave master: ${crate} ${old} → ${v}${maybe ? ' (possibly linked)' : ''}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [{ label: 'Cargo.lock (master)', url: inp.deps?.snapshots['master']?.links.lockfile ?? 'https://github.com/brave/brave-core' }], evidence: [`${crate}: ${old} → ${v}${maybe ? ` (possibly linked; candidates ${r.linked.join(', ')})` : ''}`] }));
       }
     }
     if (inp.prev.forkPin && inp.current.forkPin && inp.prev.forkPin !== inp.current.forkPin) {
@@ -475,12 +481,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     const parts = [list.some((s) => s.ref === 'master') ? 'master' : '', tags.length ? `${tags.length} channel build${tags.length > 1 ? 's' : ''} (${tags.join(', ')})` : ''].filter(Boolean);
     return parts.join(' and ');
   };
-  /**
-   * A snapshot's full Cargo.lock package list, when it is consistent: it must name every crate the snapshot's own
-   * lock lists (a list that lacks them is not a complete list, so it cannot show that a package is absent).
-   */
-  const fullList = (s: Snap): string[] | undefined =>
-    Array.isArray(s.lockPackages) && Object.keys(s.lock).every((n) => s.lockPackages!.some((p) => crateKey(p) === crateKey(n))) ? s.lockPackages : undefined;
+  const fullList = fullLockPackages;
   /** The name under which this snapshot records the crate with key `k` (its own spelling), else the shown name. */
   const nameIn = (s: Snap, k: string): string =>
     Object.keys(s.resolution?.candidates ?? {}).find((n) => crateKey(n) === k) ?? Object.keys(s.lock).find((n) => crateKey(n) === k) ?? monitored.get(k) ?? shown.get(k)!;
@@ -662,6 +663,16 @@ export function crateKey(name: string): string {
  */
 export type DepsSnapshotWithPackages = DepsData['snapshots'][string] & { lockPackages?: string[] };
 
+/**
+ * A snapshot's full Cargo.lock package list, when it is consistent: it must name every crate the snapshot's own
+ * `lock` lists (a list that lacks them is not complete, so it cannot show that a package is absent). Every derive
+ * reader of `lockPackages` goes through this.
+ */
+export function fullLockPackages(s: Pick<DepsSnapshotWithPackages, 'lock' | 'lockPackages'>): string[] | undefined {
+  const list = s.lockPackages;
+  return Array.isArray(list) && Object.keys(s.lock).every((n) => list.some((p) => crateKey(p) === crateKey(n))) ? list : undefined;
+}
+
 /** What braveResolves() reports for one crate in one snapshot. */
 export interface BraveResolved {
   /** The highest version known to be linked; when none is known, the highest version not ruled out. */
@@ -681,12 +692,14 @@ export interface BraveResolved {
  * version. Snapshots read before candidates were recorded report their `lock` entry (the newest version in
  * Cargo.lock). Exposure checks must not use this (see advisoryVerdicts). null when the crate is not linked.
  */
-export function braveResolves(s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution'> | null | undefined, crate: string): BraveResolved | null {
-  if (!s) return null;
-  if (!s.resolution) {
-    const l = s.lock[crate];
+export function braveResolves(s0: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> | null | undefined, crate: string): BraveResolved | null {
+  if (!s0) return null;
+  if (!s0.resolution) {
+    const l = s0.lock[crate];
     return l ? { version: l.version, source: l.source, linked: [l.version], possible: [], certain: true } : null;
   }
+  // deps.ts linkedVersions() reads `lockPackages`; an inconsistent list is not passed on (see fullLockPackages).
+  const s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> = { ...s0, lockPackages: fullLockPackages(s0) };
   const { versions } = linkedVersions(s, crate);
   const order = (x: { version: string }, y: { version: string }) => compareSemver(x.version, y.version) || compareVersions(x.version, y.version);
   const sure = versions.filter((c) => c.reachable === true).sort(order);
