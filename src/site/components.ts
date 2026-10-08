@@ -27,6 +27,10 @@ export function itemHref(groupId: string): string {
   return u(`work/${slug(groupId)}/`);
 }
 
+export function featureHref(id: string): string {
+  return u(`features/${id}/`);
+}
+
 /** <time> with an absolute UTC fallback; the client upgrades it to relative/local. */
 export function time(iso: string | null | undefined, opts: { rel?: boolean; withTime?: boolean } = {}): SafeHtml {
   if (!iso) return html`<span class="muted">unknown</span>`;
@@ -64,6 +68,11 @@ export const GLYPH_SPRITE = `<svg class="sprite" width="0" height="0" aria-hidde
 export function glyph(kind: string, cls = ''): SafeHtml {
   const k = GLYPH_PATHS[kind] ? kind : 'not-verified';
   return raw(`<svg class="g g-${k}${cls ? ` ${cls}` : ''}" aria-hidden="true" focusable="false"><use href="#g-${k}"/></svg>`);
+}
+
+/** Status pill: glyph + plain label, tinted by status. */
+export function statusBadge(status: string, label: string, title?: string): SafeHtml {
+  return html`<span class="badge s-${status}" ${title ? raw(`title="${escapeAttr(title)}"`) : ''}>${glyph(status)}<span>${label}</span></span>`;
 }
 
 export function cellBadge(status: string, label: string, help?: string): SafeHtml {

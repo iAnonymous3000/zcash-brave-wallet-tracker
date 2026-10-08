@@ -73,28 +73,28 @@ function freshness(): void {
 }
 
 // ---------------------------------------------------------------------------
-// Home: build picker (platform × channel) driving the capability detail column
+// Home: platform + channel picker driving every [data-k] / [data-p] variant
 // ---------------------------------------------------------------------------
 
-const keyOf = (el: HTMLElement) => `${el.dataset.platform}/${el.dataset.channel}`;
-
 function capabilitySelector(): void {
-  const buttons = $$<HTMLButtonElement>('.bsel');
-  if (!buttons.length) return;
-  const keys = buttons.map(keyOf);
+  const pBtns = $$<HTMLButtonElement>('.psel');
+  const cBtns = $$<HTMLButtonElement>('.csel');
+  if (!pBtns.length || !cBtns.length) return;
+  const ps = pBtns.map((b) => b.dataset.platform ?? '');
+  const cs = cBtns.map((b) => b.dataset.channel ?? '');
   const params = new URLSearchParams(location.search);
-  const initial = `${params.get('platform') ?? store('zbt-platform') ?? 'desktop'}/${params.get('channel') ?? store('zbt-channel') ?? 'release'}`;
-  const head = $('#sel-head');
+  let p = params.get('platform') ?? store('zbt-platform') ?? 'desktop';
+  let c = params.get('channel') ?? store('zbt-channel') ?? 'release';
+  if (!ps.includes(p)) p = 'desktop';
+  if (!cs.includes(c)) c = 'release';
 
-  const select = (k: string, persist: boolean) => {
-    for (const b of buttons) b.setAttribute('aria-pressed', String(keyOf(b) === k));
-    for (const b of $$<HTMLButtonElement>('.mx-btn')) b.setAttribute('aria-pressed', String(keyOf(b) === k));
-    for (const el of $$('.dv, .bb')) el.hidden = el.dataset.k !== k;
-    for (const el of $$('.mx-ch, .mx-cell')) el.classList.toggle('is-sel', el.dataset.k === k);
-    const th = $(`.mx-ch[data-k="${k}"]`);
-    if (head && th) head.textContent = th.getAttribute('title') ?? '';
+  const apply = (persist: boolean) => {
+    const k = `${p}/${c}`;
+    for (const b of pBtns) b.setAttribute('aria-pressed', String(b.dataset.platform === p));
+    for (const b of cBtns) b.setAttribute('aria-pressed', String(b.dataset.channel === c));
+    for (const el of $$('.status-block [data-k]')) el.hidden = el.dataset.k !== k;
+    for (const el of $$('.status-block [data-p]')) el.hidden = el.dataset.p !== p;
     if (!persist) return;
-    const [p, c] = k.split('/');
     store('zbt-platform', p);
     store('zbt-channel', c);
     const url = new URL(location.href);
@@ -102,13 +102,143 @@ function capabilitySelector(): void {
     url.searchParams.set('channel', c);
     history.replaceState(null, '', url);
   };
-  for (const b of buttons) b.addEventListener('click', () => select(keyOf(b), true));
-  for (const b of $$<HTMLButtonElement>('.mx-btn')) b.addEventListener('click', () => select(keyOf(b), true));
-  select(keys.includes(initial) ? initial : 'desktop/release', false);
+  for (const b of pBtns) b.addEventListener('click', () => { p = b.dataset.platform ?? 'desktop'; apply(true); });
+  for (const b of cBtns) b.addEventListener('click', () => { c = b.dataset.channel ?? 'release'; apply(true); });
+  apply(false);
+}
+
+/** Releases page: platform filter. */
+function releaseFilter(): void {
+  const btns = $$<HTMLButtonElement>('.rfilter');
+  if (!btns.length) return;
+  const empty = $('#rel-empty');
+  const set = (p: string) => {
+    for (const b of btns) b.setAttribute('aria-pressed', String((b.dataset.platform ?? '') === p));
+    let shown = 0;
+    for (const v of $$('.rel-v')) {
+      v.hidden = Boolean(p) && v.dataset.platform !== p;
+      if (!v.hidden) shown += 1;
+    }
+    if (empty) empty.hidden = shown > 0;
+  };
+  for (const b of btns) b.addEventListener('click', () => set(b.dataset.platform ?? ''));
+}
+
+// ---------------------------------------------------------------------------
+// Site search (index built at build time, same origin; results rendered as text)
+// ---------------------------------------------------------------------------
+
+interface SearchEntry { k: string; t: string; s: string; u: string; x: string }
+let INDEX: SearchEntry[] | null = null;
+const KIND_ORDER: Record<string, number> = { Feature: 0, Page: 1, Work: 2, 'Release note': 3, Community: 4 };
+
+function search(): void {
+  const dlg = $<HTMLDialogElement>('#search-dlg');
+  const q = $<HTMLInputElement>('#sd-q');
+  const list = $<HTMLUListElement>('#sd-results');
+  if (!dlg || !q || !list || typeof dlg.showModal !== 'function') return;
+  let active = -1;
+
+  const load = async () => {
+    if (INDEX) return;
+    try {
+      const res = await fetch(`${document.body.dataset.base ?? '/'}assets/search.json`);
+      INDEX = res.ok ? ((await res.json()) as SearchEntry[]) : [];
+    } catch {
+      INDEX = [];
+    }
+  };
+  const render = () => {
+    const terms = tokens(q.value);
+    list.replaceChildren();
+    active = -1;
+    if (!INDEX) return;
+    if (!terms.length) return;
+    const hits = INDEX.filter((e) => terms.every((t) => e.x.includes(t)))
+      .map((e) => ({ e, score: (KIND_ORDER[e.k] ?? 9) * 10 + (terms.every((t) => e.t.toLowerCase().includes(t)) ? 0 : 5) }))
+      .sort((a, b) => a.score - b.score)
+      .slice(0, 40);
+    if (!hits.length) {
+      const li = document.createElement('li');
+      li.className = 'sd-none';
+      li.textContent = `Nothing matches “${q.value.trim()}”. Try an issue number or a shorter word.`;
+      list.append(li);
+      return;
+    }
+    for (const { e } of hits) {
+      // Only same-site paths and https links are ever used as targets.
+      const safe = e.u.startsWith('/') && !e.u.startsWith('//') ? e.u : /^https:\/\/[^\s"'<>]+$/i.test(e.u) ? e.u : null;
+      if (!safe) continue;
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = safe;
+      if (/^https:/.test(safe)) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer nofollow';
+      }
+      const k = document.createElement('span');
+      k.className = 'sd-k';
+      k.textContent = e.k;
+      const t = document.createElement('span');
+      t.className = 'sd-t';
+      t.textContent = e.t;
+      const sub = document.createElement('span');
+      sub.className = 'sd-s';
+      sub.textContent = e.s;
+      a.append(k, t, sub);
+      li.append(a);
+      list.append(li);
+    }
+  };
+  const move = (delta: number) => {
+    const links = $$<HTMLAnchorElement>('a', list);
+    if (!links.length) return;
+    active = (active + delta + links.length) % links.length;
+    links.forEach((l, i) => l.classList.toggle('is-active', i === active));
+    links[active].scrollIntoView({ block: 'nearest' });
+  };
+  const open = async () => {
+    if (!dlg.open) dlg.showModal();
+    q.focus();
+    q.select();
+    await load();
+    render();
+  };
+  for (const el of $$('[data-search-open]')) el.addEventListener('click', (e) => { e.preventDefault(); void open(); });
+  for (const el of $$('[data-search-close]')) el.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  q.addEventListener('input', render);
+  q.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Enter') {
+      const links = $$<HTMLAnchorElement>('a', list);
+      const target = links[active] ?? links[0];
+      if (target) { e.preventDefault(); target.click(); }
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); void open(); }
+  });
+  (window as unknown as { zbtOpenSearch: () => void }).zbtOpenSearch = () => void open();
+}
+
+/** Close the mobile menu after navigation, on Escape and on outside clicks. */
+function menu(): void {
+  const m = $<HTMLDetailsElement>('.menu');
+  if (!m) return;
+  document.addEventListener('click', (e) => { if (m.open && !m.contains(e.target as Node)) m.open = false; });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && m.open) { m.open = false; (m.querySelector('summary') as HTMLElement | null)?.focus(); } });
 }
 
 /** Open a <details> section when the URL points at it (e.g. #cap-ironwood). */
 function openHashTarget(): void {
+  // Old overview links (#cap-<feature>) now live on the feature pages.
+  const legacy = location.hash.match(/^#cap-([a-z0-9-]+)$/);
+  if (legacy && document.body.dataset.page === 'home') {
+    location.replace(`${document.body.dataset.base ?? '/'}features/${legacy[1]}/`);
+    return;
+  }
   const open = () => {
     const id = decodeURIComponent(location.hash.slice(1));
     const el = id ? document.getElementById(id) : null;
@@ -298,11 +428,10 @@ function keyboard(): void {
     const target = e.target as HTMLElement;
     const typing = target && (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
     if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      const search = $<HTMLInputElement>('input[type="search"]');
-      if (search) {
-        e.preventDefault();
-        search.focus();
-      }
+      e.preventDefault();
+      const filter = $<HTMLInputElement>('.filters input[type="search"]');
+      if (filter) filter.focus();
+      else (window as unknown as { zbtOpenSearch?: () => void }).zbtOpenSearch?.();
     }
     if (e.key === 'Escape' && target instanceof HTMLInputElement && target.type === 'search' && target.value) {
       target.value = '';
@@ -315,9 +444,12 @@ function init(): void {
   relTimes();
   freshness();
   capabilitySelector();
+  releaseFilter();
   openHashTarget();
   filters();
   newSinceLastVisit();
+  search();
+  menu();
   keyboard();
 }
 

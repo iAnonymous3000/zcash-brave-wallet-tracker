@@ -2,6 +2,7 @@ import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { ChangeEvent, CommunityTopic, Platform, TimelineEntry, WorkItem } from '../../lib/types.ts';
 import { CHANNEL_NAME, PLATFORM_NAME, chip, ext, ghLink, glyph, html, itemHref, raw, shortRef, stageBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
+import { fixFacts } from '../view.ts';
 import { eventCard } from './changes.ts';
 
 const KIND_LABEL: Record<string, string> = { bug: 'Bug', feature: 'Feature', proposal: 'Proposal', task: 'Task', issue: 'Issue', pr: 'Pull request' };
@@ -135,6 +136,8 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
   ${lead.kind === 'issue' && lead.state === 'open' ? html`<p class="muted">This issue is open on GitHub. Fixes sometimes land through pull requests that do not link the issue (for example a later refactor); this tracker follows only explicit links (closing references, “Resolves” lines, <code>brave_&lt;issue&gt;</code> branch names, uplifts and the issue timeline).</p>` : ''}
 </div>
 
+${factStrip(g, d)}
+
 <div class="facet-grid">
   <section class="facet" aria-labelledby="f-issue"><h2 id="f-issue">Issue state</h2>
     ${st.issueState ? html`<p class="big">${st.issueState.label}</p><p class="muted">${lead.closedAt ? html`Closed ${time(lead.closedAt, { withTime: true })}.` : 'Open.'} ${lead.issueType ? `GitHub type: ${lead.issueType}.` : ''}</p>` : html`<p class="muted">No tracked issue; this group is led by a pull request.</p>`}
@@ -165,11 +168,11 @@ ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2
   <h2 id="f-builds">Build presence</h2>
   <p class="muted">Whether a merged pull request in this group is an ancestor of the brave-core tag of each platform’s current build (from versions.brave.com). Code presence is not the same as a feature being exposed on that platform.</p>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Build presence table">
-  <table class="builds"><thead><tr><th scope="col">Platform</th>${channels.map((c) => html`<th scope="col">${CHANNEL_NAME[c]}</th>`)}</tr></thead><tbody>
+  <table class="builds stack"><thead><tr><th scope="col">Platform</th>${channels.map((c) => html`<th scope="col">${CHANNEL_NAME[c]}</th>`)}</tr></thead><tbody>
     ${platforms.map((p) => html`<tr><th scope="row">${PLATFORM_NAME[p]}</th>${channels.map((c) => {
       const b = st.builds.find((x) => x.platform === p && x.channel === c);
-      if (!b) return html`<td class="b-unknown"><span class="b-state">${glyph('not-verified')}No build</span><span class="b-basis">No tagged build (iOS App Store versions have no published build number).</span></td>`;
-      return html`<td class="${b.included === true ? 'b-yes' : b.included === false ? 'b-no' : 'b-unknown'}"><span class="b-state">${glyph(b.included === true ? 'available' : b.included === false ? 'off' : 'not-verified')}${b.included === true ? 'Included' : b.included === false ? 'Not included' : 'Unknown'}</span> <span class="mono">${b.version}</span><span class="b-basis">${b.basis}${b.via ? ` (${shortRef(b.via)})` : ''}</span></td>`;
+      if (!b) return html`<td class="b-unknown" data-label="${CHANNEL_NAME[c]}"><span class="b-state">${glyph('not-verified')}No build</span><span class="b-basis">No tagged build (iOS App Store versions have no published build number).</span></td>`;
+      return html`<td data-label="${CHANNEL_NAME[c]}" class="${b.included === true ? 'b-yes' : b.included === false ? 'b-no' : 'b-unknown'}"><span class="b-state">${glyph(b.included === true ? 'available' : b.included === false ? 'off' : 'not-verified')}${b.included === true ? 'Included' : b.included === false ? 'Not included' : 'Unknown'}</span> <span class="mono">${b.version}</span><span class="b-basis">${b.basis}${b.via ? ` (${shortRef(b.via)})` : ''}</span></td>`;
     })}</tr>`)}
   </tbody></table>
   </div>
@@ -187,6 +190,22 @@ ${reports.length ? html`<section class="block" aria-labelledby="f-reports"><h2 i
 
 ${related.length ? html`<section class="block" aria-labelledby="f-events"><h2 id="f-events">Recorded changes</h2><ol class="feed">${related.map((e) => eventCard(e, d))}</ol></section>` : ''}
 `;
+}
+
+function factStrip(g: SiteGroup, d: SiteData): SafeHtml {
+  const st = g.status;
+  const f = fixFacts(g);
+  const known = st.builds.filter((b) => b.included !== null);
+  const yes = st.builds.filter((b) => b.included === true);
+  const notePlatforms = [...new Set(st.releaseNotes.map((n) => `${PLATFORM_NAME[n.platform]} ${n.version}`))];
+  const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
+  return html`<ul class="factstrip" aria-label="Key facts, each from its own source">
+    <li><span class="fs-k">Issue</span><span class="fs-v">${st.issueState ? st.issueState.label : 'None (led by a pull request)'}</span></li>
+    <li><span class="fs-k">Linked fix</span><span class="fs-v">${f.fix === 'merged' ? 'Merged' : f.fix === 'open' || f.fix === 'draft' ? 'In review' : f.fix === 'closed-unmerged' ? 'Closed without merging' : 'None linked'}</span></li>
+    <li><span class="fs-k">Code in builds</span><span class="fs-v">${builds}</span></li>
+    <li><span class="fs-k">Release notes</span><span class="fs-v">${notePlatforms.length ? notePlatforms.join(', ') : 'Not listed'}</span></li>
+    <li><span class="fs-k">QA</span><span class="fs-v">${st.qa.passed.length ? st.qa.passed.map((q) => q.label.replace('QA Pass-', 'Passed ')).join(', ') : st.qa.required === false ? 'Not QA-tested' : 'No pass recorded'}</span></li>
+  </ul>`;
 }
 
 function linkBasis(p: { closingRefs: string[]; resolvesRefs: string[]; branchRefs?: string[]; headRef: string | null }, issue: string): string {

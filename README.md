@@ -11,13 +11,17 @@ and what changed — with a source link behind every claim.
 
 | Question | Where |
 | --- | --- |
-| What Zcash functionality can I use on my platform and channel? | Overview (selector + capability matrix) |
-| What features, bugs, fixes and proposals are in progress? | Tracked work |
-| Which issues and pull requests belong together? | Item detail (issue → PRs → uplifts → builds → release notes) |
-| What changed since the last update, and why does it matter? | Changes |
+| What works on my platform, what is ahead in Beta/Nightly, what are the known issues? | Overview (platform + channel picker, feature cards, known issues, readiness) |
+| What is the exact status of one feature on every build, and what backs it? | Features → feature page (status per build, release notes, help articles, open issues, all evidence) |
+| What did each Brave release change for Zcash? | Releases (release-note lines by platform and version; current version of every channel) |
+| What features, bugs, fixes and proposals are in progress? | Work |
+| Which issues and pull requests belong together? | Work item page (key facts, issue → PRs → uplifts → builds → release notes) |
+| What changed since the last update, and why does it matter? | Activity (with “new since your last visit” markers) |
 | Which upstream changes could affect Brave, and has Brave adopted them? | Upstream |
-| What do users report? | Community reports (labeled as reported behavior) |
-| How fresh is the data, what failed, what can't be seen? | Sources & freshness |
+| What do users report? | Community (labeled as reported behavior) |
+| How fresh is the data, what failed, what can't be seen? | Sources |
+
+Search (`/` or ⌘K/Ctrl+K) covers features, work items, release notes and community threads from an index built with the site.
 
 ## How it works
 

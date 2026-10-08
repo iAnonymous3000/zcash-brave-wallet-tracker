@@ -7,7 +7,7 @@ export interface PageMeta {
   title: string;
   description: string;
   path: string; // e.g. "work/"
-  active: 'home' | 'work' | 'changes' | 'upstream' | 'reports' | 'sources' | null;
+  active: 'home' | 'features' | 'releases' | 'work' | 'changes' | 'upstream' | 'reports' | 'sources' | null;
 }
 
 export interface Freshness {
@@ -20,11 +20,13 @@ export interface Freshness {
 
 const NAV: { id: PageMeta['active']; label: string; path: string }[] = [
   { id: 'home', label: 'Overview', path: '' },
-  { id: 'work', label: 'Tracked work', path: 'work/' },
-  { id: 'changes', label: 'Changes', path: 'changes/' },
+  { id: 'features', label: 'Features', path: 'features/' },
+  { id: 'releases', label: 'Releases', path: 'releases/' },
+  { id: 'work', label: 'Work', path: 'work/' },
+  { id: 'changes', label: 'Activity', path: 'changes/' },
   { id: 'upstream', label: 'Upstream', path: 'upstream/' },
-  { id: 'reports', label: 'Community reports', path: 'reports/' },
-  { id: 'sources', label: 'Sources & freshness', path: 'sources/' },
+  { id: 'reports', label: 'Community', path: 'reports/' },
+  { id: 'sources', label: 'Sources', path: 'sources/' },
 ];
 
 const CSP = [
@@ -54,7 +56,7 @@ export function page(meta: PageMeta, fresh: Freshness, body: SafeHtml): string {
 <meta name="theme-color" content="#0f1116">
 <link rel="icon" href="${u('assets/icon.svg')}" type="image/svg+xml">
 <link rel="preload" href="${u('assets/fonts/sans-400.woff2')}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="${u('assets/fonts/sans-500.woff2')}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${u('assets/fonts/sans-600.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${u('assets/styles.css')}">
 <link rel="alternate" type="application/json" href="${u('data/events.json')}" title="Change history (JSON)">
 <script src="${u('assets/app.js')}" defer></script>
@@ -66,23 +68,31 @@ ${raw(GLYPH_SPRITE)}
   <div class="wrap top-row">
     <a class="brand" href="${u('')}" aria-label="${SITE.title}, overview">
       <span class="brand-mark" aria-hidden="true">${raw(MARK)}</span>
-      <span class="brand-text"><span class="brand-name">Zcash × Brave Wallet</span><span class="brand-sub">Independent community tracker</span></span>
+      <span class="brand-text"><span class="brand-name">Zcash × Brave Wallet</span><span class="brand-sub">Independent tracker</span></span>
     </a>
-    <nav class="nav" aria-label="Sections">
-      <ul>
-        ${NAV.map((n) => html`<li><a href="${u(n.path)}" ${n.id === meta.active ? raw('aria-current="page"') : ''}>${n.label}</a></li>`)}
-      </ul>
-    </nav>
-    <a class="fresh" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}">
-      <span class="fresh-dot" aria-hidden="true"></span>
-      <span class="fresh-text">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}${failing.length ? html` · ${failing.length} source${failing.length > 1 ? 's' : ''} failing` : ''}</span>
-    </a>
+    <nav class="nav-wide" aria-label="Sections">${navList(meta)}</nav>
+    <div class="top-actions">
+      <a class="search-btn" href="${u('work/')}" data-search-open aria-label="Search features, work, releases and reports">${raw(SEARCH_ICON)}<span class="search-btn-text">Search</span><kbd>/</kbd></a>
+      <a class="fresh" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}">
+        <span class="fresh-dot" aria-hidden="true"></span>
+        <span class="fresh-text">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}${failing.length ? html` · ${failing.length} source${failing.length > 1 ? 's' : ''} failing` : ''}</span>
+      </a>
+      <details class="menu">
+        <summary aria-label="Menu">${raw(MENU_ICON)}<span>Menu</span></summary>
+        <nav class="menu-panel" aria-label="Sections">${navList(meta)}</nav>
+      </details>
+    </div>
   </div>
   ${fresh.mode === 'fixture' ? html`<div class="wrap"><div class="banner banner-warn" role="alert"><strong>Fixture data.</strong> This build uses isolated test fixtures and must not be published.</div></div>` : ''}
   <div class="wrap stale-banner" role="status" hidden><div class="banner banner-warn">
     <strong>Data may be stale.</strong> <span class="stale-text"></span> <a href="${u('sources/')}">Check source status</a>.
   </div></div>
 </header>
+<dialog class="search-dlg" id="search-dlg" aria-label="Search the tracker">
+  <div class="sd-head">${raw(SEARCH_ICON)}<input id="sd-q" type="text" inputmode="search" placeholder="Search features, issues, PRs, release notes, reports" autocomplete="off" spellcheck="false" aria-label="Search" aria-controls="sd-results"><button type="button" class="sd-close" data-search-close>Esc</button></div>
+  <ul id="sd-results" class="sd-results"></ul>
+  <p class="sd-hint">Type to search. Use ↑ ↓ and Enter to open a result.</p>
+</dialog>
 <main id="main" class="wrap">
 ${body}
 </main>
@@ -101,6 +111,13 @@ ${body}
 `;
   return doc.value;
 }
+
+function navList(meta: PageMeta): SafeHtml {
+  return html`<ul>${NAV.map((n) => html`<li><a href="${u(n.path)}" ${n.id === meta.active ? raw('aria-current="page"') : ''}>${n.label}</a></li>`)}</ul>`;
+}
+
+const SEARCH_ICON = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const MENU_ICON = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 
 // Small mark: a Z in a rounded square. Colours come from the stylesheet.
 const MARK = `<svg viewBox="0 0 28 28" width="28" height="28" focusable="false"><rect class="mk-bg" width="28" height="28" rx="7"/><path class="mk-z" d="M9 9.5h10l-10 9h10" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;

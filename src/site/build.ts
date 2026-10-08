@@ -7,10 +7,13 @@ import { build as esbuild } from 'esbuild';
 import { SITE } from '../../config/tracker.ts';
 import type { SiteData } from '../derive/index.ts';
 import { dataPath, readJson, ROOT } from '../lib/store.ts';
-import type { ChangeEvent, RunRecord, SourceStatus, WorkItem } from '../lib/types.ts';
-import { setBase, slug } from './components.ts';
+import type { ChangeEvent, EvidenceRecord, RunRecord, SourceStatus, WorkItem } from '../lib/types.ts';
+import { featureHref, itemHref, setBase, slug, u } from './components.ts';
 import { page, type Freshness } from './layout.ts';
 import { homePage } from './pages/home.ts';
+import { featurePage, featuresPage } from './pages/features.ts';
+import { releasesPage } from './pages/releases.ts';
+import { groupReleaseNotes, searchIndex } from './view.ts';
 import { changesPage } from './pages/changes.ts';
 import { detailPage, workPage } from './pages/work.ts';
 import { notFoundPage, reportsPage, sourcesPage, upstreamPage } from './pages/other.ts';
@@ -26,6 +29,8 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   const status = readJson<{ lastRun?: RunRecord; rateLimit?: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>; sources: Record<string, SourceStatus> }>(dataPath('status.json'), { sources: {} });
   const runs = readJson<RunRecord[]>(dataPath('history', 'runs.json'), []);
   const full = readJson<{ data: { items: Record<string, WorkItem> } } | null>(dataPath('sources', 'github-items.json'), null)?.data.items ?? {};
+  const changelogs = readJson<{ data: { evidence: EvidenceRecord[]; files: { file: string; platform: string; commitSha: string; commitDate?: string | null }[] } } | null>(dataPath('sources', 'brave-changelogs.json'), null)?.data;
+  const notes = groupReleaseNotes(changelogs?.evidence ?? []);
 
   if (process.env.GITHUB_ACTIONS === 'true' && site.mode !== 'live') throw new Error('Refusing to publish fixture data from CI');
 
@@ -46,7 +51,12 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
     pages += 1;
   };
 
-  write('index.html', page({ title: SITE.title, description: 'What Zcash functionality works in Brave Wallet on each platform and release channel, what is in progress, and what changed — with source links for every claim.', path: '', active: 'home' }, fresh, homePage(site, events)));
+  write('index.html', page({ title: SITE.title, description: 'What Zcash features work in Brave Wallet on each platform, what is coming, known issues and what changed in each release, with the evidence for every claim.', path: '', active: 'home' }, fresh, homePage(site, events, notes)));
+  write('features/index.html', page({ title: 'Features', description: 'Status of every Zcash feature in Brave Wallet on Desktop, Android and iOS, Release, Beta and Nightly.', path: 'features/', active: 'features' }, fresh, featuresPage(site)));
+  for (const row of site.capabilities) {
+    write(`features/${row.id}/index.html`, page({ title: row.name, description: `${row.description} Status on every platform and channel, release notes, help articles, open issues and evidence.`, path: `features/${row.id}/`, active: 'features' }, fresh, featurePage(row, site)));
+  }
+  write('releases/index.html', page({ title: 'Releases', description: 'Zcash-related lines in Brave release notes by platform and version, and the current version of each channel.', path: 'releases/', active: 'releases' }, fresh, releasesPage(site, notes, changelogs?.files ?? [])));
   write('work/index.html', page({ title: 'Tracked work', description: 'Searchable list of Zcash issues and pull requests in Brave, grouped with their fixes, uplifts and duplicates.', path: 'work/', active: 'work' }, fresh, workPage(site)));
   const seen = new Set<string>();
   for (const g of site.groups) {
@@ -67,12 +77,11 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   copyFileSync(join(ROOT, 'src/site/styles.css'), join(assets, 'styles.css'));
   copyFileSync(join(ROOT, 'src/site/icon.svg'), join(assets, 'icon.svg'));
   const fonts: [string, string][] = [
-    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2', 'sans-400.woff2'],
-    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff2', 'sans-400-italic.woff2'],
-    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2', 'sans-500.woff2'],
-    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2', 'sans-600.woff2'],
-    ['@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2', 'mono-400.woff2'],
-    ['@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2', 'mono-500.woff2'],
+    ['@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2', 'sans-400.woff2'],
+    ['@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff2', 'sans-500.woff2'],
+    ['@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2', 'sans-600.woff2'],
+    ['@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2', 'mono-400.woff2'],
+    ['@fontsource/geist-mono/files/geist-mono-latin-500-normal.woff2', 'mono-500.woff2'],
   ];
   for (const [src, dest] of fonts) copyFileSync(join(ROOT, 'node_modules', src), join(assets, 'fonts', dest));
   await esbuild({
@@ -92,6 +101,7 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   writeFileSync(join(outDir, 'data', 'events.json'), JSON.stringify(events));
   writeFileSync(join(outDir, 'data', 'status.json'), JSON.stringify({ generatedAt: site.generatedAt, lastRun: status.lastRun ?? null, sources: status.sources, rateLimit: status.rateLimit ?? {} }));
   writeFileSync(join(outDir, 'data', 'runs.json'), JSON.stringify(runs.slice(0, 100)));
+  writeFileSync(join(assets, 'search.json'), JSON.stringify(searchIndex(site, notes, { feature: featureHref, work: itemHref, page: (p) => u(p) })));
   writeFileSync(join(outDir, '.nojekyll'), '');
   writeFileSync(join(outDir, 'robots.txt'), 'User-agent: *\nAllow: /\n');
   return { pages, outDir };

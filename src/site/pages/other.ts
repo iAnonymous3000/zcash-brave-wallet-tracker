@@ -55,8 +55,8 @@ ${readinessSection(d)}
 <section class="block" aria-labelledby="zip-h">
   <h2 id="zip-h">Protocol specifications (ZIPs)</h2>
   <div class="table-scroll" tabindex="0" role="region" aria-label="ZIPs, scrollable">
-  <table class="zips"><thead><tr><th scope="col">ZIP</th><th scope="col">Title</th><th scope="col">Status</th><th scope="col">Last change</th></tr></thead><tbody>
-  ${zips.map((z) => html`<tr><th scope="row">${ext(z.url, `ZIP ${Number(z.num)}`)}</th><td>${z.title ?? '?'}</td><td>${z.status ?? '?'}</td><td>${z.lastCommitUrl ? ext(z.lastCommitUrl, z.lastCommitMessage ?? 'commit') : '—'} <span class="muted">${time(z.lastCommitAt)}</span></td></tr>`)}
+  <table class="zips stack"><thead><tr><th scope="col">ZIP</th><th scope="col">Title</th><th scope="col">Status</th><th scope="col">Last change</th></tr></thead><tbody>
+  ${zips.map((z) => html`<tr><th scope="row">${ext(z.url, `ZIP ${Number(z.num)}`)}</th><td data-label="Title">${z.title ?? '?'}</td><td data-label="Status">${z.status ?? '?'}</td><td data-label="Last change">${z.lastCommitUrl ? ext(z.lastCommitUrl, z.lastCommitMessage ?? 'commit') : '—'} <span class="muted">${time(z.lastCommitAt)}</span></td></tr>`)}
   </tbody></table></div>
 </section>
 
@@ -151,14 +151,14 @@ export function sourcesPage(d: SiteData, runs: RunRecord[], rate: Record<string,
 <section class="block" aria-labelledby="src-h">
   <h2 id="src-h">Monitored sources</h2>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Sources, scrollable">
-  <table class="sources"><thead><tr><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Last success</th><th scope="col">Last attempt</th><th scope="col">Items</th><th scope="col">Notes</th></tr></thead><tbody>
+  <table class="sources stack"><thead><tr><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Last success</th><th scope="col">Last attempt</th><th scope="col">Items</th><th scope="col">Notes</th></tr></thead><tbody>
   ${d.sources.map((s) => html`<tr class="src" data-last-success="${s.lastSuccessAt ?? ''}" data-outcome="${s.lastOutcome ?? 'never'}">
     <th scope="row">${ext(s.url, s.name)}</th>
-    <td><span class="src-state src-${s.lastOutcome ?? 'never'}">${s.lastOutcome === 'ok' ? 'OK' : s.lastOutcome === 'partial' ? 'Partial' : s.lastOutcome === 'failed' ? 'Failed' : s.lastOutcome === 'skipped' ? 'Skipped' : 'Never run'}</span><span class="src-age"></span></td>
-    <td>${time(s.lastSuccessAt, { rel: true, withTime: true })}</td>
-    <td>${time(s.lastAttemptAt, { rel: true, withTime: true })}</td>
-    <td class="mono">${s.itemCount ?? '—'}</td>
-    <td>${s.lastError ? html`<p class="err">${s.lastError}${s.consecutiveFailures > 1 ? ` (${s.consecutiveFailures} consecutive failures)` : ''}</p>` : ''}${s.limitations.length ? html`<details><summary>${s.limitations.length} limitation${s.limitations.length > 1 ? 's' : ''}</summary><ul>${s.limitations.map((l) => html`<li>${l}</li>`)}</ul></details>` : ''}</td>
+    <td data-label="Status"><span class="src-state src-${s.lastOutcome ?? 'never'}">${s.lastOutcome === 'ok' ? 'OK' : s.lastOutcome === 'partial' ? 'Partial' : s.lastOutcome === 'failed' ? 'Failed' : s.lastOutcome === 'skipped' ? 'Skipped' : 'Never run'}</span><span class="src-age"></span></td>
+    <td data-label="Last success">${time(s.lastSuccessAt, { rel: true, withTime: true })}</td>
+    <td data-label="Last attempt">${time(s.lastAttemptAt, { rel: true, withTime: true })}</td>
+    <td data-label="Items" class="mono">${s.itemCount ?? '—'}</td>
+    <td data-label="Notes">${s.lastError ? html`<p class="err">${s.lastError}${s.consecutiveFailures > 1 ? ` (${s.consecutiveFailures} consecutive failures)` : ''}</p>` : ''}${s.limitations.length ? html`<details><summary>${s.limitations.length} limitation${s.limitations.length > 1 ? 's' : ''}</summary><ul>${s.limitations.map((l) => html`<li>${l}</li>`)}</ul></details>` : ''}</td>
   </tr>`)}
   </tbody></table></div>
   <p class="muted">A source counts as stale when its last success is more than ${Math.round(Number(d.site.refreshEveryMinutes) * 3 / 60)} hours old (refreshes run about every ${d.site.refreshEveryMinutes / 60} hours). Ages above are computed in your browser from the stored timestamps.</p>
@@ -167,8 +167,8 @@ export function sourcesPage(d: SiteData, runs: RunRecord[], rate: Record<string,
 <section class="block" aria-labelledby="runs-h">
   <h2 id="runs-h">Recent refresh runs</h2>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Refresh runs, scrollable">
-  <table class="runs"><thead><tr><th scope="col">Started</th><th scope="col">Trigger</th><th scope="col">Outcome</th><th scope="col">Requests</th><th scope="col">New events</th><th scope="col">Failed sources</th></tr></thead><tbody>
-  ${runs.slice(0, 25).map((r) => html`<tr><td>${time(r.startedAt, { withTime: true })}</td><td>${r.trigger}</td><td>${r.outcome}</td><td class="mono">${r.requests}</td><td class="mono">${r.events}</td><td>${Object.entries(r.sources).filter(([, o]) => o === 'failed').map(([k]) => k).join(', ') || '—'}</td></tr>`)}
+  <table class="runs stack"><thead><tr><th scope="col">Started</th><th scope="col">Trigger</th><th scope="col">Outcome</th><th scope="col">Requests</th><th scope="col">New events</th><th scope="col">Failed sources</th></tr></thead><tbody>
+  ${runs.slice(0, 25).map((r) => html`<tr><td data-label="Started">${time(r.startedAt, { withTime: true })}</td><td data-label="Trigger">${r.trigger}</td><td data-label="Outcome">${r.outcome}</td><td data-label="Requests" class="mono">${r.requests}</td><td data-label="New events" class="mono">${r.events}</td><td data-label="Failed sources">${Object.entries(r.sources).filter(([, o]) => o === 'failed').map(([k]) => k).join(', ') || '—'}</td></tr>`)}
   </tbody></table></div>
   ${Object.keys(rate).length ? html`<p class="muted">GitHub API budget at the end of the last run: ${Object.entries(rate).map(([k, v]) => `${k} ${v.remaining ?? '?'}/${v.limit ?? '?'}`).join(' · ')}.</p>` : ''}
 </section>

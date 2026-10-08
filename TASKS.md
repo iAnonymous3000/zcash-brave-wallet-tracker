@@ -27,6 +27,7 @@ Concise working checklist. `[x]` done · `[~]` in progress · `[ ]` open · `[!]
 - [x] Static generator (escaped templates), CSP, self-hosted fonts, base path, 404
 - [x] Overview (build picker + capability table with per-build detail + latest changes + readiness), Tracked work, item details, Changes, Upstream, Community reports, Sources & freshness
 - [x] Redesign for builders (dark only, IBM Plex Sans/Mono, glyph+label statuses, build picker, "new since your last visit" markers that never show on stale data); verified at 1280 and 375 px, stale fixture, 0 broken links
+- [x] One-stop redesign for ZEC users, Brave Wallet devs and PMs: plain-language statuses (in-build never reads as available), feature pages, Releases page, known issues with separate issue/fix facts, site-wide search, menu below 1180 px; no page-level sideways scroll at 360–1440 px (98 page/width checks), stale fixture, 0 broken links
 - [x] Browser verification: search/filters (URL-synced), "/" + Esc keyboard, empty state, detail pages, mobile 375px (no page overflow on 9 page types), light/dark contrast, headings/labels/IDs
 - [x] Server-side signals: gate3 swap routing (Zcash disabled), brave-variations studies (none apply to Chromium 155 builds); NU7 readiness (Brave fork lacks final branch ID)
 - [x] Capability prerequisites (no cell more available than its prerequisite)
