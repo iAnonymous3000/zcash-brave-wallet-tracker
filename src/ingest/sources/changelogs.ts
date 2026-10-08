@@ -36,6 +36,7 @@ export const changelogs: Collector<ChangelogsData> = {
     const tracked = new Set(Object.keys(ctx.get<GithubItemsData>('github-items')?.data.items ?? {}));
     const files: ChangelogsData['files'] = [];
     const entries: ChangelogEntry[] = [];
+    const presentUpstream = new Set<string>();
     const latestStable: ChannelVersion[] = [];
     for (const f of CHANGELOG_FILES) {
       const { data: commits } = await ctx.gh.rest<any[]>(`/repos/brave/brave-browser/commits?path=${encodeURIComponent(f.file)}&per_page=1`);
@@ -59,9 +60,12 @@ export const changelogs: Collector<ChangelogsData> = {
           url: `https://github.com/brave/brave-browser/blob/${sha}/${f.file}`,
         });
       }
-      for (const e of parsed) if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
+      for (const e of parsed) {
+        presentUpstream.add(evidenceId(e));
+        if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
+      }
     }
-    const evidence = mergeEvidence(prev?.evidence ?? [], entries, ctx.now);
+    const evidence = mergeEvidence(prev?.evidence ?? [], entries, ctx.now, presentUpstream);
     return { data: { files, entries, latestStable, evidence }, itemCount: entries.length };
   },
 };
@@ -71,7 +75,7 @@ export function evidenceId(e: { file: string; version: string; text: string }): 
 }
 
 /** Append-only merge: new lines are added, unchanged lines refresh lastSeenAt, vanished lines are kept and marked gone. */
-export function mergeEvidence(prev: EvidenceRecord[], entries: ChangelogEntry[], now: string): EvidenceRecord[] {
+export function mergeEvidence(prev: EvidenceRecord[], entries: ChangelogEntry[], now: string, presentUpstream?: Set<string>): EvidenceRecord[] {
   const byId = new Map(prev.map((r) => [r.id, { ...r }]));
   const seen = new Set<string>();
   for (const e of entries) {
@@ -85,6 +89,14 @@ export function mergeEvidence(prev: EvidenceRecord[], entries: ChangelogEntry[],
       byId.set(id, { id, kind: 'changelog', source: e.file, platform: e.platform, version: e.version, text: e.text, permalink: e.permalink, firstSeenAt: now, lastSeenAt: now, goneSince: null });
     }
   }
-  for (const r of byId.values()) if (!seen.has(r.id) && r.kind === 'changelog' && !r.goneSince) r.goneSince = now;
+  for (const r of byId.values()) {
+    if (r.kind !== 'changelog') continue;
+    // "Gone" means the line no longer exists anywhere in the upstream file, not merely that it is no longer tracked.
+    const stillUpstream = presentUpstream ? presentUpstream.has(r.id) : seen.has(r.id);
+    if (stillUpstream) {
+      r.goneSince = null;
+      if (presentUpstream?.has(r.id)) r.lastSeenAt = now;
+    } else if (!r.goneSince) r.goneSince = now;
+  }
   return [...byId.values()].sort((a, b) => a.firstSeenAt.localeCompare(b.firstSeenAt) || a.id.localeCompare(b.id));
 }

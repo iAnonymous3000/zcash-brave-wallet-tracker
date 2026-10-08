@@ -96,8 +96,8 @@ ul.plain li { margin: 0.25em 0; }
   .nav a { white-space: nowrap; }
   .nav a.fresh { margin-left: 0; }
 }
-.fresh.is-stale .fresh-dot { background: var(--lion); box-shadow: 0 0 0 3px var(--lion-wash); }
 .fresh.has-failing .fresh-dot { background: var(--optin); box-shadow: 0 0 0 3px var(--optin-wash); }
+.fresh.is-stale .fresh-dot { background: var(--lion); box-shadow: 0 0 0 3px var(--lion-wash); }
 .banner { padding: 10px 14px; border-radius: var(--radius); margin: 8px auto; }
 .banner-warn { background: var(--lion-wash); border-left: 5px solid var(--lion); }
 .banner-info { background: var(--paper-2); border-left: 5px solid var(--gold); }

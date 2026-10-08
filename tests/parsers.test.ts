@@ -153,3 +153,21 @@ test('source checks look in every candidate file (code moves between files acros
   const none = await runSourceCheck({ http }, 'v1.97.56', { ...sc, files: ['does/not/exist.cc'] });
   assert.equal(none.present, false, 'absent everywhere -> not present');
 });
+
+test('release evidence is append-only; "gone" only when the line left the upstream file', async () => {
+  const { mergeEvidence, evidenceId } = await import('../src/ingest/sources/changelogs.ts');
+  const e = (text: string) => ({ platform: 'desktop' as const, version: '1.97.56', section: null, text, issueRefs: [], line: 1, file: 'CHANGELOG_DESKTOP.md', commitSha: 's', permalink: 'https://example.invalid', zcashRelated: true });
+  const a = e('Enabled Zcash Ironwood support by default.');
+  const b = e('Updated wallet to reject negative Zcash "Send" amounts before review.');
+  const first = mergeEvidence([], [a, b], 't1', new Set([evidenceId(a), evidenceId(b)]));
+  assert.equal(first.length, 2);
+  // b is no longer tracked but still upstream: not gone.
+  const second = mergeEvidence(first, [a], 't2', new Set([evidenceId(a), evidenceId(b)]));
+  assert.equal(second.find((r) => r.id === evidenceId(b))!.goneSince, null);
+  // b edited upstream: old record kept and marked gone, new text recorded separately.
+  const b2 = e('Updated wallet to reject negative Zcash Send amounts.');
+  const third = mergeEvidence(second, [a, b2], 't3', new Set([evidenceId(a), evidenceId(b2)]));
+  assert.equal(third.length, 3, 'evidence is never deleted');
+  assert.equal(third.find((r) => r.id === evidenceId(b))!.goneSince, 't3');
+  assert.equal(third.find((r) => r.id === evidenceId(b))!.firstSeenAt, 't1');
+});
