@@ -26,15 +26,18 @@ Concise working checklist. `[x]` done · `[~]` in progress · `[ ]` open · `[!]
 ## 3. Site
 - [x] Static generator (escaped templates), CSP, self-hosted fonts, base path, 404
 - [x] Overview (selector + crate label + matrix), Tracked work, item details, Changes, Upstream, Community reports, Sources & freshness
-- [~] Visual/browser verification: search, filters, keyboard, mobile, empty/error states
+- [x] Browser verification: search/filters (URL-synced), "/" + Esc keyboard, empty state, detail pages, mobile 375px (no page overflow on 9 page types), light/dark contrast, headings/labels/IDs
+- [x] Server-side signals: gate3 swap routing (Zcash disabled), brave-variations studies (none apply to Chromium 155 builds); NU7 readiness (Brave fork lacks final branch ID)
+- [x] Capability prerequisites (no cell more available than its prerequisite)
 
 ## 4. Tests & verification
-- [x] Unit tests (33): parsers, HTTP failures, relevance/privacy, relations/status, capabilities, events/history, orchestrator outage/recovery
-- [ ] Cross-check representative displayed claims against primary sources (adversarial workflow)
-- [ ] Fault-injection run (isolated, local) showing partial outage + recovery in the UI
+- [x] Unit tests (39): parsers, HTTP failures, relevance/privacy, relations/status, capabilities (+prerequisites), events/history (+rules version, retractions), orchestrator outage/recovery, source checks, evidence
+- [~] Cross-check 158 displayed claims against primary sources (adversarial workflow + recheck)
+- [x] Fault-injection run (isolated, local): community 503 + crates.io timeout → last-good data kept, "2 sources failing", Failed rows with errors; stale fixture → browser-computed stale banner
+- [x] History integrity: found tracker-caused diff events in production; added rules-version guard + auditable retractions
 
 ## 5. Deploy & prove operation
-- [ ] Push code, enable Pages (Actions), first dispatched refresh with GITHUB_TOKEN
+- [x] Push code, enable Pages (Actions), dispatched refreshes with GITHUB_TOKEN succeed (all sources OK; ~260 requests steady state)
 - [ ] Observe a `schedule`-triggered run succeed; confirm a real source change appears live
-- [ ] Direct route loads unauthenticated; secret scan of repo + output
+- [x] Direct routes load unauthenticated (200; unknown path → 404 page); secret scan in workflow (clean)
 - [ ] Handoff

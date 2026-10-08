@@ -42,9 +42,10 @@ GitHub Actions (cron every 2 h, built-in GITHUB_TOKEN)
 | `build-inclusion` | brave-core tags | is a merged PR's commit an ancestor of each current build's tag (compare API; monotonic bounds, cached) |
 | `brave-flags` | `components/brave_wallet/common/features.cc` + source checks at each build's tag | compile-time defaults per platform, evaluated through `#if BUILDFLAG(...)` guards |
 | `brave-deps` | `third_party/rust/chromium_crates_io/Cargo.lock`, root `DEPS`, Zcash `Cargo.toml` | resolved crate versions and the librustzcash fork pin at each tag |
-| `upstream` | crates.io, zcash/lightwalletd, zcash/lightwallet-protocol, zingolabs/zaino, zcash/zips | releases, fork lag, ZIP status |
+| `upstream` | crates.io, zcash/lightwalletd, zcash/lightwallet-protocol, zingolabs/zaino, zcash/zips, zcash/librustzcash | releases, fork lag, ZIP status, next network upgrade (NU7) readiness of Brave's pinned fork |
 | `advisories` | GitHub Advisory Database, repository advisories, RustSec | compared with Brave's resolved versions |
 | `watch` | zakura-core/zakura, zakura-core/wallet-libraries | watch topics; Brave adoption checked in its own lockfile/DEPS |
+| `brave-services` | brave/gate3, brave/brave-variations | server-side switches: Zcash swap/bridge routing (`SWAP_DISABLED_CHAINS`) and field-trial studies that set Zcash features, with whether each applies to current builds |
 | `community` | community.brave.app (Discourse JSON) | reported behavior, cross-linked to GitHub when the thread links an issue |
 | `docs` | support.brave.app (Zendesk JSON API), brave.com pages | Zcash statements with content hashes |
 
@@ -64,7 +65,12 @@ GitHub Actions (cron every 2 h, built-in GITHUB_TOKEN)
 5. **Facts kept separate.** Issue state, PR state, build presence, release notes, QA labels and milestones
    are stored and shown independently. Beta/Nightly evidence is build-level only; Stable claims need the
    platform's own release notes.
-6. **Static, self-contained site.** Fonts are self-hosted and the CSP is `default-src 'self'`: no third-party
+6. **Honest change history.** Events carry the source's own timestamp and a separate detection time, and are
+   marked *backfilled* or *observed*. Facts without a source timestamp (build inclusion, flag defaults, capability
+   cells) are found by diffing refreshes; a `DERIVE_RULES_VERSION` bump suppresses those diffs for one run so that
+   tracker changes are never reported as source changes. Events later found to be tracker-caused are withdrawn
+   through `config/retractions.ts` (auditable), not deleted silently. Release-note evidence is append-only.
+7. **Static, self-contained site.** Fonts are self-hosted and the CSP is `default-src 'self'`: no third-party
    requests, which matters for a privacy-focused audience. Fetched text is always escaped.
 
 ## Local development
@@ -105,6 +111,10 @@ To change cadence, edit the cron and `SITE.refreshEveryMinutes` in `config/track
 * Topics: `config/topics.ts` (ordered keyword rules)
 * Capability rows and their evidence: `config/capabilities.ts`
 * Upstream crates, servers, ZIPs, advisory repositories: `config/upstream.ts`
+* Withdrawn events (tracker defects): `config/retractions.ts`
+
+When you change derivation logic (capability rules, source checks, build-presence rules), bump
+`DERIVE_RULES_VERSION` in `src/derive/changes.ts`.
 
 ## Known gaps
 
