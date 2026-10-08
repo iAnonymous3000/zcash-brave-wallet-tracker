@@ -793,3 +793,16 @@ test('EXTRA-5: preview server stays inside its directory and mirrors GitHub Page
   assert.equal((await get('/elsewhere/')).status, 404);
   assert.equal(server!.exitCode, null);
 });
+
+test('UI-C4: "Off server-side" cells describe Brave’s public server-side code, not the deployed service', async () => {
+  const { statusExplain, comingNextNote } = await import('../src/site/view.ts');
+  const { featuresPage } = await import('../src/site/pages/features.ts');
+  const cell = { platform: 'android' as const, channel: 'release' as const, version: '1.96.61', status: 'service-off', since: null, summary: 'currently turned off server-side for Zcash, for every client.' };
+  for (const text of [statusExplain(cell, true), statusExplain(cell), comingNextNote([{ release: { status: 'service-off' }, ahead: { status: 'in-build' } }])]) {
+    assert.match(text, /public server-side code/);
+    assert.doesNotMatch(text, /server(-side)? setting turns/);
+  }
+  assert.match(statusExplain(cell), /deployed service could differ/);
+  const legend = featuresPage(site).value.match(/<li><span class="badge s-service-off"[\s\S]*?<\/li>/)![0];
+  assert.match(legend, /public server-side code switches it off for everyone; the deployed service could differ/);
+});

@@ -71,7 +71,7 @@ export function statusExplain(cell: CellLike, short = false): string {
       case 'off':
         return 'Off by default in this build.';
       case 'service-off':
-        return 'Turned off by a Brave server setting, for everyone.';
+        return 'Switched off in Brave’s public server-side code, for every client.';
       case 'absent':
         return 'Not in this build.';
       case 'not-planned':
@@ -92,7 +92,7 @@ export function statusExplain(cell: CellLike, short = false): string {
     case 'off':
       return `Switched off by default in ${p}${v}.`;
     case 'service-off':
-      return 'A Brave server-side setting turns this off for every platform and version.';
+      return 'Brave’s public server-side code switches this off for every platform and version. The deployed service could differ.';
     case 'absent':
       return `Not present in ${p}${v}.`;
     case 'not-planned':
@@ -209,7 +209,7 @@ export function comingNextNote(items: { release: Pick<CellLike, 'status'>; ahead
   if (flagged.length) parts.push(`${flagged.map(q).join(' or ')} in Release means the code is already in the Release build but switched off by default.`);
   if (rel.has('in-build')) parts.push(`${q('in-build')} means the code is on by default in Release, but no release note announces it.`);
   if (rel.has('absent')) parts.push(`${q('absent')} means the Release build does not contain it.`);
-  if (rel.has('service-off')) parts.push(`${q('service-off')} means a Brave server-side setting turns it off whatever the build.`);
+  if (rel.has('service-off')) parts.push(`${q('service-off')} means Brave’s public server-side code switches it off, whatever the build.`);
   if (rel.has('not-verified')) parts.push(`${q('not-verified')} means its presence in the Release build is unknown.`);
   parts.push('Brave does not publish dates, so none are given here.');
   return parts.join(' ');

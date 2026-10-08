@@ -12,7 +12,7 @@ const LEGEND_HELP: Record<string, string> = {
   available: 'Announced in that platform’s Stable release notes.',
   'in-build': 'The code is in that build and on by default, but no release note announces it (Release) or it is a pre-release build (Beta, Nightly).',
   'opt-in': 'Present but off by default; an option exists in brave://flags.',
-  'service-off': 'A Brave server-side setting turns it off for everyone.',
+  'service-off': 'Brave’s public server-side code switches it off for everyone; the deployed service could differ.',
   absent: 'Not present in that build.',
   'not-planned': 'Requested, then closed as not planned.',
 };
