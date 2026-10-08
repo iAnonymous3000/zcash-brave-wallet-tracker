@@ -53,6 +53,8 @@ export interface Cell {
   channel: Channel;
   version: string | null;
   status: CellStatus;
+  /** For "available": the first version with release-note evidence (adjusted to prerequisites). */
+  since?: string | null;
   summary: string;
   evidence: Evidence[];
 }
@@ -256,7 +258,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         if (platform === 'ios' && channel === 'release' && cv && !cv.tag) {
           ev.push({ kind: 'note', text: `iOS App Store version ${cv.version} is a marketing version; Brave does not publish its build number, so flag/code checks cannot be pinned for iOS Release.`, url: cv.url });
         }
-        cells.push({ platform, channel, version: v, status, summary, evidence: ev });
+        cells.push({ platform, channel, version: v, status, summary, evidence: ev, since: status === 'available' && firstNote ? firstNote.version : null });
       }
     }
     rows.push({ id: def.id, name: def.name, description: def.description, cells, notes });
@@ -280,6 +282,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         if (!req || !rc || !LIFTABLE.includes(rc.status) || rc.evidence.some((e) => e.contrary && (e.kind === 'flag' || e.kind === 'source'))) continue;
         rc.evidence.unshift({ kind: 'release-note', text: `Implied by “${row.name}”: ${note.text}`, url: note.url, version: note.version });
         rc.status = 'available';
+        rc.since = note.version ?? null;
         rc.summary = `Implied by ${PLATFORM_NAME[cell.platform]} release notes for “${row.name}” (${note.version}), which require it.`;
       }
     }
@@ -292,6 +295,12 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
       if (!req) continue;
       for (const cell of row.cells) {
         const rc = req.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel)!;
+        // A dependent cannot have been available earlier than its prerequisite.
+        if (cell.status === 'available' && rc.status === 'available' && cell.since && rc.since && compareVersions(rc.since, cell.since) > 0) {
+          cell.evidence.push({ kind: 'note', text: `Its earliest ${PLATFORM_NAME[cell.platform]} release note (${cell.since}) predates “${req.name}” becoming available there (${rc.since}).`, url: null });
+          cell.summary = `Since ${PLATFORM_NAME[cell.platform]} ${rc.since}, when “${req.name}” became available (an earlier ${cell.since} release note predates it).`;
+          cell.since = rc.since;
+        }
         if (RANK[rc.status] < RANK[cell.status] && rc.status !== 'not-planned') {
           cell.evidence.push({ kind: 'note', text: `Capped by prerequisite “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here. Uncapped: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null });
           cell.status = rc.status;

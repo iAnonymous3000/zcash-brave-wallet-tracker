@@ -194,3 +194,22 @@ test('history merge keeps first detection, marks backfill vs observed, and is bo
   const old = mergeHistory([], [mk('old', '2024-01-01T00:00:00Z')], '2026-10-08T00:00:00Z', null);
   assert.equal(old.events.length, 0, 'events older than the retention window are dropped');
 });
+
+test('a dependent is never "available since" a version earlier than its prerequisite', () => {
+  const rows = buildCapabilities({
+    defs: [
+      { id: 'accounts', name: 'ZEC accounts', description: 'd', releaseNoteIssues: ['brave/brave-browser#48171'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
+      { id: 'shielded', name: 'Shielded', description: 'd', requires: ['accounts'], releaseNoteIssues: ['brave/brave-browser#46598'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
+    ],
+    current,
+    changelog: [
+      note('android', '1.81.131', 'Added a "Shield Account" alert on the "Account Details" panel for Zcash accounts.', 'brave/brave-browser#46598'),
+      note('android', '1.81.135', 'Enabled Zcash by default.', 'brave/brave-browser#48171'),
+    ],
+    flagsByTag: { 'v1.96.61': flags('v1.96.61', false) }, sourceChecks: {}, items: {}, groupStatus: () => null, docs: [],
+  });
+  const sh = rows.find((r) => r.id === 'shielded')!.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
+  assert.equal(sh.status, 'available');
+  assert.equal(sh.since, '1.81.135');
+  assert.match(sh.summary, /Since Android 1\.81\.135, when “ZEC accounts” became available/);
+});

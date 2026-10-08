@@ -73,6 +73,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'shielded',
+    requires: ['accounts'],
     name: 'Shielded accounts & balances',
     description: 'Shielded accounts and shielded balances (Orchard, and Ironwood where enabled). Private sends after NU6.3 depend on Ironwood.',
     // #46598 "Shield Account" alert = upgrade to a shielded account (no funds move).

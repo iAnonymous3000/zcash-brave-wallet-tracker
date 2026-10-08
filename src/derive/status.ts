@@ -49,7 +49,7 @@ export const STAGE_HELP: Record<Stage, string> = {
   open: 'Open issue with no merged or open PR found.',
   'closed-unverified': 'Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.',
   'closed-unmerged': 'The pull request was closed without being merged.',
-  'not-planned': 'Closed as not planned. Nothing will ship for this request.',
+  'not-planned': 'Closed as not planned (won’t fix, invalid, or handled elsewhere). Nothing shipped through this issue; labels such as release-notes/include do not change that.',
   duplicate: 'Closed as a duplicate. Follow the canonical issue instead.',
 };
 

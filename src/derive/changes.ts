@@ -23,7 +23,7 @@ export const HISTORY_DAYS = 365;
  * source checks, build presence rules). Diff-only events are suppressed for the first run after a
  * bump, because differences would come from the tracker, not from the sources.
  */
-export const DERIVE_RULES_VERSION = 10;
+export const DERIVE_RULES_VERSION = 11;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -296,7 +296,7 @@ function fmtBool(v: boolean | null | undefined): string {
 }
 
 function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp: ChangeInputs): string {
-  if (reason === 'not_planned') return 'Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.';
+  if (reason === 'not_planned') return 'Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.';
   if (reason === 'duplicate' || st?.duplicate) return `Closed as a duplicate${st?.duplicate?.canonical ? ` of ${shortRef(st.duplicate.canonical)}` : ''}; follow the canonical issue for status.`;
   if (!st) return 'Closed. No linked implementation was found.';
   if (st.releaseNotes.length) {

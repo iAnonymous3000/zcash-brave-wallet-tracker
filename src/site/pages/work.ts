@@ -131,7 +131,8 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
       ? html`<p class="banner banner-info">Brave labeled this issue <code>closed/duplicate</code>, but GitHub records it as closed (completed) and no canonical issue is linked. That combination is ambiguous: it is not evidence that a fix shipped, and not proof that it did not.</p>`
       : html`<p class="banner banner-info">This issue is a duplicate${st.duplicate.canonical ? html` of ${d.items[st.duplicate.canonical] ? html`<a href="${itemHref(st.duplicate.canonical)}">${shortRef(st.duplicate.canonical)}</a>` : shortRef(st.duplicate.canonical)}` : ''} (${st.duplicate.basis}). A duplicate closure is not a shipped fix.</p>`
     : ''}
-  ${st.stage === 'not-planned' ? html`<p class="banner banner-info">Closed as not planned. Labels like <code>release-notes/include</code> or <code>QA/Yes</code> on this issue do not mean anything shipped.</p>` : ''}
+  ${st.stage === 'not-planned' ? html`<p class="banner banner-info">Closed as not planned (GitHub uses this for won’t-fix, invalid and handled-elsewhere closures). Nothing shipped through this issue; labels like <code>release-notes/include</code> or <code>QA/Yes</code> do not change that.</p>` : ''}
+  ${lead.kind === 'issue' && lead.state === 'open' ? html`<p class="muted">This issue is open on GitHub. Fixes sometimes land through pull requests that do not link the issue (for example a later refactor); this tracker follows only explicit links (closing references, “Resolves” lines, <code>brave_&lt;issue&gt;</code> branch names, uplifts and the issue timeline).</p>` : ''}
 </div>
 
 <div class="facet-grid">
