@@ -7,7 +7,7 @@ import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { compareVersions } from '../lib/util.ts';
 import { inclusionAt, type PrInclusion } from '../ingest/sources/build-inclusion.ts';
 import { osLabels, parseMilestone, parseQaLabels, qaPlatform } from '../ingest/parsers.ts';
-import { isDuplicateIssue, isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
+import { isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
 
 export type Stage =
   | 'released'
@@ -47,7 +47,7 @@ export const STAGE_HELP: Record<Stage, string> = {
   'service-change': 'Merged in a Brave server-side repository (swap backend or field-trial config). It takes effect when Brave deploys it, which is not public, and applies regardless of browser version.',
   'in-progress': 'An open (or draft) pull request exists.',
   open: 'Open issue with no merged or open PR found.',
-  'closed-unverified': 'Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.',
+  'closed-unverified': 'Closed, but no merged PR or release note is linked (closed as completed, without a reason, or as a duplicate whose records contradict each other). Treat as unknown, not shipped.',
   'closed-unmerged': 'The pull request was closed without being merged.',
   'not-planned': 'Closed as not planned (won’t fix, invalid, or handled elsewhere). Nothing shipped through this issue; labels such as release-notes/include do not change that.',
   duplicate: 'Closed as a duplicate. Follow the canonical issue instead.',
@@ -105,8 +105,17 @@ export function computeGroupStatus(
     if (/\b(proposal|rfc|idea|consider)\b/i.test(issue.title) || labels.includes('needs-discussion')) kind = kind === 'bug' ? kind : 'proposal';
   }
 
-  // Issue state.
-  const dup = issue ? isDuplicateIssue(issue) : { duplicate: false, canonical: null, basis: null };
+  // Issue state. Duplicate state comes from the relations, which reconcile both issues' timelines.
+  let dup: { duplicate: boolean; canonical: string | null; basis: string | null } = issue && r.duplicateOf.has(issue.id)
+    ? { duplicate: true, canonical: r.duplicateOf.get(issue.id) ?? null, basis: r.duplicateBasis.get(issue.id) ?? null }
+    : { duplicate: false, canonical: null, basis: null };
+  // Contradictory records (A marked as a duplicate of B and B of A, or a longer cycle): buildGroups folds the
+  // cycle into the group led by its lowest id, so the recorded canonical sits inside this very group. There is no
+  // other issue to follow, so the lead is not staged as a duplicate; the facet keeps the record and says why.
+  const contradictory = dup.duplicate && dup.canonical !== null && (dup.canonical === g.lead || g.duplicates.includes(dup.canonical));
+  if (contradictory) {
+    dup = { duplicate: true, canonical: null, basis: `${dup.basis ?? 'duplicate'}; contradictory records: the recorded canonical ${dup.canonical!.replace('brave/', '')} is itself recorded, directly or through other duplicates, as a duplicate of this issue, so none of them is treated as canonical and this group gathers them all` };
+  }
   const issueState = issue
     ? {
         state: issue.state === 'open' ? ('open' as const) : ('closed' as const),
@@ -115,7 +124,7 @@ export function computeGroupStatus(
       }
     : null;
 
-  // Implementation (master PRs, plus duplicates' PRs are already folded by grouping).
+  // Implementation (master PRs; buildGroups folds the duplicates' implementing PRs into masterPrs/uplifts).
   const merged = masters.filter((p) => p.state === 'merged');
   const open = masters.filter((p) => p.state === 'open');
   const implState: GroupStatus['implementation']['state'] = merged.length ? 'merged' : open.some((p) => !p.isDraft) ? 'open' : open.length ? 'draft' : masters.length ? 'closed-unmerged' : 'none';
@@ -182,7 +191,7 @@ export function computeGroupStatus(
 
   // Stage (ordered rules; see STAGE_HELP).
   let stage: Stage;
-  if (dup.duplicate) stage = 'duplicate';
+  if (dup.duplicate && !contradictory) stage = 'duplicate';
   else if (issue && issue.state === 'closed' && issue.stateReason === 'not_planned') stage = 'not-planned';
   else if (releaseNotes.length) stage = 'released';
   else if (builds.some((b) => b.channel === 'release' && b.included)) stage = 'in-release-build';

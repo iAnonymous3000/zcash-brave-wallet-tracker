@@ -23,7 +23,7 @@ import type { ServicesData } from '../ingest/sources/services.ts';
 import { buildGroups, buildRelations, isEpic, isUpliftPr, type WorkGroup } from './relations.ts';
 import { computeGroupStatus, STAGE_HELP, STAGE_LABEL, type GroupStatus, type Stage } from './status.ts';
 import { buildCapabilities, CELL_HELP, CELL_LABEL, type CapabilityRow } from './capabilities.ts';
-import { advisoryVerdicts, DERIVE_RULES_VERSION, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
+import { advisoryVerdicts, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
 
 export const DERIVED_SCHEMA = 1;
 
@@ -236,7 +236,8 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
     return { crate: c.crate, repo: c.repo, impact: c.impact, why: c.why, brave, upstreamStable: info?.maxStable ?? null, upstreamNewest: info?.newest ?? null, upstreamUpdatedAt: info?.updatedAt ?? null, adoption, url: `https://crates.io/crates/${c.crate}` };
   });
   const advisoryViews = (advisories?.advisories ?? []).map((a) => {
-    const v = advisoryVerdicts(a, deps);
+    // Strict coverage: "not affected" needs dependency evidence for every current build (see advisoryVerdicts).
+    const v = advisoryVerdicts(a, deps, current);
     return { ...a, verdict: v.summary, verdictDetails: v.details, affected: v.affected };
   });
 
@@ -327,11 +328,15 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
     evidence: changelogs?.evidence ?? [],
     capabilityNames: Object.fromEntries(CAPABILITIES.map((c) => [c.id, c.name])),
     lineChannel,
-  });
+    channels: current,
+  }, { refreshCandidates: true });
   const histPath = dataPath('history', 'events.json');
   const history = readJson<ChangeEvent[]>(histPath, []);
   const rulesChanged = Boolean(prevSnap) && prevSnap!.rulesVersion !== DERIVE_RULES_VERSION;
-  const { events, added } = mergeHistory(history, candidates, inp.now, prevSnap?.at ?? null, undefined, { rebuildBackfill: rulesChanged });
+  // A source counts as read when its envelope exists and the last attempt was not partial (a failed attempt keeps
+  // the last complete envelope). On a rebuild, events whose inputs were not read are kept, not dropped.
+  const sourceRead = (id: string) => Boolean(inp.get(id)) && inp.status[id]?.lastOutcome !== 'partial';
+  const { events, added } = mergeHistory(history, candidates, inp.now, prevSnap?.at ?? null, undefined, { rebuildBackfill: rulesChanged, inputsRead: (e) => eventInputsRead(e, { items, sourceRead }) });
   writeJson(histPath, events);
   writeJson(snapPath, currentSnap);
 
