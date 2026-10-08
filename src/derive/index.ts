@@ -122,7 +122,6 @@ export function serviceChecks(services: ServicesData | null, items: Record<strin
       since: pr ? `${pr.title} (merged ${pr.mergedAt?.slice(0, 10)})` : null,
       sinceUrl: pr?.url ?? null,
       what: 'Brave’s public swap-service code (brave/gate3)',
-      name: 'gate3 swap routing',
     };
   }
   return out;

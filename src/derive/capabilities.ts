@@ -131,8 +131,6 @@ export interface ServiceCheck {
   sinceUrl?: string | null;
   /** What was checked, for summaries (e.g. "Brave’s public swap-service code (brave/gate3)"). */
   what?: string;
-  /** Short name of the switch, for notes when it could not be read (e.g. "gate3 swap routing"). */
-  name?: string;
 }
 
 const PLATFORM_NAME: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
