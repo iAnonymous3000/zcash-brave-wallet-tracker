@@ -137,6 +137,9 @@ export interface ChannelVersion {
   url: string;
   /** Per-OS detail when the platform aggregates several pointers (desktop). */
   detail?: Record<string, string>;
+  /** When only a marketing version is known (iOS App Store): the newest matching release tag, used for clearly-labelled inference. */
+  inferredTag?: string | null;
+  inferredBasis?: string | null;
 }
 
 export interface AncestryResult {

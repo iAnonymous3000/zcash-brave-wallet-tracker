@@ -171,3 +171,16 @@ test('release evidence is append-only; "gone" only when the line left the upstre
   assert.equal(third.find((r) => r.id === evidenceId(b))!.goneSince, 't3');
   assert.equal(third.find((r) => r.id === evidenceId(b))!.firstSeenAt, 't1');
 });
+
+test('iOS App Store marketing version: likely build is inferred but labelled as such', async () => {
+  const { inferBuild } = await import('../src/ingest/sources/brave-versions.ts');
+  const rel = { releases: [
+    { tag: 'v1.96.62', version: '1.96.62', channel: 'release', name: 'Release v1.96.62', chromium: '154.0.1.1', publishedAt: '2026-10-05T00:00:00Z', url: 'u', assetPlatforms: ['ios'], prereleaseFlag: true },
+    { tag: 'v1.96.61', version: '1.96.61', channel: 'release', name: 'Release v1.96.61', chromium: '154.0.1.1', publishedAt: '2026-10-02T00:00:00Z', url: 'u', assetPlatforms: ['android', 'ios', 'macos'], prereleaseFlag: false },
+    { tag: 'v1.97.56', version: '1.97.56', channel: 'release', name: 'Release v1.97.56', chromium: '155.0.1.1', publishedAt: '2026-10-07T00:00:00Z', url: 'u', assetPlatforms: ['ios'], prereleaseFlag: false },
+  ], latest: [], unrecognized: [] } as any;
+  const r = inferBuild(rel, '1.96', 'release');
+  assert.equal(r.inferredTag, 'v1.96.62', 'newest iOS-asset release in the 1.96 line, not 1.97');
+  assert.match(r.inferredBasis ?? '', /does not publish/);
+  assert.equal(inferBuild(rel, '1.80', 'release').inferredTag, null);
+});

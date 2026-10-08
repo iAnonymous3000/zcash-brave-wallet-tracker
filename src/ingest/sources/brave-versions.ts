@@ -4,6 +4,7 @@
 import type { Channel, ChannelVersion, Platform } from '../../lib/types.ts';
 import { compareVersions } from '../../lib/util.ts';
 import type { Collector } from '../framework.ts';
+import type { ReleasesData } from './releases.ts';
 
 const DESKTOP_OS = ['windows-x64', 'windows-x86', 'windows-arm64', 'macos-x64', 'macos-arm64', 'linux-x64', 'linux-arm64'];
 
@@ -12,6 +13,14 @@ export function pointerNames(channel: Channel, platform: Platform): string[] {
   if (platform === 'desktop') return DESKTOP_OS.map((os) => `${channel}-${os}`);
   if (platform === 'android') return [`${channel}-android-google-play`];
   return [channel === 'release' ? 'release-ios-app-store' : `${channel}-ios`];
+}
+
+/** Newest Release-named GitHub release with iOS assets in the marketing line (e.g. "1.96" -> v1.96.62). */
+export function inferBuild(rel: ReleasesData | null, marketing: string, channel: Channel): { inferredTag: string | null; inferredBasis: string | null } {
+  const line = marketing.split('.').slice(0, 2).join('.');
+  const cands = (rel?.releases ?? []).filter((r) => r.channel === channel && r.version.startsWith(`${line}.`) && r.assetPlatforms.includes('ios')).sort((a, b) => compareVersions(b.version, a.version));
+  if (!cands.length) return { inferredTag: null, inferredBasis: null };
+  return { inferredTag: cands[0].tag, inferredBasis: `newest ${line}.x Release on GitHub with iOS assets (${cands.length} candidate build${cands.length > 1 ? 's' : ''}); Brave does not publish which build the App Store ${marketing} is` };
 }
 
 export interface BraveVersionsData {
@@ -24,6 +33,7 @@ export const braveVersions: Collector<BraveVersionsData> = {
   name: 'versions.brave.com current version pointers',
   url: 'https://versions.brave.com/',
   schema: 1,
+  dependsOn: ['brave-releases'],
   async collect(ctx) {
     const current: ChannelVersion[] = [];
     const missing: string[] = [];
@@ -56,6 +66,7 @@ export const braveVersions: Collector<BraveVersionsData> = {
                 : `versions.brave.com/latest/${Object.keys(detail)[0]}.version`,
           url: `https://versions.brave.com/latest/${Object.keys(detail)[0]}.version`,
           detail,
+          ...(isBuild ? {} : inferBuild(ctx.get<ReleasesData>('brave-releases')?.data ?? null, version, channel)),
         });
       }
     }

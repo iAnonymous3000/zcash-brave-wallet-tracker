@@ -73,7 +73,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   {
     id: 'shielded',
     name: 'Shielded accounts & balances',
-    description: 'Shielded (Orchard, now also Ironwood) accounts, balances and private sends.',
+    description: 'Shielded accounts and shielded balances (Orchard, and Ironwood where enabled). Private sends after NU6.3 depend on Ironwood.',
     releaseNoteIssues: [bb(44432)],
     releaseNoteMatch: /\bzcash shielded support\.?$|\bshielded account modal\b/i,
     flags: [ZEC, SHIELDED],
@@ -138,7 +138,8 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'memos',
-    requires: ['shielded'],
+    // Since NU6.3 the send screen only offers memos for transfers to Ironwood (verified at v1.96.61 send_screen.tsx).
+    requires: ['ironwood'],
     name: 'Memos on shielded sends',
     description: 'Attach a memo (up to 512 bytes) to shielded outputs.',
     releaseNoteIssues: [bb(41986), bb(42078), bb(52303)],

@@ -31,7 +31,10 @@ export const flags: Collector<FlagsData> = {
     const snapshots: FlagsData['snapshots'] = { ...(prev?.snapshots ?? {}) };
     const checks: FlagsData['checks'] = { ...(prev?.checks ?? {}) };
     const wanted = new Map<string, { channel: Channel; version: string }>();
-    for (const c of ctx.get<BraveVersionsData>('brave-versions')?.data.current ?? []) if (c.tag) wanted.set(c.tag, { channel: c.channel, version: c.version });
+    for (const c of ctx.get<BraveVersionsData>('brave-versions')?.data.current ?? []) {
+      if (c.tag) wanted.set(c.tag, { channel: c.channel, version: c.version });
+      if (c.inferredTag && !wanted.has(c.inferredTag)) wanted.set(c.inferredTag, { channel: c.channel, version: c.inferredTag.replace(/^v/, '') });
+    }
     for (const l of ctx.get<ReleasesData>('brave-releases')?.data.latest ?? []) if (l.tag && !wanted.has(l.tag)) wanted.set(l.tag, { channel: l.channel, version: l.version });
     let fetched = 0;
     for (const [tag, meta] of wanted) {

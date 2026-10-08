@@ -235,6 +235,24 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
               ? `No ${PLATFORM_NAME[platform]} release note lists it, and the ${cv.version} store build number is not published, so its code and flags cannot be checked.`
               : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
+        // Marketing-only versions: describe the likely build without upgrading the status.
+        if (status === 'not-verified' && cv && !cv.tag && cv.inferredTag) {
+          const isnap = inp.flagsByTag[cv.inferredTag];
+          const parts: string[] = [];
+          if (isnap && def.flags?.length) {
+            const vals = def.flags.map((f) => isnap.flags.find((x) => x.name === f.name)?.defaults[platform]);
+            parts.push(vals.every((v) => v === true) ? 'flags on by default' : vals.some((v) => v === false) ? 'off by default' : 'flag state unknown');
+          }
+          for (const sc of def.sourceChecks ?? []) {
+            if (sc.platforms && !sc.platforms.includes(platform)) continue;
+            const r = inp.sourceChecks[cv.inferredTag]?.find((x) => x.id === sc.id);
+            if (r?.present && sc.role === 'opt-in') parts.push('brave://flags option present');
+            if (r?.present && sc.role === 'blocks') parts.push('hidden in the iOS wallet UI');
+            if (r && r.present === false && sc.role === 'required') parts.push('required code absent');
+          }
+          if (parts.length) summary += ` Likely build ${cv.inferredTag}: ${parts.join('; ')}.`;
+          ev.push({ kind: 'note', text: `Likely build ${cv.inferredTag} (${cv.inferredBasis ?? 'inferred'}); used for description only, not for the status.`, url: isnap?.permalink ?? null });
+        }
         if (platform === 'ios' && channel === 'release' && cv && !cv.tag) {
           ev.push({ kind: 'note', text: `iOS App Store version ${cv.version} is a marketing version; Brave does not publish its build number, so flag/code checks cannot be pinned for iOS Release.`, url: cv.url });
         }
