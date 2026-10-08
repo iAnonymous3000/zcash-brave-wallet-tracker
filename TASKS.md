@@ -31,8 +31,8 @@ Concise working checklist. `[x]` done · `[~]` in progress · `[ ]` open · `[!]
 - [x] Capability prerequisites (no cell more available than its prerequisite)
 
 ## 4. Tests & verification
-- [x] Unit tests (39): parsers, HTTP failures, relevance/privacy, relations/status, capabilities (+prerequisites), events/history (+rules version, retractions), orchestrator outage/recovery, source checks, evidence
-- [~] Cross-check 158 displayed claims against primary sources (adversarial workflow + recheck)
+- [x] Unit tests (44): parsers, HTTP failures, relevance/privacy, relations/status, capabilities (+prerequisites), events/history (+rules version, retractions), orchestrator outage/recovery, source checks, evidence
+- [x] Cross-checked 158 live claims against primary sources (20 verifier batches + independent recheck of every flag): 129 correct first pass; 27 confirmed problems → all addressed (iOS build via release-notes issue, Unshield/Shield mapping, memos need Ironwood, testnet/bridge on iOS, branch-name links, comment duplicates, feature-branch carriers, unknown-not-absent build presence, since-version prerequisites, wording) except fixes that land via unlinked refactors (#53219, #53223) — undetectable; documented on item pages
 - [x] Fault-injection run (isolated, local): community 503 + crates.io timeout → last-good data kept, "2 sources failing", Failed rows with errors; stale fixture → browser-computed stale banner
 - [x] History integrity: found tracker-caused diff events in production; added rules-version guard + auditable retractions
 
