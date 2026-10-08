@@ -8,6 +8,7 @@
 // is kept (with its own read time) and the source is reported partial, so an outage
 // never reads as "no study" or "switch not set".
 
+import { createHash } from 'node:crypto';
 import type { Channel, ChannelVersion, Platform } from '../../lib/types.ts';
 import type { Collector } from '../framework.ts';
 import type { ReleasesData } from './releases.ts';
@@ -22,6 +23,9 @@ export interface StudyExperiment {
   enable: string[];
   disable: string[];
   params: Record<string, string>;
+  /** forcing_feature_on/off: features whose command-line activation forces a client into this cohort (not a setting the cohort applies). */
+  forcingOn?: string[];
+  forcingOff?: string[];
 }
 
 /** Build-level eligibility of one current build (platform × channel × version) under a study's filter. */
@@ -33,7 +37,11 @@ export interface StudyApplicability {
   channel?: Channel;
   version?: string;
   reason?: string;
-  /** Desktop only: the desktop OS families the platform filter admits, when it is a subset of Windows/macOS/Linux. */
+  /**
+   * Desktop only, when the entry does not cover every desktop OS: the versions.brave.com OS pointers it covers
+   * ("windows-x64", ...), or for an aggregate desktop build the OS families the platform filter admits ("WINDOWS", ...).
+   * The OSes are also named in `build`.
+   */
   desktopOs?: string[];
 }
 
@@ -41,8 +49,9 @@ export interface StudyInfo {
   file: string;
   name: string;
   /**
-   * Settings shared by every enrolled cohort (experiments with weight > 0). A feature or parameter
-   * that differs between cohorts is listed in `mixed` and attributed per cohort in `experiments`.
+   * Features some enrolled cohort (experiment with weight > 0) enables / disables while no enrolled cohort sets the
+   * opposite; a parameter appears when every cohort that sets it uses the same value. Settings that differ between
+   * enrolled cohorts are listed in `mixed` and attributed per cohort (with weights) in `experiments`.
    */
   features: { enable: string[]; disable: string[] };
   params: Record<string, string>;
@@ -51,12 +60,15 @@ export interface StudyInfo {
   channels: string[];
   platforms: string[];
   probability: number | null;
-  /** Chromium-based Brave version the study's range is compared with, per current build ("155.1.97.56"). */
+  /**
+   * Determinate eligibility per current platform × channel build (desktop per OS pointer, grouped by outcome), labelled
+   * with the Chromium-based version the study's range is compared with ("Desktop release 1.97.56 (155.1.97.56)").
+   */
   appliesTo: StudyApplicability[];
   url: string;
   /** Every experiment (cohort) with its weight and own settings. */
   experiments?: StudyExperiment[];
-  /** Features/params whose setting differs between enrolled cohorts (so no single study-wide value exists). */
+  /** Features/params whose setting differs between enrolled cohorts, including set in some and not in others. */
   mixed?: { features: string[]; params: string[] };
   /** Client-level filter conditions that public data cannot decide (country, locale, policy, ...). */
   conditions?: string[];
@@ -81,32 +93,22 @@ export interface Gate3Info {
   lastDetermined?: { zcashDisabled: boolean; commitSha: string; checkedAt: string; url: string; line: number | null } | null;
 }
 
-export interface StudyFileState {
-  /** Git blob SHA from the directory listing (null when the listing did not provide one). */
-  sha: string | null;
-  readAt: string | null;
-  /** Whether the file contains studies touching Zcash. */
-  relevant: boolean;
-  /** Set when the last attempt failed; the file is re-read next run. */
-  error?: string;
-}
-
 export interface ServicesData {
   gate3: Gate3Info | null;
   studies: StudyInfo[];
   studiesCommit: string | null;
   /** When the brave-variations listing was last read successfully (studies may be older if carried over). */
   studiesReadAt?: string | null;
-  /** Per-file read state, so unchanged files are not refetched and failed ones are retried. */
-  studyFiles?: Record<string, StudyFileState>;
-  /** Version of the study selection/parsing rules the per-file cache was built with. */
-  studyRules?: number;
+  /** Digest of the studies/ listing (names, blob SHAs) and selection rules the studies were read at; an unchanged listing is not re-read. */
+  studiesDigest?: string | null;
+  /** Study files of that listing that could not be read yet (failed or deferred); retried next run. */
+  studyPending?: string[];
 }
 
 const GATE3_FILE = 'app/api/swap/constants.py';
-/** Bump when relevance or parsing rules change, so cached per-file verdicts are recomputed. */
-export const STUDY_RULES = 2;
-/** Upper bound on raw study files fetched per run (the repository has ~125; unchanged files are cached by blob SHA). */
+/** Bump when relevance or parsing rules change, so an unchanged listing is still re-read. */
+export const STUDY_RULES = 3;
+/** Upper bound on raw study files fetched per run (the repository has ~125; an unchanged listing is not re-read). */
 export const MAX_STUDY_FETCHES = 220;
 /** File-level content test: the file must mention Zcash/Ironwood somewhere. */
 const RELEVANT_TEXT = /zcash|ironwood/i;
@@ -279,6 +281,8 @@ interface PyStatement {
   code: string;
   line: number;
   indent: number;
+  /** Contents of the string literals in this statement (replaced by '' in `code`). */
+  strings: string[];
 }
 
 /**
@@ -295,9 +299,11 @@ export function pythonStatements(src: string): PyStatement[] {
   let buf = '';
   let startLine = 1;
   let indent = 0;
+  let strings: string[] = [];
   const flush = () => {
-    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent });
+    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings });
     buf = '';
+    strings = [];
   };
   const begin = (at: number) => {
     if (buf.trim() === '') {
@@ -335,6 +341,8 @@ export function pythonStatements(src: string): PyStatement[] {
         begin(i);
         const q = m[2];
         i += m[0].length;
+        const contentStart = i;
+        let contentEnd = n;
         for (;;) {
           if (i >= n) break;
           const ch = src[i];
@@ -347,16 +355,21 @@ export function pythonStatements(src: string): PyStatement[] {
             continue;
           }
           if (q.length === 3 ? src.startsWith(q, i) : ch === q) {
+            contentEnd = i;
             i += q.length;
             break;
           }
           if (ch === '\n') {
-            if (q.length === 1) break; // unterminated single-line string: stop at the line end
+            if (q.length === 1) {
+              contentEnd = i;
+              break; // unterminated single-line string: stop at the line end
+            }
             line++;
             lineStart = i + 1;
           }
           i++;
         }
+        strings.push(src.slice(contentStart, Math.min(contentEnd, n)));
         buf += "''";
         continue;
       }
@@ -429,32 +442,60 @@ function collectionElements(expr: string): string[] | null {
 }
 
 const SWAP_VAR = 'SWAP_DISABLED_CHAINS';
+/** Methods that only read a tuple/list/set; any other method call on the switch may modify it. */
+const READ_ONLY_METHODS = ['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index'];
+const AUG = '(?:[-+*/%&|^@]|<<|>>|\\*\\*|//)?';
+/** Statements (other than the definition) that bind or modify the switch, so its final value is not the literal. */
+const SWAP_BINDING = new RegExp(
+  [
+    // (augmented/annotated) assignment at the start of a statement or after a compound-statement colon
+    // ("if X: SWAP_DISABLED_CHAINS = ...", "else: ...", "try: ...")
+    `(?:^|:)\\s*${SWAP_VAR}\\s*(?::[^=]*)?${AUG}=(?!=)`,
+    `\\b${SWAP_VAR}\\s*:=`,
+    `\\b${SWAP_VAR}\\s*\\[[^\\]]*\\]\\s*${AUG}=(?!=)`,
+    `\\b${SWAP_VAR}\\s*\\.\\s*(?!(?:${READ_ONLY_METHODS.join('|')})\\s*\\()[A-Za-z_]\\w*\\s*\\(`,
+    `\\bdel\\b.*\\b${SWAP_VAR}\\b`,
+    `\\b(?:as|for|global|nonlocal|def|class|case)\\s+${SWAP_VAR}\\b`,
+    `^\\(?\\s*(?:[A-Za-z_][\\w.]*\\s*,\\s*)+${SWAP_VAR}\\s*(?:,[\\w\\s,.]*)?\\)?\\s*=(?!=)`,
+    `^\\(?\\s*${SWAP_VAR}\\s*,[\\w\\s,.]*\\)?\\s*=(?!=)`,
+    `=\\s*${SWAP_VAR}\\s*=(?!=)`,
+  ].join('|'),
+);
+/** import rebinding ("from .overrides import SWAP_DISABLED_CHAINS", "import x as SWAP_DISABLED_CHAINS"). */
+const SWAP_IMPORT = new RegExp(`^(?:from\\s+\\S+\\s+)?import\\b.*\\b${SWAP_VAR}\\b`);
+const STAR_IMPORT = /^from\s+\S+\s+import\s+\*/;
+/** Dynamic binding by name: globals()/vars()/locals()/__dict__/setattr/exec/eval with the name in a string. */
+const DYNAMIC_BINDING = /\b(?:globals|vars|locals)\s*\(\s*\)|\bsetattr\s*\(|__dict__|\bexec\s*\(|\beval\s*\(/;
 
 /**
  * Whether gate3's module-level SWAP_DISABLED_CHAINS contains Chain.ZCASH.
- * true/false only for a single literal assignment whose relevant elements are all Chain.X;
- * null (unknown) for anything else (computed values, reassignment, conditional definitions).
+ * true/false only for a single top-level literal assignment whose relevant elements are all Chain.X and that no
+ * other statement rebinds or modifies; null (unknown) for anything else (computed values, reassignment in any form,
+ * conditional definitions, import or dynamic rebinding).
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);
   const assign = new RegExp(`^${SWAP_VAR}\\s*(?::[^=]+)?=(?!=)([\\s\\S]*)$`);
   const defs = stmts.filter((s) => assign.test(s.code));
-  const mutation = new RegExp(
-    [
-      `\\b${SWAP_VAR}\\s*(?:\\|=|-=|&=|\\^=|\\+=|:=)`,
-      `\\b${SWAP_VAR}\\s*\\.\\s*(?:add|update|discard|remove|clear|pop|append|extend|insert|\\w+_update)\\s*\\(`,
-      `\\bdel\\s+${SWAP_VAR}\\b`,
-      `\\b(?:as|for|global)\\s+${SWAP_VAR}\\b`,
-      `^(?:[A-Za-z_]\\w*\\s*,\\s*)+${SWAP_VAR}\\s*(?:,[\\w\\s,]*)?=(?!=)`,
-      `^${SWAP_VAR}\\s*,[\\w\\s,]*=(?!=)`,
-      `=\\s*${SWAP_VAR}\\s*=(?!=)`,
-    ].join('|'),
-  );
-  const others = stmts.filter((s) => !defs.includes(s) && mutation.test(s.code));
-  if (!defs.length) return { zcashDisabled: null, line: null, reason: `${SWAP_VAR} assignment not found` };
+  if (!defs.length) {
+    const bound = stmts.find((s) => SWAP_BINDING.test(s.code) || SWAP_IMPORT.test(s.code));
+    return { zcashDisabled: null, line: bound?.line ?? null, reason: bound ? `${SWAP_VAR} is bound only in a form other than a single literal assignment` : `${SWAP_VAR} assignment not found` };
+  }
   const top = defs.filter((d) => d.indent === 0);
   if (!top.length) return { zcashDisabled: null, line: defs[0].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
-  if (defs.length > 1 || others.length) return { zcashDisabled: null, line: top[0].line, reason: `${SWAP_VAR} is assigned or modified more than once; its final value is not determined statically` };
+  const firstLine = top[0].line;
+  const others = stmts.filter(
+    (s) =>
+      !defs.includes(s) &&
+      (SWAP_BINDING.test(s.code) ||
+        SWAP_IMPORT.test(s.code) ||
+        (STAR_IMPORT.test(s.code) && s.line > firstLine) ||
+        (DYNAMIC_BINDING.test(s.code) && s.strings.some((x) => x.includes(SWAP_VAR)))),
+  );
+  if (defs.length > 1 || others.length) {
+    const at = [...defs, ...others].map((s) => s.line).filter((l) => l !== firstLine);
+    return { zcashDisabled: null, line: firstLine, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
+  }
   const def = top[0];
   const rhs = assign.exec(def.code)![1];
   const elements = collectionElements(rhs);
@@ -485,10 +526,17 @@ export interface StudyBuild {
   /** Chromium major version of this build, from the GitHub release name; null when unknown. */
   chromiumMajor: number | null;
   label: string;
+  /** Desktop only: the versions.brave.com OS pointer this build was read from ("windows-x64"); absent for an aggregate desktop build. */
+  os?: string;
 }
 
 const PLATFORM_NAME: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
 const DESKTOP_FAMILIES = ['WINDOWS', 'MAC', 'LINUX'];
+const FAMILY_NAME: Record<string, string> = { WINDOWS: 'Windows', MAC: 'macOS', LINUX: 'Linux' };
+/** versions.brave.com desktop OS pointer suffixes, in display order. */
+const DESKTOP_OS = ['windows-x64', 'windows-x86', 'windows-arm64', 'macos-x64', 'macos-arm64', 'linux-x64', 'linux-arm64'];
+const osFamily = (os: string): string | null => (os.startsWith('windows') ? 'WINDOWS' : os.startsWith('macos') ? 'MAC' : os.startsWith('linux') ? 'LINUX' : null);
+const osName = (os: string) => `${FAMILY_NAME[osFamily(os) ?? ''] ?? os} ${os.split('-').slice(1).join('-')}`;
 const PLATFORM_CODES: Record<Platform, string[]> = { desktop: DESKTOP_FAMILIES, android: ['ANDROID'], ios: ['IOS'] };
 const CHANNEL_CODES: Record<Channel, string[]> = { release: ['RELEASE', 'STABLE'], beta: ['BETA'], nightly: ['NIGHTLY', 'CANARY'] };
 /** Filter keys evaluated against build records. */
@@ -500,9 +548,11 @@ const CLIENT_KEYS = new Set([
   'is_low_end_device', 'policy_restriction', 'is_enterprise', 'google_group', 'exclude_google_group',
   'cpu_architecture', 'exclude_cpu_architecture',
 ]);
+const BUILD_VERSION_RE = /^\d+\.\d+\.\d+$/;
 
 const normCode = (v: unknown) => String(v).toUpperCase().replace(/^(PLATFORM|CHANNEL)_/, '');
 const asList = (v: unknown): string[] => (Array.isArray(v) ? v.map((x) => String(x)) : v === undefined || v === null ? [] : [String(v)]);
+const uniqStr = (xs: string[]) => [...new Set(xs)];
 
 function dateValue(v: unknown): number | null {
   if (typeof v === 'number' && Number.isFinite(v)) return v * 1000; // Chromium: seconds since epoch
@@ -523,9 +573,12 @@ export function evaluateStudyFilter(filter: Record<string, unknown> | null | und
 
   const platforms = asList(f.platform).map(normCode);
   if (platforms.length) {
-    const hit = PLATFORM_CODES[b.platform].filter((p) => platforms.includes(p));
-    if (!hit.length) excluded.push(`platform filter (${platforms.join(', ')}) excludes ${PLATFORM_NAME[b.platform]}`);
-    else if (b.platform === 'desktop' && hit.length < DESKTOP_FAMILIES.length) desktopOs = hit;
+    // A per-OS desktop build is one OS family; an aggregate desktop build stands for all three.
+    const family = b.platform === 'desktop' && b.os ? osFamily(b.os) : null;
+    const codes = family ? [family] : PLATFORM_CODES[b.platform];
+    const hit = codes.filter((p) => platforms.includes(p));
+    if (!hit.length) excluded.push(`platform filter (${platforms.join(', ')}) excludes ${b.os ? `${PLATFORM_NAME.desktop} ${osName(b.os)}` : PLATFORM_NAME[b.platform]}`);
+    else if (b.platform === 'desktop' && !family && hit.length < DESKTOP_FAMILIES.length) desktopOs = hit;
   }
   const channels = asList(f.channel).map(normCode);
   if (channels.length && !CHANNEL_CODES[b.channel].some((c) => channels.includes(c))) excluded.push(`channel filter (${channels.join(', ')}) excludes ${b.channel}`);
@@ -533,7 +586,7 @@ export function evaluateStudyFilter(filter: Record<string, unknown> | null | und
   const min = f.min_version === undefined || f.min_version === null ? null : String(f.min_version);
   const max = f.max_version === undefined || f.max_version === null ? null : String(f.max_version);
   if (min || max) {
-    if (b.chromiumMajor === null || !/^\d+\.\d+\.\d+$/.test(b.version)) unknown.push(`the Chromium-based version of ${b.version} is not known, so the version range ${min ?? 'any'} – ${max ?? 'any'} cannot be checked`);
+    if (b.chromiumMajor === null || !BUILD_VERSION_RE.test(b.version)) unknown.push(`the Chromium-based version of ${b.version} is not known, so the version range ${min ?? 'any'} – ${max ?? 'any'} cannot be checked`);
     else {
       const full = `${b.chromiumMajor}.${b.version}`;
       if (!inStudyRange(full, min, max)) excluded.push(`${full} is outside the version range ${min ?? 'any'} – ${max ?? 'any'}`);
@@ -562,7 +615,13 @@ export function studyConditions(filter: Record<string, unknown> | null | undefin
     .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : String(v)}`);
 }
 
-/** Current builds per platform × channel: versions.brave.com pointers, GitHub release names as a labelled fallback. */
+const versionLabel = (version: string, major: number | null) => `${version}${major !== null && BUILD_VERSION_RE.test(version) ? ` (${major}.${version})` : ''}`;
+
+/**
+ * Current builds per platform × channel: versions.brave.com pointers, GitHub release names as a labelled fallback.
+ * Desktop is one build per OS pointer when the per-OS values are known (OS builds can differ, e.g. Linux behind
+ * Windows), so a study filter is evaluated against each OS's own version.
+ */
 export function studyBuilds(versions: ChannelVersion[] | null, rel: ReleasesData | null): StudyBuild[] {
   const releases = Array.isArray(rel?.releases) ? rel!.releases : [];
   const chromiumOf = (version: string): number | null => {
@@ -575,6 +634,19 @@ export function studyBuilds(versions: ChannelVersion[] | null, rel: ReleasesData
   for (const channel of ['release', 'beta', 'nightly'] as Channel[]) {
     for (const platform of ['desktop', 'android', 'ios'] as Platform[]) {
       const cv = (versions ?? []).find((c) => c.channel === channel && c.platform === platform);
+      if (platform === 'desktop' && cv?.detail) {
+        const notPublished = new Set(cv.notPublishedPointers ?? []);
+        const known = DESKTOP_OS.map((os) => [os, cv.detail![`${channel}-${os}`]] as const).filter((e): e is readonly [string, string] => typeof e[1] === 'string' && BUILD_VERSION_RE.test(e[1]));
+        const usable = known.filter(([os]) => !notPublished.has(`${channel}-${os}`));
+        const list = usable.length ? usable : known;
+        if (list.length) {
+          for (const [os, version] of list) {
+            const major = chromiumOf(version);
+            out.push({ platform, channel, version, chromiumMajor: major, os, label: `${PLATFORM_NAME.desktop} ${channel} (${osName(os)}) ${versionLabel(version, major)}` });
+          }
+          continue;
+        }
+      }
       let version: string | null = cv?.version ?? null;
       let fallback = false;
       if (!version) {
@@ -584,31 +656,75 @@ export function studyBuilds(versions: ChannelVersion[] | null, rel: ReleasesData
       }
       if (!version) continue;
       const major = chromiumOf(version);
-      out.push({ platform, channel, version, chromiumMajor: major, label: `${PLATFORM_NAME[platform]} ${channel} ${version}${major !== null && /^\d+\.\d+\.\d+$/.test(version) ? ` (${major}.${version})` : ''}${fallback ? ' [GitHub release; version pointer unavailable]' : ''}` });
+      out.push({ platform, channel, version, chromiumMajor: major, label: `${PLATFORM_NAME[platform]} ${channel} ${versionLabel(version, major)}${fallback ? ' [GitHub release; version pointer unavailable]' : ''}` });
     }
   }
   return out;
 }
 
-function applicability(filter: Record<string, unknown> | undefined, builds: StudyBuild[], now: string): Pick<StudyInfo, 'appliesTo' | 'appliesUnknown'> {
+/** "Windows" when every Windows pointer is in the group, else "Windows arm64"; families in display order. */
+function describeOs(group: string[], all: string[]): string {
+  const parts: string[] = [];
+  for (const fam of DESKTOP_FAMILIES) {
+    const famAll = all.filter((os) => osFamily(os) === fam);
+    const famIn = famAll.filter((os) => group.includes(os));
+    if (!famIn.length) continue;
+    parts.push(famIn.length === famAll.length ? FAMILY_NAME[fam] : famIn.map(osName).join(', '));
+  }
+  return parts.join(', ');
+}
+
+function applicability(filter: Record<string, unknown> | undefined, builds: StudyBuild[], now: string, note = ''): Pick<StudyInfo, 'appliesTo' | 'appliesUnknown'> {
   const appliesTo: StudyApplicability[] = [];
   const appliesUnknown: NonNullable<StudyInfo['appliesUnknown']> = [];
+  const desktopDone = new Set<Channel>();
   for (const b of builds) {
+    if (b.platform === 'desktop' && b.os) {
+      // Per-OS desktop builds of one channel: one entry per outcome, naming the OSes when not all share it.
+      if (desktopDone.has(b.channel)) continue;
+      desktopDone.add(b.channel);
+      const same = builds.filter((x) => x.platform === 'desktop' && x.os && x.channel === b.channel);
+      const results = same.map((x) => ({ b: x, r: evaluateStudyFilter(filter, x, now) }));
+      for (const outcome of uniqStr(results.map((x) => String(x.r.applies)))) {
+        const g = results.filter((x) => String(x.r.applies) === outcome);
+        const sorted = g.map((x) => x.b).sort((p, q) => compareVersions(p.version, q.version));
+        const versions = uniqStr(sorted.map((x) => versionLabel(x.version, x.chromiumMajor)));
+        const osList = g.map((x) => x.b.os!);
+        const all = g.length === same.length;
+        const build = `${PLATFORM_NAME.desktop} ${b.channel}${all ? '' : ` (${describeOs(osList, same.map((x) => x.os!))})`} ${versions.join(' / ')}`;
+        const reason = uniqStr(g.map((x) => x.r.reason)).join('; ') + note;
+        if (outcome === 'null') appliesUnknown.push({ build, platform: 'desktop', channel: b.channel, version: sorted[0].version, reason });
+        else appliesTo.push({ build, applies: outcome === 'true', platform: 'desktop', channel: b.channel, version: sorted[0].version, reason, ...(all ? {} : { desktopOs: osList }) });
+      }
+      continue;
+    }
     const r = evaluateStudyFilter(filter, b, now);
-    if (r.applies === null) appliesUnknown.push({ build: b.label, platform: b.platform, channel: b.channel, version: b.version, reason: r.reason });
-    else appliesTo.push({ build: b.label, applies: r.applies, platform: b.platform, channel: b.channel, version: b.version, reason: r.reason, ...(r.desktopOs ? { desktopOs: r.desktopOs } : {}) });
+    if (r.applies === null) appliesUnknown.push({ build: b.label, platform: b.platform, channel: b.channel, version: b.version, reason: r.reason + note });
+    else appliesTo.push({ build: b.label, applies: r.applies, platform: b.platform, channel: b.channel, version: b.version, reason: r.reason + note, ...(r.desktopOs ? { desktopOs: r.desktopOs } : {}) });
   }
   return appliesUnknown.length ? { appliesTo, appliesUnknown } : { appliesTo };
 }
 
-/** Recompute applicability of a stored study for the current builds (keeps the old answer when it cannot be recomputed). */
-function refreshApplicability(st: StudyInfo, builds: StudyBuild[], now: string): StudyInfo {
-  if (!st.filter || !builds.length) return st;
-  const { appliesUnknown: _stale, ...rest } = st;
-  return { ...rest, ...applicability(st.filter, builds, now) };
+/** Filter fields kept by data written before the raw filter was stored (version range, channels, platforms). */
+function legacyFilter(st: StudyInfo): Record<string, unknown> {
+  return {
+    ...(st.minVersion ? { min_version: st.minVersion } : {}),
+    ...(st.maxVersion ? { max_version: st.maxVersion } : {}),
+    ...(Array.isArray(st.channels) && st.channels.length ? { channel: st.channels } : {}),
+    ...(Array.isArray(st.platforms) && st.platforms.length ? { platform: st.platforms } : {}),
+  };
 }
 
-const strList = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined).map(String) : []);
+/** Recompute applicability of a stored study for the current builds (keeps the old answer when there are no builds). */
+function refreshApplicability(st: StudyInfo, builds: StudyBuild[], now: string): StudyInfo {
+  if (!builds.length) return st;
+  const { appliesUnknown: _stale, ...rest } = st;
+  // Data from before the raw filter was stored: rebuild it from the stored fields and say so.
+  const res = st.filter ? applicability(st.filter, builds, now) : applicability(legacyFilter(st), builds, now, ' (filter reconstructed from the stored version, channel and platform fields)');
+  return { ...rest, ...res };
+}
+
+const strList = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined).map(String) : typeof v === 'string' ? [v] : []);
 
 /** Whether a parsed study touches Zcash/Ironwood/Wallet features or parameters in any experiment. */
 export function isRelevantStudy(st: any): boolean {
@@ -633,27 +749,42 @@ export function toStudyInfo(st: any, file: string, commit: string, builds: Study
     const weight = Number(e?.probability_weight) || 0;
     const params: Record<string, string> = {};
     for (const p of Array.isArray(e?.param) ? e.param : []) if (p?.name !== undefined) params[String(p.name)] = String(p.value ?? '');
+    const fa = e?.feature_association ?? {};
+    const forcingOn = strList(fa.forcing_feature_on);
+    const forcingOff = strList(fa.forcing_feature_off);
     return {
       name: String(e?.name ?? ''),
       weight,
       share: total > 0 ? Math.round((weight / total) * 10000) / 100 : null,
-      enable: strList(e?.feature_association?.enable_feature),
-      disable: strList(e?.feature_association?.disable_feature),
+      enable: strList(fa.enable_feature),
+      disable: strList(fa.disable_feature),
       params,
+      ...(forcingOn.length ? { forcingOn } : {}),
+      ...(forcingOff.length ? { forcingOff } : {}),
     };
   });
   const active = experiments.filter((e) => e.weight > 0);
-  // Study-wide settings are those every enrolled cohort shares; the rest are cohort-dependent.
-  const allFeatures = [...new Set(active.flatMap((e) => [...e.enable, ...e.disable]))];
-  const enable = allFeatures.filter((f) => active.every((e) => e.enable.includes(f) && !e.disable.includes(f)));
-  const disable = allFeatures.filter((f) => active.every((e) => e.disable.includes(f) && !e.enable.includes(f)));
-  const mixedFeatures = allFeatures.filter((f) => !enable.includes(f) && !disable.includes(f));
+  // A feature is listed as enabled (disabled) when some enrolled cohort enables (disables) it and no enrolled
+  // cohort sets the opposite; a parameter keeps its value when every cohort that sets it agrees. Anything that
+  // differs between enrolled cohorts (including set vs. not set) is listed in `mixed`.
+  const setting = (e: StudyExperiment, f: string) => (e.enable.includes(f) && e.disable.includes(f) ? 'conflict' : e.enable.includes(f) ? 'on' : e.disable.includes(f) ? 'off' : 'default');
+  const allFeatures = uniqStr(active.flatMap((e) => [...e.enable, ...e.disable]));
+  const enable: string[] = [];
+  const disable: string[] = [];
+  const mixedFeatures: string[] = [];
+  for (const f of allFeatures) {
+    const s = active.map((e) => setting(e, f));
+    if (!s.includes('off') && !s.includes('conflict') && s.includes('on')) enable.push(f);
+    if (!s.includes('on') && !s.includes('conflict') && s.includes('off')) disable.push(f);
+    if (uniqStr(s).length > 1 || s.includes('conflict')) mixedFeatures.push(f);
+  }
   const params: Record<string, string> = {};
   const mixedParams: string[] = [];
-  for (const name of [...new Set(active.flatMap((e) => Object.keys(e.params)))]) {
+  for (const name of uniqStr(active.flatMap((e) => Object.keys(e.params)))) {
     const values = active.map((e) => (Object.prototype.hasOwnProperty.call(e.params, name) ? e.params[name] : undefined));
-    if (values.every((v) => v !== undefined && v === values[0])) params[name] = values[0]!;
-    else mixedParams.push(name);
+    const set = uniqStr(values.filter((v): v is string => v !== undefined));
+    if (set.length === 1) params[name] = set[0];
+    if (set.length > 1 || values.some((v) => v === undefined)) mixedParams.push(name);
   }
   const filter: Record<string, unknown> = st.filter && typeof st.filter === 'object' && !Array.isArray(st.filter) ? st.filter : {};
   const conditions = studyConditions(filter);
@@ -675,6 +806,19 @@ export function toStudyInfo(st: any, file: string, commit: string, builds: Study
     filter,
     readAt: now,
   };
+}
+
+/** Git blob SHA-1 of a file's bytes, as the GitHub contents API lists it. */
+export function gitBlobSha(bytes: Uint8Array): string {
+  return createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+}
+
+/** Digest of a studies/ listing (file names and blob SHAs) and the selection rules; null when a blob SHA is missing. */
+export function listingDigest(files: { name: string; sha: string | null }[]): string | null {
+  if (files.some((f) => !f.sha)) return null;
+  const h = createHash('sha256').update(`rules=${STUDY_RULES}\n`);
+  for (const f of [...files].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) h.update(`${f.name}\t${f.sha}\n`);
+  return h.digest('hex');
 }
 
 const errText = (err: unknown) => (err instanceof Error ? err.message : String(err)).slice(0, 120);
@@ -733,7 +877,7 @@ export const services: Collector<ServicesData> = {
     const versionsData = ctx.get<{ current?: ChannelVersion[] }>('brave-versions')?.data;
     const relData = ctx.get<ReleasesData>('brave-releases')?.data ?? null;
     const builds = studyBuilds(Array.isArray(versionsData?.current) ? versionsData!.current : null, relData);
-    const prevStudies = (prev?.studies ?? []).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    const prevStudies = (Array.isArray(prev?.studies) ? prev!.studies : []).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
     const prevByFile = new Map<string, StudyInfo[]>();
     for (const s of prevStudies) prevByFile.set(s.file, [...(prevByFile.get(s.file) ?? []), s]);
     const carry = (file: string) => (prevByFile.get(file) ?? []).map((s) => refreshApplicability(s, builds, ctx.now));
@@ -741,8 +885,8 @@ export const services: Collector<ServicesData> = {
     let studies: StudyInfo[] = prevStudies.map((s) => refreshApplicability(s, builds, ctx.now));
     let studiesCommit = prev?.studiesCommit ?? null;
     let studiesReadAt = prev?.studiesReadAt ?? (prev ? prevReadAt : null);
-    let studyFiles: Record<string, StudyFileState> | undefined = prev?.studyFiles;
-    let studyRules = prev?.studyRules;
+    let studiesDigest = typeof prev?.studiesDigest === 'string' ? prev.studiesDigest : null;
+    let studyPending: string[] = Array.isArray(prev?.studyPending) ? prev!.studyPending : [];
     let variationsFresh = false;
     try {
       const vsha = await ctx.gh.commitSha('brave/brave-variations', 'main');
@@ -750,12 +894,12 @@ export const services: Collector<ServicesData> = {
       const { data: listing } = await ctx.gh.rest<any[]>(`/repos/brave/brave-variations/contents/studies?ref=${vsha}`);
       if (!Array.isArray(listing)) throw new Error('studies/ listing is not a directory listing');
       variationsFresh = true;
-      const cache = prev?.studyRules === STUDY_RULES ? (prev?.studyFiles ?? {}) : {};
-      const nextFiles: Record<string, StudyFileState> = {};
-      const next: StudyInfo[] = [];
       const entries = listing.filter((x) => x && typeof x.name === 'string');
       const dirs = entries.filter((x) => x.type === 'dir');
-      const files = entries.filter((x) => x.type !== 'dir' && /\.json5?$/i.test(x.name));
+      // Only a well-formed blob SHA-1 can be verified against; anything else counts as "no SHA" (content must parse).
+      const files: { name: string; sha: string | null }[] = entries
+        .filter((x) => x.type !== 'dir' && /\.json5?$/i.test(x.name))
+        .map((x) => ({ name: x.name as string, sha: typeof x.sha === 'string' && /^[0-9a-f]{40}$/i.test(x.sha) ? x.sha.toLowerCase() : null }));
       const other = entries.filter((x) => x.type !== 'dir' && !/\.json5?$/i.test(x.name));
       if (dirs.length) {
         partial = true;
@@ -767,54 +911,65 @@ export const services: Collector<ServicesData> = {
         partial = true;
         limitations.push('studies/ listing returned 1000 entries (the contents API maximum); files beyond it were not read and their earlier studies are kept');
       }
-      let fetched = 0;
+      // Unchanged listing (same names and blob SHAs, same rules): only files still pending from earlier runs are read.
+      const digest = truncatedListing ? null : listingDigest(files);
+      const unchanged = digest !== null && digest === studiesDigest;
+      const prevPending = new Set(studyPending);
+      const next: StudyInfo[] = [];
+      const pending: string[] = [];
       const failed: string[] = [];
       const deferred: string[] = [];
+      const unparsedIrrelevant: string[] = [];
+      let fetched = 0;
       for (const f of files) {
-        const name: string = f.name;
-        const sha: string | null = typeof f.sha === 'string' ? f.sha : null;
-        const cached = cache[name];
-        const before = prevByFile.get(name) ?? [];
-        const reusable = Boolean(cached && !cached.error && sha && cached.sha === sha && (!cached.relevant || (before.length > 0 && before.every((s) => s.filter && s.experiments))));
-        if (reusable) {
-          nextFiles[name] = cached!;
-          if (cached!.relevant) next.push(...carry(name));
+        const name = f.name;
+        if (unchanged && !prevPending.has(name)) {
+          next.push(...carry(name));
           continue;
         }
+        // Keep the file's earlier studies and retry it next run.
+        const keep = (problem: string | null) => {
+          if (problem) failed.push(`${name} (${problem})`);
+          pending.push(name);
+          next.push(...carry(name));
+        };
         if (fetched >= MAX_STUDY_FETCHES) {
           deferred.push(name);
-          next.push(...carry(name));
-          if (cached) nextFiles[name] = { ...cached, error: 'deferred (per-run cap)' };
+          keep(null);
           continue;
         }
         fetched += 1;
-        let text: string;
+        let bytes: Uint8Array;
         try {
           const raw = await ctx.http.request(`https://raw.githubusercontent.com/brave/brave-variations/${vsha}/studies/${encodeURIComponent(name)}`, { scope: 'raw.githubusercontent.com' });
-          text = await raw.text();
+          bytes = new Uint8Array(await raw.arrayBuffer());
         } catch (err) {
-          failed.push(`${name} (${errText(err)})`);
-          next.push(...carry(name));
-          nextFiles[name] = { sha: null, readAt: cached?.readAt ?? null, relevant: before.length > 0 || Boolean(cached?.relevant), error: errText(err) };
+          keep(errText(err));
           continue;
         }
-        if (!RELEVANT_TEXT.test(text)) {
-          nextFiles[name] = { sha, readAt: ctx.now, relevant: false };
+        // The listing's blob SHA identifies the exact file: a truncated, empty or substituted body is a failed read.
+        if (f.sha && gitBlobSha(bytes) !== f.sha) {
+          keep(`content does not match the listed blob ${f.sha.slice(0, 8)} (${bytes.length} bytes received)`);
           continue;
         }
-        let parsed: unknown;
+        const text = new TextDecoder().decode(bytes);
+        let parsed: unknown[] | null = null;
+        let parseError = '';
         try {
-          parsed = parseJson5(text);
-          if (!Array.isArray(parsed)) throw new Error('top level is not a list of studies');
+          const p = parseJson5(text);
+          if (!Array.isArray(p)) throw new Error('top level is not a list of studies');
+          parsed = p;
         } catch (err) {
-          failed.push(`${name} (could not parse: ${errText(err)})`);
-          next.push(...carry(name));
-          nextFiles[name] = { sha: null, readAt: cached?.readAt ?? null, relevant: true, error: `parse: ${errText(err)}` };
+          parseError = errText(err);
+        }
+        if (!parsed) {
+          // Verified file content that never mentions Zcash/Ironwood cannot hold a Zcash study, parseable or not.
+          if (f.sha && !RELEVANT_TEXT.test(text)) unparsedIrrelevant.push(name);
+          else keep(`could not parse: ${parseError}`);
           continue;
         }
-        const found = (parsed as any[]).filter(isRelevantStudy).map((st) => toStudyInfo(st, name, vsha, builds, ctx.now));
-        nextFiles[name] = { sha, readAt: ctx.now, relevant: found.length > 0 };
-        next.push(...found);
+        if (!RELEVANT_TEXT.test(text)) continue; // a valid study file that never mentions Zcash/Ironwood
+        next.push(...parsed.filter(isRelevantStudy).map((st) => toStudyInfo(st, name, vsha, builds, ctx.now)));
       }
       if (truncatedListing) {
         const listed = new Set(files.map((f) => f.name));
@@ -822,17 +977,18 @@ export const services: Collector<ServicesData> = {
       }
       if (failed.length) {
         partial = true;
-        limitations.push(`${failed.length} study file(s) could not be read or parsed; their earlier studies are kept: ${failed.slice(0, 4).join('; ')}`);
+        limitations.push(`${failed.length} study file(s) could not be read or parsed; their earlier studies are kept and they are retried next run: ${failed.slice(0, 4).join('; ')}`);
       }
       if (deferred.length) {
         partial = true;
         limitations.push(`${deferred.length} study file(s) deferred by the per-run cap of ${MAX_STUDY_FETCHES}; their earlier studies are kept`);
       }
+      if (unparsedIrrelevant.length) limitations.push(`${unparsedIrrelevant.length} study file(s) could not be parsed but contain no Zcash/Ironwood wording (content verified against the listed blob SHA): ${unparsedIrrelevant.slice(0, 4).join(', ')}`);
       studies = next;
       studiesCommit = vsha;
       studiesReadAt = ctx.now;
-      studyFiles = nextFiles;
-      studyRules = STUDY_RULES;
+      studiesDigest = digest;
+      studyPending = pending;
     } catch (err) {
       partial = true;
       limitations.push(`brave/brave-variations could not be re-read (${errText(err)}); ${prevStudies.length ? `keeping ${prevStudies.length} stud${prevStudies.length === 1 ? 'y' : 'ies'} read at ${studiesReadAt ?? 'an earlier run'}` : 'no earlier studies to show'}`);
@@ -841,7 +997,14 @@ export const services: Collector<ServicesData> = {
     if (!gate3Fresh && !variationsFresh) throw new Error('neither brave/gate3 nor brave/brave-variations could be read');
     const unknownBuilds = studies.filter((s) => s.appliesUnknown?.length).length;
     if (unknownBuilds) limitations.push(`${unknownBuilds} stud${unknownBuilds === 1 ? 'y has' : 'ies have'} builds whose eligibility cannot be determined from public data`);
-    const data: ServicesData = { gate3, studies, studiesCommit, studiesReadAt: studiesReadAt ?? null, ...(studyFiles ? { studyFiles } : {}), ...(studyRules !== undefined ? { studyRules } : {}) };
+    const data: ServicesData = {
+      gate3,
+      studies,
+      studiesCommit,
+      studiesReadAt: studiesReadAt ?? null,
+      ...(studiesDigest ? { studiesDigest } : {}),
+      ...(studyPending.length ? { studyPending } : {}),
+    };
     return { data, limitations, partial, itemCount: studies.length + (gate3 ? 1 : 0) };
   },
 };

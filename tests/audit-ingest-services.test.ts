@@ -3,14 +3,15 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { Http } from '../src/lib/http.ts';
 import type { Ctx } from '../src/ingest/framework.ts';
 import type { ChannelVersion, CommunityTopic, DocPage, SourceEnvelope } from '../src/lib/types.ts';
-import { json5ToJson, services } from '../src/ingest/sources/services.ts';
+import { json5ToJson, parseGate3Switch, services } from '../src/ingest/sources/services.ts';
 import * as servicesModule from '../src/ingest/sources/services.ts';
 import type { ServicesData, StudyInfo } from '../src/ingest/sources/services.ts';
 import { braveVersions } from '../src/ingest/sources/brave-versions.ts';
-import type { BraveVersionsData } from '../src/ingest/sources/brave-versions.ts';
+import type { BraveVersionsData, PointerValue } from '../src/ingest/sources/brave-versions.ts';
 import { watch } from '../src/ingest/sources/watch.ts';
 import type { WatchData } from '../src/ingest/sources/watch.ts';
 import { docs } from '../src/ingest/sources/docs.ts';
@@ -132,7 +133,7 @@ test('ING-07: a malformed study file keeps that file\'s earlier studies and mark
   assert.equal(r.partial, true);
   assert.deepEqual(r.data.studies.map((s) => `${s.file}:${s.name}`).sort(), ['WalletOther.json5:WalletOther_Zcash', 'ZCashStudy.json5:ZCashStudy_Enabled']);
   assert.ok(r.limitations?.some((l) => /could not be read or parsed/.test(l) && /ZCashStudy\.json5/.test(l)));
-  assert.equal(r.data.studyFiles?.['ZCashStudy.json5'].error !== undefined, true, 'failed file is retried next run');
+  assert.deepEqual(r.data.studyPending, ['ZCashStudy.json5'], 'failed file is retried next run');
 });
 
 test('ING-07: an unavailable raw study file keeps its earlier studies instead of failing or dropping them', async () => {
@@ -163,28 +164,42 @@ test('ING-07: an unparseable switch at a new commit is unknown and keeps the las
   assert.equal(g.data.gate3?.lastDetermined?.checkedAt, EARLIER);
 });
 
-test('ING-11: Zcash studies are found by content, not filename; unchanged files are not refetched', async () => {
-  const listing = [
-    { name: 'ironwood.json', sha: 'i1' },
-    { name: 'MiscFeatures.json5', sha: 'm1' },
-    { name: 'Unrelated.json5', sha: 'u1' },
-  ];
+/** Git blob SHA-1 of a string, as the GitHub contents API lists it. */
+const blob = (s: string) => createHash('sha1').update(`blob ${Buffer.byteLength(s)}\0`).update(s).digest('hex');
+const listingOf = (files: Record<string, string>) => Object.entries(files).map(([name, body]) => ({ name, type: 'file', sha: blob(body) }));
+const fileRoute = (files: Record<string, string>): Route => (url) => {
+  if (url.includes('gate3')) return text(GATE3_ON);
+  const body = files[decodeURIComponent(url.split('/').pop()!)];
+  return body === undefined ? text('nf', 404) : text(body);
+};
+
+test('ING-11: Zcash studies are found by content, not filename; an unchanged listing is not refetched', async () => {
   const files: Record<string, string> = {
     'ironwood.json': JSON.stringify([{ name: 'BraveWalletZCash', experiment: [{ name: 'On', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash'] } }] }]),
     'MiscFeatures.json5': "[ { name: 'Misc', experiment: [ { name: 'On', probability_weight: 100, param: [ { name: 'zcash_ironwood_enabled', value: 'true' } ] } ] } ]",
     'Unrelated.json5': "[ { name: 'Speedreader', experiment: [ { name: 'On', probability_weight: 100, feature_association: { enable_feature: ['Speedreader'] } } ] } ]",
   };
-  const route: Route = (url) => (url.includes('gate3') ? text(GATE3_ON) : text(files[decodeURIComponent(url.split('/').pop()!)]));
-  const ctx = makeCtx(route, servicesGh({ listing }));
+  const listing = listingOf(files);
+  const ctx = makeCtx(fileRoute(files), servicesGh({ listing }));
   const r = await services.collect(ctx, null);
   assert.deepEqual(r.data.studies.map((s) => `${s.file}:${s.name}`), ['ironwood.json:BraveWalletZCash', 'MiscFeatures.json5:Misc']);
-  assert.equal(r.data.studyFiles?.['Unrelated.json5'].relevant, false, 'every listed file was read');
+  assert.equal(ctx.calls.filter((u) => u.includes('brave-variations')).length, 3, 'every listed file was read');
+  assert.equal(r.partial, false);
+  assert.match(r.data.studiesDigest ?? '', /^[0-9a-f]{64}$/);
+  assert.equal(r.data.studyPending, undefined);
+  assert.deepEqual(Object.keys(r.data).sort(), ['gate3', 'studies', 'studiesCommit', 'studiesDigest', 'studiesReadAt'], 'no per-file cache in the published data');
 
-  const ctx2 = makeCtx(route, servicesGh({ listing }));
+  const ctx2 = makeCtx(fileRoute(files), servicesGh({ listing }));
   const r2 = await services.collect(ctx2, r.data);
-  assert.equal(ctx2.calls.filter((u) => u.includes('brave-variations')).length, 0, 'unchanged blobs are served from the per-file cache');
+  assert.equal(ctx2.calls.filter((u) => u.includes('brave-variations')).length, 0, 'unchanged listing (same blob SHAs) is not re-read');
   assert.deepEqual(r2.data.studies.map((s) => s.name), ['BraveWalletZCash', 'Misc']);
   assert.equal(r2.partial, false);
+
+  // A changed blob is picked up.
+  const changed = { ...files, 'Unrelated.json5': "[ { name: 'NowZcash', experiment: [ { name: 'On', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCashShielded'] } } ] } ]" };
+  const ctx3 = makeCtx(fileRoute(changed), servicesGh({ listing: listingOf(changed) }));
+  const r3 = await services.collect(ctx3, r2.data);
+  assert.deepEqual(r3.data.studies.map((s) => s.name), ['BraveWalletZCash', 'Misc', 'NowZcash']);
 });
 
 test('ING-11: unsupported entries are reported instead of implying no study exists', async () => {
@@ -317,7 +332,7 @@ test('ING-06: one desktop OS readable and no earlier data: coverage is stated, p
   const android = r.data.current.find((c) => c.platform === 'android' && c.channel === 'release');
   assert.equal(android?.version, '1.2.2', 'previous Android value retained');
   assert.deepEqual(android?.carriedPointers, { 'release-android-google-play': EARLIER }, 'with the time it was read');
-  assert.match(android!.basis, /not readable this run/);
+  assert.match(android!.basis, /answered "not published" this run; value last read at 2026-10-01/);
 });
 
 test('ING-06: unreadable pointers keep their last good values with provenance; network errors do not abort', async () => {
@@ -340,8 +355,11 @@ test('ING-06: unreadable pointers keep their last good values with provenance; n
   assert.equal(Object.keys(desk.detail!).length, 7);
   assert.equal(desk.detail!['release-macos-arm64'], '1.97.50');
   assert.deepEqual(desk.carriedPointers, { 'release-macos-arm64': EARLIER, 'release-linux-x64': EARLIER });
-  assert.equal(desk.version, '1.97.50', 'lowest of all known OS values');
-  assert.match(desk.basis, /release-macos-arm64, release-linux-x64 not readable this run; value\(s\) last read at 2026-10-01/);
+  assert.equal(desk.version, '1.97.50', 'an OS kept through an outage still counts towards the lowest version');
+  assert.match(desk.basis, /release-macos-arm64 not readable this run; value\(s\) last read at 2026-10-01\S* included/);
+  assert.match(desk.basis, /release-linux-x64 answered "not published" this run; earlier value\(s\) 1\.97\.50 \(read at 2026-10-01\S*\) not used/);
+  assert.match(desk.basis, /not confirmed for every desktop OS/);
+  assert.deepEqual(desk.notPublishedPointers, ['release-linux-x64']);
   assert.equal(r.data.pointers?.['release-macos-arm64'].readAt, EARLIER, 'carried value keeps its original read time');
   assert.equal(r.data.pointers?.['release-windows-x64'].readAt, NOW);
   assert.ok(r.limitations?.some((l) => /2 pointer\(s\) unavailable/.test(l)));
@@ -536,4 +554,224 @@ test('legacy envelopes (pre-audit shapes) still load as previous data', async ()
   const s = await services.collect(makeCtx((url) => (url.includes('gate3') ? text(GATE3_ON) : text(studyJson('ZCashStudy_Enabled'))), servicesGh({ listing: [{ name: 'ZCashStudy.json5' }] }), VERSION_ENVS), PREV_SERVICES);
   assert.equal(s.partial, false);
   assert.ok(s.data.studies[0].filter, 'legacy study refreshed with its filter');
+});
+
+// ---------------------------------------------------------------------------
+// Repair round: variants refuted by the independent verifier
+// ---------------------------------------------------------------------------
+
+test('ING-07: an empty, error-page or substituted 200 body keeps the last-good studies and is re-read next run', async () => {
+  const good = studyJson('ZCashStudy_Fresh');
+  const listing = [{ name: 'ZCashStudy.json5', type: 'file', sha: blob(good) }];
+  for (const bad of ['', '<html><body>Service unavailable</body></html>', '[]']) {
+    const ctx = makeCtx((url) => (url.includes('gate3') ? text(GATE3_ON) : text(bad)), servicesGh({ listing }));
+    const r = await services.collect(ctx, PREV_SERVICES);
+    assert.equal(r.partial, true, `body ${JSON.stringify(bad)}`);
+    assert.deepEqual(r.data.studies.map((s) => s.name), ['ZCashStudy_Enabled'], 'last-good study kept');
+    assert.deepEqual(r.data.studyPending, ['ZCashStudy.json5'], 'not recorded as read');
+    assert.ok(r.limitations?.some((l) => /ZCashStudy\.json5 \(content does not match the listed blob/.test(l)));
+    // Next run with the same listing: the pending file is fetched again and its real content replaces the kept study.
+    const ctx2 = makeCtx(fileRoute({ 'ZCashStudy.json5': good }), servicesGh({ listing }));
+    const r2 = await services.collect(ctx2, r.data);
+    assert.equal(ctx2.calls.filter((u) => u.includes('brave-variations')).length, 1, 'pending file re-read');
+    assert.deepEqual(r2.data.studies.map((s) => s.name), ['ZCashStudy_Fresh']);
+    assert.equal(r2.partial, false);
+    assert.equal(r2.data.studyPending, undefined);
+  }
+  // Without a usable blob SHA, the body must parse as a list of studies.
+  const r3 = await services.collect(makeCtx((url) => (url.includes('gate3') ? text(GATE3_ON) : text('')), servicesGh({ listing: [{ name: 'ZCashStudy.json5', sha: 'not-a-sha' }] })), PREV_SERVICES);
+  assert.equal(r3.partial, true);
+  assert.deepEqual(r3.data.studies.map((s) => s.name), ['ZCashStudy_Enabled']);
+  assert.ok(r3.limitations?.some((l) => /ZCashStudy\.json5 \(could not parse/.test(l)));
+});
+
+test('ING-11: a verified file that cannot be parsed is a gap only when it mentions Zcash', async () => {
+  const odd = "[ { name: 'Odd', experiment: [ { name: 'On', probability_weight: 100, x: @@ } ] } ]";
+  const files = { 'Odd.json5': odd, 'ZCashStudy.json5': studyJson('Z') };
+  const r = await services.collect(makeCtx(fileRoute(files), servicesGh({ listing: listingOf(files) })), null);
+  assert.equal(r.partial, false);
+  assert.deepEqual(r.data.studies.map((s) => s.name), ['Z']);
+  assert.ok(r.limitations?.some((l) => /could not be parsed but contain no Zcash\/Ironwood wording/.test(l) && /Odd\.json5/.test(l)));
+  const zfiles = { ...files, 'Odd.json5': odd.replace("'Odd'", "'OddZcash'") };
+  const r2 = await services.collect(makeCtx(fileRoute(zfiles), servicesGh({ listing: listingOf(zfiles) })), null);
+  assert.equal(r2.partial, true);
+  assert.deepEqual(r2.data.studyPending, ['Odd.json5']);
+});
+
+test('ING-08: any other binding of the switch (one-line compound, import, dynamic, item) is unknown; reads stay determinate', () => {
+  const unknown = [
+    'SWAP_DISABLED_CHAINS = ()\nif settings.DISABLE_ZCASH: SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nif X: pass\nelse: SWAP_DISABLED_CHAINS = ()\n',
+    'SWAP_DISABLED_CHAINS = ()\ntry: SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nexcept Exception: pass\n',
+    'SWAP_DISABLED_CHAINS = ()\nfrom .overrides import SWAP_DISABLED_CHAINS\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nfrom .overrides import (\n    OTHER,\n    SWAP_DISABLED_CHAINS,\n)\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nfrom .overrides import *\n',
+    "SWAP_DISABLED_CHAINS = ()\nglobals()['SWAP_DISABLED_CHAINS'] = (Chain.ZCASH,)\n",
+    "SWAP_DISABLED_CHAINS = ()\nsetattr(sys.modules[__name__], 'SWAP_DISABLED_CHAINS', (Chain.ZCASH,))\n",
+    'SWAP_DISABLED_CHAINS = [Chain.ETH]\nSWAP_DISABLED_CHAINS[0] = Chain.ZCASH\n',
+    'SWAP_DISABLED_CHAINS = {Chain.ETH}\nSWAP_DISABLED_CHAINS.add(Chain.ZCASH)\n',
+    'A = SWAP_DISABLED_CHAINS = ()\n',
+  ];
+  for (const src of unknown) assert.equal(parseGate3Switch(src).zcashDisabled, null, src);
+  const determinate: [string, boolean][] = [
+    ['from app.models import *\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n', false],
+    ["__all__ = ['SWAP_DISABLED_CHAINS']\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\n", true],
+    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nif chain in SWAP_DISABLED_CHAINS: raise ValueError(chain)\n', false],
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\ndef f(x=SWAP_DISABLED_CHAINS): pass\nALL = SWAP_DISABLED_CHAINS.union(OTHER)\n', true],
+    ['"""Module docs: SWAP_DISABLED_CHAINS lists chains."""\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nlog.info("SWAP_DISABLED_CHAINS loaded")\n', true],
+  ];
+  for (const [src, v] of determinate) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
+});
+
+const RELEASE_ROW = (version: string, channel: string, chromium: string) => ({ tag: `v${version}`, version, channel, name: `${channel} v${version}`, chromium, publishedAt: null, url: 'u', assetPlatforms: [], prereleaseFlag: false });
+const ON = [{ name: 'On', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash'] } }];
+
+test('ING-09: desktop eligibility uses each OS pointer’s own version and the label names the OSes', async () => {
+  const detail = Object.fromEntries(DESKTOP.map((os) => [`beta-${os}`, os === 'linux-x64' ? '1.98.47' : '1.98.52']));
+  const envs = {
+    'brave-versions': env('brave-versions', { current: [{ ...cv('beta', 'desktop', '1.98.47'), detail }], missing: [] }),
+    'brave-releases': env('brave-releases', { releases: [RELEASE_ROW('1.98.47', 'beta', '155.0.1.1'), RELEASE_ROW('1.98.52', 'beta', '155.0.1.1')], latest: [], unrecognized: [] }),
+  };
+  const study = JSON.stringify([
+    { name: 'ZcashWin', filter: { platform: ['WINDOWS'], channel: ['BETA'], min_version: '155.1.98.50' }, experiment: ON },
+    { name: 'ZcashMin', filter: { channel: ['BETA'], min_version: '155.1.98.50' }, experiment: ON },
+    { name: 'ZcashAll', filter: { channel: ['BETA'] }, experiment: ON },
+  ]);
+  const [win, min, all] = (await services.collect(makeCtx((url) => (url.includes('gate3') ? text(GATE3_ON) : text(study)), servicesGh({ listing: [{ name: 'zcash.json' }] }), envs), null)).data.studies;
+  // Windows beta is 1.98.52 although the lowest desktop OS (Linux x64) is 1.98.47.
+  assert.deepEqual(win.appliesTo.map((a) => [a.build, a.applies]), [
+    ['Desktop beta (Windows) 1.98.52 (155.1.98.52)', true],
+    ['Desktop beta (macOS, Linux) 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)', false],
+  ]);
+  assert.deepEqual(win.appliesTo[0].desktopOs, ['windows-x64', 'windows-x86', 'windows-arm64']);
+  assert.deepEqual(min.appliesTo.map((a) => [a.build, a.applies]), [
+    ['Desktop beta (Windows, macOS, Linux arm64) 1.98.52 (155.1.98.52)', true],
+    ['Desktop beta (Linux x64) 1.98.47 (155.1.98.47)', false],
+  ]);
+  // Same answer on every desktop OS: one entry, no OS qualifier.
+  assert.deepEqual(all.appliesTo.map((a) => [a.build, a.applies, a.desktopOs]), [['Desktop beta 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)', true, undefined]]);
+});
+
+test('ING-09: legacy studies without a stored filter are re-evaluated per platform while variations is down', async () => {
+  const r = await services.collect(makeCtx(() => text(GATE3_ON), servicesGh({ variations: null }), VERSION_ENVS), PREV_SERVICES);
+  const st = r.data.studies.find((s) => s.name === 'ZCashStudy_Enabled')!;
+  assert.equal(st.appliesTo.some((a) => a.build === 'release 1.97.56 (155.1.97.56)'), false, 'stale version-only answer replaced');
+  assert.equal(st.appliesTo.find((a) => a.platform === 'android' && a.channel === 'release')?.applies, true);
+  assert.equal(st.appliesTo.find((a) => a.platform === 'desktop' && a.channel === 'release')?.applies, false, 'ANDROID-only study');
+  assert.equal(st.appliesTo.find((a) => a.platform === 'android' && a.channel === 'beta')?.applies, false, 'RELEASE-only study');
+  assert.ok(st.appliesTo.every((a) => /filter reconstructed/.test(a.reason ?? '')));
+});
+
+test('ING-10: a one-sided rollout still states what it enables; cohort dependence stays attributable', async () => {
+  const study = JSON.stringify([
+    {
+      name: 'ZcashRollout',
+      experiment: [
+        { name: 'Default', probability_weight: 90 },
+        { name: 'Enabled', probability_weight: 10, feature_association: { enable_feature: ['BraveWalletZCash'], forcing_feature_on: 'BraveWalletZCash' }, param: [{ name: 'zcash_shielded', value: 'true' }] },
+      ],
+    },
+  ]);
+  const st = (await services.collect(makeCtx((url) => (url.includes('gate3') ? text(GATE3_ON) : text(study)), servicesGh({ listing: [{ name: 'zcash.json' }] })), null)).data.studies[0];
+  assert.deepEqual(st.features, { enable: ['BraveWalletZCash'], disable: [] }, 'no cohort disables it, so the study enables it (for some clients)');
+  assert.deepEqual(st.params, { zcash_shielded: 'true' }, 'every cohort that sets the parameter agrees');
+  assert.deepEqual(st.mixed, { features: ['BraveWalletZCash'], params: ['zcash_shielded'] }, 'but it is cohort-dependent');
+  assert.deepEqual(st.experiments?.map((e) => [e.name, e.share, e.enable, e.forcingOn ?? []]), [['Default', 90, [], []], ['Enabled', 10, ['BraveWalletZCash'], ['BraveWalletZCash']]]);
+});
+
+test('ING-06: carried values expire; a retired (404) pointer never pins the desktop version', async () => {
+  const pointers: Record<string, PointerValue> = {};
+  for (const os of DESKTOP) pointers[`release-${os}`] = { version: '1.97.0', readAt: EARLIER };
+  pointers['release-windows-x86'] = { version: '1.90.0', readAt: '2026-03-01T00:00:00Z' };
+  const prev: BraveVersionsData = { current: [], missing: [], pointers };
+  const gh = { searchIssues: async () => ({ hits: [], incomplete: false }) };
+  const route = (release: string): Route => (url) => (url.endsWith('release-windows-x86.version') ? text('gone', 404) : text(url.includes('/release-') ? release : '1.99.0'));
+  const r = await braveVersions.collect(makeCtx(route('1.98.0'), gh), prev);
+  const d = r.data.current.find((c) => c.platform === 'desktop' && c.channel === 'release')!;
+  assert.equal(d.version, '1.98.0', 'a value last read seven months ago is not used');
+  assert.equal(d.detail!['release-windows-x86'], undefined);
+  assert.deepEqual(d.unavailablePointers, ['release-windows-x86']);
+  assert.match(d.basis, /older than 30 days and was dropped/);
+  assert.match(d.basis, /not confirmed for every desktop OS/);
+  assert.equal(r.data.pointers?.['release-windows-x86'], undefined);
+  assert.equal(r.partial, false, 'a pointer that is not published (and has no recent value) is a determinate answer, not a gap');
+  assert.ok(r.limitations?.some((l) => /1 not published \(HTTP 403\/404\)/.test(l)));
+  const r2 = await braveVersions.collect(makeCtx(route('1.99.5'), gh, {}, '2027-06-01T00:00:00Z'), r.data);
+  assert.equal(r2.data.current.find((c) => c.platform === 'desktop' && c.channel === 'release')!.version, '1.99.5', 'still not pinned on later runs');
+});
+
+test('ING-06: a pointer that newly answers 404 is kept for reference but does not lower the desktop version', async () => {
+  const pointers: Record<string, PointerValue> = {};
+  for (const os of DESKTOP) pointers[`release-${os}`] = { version: '1.97.0', readAt: EARLIER };
+  const gh = { searchIssues: async () => ({ hits: [], incomplete: false }) };
+  const r = await braveVersions.collect(makeCtx((url) => (url.endsWith('release-windows-x86.version') ? text('gone', 404) : text(url.includes('/release-') ? '1.98.0' : '1.99.0')), gh), { current: [], missing: [], pointers });
+  const d = r.data.current.find((c) => c.platform === 'desktop' && c.channel === 'release')!;
+  assert.equal(d.version, '1.98.0');
+  assert.equal(d.detail!['release-windows-x86'], '1.97.0');
+  assert.deepEqual(d.notPublishedPointers, ['release-windows-x86']);
+  assert.deepEqual(d.carriedPointers, { 'release-windows-x86': EARLIER });
+  assert.match(d.basis, /release-windows-x86 answered "not published" this run; earlier value\(s\) 1\.97\.0 .* not used/);
+  assert.match(d.basis, /not confirmed for every desktop OS/);
+  assert.equal(r.partial, true, 'an earlier value is being carried');
+});
+
+test('ING-06: a carried value with no recorded read time expires 30 days after the first failed read', async () => {
+  const gh = { searchIssues: async () => ({ hits: [], incomplete: false }) };
+  const route: Route = (url) => (url.includes('android') ? text('busy', 503) : text('1.98.0'));
+  const legacy: BraveVersionsData = { current: [cv('release', 'android', '1.2.2')], missing: [] };
+  const r1 = await braveVersions.collect(makeCtx(route, gh), legacy);
+  const a1 = r1.data.current.find((c) => c.platform === 'android' && c.channel === 'release')!;
+  assert.equal(a1.version, '1.2.2');
+  assert.equal(r1.data.pointers?.['release-android-google-play'].missingSince, NOW);
+  assert.equal(r1.partial, true);
+  const r2 = await braveVersions.collect(makeCtx(route, gh, {}, '2026-11-20T00:00:00Z'), r1.data);
+  assert.equal(r2.data.current.find((c) => c.platform === 'android' && c.channel === 'release'), undefined, 'no longer presented as current');
+  assert.equal(r2.partial, true, 'the pointer is still unreadable');
+  assert.ok(r2.limitations?.some((l) => /older than 30 days dropped/.test(l)));
+});
+
+test('ING-17: earlier topics missing from the search results are revalidated too', async () => {
+  const editedOut = topic(900, { retrievedAt: '2026-06-01T00:00:00Z' });
+  const edited = topic(901, { retrievedAt: '2026-06-02T00:00:00Z' });
+  const recent = topic(902, { retrievedAt: '2026-10-07T00:00:00Z' });
+  const counter = { n: 0 };
+  const details = {
+    900: { id: 900, title: 'Wallet question', category_id: 131, post_stream: { posts: [{ cooked: '<p>edited, nothing here</p>' }] } },
+    901: { id: 901, title: 'Zcash wallet report 901 (edited)', category_id: 131, post_stream: { posts: [{ cooked: '<p>Zcash send still fails</p>' }] } },
+  };
+  const r = await community.collect(makeCtx(communityRoute([], details, counter), {}, {}, '2026-10-08T00:00:00Z'), { topics: [editedOut, edited, recent], categories: {}, searched: [] });
+  assert.equal(counter.n, 2, 'stale topics are re-read; the recently read one stays cached');
+  assert.deepEqual(r.data.topics.map((t) => t.id).sort(), [901, 902]);
+  const t = r.data.topics.find((x) => x.id === 901)!;
+  assert.equal(t.title, 'Zcash wallet report 901 (edited)');
+  assert.equal(t.retrievedAt, '2026-10-08T00:00:00Z');
+  assert.ok(r.limitations?.some((l) => /no longer mention Zcash/.test(l) && /900/.test(l)));
+  assert.equal(r.partial, false);
+});
+
+test('ING-17: topics moved to an excluded category, deleted or made private are removed; other read failures keep them', async () => {
+  const moved = topic(910);
+  const deleted = topic(911, { retrievedAt: '2026-06-01T00:00:00Z' });
+  const priv = topic(912, { retrievedAt: '2026-06-01T00:00:00Z' });
+  const blocked = topic(913, { retrievedAt: '2026-06-01T00:00:00Z' });
+  const movedByDetail = topic(914, { retrievedAt: '2026-06-01T00:00:00Z' });
+  const hits = [{ id: 910, title: moved.title, category_id: 98, last_posted_at: moved.lastPostedAt, posts_count: 1 }];
+  const reads: number[] = [];
+  const route: Route = (url) => {
+    if (url.includes('/categories.json')) return json({ category_list: { categories: [{ id: 131, name: 'Wallet' }, { id: 98, name: 'Release Notes' }] } });
+    if (url.includes('/search.json')) return json({ topics: url.includes('zcash') ? hits : [] });
+    const id = Number(/\/t\/(\d+)\.json/.exec(url)?.[1]);
+    reads.push(id);
+    if (id === 911) return json({ errors: ['The requested URL or resource could not be found.'], error_type: 'not_found' }, 404);
+    if (id === 912) return json({ errors: ['You are not permitted to view the requested resource.'], error_type: 'invalid_access' }, 403);
+    if (id === 913) return text('<html>Access denied</html>', 403);
+    if (id === 914) return json({ id: 914, title: movedByDetail.title, category_id: 98, post_stream: { posts: [{ cooked: '<p>Zcash wallet release notes</p>' }] } });
+    return text('nf', 404);
+  };
+  const r = await community.collect(makeCtx(route, {}, {}, '2026-10-08T00:00:00Z'), { topics: [moved, deleted, priv, blocked, movedByDetail], categories: {}, searched: [] });
+  assert.deepEqual(r.data.topics.map((t) => t.id), [913], 'only the topic whose read failed for another reason is kept');
+  assert.equal(reads.includes(910), false, 'the search already shows the excluded category');
+  assert.equal(r.partial, true, 'the failed read is a gap');
+  assert.ok(r.limitations?.some((l) => /moved to an excluded category/.test(l) && /910/.test(l) && /914/.test(l)));
+  assert.ok(r.limitations?.some((l) => /deleted or are no longer public/.test(l) && /911, 912/.test(l)));
 });

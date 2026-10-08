@@ -3,7 +3,9 @@
 //
 // Topic details are cached, but re-read when the search metadata (title, category, last post)
 // differs from what was stored, and revalidated periodically (oldest first, bounded per run) so
-// edits that do not add a post are still picked up.
+// edits that do not add a post are still picked up. Earlier topics that the search no longer
+// returns are kept but revalidated the same way, so a topic edited out of the search results,
+// moved to an excluded category, deleted or made private does not stay unchanged forever.
 
 import { isPublicRef } from '../../../config/tracker.ts';
 import type { CommunityTopic } from '../../lib/types.ts';
@@ -82,31 +84,67 @@ export const community: Collector<CommunityData> = {
     let partial = false;
     const nowMs = Date.parse(ctx.now);
     const refreshCached = (old: CommunityTopic, t: any): CommunityTopic => ({ ...old, closed: Boolean(t.closed), archived: Boolean(t.archived), hasAcceptedAnswer: Boolean(t.has_accepted_answer), postsCount: t.posts_count ?? old.postsCount });
+    const isStale = (old: CommunityTopic) => !old.retrievedAt || !(nowMs - Date.parse(old.retrievedAt) < REVALIDATE_AFTER_MS);
+
+    const dropped = new Set<number>();
+    const removed = { editedOut: [] as number[], excluded: [] as number[], gone: [] as number[] };
 
     // Classify search hits: new/changed topics need a detail read; unchanged ones are cached or due for revalidation.
     const needDetail: { t: any; old: CommunityTopic | undefined; why: string }[] = [];
-    const revalidate: { t: any; old: CommunityTopic }[] = [];
+    const revalidate: { t: any; old: CommunityTopic; cached: CommunityTopic }[] = [];
     for (const t of hits.values()) {
-      if (EXCLUDED_CATEGORIES.has(t.category_id)) continue;
       const old = prevById.get(t.id);
+      if (EXCLUDED_CATEGORIES.has(t.category_id)) {
+        // The search reports the topic's current category: an earlier topic moved there is no longer a report.
+        if (old) {
+          dropped.add(t.id);
+          removed.excluded.push(t.id);
+        }
+        continue;
+      }
       if (!old || !old.retrievedAt) {
         needDetail.push({ t, old, why: 'new' });
         continue;
       }
       const why = searchMetadataChange(old, t);
       if (why) needDetail.push({ t, old, why });
-      else if (!(nowMs - Date.parse(old.retrievedAt) < REVALIDATE_AFTER_MS)) revalidate.push({ t, old });
+      else if (isStale(old)) revalidate.push({ t, old, cached: refreshCached(old, t) });
       else topics.push(refreshCached(old, t));
+    }
+    // Earlier topics the search no longer returns (ranking drift, or edited/moved/deleted): kept, and revalidated
+    // like any other cached topic, from a stand-in hit built from the stored fields.
+    for (const old of prevTopics) {
+      if (hits.has(old.id) || dropped.has(old.id) || !isStale(old)) continue;
+      const slug = /\/t\/([^/]+)\/\d+/.exec(old.url ?? '')?.[1];
+      revalidate.push({ t: { id: old.id, title: old.title, category_id: old.categoryId, slug, created_at: old.createdAt, last_posted_at: old.lastPostedAt, posts_count: old.postsCount, reply_count: old.replyCount, has_accepted_answer: old.hasAcceptedAnswer }, old, cached: old });
     }
     revalidate.sort((a, b) => (a.old.retrievedAt ?? '').localeCompare(b.old.retrievedAt ?? ''));
 
-    const dropped = new Set<number>();
     const failed: string[] = [];
     const deferred: string[] = [];
-    let editedOut = 0;
-    const readDetail = async (t: any): Promise<CommunityTopic | 'not-zcash'> => {
-      const { data: d } = await ctx.http.json<any>(`${BASE}/t/${t.id}.json`, { scope: 'community.brave.app' });
+    type DetailResult = CommunityTopic | 'not-zcash' | 'excluded' | 'gone';
+    const readDetail = async (t: any): Promise<DetailResult> => {
+      const res = await ctx.http.request(`${BASE}/t/${t.id}.json`, { scope: 'community.brave.app', okStatuses: [403, 404, 410] });
+      const body = await res.text();
       await ctx.http.pause(1300);
+      // Discourse answers 404/410 for a deleted topic and 403 "invalid_access" for one that is no longer public.
+      if (res.status === 404 || res.status === 410) return 'gone';
+      if (res.status === 403) {
+        let errorType: unknown = null;
+        try {
+          errorType = JSON.parse(body)?.error_type;
+        } catch {
+          // not a Discourse answer (e.g. a proxy block page): handled as a failed read below
+        }
+        if (errorType === 'invalid_access') return 'gone';
+        throw new Error(`HTTP 403 for /t/${t.id}.json${errorType ? ` (${String(errorType)})` : ''}`);
+      }
+      let d: any;
+      try {
+        d = JSON.parse(body);
+      } catch {
+        throw new Error(`invalid JSON for /t/${t.id}.json`);
+      }
       const first = d.post_stream?.posts?.[0];
       const cooked: string = first?.cooked ?? '';
       const allCooked = (d.post_stream?.posts ?? []).map((p: any) => p.cooked ?? '').join('\n');
@@ -115,6 +153,7 @@ export const community: Collector<CommunityData> = {
       const matched = TERMS.filter((term) => new RegExp(`\\b${term}\\b`, 'i').test(text));
       if (!CONFIRM.test(text)) return 'not-zcash'; // search stemming false positive, or edited
       const categoryId = d.category_id ?? t.category_id;
+      if (EXCLUDED_CATEGORIES.has(categoryId)) return 'excluded';
       if (!WALLET_CATEGORIES.has(categoryId) && !WALLET_HINT.test(text)) return 'not-zcash'; // e.g. general crypto chatter outside wallet context
       const linkUrls: string[] = (first?.link_counts ?? []).map((l: any) => l.url).filter(Boolean);
       const githubRefs = uniq([...extractRefs(allCooked), ...linkUrls.flatMap((u) => extractRefs(u))]).filter((r) => isPublicRef(r) && r.startsWith('brave/'));
@@ -139,12 +178,16 @@ export const community: Collector<CommunityData> = {
         retrievedAt: ctx.now,
       };
     };
-    const apply = (t: any, old: CommunityTopic | undefined, r: CommunityTopic | 'not-zcash') => {
-      if (r !== 'not-zcash') topics.push(r);
-      else if (old) {
-        dropped.add(t.id); // re-read: the topic no longer mentions Zcash in a wallet context
-        editedOut += 1;
+    const apply = (t: any, old: CommunityTopic | undefined, r: DetailResult) => {
+      if (typeof r === 'object') {
+        topics.push(r);
+        return;
       }
+      if (!old) return; // a new search hit that is not a Zcash wallet report
+      dropped.add(t.id);
+      if (r === 'not-zcash') removed.editedOut.push(t.id); // re-read: no longer mentions Zcash in a wallet context
+      else if (r === 'excluded') removed.excluded.push(t.id);
+      else removed.gone.push(t.id);
     };
 
     let detailFetches = 0;
@@ -162,11 +205,11 @@ export const community: Collector<CommunityData> = {
         if (old) topics.push(refreshCached(old, t));
       }
     }
-    // Periodic revalidation of unchanged topics, oldest first; the rest keep their cached details.
+    // Periodic revalidation of unchanged topics (in the search results or not), oldest first; the rest keep their cached details.
     let revalidated = 0;
-    for (const { t, old } of revalidate) {
+    for (const { t, old, cached } of revalidate) {
       if (revalidated >= MAX_REVALIDATIONS || detailFetches >= MAX_DETAIL_FETCHES || ctx.http.remaining('community.brave.app') < 1) {
-        topics.push(refreshCached(old, t));
+        topics.push(cached);
         continue;
       }
       revalidated += 1;
@@ -175,7 +218,7 @@ export const community: Collector<CommunityData> = {
         apply(t, old, await readDetail(t));
       } catch (err) {
         failed.push(`${t.id} (${errText(err)})`);
-        topics.push(refreshCached(old, t));
+        topics.push(cached);
       }
     }
     if (deferred.length) {
@@ -187,10 +230,13 @@ export const community: Collector<CommunityData> = {
       limitations.push(`${failed.length} topic detail read(s) failed; earlier details kept where they exist: ${failed.slice(0, 5).join(', ')}`);
     }
     if (revalidate.length > revalidated) limitations.push(`${revalidate.length - revalidated} topic(s) due for periodic re-reading were deferred to later runs`);
-    if (editedOut) limitations.push(`${editedOut} earlier topic(s) no longer mention Zcash in a wallet context after re-reading and were removed`);
-    // Keep previously captured topics that the search no longer returns (search ranking can drift).
-    const ids = new Set(topics.map((t) => t.id));
-    for (const old of prevTopics) if (!ids.has(old.id) && !dropped.has(old.id)) topics.push(old);
+    const idList = (xs: number[]) => xs.slice(0, 8).join(', ') + (xs.length > 8 ? ', …' : '');
+    if (removed.editedOut.length) limitations.push(`${removed.editedOut.length} earlier topic(s) no longer mention Zcash in a wallet context after re-reading and were removed: ${idList(removed.editedOut)}`);
+    if (removed.excluded.length) limitations.push(`${removed.excluded.length} earlier topic(s) moved to an excluded category (release notes) and were removed: ${idList(removed.excluded)}`);
+    if (removed.gone.length) limitations.push(`${removed.gone.length} earlier topic(s) were deleted or are no longer public (HTTP 404/410, or 403 invalid_access) and were removed: ${idList(removed.gone)}`);
+    // Keep previously captured topics that the search no longer returns and that were not revalidated this run.
+    const kept = new Set(topics.map((t) => t.id));
+    for (const old of prevTopics) if (!kept.has(old.id) && !dropped.has(old.id)) topics.push(old);
     topics.sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''));
     limitations.push('Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context');
     return { data: { topics, categories, searched }, limitations: uniq(limitations), partial, itemCount: topics.length };

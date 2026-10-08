@@ -149,6 +149,9 @@ export interface ChannelVersion {
   carriedPointers?: Record<string, string | null>;
   /** Pointers that could not be read in the latest run and have no earlier value (coverage is incomplete). */
   unavailablePointers?: string[];
+  /** Carried pointers that answered "not published" (HTTP 403/404) in the latest run; on desktop their earlier
+   *  values do not lower `version` while another desktop OS pointer was read. */
+  notPublishedPointers?: string[];
 }
 
 export interface AncestryResult {
