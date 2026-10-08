@@ -284,18 +284,27 @@ export function json5ToJson(src: string): unknown {
 interface PyStatement {
   code: string;
   line: number;
+  /** Columns before the statement on its line (statements after ';' share their line's indentation). */
   indent: number;
   /** Contents of the string literals in this statement (replaced by '' in `code`). */
   strings: string[];
-  /** Contents of the f-string literals among them: their {…} parts are code that runs. */
+  /** Contents of the f-string and t-string literals among them: their {…} parts are code that runs. */
   fstrings?: string[];
+  /** A string literal in this statement is not closed (a syntax error, or a form this scanner does not know). */
+  unterminated?: boolean;
 }
+
+/** Python string prefixes (any case): r, u, b, f, t and their two-letter combinations. */
+const STRING_PREFIX = /^(?:[rubft]|br|rb|fr|rf|tr|rt)$/i;
+const IDENTIFIER = /[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*/uy;
 
 /**
  * Split Python source into logical statements: comments dropped, string literals replaced by '',
- * bracketed and backslash-continued lines joined. Enough structure to read a module-level constant.
+ * bracketed and backslash-continued lines joined. Words are read whole, so a quote directly after a keyword
+ * (`else"""…"""`) starts a string and a quote after a string prefix starts a prefixed string, as in Python's tokenizer.
  */
-export function pythonStatements(src: string): PyStatement[] {
+export function pythonStatements(source: string): PyStatement[] {
+  const src = source.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
   const out: PyStatement[] = [];
   const n = src.length;
   let i = 0;
@@ -305,29 +314,30 @@ export function pythonStatements(src: string): PyStatement[] {
   let buf = '';
   let startLine = 1;
   let indent = 0;
+  let afterSemicolon = false;
   let strings: string[] = [];
   let fstrings: string[] = [];
+  let unterminated = false;
   const flush = () => {
-    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings, ...(fstrings.length ? { fstrings } : {}) });
+    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings, ...(fstrings.length ? { fstrings } : {}), ...(unterminated ? { unterminated } : {}) });
     buf = '';
     strings = [];
     fstrings = [];
+    unterminated = false;
   };
   const begin = (at: number) => {
-    if (buf.trim() === '') {
-      startLine = line;
-      indent = at - lineStart;
-    }
+    if (buf.trim() !== '') return;
+    startLine = line;
+    if (!afterSemicolon) indent = at - lineStart;
   };
-  const STR = /([rRuUbBfF]{0,2})('''|"""|'|")/y;
   while (i < n) {
     const c = src[i];
     if (c === '#') {
       while (i < n && src[i] !== '\n') i++;
       continue;
     }
-    if (c === '\\' && (src[i + 1] === '\n' || (src[i + 1] === '\r' && src[i + 2] === '\n'))) {
-      i += src[i + 1] === '\r' ? 3 : 2;
+    if (c === '\\' && src[i + 1] === '\n') {
+      i += 2;
       line++;
       lineStart = i;
       buf += ' ';
@@ -337,59 +347,68 @@ export function pythonStatements(src: string): PyStatement[] {
       i++;
       line++;
       lineStart = i;
-      if (depth === 0) flush();
-      else buf += ' ';
+      if (depth === 0) {
+        flush();
+        afterSemicolon = false;
+      } else buf += ' ';
       continue;
     }
-    const prevChar = i > 0 ? src[i - 1] : '';
-    if (!/[\w]/.test(prevChar)) {
-      STR.lastIndex = i;
-      const m = STR.exec(src);
-      if (m) {
+    let prefix = '';
+    IDENTIFIER.lastIndex = i;
+    const word = IDENTIFIER.exec(src);
+    if (word) {
+      const after = i + word[0].length;
+      if (!(STRING_PREFIX.test(word[0]) && (src[after] === '"' || src[after] === "'"))) {
         begin(i);
-        const q = m[2];
-        i += m[0].length;
-        const contentStart = i;
-        let contentEnd = n;
-        for (;;) {
-          if (i >= n) break;
-          const ch = src[i];
-          if (ch === '\\') {
-            if (src[i + 1] === '\n') {
-              line++;
-              lineStart = i + 2;
-            }
-            i += 2;
-            continue;
-          }
-          if (q.length === 3 ? src.startsWith(q, i) : ch === q) {
-            contentEnd = i;
-            i += q.length;
-            break;
-          }
-          if (ch === '\n') {
-            if (q.length === 1) {
-              contentEnd = i;
-              break; // unterminated single-line string: stop at the line end
-            }
-            line++;
-            lineStart = i + 1;
-          }
-          i++;
-        }
-        const content = src.slice(contentStart, Math.min(contentEnd, n));
-        strings.push(content);
-        if (/f/i.test(m[1])) fstrings.push(content);
-        buf += "''";
+        buf += word[0];
+        i = after;
         continue;
       }
+      prefix = word[0];
+    }
+    const quoteAt = i + prefix.length;
+    if (src[quoteAt] === '"' || src[quoteAt] === "'") {
+      begin(i);
+      const q = src.startsWith(src[quoteAt].repeat(3), quoteAt) ? src[quoteAt].repeat(3) : src[quoteAt];
+      i = quoteAt + q.length;
+      const contentStart = i;
+      let contentEnd = -1;
+      while (i < n) {
+        const ch = src[i];
+        if (ch === '\\') {
+          if (src[i + 1] === '\n') {
+            line++;
+            lineStart = i + 2;
+          }
+          i += 2;
+          continue;
+        }
+        if (q.length === 3 ? src.startsWith(q, i) : ch === q) {
+          contentEnd = i;
+          i += q.length;
+          break;
+        }
+        if (ch === '\n') {
+          if (q.length === 1) break; // unterminated single-line string: stop at the line end
+          line++;
+          lineStart = i + 1;
+        }
+        i++;
+      }
+      if (contentEnd < 0) unterminated = true;
+      const content = src.slice(contentStart, contentEnd < 0 ? Math.min(i, n) : contentEnd);
+      strings.push(content);
+      if (/[ft]/i.test(prefix)) fstrings.push(content);
+      buf += "''";
+      continue;
     }
     if (c === ';' && depth === 0) {
       flush();
+      afterSemicolon = true;
       i++;
       continue;
     }
-    if (c !== ' ' && c !== '\t' && c !== '\r') begin(i);
+    if (c !== ' ' && c !== '\t' && c !== '\f') begin(i);
     if (c === '(' || c === '[' || c === '{') depth++;
     else if (c === ')' || c === ']' || c === '}') depth = Math.max(0, depth - 1);
     buf += c;
@@ -452,15 +471,6 @@ function collectionElements(expr: string): string[] | null {
 }
 
 const SWAP_VAR = 'SWAP_DISABLED_CHAINS';
-/** Methods that only read a tuple/list/set; any other method call on the switch may modify it. */
-const READ_ONLY_METHODS = new Set(['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index']);
-const STAR_IMPORT = /^from\s+\S+\s+import\s+\*/;
-/**
- * Namespace primitives that can create or rebind module names at run time without naming them in code
- * (globals()/vars()/locals(), sys.modules, __dict__, setattr/delattr, exec/eval). Any use makes the final value of a
- * module constant undeterminable by reading the file: the name can be in a string, a variable or an alias.
- */
-const DYNAMIC_NAMESPACE = /(?<![\w.])(?:globals|vars|locals|setattr|delattr|exec|eval)\s*\(|\b__dict__\b|\b__(?:set|del)attr__\b|\bsys\s*\.\s*modules\b/;
 
 interface PyToken {
   t: string;
@@ -469,11 +479,7 @@ interface PyToken {
   depth: number;
 }
 const PY_OPS = ['**=', '//=', '>>=', '<<=', '...', '->', ':=', '==', '!=', '<=', '>=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '@=', '**', '//', '<<', '>>'];
-/** Assignment operators: a name to their left (at bracket depth 0) is an assignment target. */
-const ASSIGN_OPS = new Set(['=', '+=', '-=', '*=', '/=', '//=', '%=', '**=', '>>=', '<<=', '&=', '|=', '^=', '@=']);
 const PY_KEYWORDS = new Set(['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']);
-/** Keywords whose following target list binds names: `for X in`, `... as X`, `del X`, `global X`, `import X`, `def X`, `class X`. */
-const BINDING_KEYWORDS = new Set(['for', 'as', 'del', 'global', 'nonlocal', 'import', 'def', 'class']);
 
 /** Tokens of one logical statement from pythonStatements (string literals are already ''). */
 function pyTokens(code: string): PyToken[] {
@@ -516,116 +522,392 @@ function pyTokens(code: string): PyToken[] {
   return out;
 }
 
-/**
- * How a statement other than the definition binds or modifies the switch, or null when it only reads it.
- * The name is a target when it stands left of an assignment operator at bracket depth 0 (plain, chained, augmented,
- * annotated, tuple/list/starred, subscript and attribute targets, `type X = ...`, one-line `if c: X = ...`), when
- * it is assigned with := or passed as a keyword (`globals().update(X=...)`), when it is in the target list of
- * for/as/del/global/nonlocal/import/def/class or in a match-case pattern, or when a method that may modify it is
- * called on it.
- */
-function switchBinding(code: string, expression = false): string | null {
-  const toks = pyTokens(code);
-  const hits = toks.flatMap((x, k) => (x.kind === 'name' && x.t === SWAP_VAR ? [k] : []));
-  if (!hits.length) return null;
-  // An f-string replacement field is an expression: "{X=}" is the debug form of a read, not an assignment.
-  if (!expression) {
-    let lastAssign = -1;
-    toks.forEach((x, k) => {
-      if (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)) lastAssign = k;
-    });
-    if (hits.some((k) => k < lastAssign)) return 'assignment target';
-    const first = toks[0];
-    if (first?.t === 'case' && toks[1] && !(toks[1].kind === 'op' && (ASSIGN_OPS.has(toks[1].t) || toks[1].t === '.'))) return 'match-case pattern';
+// The module is read with an allowlist, not by looking for ways the switch could change: Python offers too many
+// (target lists, attribute and subscript targets, mutating calls on the value or an alias, setattr/exec/globals() and
+// every route to them such as builtins.exec, f.__globals__ or frame.f_globals, star imports, NFKC-equivalent names,
+// code in f-string fields). A value is only reported when every statement is a form that cannot run such code.
+
+/** The only callables a value may use: they build a new collection and cannot rebind or modify a module name. */
+const CONSTRUCTORS = new Set(['frozenset', 'set', 'tuple', 'list', 'dict']);
+/** Methods of tuple/list/set/frozenset that only read the collection; callable on the switch itself. */
+const READ_ONLY_METHODS = new Set(['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index']);
+/** Builtin exception classes (CPython 3.9 to 3.14): constructing and raising one runs no code of this module. */
+const PY_EXCEPTIONS = new Set(
+  (
+    'ArithmeticError AssertionError AttributeError BaseException BaseExceptionGroup BlockingIOError BrokenPipeError BufferError BytesWarning ' +
+    'ChildProcessError ConnectionAbortedError ConnectionError ConnectionRefusedError ConnectionResetError DeprecationWarning EOFError EncodingWarning ' +
+    'EnvironmentError Exception ExceptionGroup FileExistsError FileNotFoundError FloatingPointError FutureWarning GeneratorExit IOError ImportError ' +
+    'ImportWarning IndentationError IndexError InterruptedError IsADirectoryError KeyError KeyboardInterrupt LookupError MemoryError ModuleNotFoundError ' +
+    'NameError NotADirectoryError NotImplementedError OSError OverflowError PendingDeprecationWarning PermissionError ProcessLookupError ' +
+    'PythonFinalizationError RecursionError ReferenceError ResourceWarning RuntimeError RuntimeWarning StopAsyncIteration StopIteration SyntaxError ' +
+    'SyntaxWarning SystemError SystemExit TabError TimeoutError TypeError UnboundLocalError UnicodeDecodeError UnicodeEncodeError UnicodeError ' +
+    'UnicodeTranslateError UnicodeWarning UserWarning ValueError Warning ZeroDivisionError'
+  ).split(' '),
+);
+/** Every other public builtin name (dir(builtins) with the site module, CPython 3.9 to 3.14). */
+const PY_BUILTINS = new Set([
+  ...PY_EXCEPTIONS,
+  ...(
+    'Ellipsis False None NotImplemented True abs aiter all anext any ascii bin bool breakpoint bytearray bytes callable chr classmethod compile complex ' +
+    'copyright credits delattr dict dir divmod enumerate eval exec exit filter float format frozenset getattr globals hasattr hash help hex id input ' +
+    'int isinstance issubclass iter len license list locals map max memoryview min next object oct open ord pow print property quit range repr ' +
+    'reversed round set setattr slice sorted staticmethod str sum super tuple type vars zip WindowsError'
+  ).split(' '),
+]);
+const OPERATOR_KEYWORDS = new Set(['and', 'or', 'not', 'in', 'is']);
+const OPERATORS = new Set(['+', '-', '*', '/', '//', '%', '**', '@', '|', '&', '^', '~', '<<', '>>', '==', '!=', '<', '>', '<=', '>=']);
+const NUMBER_LITERAL = /^(?:0[xX][\da-fA-F_]+|0[bB][01_]+|0[oO][0-7_]+|(?:\d[\d_]*(?:\.[\d_]*)?|\.\d[\d_]*)(?:[eE][+-]?\d[\d_]*)?[jJ]?)$/;
+const isDunder = (s: string) => /^__\w*__$/.test(s);
+const isName = (x: PyToken | undefined): boolean => !!x && x.kind === 'name' && !PY_KEYWORDS.has(x.t);
+const plainName = (x: PyToken | undefined): boolean => !!x && isName(x) && !isDunder(x.t);
+const CLOSERS: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+
+/** Facts about the whole module that decide whether a statement is inert. */
+interface ModuleFacts {
+  /** A `from x import *` is present: it may bind any name, the constructors and exception classes included. */
+  star: boolean;
+  /** Module names bound anywhere by imports, assignments and defs. */
+  bound: Set<string>;
+  /** How often each name occurs in the module's code (outside strings and comments). */
+  uses: Map<string, number>;
+}
+
+function balanced(toks: PyToken[]): boolean {
+  const stack: string[] = [];
+  for (const x of toks) {
+    if (x.kind !== 'op') continue;
+    if (x.t === '(' || x.t === '[' || x.t === '{') stack.push(x.t);
+    else if (CLOSERS[x.t] && stack.pop() !== CLOSERS[x.t]) return false;
   }
-  for (const k of hits) {
-    const next = toks[k + 1];
-    if (next?.t === ':=') return 'assignment expression (:=)';
-    if (next?.t === '=' && toks[k].depth > 0) return 'keyword argument (e.g. globals().update(...))';
-    if (next?.t === '.' && toks[k + 2]?.kind === 'name' && toks[k + 3]?.t === '(' && !READ_ONLY_METHODS.has(toks[k + 2].t)) return `method call .${toks[k + 2].t}() that may modify it`;
-    // Walk back over a target list ("for a, (b, X) in", "import a, X", "with f() as X") to its keyword.
-    for (let j = k - 1; j >= 0; j--) {
-      const p = toks[j];
-      if (p.kind === 'name' && BINDING_KEYWORDS.has(p.t)) return `${p.t} target`;
-      if (p.kind === 'name' && !PY_KEYWORDS.has(p.t)) continue;
-      if (p.t === ',' || p.t === '*' || p.t === '.') continue;
-      if (p.t === '(' || p.t === '[') {
-        const before = toks[j - 1];
-        // A call or subscript ("f(X)", "a[X]") is a read, not a target list.
-        if (before && ((before.kind === 'name' && !PY_KEYWORDS.has(before.t)) || before.t === ')' || before.t === ']' || before.kind === 'string')) break;
-        continue;
+  return stack.length === 0;
+}
+
+/** Index of the bracket closing toks[open] (same depth), or -1. */
+function closingIndex(toks: PyToken[], open: number): number {
+  const close = { '(': ')', '[': ']', '{': '}' }[toks[open]?.t ?? ''];
+  if (!close) return -1;
+  for (let k = open + 1; k < toks.length; k++) if (toks[k].t === close && toks[k].depth === toks[open].depth) return k;
+  return -1;
+}
+
+/** End index of a dotted name (a.b.c) starting at k, or -1. */
+function dottedEnd(toks: PyToken[], k: number): number {
+  if (!isName(toks[k])) return -1;
+  let j = k + 1;
+  while (toks[j]?.t === '.' && isName(toks[j + 1])) j += 2;
+  return j;
+}
+
+const isStarImport = (toks: PyToken[]) => toks[0]?.t === 'from' && toks[toks.length - 1]?.t === '*' && toks[toks.length - 2]?.t === 'import';
+
+/** Names bound by a plain `import a.b [as c], ...` or `from x import a [as b], ...` statement; null for any other form (star imports included). */
+function importBindings(toks: PyToken[]): string[] | null {
+  const bound: string[] = [];
+  if (toks[0]?.t === 'import') {
+    let k = 1;
+    for (;;) {
+      const end = dottedEnd(toks, k);
+      if (end < 0) return null;
+      if (toks[end]?.t === 'as') {
+        if (!isName(toks[end + 1])) return null;
+        bound.push(toks[end + 1].t);
+        k = end + 2;
+      } else {
+        bound.push(toks[k].t);
+        k = end;
       }
-      break;
+      if (k === toks.length) return bound;
+      if (toks[k].t !== ',') return null;
+      k++;
+    }
+  }
+  if (toks[0]?.t === 'from') {
+    let k = 1;
+    while (toks[k]?.t === '.' || toks[k]?.t === '...') k++;
+    if (isName(toks[k])) k = dottedEnd(toks, k);
+    else if (k === 1) return null;
+    if (toks[k]?.t !== 'import') return null;
+    k++;
+    const paren = toks[k]?.t === '(';
+    if (paren) k++;
+    for (;;) {
+      if (!isName(toks[k])) return null;
+      let name = toks[k].t;
+      k++;
+      if (toks[k]?.t === 'as') {
+        if (!isName(toks[k + 1])) return null;
+        name = toks[k + 1].t;
+        k += 2;
+      }
+      bound.push(name);
+      if (paren && toks[k]?.t === ',' && toks[k + 1]?.t === ')') k++;
+      if (paren && toks[k]?.t === ')') return k + 1 === toks.length ? bound : null;
+      if (!paren && k === toks.length) return bound;
+      if (toks[k]?.t !== ',') return null;
+      k++;
     }
   }
   return null;
 }
 
-/** The replacement fields ("{...}", not "{{") of an f-string's contents: code that runs when the string is built. */
-function fstringFields(content: string): string[] {
-  const out: string[] = [];
-  let i = 0;
-  while (i < content.length) {
-    if (content.startsWith('{{', i) || content.startsWith('}}', i)) {
-      i += 2;
-      continue;
-    }
-    if (content[i] !== '{') {
-      i++;
-      continue;
-    }
-    let depth = 1;
-    let j = i + 1;
-    for (; j < content.length && depth > 0; j++) {
-      if ('([{'.includes(content[j])) depth++;
-      else if (')]}'.includes(content[j])) depth--;
-    }
-    out.push(content.slice(i + 1, depth === 0 ? j - 1 : j));
-    i = j;
-  }
-  return out;
+/** The module names a statement binds, as far as the allowlisted forms go (other forms are rejected anyway). */
+function statementBindings(toks: PyToken[]): string[] {
+  if (toks[0]?.t === 'import' || toks[0]?.t === 'from') return importBindings(toks) ?? [];
+  if (toks[0]?.t === 'def') return isName(toks[1]) ? [toks[1].t] : [];
+  if ((plainName(toks[0]) || toks[0]?.t === '__all__') && (toks[1]?.t === '=' || (toks[1]?.t === ':' && toks.some((x) => x.depth === 0 && x.t === '=')))) return [toks[0].t];
+  return [];
 }
 
-/** Code of a statement that string blanking hides: the replacement fields of its f-strings. */
-const fstringCode = (s: PyStatement) => (s.fstrings ?? []).flatMap(fstringFields);
+/** Why an annotation is not inert, or null. Module-level annotations are evaluated, so only names, subscripts, `|` and strings are accepted. */
+function annotationProblem(toks: PyToken[]): string | null {
+  if (!toks.length) return 'empty annotation';
+  for (const x of toks) {
+    if (x.kind === 'string' || x.t === 'None' || plainName(x)) continue;
+    if (x.kind === 'op' && ['.', '[', ']', ',', '|', '...'].includes(x.t)) continue;
+    return `its annotation uses "${x.t}"`;
+  }
+  return null;
+}
+
+/**
+ * Why an expression could run code that changes a module name, or null when it is inert: literals, names, attribute
+ * reads, operators, tuple/list/set/dict displays, calls to the collection constructors (not when a star import may
+ * have rebound them) and, after the definition, read-only methods called on the switch itself. No other call, no
+ * subscript, comprehension, lambda, conditional expression, walrus or keyword argument.
+ */
+function valueProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  if (!toks.length) return 'no value';
+  const open: string[] = [];
+  for (let k = 0; k < toks.length; k++) {
+    const x = toks[k];
+    const prev = toks[k - 1];
+    const next = toks[k + 1];
+    if (x.kind === 'string') continue;
+    if (x.kind === 'number') {
+      if (!NUMBER_LITERAL.test(x.t)) return `unrecognised number "${x.t}"`;
+      continue;
+    }
+    if (x.kind === 'name') {
+      if (x.t === 'True' || x.t === 'False' || x.t === 'None' || OPERATOR_KEYWORDS.has(x.t)) continue;
+      if (PY_KEYWORDS.has(x.t)) return `uses "${x.t}"`;
+      if (isDunder(x.t)) return `uses ${x.t}`;
+      if (next?.t === '(') {
+        if (prev?.t === '.') {
+          const receiver = toks[k - 2];
+          const onSwitch = receiver?.kind === 'name' && receiver.t === SWAP_VAR && toks[k - 3]?.t !== '.';
+          if (!(onSwitch && afterDef && READ_ONLY_METHODS.has(x.t))) return `calls .${x.t}()`;
+        } else if (!CONSTRUCTORS.has(x.t) || facts.star) return `calls ${x.t}()`;
+        continue;
+      }
+      if (next?.t === '[') return `subscripts ${x.t}[…]`;
+      continue;
+    }
+    switch (x.t) {
+      case '(':
+      case '[':
+      case '{':
+        if (prev && (prev.kind === 'string' || prev.kind === 'number' || prev.t === ')' || prev.t === ']' || prev.t === '}')) return 'calls or subscripts the result of an expression';
+        open.push(x.t);
+        continue;
+      case ')':
+      case ']':
+      case '}':
+        open.pop();
+        continue;
+      case ',':
+      case '...':
+        continue;
+      case '.':
+        if (prev && (prev.kind === 'name' || prev.kind === 'string' || prev.t === ')' || prev.t === ']' || prev.t === '}') && plainName(next)) continue;
+        return 'uses "." other than to read a plain attribute';
+      case ':':
+        if (open[open.length - 1] === '{') continue; // dict display
+        return 'uses ":" outside a dict display';
+      default:
+        if (OPERATORS.has(x.t)) continue;
+        return `uses "${x.t}"`;
+    }
+  }
+  return null;
+}
+
+/** One-line `def NAME(PARAMS) [-> T]: pass` (or `...` or a docstring): defaults and annotations inert, a body that does nothing. */
+function defProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const other = 'a def other than a one-line `def name(...): pass` without decorators';
+  if (!plainName(toks[1]) || toks[2]?.t !== '(') return other;
+  const close = closingIndex(toks, 2);
+  if (close < 0) return other;
+  const level = toks[2].depth + 1;
+  const params: PyToken[][] = [[]];
+  for (const x of toks.slice(3, close)) {
+    if (x.t === ',' && x.depth === level) params.push([]);
+    else params[params.length - 1].push(x);
+  }
+  for (const p of params) {
+    if (!p.length || (p.length === 1 && (p[0].t === '/' || p[0].t === '*'))) continue;
+    let j = p[0].t === '*' || p[0].t === '**' ? 1 : 0;
+    if (!isName(p[j])) return other;
+    j++;
+    const eq = p.findIndex((x, i) => i >= j && x.t === '=' && x.depth === level);
+    if (p[j]?.t === ':') {
+      const annotation = annotationProblem(p.slice(j + 1, eq < 0 ? undefined : eq));
+      if (annotation) return annotation;
+    } else if (j < p.length && eq !== j) return other;
+    if (eq >= 0) {
+      const value = valueProblem(p.slice(eq + 1), facts, afterDef);
+      if (value) return `a default value ${value}`;
+    }
+  }
+  let k = close + 1;
+  if (toks[k]?.t === '->') {
+    const colon = toks.findIndex((x, i) => i > k && x.depth === 0 && x.t === ':');
+    if (colon < 0) return other;
+    const annotation = annotationProblem(toks.slice(k + 1, colon));
+    if (annotation) return annotation;
+    k = colon;
+  }
+  if (toks[k]?.t !== ':') return other;
+  const body = toks.slice(k + 1);
+  if (body.length === 1 && (body[0].t === 'pass' || body[0].t === '...')) return null;
+  if (body.length && body.every((x) => x.kind === 'string')) return null;
+  return other;
+}
+
+/** One-line `if COND: raise BuiltinError(ARGS)` guard: an inert condition, and raising stops the module. */
+function ifRaiseProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const other = 'an if statement other than a one-line `if ...: raise BuiltinError(...)` guard';
+  const colon = toks.findIndex((x, i) => i > 0 && x.depth === 0 && x.t === ':');
+  if (colon < 2) return other;
+  const cond = valueProblem(toks.slice(1, colon), facts, afterDef);
+  if (cond) return `its condition ${cond}`;
+  const body = toks.slice(colon + 1);
+  if (body[0]?.t !== 'raise') return other;
+  const exc = body[1];
+  if (!plainName(exc) || !PY_EXCEPTIONS.has(exc.t) || facts.bound.has(exc.t) || facts.star) return `it raises ${exc?.t ?? 'nothing'}, not a builtin exception class the module leaves alone`;
+  if (body.length === 2) return null;
+  if (body[2]?.t !== '(' || closingIndex(body, 2) !== body.length - 1) return other;
+  if (body.length === 4) return null;
+  const args = valueProblem(body.slice(3, -1), facts, afterDef);
+  return args ? `its exception arguments ${args}` : null;
+}
+
+/**
+ * Expression statement `root.a.b(ARGS)` whose root name is defined nowhere: not bound in the module, not a builtin,
+ * no star import, used nowhere else. Python looks the root up first and raises NameError, so nothing in the call
+ * runs and the module stops there. Any other call runs code this reader cannot see.
+ */
+function unboundCallProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const root = toks[0];
+  let k = 1;
+  while (toks[k]?.t === '.' && plainName(toks[k + 1])) k += 2;
+  const callee = toks
+    .slice(0, k)
+    .map((x) => x.t)
+    .join('');
+  if (toks[k]?.t !== '(' || closingIndex(toks, k) !== toks.length - 1) return 'not an import, docstring or NAME = value statement (a call on a computed value, a subscript, ...)';
+  if (facts.star || facts.bound.has(root.t) || PY_BUILTINS.has(root.t) || root.t === 'Chain' || root.t.startsWith('_') || (facts.uses.get(root.t) ?? 0) > 1) return `it calls ${callee}(), code this reader cannot see`;
+  if (k + 1 === toks.length - 1) return null;
+  const args = valueProblem(toks.slice(k + 1, -1), facts, afterDef);
+  return args ? `the arguments of ${callee}() ${args}` : null;
+}
+
+/** Why a top-level statement is not one of the inert forms, or null; `bind` receives the module names it binds. */
+function statementProblem(s: PyStatement, toks: PyToken[], facts: ModuleFacts, afterDef: boolean, bind: (name: string, how: 'import' | 'assignment' | 'def') => void): string | null {
+  if (s.unterminated) return 'a string literal is not closed';
+  if (/[^\t\f\x20-\x7e]/.test(s.code)) return 'non-ASCII or control characters outside strings and comments (Python normalises identifiers, so names cannot be compared as written)';
+  if (s.indent > 0) return 'indented code inside a block';
+  if ((s.fstrings ?? []).some((f) => /[{}]/.test(f.replace(/\{\{|\}\}/g, '')))) return 'an f-string or t-string replacement field (code that runs)';
+  if (!balanced(toks)) return 'unbalanced brackets';
+  if (toks.every((x) => x.kind === 'string')) return null; // docstring or other bare string
+  if (toks.length === 1 && toks[0].t === 'pass') return null;
+  if (toks[0].t === 'import' || toks[0].t === 'from') {
+    // A star import before the definition cannot rebind the switch afterwards; that it may bind any other name is
+    // accounted for in facts.star (no constructor calls, no exception guards, no unbound-call statements).
+    if (isStarImport(toks)) return afterDef ? 'a star import after the definition' : null;
+    const names = importBindings(toks);
+    if (!names) return 'an import form not recognised';
+    // `from x import __builtins__` and the like change how this module resolves names.
+    const dunder = names.find(isDunder);
+    if (dunder) return `it imports the name ${dunder}`;
+    for (const name of names) bind(name, 'import');
+    return null;
+  }
+  if (toks[0].t === 'def') {
+    const problem = defProblem(toks, facts, afterDef);
+    if (!problem) bind(toks[1].t, 'def');
+    return problem;
+  }
+  if (toks[0].t === 'if') return ifRaiseProblem(toks, facts, afterDef);
+  const target = plainName(toks[0]) || toks[0].t === '__all__';
+  if (target && (toks[1]?.t === '=' || toks[1]?.t === ':')) {
+    let eq = -1;
+    for (let k = 1; k < toks.length; k++) {
+      if (toks[k].depth !== 0 || toks[k].t !== '=') continue;
+      if (eq >= 0) return 'a chained assignment';
+      eq = k;
+    }
+    if (toks[1].t === ':') {
+      const annotation = annotationProblem(toks.slice(2, eq < 0 ? undefined : eq));
+      if (annotation) return annotation;
+    }
+    if (eq < 0) return null; // annotation only: binds nothing
+    const value = valueProblem(toks.slice(eq + 1), facts, afterDef);
+    if (value) return `its value ${value}`;
+    bind(toks[0].t, 'assignment');
+    return null;
+  }
+  if (plainName(toks[0]) && (toks[1]?.t === '.' || toks[1]?.t === '(')) return unboundCallProblem(toks, facts, afterDef);
+  return 'not an import, docstring or NAME = value statement (a compound statement, del, or an augmented, unpacking, attribute or subscript assignment)';
+}
+
+/** Source encodings this reader decodes like Python does (the text is read as UTF-8). */
+const READABLE_ENCODING = /^(?:utf[-_]?8|ascii|us[-_]ascii)$/i;
 
 /**
  * Whether gate3's module-level SWAP_DISABLED_CHAINS contains Chain.ZCASH.
- * true/false only for a single top-level literal assignment whose relevant elements are all Chain.X and that no
- * other statement binds or modifies; null (unknown) for anything else: computed values, any other binding of the
- * name (see switchBinding, also inside f-string replacement fields), conditional definitions, a later star import,
- * or run-time namespace changes anywhere in the module (an alias such as `g = globals()` can hide the name, so any
- * use of those primitives leaves the value unknown).
+ * true/false only when every statement of the module is an inert form (see statementProblem: imports, docstrings,
+ * annotations, `NAME[: T] = value` with inert values, one-line `def f(...): pass`, one-line `if ...: raise
+ * BuiltinError(...)` guards, calls whose root name is defined nowhere) and the switch is bound exactly once, to a
+ * literal tuple/list/set of Chain members. Anything else leaves the value unknown (null): a statement that can run
+ * code could rebind or modify the switch in ways reading the file cannot rule out. Code in other modules (what an
+ * import runs, how Chain is defined) is outside what this file can show.
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);
-  const assign = new RegExp(`^${SWAP_VAR}\\s*(?::[^=]+)?=(?!=)([\\s\\S]*)$`);
-  const defs = stmts.filter((s) => assign.test(s.code));
-  if (!defs.length) {
-    const bound = stmts.find((s) => switchBinding(s.code));
-    return { zcashDisabled: null, line: bound?.line ?? null, reason: bound ? `${SWAP_VAR} is bound only in a form other than a single literal assignment (${switchBinding(bound.code)})` : `${SWAP_VAR} assignment not found` };
+  const toks = stmts.map((s) => pyTokens(s.code));
+  const isDef = (t: PyToken[]) => t[0]?.kind === 'name' && t[0].t === SWAP_VAR && (t[1]?.t === '=' || (t[1]?.t === ':' && t.some((x) => x.depth === 0 && x.t === '=')));
+  const defAt = stmts.findIndex((s, k) => s.indent === 0 && isDef(toks[k]));
+  if (defAt < 0) {
+    const nested = stmts.findIndex((_, k) => isDef(toks[k]));
+    if (nested >= 0) return { zcashDisabled: null, line: stmts[nested].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
+    const mention = stmts.find((_, k) => toks[k].some((x) => x.kind === 'name' && x.t === SWAP_VAR));
+    return { zcashDisabled: null, line: mention?.line ?? null, reason: mention ? `${SWAP_VAR} is bound only in a form other than a single literal assignment (line ${mention.line})` : `${SWAP_VAR} assignment not found` };
   }
-  const top = defs.filter((d) => d.indent === 0);
-  if (!top.length) return { zcashDisabled: null, line: defs[0].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
-  const def = top[0];
-  const dynamic = stmts.find((s) => [s.code, ...fstringCode(s)].some((c) => DYNAMIC_NAMESPACE.test(c)));
-  if (dynamic) return { zcashDisabled: null, line: def.line, reason: `the module changes names at run time (line ${dynamic.line}: globals()/vars()/setattr/exec or similar); the final value of ${SWAP_VAR} is not determined statically` };
-  const others = stmts.filter(
-    (s) =>
-      s !== def &&
-      (defs.includes(s) || switchBinding(s.code) !== null || fstringCode(s).some((c) => switchBinding(c, true) !== null) || (STAR_IMPORT.test(s.code) && s.line > def.line)),
-  );
-  if (others.length) {
-    const at = others.map((s) => s.line);
-    return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
+  const def = stmts[defAt];
+  const unknown = (why: string) => ({ zcashDisabled: null, line: def.line, reason: `${why}; the final value of ${SWAP_VAR} is not determined statically` });
+
+  const coding = src
+    .replace(/^\uFEFF/, '')
+    .split(/\r\n?|\n/, 2)
+    .map((l) => /^[ \t\f]*#.*?coding[:=][ \t]*([-\w.]+)/.exec(l)?.[1])
+    .find(Boolean);
+  if (coding && !READABLE_ENCODING.test(coding)) return unknown(`the file declares the source encoding ${coding}, which this reader does not decode`);
+
+  const facts: ModuleFacts = { star: toks.some(isStarImport), bound: new Set(toks.flatMap(statementBindings)), uses: new Map() };
+  for (const x of toks.flat()) if (x.kind === 'name') facts.uses.set(x.t, (facts.uses.get(x.t) ?? 0) + 1);
+  const bound = new Map<string, { how: 'import' | 'assignment' | 'def'; line: number }[]>();
+  for (let k = 0; k < stmts.length; k++) {
+    const s = stmts[k];
+    const problem = statementProblem(s, toks[k], facts, k > defAt, (name, how) => bound.set(name, [...(bound.get(name) ?? []), { how, line: s.line }]));
+    if (problem) return unknown(`line ${s.line}: ${problem}; only statements that cannot run code (imports, docstrings, NAME = literal, ...) are read as leaving the switch unchanged`);
   }
-  const rhs = assign.exec(def.code)![1];
-  // The value itself must be a plain literal: no chained target, walrus or self-reference.
-  const rhsToks = pyTokens(rhs);
-  if (rhsToks.some((x) => (x.kind === 'name' && x.t === SWAP_VAR) || x.t === ':=' || (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)))) {
-    return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is not a literal tuple/list/set of Chain members` };
-  }
-  const elements = collectionElements(rhs);
+  const swap = bound.get(SWAP_VAR) ?? [];
+  if (swap.length !== 1 || swap[0].how !== 'assignment') return unknown(`${SWAP_VAR} is bound more than once (lines ${swap.map((b) => b.line).join(', ')})`);
+  for (const name of CONSTRUCTORS) if (bound.has(name)) return unknown(`line ${bound.get(name)![0].line} rebinds ${name}`);
+  if ((bound.get('Chain')?.length ?? 0) > 1) return unknown(`Chain is bound more than once (lines ${bound.get('Chain')!.map((b) => b.line).join(', ')})`);
+
+  const rhs = /^SWAP_DISABLED_CHAINS\s*(?::[^=]+)?=([\s\S]*)$/.exec(def.code)?.[1];
+  const elements = rhs === undefined ? null : collectionElements(rhs);
   if (elements === null) return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is not a literal tuple/list/set of Chain members` };
   const names = elements.map((el) => /^Chain\s*\.\s*([A-Za-z_]\w*)$/.exec(el)?.[1] ?? null);
   if (names.some((x) => x !== null && x.toUpperCase() === 'ZCASH')) return { zcashDisabled: true, line: def.line, reason: null };

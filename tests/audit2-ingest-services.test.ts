@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { Http } from '../src/lib/http.ts';
 import type { Ctx } from '../src/ingest/framework.ts';
 import type { ChannelVersion, DocPage, SourceEnvelope } from '../src/lib/types.ts';
-import { isRelevantStudy, parseGate3Switch, services } from '../src/ingest/sources/services.ts';
+import { isRelevantStudy, parseGate3Switch, pythonStatements, services } from '../src/ingest/sources/services.ts';
 import type { ServicesData, StudyInfo } from '../src/ingest/sources/services.ts';
 import { docs } from '../src/ingest/sources/docs.ts';
 
@@ -94,20 +94,30 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
   // earlier can be called later); only the definition alone is determinate.
   assert.equal(parseGate3Switch(`[A, SWAP_DISABLED_CHAINS] = [1, (Chain.ZCASH,)]\n`).zcashDisabled, null);
 
-  // Reads stay determinate, including the real repository file.
+  // Inert reads stay determinate, including the real repository file.
   const reads: [string, boolean][] = [
     [GATE3_ON, true],
-    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nOK = [c for c in CHAINS if c not in SWAP_DISABLED_CHAINS]\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nd = {c: c in SWAP_DISABLED_CHAINS for c in CHAINS}\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nfor c in SWAP_DISABLED_CHAINS: register(c)\n', true],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nsmall = len(SWAP_DISABLED_CHAINS) <= 3\n', true],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\ndef f(chain, disabled=SWAP_DISABLED_CHAINS):\n    return chain in disabled\n', true],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\n', true],
     ['SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nlog.info(f"{SWAP_DISABLED_CHAINS} loaded; {SWAP_DISABLED_CHAINS=}; {{SWAP_DISABLED_CHAINS := x}}")\n', true],
     ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nDOC = "SWAP_DISABLED_CHAINS = (Chain.ZCASH,) and globals() are only words here"\n', false],
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = frozenset(SWAP_DISABLED_CHAINS)\n', true],
+    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nSWAP_DISABLED_CHAINS: tuple[Chain, ...]\nNOTE = f"{{SWAP_DISABLED_CHAINS := x}} is only text"\n', false],
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\n', true],
   ];
   for (const [src, v] of reads) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
+  // Repair round: these modules were first read as determinate, but each one has a statement that runs code the file
+  // cannot vouch for (a comprehension, a for loop, a call to len(), a def with a body, an f-string field). The verifier's
+  // counter-examples (a function that appends to its argument, setattr reached through an alias or functools.partial,
+  // operator.setitem, ...) have exactly that shape, so the module is read with an allowlist and such modules are
+  // unknown rather than a guess.
+  const runsCode = [
+    'SWAP_DISABLED_CHAINS = (Chain.ETH,)\nOK = [c for c in CHAINS if c not in SWAP_DISABLED_CHAINS]\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ETH,)\nd = {c: c in SWAP_DISABLED_CHAINS for c in CHAINS}\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nfor c in SWAP_DISABLED_CHAINS: register(c)\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nsmall = len(SWAP_DISABLED_CHAINS) <= 3\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\ndef f(chain, disabled=SWAP_DISABLED_CHAINS):\n    return chain in disabled\n',
+    'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nlog.info(f"{SWAP_DISABLED_CHAINS} loaded; {SWAP_DISABLED_CHAINS=}; {{SWAP_DISABLED_CHAINS := x}}")\n',
+  ];
+  for (const src of runsCode) assert.equal(parseGate3Switch(src).zcashDisabled, null, src);
 
   // Through the collector: unknown, partial, last determined value kept.
   const prev: ServicesData = {
@@ -120,6 +130,153 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
   assert.equal(r.data.gate3?.zcashDisabled, null);
   assert.equal(r.data.gate3?.lastDetermined?.zcashDisabled, true);
   assert.equal(r.partial, true);
+});
+
+// Repair round. Every case below was run with CPython (the module executed with Chain provided, an `overrides` module
+// defining SWAP_DISABLED_CHAINS = (Chain.ZCASH,)): Python's final value contains Chain.ZCASH in each, so a determinate
+// false would be wrong. The parser now reads the module with an allowlist (imports, docstrings, NAME = literal) and
+// leaves every other module unknown.
+const REAL_GATE3_CONSTANTS = `from app.api.common.models import Chain
+
+# Default slippage percentage for providers that do not support automatic
+# slippage computation
+DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"
+
+# Chains temporarily excluded from swap/bridge routing entirely.
+#
+# Zcash is disabled because Brave Wallet currently sends a shielded-only
+# unified address (u1...) as the swap recipient. Bridge providers honour
+# whatever recipient they are given, so the payout lands in a shielded pool the
+# wallet cannot scan: the funds arrive, but are invisible to the user.
+#
+# Re-enable by removing Chain.ZCASH here, once brave-core ships (and uplifts)
+# the fix that sends a transparent recipient. Pair that with a
+# recipient/refund_to validation guard that rejects shielded addresses, so
+# shielded support doesn't come back accidentally before Ironwood ships.
+SWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})
+`;
+
+test('R-ING-08 (repair): namespace access by any route, hidden statements, star imports, NFKC names, f-string fields and mutating calls are unknown, never false', async () => {
+  const DEF = 'SWAP_DISABLED_CHAINS = (Chain.ETH,)\n';
+  const LDEF = 'SWAP_DISABLED_CHAINS = [Chain.ETH]\n';
+  const cases: [string, string][] = [
+    // (1) Dynamic namespace forms: dotted calls, the globals dict reached through functions and frames, aliases.
+    ['builtins.exec', `${DEF}import builtins\nbuiltins.exec("SWAP_DISABLED_CHAINS = (Chain.ZCASH,)")\n`],
+    ['builtins.setattr', `${DEF}import builtins, importlib\nbuiltins.setattr(importlib.import_module(__name__), "SWAP_DISABLED_CHAINS", (Chain.ZCASH,))\n`],
+    ['f.__globals__', `${DEF}def f(): pass\nf.__globals__["SWAP_DISABLED_CHAINS"] = (Chain.ZCASH,)\n`],
+    ['frame f_globals', `${DEF}import inspect\ninspect.currentframe().f_globals["SWAP_DISABLED_CHAINS"] = (Chain.ZCASH,)\n`],
+    ['sys._getframe', `${DEF}import sys\nsys._getframe().f_globals.update({"SWAP_DISABLED_CHAINS": (Chain.ZCASH,)})\n`],
+    ['lambda __globals__', `${DEF}(lambda: 0).__globals__.update({"SWAP_DISABLED_CHAINS": (Chain.ZCASH,)})\n`],
+    ['partial(setattr)', `${DEF}import functools, importlib\nfunctools.partial(setattr, importlib.import_module(__name__))("SWAP_DISABLED_CHAINS", (Chain.ZCASH,))\n`],
+    ['setattr alias', `${DEF}import importlib\nfrom builtins import setattr as s\ns(importlib.import_module(__name__), "SWAP_DISABLED_CHAINS", (Chain.ZCASH,))\n`],
+    ['getattr exec', `${DEF}import builtins\ngetattr(builtins, "exec")("SWAP_DISABLED_CHAINS = (Chain.ZCASH,)")\n`],
+    ['module from a call', `${DEF}import importlib\nm = importlib.import_module(__name__)\n`],
+    ['imported __builtins__', `from fakebuiltins import __builtins__\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n`],
+    // (2) A statement hidden by the tokenizer: a quote right after a keyword starts a string.
+    ['else"""', `${DEF}a = b = 1\nX = a if b else"""\n"""; SWAP_DISABLED_CHAINS = (Chain.ZCASH,); Y = """\n"""\n`],
+    ['or"""', `${DEF}a = 1\nX = a or"""\n"""; SWAP_DISABLED_CHAINS = (Chain.ZCASH,); Y = """\n"""\n`],
+    // (3) A star import after a one-line compound header, or after ';'.
+    ['if: star import', `${DEF}if True: from overrides import *\n`],
+    ['; star import', `${DEF}pass; from overrides import *\n`],
+    // (4) Identifiers Python normalises with NFKC.
+    ['fullwidth S', `${DEF}ＳWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`],
+    ['mathematical bold S', `${DEF}\u{1D412}WAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`],
+    ['fullwidth member', 'SWAP_DISABLED_CHAINS = (Chain.ETH, Chain.ＺCASH)\n'],
+    // (5) A string containing a brace inside an f-string replacement field.
+    ['f-string brace in string', `${DEF}X = f"{'}' + str(SWAP_DISABLED_CHAINS := (Chain.ZCASH,))}"\n`],
+    ['t-string field', `${DEF}X = t"{(SWAP_DISABLED_CHAINS := (Chain.ZCASH,))}"\n`],
+    // (6) In-place mutation of a mutable definition, directly, through a function or through an alias.
+    ['list.append', `${LDEF}list.append(SWAP_DISABLED_CHAINS, Chain.ZCASH)\n`],
+    ['list.extend', `${LDEF}list.extend(SWAP_DISABLED_CHAINS, [Chain.ZCASH])\n`],
+    ['operator.setitem', `${LDEF}import operator\noperator.setitem(SWAP_DISABLED_CHAINS, 0, Chain.ZCASH)\n`],
+    ['operator.iadd', `${LDEF}import operator\noperator.iadd(SWAP_DISABLED_CHAINS, [Chain.ZCASH])\n`],
+    ['set.add', 'SWAP_DISABLED_CHAINS = {Chain.ETH}\nset.add(SWAP_DISABLED_CHAINS, Chain.ZCASH)\n'],
+    ['function appends to its argument', `${LDEF}def add(l):\n    l.append(Chain.ZCASH)\nadd(SWAP_DISABLED_CHAINS)\n`],
+    ['alias append', `${LDEF}_l = SWAP_DISABLED_CHAINS\n_l.append(Chain.ZCASH)\n`],
+    // Source-level forms that change what Python reads: a UTF-7 newline in a comment, a form feed resetting the
+    // indentation, lone carriage returns as line ends.
+    ['utf-7 comment', '# coding: utf-7\nSWAP_DISABLED_CHAINS = (Chain.ETH,) #+AAo-SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n'],
+    ['form feed', `${DEF}    \fSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`],
+    ['CR line ends', 'SWAP_DISABLED_CHAINS = (Chain.ETH,)\rSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\r'],
+  ];
+  for (const [name, src] of cases) {
+    const r = parseGate3Switch(src);
+    assert.equal(r.zcashDisabled, null, `${name}: Python's value contains Chain.ZCASH, so the answer is unknown, not false`);
+    assert.ok(r.reason, `${name}: a reason is given`);
+  }
+
+  // The real file (app/api/swap/constants.py at the time of writing) and a realistic richer constants module stay
+  // determinate: imports (also parenthesised, aliased, __future__), docstrings, literal constants, an annotation-only
+  // line, an alias of the switch and a constructor copy of it.
+  const real = parseGate3Switch(REAL_GATE3_CONSTANTS);
+  assert.deepEqual(real, { zcashDisabled: true, line: 18, reason: null });
+  const rich = (members: string) =>
+    `"""Swap constants."""\nfrom __future__ import annotations\n\nimport enum\nfrom app.api.common.models import (\n    Chain,\n    Provider as P,\n)\n\nDEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\nMAX_RETRIES: int = 3\nTIMEOUT = -1.5\nFEES = {"a": 1, "b": [1, 2], "c": (P, None)}\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({${members}})\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = tuple(SWAP_DISABLED_CHAINS)\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nNOTE = f"literal only {{braces}}"; pass\n`;
+  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.SOL')), { zcashDisabled: false, line: 14, reason: null });
+  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.ZCASH')), { zcashDisabled: true, line: 14, reason: null });
+  // ...and the same module with one more statement that runs code is unknown, whichever value the literal has.
+  for (const extra of ['from app.registry import register\nregister(SWAP_DISABLED_CHAINS)', 'if DEBUG: pass', 'Chain = OtherChain', 'frozenset = set', 'SWAP_DISABLED_CHAINS = SWAP_DISABLED_CHAINS - {Chain.ETH}']) {
+    for (const members of ['Chain.ETH', 'Chain.ZCASH']) assert.equal(parseGate3Switch(`${rich(members)}${extra}\n`).zcashDisabled, null, extra);
+  }
+
+  // The few statement forms beyond NAME = literal that the reader accepts (each cannot run code of this module):
+  // `__all__`, an `if ...: raise BuiltinError(...)` guard, a one-line `def ...: ...` without a body, operators, and
+  // read-only methods called on the switch itself. Python agrees on both values.
+  const guarded = (members: string) =>
+    `"""Swap constants."""\n__all__ = ["SWAP_DISABLED_CHAINS", "is_disabled"]\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({${members}})\nif Chain.ETH in SWAP_DISABLED_CHAINS: raise ValueError("ETH must stay routable")\ndef is_disabled(chain: Chain, *, disabled: frozenset[Chain] = SWAP_DISABLED_CHAINS) -> bool: ...\nROUTABLE = SWAP_DISABLED_CHAINS.symmetric_difference({Chain.ETH, Chain.SOL})\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\nNOT_ETH = Chain.ETH not in SWAP_DISABLED_CHAINS and Chain.SOL is not None\n`;
+  assert.deepEqual(parseGate3Switch(guarded('Chain.ZCASH')), { zcashDisabled: true, line: 4, reason: null });
+  assert.deepEqual(parseGate3Switch(guarded('Chain.SOL')), { zcashDisabled: false, line: 4, reason: null });
+  // ...but not when they could run something else. Python's value contains Chain.ZCASH in each of these:
+  const narrowed: [string, string][] = [
+    ['star import rebinding frozenset', 'from rebind import *\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n'],
+    ['mutating default', `${LDEF}def f(x=SWAP_DISABLED_CHAINS.append(Chain.ZCASH)): pass\n`],
+    ['mutating method in a value', `${LDEF}X = SWAP_DISABLED_CHAINS.append(Chain.ZCASH)\n`],
+    ['mutating method statement', `${LDEF}SWAP_DISABLED_CHAINS.insert(0, Chain.ZCASH)\n`],
+    ['mutating guard condition', `${LDEF}if SWAP_DISABLED_CHAINS.append(Chain.ZCASH): raise ValueError\n`],
+  ];
+  for (const [name, src] of narrowed) assert.equal(parseGate3Switch(src).zcashDisabled, null, name);
+  // ...and a call is only passed over when its root name is defined nowhere (Python stops at the NameError); a guard
+  // only raises a builtin exception class nothing rebinds; walrus conditions run code.
+  for (const extra of ['import logging as log\nlog.info("loaded")', 'ALIAS = log\nlog.info("loaded")', 'ValueError = setattr\nif True: raise ValueError(SWAP_DISABLED_CHAINS)', 'if (x := 1): raise ValueError()']) {
+    assert.equal(parseGate3Switch(`${guarded('Chain.SOL')}${extra}\n`).zcashDisabled, null, extra);
+  }
+  assert.equal(parseGate3Switch('from x import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\nif True: raise ValueError\n').zcashDisabled, null, 'a star import may rebind the exception class');
+  assert.equal(parseGate3Switch('from x import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n').zcashDisabled, false, 'a star import before a constructor-free definition cannot change it');
+
+  // Through the collector: the value is null, the source partial and the last determined value kept.
+  const prev: ServicesData = {
+    gate3: { commitSha: SHA_A, file: 'app/api/swap/constants.py', zcashDisabled: true, line: 18, url: 'https://github.com/brave/gate3/blob/x', checkedAt: EARLIER },
+    studies: [],
+    studiesCommit: null,
+  };
+  const r = await services.collect(makeCtx(() => text(`${LDEF}def add(l):\n    l.append(Chain.ZCASH)\nadd(SWAP_DISABLED_CHAINS)\n`), servicesGh({ gate3: 'c'.repeat(40), variations: null })), prev);
+  assert.equal(r.data.gate3?.zcashDisabled, null);
+  assert.equal(r.data.gate3?.lastDetermined?.zcashDisabled, true);
+  assert.equal(r.partial, true);
+  assert.ok(r.limitations?.some((l) => /gate3 at cccccccc: line 2: /.test(l)), 'the limitation names the statement that made the value unknown');
+});
+
+test('R-ING-08 (repair): Python statement splitting follows the tokenizer for prefixes, keywords before quotes and line ends', () => {
+  const split = (src: string) => pythonStatements(src).map((s) => [s.line, s.indent, s.code]);
+  // A quote right after a keyword starts a string; the statement after ';' keeps the line's indentation.
+  assert.deepEqual(split('X = a if b else"""\n"""; SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n'), [
+    [1, 0, "X = a if b else''"],
+    [2, 0, 'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)'],
+  ]);
+  assert.deepEqual(split("X = 1 in'#'; Y = 2\n"), [
+    [1, 0, "X = 1 in''"],
+    [1, 0, 'Y = 2'],
+  ]);
+  // String prefixes (any case, t-strings included) belong to the string; other words before a quote do not.
+  const st = pythonStatements('A = Rb"x" + T"{y}" + fR\'{z}\' + u"w"\n')[0];
+  assert.equal(st.code, "A = '' + '' + '' + ''");
+  assert.deepEqual(st.fstrings, ['{y}', '{z}']);
+  // Carriage returns end lines as in Python.
+  assert.deepEqual(split('A = 1\rB = 2\r\nC = 3\n'), [
+    [1, 0, 'A = 1'],
+    [2, 0, 'B = 2'],
+    [3, 0, 'C = 3'],
+  ]);
 });
 
 // ---------------------------------------------------------------------------
@@ -173,6 +330,77 @@ test('R-DOCS: a listing whose articles lack bodies keeps every captured statemen
 
   // Nothing captured before and nothing readable now: a failure, not an empty success.
   await assert.rejects(docs.collect(makeCtx(docsRoute({ list })), null), /without a body/);
+});
+
+// The four Help Center pages captured by a live run of the merged code (scratchpad data-live-int/sources/docs.json).
+const LIVE_SUPPORT_PAGES: DocPage[] = [
+  { id: 'zendesk-26390040705165', source: 'support', title: 'Zcash and Address Types', url: 'https://support.brave.app/hc/en-us/articles/26390040705165-Zcash-and-Address-Types', updatedAt: '2025-04-02T17:12:57Z', contentHash: '35330fe13fa96296', zcashStatements: ['Zcash is a secure digital currency that helps protect your privacy.', 'With Zcash, there are two types of addresses:', 'Transparent addresses: Transactions with transparent addresses, or t-addresses, can be tracked on the Zcash blockchain the same way Bitcoin can.'], retrievedAt: '2026-10-08T14:35:45.102Z' },
+  { id: 'zendesk-12747992885389', source: 'support', title: 'What is Brave Wallet?', url: 'https://support.brave.app/hc/en-us/articles/12747992885389-What-is-Brave-Wallet', updatedAt: '2025-11-13T22:16:24Z', contentHash: 'b50a98de04250093', zcashStatements: ['Support transparent and private shielded Zcash transactions.'], retrievedAt: '2026-10-08T14:35:45.102Z' },
+  { id: 'zendesk-4415497656461', source: 'support', title: 'Brave Wallet FAQ', url: 'https://support.brave.app/hc/en-us/articles/4415497656461-Brave-Wallet-FAQ', updatedAt: '2024-08-06T14:17:49Z', contentHash: 'e5f7d6f1ad6ac6de', zcashStatements: ['Brave Wallet supports Ethereum, EVM-compatible chains and L2s, Solana, Bitcoin, Zcash, and Filecoin.'], retrievedAt: '2026-10-08T14:35:45.102Z' },
+  { id: 'zendesk-12744130666509', source: 'support', title: 'How does Brave Wallet differ from other wallets?', url: 'https://support.brave.app/hc/en-us/articles/12744130666509-How-does-Brave-Wallet-differ-from-other-wallets', updatedAt: '2025-11-13T22:29:09Z', contentHash: '5ddad1adb949605b', zcashStatements: ['Brave Wallet users can buy, receive, and send crypto assets across multiple chains, including Ethereum, EVM compatible chains, and Solana, Zcash, and Bitcoin.'], retrievedAt: '2026-10-08T14:35:45.102Z' },
+];
+const liveId = (p: DocPage) => Number(p.id.replace('zendesk-', ''));
+/** Listing records for the live pages: same ids, titles and URLs, plus the given fields. */
+const liveListing = (extra: (p: DocPage) => Record<string, unknown>) => LIVE_SUPPORT_PAGES.map((p) => ({ id: liveId(p), title: p.title, html_url: p.url, edited_at: p.updatedAt, ...extra(p) }));
+
+function assertLiveKept(r: { data: { pages: DocPage[]; history: unknown[] }; partial?: boolean }, label: string) {
+  assert.equal(r.partial, true, `${label}: not a clean refresh`);
+  assert.deepEqual(r.data.history, [], `${label}: nothing archived (removed, reworded or superseded)`);
+  for (const old of LIVE_SUPPORT_PAGES) assert.deepEqual(r.data.pages.find((p) => p.id === old.id), old, `${label}: ${old.id} kept unchanged`);
+}
+
+test('R-DOCS (repair): empty bodies and look-ups that contradict the listing never archive the live Help Center statements', async () => {
+  const prev = { pages: LIVE_SUPPORT_PAGES, history: [] };
+  const empties = ['', '<p></p>', '&nbsp;', ' \n\t ', '<p> <br> </p>'];
+
+  // (a) The listing returns the same ids with an empty body (titles unchanged); the direct look-up is busy.
+  for (const body of empties) {
+    const r = await docs.collect(makeCtx(docsRoute({ list: liveListing(() => ({ body })) })), prev);
+    assertLiveKept(r, `listing body ${JSON.stringify(body)}`);
+    assert.ok(r.limitations?.some((l) => /4 Help Center article\(s\) were listed without a body \(missing or empty/.test(l)), JSON.stringify(body));
+  }
+  // ... and when the direct look-up answers with an empty body too (or the listing has no body at all).
+  for (const body of empties) {
+    for (const listed of [{ body: '' }, {}]) {
+      const r = await docs.collect(makeCtx(docsRoute({ list: liveListing(() => listed), article: (id) => json({ article: { id: Number(id), title: 'x', html_url: 'u', body } }) })), prev);
+      assertLiveKept(r, `look-up body ${JSON.stringify(body)}, listing ${JSON.stringify(listed)}`);
+    }
+  }
+
+  // (b) Listed as published (body missing or empty), but the direct look-up answers 404, 410 or draft: conflicting
+  // answers in one run are unknown, not a removal.
+  const lookups: [string, (id: string) => Response][] = [
+    ['404', () => text('nf', 404)],
+    ['410', () => text('gone', 410)],
+    ['draft', (id) => json({ article: { id: Number(id), draft: true, title: 'x', html_url: 'u', body: '<p>Draft text.</p>' } })],
+  ];
+  for (const [label, article] of lookups) {
+    for (const listed of [{}, { body: '' }, { body: null }]) {
+      const r = await docs.collect(makeCtx(docsRoute({ list: liveListing(() => listed), article })), prev);
+      assertLiveKept(r, `listed ${JSON.stringify(listed)}, look-up ${label}`);
+      assert.ok(r.limitations?.some((l) => /listed as published, but the article look-up/.test(l)), label);
+    }
+  }
+
+  // Unchanged: an article missing from both listing and search that answers 404 is archived as removed; one listed
+  // as a draft that answers 404 likewise; a readable body without Zcash wording is a real rewording.
+  const elsewhere = { id: 999, title: 'Zcash fees', html_url: 'https://support.brave.app/hc/999', body: '<p>Zcash fees follow ZIP-317.</p>' };
+  const gone = await docs.collect(makeCtx(docsRoute({ list: [elsewhere], article: () => text('nf', 404) })), prev);
+  assert.deepEqual(gone.data.history.map((h) => [h.id, h.state]), LIVE_SUPPORT_PAGES.map((p) => [p.id, 'removed']));
+  assert.equal(gone.partial, false);
+  const drafted = await docs.collect(makeCtx(docsRoute({ list: [elsewhere, ...liveListing(() => ({ draft: true }))], article: () => text('nf', 404) })), prev);
+  assert.deepEqual(drafted.data.history.map((h) => h.state), ['removed', 'removed', 'removed', 'removed']);
+  const reworded = await docs.collect(makeCtx(docsRoute({ list: [elsewhere, ...liveListing(() => ({ title: 'Wallet basics', body: '<p>Brave Wallet supports many chains.</p>' }))] })), prev);
+  assert.equal(reworded.partial, false);
+  assert.deepEqual(reworded.data.history.map((h) => h.state), ['no-longer-mentions-zcash', 'no-longer-mentions-zcash', 'no-longer-mentions-zcash', 'no-longer-mentions-zcash']);
+
+  // An unrelated Wallet article with an empty body (never captured, title without Zcash) does not make a clean run partial.
+  const unrelated = await docs.collect(makeCtx(docsRoute({ list: [elsewhere, { id: 5, title: 'Backing up your wallet', html_url: 'u', body: '' }] })), null);
+  assert.equal(unrelated.partial, false);
+  // With nothing captured before, a Zcash-titled article with an empty body is not captured as an empty page.
+  const emptyNew = await docs.collect(makeCtx(docsRoute({ list: [elsewhere, { id: 6, title: 'Zcash shielding', html_url: 'u', body: '<p></p>' }] })), null);
+  assert.equal(emptyNew.partial, true);
+  assert.equal(emptyNew.data.pages.some((p) => p.id === 'zendesk-6'), false);
 });
 
 // ---------------------------------------------------------------------------

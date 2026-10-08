@@ -6,7 +6,8 @@
 // article itself answers 404/410; when it is still published without Zcash wording it is
 // recorded as no longer mentioning Zcash. Either way its last statements move to `history`.
 // When neither can be confirmed (truncated listing, request failure, article records without
-// a body) the last captured copy is kept and the source is reported partial.
+// a readable body, a look-up that contradicts the listing) the last captured copy is kept and the
+// source is reported partial.
 
 import type { DocPage } from '../../lib/types.ts';
 import { decodeEntities, sha256, uniq } from '../../lib/util.ts';
@@ -112,11 +113,12 @@ async function zendeskList(ctx: Ctx, firstUrl: string, key: string, maxPages: nu
 }
 
 /**
- * Whether a Zendesk article record carries its content. The listing, search and article endpoints all return `body`
- * (HTML, possibly empty); a record without a string body is an API shape change, not an article without text, so its
- * Zcash wording is unknown: it is never captured as a page and never archived as reworded.
+ * Whether a Zendesk article record carries readable content. The listing, search and article endpoints all return
+ * `body` (HTML). A record without a string body, or whose body has no text ("", "<p></p>", whitespace), is not an
+ * article that was reworded: a published Help Center article is never empty, so this is an API shape change or a
+ * failed render, and the article's Zcash wording is unknown. It is never captured as a page and never archived.
  */
-const hasBody = (a: any) => typeof a?.body === 'string';
+const hasBody = (a: any) => typeof a?.body === 'string' && htmlToText(a.body).trim() !== '';
 
 function supportPage(a: any, now: string): { page: DocPage; mentionsZcash: boolean } {
   const text = htmlToText(a.body ?? '');
@@ -177,10 +179,13 @@ export const docs: Collector<DocsData> = {
       articles.set(String(a.id), a);
     }
     const bodyless: string[] = [];
+    const prevIds = new Set(prevPages.map((p) => p.id));
     for (const a of articles.values()) {
       if (a.draft) continue;
       if (!hasBody(a)) {
-        bodyless.push(String(a.id));
+        // A missing body hides whether the article mentions Zcash at all; an empty one matters when the article was
+        // captured before or its title names Zcash (an unrelated empty Wallet article cannot be a Zcash page).
+        if (typeof a.body !== 'string' || prevIds.has(`zendesk-${a.id}`) || ZCASH.test(String(a.title ?? ''))) bodyless.push(String(a.id));
         continue;
       }
       const { page, mentionsZcash } = supportPage(a, ctx.now);
@@ -188,7 +193,7 @@ export const docs: Collector<DocsData> = {
     }
     if (bodyless.length) {
       partial = true;
-      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
+      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (missing or empty; API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
     }
 
     // Earlier Help Center pages not captured this run: removed, reworded, or merely not listed?
@@ -199,7 +204,9 @@ export const docs: Collector<DocsData> = {
       if (pages.some((p) => p.id === old.id)) continue;
       const articleId = old.id.replace(/^zendesk-/, '');
       const listed = articles.get(articleId);
-      if (listed && !listed.draft && hasBody(listed)) {
+      // This run's listing or search shows the article as published (with or without a readable body).
+      const listedPublished = !!listed && !listed.draft;
+      if (listedPublished && hasBody(listed)) {
         archive(old, 'no-longer-mentions-zcash'); // read this run: still published, no Zcash wording
         ended += 1;
         continue;
@@ -212,6 +219,8 @@ export const docs: Collector<DocsData> = {
           const res = await ctx.http.request(`${ZENDESK}/en-us/articles/${articleId}.json`, { scope: 'support.brave.app', okStatuses: [404, 410] });
           const body = await res.text();
           if (res.status === 404 || res.status === 410) {
+            // Removal is only recorded when nothing in this run still shows the article as published.
+            if (listedPublished) throw new Error(`listed as published, but the article look-up answered ${res.status}`);
             archive(old, 'removed');
             ended += 1;
             continue;
@@ -219,11 +228,12 @@ export const docs: Collector<DocsData> = {
           const article = (JSON.parse(body) as any)?.article;
           if (!article || String(article.id) !== articleId) throw new Error('unexpected article response');
           if (article.draft) {
+            if (listedPublished) throw new Error('listed as published, but the article look-up says draft');
             archive(old, 'removed'); // unpublished
             ended += 1;
             continue;
           }
-          if (!hasBody(article)) throw new Error('article response has no body (API shape changed?)');
+          if (!hasBody(article)) throw new Error('article response has no body or an empty one (API shape changed?)');
           const { page, mentionsZcash } = supportPage(article, ctx.now);
           if (mentionsZcash) pages.push(page); // still a Zcash article, just outside the listing/search
           else {
