@@ -31,22 +31,59 @@ export function compareVersions(a: string, b: string): number {
   return 0;
 }
 
-/** Semver-ish comparison that ranks prereleases below the release ("0.24.0-rc.1" < "0.24.0"). */
+/**
+ * SemVer 2.0 precedence (https://semver.org/#spec-item-11):
+ * - build metadata ("+...") is ignored ("1.0.0+build.1" == "1.0.0");
+ * - a prerelease ranks below its release ("0.24.0-rc.1" < "0.24.0");
+ * - prerelease identifiers compare left to right: numeric identifiers numerically, alphanumeric ones in
+ *   ASCII order, numeric below alphanumeric, and a shorter identifier list below a longer one with the
+ *   same prefix (alpha < alpha.1 < alpha.beta < beta < beta.2 < beta.11 < rc.1 < release).
+ * The core ("x.y.z") is compared with compareVersions, so missing parts count as 0 ("0.15" == "0.15.0").
+ * Only the sign of the result is meaningful.
+ */
 export function compareSemver(a: string, b: string): number {
-  const [ca, pa] = splitPre(a);
-  const [cb, pb] = splitPre(b);
+  const [ca, pa] = splitSemver(a);
+  const [cb, pb] = splitSemver(b);
   const c = compareVersions(ca, cb);
   if (c !== 0) return c;
-  if (pa === pb) return 0;
-  if (!pa) return 1;
-  if (!pb) return -1;
-  return compareVersions(pa.replace(/[a-z]+\.?/gi, ''), pb.replace(/[a-z]+\.?/gi, '')) || (pa < pb ? -1 : 1);
+  if (pa === null && pb === null) return 0;
+  if (pa === null) return 1;
+  if (pb === null) return -1;
+  return comparePrerelease(pa, pb);
 }
 
-function splitPre(v: string): [string, string] {
-  const s = v.replace(/^v/, '');
-  const i = s.indexOf('-');
-  return i === -1 ? [s, ''] : [s.slice(0, i), s.slice(i + 1)];
+/** Split "v1.2.3-rc.1+build-5" into core "1.2.3" and prerelease "rc.1" (null when absent); build metadata is dropped. */
+function splitSemver(v: string): [string, string | null] {
+  let s = v.trim().replace(/^v/, '');
+  const plus = s.indexOf('+');
+  if (plus !== -1) s = s.slice(0, plus);
+  const dash = s.indexOf('-');
+  return dash === -1 ? [s, null] : [s.slice(0, dash), s.slice(dash + 1)];
+}
+
+function comparePrerelease(a: string, b: string): number {
+  const xa = a.split('.');
+  const xb = b.split('.');
+  const n = Math.min(xa.length, xb.length);
+  for (let i = 0; i < n; i++) {
+    const c = compareIdentifier(xa[i], xb[i]);
+    if (c !== 0) return c;
+  }
+  return xa.length === xb.length ? 0 : xa.length < xb.length ? -1 : 1;
+}
+
+function compareIdentifier(x: string, y: string): number {
+  const nx = /^\d+$/.test(x);
+  const ny = /^\d+$/.test(y);
+  if (nx && ny) {
+    // Arbitrary-length numeric identifiers: compare without precision loss.
+    const bx = BigInt(x);
+    const by = BigInt(y);
+    return bx === by ? 0 : bx < by ? -1 : 1;
+  }
+  if (nx) return -1;
+  if (ny) return 1;
+  return x === y ? 0 : x < y ? -1 : 1;
 }
 
 /** Convert Markdown/HTML-ish untrusted text to a compact plain-text excerpt. */
