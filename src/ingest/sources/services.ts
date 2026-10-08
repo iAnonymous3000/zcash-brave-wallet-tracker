@@ -107,12 +107,16 @@ export interface ServicesData {
 
 const GATE3_FILE = 'app/api/swap/constants.py';
 /** Bump when relevance or parsing rules change, so an unchanged listing is still re-read. */
-export const STUDY_RULES = 3;
+export const STUDY_RULES = 4;
 /** Upper bound on raw study files fetched per run (the repository has ~125; an unchanged listing is not re-read). */
 export const MAX_STUDY_FETCHES = 220;
-/** File-level content test: the file must mention Zcash/Ironwood somewhere. */
+/**
+ * Zcash terms. File level: the file must mention one somewhere. Study level: a feature name (enable/disable/forcing),
+ * parameter name or parameter value must contain one (BraveWalletZCash, zcash_shielded_transactions_enabled,
+ * zcash_ironwood_enabled, ...). Every Zcash feature and parameter Brave defines contains "zcash" or "ironwood";
+ * other Brave Wallet features (BraveWalletWebUIFeature, BraveWalletCardano, ...) do not make a study relevant.
+ */
 const RELEVANT_TEXT = /zcash|ironwood/i;
-const RELEVANT_NAME = /zcash|ironwood|wallet/i;
 
 // ---------------------------------------------------------------------------
 // JSON5
@@ -280,16 +284,27 @@ export function json5ToJson(src: string): unknown {
 interface PyStatement {
   code: string;
   line: number;
+  /** Columns before the statement on its line (statements after ';' share their line's indentation). */
   indent: number;
   /** Contents of the string literals in this statement (replaced by '' in `code`). */
   strings: string[];
+  /** Contents of the f-string and t-string literals among them: their {…} parts are code that runs. */
+  fstrings?: string[];
+  /** A string literal in this statement is not closed (a syntax error, or a form this scanner does not know). */
+  unterminated?: boolean;
 }
+
+/** Python string prefixes (any case): r, u, b, f, t and their two-letter combinations. */
+const STRING_PREFIX = /^(?:[rubft]|br|rb|fr|rf|tr|rt)$/i;
+const IDENTIFIER = /[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*/uy;
 
 /**
  * Split Python source into logical statements: comments dropped, string literals replaced by '',
- * bracketed and backslash-continued lines joined. Enough structure to read a module-level constant.
+ * bracketed and backslash-continued lines joined. Words are read whole, so a quote directly after a keyword
+ * (`else"""…"""`) starts a string and a quote after a string prefix starts a prefixed string, as in Python's tokenizer.
  */
-export function pythonStatements(src: string): PyStatement[] {
+export function pythonStatements(source: string): PyStatement[] {
+  const src = source.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
   const out: PyStatement[] = [];
   const n = src.length;
   let i = 0;
@@ -299,27 +314,30 @@ export function pythonStatements(src: string): PyStatement[] {
   let buf = '';
   let startLine = 1;
   let indent = 0;
+  let afterSemicolon = false;
   let strings: string[] = [];
+  let fstrings: string[] = [];
+  let unterminated = false;
   const flush = () => {
-    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings });
+    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings, ...(fstrings.length ? { fstrings } : {}), ...(unterminated ? { unterminated } : {}) });
     buf = '';
     strings = [];
+    fstrings = [];
+    unterminated = false;
   };
   const begin = (at: number) => {
-    if (buf.trim() === '') {
-      startLine = line;
-      indent = at - lineStart;
-    }
+    if (buf.trim() !== '') return;
+    startLine = line;
+    if (!afterSemicolon) indent = at - lineStart;
   };
-  const STR = /([rRuUbBfF]{0,2})('''|"""|'|")/y;
   while (i < n) {
     const c = src[i];
     if (c === '#') {
       while (i < n && src[i] !== '\n') i++;
       continue;
     }
-    if (c === '\\' && (src[i + 1] === '\n' || (src[i + 1] === '\r' && src[i + 2] === '\n'))) {
-      i += src[i + 1] === '\r' ? 3 : 2;
+    if (c === '\\' && src[i + 1] === '\n') {
+      i += 2;
       line++;
       lineStart = i;
       buf += ' ';
@@ -329,57 +347,68 @@ export function pythonStatements(src: string): PyStatement[] {
       i++;
       line++;
       lineStart = i;
-      if (depth === 0) flush();
-      else buf += ' ';
+      if (depth === 0) {
+        flush();
+        afterSemicolon = false;
+      } else buf += ' ';
       continue;
     }
-    const prevChar = i > 0 ? src[i - 1] : '';
-    if (!/[\w]/.test(prevChar)) {
-      STR.lastIndex = i;
-      const m = STR.exec(src);
-      if (m) {
+    let prefix = '';
+    IDENTIFIER.lastIndex = i;
+    const word = IDENTIFIER.exec(src);
+    if (word) {
+      const after = i + word[0].length;
+      if (!(STRING_PREFIX.test(word[0]) && (src[after] === '"' || src[after] === "'"))) {
         begin(i);
-        const q = m[2];
-        i += m[0].length;
-        const contentStart = i;
-        let contentEnd = n;
-        for (;;) {
-          if (i >= n) break;
-          const ch = src[i];
-          if (ch === '\\') {
-            if (src[i + 1] === '\n') {
-              line++;
-              lineStart = i + 2;
-            }
-            i += 2;
-            continue;
-          }
-          if (q.length === 3 ? src.startsWith(q, i) : ch === q) {
-            contentEnd = i;
-            i += q.length;
-            break;
-          }
-          if (ch === '\n') {
-            if (q.length === 1) {
-              contentEnd = i;
-              break; // unterminated single-line string: stop at the line end
-            }
-            line++;
-            lineStart = i + 1;
-          }
-          i++;
-        }
-        strings.push(src.slice(contentStart, Math.min(contentEnd, n)));
-        buf += "''";
+        buf += word[0];
+        i = after;
         continue;
       }
+      prefix = word[0];
+    }
+    const quoteAt = i + prefix.length;
+    if (src[quoteAt] === '"' || src[quoteAt] === "'") {
+      begin(i);
+      const q = src.startsWith(src[quoteAt].repeat(3), quoteAt) ? src[quoteAt].repeat(3) : src[quoteAt];
+      i = quoteAt + q.length;
+      const contentStart = i;
+      let contentEnd = -1;
+      while (i < n) {
+        const ch = src[i];
+        if (ch === '\\') {
+          if (src[i + 1] === '\n') {
+            line++;
+            lineStart = i + 2;
+          }
+          i += 2;
+          continue;
+        }
+        if (q.length === 3 ? src.startsWith(q, i) : ch === q) {
+          contentEnd = i;
+          i += q.length;
+          break;
+        }
+        if (ch === '\n') {
+          if (q.length === 1) break; // unterminated single-line string: stop at the line end
+          line++;
+          lineStart = i + 1;
+        }
+        i++;
+      }
+      if (contentEnd < 0) unterminated = true;
+      const content = src.slice(contentStart, contentEnd < 0 ? Math.min(i, n) : contentEnd);
+      strings.push(content);
+      if (/[ft]/i.test(prefix)) fstrings.push(content);
+      buf += "''";
+      continue;
     }
     if (c === ';' && depth === 0) {
       flush();
+      afterSemicolon = true;
       i++;
       continue;
     }
-    if (c !== ' ' && c !== '\t' && c !== '\r') begin(i);
+    if (c !== ' ' && c !== '\t' && c !== '\f') begin(i);
     if (c === '(' || c === '[' || c === '{') depth++;
     else if (c === ')' || c === ']' || c === '}') depth = Math.max(0, depth - 1);
     buf += c;
@@ -442,63 +471,443 @@ function collectionElements(expr: string): string[] | null {
 }
 
 const SWAP_VAR = 'SWAP_DISABLED_CHAINS';
-/** Methods that only read a tuple/list/set; any other method call on the switch may modify it. */
-const READ_ONLY_METHODS = ['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index'];
-const AUG = '(?:[-+*/%&|^@]|<<|>>|\\*\\*|//)?';
-/** Statements (other than the definition) that bind or modify the switch, so its final value is not the literal. */
-const SWAP_BINDING = new RegExp(
-  [
-    // (augmented/annotated) assignment at the start of a statement or after a compound-statement colon
-    // ("if X: SWAP_DISABLED_CHAINS = ...", "else: ...", "try: ...")
-    `(?:^|:)\\s*${SWAP_VAR}\\s*(?::[^=]*)?${AUG}=(?!=)`,
-    `\\b${SWAP_VAR}\\s*:=`,
-    `\\b${SWAP_VAR}\\s*\\[[^\\]]*\\]\\s*${AUG}=(?!=)`,
-    `\\b${SWAP_VAR}\\s*\\.\\s*(?!(?:${READ_ONLY_METHODS.join('|')})\\s*\\()[A-Za-z_]\\w*\\s*\\(`,
-    `\\bdel\\b.*\\b${SWAP_VAR}\\b`,
-    `\\b(?:as|for|global|nonlocal|def|class|case)\\s+${SWAP_VAR}\\b`,
-    `^\\(?\\s*(?:[A-Za-z_][\\w.]*\\s*,\\s*)+${SWAP_VAR}\\s*(?:,[\\w\\s,.]*)?\\)?\\s*=(?!=)`,
-    `^\\(?\\s*${SWAP_VAR}\\s*,[\\w\\s,.]*\\)?\\s*=(?!=)`,
-    `=\\s*${SWAP_VAR}\\s*=(?!=)`,
-  ].join('|'),
+
+interface PyToken {
+  t: string;
+  kind: 'name' | 'number' | 'string' | 'op';
+  /** Bracket depth the token is at (an opening bracket is at the outer depth, its contents one deeper). */
+  depth: number;
+}
+const PY_OPS = ['**=', '//=', '>>=', '<<=', '...', '->', ':=', '==', '!=', '<=', '>=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '@=', '**', '//', '<<', '>>'];
+const PY_KEYWORDS = new Set(['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']);
+
+/** Tokens of one logical statement from pythonStatements (string literals are already ''). */
+function pyTokens(code: string): PyToken[] {
+  const out: PyToken[] = [];
+  const NAME = /[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*/uy;
+  const NUMBER = /(?:\d|\.\d)[\w.]*/y;
+  let depth = 0;
+  let i = 0;
+  while (i < code.length) {
+    const c = code[i];
+    if (/\s/.test(c)) {
+      i++;
+      continue;
+    }
+    if (code.startsWith("''", i)) {
+      out.push({ t: "''", kind: 'string', depth });
+      i += 2;
+      continue;
+    }
+    NAME.lastIndex = i;
+    const name = NAME.exec(code);
+    if (name) {
+      out.push({ t: name[0], kind: 'name', depth });
+      i += name[0].length;
+      continue;
+    }
+    NUMBER.lastIndex = i;
+    const num = NUMBER.exec(code);
+    if (num) {
+      out.push({ t: num[0], kind: 'number', depth });
+      i += num[0].length;
+      continue;
+    }
+    const op = PY_OPS.find((o) => code.startsWith(o, i)) ?? c;
+    if (op === ')' || op === ']' || op === '}') depth = Math.max(0, depth - 1);
+    out.push({ t: op, kind: 'op', depth });
+    if (op === '(' || op === '[' || op === '{') depth++;
+    i += op.length;
+  }
+  return out;
+}
+
+// The module is read with an allowlist, not by looking for ways the switch could change: Python offers too many
+// (target lists, attribute and subscript targets, mutating calls on the value or an alias, setattr/exec/globals() and
+// every route to them such as builtins.exec, f.__globals__ or frame.f_globals, star imports, NFKC-equivalent names,
+// code in f-string fields). A value is only reported when every statement is a form that cannot run such code.
+
+/** The only callables a value may use: they build a new collection and cannot rebind or modify a module name. */
+const CONSTRUCTORS = new Set(['frozenset', 'set', 'tuple', 'list', 'dict']);
+/** Methods of tuple/list/set/frozenset that only read the collection; callable on the switch itself. */
+const READ_ONLY_METHODS = new Set(['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index']);
+/** Builtin exception classes (CPython 3.9 to 3.14): constructing and raising one runs no code of this module. */
+const PY_EXCEPTIONS = new Set(
+  (
+    'ArithmeticError AssertionError AttributeError BaseException BaseExceptionGroup BlockingIOError BrokenPipeError BufferError BytesWarning ' +
+    'ChildProcessError ConnectionAbortedError ConnectionError ConnectionRefusedError ConnectionResetError DeprecationWarning EOFError EncodingWarning ' +
+    'EnvironmentError Exception ExceptionGroup FileExistsError FileNotFoundError FloatingPointError FutureWarning GeneratorExit IOError ImportError ' +
+    'ImportWarning IndentationError IndexError InterruptedError IsADirectoryError KeyError KeyboardInterrupt LookupError MemoryError ModuleNotFoundError ' +
+    'NameError NotADirectoryError NotImplementedError OSError OverflowError PendingDeprecationWarning PermissionError ProcessLookupError ' +
+    'PythonFinalizationError RecursionError ReferenceError ResourceWarning RuntimeError RuntimeWarning StopAsyncIteration StopIteration SyntaxError ' +
+    'SyntaxWarning SystemError SystemExit TabError TimeoutError TypeError UnboundLocalError UnicodeDecodeError UnicodeEncodeError UnicodeError ' +
+    'UnicodeTranslateError UnicodeWarning UserWarning ValueError Warning ZeroDivisionError'
+  ).split(' '),
 );
-/** import rebinding ("from .overrides import SWAP_DISABLED_CHAINS", "import x as SWAP_DISABLED_CHAINS"). */
-const SWAP_IMPORT = new RegExp(`^(?:from\\s+\\S+\\s+)?import\\b.*\\b${SWAP_VAR}\\b`);
-const STAR_IMPORT = /^from\s+\S+\s+import\s+\*/;
-/** Dynamic binding by name: globals()/vars()/locals()/__dict__/setattr/exec/eval with the name in a string. */
-const DYNAMIC_BINDING = /\b(?:globals|vars|locals)\s*\(\s*\)|\bsetattr\s*\(|__dict__|\bexec\s*\(|\beval\s*\(/;
+/** Every other public builtin name (dir(builtins) with the site module, CPython 3.9 to 3.14). */
+const PY_BUILTINS = new Set([
+  ...PY_EXCEPTIONS,
+  ...(
+    'Ellipsis False None NotImplemented True abs aiter all anext any ascii bin bool breakpoint bytearray bytes callable chr classmethod compile complex ' +
+    'copyright credits delattr dict dir divmod enumerate eval exec exit filter float format frozenset getattr globals hasattr hash help hex id input ' +
+    'int isinstance issubclass iter len license list locals map max memoryview min next object oct open ord pow print property quit range repr ' +
+    'reversed round set setattr slice sorted staticmethod str sum super tuple type vars zip WindowsError'
+  ).split(' '),
+]);
+const OPERATOR_KEYWORDS = new Set(['and', 'or', 'not', 'in', 'is']);
+const OPERATORS = new Set(['+', '-', '*', '/', '//', '%', '**', '@', '|', '&', '^', '~', '<<', '>>', '==', '!=', '<', '>', '<=', '>=']);
+const NUMBER_LITERAL = /^(?:0[xX][\da-fA-F_]+|0[bB][01_]+|0[oO][0-7_]+|(?:\d[\d_]*(?:\.[\d_]*)?|\.\d[\d_]*)(?:[eE][+-]?\d[\d_]*)?[jJ]?)$/;
+const isDunder = (s: string) => /^__\w*__$/.test(s);
+const isName = (x: PyToken | undefined): boolean => !!x && x.kind === 'name' && !PY_KEYWORDS.has(x.t);
+const plainName = (x: PyToken | undefined): boolean => !!x && isName(x) && !isDunder(x.t);
+const CLOSERS: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+
+/** Facts about the whole module that decide whether a statement is inert. */
+interface ModuleFacts {
+  /** A `from x import *` is present: it may bind any name, the constructors and exception classes included. */
+  star: boolean;
+  /** Module names bound anywhere by imports, assignments and defs. */
+  bound: Set<string>;
+  /** How often each name occurs in the module's code (outside strings and comments). */
+  uses: Map<string, number>;
+}
+
+function balanced(toks: PyToken[]): boolean {
+  const stack: string[] = [];
+  for (const x of toks) {
+    if (x.kind !== 'op') continue;
+    if (x.t === '(' || x.t === '[' || x.t === '{') stack.push(x.t);
+    else if (CLOSERS[x.t] && stack.pop() !== CLOSERS[x.t]) return false;
+  }
+  return stack.length === 0;
+}
+
+/** Index of the bracket closing toks[open] (same depth), or -1. */
+function closingIndex(toks: PyToken[], open: number): number {
+  const close = { '(': ')', '[': ']', '{': '}' }[toks[open]?.t ?? ''];
+  if (!close) return -1;
+  for (let k = open + 1; k < toks.length; k++) if (toks[k].t === close && toks[k].depth === toks[open].depth) return k;
+  return -1;
+}
+
+/** End index of a dotted name (a.b.c) starting at k, or -1. */
+function dottedEnd(toks: PyToken[], k: number): number {
+  if (!isName(toks[k])) return -1;
+  let j = k + 1;
+  while (toks[j]?.t === '.' && isName(toks[j + 1])) j += 2;
+  return j;
+}
+
+const isStarImport = (toks: PyToken[]) => toks[0]?.t === 'from' && toks[toks.length - 1]?.t === '*' && toks[toks.length - 2]?.t === 'import';
+
+/** Names bound by a plain `import a.b [as c], ...` or `from x import a [as b], ...` statement; null for any other form (star imports included). */
+function importBindings(toks: PyToken[]): string[] | null {
+  const bound: string[] = [];
+  if (toks[0]?.t === 'import') {
+    let k = 1;
+    for (;;) {
+      const end = dottedEnd(toks, k);
+      if (end < 0) return null;
+      if (toks[end]?.t === 'as') {
+        if (!isName(toks[end + 1])) return null;
+        bound.push(toks[end + 1].t);
+        k = end + 2;
+      } else {
+        bound.push(toks[k].t);
+        k = end;
+      }
+      if (k === toks.length) return bound;
+      if (toks[k].t !== ',') return null;
+      k++;
+    }
+  }
+  if (toks[0]?.t === 'from') {
+    let k = 1;
+    while (toks[k]?.t === '.' || toks[k]?.t === '...') k++;
+    if (isName(toks[k])) k = dottedEnd(toks, k);
+    else if (k === 1) return null;
+    if (toks[k]?.t !== 'import') return null;
+    k++;
+    const paren = toks[k]?.t === '(';
+    if (paren) k++;
+    for (;;) {
+      if (!isName(toks[k])) return null;
+      let name = toks[k].t;
+      k++;
+      if (toks[k]?.t === 'as') {
+        if (!isName(toks[k + 1])) return null;
+        name = toks[k + 1].t;
+        k += 2;
+      }
+      bound.push(name);
+      if (paren && toks[k]?.t === ',' && toks[k + 1]?.t === ')') k++;
+      if (paren && toks[k]?.t === ')') return k + 1 === toks.length ? bound : null;
+      if (!paren && k === toks.length) return bound;
+      if (toks[k]?.t !== ',') return null;
+      k++;
+    }
+  }
+  return null;
+}
+
+/** The module names a statement binds, as far as the allowlisted forms go (other forms are rejected anyway). */
+function statementBindings(toks: PyToken[]): string[] {
+  if (toks[0]?.t === 'import' || toks[0]?.t === 'from') return importBindings(toks) ?? [];
+  if (toks[0]?.t === 'def') return isName(toks[1]) ? [toks[1].t] : [];
+  if ((plainName(toks[0]) || toks[0]?.t === '__all__') && (toks[1]?.t === '=' || (toks[1]?.t === ':' && toks.some((x) => x.depth === 0 && x.t === '=')))) return [toks[0].t];
+  return [];
+}
+
+/** Why an annotation is not inert, or null. Module-level annotations are evaluated, so only names, subscripts, `|` and strings are accepted. */
+function annotationProblem(toks: PyToken[]): string | null {
+  if (!toks.length) return 'empty annotation';
+  for (const x of toks) {
+    if (x.kind === 'string' || x.t === 'None' || plainName(x)) continue;
+    if (x.kind === 'op' && ['.', '[', ']', ',', '|', '...'].includes(x.t)) continue;
+    return `its annotation uses "${x.t}"`;
+  }
+  return null;
+}
+
+/**
+ * Why an expression could run code that changes a module name, or null when it is inert: literals, names, attribute
+ * reads, operators, tuple/list/set/dict displays, calls to the collection constructors (not when a star import may
+ * have rebound them) and, after the definition, read-only methods called on the switch itself. No other call, no
+ * subscript, comprehension, lambda, conditional expression, walrus or keyword argument.
+ */
+function valueProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  if (!toks.length) return 'no value';
+  const open: string[] = [];
+  for (let k = 0; k < toks.length; k++) {
+    const x = toks[k];
+    const prev = toks[k - 1];
+    const next = toks[k + 1];
+    if (x.kind === 'string') continue;
+    if (x.kind === 'number') {
+      if (!NUMBER_LITERAL.test(x.t)) return `unrecognised number "${x.t}"`;
+      continue;
+    }
+    if (x.kind === 'name') {
+      if (x.t === 'True' || x.t === 'False' || x.t === 'None' || OPERATOR_KEYWORDS.has(x.t)) continue;
+      if (PY_KEYWORDS.has(x.t)) return `uses "${x.t}"`;
+      if (isDunder(x.t)) return `uses ${x.t}`;
+      if (next?.t === '(') {
+        if (prev?.t === '.') {
+          const receiver = toks[k - 2];
+          const onSwitch = receiver?.kind === 'name' && receiver.t === SWAP_VAR && toks[k - 3]?.t !== '.';
+          if (!(onSwitch && afterDef && READ_ONLY_METHODS.has(x.t))) return `calls .${x.t}()`;
+        } else if (!CONSTRUCTORS.has(x.t) || facts.star) return `calls ${x.t}()`;
+        continue;
+      }
+      if (next?.t === '[') return `subscripts ${x.t}[…]`;
+      continue;
+    }
+    switch (x.t) {
+      case '(':
+      case '[':
+      case '{':
+        if (prev && (prev.kind === 'string' || prev.kind === 'number' || prev.t === ')' || prev.t === ']' || prev.t === '}')) return 'calls or subscripts the result of an expression';
+        open.push(x.t);
+        continue;
+      case ')':
+      case ']':
+      case '}':
+        open.pop();
+        continue;
+      case ',':
+      case '...':
+        continue;
+      case '.':
+        if (prev && (prev.kind === 'name' || prev.kind === 'string' || prev.t === ')' || prev.t === ']' || prev.t === '}') && plainName(next)) continue;
+        return 'uses "." other than to read a plain attribute';
+      case ':':
+        if (open[open.length - 1] === '{') continue; // dict display
+        return 'uses ":" outside a dict display';
+      default:
+        if (OPERATORS.has(x.t)) continue;
+        return `uses "${x.t}"`;
+    }
+  }
+  return null;
+}
+
+/** One-line `def NAME(PARAMS) [-> T]: pass` (or `...` or a docstring): defaults and annotations inert, a body that does nothing. */
+function defProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const other = 'a def other than a one-line `def name(...): pass` without decorators';
+  if (!plainName(toks[1]) || toks[2]?.t !== '(') return other;
+  const close = closingIndex(toks, 2);
+  if (close < 0) return other;
+  const level = toks[2].depth + 1;
+  const params: PyToken[][] = [[]];
+  for (const x of toks.slice(3, close)) {
+    if (x.t === ',' && x.depth === level) params.push([]);
+    else params[params.length - 1].push(x);
+  }
+  for (const p of params) {
+    if (!p.length || (p.length === 1 && (p[0].t === '/' || p[0].t === '*'))) continue;
+    let j = p[0].t === '*' || p[0].t === '**' ? 1 : 0;
+    if (!isName(p[j])) return other;
+    j++;
+    const eq = p.findIndex((x, i) => i >= j && x.t === '=' && x.depth === level);
+    if (p[j]?.t === ':') {
+      const annotation = annotationProblem(p.slice(j + 1, eq < 0 ? undefined : eq));
+      if (annotation) return annotation;
+    } else if (j < p.length && eq !== j) return other;
+    if (eq >= 0) {
+      const value = valueProblem(p.slice(eq + 1), facts, afterDef);
+      if (value) return `a default value ${value}`;
+    }
+  }
+  let k = close + 1;
+  if (toks[k]?.t === '->') {
+    const colon = toks.findIndex((x, i) => i > k && x.depth === 0 && x.t === ':');
+    if (colon < 0) return other;
+    const annotation = annotationProblem(toks.slice(k + 1, colon));
+    if (annotation) return annotation;
+    k = colon;
+  }
+  if (toks[k]?.t !== ':') return other;
+  const body = toks.slice(k + 1);
+  if (body.length === 1 && (body[0].t === 'pass' || body[0].t === '...')) return null;
+  if (body.length && body.every((x) => x.kind === 'string')) return null;
+  return other;
+}
+
+/** One-line `if COND: raise BuiltinError(ARGS)` guard: an inert condition, and raising stops the module. */
+function ifRaiseProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const other = 'an if statement other than a one-line `if ...: raise BuiltinError(...)` guard';
+  const colon = toks.findIndex((x, i) => i > 0 && x.depth === 0 && x.t === ':');
+  if (colon < 2) return other;
+  const cond = valueProblem(toks.slice(1, colon), facts, afterDef);
+  if (cond) return `its condition ${cond}`;
+  const body = toks.slice(colon + 1);
+  if (body[0]?.t !== 'raise') return other;
+  const exc = body[1];
+  if (!plainName(exc) || !PY_EXCEPTIONS.has(exc.t) || facts.bound.has(exc.t) || facts.star) return `it raises ${exc?.t ?? 'nothing'}, not a builtin exception class the module leaves alone`;
+  if (body.length === 2) return null;
+  if (body[2]?.t !== '(' || closingIndex(body, 2) !== body.length - 1) return other;
+  if (body.length === 4) return null;
+  const args = valueProblem(body.slice(3, -1), facts, afterDef);
+  return args ? `its exception arguments ${args}` : null;
+}
+
+/**
+ * Expression statement `root.a.b(ARGS)` whose root name is defined nowhere: not bound in the module, not a builtin,
+ * no star import, used nowhere else. Python looks the root up first and raises NameError, so nothing in the call
+ * runs and the module stops there. Any other call runs code this reader cannot see.
+ */
+function unboundCallProblem(toks: PyToken[], facts: ModuleFacts, afterDef: boolean): string | null {
+  const root = toks[0];
+  let k = 1;
+  while (toks[k]?.t === '.' && plainName(toks[k + 1])) k += 2;
+  const callee = toks
+    .slice(0, k)
+    .map((x) => x.t)
+    .join('');
+  if (toks[k]?.t !== '(' || closingIndex(toks, k) !== toks.length - 1) return 'not an import, docstring or NAME = value statement (a call on a computed value, a subscript, ...)';
+  if (facts.star || facts.bound.has(root.t) || PY_BUILTINS.has(root.t) || root.t === 'Chain' || root.t.startsWith('_') || (facts.uses.get(root.t) ?? 0) > 1) return `it calls ${callee}(), code this reader cannot see`;
+  if (k + 1 === toks.length - 1) return null;
+  const args = valueProblem(toks.slice(k + 1, -1), facts, afterDef);
+  return args ? `the arguments of ${callee}() ${args}` : null;
+}
+
+/** Why a top-level statement is not one of the inert forms, or null; `bind` receives the module names it binds. */
+function statementProblem(s: PyStatement, toks: PyToken[], facts: ModuleFacts, afterDef: boolean, bind: (name: string, how: 'import' | 'assignment' | 'def') => void): string | null {
+  if (s.unterminated) return 'a string literal is not closed';
+  if (/[^\t\f\x20-\x7e]/.test(s.code)) return 'non-ASCII or control characters outside strings and comments (Python normalises identifiers, so names cannot be compared as written)';
+  if (s.indent > 0) return 'indented code inside a block';
+  if ((s.fstrings ?? []).some((f) => /[{}]/.test(f.replace(/\{\{|\}\}/g, '')))) return 'an f-string or t-string replacement field (code that runs)';
+  if (!balanced(toks)) return 'unbalanced brackets';
+  if (toks.every((x) => x.kind === 'string')) return null; // docstring or other bare string
+  if (toks.length === 1 && toks[0].t === 'pass') return null;
+  if (toks[0].t === 'import' || toks[0].t === 'from') {
+    // A star import before the definition cannot rebind the switch afterwards; that it may bind any other name is
+    // accounted for in facts.star (no constructor calls, no exception guards, no unbound-call statements).
+    if (isStarImport(toks)) return afterDef ? 'a star import after the definition' : null;
+    const names = importBindings(toks);
+    if (!names) return 'an import form not recognised';
+    // `from x import __builtins__` and the like change how this module resolves names.
+    const dunder = names.find(isDunder);
+    if (dunder) return `it imports the name ${dunder}`;
+    for (const name of names) bind(name, 'import');
+    return null;
+  }
+  if (toks[0].t === 'def') {
+    const problem = defProblem(toks, facts, afterDef);
+    if (!problem) bind(toks[1].t, 'def');
+    return problem;
+  }
+  if (toks[0].t === 'if') return ifRaiseProblem(toks, facts, afterDef);
+  const target = plainName(toks[0]) || toks[0].t === '__all__';
+  if (target && (toks[1]?.t === '=' || toks[1]?.t === ':')) {
+    let eq = -1;
+    for (let k = 1; k < toks.length; k++) {
+      if (toks[k].depth !== 0 || toks[k].t !== '=') continue;
+      if (eq >= 0) return 'a chained assignment';
+      eq = k;
+    }
+    if (toks[1].t === ':') {
+      const annotation = annotationProblem(toks.slice(2, eq < 0 ? undefined : eq));
+      if (annotation) return annotation;
+    }
+    if (eq < 0) return null; // annotation only: binds nothing
+    const value = valueProblem(toks.slice(eq + 1), facts, afterDef);
+    if (value) return `its value ${value}`;
+    bind(toks[0].t, 'assignment');
+    return null;
+  }
+  if (plainName(toks[0]) && (toks[1]?.t === '.' || toks[1]?.t === '(')) return unboundCallProblem(toks, facts, afterDef);
+  return 'not an import, docstring or NAME = value statement (a compound statement, del, or an augmented, unpacking, attribute or subscript assignment)';
+}
+
+/** Source encodings this reader decodes like Python does (the text is read as UTF-8). */
+const READABLE_ENCODING = /^(?:utf[-_]?8|ascii|us[-_]ascii)$/i;
 
 /**
  * Whether gate3's module-level SWAP_DISABLED_CHAINS contains Chain.ZCASH.
- * true/false only for a single top-level literal assignment whose relevant elements are all Chain.X and that no
- * other statement rebinds or modifies; null (unknown) for anything else (computed values, reassignment in any form,
- * conditional definitions, import or dynamic rebinding).
+ * true/false only when every statement of the module is an inert form (see statementProblem: imports, docstrings,
+ * annotations, `NAME[: T] = value` with inert values, one-line `def f(...): pass`, one-line `if ...: raise
+ * BuiltinError(...)` guards, calls whose root name is defined nowhere) and the switch is bound exactly once, to a
+ * literal tuple/list/set of Chain members. Anything else leaves the value unknown (null): a statement that can run
+ * code could rebind or modify the switch in ways reading the file cannot rule out. Code in other modules (what an
+ * import runs, how Chain is defined) is outside what this file can show.
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);
-  const assign = new RegExp(`^${SWAP_VAR}\\s*(?::[^=]+)?=(?!=)([\\s\\S]*)$`);
-  const defs = stmts.filter((s) => assign.test(s.code));
-  if (!defs.length) {
-    const bound = stmts.find((s) => SWAP_BINDING.test(s.code) || SWAP_IMPORT.test(s.code));
-    return { zcashDisabled: null, line: bound?.line ?? null, reason: bound ? `${SWAP_VAR} is bound only in a form other than a single literal assignment` : `${SWAP_VAR} assignment not found` };
+  const toks = stmts.map((s) => pyTokens(s.code));
+  const isDef = (t: PyToken[]) => t[0]?.kind === 'name' && t[0].t === SWAP_VAR && (t[1]?.t === '=' || (t[1]?.t === ':' && t.some((x) => x.depth === 0 && x.t === '=')));
+  const defAt = stmts.findIndex((s, k) => s.indent === 0 && isDef(toks[k]));
+  if (defAt < 0) {
+    const nested = stmts.findIndex((_, k) => isDef(toks[k]));
+    if (nested >= 0) return { zcashDisabled: null, line: stmts[nested].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
+    const mention = stmts.find((_, k) => toks[k].some((x) => x.kind === 'name' && x.t === SWAP_VAR));
+    return { zcashDisabled: null, line: mention?.line ?? null, reason: mention ? `${SWAP_VAR} is bound only in a form other than a single literal assignment (line ${mention.line})` : `${SWAP_VAR} assignment not found` };
   }
-  const top = defs.filter((d) => d.indent === 0);
-  if (!top.length) return { zcashDisabled: null, line: defs[0].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
-  const firstLine = top[0].line;
-  const others = stmts.filter(
-    (s) =>
-      !defs.includes(s) &&
-      (SWAP_BINDING.test(s.code) ||
-        SWAP_IMPORT.test(s.code) ||
-        (STAR_IMPORT.test(s.code) && s.line > firstLine) ||
-        (DYNAMIC_BINDING.test(s.code) && s.strings.some((x) => x.includes(SWAP_VAR)))),
-  );
-  if (defs.length > 1 || others.length) {
-    const at = [...defs, ...others].map((s) => s.line).filter((l) => l !== firstLine);
-    return { zcashDisabled: null, line: firstLine, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
+  const def = stmts[defAt];
+  const unknown = (why: string) => ({ zcashDisabled: null, line: def.line, reason: `${why}; the final value of ${SWAP_VAR} is not determined statically` });
+
+  const coding = src
+    .replace(/^\uFEFF/, '')
+    .split(/\r\n?|\n/, 2)
+    .map((l) => /^[ \t\f]*#.*?coding[:=][ \t]*([-\w.]+)/.exec(l)?.[1])
+    .find(Boolean);
+  if (coding && !READABLE_ENCODING.test(coding)) return unknown(`the file declares the source encoding ${coding}, which this reader does not decode`);
+
+  const facts: ModuleFacts = { star: toks.some(isStarImport), bound: new Set(toks.flatMap(statementBindings)), uses: new Map() };
+  for (const x of toks.flat()) if (x.kind === 'name') facts.uses.set(x.t, (facts.uses.get(x.t) ?? 0) + 1);
+  const bound = new Map<string, { how: 'import' | 'assignment' | 'def'; line: number }[]>();
+  for (let k = 0; k < stmts.length; k++) {
+    const s = stmts[k];
+    const problem = statementProblem(s, toks[k], facts, k > defAt, (name, how) => bound.set(name, [...(bound.get(name) ?? []), { how, line: s.line }]));
+    if (problem) return unknown(`line ${s.line}: ${problem}; only statements that cannot run code (imports, docstrings, NAME = literal, ...) are read as leaving the switch unchanged`);
   }
-  const def = top[0];
-  const rhs = assign.exec(def.code)![1];
-  const elements = collectionElements(rhs);
+  const swap = bound.get(SWAP_VAR) ?? [];
+  if (swap.length !== 1 || swap[0].how !== 'assignment') return unknown(`${SWAP_VAR} is bound more than once (lines ${swap.map((b) => b.line).join(', ')})`);
+  for (const name of CONSTRUCTORS) if (bound.has(name)) return unknown(`line ${bound.get(name)![0].line} rebinds ${name}`);
+  if ((bound.get('Chain')?.length ?? 0) > 1) return unknown(`Chain is bound more than once (lines ${bound.get('Chain')!.map((b) => b.line).join(', ')})`);
+
+  const rhs = /^SWAP_DISABLED_CHAINS\s*(?::[^=]+)?=([\s\S]*)$/.exec(def.code)?.[1];
+  const elements = rhs === undefined ? null : collectionElements(rhs);
   if (elements === null) return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is not a literal tuple/list/set of Chain members` };
   const names = elements.map((el) => /^Chain\s*\.\s*([A-Za-z_]\w*)$/.exec(el)?.[1] ?? null);
   if (names.some((x) => x !== null && x.toUpperCase() === 'ZCASH')) return { zcashDisabled: true, line: def.line, reason: null };
@@ -564,11 +973,32 @@ function dateValue(v: unknown): number | null {
   return null;
 }
 
+/**
+ * One clause of a filter outcome. Clauses with the same `key` say the same thing about different builds, so the
+ * per-OS desktop builds of one channel can be summarised clause by clause instead of repeating every OS's reason.
+ */
+export interface FilterClause {
+  key: string;
+  /** platform: `key` + the excluded build; version: `full` + `key`; others: `text` is the same for every build with this key. */
+  kind: (typeof CLAUSE_ORDER)[number];
+  /** As stated for this one build. */
+  text: string;
+  /** version clauses: the full (Chromium-based) version that was compared. */
+  full?: string;
+}
+/** Clause kinds in the order a filter is evaluated (and reasons are written). */
+const CLAUSE_ORDER = ['platform', 'channel', 'version', 'version-unknown', 'date', 'key'] as const;
+
 /** Evaluate a study filter against one build. null = cannot be determined from public data. */
-export function evaluateStudyFilter(filter: Record<string, unknown> | null | undefined, b: StudyBuild, now: string): { applies: boolean | null; reason: string; desktopOs?: string[] } {
+export function evaluateStudyFilter(
+  filter: Record<string, unknown> | null | undefined,
+  b: StudyBuild,
+  now: string,
+): { applies: boolean | null; reason: string; desktopOs?: string[]; clauses: FilterClause[] } {
   const f = filter ?? {};
-  const excluded: string[] = [];
-  const unknown: string[] = [];
+  const excluded: FilterClause[] = [];
+  const unknown: FilterClause[] = [];
+  const other = (kind: FilterClause['kind'], text: string): FilterClause => ({ key: text, kind, text });
   let desktopOs: string[] | undefined;
 
   const platforms = asList(f.platform).map(normCode);
@@ -577,35 +1007,70 @@ export function evaluateStudyFilter(filter: Record<string, unknown> | null | und
     const family = b.platform === 'desktop' && b.os ? osFamily(b.os) : null;
     const codes = family ? [family] : PLATFORM_CODES[b.platform];
     const hit = codes.filter((p) => platforms.includes(p));
-    if (!hit.length) excluded.push(`platform filter (${platforms.join(', ')}) excludes ${b.os ? `${PLATFORM_NAME.desktop} ${osName(b.os)}` : PLATFORM_NAME[b.platform]}`);
+    const key = `platform filter (${platforms.join(', ')}) excludes`;
+    if (!hit.length) excluded.push({ key, kind: 'platform', text: `${key} ${b.os ? `${PLATFORM_NAME.desktop} ${osName(b.os)}` : PLATFORM_NAME[b.platform]}` });
     else if (b.platform === 'desktop' && !family && hit.length < DESKTOP_FAMILIES.length) desktopOs = hit;
   }
   const channels = asList(f.channel).map(normCode);
-  if (channels.length && !CHANNEL_CODES[b.channel].some((c) => channels.includes(c))) excluded.push(`channel filter (${channels.join(', ')}) excludes ${b.channel}`);
+  if (channels.length && !CHANNEL_CODES[b.channel].some((c) => channels.includes(c))) excluded.push(other('channel', `channel filter (${channels.join(', ')}) excludes ${b.channel}`));
 
   const min = f.min_version === undefined || f.min_version === null ? null : String(f.min_version);
   const max = f.max_version === undefined || f.max_version === null ? null : String(f.max_version);
   if (min || max) {
-    if (b.chromiumMajor === null || !BUILD_VERSION_RE.test(b.version)) unknown.push(`the Chromium-based version of ${b.version} is not known, so the version range ${min ?? 'any'} – ${max ?? 'any'} cannot be checked`);
+    const range = `${min ?? 'any'} – ${max ?? 'any'}`;
+    if (b.chromiumMajor === null || !BUILD_VERSION_RE.test(b.version)) unknown.push(other('version-unknown', `the Chromium-based version of ${b.version} is not known, so the version range ${range} cannot be checked`));
     else {
       const full = `${b.chromiumMajor}.${b.version}`;
-      if (!inStudyRange(full, min, max)) excluded.push(`${full} is outside the version range ${min ?? 'any'} – ${max ?? 'any'}`);
+      const key = `outside the version range ${range}`;
+      if (!inStudyRange(full, min, max)) excluded.push({ key, kind: 'version', text: `${full} is ${key}`, full });
     }
   }
   const nowMs = Date.parse(now);
   for (const [key, cmp] of [['start_date', 1], ['end_date', -1]] as const) {
     if (f[key] === undefined || f[key] === null) continue;
     const t = dateValue(f[key]);
-    if (t === null || !Number.isFinite(nowMs)) unknown.push(`${key} ${String(f[key])} could not be interpreted`);
-    else if (cmp === 1 ? nowMs < t : nowMs > t) excluded.push(`${key} ${new Date(t).toISOString()} ${cmp === 1 ? 'is in the future' : 'has passed'}`);
+    if (t === null || !Number.isFinite(nowMs)) unknown.push(other('date', `${key} ${String(f[key])} could not be interpreted`));
+    else if (cmp === 1 ? nowMs < t : nowMs > t) excluded.push(other('date', `${key} ${new Date(t).toISOString()} ${cmp === 1 ? 'is in the future' : 'has passed'}`));
   }
   for (const key of Object.keys(f)) {
     if (BUILD_KEYS.has(key) || CLIENT_KEYS.has(key)) continue;
-    unknown.push(`filter key "${key}" is not evaluated`);
+    unknown.push(other('key', `filter key "${key}" is not evaluated`));
   }
-  if (excluded.length) return { applies: false, reason: excluded.join('; ') };
-  if (unknown.length) return { applies: null, reason: unknown.join('; ') };
-  return { applies: true, reason: desktopOs ? `admitted on ${desktopOs.join(', ')} only among desktop OSes` : 'platform, channel and version filters admit this build', ...(desktopOs ? { desktopOs } : {}) };
+  const join = (cs: FilterClause[]) => cs.map((c) => c.text).join('; ');
+  if (excluded.length) return { applies: false, reason: join(excluded), clauses: excluded };
+  if (unknown.length) return { applies: null, reason: join(unknown), clauses: unknown };
+  return { applies: true, reason: desktopOs ? `admitted on ${desktopOs.join(', ')} only among desktop OSes` : 'platform, channel and version filters admit this build', ...(desktopOs ? { desktopOs } : {}), clauses: [] };
+}
+
+/**
+ * One reason for the per-OS desktop builds of a channel that share an outcome: each clause once, naming the OSes it
+ * concerns only when it does not concern every build of the group ("platform filter (IOS) excludes Desktop (all 7 OS
+ * builds); channel filter (NIGHTLY, BETA) excludes release; 155.1.97.56 is outside the version range 146.1.89.116 – 152.*").
+ */
+function desktopGroupReason(results: { b: StudyBuild; r: ReturnType<typeof evaluateStudyFilter> }[], channelOs: string[]): string {
+  if (results.every((x) => !x.r.clauses.length)) return uniqStr(results.map((x) => x.r.reason)).join('; ');
+  const groupOs = results.map((x) => x.b.os!);
+  const covers = (os: string[], all: string[]) => all.every((o) => os.includes(o));
+  const where = (os: string[]) => describeOs(os, channelOs);
+  const merged = new Map<string, { c: FilterClause; os: string[]; versions: Map<string, string[]> }>();
+  for (const { b, r } of results) {
+    for (const c of r.clauses) {
+      const e = merged.get(c.key) ?? { c, os: [], versions: new Map<string, string[]>() };
+      merged.set(c.key, e);
+      e.os.push(b.os!);
+      if (c.full) e.versions.set(c.full, [...(e.versions.get(c.full) ?? []), b.os!]);
+    }
+  }
+  const out: string[] = [];
+  const rank = (c: FilterClause) => CLAUSE_ORDER.indexOf(c.kind);
+  for (const { c, os, versions } of [...merged.values()].sort((p, q) => rank(p.c) - rank(q.c))) {
+    if (c.kind === 'platform') out.push(`${c.key} ${PLATFORM_NAME.desktop}${covers(os, channelOs) && channelOs.length > 1 ? ` (all ${channelOs.length} OS builds)` : ` ${where(os)}`}`);
+    else if (c.kind === 'version' && versions.size > 1) {
+      const list = [...versions].sort((p, q) => compareVersions(q[0], p[0])).map(([v, vos]) => `${v} (${where(vos)})`);
+      out.push(`${list.join(' and ')} are ${c.key}`);
+    } else out.push(covers(os, groupOs) ? c.text : `${c.text} (${where(os)})`);
+  }
+  return out.join('; ');
 }
 
 /** Client-level conditions of a filter, as readable strings. */
@@ -692,7 +1157,7 @@ function applicability(filter: Record<string, unknown> | undefined, builds: Stud
         const osList = g.map((x) => x.b.os!);
         const all = g.length === same.length;
         const build = `${PLATFORM_NAME.desktop} ${b.channel}${all ? '' : ` (${describeOs(osList, same.map((x) => x.os!))})`} ${versions.join(' / ')}`;
-        const reason = uniqStr(g.map((x) => x.r.reason)).join('; ') + note;
+        const reason = desktopGroupReason(g, same.map((x) => x.os!)) + note;
         if (outcome === 'null') appliesUnknown.push({ build, platform: 'desktop', channel: b.channel, version: sorted[0].version, reason });
         else appliesTo.push({ build, applies: outcome === 'true', platform: 'desktop', channel: b.channel, version: sorted[0].version, reason, ...(all ? {} : { desktopOs: osList }) });
       }
@@ -726,19 +1191,31 @@ function refreshApplicability(st: StudyInfo, builds: StudyBuild[], now: string):
 
 const strList = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined).map(String) : typeof v === 'string' ? [v] : []);
 
-/** Whether a parsed study touches Zcash/Ironwood/Wallet features or parameters in any experiment. */
+/**
+ * Whether a parsed study touches Zcash: some experiment enables, disables or forces a Zcash/Ironwood feature, or
+ * sets a parameter whose name or value names Zcash/Ironwood. Other wallet features do not count.
+ */
 export function isRelevantStudy(st: any): boolean {
   if (!st || typeof st !== 'object') return false;
   for (const e of Array.isArray(st.experiment) ? st.experiment : []) {
     const fa = e?.feature_association ?? {};
-    const names = [...strList(fa.enable_feature), ...strList(fa.disable_feature), ...strList(fa.forcing_feature_on), ...strList(fa.forcing_feature_off)];
-    for (const p of Array.isArray(e?.param) ? e.param : []) {
-      names.push(String(p?.name ?? ''));
-      if (RELEVANT_TEXT.test(String(p?.value ?? ''))) return true;
-    }
-    if (names.some((x) => RELEVANT_NAME.test(x))) return true;
+    const terms = [...strList(fa.enable_feature), ...strList(fa.disable_feature), ...strList(fa.forcing_feature_on), ...strList(fa.forcing_feature_off)];
+    for (const p of Array.isArray(e?.param) ? e.param : []) terms.push(String(p?.name ?? ''), String(p?.value ?? ''));
+    if (terms.some((x) => RELEVANT_TEXT.test(x))) return true;
   }
   return false;
+}
+
+/** The same test for a stored StudyInfo (cohorts when stored, else the study-level features/params of older data). */
+export function studyInfoTouchesZcash(st: StudyInfo): boolean {
+  const terms: string[] = [];
+  for (const e of Array.isArray(st.experiments) ? st.experiments : []) {
+    terms.push(...strList(e.enable), ...strList(e.disable), ...strList(e.forcingOn), ...strList(e.forcingOff));
+    for (const [k, v] of Object.entries(e.params ?? {})) terms.push(k, String(v));
+  }
+  terms.push(...strList(st.features?.enable), ...strList(st.features?.disable));
+  for (const [k, v] of Object.entries(st.params ?? {})) terms.push(k, String(v));
+  return terms.some((x) => RELEVANT_TEXT.test(x));
 }
 
 /** Turn one parsed study into StudyInfo, keeping each cohort separately. */
@@ -877,7 +1354,12 @@ export const services: Collector<ServicesData> = {
     const versionsData = ctx.get<{ current?: ChannelVersion[] }>('brave-versions')?.data;
     const relData = ctx.get<ReleasesData>('brave-releases')?.data ?? null;
     const builds = studyBuilds(Array.isArray(versionsData?.current) ? versionsData!.current : null, relData);
-    const prevStudies = (Array.isArray(prev?.studies) ? prev!.studies : []).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    // Earlier data can hold studies selected by older, broader rules (e.g. any Brave Wallet feature); those never
+    // touched Zcash and are not carried, even while brave-variations cannot be re-read.
+    const prevAll = Array.isArray(prev?.studies) ? prev!.studies : [];
+    const prevStudies = prevAll.filter(studyInfoTouchesZcash).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    const notZcash = uniqStr(prevAll.filter((s) => !studyInfoTouchesZcash(s)).map((s) => s.name));
+    if (notZcash.length) limitations.push(`${notZcash.length} earlier stud${notZcash.length === 1 ? 'y was' : 'ies were'} dropped because no cohort sets a Zcash/Ironwood feature or parameter: ${notZcash.slice(0, 4).join(', ')}`);
     const prevByFile = new Map<string, StudyInfo[]>();
     for (const s of prevStudies) prevByFile.set(s.file, [...(prevByFile.get(s.file) ?? []), s]);
     const carry = (file: string) => (prevByFile.get(file) ?? []).map((s) => refreshApplicability(s, builds, ctx.now));
