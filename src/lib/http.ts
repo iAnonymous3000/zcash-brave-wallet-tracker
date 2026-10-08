@@ -297,10 +297,42 @@ export function parseRetryAfter(value: string | null | undefined, nowMs: number 
   // delay-seconds first: Date.parse('3') would otherwise yield a (bogus) valid date.
   if (/^\d+$/.test(v)) return Number(v) * 1000;
   if (/^\d*\.\d+$/.test(v)) return Math.ceil(Number(v) * 1000);
-  if (!/[a-z]/i.test(v)) return null;
-  const at = Date.parse(v);
-  if (!Number.isFinite(at)) return null;
+  const at = parseHttpDate(v, nowMs);
+  if (at === null) return null;
   return Math.max(0, at - nowMs);
+}
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+/**
+ * HTTP-date (RFC 9110 §5.6.7) to epoch milliseconds. All three forms denote UTC, including the
+ * obsolete asctime form that carries no zone (Date.parse would read that one as local time):
+ *   IMF-fixdate  "Sun, 06 Nov 1994 08:49:37 GMT"
+ *   RFC 850      "Sunday, 06-Nov-94 08:49:37 GMT"   (two-digit year: at most 50 years ahead)
+ *   asctime      "Sun Nov  6 08:49:37 1994"
+ * Returns null for anything else.
+ */
+export function parseHttpDate(value: string, nowMs: number = Date.now()): number | null {
+  const v = value.trim();
+  let day: number, mon: string, year: number, hh: number, mm: number, ss: number;
+  let m = /^[a-z]{3}, (\d{2}) ([a-z]{3}) (\d{4}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v);
+  if (m) {
+    [day, mon, year, hh, mm, ss] = [Number(m[1]), m[2], Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6])];
+  } else if ((m = /^[a-z]{6,9}, (\d{2})-([a-z]{3})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v))) {
+    [day, mon, hh, mm, ss] = [Number(m[1]), m[2], Number(m[4]), Number(m[5]), Number(m[6])];
+    const nowYear = new Date(nowMs).getUTCFullYear();
+    year = Math.floor(nowYear / 100) * 100 + Number(m[3]);
+    if (year > nowYear + 50) year -= 100;
+  } else if ((m = /^[a-z]{3} ([a-z]{3}) ([ \d]\d) (\d{2}):(\d{2}):(\d{2}) (\d{4})$/i.exec(v))) {
+    [mon, day, hh, mm, ss, year] = [m[1], Number(m[2].trim()), Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6])];
+  } else {
+    return null;
+  }
+  const month = MONTHS.indexOf(mon.toLowerCase());
+  if (month < 0 || day < 1 || day > 31 || hh > 23 || mm > 59 || ss > 60) return null;
+  const ms = Date.UTC(year, month, day, hh, mm, Math.min(ss, 59));
+  // Reject impossible calendar dates (e.g. 31 Feb), which Date.UTC would silently roll over.
+  return new Date(ms).getUTCDate() === day ? ms : null;
 }
 
 function isoAfter(nowMs: number, ms: number): string | null {

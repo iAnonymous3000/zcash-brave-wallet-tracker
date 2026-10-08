@@ -268,8 +268,9 @@ const ADVISORY_MAX_PAGES = 5;
 
 /**
  * Follow Link rel="next" pagination through gh.rest within a page cap. A failing page (outage,
- * budget or rate limit) ends the walk and is returned as `error` together with the pages read
- * before it, which are fresh and still merged; truncated=true whenever the last page was not reached.
+ * budget, rate limit, or a 2xx body that is not a list) ends the walk and is returned as `error`
+ * together with the pages read before it, which are fresh and still merged; truncated=true whenever
+ * the last page was not reached.
  */
 async function restPages<T>(ctx: Ctx, path: string, maxPages: number): Promise<{ items: T[]; truncated: boolean; error?: Error }> {
   const items: T[] = [];
@@ -277,8 +278,10 @@ async function restPages<T>(ctx: Ctx, path: string, maxPages: number): Promise<{
   for (let pages = 0; url; pages++) {
     if (pages >= maxPages) return { items, truncated: true };
     try {
-      const page: { data: T[]; res: Response } = await ctx.gh.rest<T[]>(url);
-      if (Array.isArray(page.data)) items.push(...page.data);
+      const page: { data: unknown; res: Response } = await ctx.gh.rest<unknown>(url);
+      // An unexpected body (e.g. {"message": ...} with a 200) is not an empty page: the query is unread.
+      if (!Array.isArray(page.data)) throw new Error(`unexpected response shape (expected a list): ${JSON.stringify(page.data).slice(0, 80)}`);
+      items.push(...(page.data as T[]));
       url = page.res ? nextLink(page.res) : null;
     } catch (err) {
       return { items, truncated: true, error: err as Error };
@@ -364,9 +367,11 @@ export const advisories: Collector<AdvisoriesData> = {
     let rustsecCrates: string[] = prev?.rustsecCrates ?? [];
     try {
       const { data: tree } = await ctx.gh.rest<any>('/repos/rustsec/advisory-db/git/trees/main?recursive=1');
+      // A body without a tree list is an unread listing, not an empty advisory database.
+      if (!Array.isArray(tree?.tree)) throw new Error(`unexpected response shape (expected a tree list): ${JSON.stringify(tree).slice(0, 80)}`);
       const names = new Set(ADVISORY_QUERIES.filter((q) => q.ecosystem === 'rust').map((q) => q.pkg));
       const found = new Set<string>();
-      for (const t of tree.tree ?? []) {
+      for (const t of tree.tree) {
         const m = String(t.path).match(/^crates\/([^/]+)\/(RUSTSEC-\d{4}-\d{4})\.md$/);
         if (m && names.has(m[1])) {
           found.add(m[1]);

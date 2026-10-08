@@ -1,4 +1,4 @@
-import { Http, HttpError, nextLink } from './http.ts';
+import { Http, HttpError, nextLink, redact } from './http.ts';
 
 const API = 'https://api.github.com';
 
@@ -41,7 +41,10 @@ export class GitHub {
     return this.http.json<T>(url, { scope: 'github-core', okStatuses: opts.okStatuses, headers });
   }
 
-  /** Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation. */
+  /**
+   * Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation.
+   * A page that is neither a list nor an object with an `items` list is an error, never an empty page.
+   */
   async paginate<T>(path: string, maxPages = 50): Promise<{ items: T[]; truncated: boolean }> {
     let url: string | null = path.startsWith('http') ? path : `${API}${path}`;
     const items: T[] = [];
@@ -49,7 +52,8 @@ export class GitHub {
     while (url) {
       if (pages >= maxPages) return { items, truncated: true };
       const { data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' });
-      const page = Array.isArray(data) ? data : (data.items ?? []);
+      const page = listPage<T>(data);
+      if (!page) throw new HttpError(res.status, redact(url), `unexpected response shape (expected a list): ${JSON.stringify(data).slice(0, 80)}`);
       items.push(...page);
       pages += 1;
       url = nextLink(res);
@@ -160,6 +164,13 @@ async function pace(gh: GitHub, minGapMs: number): Promise<void> {
 /** Test hook: reset search pacing state. */
 export function resetSearchPacing(): void {
   lastSearchAt = 0;
+}
+
+/** The entries of a list response (a JSON array, or a search-style `{ items: [...] }`), or null for any other shape. */
+export function listPage<T>(data: unknown): T[] | null {
+  if (Array.isArray(data)) return data as T[];
+  if (data && typeof data === 'object' && Array.isArray((data as { items?: unknown }).items)) return (data as { items: T[] }).items;
+  return null;
 }
 
 function dayAfter(d: string): string {

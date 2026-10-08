@@ -10,7 +10,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { ZIPS } from '../config/upstream.ts';
-import { Http, RateLimitError, parseRetryAfter, epochToIso } from '../src/lib/http.ts';
+import { Http, RateLimitError, parseRetryAfter, parseHttpDate, epochToIso } from '../src/lib/http.ts';
 import { GitHub } from '../src/lib/github.ts';
 import type { Ctx } from '../src/ingest/framework.ts';
 import { githubItems, toWorkItem, type GithubItemsData } from '../src/ingest/sources/github-items.ts';
@@ -124,6 +124,42 @@ test('ING-21: a Retry-After beyond the in-run wait limit is an explicit deferral
   await assert.rejects(http2.text('https://example.org/'), RateLimitError);
 });
 
+/** Run `fn` with the process in a non-UTC time zone (Node applies a runtime TZ change to Date). */
+async function inNonUtcZone(fn: () => void | Promise<void>): Promise<void> {
+  const saved = process.env.TZ;
+  process.env.TZ = 'America/Los_Angeles';
+  try {
+    assert.notEqual(new Date(NOW_MS).getTimezoneOffset(), 0, 'the test really runs outside UTC');
+    await fn();
+  } finally {
+    if (saved === undefined) delete process.env.TZ;
+    else process.env.TZ = saved;
+  }
+}
+
+test('ING-21: all three HTTP-date forms are read as UTC whatever the local time zone (asctime carries no zone)', async () => {
+  await inNonUtcZone(() => {
+    assert.equal(parseRetryAfter('Thu, 08 Oct 2026 20:01:00 GMT', NOW_MS), 60_000, 'IMF-fixdate');
+    assert.equal(parseRetryAfter('Thursday, 08-Oct-26 20:01:00 GMT', NOW_MS), 60_000, 'RFC 850');
+    assert.equal(parseRetryAfter('Thu Oct  8 20:01:00 2026', NOW_MS), 60_000, 'asctime');
+    assert.equal(parseHttpDate('Thu Oct  8 20:01:00 2026'), Date.UTC(2026, 9, 8, 20, 1, 0));
+  });
+  // RFC 850 two-digit years never land more than 50 years ahead.
+  assert.equal(parseHttpDate('Friday, 08-Oct-99 20:01:00 GMT', NOW_MS), Date.UTC(1999, 9, 8, 20, 1, 0));
+  // Not HTTP-dates (ignored: the normal backoff applies instead).
+  for (const v of ['soon', '2026-10-08T20:01:00Z', 'Sat, 31 Feb 2026 00:00:00 GMT', 'Thu, 08 Oct 2026 20:01:00 PST']) assert.equal(parseRetryAfter(v, NOW_MS), null, v);
+});
+
+test('ING-21: an asctime Retry-After of one minute is waited for, not turned into a long deferral, outside UTC', async () => {
+  await inNonUtcZone(async () => {
+    let calls = 0;
+    const sleeps: number[] = [];
+    const http = new Http({ fetch: async () => (++calls === 1 ? new Response('busy', { status: 503, headers: { 'retry-after': 'Thu Oct  8 20:01:00 2026' } }) : new Response('ok')), sleep: async (ms) => void sleeps.push(ms), maxRetries: 1, now: () => NOW_MS });
+    assert.equal((await http.text('https://example.org/')).text, 'ok');
+    assert.deepEqual(sleeps, [60_000]);
+  });
+});
+
 // ---------------------------------------------------------------------------
 // ING-22: malformed optional rate-limit reset header
 // ---------------------------------------------------------------------------
@@ -187,12 +223,14 @@ interface GhEnv {
   searchIncomplete?: boolean;
   commits?: { sha: string; message: string; date: string }[];
   commitPages?: number;
+  /** Commits on pages 2.. of the code-path history (index 0 = page 2). */
+  laterCommitPages?: { sha: string; message: string; date: string }[][];
   /** Canonical nodes by id; unknown numbers fall back to `fallback` (or null = not found). */
   nodes?: Record<string, Record<string, unknown>>;
   fallback?: (repo: string, n: number) => Record<string, unknown> | null;
   batchErrors?: { message: string; path?: unknown[] }[];
-  /** Follow-up connection pages: (field, number, after) -> page, or null for a failed field. */
-  followUp?: (field: string, n: number, after: string) => { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: unknown[] } | null;
+  /** Follow-up connection pages: (field, number, after) -> page (optionally with GraphQL errors), or null for a failed field. */
+  followUp?: (field: string, n: number, after: string) => { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: unknown[]; errors?: { message: string; path?: unknown[] }[] } | null;
   log?: { commitUrls: string[]; followUps: { field: string; n: number; after: string }[] };
 }
 
@@ -210,15 +248,18 @@ function ghFetch(env: GhEnv) {
       log.commitUrls.push(u.toString());
       const page = Number(u.searchParams.get('page') ?? '1');
       const next: Record<string, string> = page < (env.commitPages ?? 1) ? { link: `<https://api.github.com/repos/brave/brave-core/commits?path=x&page=${page + 1}>; rel="next"` } : {};
-      return json(page === 1 ? (env.commits ?? []).map((c) => ({ sha: c.sha, commit: { message: c.message, committer: { date: c.date } } })) : [], next);
+      const list = page === 1 ? (env.commits ?? []) : (env.laterCommitPages?.[page - 2] ?? []);
+      return json(list.map((c) => ({ sha: c.sha, commit: { message: c.message, committer: { date: c.date } } })), next);
     }
     if (u.pathname === '/graphql' && init?.method === 'POST') {
       const body = JSON.parse(String(init.body)) as { query: string; variables: Record<string, any> };
       if (body.variables?.after !== undefined) {
         const field = /conn: (\w+)\(/.exec(body.query)![1];
         log.followUps.push({ field, n: body.variables.number, after: body.variables.after });
-        const page = env.followUp?.(field, body.variables.number, body.variables.after) ?? null;
-        return json(page ? { data: { repository: { issueOrPullRequest: { conn: page } } } } : { data: { repository: { issueOrPullRequest: { conn: null } } }, errors: [{ message: `${field} unavailable`, path: ['repository', 'issueOrPullRequest', 'conn'] }] });
+        const got = env.followUp?.(field, body.variables.number, body.variables.after) ?? null;
+        if (!got) return json({ data: { repository: { issueOrPullRequest: { conn: null } } }, errors: [{ message: `${field} unavailable`, path: ['repository', 'issueOrPullRequest', 'conn'] }] });
+        const { errors, ...page } = got;
+        return json({ data: { repository: { issueOrPullRequest: { conn: page } } }, ...(errors?.length ? { errors } : {}) });
       }
       const m = /repository\(owner: "([^"]+)", name: "([^"]+)"\)/.exec(body.query)!;
       const repo = `${m[1]}/${m[2]}`;
@@ -295,10 +336,13 @@ test('ING-12: errors without a path (connection returned null) are still treated
   assert.equal(r.partial, true);
   assert.deepEqual(r.data.items['brave/brave-browser#100'].subIssues, ['brave/brave-browser#101']);
   assert.deepEqual(r.data.items['brave/brave-browser#100'].incompleteFields, ['subIssues']);
-  // Without a previous copy the field is still flagged, so an empty list is never read as "no sub-issues".
+  // Without a previous copy there is nothing to restore: the item is not recorded at all this run
+  // (an empty sub-issue list would read downstream as "no sub-issues"), and it is not excluded either.
   const r2 = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
   assert.equal(r2.partial, true);
-  assert.deepEqual(r2.data.items['brave/brave-browser#100'].incompleteFields, ['subIssues']);
+  assert.equal(r2.data.items['brave/brave-browser#100'], undefined);
+  assert.equal(r2.data.excluded['brave/brave-browser#100'], undefined);
+  assert.ok(r2.limitations!.some((l) => /brave\/brave-browser#100: GitHub returned errors for subIssues .*not recorded this run/.test(l)), JSON.stringify(r2.limitations));
 });
 
 test('ING-12: a label field error keeps the whole last good item (labels decide relevance)', async () => {
@@ -408,6 +452,119 @@ test('ING-13: toWorkItem exposes connection truncation instead of a silent subse
 });
 
 // ---------------------------------------------------------------------------
+// ING-12 / ING-13 (repair round): follow-up page errors, excluded items, labels
+// ---------------------------------------------------------------------------
+
+const subTask = (repo: string, n: number) => (repo === 'brave/brave-browser' ? issueNode(n, { title: `Sub task ${n}` }) : null);
+const fifty = () => Array.from({ length: 50 }, (_, i) => ref('brave/brave-browser', 1000 + i));
+/** Follow-up sub-issue page holding #1050 plus an entry GitHub could not resolve (null) and an error for it. */
+const erroredSubIssuePage = (field: string, n: number, after: string) =>
+  field === 'subIssues' && n === 100 && after === 'c50'
+    ? { pageInfo: { hasNextPage: false, endCursor: 'c52' }, nodes: [ref('brave/brave-browser', 1050), null], errors: [{ message: 'Could not resolve to an Issue', path: ['repository', 'issueOrPullRequest', 'conn', 'nodes', 1] }] }
+    : null;
+
+test('ING-12: a follow-up connection page with GraphQL errors and a null entry is flagged, not reported as fully read', async () => {
+  const env: GhEnv = {
+    labelItems: [100],
+    nodes: { 'brave/brave-browser#100': issueNode(100, { subIssues: { pageInfo: { hasNextPage: true, endCursor: 'c50' }, nodes: fifty() } }) },
+    fallback: subTask,
+    followUp: erroredSubIssuePage,
+  };
+  // No previous copy: the 51 entries that did resolve are real sub-issues; the list is flagged as a known subset.
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
+  const issue = r.data.items['brave/brave-browser#100'];
+  assert.equal(issue.subIssues.length, 51);
+  assert.ok(issue.subIssues.includes('brave/brave-browser#1050'));
+  assert.equal(issue.subIssuesTruncated, true, 'the unresolved entry is not silently dropped');
+  assert.equal(r.partial, true);
+  assert.ok(r.limitations!.some((l) => /brave-browser#100: a further subIssues page came back with 1 GraphQL error\(s\) and 1 unresolved entry/.test(l)), JSON.stringify(r.limitations));
+  // With a previous copy: the entry that did not resolve this time (#1051) is kept from the last good copy.
+  const prevItem = wi('brave/brave-browser#100', { title: 'Zcash issue 100', subIssues: [...fifty().map((x) => `brave/brave-browser#${x.number}`), 'brave/brave-browser#1050', 'brave/brave-browser#1051'], discovery: ['label:feature/web3/wallet/zcash'] });
+  const r2 = await githubItems.collect(ctxFor(ghFetch(env)), { ...EMPTY_ITEMS, items: { [prevItem.id]: prevItem } });
+  assert.equal(r2.data.items[prevItem.id].subIssues.length, 52);
+  assert.ok(r2.data.items[prevItem.id].subIssues.includes('brave/brave-browser#1051'));
+  assert.equal(r2.partial, true);
+});
+
+test('ING-12: a null entry in a first-page connection (no error path) is unknown, not a shorter list', async () => {
+  const prevItem = wi('brave/brave-browser#100', { title: 'Zcash issue 100', subIssues: ['brave/brave-browser#101', 'brave/brave-browser#102'], discovery: ['label:feature/web3/wallet/zcash'] });
+  const env: GhEnv = { labelItems: [100], nodes: { 'brave/brave-browser#100': issueNode(100, { subIssues: { pageInfo: PAGE, nodes: [ref('brave/brave-browser', 101), null] } }) }, fallback: subTask };
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), { ...EMPTY_ITEMS, items: { [prevItem.id]: prevItem } });
+  assert.deepEqual(r.data.items[prevItem.id].subIssues, ['brave/brave-browser#101', 'brave/brave-browser#102'], 'last good sub-issues kept');
+  assert.deepEqual(r.data.items[prevItem.id].incompleteFields, ['subIssues']);
+  assert.equal(r.partial, true);
+});
+
+test('ING-12: an uncompleted connection makes the run partial even when the item ends up excluded', async () => {
+  const env: GhEnv = {
+    labelItems: [300],
+    nodes: { 'brave/brave-browser#300': issueNode(300, { title: 'Settings page layout', subIssues: { pageInfo: { hasNextPage: true, endCursor: 'c50' }, nodes: fifty() } }) },
+    fallback: subTask,
+    followUp: () => null,
+  };
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
+  assert.ok(r.data.excluded['brave/brave-browser#300'], 'not a Zcash item');
+  assert.equal(r.data.items['brave/brave-browser#300'], undefined);
+  assert.equal(r.partial, true, JSON.stringify(r.limitations));
+});
+
+test('ING-12: a new item whose relationship field failed is not recorded until it can be read (no confident empty list)', async () => {
+  const env: GhEnv = {
+    labelItems: [100],
+    nodes: { 'brave/brave-browser#100': issueNode(100, { subIssues: null }) },
+    fallback: subTask,
+    batchErrors: [{ message: 'subIssues: service unavailable', path: ['repository', 'n100', 'subIssues'] }],
+  };
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
+  assert.equal(r.data.items['brave/brave-browser#100'], undefined, 'never stored with subIssues: []');
+  assert.equal(r.data.excluded['brave/brave-browser#100'], undefined);
+  assert.equal(r.partial, true);
+  // The next clean run records it normally.
+  env.nodes = { 'brave/brave-browser#100': issueNode(100, { subIssues: { pageInfo: PAGE, nodes: [ref('brave/brave-browser', 101)] } }) };
+  env.batchErrors = [];
+  const r2 = await githubItems.collect(ctxFor(ghFetch(env)), r.data);
+  assert.deepEqual(r2.data.items['brave/brave-browser#100'].subIssues, ['brave/brave-browser#101']);
+  assert.equal('incompleteFields' in r2.data.items['brave/brave-browser#100'], false);
+  assert.equal(r2.partial, false, JSON.stringify(r2.limitations));
+});
+
+const unrelatedLabels = () => Array.from({ length: 50 }, (_, i) => ({ name: `area/unrelated-${i}` }));
+
+test('ING-13: labels that cannot be read to the end keep the last good item and never exclude it', async () => {
+  const prevItem = wi('brave/brave-browser#100', { title: 'Wallet crash on startup', labels: ['feature/web3/wallet/zcash'], relevance: 'direct', matchedTerms: ['label:feature/web3/wallet/zcash'], discovery: ['label:feature/web3/wallet/zcash'] });
+  const env: GhEnv = {
+    labelItems: [100],
+    nodes: { 'brave/brave-browser#100': issueNode(100, { title: 'Wallet crash on startup', state: 'CLOSED', labels: { pageInfo: { hasNextPage: true, endCursor: 'l50' }, nodes: unrelatedLabels() } }) },
+    followUp: () => null,
+  };
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), { ...EMPTY_ITEMS, items: { [prevItem.id]: prevItem } });
+  assert.deepEqual(r.data.items[prevItem.id], prevItem, 'last good copy kept whole');
+  assert.equal(r.data.excluded[prevItem.id], undefined, 'not excluded on the basis of a label subset');
+  assert.equal(r.partial, true);
+  assert.ok(r.limitations!.some((l) => /brave-browser#100: GitHub did not return labels completely; last good copy kept/.test(l)), JSON.stringify(r.limitations));
+  // No previous copy: relevance is unknown, so the item is neither tracked nor excluded this run.
+  const r2 = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
+  assert.equal(r2.data.items[prevItem.id], undefined);
+  assert.equal(r2.data.excluded[prevItem.id], undefined);
+  assert.equal(r2.partial, true);
+});
+
+test('ING-13: a Zcash label that is only on the follow-up label page makes the item direct', async () => {
+  const env: GhEnv = {
+    labelItems: [100],
+    nodes: { 'brave/brave-browser#100': issueNode(100, { title: 'Wallet crash on startup', labels: { pageInfo: { hasNextPage: true, endCursor: 'l50' }, nodes: unrelatedLabels() } }) },
+    followUp: (field, n, after) => (field === 'labels' && n === 100 && after === 'l50' ? { pageInfo: { hasNextPage: false, endCursor: 'l51' }, nodes: [{ name: 'feature/web3/wallet/zcash' }] } : null),
+  };
+  const r = await githubItems.collect(ctxFor(ghFetch(env)), EMPTY_ITEMS);
+  const item = r.data.items['brave/brave-browser#100'];
+  assert.equal(item.relevance, 'direct');
+  assert.equal(item.labels.length, 51);
+  assert.ok(item.labels.includes('feature/web3/wallet/zcash'));
+  assert.equal('labelsTruncated' in item, false);
+  assert.equal(r.partial, false, JSON.stringify(r.limitations));
+});
+
+// ---------------------------------------------------------------------------
 // ING-25: path-history commit counts
 // ---------------------------------------------------------------------------
 
@@ -440,6 +597,60 @@ test('ING-25: an entry written before SHAs were kept is rebuilt once from full h
   const r2 = await githubItems.collect(ctxFor(ghFetch(env)), r.data);
   assert.notEqual(new URL(log.commitUrls[1]).searchParams.get('since'), null, 'incremental again afterwards');
   assert.equal(r2.data.pathHistory[path].commitsWithoutPr, 1);
+});
+
+const CODE_PATH = 'components/brave_wallet/browser/zcash';
+const directCommit = (c: string, date: string) => ({ sha: c.repeat(40), message: `direct commit ${c}`, date });
+const sinceOf = (url: string) => new URL(url).searchParams.get('since');
+/** First-page request of each run (later pages follow the fixture's Link header). */
+const firstPages = (log: { commitUrls: string[] }) => log.commitUrls.filter((u) => !new URL(u).searchParams.has('page'));
+
+test('ING-25: a rebuild cut short by the page cap is not trusted later; only a complete read sets the count', async () => {
+  const log = { commitUrls: [] as string[], followUps: [] };
+  // Legacy entry (count possibly inflated by re-counting, no SHA inventory).
+  const legacy: GithubItemsData = { ...EMPTY_ITEMS, pathHistory: { [CODE_PATH]: { lastCommitAt: '2026-10-01T00:00:00Z', prs: [150], commitsWithoutPr: 7 } } };
+  const env: GhEnv = { commits: [directCommit('a', '2026-10-01T00:00:00Z'), directCommit('b', '2026-09-30T00:00:00Z')], commitPages: 41, nodes: { 'brave/brave-core#150': prNode(150) }, log };
+  // Run 1: the full read stops at 40 pages. The count is not lowered from a subset, and the entry is marked.
+  const r1 = await githubItems.collect(ctxFor(ghFetch(env)), legacy);
+  assert.equal(sinceOf(log.commitUrls[0]), null);
+  assert.equal(r1.partial, true);
+  assert.equal(r1.data.pathHistory[CODE_PATH].commitsWithoutPr, 7);
+  assert.equal(r1.data.pathHistory[CODE_PATH].historyIncomplete, true, 'the SHA inventory is a known subset');
+  // Run 2 (variant): still truncated -> still a full read, count unchanged, still partial.
+  const r1b = await githubItems.collect(ctxFor(ghFetch(env)), r1.data);
+  assert.equal(sinceOf(firstPages(log).at(-1)!), null, 'an incomplete inventory is never extended incrementally');
+  assert.equal(r1b.data.pathHistory[CODE_PATH].commitsWithoutPr, 7);
+  assert.equal(r1b.data.pathHistory[CODE_PATH].historyIncomplete, true);
+  assert.equal(r1b.partial, true);
+  // Run 2: the full history now fits (one more direct commit on page 2) -> one correction from a complete read.
+  env.commitPages = 2;
+  env.laterCommitPages = [[directCommit('c', '2026-09-01T00:00:00Z')]];
+  const r2 = await githubItems.collect(ctxFor(ghFetch(env)), r1b.data);
+  assert.equal(sinceOf(firstPages(log).at(-1)!), null, 'full read, not an incremental one built on the subset');
+  assert.equal(r2.data.pathHistory[CODE_PATH].commitsWithoutPr, 3);
+  assert.equal('historyIncomplete' in r2.data.pathHistory[CODE_PATH], false);
+  assert.equal(r2.partial, false, JSON.stringify(r2.limitations));
+  // Run 3: incremental again, and the same commits leave the count unchanged.
+  const r3 = await githubItems.collect(ctxFor(ghFetch(env)), r2.data);
+  assert.notEqual(sinceOf(firstPages(log).at(-1)!), null);
+  assert.equal(r3.data.pathHistory[CODE_PATH].commitsWithoutPr, 3);
+  assert.equal(r3.partial, false);
+});
+
+test('ING-25: a truncated incremental read marks the inventory incomplete and the next run reads the full history', async () => {
+  const log = { commitUrls: [] as string[], followUps: [] };
+  const known: GithubItemsData = { ...EMPTY_ITEMS, pathHistory: { [CODE_PATH]: { lastCommitAt: '2026-09-01T00:00:00Z', prs: [], commitsWithoutPr: 1, shasWithoutPr: ['a'.repeat(40)] } } };
+  const env: GhEnv = { commits: [directCommit('d', '2026-10-05T00:00:00Z')], commitPages: 41, log };
+  const r1 = await githubItems.collect(ctxFor(ghFetch(env)), known);
+  assert.notEqual(sinceOf(log.commitUrls[0]), null);
+  assert.equal(r1.data.pathHistory[CODE_PATH].commitsWithoutPr, 2, 'known commits plus the new one; never lowered');
+  assert.equal(r1.data.pathHistory[CODE_PATH].historyIncomplete, true);
+  assert.equal(r1.partial, true);
+  env.commitPages = 1;
+  const r2 = await githubItems.collect(ctxFor(ghFetch(env)), r1.data);
+  assert.equal(sinceOf(firstPages(log)[1]), null, 'the gap left by the cut-short read is covered by a full read');
+  assert.equal('historyIncomplete' in r2.data.pathHistory[CODE_PATH], false);
+  assert.equal(r2.data.pathHistory[CODE_PATH].commitsWithoutPr, 2);
 });
 
 // ---------------------------------------------------------------------------
@@ -624,4 +835,50 @@ test('ING-18: a truncated RustSec tree is partial and keeps the previously known
   const r2 = await advisories.collect(ctxFor(advisoryFetch({ tree: ['crates/orchard/RUSTSEC-2099-0001.md'] })), r.data);
   assert.equal(r2.partial, false, JSON.stringify(r2.limitations));
   assert.deepEqual(r2.data.rustsecCrates, ['orchard']);
+});
+
+// ---------------------------------------------------------------------------
+// Repair round: a 2xx body that is not a list is an unread page, never an empty complete one
+// ---------------------------------------------------------------------------
+
+const objectBody = () => json({ message: 'unexpected object' });
+const RUSTSEC_TREE = '/repos/rustsec/advisory-db/' + 'git/trees/main';
+
+test('ING-18: object bodies on every global advisory query fail the source (last good envelope kept by the run)', async () => {
+  const fetchImpl = routed((u) => {
+    if (u.host !== 'api.github.com') return undefined;
+    if (u.pathname === '/advisories' || /\/security-advisories$/.test(u.pathname)) return objectBody();
+    if (u.pathname === RUSTSEC_TREE) return json({ tree: [], truncated: false });
+    return undefined;
+  });
+  await assert.rejects(advisories.collect(ctxFor(fetchImpl), { advisories: [prevAdvisory], queried: [], rustsecCrates: ['shardtree'] }), /unreachable for every query.*unexpected response shape/);
+});
+
+test('ING-18: an object body on one repository advisory endpoint is partial and that repository is not listed as queried', async () => {
+  const base = advisoryFetch({});
+  const fetchImpl = async (input: string, init?: RequestInit) => (new URL(input).pathname === '/repos/zcash/orchard/security-advisories' ? objectBody() : base(input, init));
+  const r = await advisories.collect(ctxFor(fetchImpl), { advisories: [prevAdvisory], queried: [], rustsecCrates: [] });
+  assert.equal(r.partial, true);
+  assert.equal(r.data.queried.includes('repo:zcash/orchard'), false);
+  assert.ok(r.data.queried.includes('repo:zcash/lightwalletd'));
+  assert.ok(r.limitations!.some((l) => /zcash\/orchard repository advisories: unexpected response shape/.test(l)), JSON.stringify(r.limitations));
+  assert.ok(r.data.advisories.some((a) => a.id === 'GHSA-prev-0001'), 'known advisories kept');
+});
+
+test('ING-18: a RustSec tree response without a tree list keeps the previous inventory and is partial', async () => {
+  const base = advisoryFetch({});
+  const fetchImpl = async (input: string, init?: RequestInit) => (new URL(input).pathname === RUSTSEC_TREE ? objectBody() : base(input, init));
+  const r = await advisories.collect(ctxFor(fetchImpl), { advisories: [], queried: [], rustsecCrates: ['halo2_proofs', 'shardtree'] });
+  assert.equal(r.partial, true);
+  assert.deepEqual(r.data.rustsecCrates, ['halo2_proofs', 'shardtree']);
+  assert.ok(r.limitations!.some((l) => /RustSec tree listing failed: unexpected response shape/.test(l)));
+});
+
+test('ING-12: gh.paginate rejects a non-list page instead of reading it as an empty, complete listing', async () => {
+  const ctx = ctxFor(routed((u) => (u.pathname === '/repos/brave/brave-browser/issues' ? objectBody() : u.pathname === '/search/issues' ? json({ total_count: 1, incomplete_results: false, items: [{ number: 1 }] }) : undefined)));
+  await assert.rejects(ctx.gh.paginate('/repos/brave/brave-browser/issues?labels=x'), /unexpected response shape/);
+  // Search-style { items: [...] } pages are still lists.
+  assert.deepEqual((await ctx.gh.paginate<{ number: number }>('/search/issues?q=x')).items, [{ number: 1 }]);
+  // The collector does not report an unread label listing as a successful run.
+  await assert.rejects(githubItems.collect(ctx, EMPTY_ITEMS), /unexpected response shape/);
 });

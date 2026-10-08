@@ -25,7 +25,11 @@ export interface GithubItemsData {
 export interface PathHistory {
   lastCommitAt: string | null;
   prs: number[];
-  /** Number of distinct commits on the path whose message names no PR (shasWithoutPr.length once that is present). */
+  /**
+   * Number of distinct commits on the path whose message names no PR (shasWithoutPr.length after a
+   * complete read). While `historyIncomplete` is set it is the last value known before the
+   * incomplete read, never lowered by it.
+   */
   commitsWithoutPr: number;
   /**
    * Distinct SHAs of those commits. Lets the overlapping incremental read recognise commits it
@@ -33,6 +37,12 @@ export interface PathHistory {
    * from the full path history, because their stored count may already include re-counted commits.
    */
   shasWithoutPr?: string[];
+  /**
+   * Present (true) only when the latest read of this path stopped at the page cap, so shasWithoutPr
+   * is a known subset. Such an entry is not trusted for incremental reads: the next run reads the
+   * full path history again, and only a read that reaches the end sets the count from the SHAs.
+   */
+  historyIncomplete?: boolean;
 }
 
 const EMPTY: GithubItemsData = { items: {}, pathHistory: {}, excluded: {}, externalRefs: [], stats: {} };
@@ -85,9 +95,10 @@ export const githubItems: Collector<GithubItemsData> = {
     const pathHistory: GithubItemsData['pathHistory'] = structuredClone(prev.pathHistory);
     for (const path of CODE_PATHS) {
       const h: PathHistory = pathHistory[path] ?? { lastCommitAt: null, prs: [], commitsWithoutPr: 0, shasWithoutPr: [] };
-      // Entries written before SHAs were kept cannot tell which overlapping commits were already
-      // counted: rebuild them once from the full history instead of adding to a possibly inflated count.
-      const rebuild = !Array.isArray(h.shasWithoutPr);
+      // The SHA inventory is authoritative only after a read that reached the end of the history.
+      // Entries written before SHAs were kept (whose count may include re-counted commits) and entries
+      // whose last read stopped at the page cap are read again from the full history.
+      const rebuild = !Array.isArray(h.shasWithoutPr) || h.historyIncomplete === true;
       const since = h.lastCommitAt && !rebuild ? `&since=${new Date(Date.parse(h.lastCommitAt) - 3 * 86_400_000).toISOString()}` : '';
       const { items: commits, truncated } = await ctx.gh.paginate<{ sha: string; commit: { message: string; committer: { date: string } | null } }>(
         `/repos/brave/brave-core/commits?path=${encodeURIComponent(path)}&per_page=100${since}`,
@@ -95,10 +106,11 @@ export const githubItems: Collector<GithubItemsData> = {
       );
       if (truncated) {
         discoveryIncomplete = true;
-        limitations.push(`commit history for ${path} truncated at 40 pages`);
+        limitations.push(`commit history for ${path} truncated at 40 pages (commit count kept from the last complete read; full history is read again next run)`);
       }
       const prs = new Set(h.prs);
-      const withoutPr = new Set(rebuild ? [] : h.shasWithoutPr);
+      // Stored SHAs are real commits on the path, so a full read finds them again; legacy entries start empty.
+      const withoutPr = new Set(h.shasWithoutPr ?? []);
       for (const c of commits) {
         const pr = prNumberFromCommitMessage(c.commit.message);
         if (pr) prs.add(pr);
@@ -108,8 +120,14 @@ export const githubItems: Collector<GithubItemsData> = {
       }
       h.prs = [...prs].sort((a, b) => a - b);
       h.shasWithoutPr = [...withoutPr].sort();
-      // A rebuild cut short by the page cap must not lower the previous (lower-bound) count.
-      h.commitsWithoutPr = rebuild && truncated ? Math.max(h.commitsWithoutPr, withoutPr.size) : withoutPr.size;
+      if (truncated) {
+        // A subset: never lower the count from it, and do not let later incremental reads build on it.
+        h.historyIncomplete = true;
+        h.commitsWithoutPr = Math.max(h.commitsWithoutPr, withoutPr.size);
+      } else {
+        delete h.historyIncomplete;
+        h.commitsWithoutPr = withoutPr.size;
+      }
       pathHistory[path] = h;
       for (const n of h.prs) note(itemId('brave/brave-core', n), `path:${path}`);
     }
@@ -471,12 +489,21 @@ async function fetchDetails(ctx: Ctx, ids: string[], limitations: string[]): Pro
           const node = data.repository?.[`n${n}`];
           if (!node) continue;
           const errored = new Set(fieldErrors.get(n) ?? []);
-          // A failed nullable connection comes back as null; an empty connection is never null.
           for (const [f, on] of Object.entries(CONNECTION_FIELDS)) {
-            if ((on === 'both' || on === node.__typename) && f in node && node[f] === null) errored.add(f);
+            if ((on !== 'both' && on !== node.__typename) || !(f in node)) continue;
+            // A failed nullable connection comes back as null; an empty connection is never null.
+            if (node[f] === null) errored.add(f);
+            // An entry GitHub could not resolve comes back as null: the list is not the full answer.
+            else if (PAGED_CONNECTIONS[f] && Array.isArray(node[f].nodes) && node[f].nodes.some((x: unknown) => x === null || x === undefined)) errored.add(f);
           }
           const id = itemId(repo, n);
-          await completeConnections(ctx, { owner, name, number: n, id }, node, errored, followUps, limitations);
+          const unfinished = await completeConnections(ctx, { owner, name, number: n, id }, node, errored, followUps, limitations);
+          // Labels decide relevance and QA/duplicate status, so a label list that could not be read to
+          // the end is unknown, exactly like a failed labels field (never judged from the subset).
+          if (unfinished.includes('labels')) errored.add('labels');
+          // Reported here, not from the items that end up stored: an item that is later excluded or
+          // left unrecorded must still make this run partial.
+          if (errored.size || unfinished.length) incomplete = true;
           out.set(id, { node, repo, errored });
         }
       } catch (err) {
@@ -492,8 +519,10 @@ async function fetchDetails(ctx: Ctx, ids: string[], limitations: string[]): Pro
 
 /**
  * Read the remaining pages of relationship/label connections whose first page was not enough and
- * append them to the node. A connection that cannot be completed keeps hasNextPage=true, which
- * toWorkItem() records as `<field>Truncated` (and the collector reports as partial).
+ * append them to the node. Returns the connections that could not be read to the end: a follow-up
+ * that failed, ran out of budget or hit the page cap, or a page that came back with GraphQL errors
+ * or unresolved (null) entries. Their valid entries are kept and their pageInfo.hasNextPage stays
+ * true, which toWorkItem() records as `<field>Truncated`; the caller reports the run as partial.
  */
 async function completeConnections(
   ctx: Ctx,
@@ -502,7 +531,8 @@ async function completeConnections(
   errored: Set<string>,
   followUps: { stopped: boolean },
   limitations: string[],
-): Promise<void> {
+): Promise<string[]> {
+  const unfinished: string[] = [];
   for (const [field, spec] of Object.entries(PAGED_CONNECTIONS)) {
     if (spec.on !== 'both' && spec.on !== node.__typename) continue;
     const conn = node[field];
@@ -511,32 +541,53 @@ async function completeConnections(
     while (conn.pageInfo?.hasNextPage && conn.pageInfo?.endCursor && !followUps.stopped && pages < MAX_CONNECTION_PAGES) {
       const query = `query($owner: String!, $name: String!, $number: Int!, $after: String) { repository(owner: $owner, name: $name) { issueOrPullRequest(number: $number) { ... on ${node.__typename} { conn: ${field}(first: 100, after: $after) { pageInfo { hasNextPage endCursor } nodes { ${spec.select} } } } } } }`;
       try {
-        const { data } = await ctx.gh.graphql<any>(query, { owner: at.owner, name: at.name, number: at.number, after: conn.pageInfo.endCursor });
+        const { data, errors } = await ctx.gh.graphql<any>(query, { owner: at.owner, name: at.name, number: at.number, after: conn.pageInfo.endCursor });
         const page = data?.repository?.issueOrPullRequest?.conn;
-        if (!page || !Array.isArray(page.nodes)) break;
-        conn.nodes = [...(conn.nodes ?? []), ...page.nodes];
-        conn.pageInfo = { hasNextPage: Boolean(page.pageInfo?.hasNextPage), endCursor: page.pageInfo?.endCursor ?? null };
+        if (!page || !Array.isArray(page.nodes)) {
+          limitations.push(`${at.id}: further ${field} pages were not returned${errors.length ? ` (${errors[0].slice(0, 120)})` : ''}`);
+          break;
+        }
+        const valid = page.nodes.filter((x: unknown) => x !== null && x !== undefined);
+        conn.nodes = [...(conn.nodes ?? []), ...valid];
         pages += 1;
+        if (errors.length || valid.length !== page.nodes.length) {
+          // Part of this page is missing: keep what came back, but the list stays known-incomplete
+          // (hasNextPage is left true) instead of being reported as fully read.
+          limitations.push(`${at.id}: a further ${field} page came back with ${errors.length} GraphQL error(s) and ${page.nodes.length - valid.length} unresolved entr${page.nodes.length - valid.length === 1 ? 'y' : 'ies'}${errors.length ? ` (${errors[0].slice(0, 120)})` : ''}`);
+          break;
+        }
+        conn.pageInfo = { hasNextPage: Boolean(page.pageInfo?.hasNextPage), endCursor: page.pageInfo?.endCursor ?? null };
       } catch (err) {
         if ((err as Error).name === 'BudgetExceededError' || (err as Error).name === 'RateLimitError') followUps.stopped = true;
         limitations.push(`${at.id}: could not read further ${field} pages: ${(err as Error).message.slice(0, 120)}`);
         break;
       }
     }
-    if (conn.pageInfo?.hasNextPage) limitations.push(`${at.id}: ${field} has more entries than were read (${(conn.nodes ?? []).length} read)`);
+    if (conn.pageInfo?.hasNextPage) {
+      unfinished.push(field);
+      limitations.push(`${at.id}: ${field} has more entries than were read (${(conn.nodes ?? []).length} read)`);
+    }
   }
+  return unfinished;
 }
 
 /**
  * Turn a fetched node into a WorkItem without letting a partial GraphQL answer erase last good data:
  * failed relationship fields are restored from the previous copy (and listed in incompleteFields), and
  * connections that could not be read to the end keep entries known from the previous copy.
- * Returns null when the fresh copy is unusable (the caller then keeps the previous copy, if any).
+ * Returns null when the fresh copy is unusable (the caller then keeps the previous copy, if any):
+ * a failed node or label list (labels decide relevance), or any failed field with no previous copy
+ * to restore it from, since an empty list or null there would read downstream as a confident "none".
  */
 export function buildItem(raw: FetchedNode, tags: string[], prevItem: WorkItem | undefined, now: string, limitations: string[] = []): WorkItem | null {
+  const id = itemId(raw.repo, raw.node.number);
   const unusable = [...raw.errored].filter((f) => !RESTORABLE_FIELDS[f]);
   if (unusable.length) {
-    limitations.push(`${itemId(raw.repo, raw.node.number)}: GitHub returned errors for ${unusable.join(', ')}; ${prevItem ? 'last good copy kept' : 'not recorded this run'}`);
+    limitations.push(`${id}: GitHub did not return ${unusable.map((f) => (f === '*' ? 'the item' : f)).join(', ')} completely; ${prevItem ? 'last good copy kept' : 'not recorded this run (relevance unknown)'}`);
+    return null;
+  }
+  if (raw.errored.size && !prevItem) {
+    limitations.push(`${id}: GitHub returned errors for ${[...raw.errored].sort().join(', ')} and there is no last good copy to keep; not recorded this run`);
     return null;
   }
   const item = toWorkItem(raw.node, raw.repo, tags, now);
