@@ -320,7 +320,9 @@ test('R-STATUS: kept data older than the staleness window is stored as partial w
     });
     assert.equal(late.sources.src, 'partial', 'usable data was read and stored');
     assert.equal(late.outcome, 'partial');
-    assert.equal(run.refreshExitCode(late), 0);
+    // R3-CI-STALE: a source stale for longer than the staleness window makes the refresh exit
+    // non-zero (EXIT_STALE, after storing and deriving everything read); it used to exit 0.
+    assert.equal(run.refreshExitCode(late), 2);
     const st = readData(dir, 'status.json').sources.src;
     assert.equal(st.lastOutcome, 'partial');
     assert.equal(st.staleSince, '2026-10-08T08:00:00Z', 'explicit field the site can count');

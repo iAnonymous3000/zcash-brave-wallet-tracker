@@ -11,6 +11,11 @@
 // and `consecutiveFailures` counts it, so a lasting outage stays visible as a stale source.
 // 'failed' always means the collector threw and nothing was stored (the previous envelope is
 // untouched).
+// A source left stale at the end of a run (staleSince recorded, or a failed source whose last
+// success is older than the staleness window) is listed in the run record (`stale`) and makes the
+// process exit with EXIT_STALE: the run's outcome stays as recorded and its data is still
+// committed and published by the workflow, which then fails the job naming the stale sources, so
+// a lasting outage turns CI red instead of passing as a partial run.
 // After collection, derived views and change history are rebuilt from the
 // persisted envelopes (see src/derive). If derivation fails, the previously
 // derived files are restored byte for byte (so they keep their own generatedAt),
@@ -175,6 +180,17 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
     statusFile.sources[c.id] = st;
   }
 
+  // Sources this run leaves stale for longer than the staleness window (see staleSinceOf). Skipped
+  // sources were not attempted, so this run says nothing new about them.
+  const stale: Record<string, string> = {};
+  for (const [id, o] of Object.entries(outcomes)) {
+    if (o === 'skipped') continue;
+    const since = staleSinceOf(statusFile.sources[id], now);
+    if (since !== null) stale[id] = since;
+  }
+  const staleIds = Object.keys(stale);
+  if (staleIds.length) log(`! ${staleIds.length} source${staleIds.length > 1 ? 's' : ''} stale for longer than the ${FRESHNESS.staleAfterMinutes / 60}-hour staleness window: ${staleIds.map((id) => `${id} (${outcomes[id]}) not refreshed since ${stale[id]}`).join('; ')}`);
+
   // Derive site data + change history from persisted envelopes. Derivation writes several files;
   // a failure part-way must neither leave new history next to old site data nor put a fresh
   // generatedAt on data that was not rebuilt, so the previous files are restored on failure.
@@ -221,6 +237,7 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
     events,
     notes,
     derive: deriveResult,
+    ...(staleIds.length ? { stale } : {}),
   };
   writeJson(statusPath, { updatedAt: record.finishedAt, lastRun: record, rateLimit: http.meter.rateLimit, sources: statusFile.sources, derive: deriveStatus });
   const runsPath = dataPath('history', 'runs.json');
@@ -231,9 +248,43 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
   return record;
 }
 
-/** Process exit code for a finished run: non-zero when nothing was refreshed or nothing new could be derived. */
+/** Exit code of a failed refresh: nothing was refreshed, or nothing new could be derived. */
+export const EXIT_FAILED = 1;
+/**
+ * Exit code of a refresh that stored and derived everything it read (so the site can be built and
+ * deployed from it) but left a source stale for longer than the staleness window
+ * (RunRecord.stale). The workflow publishes first and then fails the job naming those sources, so
+ * a lasting outage of one source turns CI red. Distinct from EXIT_FAILED and from a crash (1).
+ */
+export const EXIT_STALE = 2;
+
+/**
+ * Process exit code for a finished run: EXIT_FAILED when nothing was refreshed or nothing new could
+ * be derived, else EXIT_STALE when a source was left stale (RunRecord.stale), else 0 (a partial
+ * source outage within the staleness window still publishes and exits 0).
+ */
 export function refreshExitCode(r: RunRecord): number {
-  return r.outcome === 'failed' || r.derive?.outcome === 'failed' ? 1 : 0;
+  if (r.outcome === 'failed' || r.derive?.outcome === 'failed') return EXIT_FAILED;
+  if (r.stale && Object.keys(r.stale).length) return EXIT_STALE;
+  return 0;
+}
+
+/**
+ * Since when a source's shown data has not been refreshed, when that is longer than the staleness
+ * window (FRESHNESS.staleAfterMinutes) at `now`; null otherwise.
+ * - `staleSince`: the source kept values unrefreshed past the window (R-STATUS); a failed run
+ *   keeps it, as its data is then older still.
+ * - Otherwise a last success older than the window: the source has failed since (an ok or partial
+ *   run within the window advances it). The Sources page marks such a row stale too.
+ * A source that never succeeded has no time to measure from and is not counted here (its data is
+ * missing, not stale; a run in which every source failed exits non-zero anyway).
+ */
+export function staleSinceOf(st: SourceStatus | undefined, now: string): string | null {
+  if (!st) return null;
+  const since = validTime(st.staleSince);
+  if (since !== null) return since;
+  const last = validTime(st.lastSuccessAt);
+  return last !== null && Date.parse(now) - Date.parse(last) > FRESHNESS.staleAfterMinutes * 60_000 ? last : null;
 }
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -355,8 +406,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (!existsSync(dataDir())) console.log(`creating data dir ${dataDir()}`);
   runRefresh({ only: parseList('only'), skip: parseList('skip') })
     .then((r) => {
-      // Exit non-zero when nothing at all succeeded or when derivation failed; partial source
-      // outages still publish fresh data and exit 0.
+      // Exit non-zero when nothing at all succeeded or when derivation failed (EXIT_FAILED), or when
+      // a source has been stale for longer than the staleness window (EXIT_STALE, after storing
+      // and deriving everything read: the workflow still commits and deploys, then fails the job).
+      // A partial source outage within the window publishes fresh data and exits 0.
       if (r.derive?.outcome === 'failed' && process.env.GITHUB_ACTIONS === 'true') {
         console.log(`::error::Derivation failed: ${(r.derive.error ?? '').replace(/[\r\n]+/g, ' ')}. The previously derived data was kept.`);
       }

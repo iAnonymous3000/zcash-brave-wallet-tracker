@@ -88,6 +88,12 @@ export interface DepResolution {
   unreachable: string[];
   /** Dependency entries that matched no package, so the graph may be incomplete. */
   unresolvedEdges: string[];
+  /**
+   * Parts of Cargo.lock that could not be read (see scanCargoLock), first few. When present the
+   * graph may be missing packages or dependency entries, so candidates it does not reach are
+   * possibly linked (reachable: null) rather than ruled out.
+   */
+  lockProblems?: string[];
 }
 
 /** Component files read per ref (keys used in `missing` and `carriedFrom`). */
@@ -147,63 +153,187 @@ export interface LockPackage {
   dependencies: string[];
 }
 
-const QUOTED = /"((?:[^"\\]|\\.)*)"/g;
+/** A Cargo.lock as read by scanCargoLock. */
+export interface LockScan {
+  /** Packages read completely (string name and version; source and dependencies when given). */
+  packages: LockPackage[];
+  /** [[package]] tables found, in any valid TOML spelling of the header. */
+  tables: number;
+  /**
+   * What could not be read with certainty, by line: a table header in a form not understood, a
+   * line in a package table that is not a plain key/value, a name/version/source that is not a
+   * plain string, a dependency entry that is not one, a package without a name or version.
+   * Empty when every line was understood; otherwise a package may be missing from `packages`, or
+   * read without some of its dependency entries.
+   */
+  problems: string[];
+}
 
-/** Parse every [[package]] of a Cargo.lock (format v1–v4), including its dependency list. */
-export function parseLockPackages(lock: string): LockPackage[] {
-  const out: LockPackage[] = [];
-  let cur: { name?: string; version?: string; source?: string; deps: string[] } | null = null;
-  let inDeps = false;
-  const flush = () => {
-    if (cur?.name && cur.version) out.push({ name: cur.name, version: cur.version, source: cur.source ?? null, dependencies: cur.deps });
-    cur = null;
-    inDeps = false;
-  };
-  const strings = (s: string) => [...s.matchAll(QUOTED)].map((m) => m[1]);
-  const closes = (s: string) => s.replace(QUOTED, '').includes(']');
-  for (const raw of lock.split(/\r?\n/)) {
-    const line = raw.trim();
-    if (!line || line.startsWith('#')) continue;
-    if (inDeps && cur) {
-      cur.deps.push(...strings(line));
-      if (closes(line)) inDeps = false;
-      continue;
-    }
-    if (line === '[[package]]') {
-      flush();
-      cur = { deps: [] };
-      continue;
-    }
-    if (line.startsWith('[')) {
-      flush(); // [metadata], [[patch.unused]], ...: not packages
-      continue;
-    }
-    if (!cur) continue;
-    const kv = line.match(/^([A-Za-z_][\w-]*)\s*=\s*(.*)$/);
-    if (!kv) continue;
-    const [, key, value] = kv;
-    if (key === 'dependencies') {
-      cur.deps.push(...strings(value));
-      inDeps = value.startsWith('[') && !closes(value);
-    } else if (key === 'name' || key === 'version' || key === 'source') {
-      const v = strings(value)[0];
-      if (v !== undefined) cur[key] = v;
-    }
-  }
-  flush();
-  return out;
+// The TOML that Cargo.lock uses, read line by line. TOML whitespace is space and tab only.
+// Keys may be bare, "basic" or 'literal' and dotted; quoted keys and strings containing a
+// backslash escape are not decoded (Cargo never writes one) but reported as problems.
+const SIMPLE_KEY = String.raw`(?:[A-Za-z0-9_-]+|"[^"\\\r\n]*"|'[^'\r\n]*')`;
+const DOTTED_KEY = String.raw`${SIMPLE_KEY}(?:[ \t]*\.[ \t]*${SIMPLE_KEY})*`;
+const ARRAY_TABLE_HEADER = new RegExp(String.raw`^\[\[[ \t]*(${DOTTED_KEY})[ \t]*\]\][ \t]*(?:#.*)?$`);
+const TABLE_HEADER = new RegExp(String.raw`^\[[ \t]*(${DOTTED_KEY})[ \t]*\][ \t]*(?:#.*)?$`);
+const KEY_VALUE = new RegExp(String.raw`^(${DOTTED_KEY})[ \t]*=[ \t]*(.*)$`);
+const PLAIN_STRING = /^(?:"([^"\\\r\n]*)"|'([^'\r\n]*)')/;
+const TOML_TRIM = /^[ \t]+|[ \t]+$/g;
+const keyParts = (key: string): string[] => [...key.matchAll(new RegExp(SIMPLE_KEY, 'g'))].map((m) => (/^["']/.test(m[0]) ? m[0].slice(1, -1) : m[0]));
+const clip = (s: string) => JSON.stringify(s.length > 60 ? `${s.slice(0, 60)}…` : s);
+
+/** A table header line: whether it is an array-of-tables header and its key, or null when it is not one in a form understood. */
+function tableHeader(line: string): { array: boolean; key: string[] } | null {
+  const a = line.match(ARRAY_TABLE_HEADER);
+  if (a) return { array: true, key: keyParts(a[1]) };
+  const t = line.startsWith('[[') ? null : line.match(TABLE_HEADER);
+  return t ? { array: false, key: keyParts(t[1]) } : null;
 }
 
 /**
- * Sorted, de-duplicated names of every package in a Cargo.lock, or null when not every
- * [[package]] table could be parsed (a name/version missing or in an unexpected form): a package
- * the parser skipped must never look absent.
+ * Read a Cargo.lock (format v1–v4): every [[package]] with its dependency list, the number of
+ * [[package]] tables, and everything that could not be read. Headers are recognised in every
+ * valid TOML spelling ('[[ package ]]', '[[package]] # note', '[["package"]]', indented); a line
+ * starting with '[' that is not a header in a form understood is a problem, never skipped
+ * silently, so a package behind it cannot simply go missing.
+ */
+export function scanCargoLock(lock: string): LockScan {
+  const packages: LockPackage[] = [];
+  const problems: string[] = [];
+  let tables = 0;
+  let section: 'root' | 'package' | 'other' = 'root';
+  type Cur = { line: number; name?: string; version?: string; source?: string; deps?: string[]; bad: boolean };
+  let cur: Cur | null = null;
+  let inDeps = false;
+  const flush = () => {
+    if (cur && !cur.bad) {
+      if (cur.name !== undefined && cur.version !== undefined) packages.push({ name: cur.name, version: cur.version, source: cur.source ?? null, dependencies: cur.deps ?? [] });
+      else problems.push(`line ${cur.line}: [[package]] without a ${cur.name === undefined ? 'name' : 'version'}`);
+    }
+    cur = null;
+    inDeps = false;
+  };
+  /** Entries of a dependency array from `text` on (the rest of a line); anything but plain string entries is a problem. */
+  const readEntries = (pkg: Cur, text: string, n: number): void => {
+    let s = text;
+    for (;;) {
+      s = s.replace(/^[ \t]+/, '');
+      if (!s || s.startsWith('#')) return; // the array continues on the next line
+      if (s.startsWith(']')) {
+        inDeps = false;
+        if (!/^\][ \t]*(?:#.*)?$/.test(s)) problems.push(`line ${n}: unexpected text after the dependencies array: ${clip(s)}`);
+        return;
+      }
+      if (s.startsWith(',')) {
+        s = s.slice(1);
+        continue;
+      }
+      const m = s.match(PLAIN_STRING);
+      if (!m) {
+        problems.push(`line ${n}: dependency entry not understood: ${clip(s)}`);
+        return;
+      }
+      (pkg.deps ??= []).push(m[1] ?? m[2]);
+      s = s.slice(m[0].length);
+    }
+  };
+  const lines = lock.replace(/^﻿/, '').split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const n = i + 1;
+    const line = lines[i].replace(TOML_TRIM, '');
+    if (inDeps && cur) {
+      if (!line.startsWith('[')) {
+        readEntries(cur, line, n);
+        continue;
+      }
+      // Dependency entries are strings; a line starting with '[' means the array was never closed.
+      problems.push(`line ${n}: dependencies array of the package at line ${cur.line} not closed before ${clip(line)}`);
+      inDeps = false;
+    }
+    if (!line || line.startsWith('#')) continue;
+    if (line.startsWith('[')) {
+      flush();
+      const h = tableHeader(line);
+      if (!h) {
+        problems.push(`line ${n}: table header not understood: ${clip(line)}`);
+        section = 'other';
+      } else if (h.array && h.key.length === 1 && h.key[0] === 'package') {
+        tables += 1;
+        cur = { line: n, bad: false };
+        section = 'package';
+      } else {
+        // [metadata], [[patch.unused]], ...: not packages. Cargo never writes a plain [package]
+        // table (which cannot sit next to [[package]] tables) or a table nested in a package
+        // ([package.x], [[package.x]], which would take over the keys that follow): a lockfile
+        // with one is not read as a complete list.
+        if (h.key[0] === 'package') problems.push(`line ${n}: ${h.key.length === 1 ? '[package] table instead of [[package]]' : 'table nested in a [[package]] table'}: ${clip(line)}`);
+        section = 'other';
+      }
+      continue;
+    }
+    const kv = line.match(KEY_VALUE);
+    if (!kv) {
+      problems.push(`line ${n}: line not understood: ${clip(line)}`);
+      continue;
+    }
+    const key = keyParts(kv[1]);
+    const value = kv[2];
+    if (section === 'root') {
+      if (key[0] === 'package') problems.push(`line ${n}: packages defined outside [[package]] tables: ${clip(line)}`);
+      continue;
+    }
+    if (section !== 'package' || !cur) continue;
+    const field = key[0];
+    const known = field === 'name' || field === 'version' || field === 'source' || field === 'dependencies';
+    if (key.length !== 1) {
+      if (known) problems.push(`line ${n}: dotted key in a package table: ${clip(line)}`);
+      continue;
+    }
+    if (field === 'name' || field === 'version' || field === 'source') {
+      const m = value.match(PLAIN_STRING);
+      if (cur[field] !== undefined || !m || !/^[ \t]*(?:#.*)?$/.test(value.slice(m[0].length))) {
+        problems.push(`line ${n}: ${cur[field] !== undefined ? `${field} given twice` : `${field} is not a plain string`}: ${clip(line)}`);
+        cur.bad = true; // never guess a package's identity
+        continue;
+      }
+      cur[field] = m[1] ?? m[2];
+    } else if (field === 'dependencies') {
+      if (cur.deps !== undefined || !value.startsWith('[')) {
+        problems.push(`line ${n}: ${cur.deps !== undefined ? 'dependencies given twice' : 'dependencies is not an array'}: ${clip(line)}`);
+        continue;
+      }
+      cur.deps = [];
+      inDeps = true;
+      readEntries(cur, value.slice(1), n);
+    }
+  }
+  if (inDeps && cur) problems.push(`line ${(cur as Cur).line}: dependencies array not closed before the end of the file`);
+  flush();
+  return { packages, tables, problems };
+}
+
+/** Whether every [[package]] of a scanned Cargo.lock was read and nothing else in it was left unread. */
+const scanComplete = (s: LockScan) => !s.problems.length && s.packages.length === s.tables;
+
+/** Parse every [[package]] of a Cargo.lock (format v1–v4), including its dependency list (see scanCargoLock). */
+export function parseLockPackages(lock: string): LockPackage[] {
+  return scanCargoLock(lock).packages;
+}
+
+/** Package names of a scanned Cargo.lock, or null unless it was read completely (see lockPackageNames). */
+function packageNamesOf(scan: LockScan): string[] | null {
+  if (!scan.tables || !scanComplete(scan)) return null;
+  return [...new Set(scan.packages.map((p) => p.name))].sort();
+}
+
+/**
+ * Sorted, de-duplicated names of every package in a Cargo.lock, or null when it could not be read
+ * completely: a [[package]] header in a form not understood, a package whose name/version is
+ * missing or not a plain string, or any other line not understood. A package the parser skipped
+ * must never look absent, so a short list is never returned.
  */
 export function lockPackageNames(lock: string): string[] | null {
-  const tables = lock.split(/\r?\n/).filter((l) => l.trim() === '[[package]]').length;
-  const packages = parseLockPackages(lock);
-  if (!tables || packages.length !== tables) return null;
-  return [...new Set(packages.map((p) => p.name))].sort();
+  return packageNamesOf(scanCargoLock(lock));
 }
 
 export function lockSource(src: string | null): LockSource {
@@ -256,8 +386,9 @@ const pkgKey = (p: LockPackage) => `${p.name} ${p.version} ${p.source ?? ''}`;
  *   the crate is listed in `multiple`; whether one of them is a direct dependency is kept in
  *   `candidates`, but a direct dependency does not hide the others.
  * - None reachable in a complete graph: not reported (listed in `unreachable`).
- * - Reachability not established for some candidates (no graph, unmatched entries, or an entry
- *   that matches several packages, which names none of them for certain): `lock` gets the highest
+ * - Reachability not established for some candidates (no graph, unmatched entries, an entry
+ *   that matches several packages, which names none of them for certain, or a lockfile with parts
+ *   that could not be read, see `lockProblems`): `lock` gets the highest
  *   version known to be reached, or else the highest candidate not ruled out, and if more than one
  *   candidate remains possible the crate is `ambiguous`.
  */
@@ -266,7 +397,8 @@ export function resolveZcashDependencies(
   crates: string[],
   root: { name: string; version: string | null; from: 'cargo-toml' | 'default' },
 ): { lock: BraveDepsSnapshot['lock']; resolution: DepResolution } {
-  const packages = parseLockPackages(lock);
+  const scan = scanCargoLock(lock);
+  const packages = scan.packages;
   const byName = new Map<string, LockPackage[]>();
   for (const p of packages) byName.set(p.name, [...(byName.get(p.name) ?? []), p]);
 
@@ -303,7 +435,9 @@ export function resolveZcashDependencies(
       }
     }
   }
-  const graphComplete = Boolean(rootPkg) && unresolvedEdges.length === 0;
+  // A lockfile that could not be read completely may hide packages or dependency entries from the
+  // graph: what it does not reach is then possibly linked, not ruled out.
+  const graphComplete = Boolean(rootPkg) && unresolvedEdges.length === 0 && scanComplete(scan);
   const isDirect = (p: LockPackage): boolean | null => (!rootPkg ? null : direct.has(pkgKey(p)) ? true : maybeDirect.has(pkgKey(p)) ? null : false);
 
   const picked: BraveDepsSnapshot['lock'] = {};
@@ -342,6 +476,7 @@ export function resolveZcashDependencies(
       ambiguous,
       unreachable,
       unresolvedEdges: unresolvedEdges.slice(0, 50),
+      ...(scanComplete(scan) ? {} : { lockProblems: scan.problems.slice(0, 10) }),
     },
   };
 }
@@ -417,7 +552,8 @@ export function isCompleteSnapshot(s: BraveDepsSnapshot | undefined): boolean {
       s.rpcMethods !== undefined &&
       s.lockPackages !== undefined &&
       s.resolution?.method === 'graph' &&
-      !s.resolution.unresolvedEdges.length,
+      !s.resolution.unresolvedEdges.length &&
+      !s.resolution.lockProblems?.length,
   );
 }
 
@@ -476,9 +612,13 @@ export function buildDepsSnapshot(
   else if (resolution.unresolvedEdges.length) problems.push(`${key}: ${resolution.unresolvedEdges.length} Cargo.lock dependency entr${resolution.unresolvedEdges.length === 1 ? 'y' : 'ies'} could not be matched to exactly one package (${resolution.unresolvedEdges.slice(0, 3).join('; ')}${resolution.unresolvedEdges.length > 3 ? '; …' : ''}); which versions those entries link is unknown, and crates not reached otherwise are reported from the lockfile`);
   if (files.cargo !== null && !cargoPkg) problems.push(`${key}: no [package] name in ${BRAVE_ZCASH_CARGO}; assumed "${DEFAULT_ZCASH_ROOT}"`);
   // Every package name in the lockfile, so a package that is not there at all can be told apart
-  // from one that was not inspected. Recorded only when every [[package]] table was parsed.
-  const lockPackages = lockPackageNames(files.lock);
-  if (!lockPackages) problems.push(`${key}: not every [[package]] in ${BRAVE_LOCKFILE} could be parsed, so the list of packages it contains is not recorded (whether a package is absent from it is unknown)`);
+  // from one that was not inspected. Recorded only when the whole lockfile was read.
+  const scan = scanCargoLock(files.lock);
+  const lockPackages = packageNamesOf(scan);
+  if (!lockPackages) {
+    const why = scan.problems.length ? `${scan.problems.slice(0, 3).join('; ')}${scan.problems.length > 3 ? `; ${scan.problems.length - 3} more` : ''}` : 'no [[package]] table found';
+    problems.push(`${key}: not every [[package]] in ${BRAVE_LOCKFILE} could be parsed (${why}), so the list of packages it contains is not recorded (whether a package is absent from it is unknown), and crate versions the dependency graph does not reach may still be linked`);
+  }
 
   const rpcMethods = carry<string[] | undefined>('rpc', (t) => [...new Set([...t.matchAll(/CompactTxStreamer\/(\w+)/g)].map((m) => m[1]))].sort(), (v) => !v?.length, prev?.rpcMethods, undefined);
   const pinRef = key === 'master' ? ref : key;
@@ -611,7 +751,7 @@ export const braveDeps: Collector<DepsData> = {
 
 /** Whether nothing about a freshly built snapshot is incomplete (all files read and parsed, graph resolved). */
 function isComplete(s: BraveDepsSnapshot): boolean {
-  return !s.missing?.length && !s.unparsed?.length && s.lockPackages !== undefined && s.resolution?.method === 'graph' && !s.resolution.unresolvedEdges.length && !s.resolution.ambiguous.length;
+  return !s.missing?.length && !s.unparsed?.length && s.lockPackages !== undefined && s.resolution?.method === 'graph' && !s.resolution.unresolvedEdges.length && !s.resolution.lockProblems?.length && !s.resolution.ambiguous.length;
 }
 
 /** Which of several versions `lock` holds: the highest, or the lowest in snapshots resolved before DEPS_RESOLVER 4. */

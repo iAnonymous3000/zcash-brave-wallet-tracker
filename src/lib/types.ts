@@ -351,6 +351,15 @@ export interface RunRecord {
    * outcome is 'failed' and the previously derived files (with their own generatedAt) are kept.
    */
   derive?: { outcome: 'ok' | 'failed'; error: string | null };
+  /**
+   * Sources attempted in this run whose shown data, at the end of it, had not been refreshed for
+   * longer than the staleness window (FRESHNESS.staleAfterMinutes): source id -> the time since
+   * which it has not been refreshed (`SourceStatus.staleSince`, or the last success of a source
+   * that failed). Absent when there is none. The outcome is unaffected (a stale source is
+   * partial or failed as recorded in `sources`), but the refresh exits non-zero so a lasting
+   * outage is not silent (src/ingest/run.ts refreshExitCode).
+   */
+  stale?: Record<string, string>;
 }
 
 // ---------------------------------------------------------------------------
