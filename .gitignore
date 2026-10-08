@@ -8,3 +8,6 @@ dist/
 # local-only files
 BUILD_PROMPT.md
 fixtures-out/
+
+# local tooling
+.claude/

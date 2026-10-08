@@ -1,0 +1,90 @@
+// Zcash feature-flag defaults at each channel build's brave-core tag (and master).
+// Tags are immutable, so each tag's parse is cached forever.
+
+import type { Channel, FlagSnapshot } from '../../lib/types.ts';
+import { compareVersions } from '../../lib/util.ts';
+import type { Collector } from '../framework.ts';
+import type { BraveVersionsData } from './brave-versions.ts';
+import type { ReleasesData } from './releases.ts';
+import { parseFeatureFlags } from '../parsers.ts';
+import { SOURCE_CHECKS } from '../../../config/capabilities.ts';
+import type { SourceCheckResult } from '../../derive/capabilities.ts';
+
+export const FLAGS_FILE = 'components/brave_wallet/common/features.cc';
+export const ZCASH_FLAG_FILTER = /zcash|ironwood|orchard|shielded/i;
+
+export interface FlagsData {
+  /** Snapshots keyed by tag (or "master"). */
+  snapshots: Record<string, FlagSnapshot & { commitSha: string | null }>;
+  /** Source checks (config/capabilities.ts SOURCE_CHECKS) per tag. */
+  checks: Record<string, SourceCheckResult[]>;
+}
+
+export const flags: Collector<FlagsData> = {
+  id: 'brave-flags',
+  name: 'Zcash feature flags in brave-core (features.cc at channel tags)',
+  url: `https://github.com/brave/brave-core/blob/master/${FLAGS_FILE}`,
+  schema: 1,
+  dependsOn: ['brave-versions', 'brave-releases'],
+  budget: { 'github-core': 6 },
+  async collect(ctx, prev) {
+    const snapshots: FlagsData['snapshots'] = { ...(prev?.snapshots ?? {}) };
+    const checks: FlagsData['checks'] = { ...(prev?.checks ?? {}) };
+    const wanted = new Map<string, { channel: Channel; version: string }>();
+    for (const c of ctx.get<BraveVersionsData>('brave-versions')?.data.current ?? []) if (c.tag) wanted.set(c.tag, { channel: c.channel, version: c.version });
+    for (const l of ctx.get<ReleasesData>('brave-releases')?.data.latest ?? []) if (l.tag && !wanted.has(l.tag)) wanted.set(l.tag, { channel: l.channel, version: l.version });
+    let fetched = 0;
+    for (const [tag, meta] of wanted) {
+      if (snapshots[tag]) continue; // immutable
+      const src = await rawFile(ctx, tag, FLAGS_FILE);
+      if (src === null) throw new Error(`${FLAGS_FILE} not found at ${tag} (file moved?)`);
+      const flagsAt = parseFeatureFlags(src, ZCASH_FLAG_FILTER);
+      if (!flagsAt.some((f) => /ZCash/i.test(f.name))) throw new Error(`no Zcash flags parsed from ${FLAGS_FILE} at ${tag} (format changed?)`);
+      snapshots[tag] = { tag, channel: meta.channel, version: meta.version, file: FLAGS_FILE, permalink: `https://github.com/brave/brave-core/blob/${tag}/${FLAGS_FILE}`, flags: flagsAt, retrievedAt: ctx.now, commitSha: null };
+      fetched += 1;
+    }
+    // Source checks per tag (immutable once complete).
+    for (const tag of wanted.keys()) {
+      const have = checks[tag] ?? [];
+      const missing = SOURCE_CHECKS.filter((sc) => !have.some((h) => h.id === sc.id && h.present !== null));
+      if (!missing.length) continue;
+      const results = have.filter((h) => !missing.some((m) => m.id === h.id));
+      for (const sc of missing) results.push(await runSourceCheck(ctx, tag, sc));
+      checks[tag] = results;
+    }
+    // master moves; always refresh, pinned to the commit we read.
+    const sha = await ctx.gh.commitSha('brave/brave-core', 'master');
+    if (sha) {
+      const src = await rawFile(ctx, sha, FLAGS_FILE);
+      if (src) snapshots['master'] = { tag: 'master', channel: 'nightly', version: 'master', file: FLAGS_FILE, permalink: `https://github.com/brave/brave-core/blob/${sha}/${FLAGS_FILE}`, flags: parseFeatureFlags(src, ZCASH_FLAG_FILTER), retrievedAt: ctx.now, commitSha: sha };
+    }
+    // Bound the cache: keep wanted tags + the 12 newest others (history for flag-change events).
+    const keep = new Set([...wanted.keys(), 'master']);
+    const others = Object.keys(snapshots).filter((t) => !keep.has(t)).sort((a, b) => compareVersions(b, a));
+    for (const t of others.slice(12)) delete snapshots[t];
+    for (const t of Object.keys(checks)) if (!wanted.has(t) && !snapshots[t]) delete checks[t];
+    void fetched;
+    return { data: { snapshots, checks }, itemCount: Object.keys(snapshots).length };
+  },
+};
+
+export async function runSourceCheck(ctx: { http: import('../../lib/http.ts').Http }, tag: string, sc: (typeof SOURCE_CHECKS)[number]): Promise<SourceCheckResult> {
+  for (const file of sc.files) {
+    const src = await rawFile(ctx, tag, file);
+    if (src === null) continue;
+    const lines = src.split('\n');
+    const idx = lines.findIndex((l) => sc.pattern.test(l));
+    return { id: sc.id, tag, present: idx !== -1, file, line: idx === -1 ? null : idx + 1, url: `https://github.com/brave/brave-core/blob/${tag}/${file}${idx === -1 ? '' : `#L${idx + 1}`}` };
+  }
+  // None of the candidate files exist at this tag: the checked code is absent.
+  return { id: sc.id, tag, present: false, file: sc.files[0], line: null, url: `https://github.com/brave/brave-core/tree/${tag}` };
+}
+
+export async function rawFile(ctx: { http: import('../../lib/http.ts').Http }, ref: string, path: string): Promise<string | null> {
+  const res = await ctx.http.request(`https://raw.githubusercontent.com/brave/brave-core/${encodeURIComponent(ref)}/${path}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+  if (res.status === 404) {
+    await res.text();
+    return null;
+  }
+  return res.text();
+}

@@ -1,0 +1,90 @@
+name: refresh
+
+# Unattended refresh: collect public sources with the built-in GITHUB_TOKEN (public data only,
+# no personal token), commit the collected state to this repository (auditable history), then
+# build and deploy the static site to GitHub Pages in the same run.
+
+on:
+  schedule:
+    # Every 2 hours at :17 (keep in sync with SITE.refreshEveryMinutes in config/tracker.ts).
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit refreshed data under data/
+  pages: write      # deploy to GitHub Pages
+  id-token: write   # required by actions/deploy-pages
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck and test
+        run: npm run check
+
+      - name: Refresh sources
+        id: refresh
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRACKER_TRIGGER: ${{ github.event_name }}
+        run: node src/ingest/run.ts
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "zcash-tracker-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "no data changes"
+          else
+            git commit -q -m "data: refresh ($GITHUB_EVENT_NAME, run $GITHUB_RUN_ID)"
+            for attempt in 1 2 3; do
+              if git push; then break; fi
+              echo "push rejected; rebasing (attempt $attempt)"
+              git pull --rebase --autostash
+            done
+          fi
+
+      - name: Build site
+        run: node src/site/build.ts
+
+      - name: Scan build output for secrets
+        run: node scripts/scan-secrets.ts dist data
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+      - name: Report total refresh failure
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo "::error::Every source failed in this run. The site was redeployed with the previous data and marks it as stale."
+          exit 1
