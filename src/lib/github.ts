@@ -28,14 +28,6 @@ export interface GraphqlErrorDetail {
   path: (string | number)[] | null;
 }
 
-export interface PaginateResult<T> {
-  items: T[];
-  /** True when pagination stopped before the last page (page cap, or an error with tolerateErrors). */
-  truncated: boolean;
-  /** With tolerateErrors: the error that stopped pagination; `items` holds the pages read before it. */
-  error?: Error;
-}
-
 export class GitHub {
   http: Http;
   constructor(http: Http) {
@@ -49,25 +41,14 @@ export class GitHub {
     return this.http.json<T>(url, { scope: 'github-core', okStatuses: opts.okStatuses, headers });
   }
 
-  /**
-   * Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation.
-   * With `tolerateErrors`, a failing page ends pagination and is returned as `error` (with the
-   * pages already read and truncated=true) instead of discarding them by throwing.
-   */
-  async paginate<T>(path: string, maxPages = 50, opts: { tolerateErrors?: boolean } = {}): Promise<PaginateResult<T>> {
+  /** Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation. */
+  async paginate<T>(path: string, maxPages = 50): Promise<{ items: T[]; truncated: boolean }> {
     let url: string | null = path.startsWith('http') ? path : `${API}${path}`;
     const items: T[] = [];
     let pages = 0;
     while (url) {
       if (pages >= maxPages) return { items, truncated: true };
-      let data: T[] | { items?: T[] };
-      let res: Response;
-      try {
-        ({ data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' }));
-      } catch (err) {
-        if (!opts.tolerateErrors) throw err;
-        return { items, truncated: true, error: err as Error };
-      }
+      const { data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' });
       const page = Array.isArray(data) ? data : (data.items ?? []);
       items.push(...page);
       pages += 1;

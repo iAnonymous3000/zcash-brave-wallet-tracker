@@ -3,6 +3,7 @@
 // to Brave; "adoption" is decided only from Brave's own pins (see brave-deps).
 
 import { ADVISORY_QUERIES, ADVISORY_REPOS, CRATES, RELEASE_REPOS, ZIPS } from '../../../config/upstream.ts';
+import { nextLink } from '../../lib/http.ts';
 import type { Advisory, UpstreamRelease } from '../../lib/types.ts';
 import { compareSemver, plainExcerpt, uniq } from '../../lib/util.ts';
 import type { Collector, Ctx } from '../framework.ts';
@@ -265,6 +266,27 @@ export interface AdvisoriesData {
 /** Pages (of 100) read per advisory query before the query is reported as truncated. */
 const ADVISORY_MAX_PAGES = 5;
 
+/**
+ * Follow Link rel="next" pagination through gh.rest within a page cap. A failing page (outage,
+ * budget or rate limit) ends the walk and is returned as `error` together with the pages read
+ * before it, which are fresh and still merged; truncated=true whenever the last page was not reached.
+ */
+async function restPages<T>(ctx: Ctx, path: string, maxPages: number): Promise<{ items: T[]; truncated: boolean; error?: Error }> {
+  const items: T[] = [];
+  let url: string | null = path;
+  for (let pages = 0; url; pages++) {
+    if (pages >= maxPages) return { items, truncated: true };
+    try {
+      const page: { data: T[]; res: Response } = await ctx.gh.rest<T[]>(url);
+      if (Array.isArray(page.data)) items.push(...page.data);
+      url = page.res ? nextLink(page.res) : null;
+    } catch (err) {
+      return { items, truncated: true, error: err as Error };
+    }
+  }
+  return { items, truncated: false };
+}
+
 export const advisories: Collector<AdvisoriesData> = {
   id: 'advisories',
   name: 'Security advisories (GitHub Advisory Database, RustSec)',
@@ -282,11 +304,7 @@ export const advisories: Collector<AdvisoriesData> = {
     let globalFailures = 0;
     for (const q of ADVISORY_QUERIES) {
       const label = `${q.ecosystem}:${q.pkg}`;
-      const { items: data, truncated, error } = await ctx.gh.paginate<any>(
-        `/advisories?ecosystem=${q.ecosystem}&affects=${encodeURIComponent(q.pkg)}&per_page=100`,
-        ADVISORY_MAX_PAGES,
-        { tolerateErrors: true },
-      );
+      const { items: data, truncated, error } = await restPages<any>(ctx, `/advisories?ecosystem=${q.ecosystem}&affects=${encodeURIComponent(q.pkg)}&per_page=100`, ADVISORY_MAX_PAGES);
       if (error) {
         if (!data.length) globalFailures += 1;
         incomplete = true;
@@ -319,7 +337,7 @@ export const advisories: Collector<AdvisoriesData> = {
     // Repository advisories (published ones are public but do not always reach the global database).
     const repoLimits: string[] = [];
     for (const repo of ADVISORY_REPOS) {
-      const { items: data, truncated, error } = await ctx.gh.paginate<any>(`/repos/${repo}/security-advisories?per_page=100&state=published`, ADVISORY_MAX_PAGES, { tolerateErrors: true });
+      const { items: data, truncated, error } = await restPages<any>(ctx, `/repos/${repo}/security-advisories?per_page=100&state=published`, ADVISORY_MAX_PAGES);
       if (error) repoLimits.push(`${repo} repository advisories: ${error.message.slice(0, 100)}${data.length ? ' (pages read so far merged)' : ''}`);
       else if (truncated) repoLimits.push(`${repo} repository advisories: more than ${ADVISORY_MAX_PAGES} pages; later pages were not read`);
       else queried.push(`repo:${repo}`);
