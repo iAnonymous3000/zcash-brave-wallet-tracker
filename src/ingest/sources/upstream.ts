@@ -4,8 +4,8 @@
 
 import { ADVISORY_QUERIES, ADVISORY_REPOS, CRATES, RELEASE_REPOS, ZIPS } from '../../../config/upstream.ts';
 import type { Advisory, UpstreamRelease } from '../../lib/types.ts';
-import { compareSemver, plainExcerpt } from '../../lib/util.ts';
-import type { Collector } from '../framework.ts';
+import { compareSemver, plainExcerpt, uniq } from '../../lib/util.ts';
+import type { Collector, Ctx } from '../framework.ts';
 import type { DepsData } from './deps.ts';
 
 export interface CrateInfo {
@@ -25,6 +25,13 @@ export interface ZipInfo {
   lastCommitMessage: string | null;
   lastCommitUrl: string | null;
   url: string;
+  /** Repository path (zcash/zips, branch main) the document was read from. Absent in data written before paths were resolved. */
+  path?: string | null;
+  /**
+   * Present (true) only when no readable document was found in the latest run. The other fields
+   * then hold the last good values (or null when never read) and are retried on the next run.
+   */
+  missing?: boolean;
 }
 
 export interface UpstreamData {
@@ -56,7 +63,8 @@ export const upstream: Collector<UpstreamData> = {
   url: 'https://crates.io/crates/orchard',
   schema: 1,
   dependsOn: ['brave-deps'],
-  budget: { 'github-core': 40, 'crates.io': 30 },
+  // ZIP path discovery may try up to three candidate paths per ZIP when a document has moved.
+  budget: { 'github-core': 60, 'crates.io': 30 },
   async collect(ctx, prev) {
     const limitations: string[] = [];
     // crates.io (1 req/s politeness).
@@ -135,27 +143,19 @@ export const upstream: Collector<UpstreamData> = {
     // ZIPs: status from the document header + last commit touching it.
     const zips: UpstreamData['zips'] = { ...(prev?.zips ?? {}) };
     for (const z of ZIPS) {
-      const path = z.file ?? `zips/zip-${z.num}.md`;
       try {
-        const { data: commits } = await ctx.gh.rest<any[]>(`/repos/zcash/zips/commits?path=${encodeURIComponent(path)}&per_page=1`);
-        const c = commits[0];
-        let title: string | null = zips[z.num]?.title ?? null;
-        let status: string | null = zips[z.num]?.status ?? null;
-        if (!zips[z.num] || zips[z.num].lastCommitAt !== (c?.commit?.committer?.date ?? null)) {
-          const res = await ctx.http.request(`https://raw.githubusercontent.com/zcash/zips/main/${path}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
-          const text = res.status === 404 ? '' : await res.text();
-          title = text.match(/^\s*Title:\s*(.+)$/m)?.[1]?.trim() ?? title;
-          status = text.match(/^\s*Status:\s*(.+)$/m)?.[1]?.trim() ?? status;
+        const got = await readZip(ctx, z, zips[z.num]);
+        if (got.zip) {
+          zips[z.num] = got.zip;
+        } else {
+          // No readable document: never cache "absent" as a fresh answer. Keep the last good values,
+          // flag the entry as missing (so the next run looks again) and report the source as partial.
+          const last = zips[z.num];
+          zips[z.num] = last
+            ? { ...last, missing: true }
+            : { num: z.num, title: null, status: null, lastCommitAt: null, lastCommitMessage: null, lastCommitUrl: null, url: `https://zips.z.cash/zip-${z.num}`, path: null, missing: true };
+          limitations.push(`ZIP ${z.num}: no readable document in zcash/zips (tried ${got.tried.join(', ')}${got.problems.length ? `; ${got.problems.join('; ')}` : ''}); last good values kept`);
         }
-        zips[z.num] = {
-          num: z.num,
-          title,
-          status,
-          lastCommitAt: c?.commit?.committer?.date ?? null,
-          lastCommitMessage: c ? plainExcerpt(c.commit.message.split('\n')[0], 140) : null,
-          lastCommitUrl: c?.html_url ?? null,
-          url: `https://zips.z.cash/zip-${z.num}`,
-        };
       } catch (err) {
         limitations.push(`ZIP ${z.num}: ${(err as Error).message.slice(0, 100)}`);
       }
@@ -165,22 +165,26 @@ export const upstream: Collector<UpstreamData> = {
     try {
       const CONSENSUS = 'components/zcash_protocol/src/consensus.rs';
       const BRANCH = /0x7719_?0ad9/i;
-      const zipRes = await ctx.http.request('https://raw.githubusercontent.com/zcash/zips/main/zips/zip-0259.md', { okStatuses: [404], scope: 'raw.githubusercontent.com' });
-      const zip = zipRes.status === 404 ? '' : await zipRes.text();
+      const zipPath = zips['0259']?.path ?? 'zips/zip-0259.md';
+      const zipRes = await ctx.http.text(`https://raw.githubusercontent.com/zcash/zips/main/${zipPath}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+      const zipFound = zipRes.res.status !== 404;
+      if (!zipFound) limitations.push(`NU7 readiness: ${zipPath} not found in zcash/zips; previous ZIP 259 status and heights kept`);
+      const zip = zipFound ? zipRes.text : '';
       const after = zip.slice(Math.max(0, zip.indexOf('ACTIVATION_HEIGHT (NU7)')));
-      const up = await ctx.http.request(`https://raw.githubusercontent.com/zcash/librustzcash/main/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
-      const upText = up.status === 404 ? null : await up.text();
+      const up = await ctx.http.text(`https://raw.githubusercontent.com/zcash/librustzcash/main/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+      const upText = up.res.status === 404 ? null : up.text;
       let braveText: string | null = null;
       if (pin) {
-        const br = await ctx.http.request(`https://raw.githubusercontent.com/${pin.repo}/${pin.sha}/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
-        braveText = br.status === 404 ? null : await br.text();
+        const br = await ctx.http.text(`https://raw.githubusercontent.com/${pin.repo}/${pin.sha}/${CONSENSUS}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+        braveText = br.res.status === 404 ? null : br.text;
       }
+      const last = prev?.nextUpgrade ?? null;
       nextUpgrade = {
         name: 'NU7',
         zip: '0259',
-        zipStatus: zip.match(/^\s*Status:\s*(.+)$/m)?.[1]?.trim() ?? null,
-        testnetHeight: after.match(/Testnet:\s*([^\n]+)/)?.[1]?.trim() ?? null,
-        mainnetHeight: after.match(/Mainnet:\s*([^\n]+)/)?.[1]?.trim() ?? null,
+        zipStatus: zipFound ? (zip.match(/^\s*Status:\s*(.+)$/m)?.[1]?.trim() ?? null) : (last?.zipStatus ?? null),
+        testnetHeight: zipFound ? (after.match(/Testnet:\s*([^\n]+)/)?.[1]?.trim() ?? null) : (last?.testnetHeight ?? null),
+        mainnetHeight: zipFound ? (after.match(/Mainnet:\s*([^\n]+)/)?.[1]?.trim() ?? null) : (last?.mainnetHeight ?? null),
         branchId: '0x77190AD9',
         braveForkSha: pin?.sha ?? null,
         braveHasBranchId: braveText === null ? null : BRANCH.test(braveText),
@@ -198,25 +202,101 @@ export const upstream: Collector<UpstreamData> = {
   },
 };
 
+/**
+ * Candidate repository paths for a ZIP document, most likely first: the path it was last read from,
+ * the configured file, then both document formats used in zcash/zips (older ZIPs are reStructuredText,
+ * newer ones Markdown).
+ */
+export function zipCandidatePaths(z: { num: string; file?: string }, lastPath?: string | null): string[] {
+  return uniq([lastPath, z.file, `zips/zip-${z.num}.md`, `zips/zip-${z.num}.rst`].filter((p): p is string => Boolean(p)));
+}
+
+/** Title/Status from a ZIP preamble (Markdown or reStructuredText); only the header block is read. */
+export function parseZipHeader(text: string): { title: string | null; status: string | null } {
+  const head = text.split('\n').slice(0, 60).join('\n');
+  return {
+    title: head.match(/^\s*Title:\s*(.+)$/m)?.[1]?.trim() ?? null,
+    status: head.match(/^\s*Status:\s*(.+)$/m)?.[1]?.trim() ?? null,
+  };
+}
+
+/**
+ * Resolve and read one ZIP. A candidate path counts only when it has commit history AND the document
+ * is on main with a parseable Title/Status header. The raw document is re-read unless the same path
+ * was read successfully before and has no newer commit. Returns zip=null when nothing was readable.
+ */
+async function readZip(ctx: Ctx, z: { num: string; file?: string }, last: ZipInfo | undefined): Promise<{ zip: ZipInfo | null; tried: string[]; problems: string[] }> {
+  const tried: string[] = [];
+  const problems: string[] = [];
+  for (const path of zipCandidatePaths(z, last?.path)) {
+    tried.push(path);
+    const { data: commits } = await ctx.gh.rest<any[]>(`/repos/zcash/zips/commits?path=${encodeURIComponent(path)}&per_page=1`);
+    const c = Array.isArray(commits) ? commits[0] : undefined;
+    if (!c) continue; // no history at this path
+    const commit = {
+      lastCommitAt: c.commit?.committer?.date ?? null,
+      lastCommitMessage: plainExcerpt(String(c.commit?.message ?? '').split('\n')[0], 140) || null,
+      lastCommitUrl: c.html_url ?? null,
+    };
+    const unchanged = last && last.path === path && !last.missing && last.title && last.status && last.lastCommitAt === commit.lastCommitAt;
+    if (unchanged) return { zip: { ...last, ...commit }, tried, problems };
+    const { text, res } = await ctx.http.text(`https://raw.githubusercontent.com/zcash/zips/main/${path}`, { okStatuses: [404], scope: 'raw.githubusercontent.com' });
+    if (res.status === 404) {
+      problems.push(`${path} has history but is not on main`);
+      continue;
+    }
+    const { title, status } = parseZipHeader(text);
+    if (!title || !status) {
+      problems.push(`${path} has no Title/Status header`);
+      continue;
+    }
+    return { zip: { num: z.num, title, status, ...commit, url: `https://zips.z.cash/zip-${z.num}`, path }, tried, problems };
+  }
+  return { zip: null, tried, problems };
+}
+
 export interface AdvisoriesData {
   advisories: Advisory[];
+  /** Queries read completely in the latest run (incomplete ones are listed in the source limitations). */
   queried: string[];
   rustsecCrates: string[];
 }
+
+/** Pages (of 100) read per advisory query before the query is reported as truncated. */
+const ADVISORY_MAX_PAGES = 5;
 
 export const advisories: Collector<AdvisoriesData> = {
   id: 'advisories',
   name: 'Security advisories (GitHub Advisory Database, RustSec)',
   url: 'https://github.com/advisories?query=ecosystem%3Arust+zcash',
   schema: 1,
-  budget: { 'github-core': 30 },
+  // 15 global queries + 7 repositories + 1 RustSec tree, with headroom for follow-up pages.
+  budget: { 'github-core': 60 },
   async collect(ctx, prev) {
+    // Seeded with the last good list: an advisory is never dropped because a query failed or was cut short.
     const byId = new Map<string, Advisory>();
     for (const a of prev?.advisories ?? []) byId.set(a.id, a);
     const queried: string[] = [];
+    const limitations: string[] = [];
+    let incomplete = false;
+    let globalFailures = 0;
     for (const q of ADVISORY_QUERIES) {
-      const { data } = await ctx.gh.rest<any[]>(`/advisories?ecosystem=${q.ecosystem}&affects=${encodeURIComponent(q.pkg)}&per_page=100`);
-      queried.push(`${q.ecosystem}:${q.pkg}`);
+      const label = `${q.ecosystem}:${q.pkg}`;
+      const { items: data, truncated, error } = await ctx.gh.paginate<any>(
+        `/advisories?ecosystem=${q.ecosystem}&affects=${encodeURIComponent(q.pkg)}&per_page=100`,
+        ADVISORY_MAX_PAGES,
+        { tolerateErrors: true },
+      );
+      if (error) {
+        if (!data.length) globalFailures += 1;
+        incomplete = true;
+        limitations.push(`advisories ${label}: ${error.message.slice(0, 100)} (${data.length ? 'pages read so far merged; ' : ''}previously known advisories kept)`);
+      } else if (truncated) {
+        incomplete = true;
+        limitations.push(`advisories ${label}: more than ${ADVISORY_MAX_PAGES} pages; later pages were not read`);
+      } else {
+        queried.push(label);
+      }
       for (const a of data) {
         const vulns = (a.vulnerabilities ?? []) as any[];
         byId.set(a.ghsa_id, {
@@ -234,50 +314,62 @@ export const advisories: Collector<AdvisoriesData> = {
         });
       }
     }
+    // Nothing at all could be read: fail the source (the last good envelope is kept by the orchestrator).
+    if (globalFailures === ADVISORY_QUERIES.length) throw new Error(`GitHub Advisory Database unreachable for every query: ${limitations[0] ?? ''}`.slice(0, 300));
     // Repository advisories (published ones are public but do not always reach the global database).
     const repoLimits: string[] = [];
     for (const repo of ADVISORY_REPOS) {
-      try {
-        const { data } = await ctx.gh.rest<any[]>(`/repos/${repo}/security-advisories?per_page=100&state=published`);
-        queried.push(`repo:${repo}`);
-        for (const a of data) {
-          if (a.state && a.state !== 'published') continue;
-          const vulns = (a.vulnerabilities ?? []) as any[];
-          const existing = byId.get(a.ghsa_id);
-          byId.set(a.ghsa_id, {
-            id: a.ghsa_id,
-            aliases: [a.cve_id, ...(existing?.aliases ?? [])].filter((x: any, i: number, arr: any[]) => x && arr.indexOf(x) === i),
-            summary: plainExcerpt(a.summary ?? '', 240),
-            severity: a.severity ?? existing?.severity ?? null,
-            packages: [...new Set(vulns.map((v) => (v.package?.name ? `${v.package?.ecosystem || 'repo'}:${v.package?.name}` : `repo:${repo}`)))],
-            vulnerableRanges: vulns.map((v) => `${v.package?.name || repo} ${v.vulnerable_version_range ?? '?'}`),
-            patched: vulns.map((v) => `${v.package?.name || repo} ${v.patched_versions || 'none'}`),
-            publishedAt: a.published_at ?? null,
-            updatedAt: a.updated_at ?? null,
-            withdrawnAt: a.withdrawn_at ?? null,
-            url: a.html_url ?? `https://github.com/${repo}/security/advisories/${a.ghsa_id}`,
-          });
-        }
-      } catch (err) {
-        repoLimits.push(`${repo} repository advisories: ${(err as Error).message.slice(0, 100)}`);
+      const { items: data, truncated, error } = await ctx.gh.paginate<any>(`/repos/${repo}/security-advisories?per_page=100&state=published`, ADVISORY_MAX_PAGES, { tolerateErrors: true });
+      if (error) repoLimits.push(`${repo} repository advisories: ${error.message.slice(0, 100)}${data.length ? ' (pages read so far merged)' : ''}`);
+      else if (truncated) repoLimits.push(`${repo} repository advisories: more than ${ADVISORY_MAX_PAGES} pages; later pages were not read`);
+      else queried.push(`repo:${repo}`);
+      for (const a of data) {
+        if (a.state && a.state !== 'published') continue;
+        const vulns = (a.vulnerabilities ?? []) as any[];
+        const existing = byId.get(a.ghsa_id);
+        byId.set(a.ghsa_id, {
+          id: a.ghsa_id,
+          aliases: [a.cve_id, ...(existing?.aliases ?? [])].filter((x: any, i: number, arr: any[]) => x && arr.indexOf(x) === i),
+          summary: plainExcerpt(a.summary ?? '', 240),
+          severity: a.severity ?? existing?.severity ?? null,
+          packages: [...new Set(vulns.map((v) => (v.package?.name ? `${v.package?.ecosystem || 'repo'}:${v.package?.name}` : `repo:${repo}`)))],
+          vulnerableRanges: vulns.map((v) => `${v.package?.name || repo} ${v.vulnerable_version_range ?? '?'}`),
+          patched: vulns.map((v) => `${v.package?.name || repo} ${v.patched_versions || 'none'}`),
+          publishedAt: a.published_at ?? null,
+          updatedAt: a.updated_at ?? null,
+          withdrawnAt: a.withdrawn_at ?? null,
+          url: a.html_url ?? `https://github.com/${repo}/security/advisories/${a.ghsa_id}`,
+        });
       }
     }
     // RustSec: one tree listing of crates/ directories.
     let rustsecCrates: string[] = prev?.rustsecCrates ?? [];
-    const { data: tree } = await ctx.gh.rest<any>('/repos/rustsec/advisory-db/git/trees/main?recursive=1');
-    const names = new Set(ADVISORY_QUERIES.filter((q) => q.ecosystem === 'rust').map((q) => q.pkg));
-    const found = new Set<string>();
-    for (const t of tree.tree ?? []) {
-      const m = String(t.path).match(/^crates\/([^/]+)\/(RUSTSEC-\d{4}-\d{4})\.md$/);
-      if (m && names.has(m[1])) {
-        found.add(m[1]);
-        const id = m[2];
-        if (!byId.has(id)) byId.set(id, { id, aliases: [], summary: `RustSec advisory for ${m[1]} (see link)`, severity: null, packages: [`rust:${m[1]}`], vulnerableRanges: [], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: `https://rustsec.org/advisories/${id}.html` });
+    try {
+      const { data: tree } = await ctx.gh.rest<any>('/repos/rustsec/advisory-db/git/trees/main?recursive=1');
+      const names = new Set(ADVISORY_QUERIES.filter((q) => q.ecosystem === 'rust').map((q) => q.pkg));
+      const found = new Set<string>();
+      for (const t of tree.tree ?? []) {
+        const m = String(t.path).match(/^crates\/([^/]+)\/(RUSTSEC-\d{4}-\d{4})\.md$/);
+        if (m && names.has(m[1])) {
+          found.add(m[1]);
+          const id = m[2];
+          if (!byId.has(id)) byId.set(id, { id, aliases: [], summary: `RustSec advisory for ${m[1]} (see link)`, severity: null, packages: [`rust:${m[1]}`], vulnerableRanges: [], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: `https://rustsec.org/advisories/${id}.html` });
+        }
       }
+      if (tree.truncated) {
+        // A truncated listing is a subset: absence from it proves nothing, so keep the known inventory.
+        incomplete = true;
+        rustsecCrates = uniq([...rustsecCrates, ...found]).sort();
+        limitations.push('RustSec tree listing was truncated by GitHub; crates not seen in it keep their previous RustSec state');
+      } else {
+        rustsecCrates = [...found].sort();
+      }
+    } catch (err) {
+      incomplete = true;
+      limitations.push(`RustSec tree listing failed: ${(err as Error).message.slice(0, 100)} (previous RustSec inventory kept)`);
     }
-    rustsecCrates = [...found].sort();
-    const limitations = [...repoLimits, ...(tree.truncated ? ['RustSec tree listing was truncated by GitHub'] : [])];
+    limitations.push(...repoLimits);
     const list = [...byId.values()].sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''));
-    return { data: { advisories: list, queried, rustsecCrates }, limitations, partial: repoLimits.length > 0, itemCount: list.length };
+    return { data: { advisories: list, queried, rustsecCrates }, limitations, partial: incomplete || repoLimits.length > 0, itemCount: list.length };
   },
 };

@@ -50,6 +50,8 @@ export interface HttpOptions {
   timeoutMs?: number;
   /** Log function for diagnostics (never receives secrets). */
   log?: (msg: string) => void;
+  /** Clock used to interpret HTTP-date Retry-After and rate-limit reset headers (tests inject a fixed clock). */
+  now?: () => number;
 }
 
 export interface RequestOptions {
@@ -70,6 +72,8 @@ export interface Meter {
 }
 
 const RETRYABLE = new Set([408, 425, 429, 500, 502, 503, 504]);
+/** Statuses whose responses never carry a body (a Response cannot be rebuilt with one). */
+const NULL_BODY = new Set([101, 103, 204, 205, 304]);
 
 export class Http {
   private fetchImpl: FetchLike;
@@ -81,6 +85,7 @@ export class Http {
   private maxRateLimitWaitMs: number;
   private timeoutMs: number;
   private log: (msg: string) => void;
+  private clock: () => number;
   private budgets = new Map<string, number>();
   meter: Meter = { requests: 0, retries: 0, byScope: {}, rateLimit: {} };
 
@@ -94,6 +99,7 @@ export class Http {
     this.maxRateLimitWaitMs = opts.maxRateLimitWaitMs ?? 90_000;
     this.timeoutMs = opts.timeoutMs ?? 30_000;
     this.log = opts.log ?? (() => {});
+    this.clock = opts.now ?? (() => Date.now());
   }
 
   /** Politeness delay that tests can short-circuit through the injected sleep. */
@@ -127,6 +133,12 @@ export class Http {
     this.meter.requests += 1;
   }
 
+  /**
+   * Perform a request with retries. The response body is read to completion inside the
+   * retry loop, so a connection that drops mid-body (after 2xx headers) is retried through
+   * the same path, attempt counter and budget as a network error. The returned Response is
+   * rebuilt from the buffered bytes, so callers may read it exactly once as usual.
+   */
   async request(url: string, opts: RequestOptions = {}): Promise<Response> {
     const u = new URL(url);
     if (u.protocol !== 'https:') throw new Error(`Refusing non-https URL: ${url}`);
@@ -140,6 +152,15 @@ export class Http {
     }
 
     let attempt = 0;
+    /** Shared retry path for transport failures (connect, timeout, or body stream errors). */
+    const retryTransport = async (err: unknown, what: string): Promise<void> => {
+      if (attempt >= this.maxRetries) throw err;
+      attempt += 1;
+      this.meter.retries += 1;
+      const delay = this.backoff(attempt);
+      this.log(`${what} on ${redact(url)} (${(err as Error)?.message ?? String(err)}); retry ${attempt} in ${delay}ms`);
+      await this.sleepImpl(delay);
+    };
     for (;;) {
       this.charge(scope);
       let res: Response;
@@ -152,34 +173,37 @@ export class Http {
           signal: AbortSignal.timeout(this.timeoutMs),
         });
       } catch (err) {
-        if (attempt >= this.maxRetries) throw err;
-        attempt += 1;
-        this.meter.retries += 1;
-        const delay = this.backoff(attempt);
-        this.log(`network error on ${redact(url)} (${(err as Error).message}); retry ${attempt} in ${delay}ms`);
-        await this.sleepImpl(delay);
+        await retryTransport(err, 'network error');
         continue;
       }
 
       this.recordRateLimit(u.host, scope, res);
 
-      if (res.ok || res.status === 304 || opts.okStatuses?.includes(res.status)) return res;
+      if (res.ok || res.status === 304 || opts.okStatuses?.includes(res.status)) {
+        let body: ArrayBuffer | null;
+        try {
+          body = NULL_BODY.has(res.status) ? null : await res.arrayBuffer();
+        } catch (err) {
+          await retryTransport(err, `body read failed (HTTP ${res.status})`);
+          continue;
+        }
+        return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
+      }
 
       // GitHub primary/secondary rate limits.
       if ((res.status === 403 || res.status === 429) && u.host === 'api.github.com') {
-        const retryAfter = Number(res.headers.get('retry-after'));
+        const retryAfterMs = parseRetryAfter(res.headers.get('retry-after'), this.clock());
         const remaining = res.headers.get('x-ratelimit-remaining');
-        const reset = Number(res.headers.get('x-ratelimit-reset'));
+        const resetAt = epochToIso(res.headers.get('x-ratelimit-reset'));
         const body = await safeText(res);
-        const isRateLimit = res.status === 429 || remaining === '0' || /rate limit/i.test(body) || Number.isFinite(retryAfter) && retryAfter > 0;
+        const isRateLimit = res.status === 429 || remaining === '0' || /rate limit/i.test(body) || (retryAfterMs !== null && retryAfterMs > 0);
         if (isRateLimit) {
           let waitMs: number;
-          if (Number.isFinite(retryAfter) && retryAfter > 0) waitMs = retryAfter * 1000;
-          else if (remaining === '0' && Number.isFinite(reset) && reset > 0) waitMs = Math.max(0, reset * 1000 - Date.now()) + 1000;
+          if (retryAfterMs !== null && retryAfterMs > 0) waitMs = retryAfterMs;
+          else if (remaining === '0' && resetAt) waitMs = Math.max(0, Date.parse(resetAt) - this.clock()) + 1000;
           else waitMs = this.backoff(attempt + 1) * 5;
-          const resetAt = Number.isFinite(reset) && reset > 0 ? new Date(reset * 1000).toISOString() : null;
           if (attempt >= this.maxRetries || waitMs > this.maxRateLimitWaitMs) {
-            throw new RateLimitError(redact(url), resetAt, body.slice(0, 160));
+            throw new RateLimitError(redact(url), resetAt ?? (retryAfterMs !== null ? isoAfter(this.clock(), retryAfterMs) : null), body.slice(0, 160));
           }
           attempt += 1;
           this.meter.retries += 1;
@@ -191,11 +215,16 @@ export class Http {
       }
 
       if (RETRYABLE.has(res.status) && attempt < this.maxRetries) {
+        const retryAfterMs = parseRetryAfter(res.headers.get('retry-after'), this.clock());
+        const body = await safeText(res);
+        if (retryAfterMs !== null && retryAfterMs > this.maxRateLimitWaitMs) {
+          // The server asked us to come back later than this run is willing to wait:
+          // defer instead of retrying early (which would only be refused again).
+          throw new RateLimitError(redact(url), isoAfter(this.clock(), retryAfterMs), `HTTP ${res.status} with Retry-After beyond the ${Math.round(this.maxRateLimitWaitMs / 1000)}s in-run wait limit; deferred${body ? `: ${body.slice(0, 120)}` : ''}`);
+        }
         attempt += 1;
         this.meter.retries += 1;
-        const retryAfter = Number(res.headers.get('retry-after'));
-        const delay = Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter * 1000, this.maxRateLimitWaitMs) : this.backoff(attempt);
-        await safeText(res);
+        const delay = retryAfterMs !== null && retryAfterMs > 0 ? retryAfterMs : this.backoff(attempt);
         this.log(`HTTP ${res.status} on ${redact(url)}; retry ${attempt} in ${delay}ms`);
         await this.sleepImpl(delay);
         continue;
@@ -232,14 +261,51 @@ export class Http {
     const resource = res.headers.get('x-ratelimit-resource') ?? scope;
     const remaining = res.headers.get('x-ratelimit-remaining');
     const limit = res.headers.get('x-ratelimit-limit');
-    const reset = res.headers.get('x-ratelimit-reset');
     if (remaining === null && limit === null) return;
+    // Diagnostics only: malformed optional headers become null and never reject a response.
     this.meter.rateLimit[resource] = {
-      remaining: remaining === null ? null : Number(remaining),
-      limit: limit === null ? null : Number(limit),
-      resetAt: reset ? new Date(Number(reset) * 1000).toISOString() : null,
+      remaining: finiteOrNull(remaining),
+      limit: finiteOrNull(limit),
+      resetAt: epochToIso(res.headers.get('x-ratelimit-reset')),
     };
   }
+}
+
+function finiteOrNull(value: string | null): number | null {
+  if (value === null || value.trim() === '') return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+/** Epoch seconds (as sent in x-ratelimit-reset) to ISO, or null when missing, malformed or out of Date range. */
+export function epochToIso(value: string | null | undefined): string | null {
+  if (value === null || value === undefined || value.trim() === '') return null;
+  const secs = Number(value);
+  if (!Number.isFinite(secs) || secs <= 0) return null;
+  const d = new Date(secs * 1000);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}
+
+/**
+ * Retry-After in either form (RFC 9110 §10.2.3): delay-seconds or an HTTP-date.
+ * Returns the wait in milliseconds (0 for a date in the past), or null when absent/unparseable.
+ */
+export function parseRetryAfter(value: string | null | undefined, nowMs: number = Date.now()): number | null {
+  if (value === null || value === undefined) return null;
+  const v = value.trim();
+  if (!v) return null;
+  // delay-seconds first: Date.parse('3') would otherwise yield a (bogus) valid date.
+  if (/^\d+$/.test(v)) return Number(v) * 1000;
+  if (/^\d*\.\d+$/.test(v)) return Math.ceil(Number(v) * 1000);
+  if (!/[a-z]/i.test(v)) return null;
+  const at = Date.parse(v);
+  if (!Number.isFinite(at)) return null;
+  return Math.max(0, at - nowMs);
+}
+
+function isoAfter(nowMs: number, ms: number): string | null {
+  const d = new Date(nowMs + ms);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
 function pseudoRandom(seed: number): number {

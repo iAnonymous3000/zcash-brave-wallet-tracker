@@ -14,8 +14,26 @@ export interface SearchIssueHit {
 export interface SearchOutcome {
   hits: SearchIssueHit[];
   totalCount: number;
+  /** GitHub reported incomplete_results=true (search timed out) for at least one page. */
   incomplete: boolean;
+  /** At least one query window still matched more than the 1000 retrievable results. */
+  truncated?: boolean;
   limitations: string[];
+}
+
+/** A GraphQL error with the response path it applies to (e.g. ["repository", "n123", "subIssues"]). */
+export interface GraphqlErrorDetail {
+  message: string;
+  type: string | null;
+  path: (string | number)[] | null;
+}
+
+export interface PaginateResult<T> {
+  items: T[];
+  /** True when pagination stopped before the last page (page cap, or an error with tolerateErrors). */
+  truncated: boolean;
+  /** With tolerateErrors: the error that stopped pagination; `items` holds the pages read before it. */
+  error?: Error;
 }
 
 export class GitHub {
@@ -31,14 +49,25 @@ export class GitHub {
     return this.http.json<T>(url, { scope: 'github-core', okStatuses: opts.okStatuses, headers });
   }
 
-  /** Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation. */
-  async paginate<T>(path: string, maxPages = 50): Promise<{ items: T[]; truncated: boolean }> {
+  /**
+   * Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation.
+   * With `tolerateErrors`, a failing page ends pagination and is returned as `error` (with the
+   * pages already read and truncated=true) instead of discarding them by throwing.
+   */
+  async paginate<T>(path: string, maxPages = 50, opts: { tolerateErrors?: boolean } = {}): Promise<PaginateResult<T>> {
     let url: string | null = path.startsWith('http') ? path : `${API}${path}`;
     const items: T[] = [];
     let pages = 0;
     while (url) {
       if (pages >= maxPages) return { items, truncated: true };
-      const { data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' });
+      let data: T[] | { items?: T[] };
+      let res: Response;
+      try {
+        ({ data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' }));
+      } catch (err) {
+        if (!opts.tolerateErrors) throw err;
+        return { items, truncated: true, error: err as Error };
+      }
       const page = Array.isArray(data) ? data : (data.items ?? []);
       items.push(...page);
       pages += 1;
@@ -68,6 +97,7 @@ export class GitHub {
           hits: dedupeHits([...a.hits, ...b.hits]),
           totalCount: first.total,
           incomplete: a.incomplete || b.incomplete,
+          truncated: Boolean(a.truncated || b.truncated),
           limitations: [...a.limitations, ...b.limitations],
         };
       }
@@ -82,7 +112,7 @@ export class GitHub {
     }
     if (first.total > 1000) limitations.push(`search "${q}" matched ${first.total} items; only 1000 retrievable`);
     if (incomplete) limitations.push(`search "${q}" returned incomplete_results=true (GitHub timeout)`);
-    return { hits: dedupeHits(hits), totalCount: first.total, incomplete, limitations };
+    return { hits: dedupeHits(hits), totalCount: first.total, incomplete, truncated: first.total > 1000, limitations };
   }
 
   private async searchPage(q: string, page: number): Promise<{ items: SearchIssueHit[]; total: number; incomplete: boolean }> {
@@ -93,16 +123,26 @@ export class GitHub {
     return { items: data.items ?? [], total: data.total_count ?? 0, incomplete: Boolean(data.incomplete_results) };
   }
 
-  async graphql<T = any>(query: string, variables: Record<string, unknown> = {}): Promise<{ data: T; errors: string[] }> {
+  /**
+   * GraphQL query. `errors` keeps the historical string form; `errorDetails` adds each error's
+   * response path so callers can tell which node/field a partial response is missing.
+   */
+  async graphql<T = any>(query: string, variables: Record<string, unknown> = {}): Promise<{ data: T; errors: string[]; errorDetails: GraphqlErrorDetail[] }> {
     const { data } = await this.http.json<{ data?: T; errors?: { message: string; type?: string; path?: unknown[] }[] }>(`${API}/graphql`, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
       headers: { 'Content-Type': 'application/json' },
       scope: 'github-graphql',
     });
-    const errors = (data.errors ?? []).map((e) => `${e.type ?? 'ERROR'}: ${e.message}`);
+    const raw = Array.isArray(data.errors) ? data.errors : [];
+    const errors = raw.map((e) => `${e.type ?? 'ERROR'}: ${e.message}`);
+    const errorDetails: GraphqlErrorDetail[] = raw.map((e) => ({
+      message: String(e.message ?? ''),
+      type: e.type ?? null,
+      path: Array.isArray(e.path) ? e.path.filter((x): x is string | number => typeof x === 'string' || typeof x === 'number') : null,
+    }));
     if (!data.data) throw new HttpError(200, `${API}/graphql`, `GraphQL errors: ${errors.join('; ').slice(0, 300)}`);
-    return { data: data.data, errors };
+    return { data: data.data, errors, errorDetails };
   }
 
   /** Read a file at a ref via the contents API (raw media type). Returns null on 404. */
@@ -129,9 +169,10 @@ export class GitHub {
 }
 
 let lastSearchAt = 0;
-async function pace(_gh: GitHub, minGapMs: number): Promise<void> {
+async function pace(gh: GitHub, minGapMs: number): Promise<void> {
   const wait = lastSearchAt + minGapMs - Date.now();
-  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  // Through the injected sleep, so tests with a no-op sleep are not slowed by real pacing.
+  if (wait > 0) await gh.http.pause(wait);
   lastSearchAt = Date.now();
 }
 
