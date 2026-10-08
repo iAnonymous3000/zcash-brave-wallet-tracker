@@ -11,7 +11,7 @@ import { advisoryVerdicts, DERIVE_RULES_VERSION, eventInputsRead, generateEvents
 import { deriveAll } from '../src/derive/index.ts';
 import { writeJson } from '../src/lib/store.ts';
 import { buildGroups, buildRelations, type WorkGroup } from '../src/derive/relations.ts';
-import { computeGroupStatus } from '../src/derive/status.ts';
+import { computeGroupStatus, STAGE_HELP } from '../src/derive/status.ts';
 import { CAPABILITIES, type CapabilityDef } from '../config/capabilities.ts';
 import type { Advisory, ChangeEvent, ChangelogEntry, ChannelVersion, FlagSnapshot, Platform, SourceEnvelope, WorkItem } from '../src/lib/types.ts';
 import type { DepsData } from '../src/ingest/sources/deps.ts';
@@ -756,6 +756,7 @@ test('Edges (repair): mutual duplicates are grouped once and not staged as a dup
     assert.ok(st.duplicate, 'the recorded duplicate state is kept');
     assert.equal(st.duplicate!.canonical, null, 'no canonical pointing inside its own group');
     assert.match(st.duplicate!.basis, /contradictory/);
+    assert.doesNotMatch(STAGE_HELP[st.stage], /^Closed as completed/, 'the stage help does not contradict a duplicate closure');
   }
   // An ordinary duplicate still points to its canonical issue, and the canonical lead is not a duplicate.
   const c = wi('brave/brave-browser#20', { state: 'closed', stateReason: 'completed' });

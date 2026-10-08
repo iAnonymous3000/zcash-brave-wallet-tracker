@@ -47,7 +47,7 @@ export const STAGE_HELP: Record<Stage, string> = {
   'service-change': 'Merged in a Brave server-side repository (swap backend or field-trial config). It takes effect when Brave deploys it, which is not public, and applies regardless of browser version.',
   'in-progress': 'An open (or draft) pull request exists.',
   open: 'Open issue with no merged or open PR found.',
-  'closed-unverified': 'Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.',
+  'closed-unverified': 'Closed, but no merged PR or release note is linked (closed as completed, without a reason, or as a duplicate whose records contradict each other). Treat as unknown, not shipped.',
   'closed-unmerged': 'The pull request was closed without being merged.',
   'not-planned': 'Closed as not planned (won’t fix, invalid, or handled elsewhere). Nothing shipped through this issue; labels such as release-notes/include do not change that.',
   duplicate: 'Closed as a duplicate. Follow the canonical issue instead.',
