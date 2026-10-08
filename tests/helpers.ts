@@ -30,6 +30,8 @@ export function wi(id: string, over: Partial<WorkItem> = {}): WorkItem {
     resolvesRefs: [],
     upliftOfRefs: [],
     issueType: null,
+    branchRefs: [],
+    commentDuplicateOf: null,
     closingRefs: [],
     subIssues: [],
     parent: null,

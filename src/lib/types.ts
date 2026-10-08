@@ -64,6 +64,10 @@ export interface WorkItem {
   upliftOfRefs: string[];
   /** GitHub issue type (e.g. Bug, Enhancement, Feature) when set. */
   issueType: string | null;
+  /** brave-core PRs whose head branch names a brave-browser issue (Brave convention "brave_<issue>[_n]"). */
+  branchRefs: string[];
+  /** Closed issues whose closing comment says "Duplicate of #N". */
+  commentDuplicateOf: string | null;
   /** GitHub closingIssuesReferences (PRs) — authoritative "fixes" links. */
   closingRefs: string[];
   /** Sub-issues (GitHub native) for root issues. */

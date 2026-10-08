@@ -152,3 +152,29 @@ test('epics list their children; QA labels are per platform', () => {
   const st = computeGroupStatus(g, items, r, { inclusion: {}, current, changelog: [] });
   assert.deepEqual(st.qa.passed, [{ label: 'QA Pass-Win64', platform: 'desktop' }]);
 });
+
+test('branch-name links and "Duplicate of" comments (real Brave cases)', async () => {
+  const { branchRefsOf, duplicateFromComments } = await import('../src/ingest/sources/github-items.ts');
+  assert.deepEqual(branchRefsOf('brave_58957'), ['brave/brave-browser#58957'], '#39877 fixes #58957 with an empty Resolves line');
+  assert.deepEqual(branchRefsOf('brave_57635_2'), ['brave/brave-browser#57635']);
+  assert.deepEqual(branchRefsOf('pr39979_brave_59049_1.97.x'), [], 'uplift branches are handled elsewhere');
+  assert.deepEqual(branchRefsOf('feature-x'), []);
+  assert.equal(duplicateFromComments(['Thanks!', 'Duplicate of #53219'], 'brave/brave-browser#53218'), 'brave/brave-browser#53219');
+  assert.equal(duplicateFromComments(['Closing this as a duplicate of https://github.com/brave/brave-browser/issues/51086'], 'brave/brave-browser#1'), 'brave/brave-browser#51086');
+  assert.equal(duplicateFromComments(['not related'], 'brave/brave-browser#1'), null);
+
+  const issue = wi('brave/brave-browser#58957', { title: 'fix: Zcash Ironwood transactions miscalculate fees' });
+  const pr = wi('brave/brave-core#39877', { title: '[ZCash] Fix ironwood fee calculation', state: 'merged', mergedAt: '2026-09-16T00:00:00Z', mergeCommitSha: 'x', headRef: 'brave_58957', branchRefs: ['brave/brave-browser#58957'] });
+  const dupe = wi('brave/brave-browser#53218', { state: 'closed', stateReason: 'completed', commentDuplicateOf: 'brave/brave-browser#53219' });
+  const canon = wi('brave/brave-browser#53219');
+  const items = byId(issue, pr, dupe, canon);
+  const r = buildRelations(items);
+  assert.deepEqual(r.issuePrs.get(issue.id), [pr.id]);
+  assert.equal(r.duplicateOf.get(dupe.id), canon.id);
+  const groups = buildGroups(items, r);
+  const st = computeGroupStatus(groups.find((g) => g.lead === issue.id)!, items, r, { inclusion: {}, current, changelog: [] });
+  assert.equal(st.implementation.state, 'merged');
+  const lone = computeGroupStatus(groups.find((g) => g.lead === canon.id)!, items, r, { inclusion: {}, current, changelog: [] });
+  assert.ok(lone.builds.every((b) => b.included === null && /unknown/.test(b.basis)), 'no linked PR -> presence unknown, not "not included"');
+  assert.deepEqual(groups.find((g) => g.lead === canon.id)!.duplicates, [dupe.id]);
+});

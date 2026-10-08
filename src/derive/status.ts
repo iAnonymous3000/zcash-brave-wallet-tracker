@@ -128,7 +128,7 @@ export function computeGroupStatus(
     if (cv.platform === 'all' || !cv.tag) continue;
     const base = { platform: cv.platform, channel: cv.channel, version: cv.version };
     if (!mergedAll.length) {
-      builds.push({ ...base, included: false, via: null, basis: 'no merged PR' });
+      builds.push({ ...base, included: null, via: null, basis: 'no merged PR is linked, so presence in this build is unknown' });
       continue;
     }
     const verdicts = mergedAll.map((pr) => ({ pr: pr.id, v: inclusionAt(ctx.inclusion[pr.id], cv.version) }));

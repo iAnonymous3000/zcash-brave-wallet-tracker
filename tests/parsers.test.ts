@@ -184,3 +184,12 @@ test('iOS App Store marketing version: likely build is inferred but labelled as 
   assert.match(r.inferredBasis ?? '', /does not publish/);
   assert.equal(inferBuild(rel, '1.80', 'release').inferredTag, null);
 });
+
+test('iOS release-notes issues map the App Store version to a build', async () => {
+  const { parseIosNotesIssue } = await import('../src/ingest/sources/brave-versions.ts');
+  assert.deepEqual(parseIosNotesIssue('Release Notes for iOS Release 1.96 [Changelog]', '## [1.96.62](https://github.com/brave/brave-browser/releases/tag/v1.96.62)\n\n - Added x.'), { marketing: '1.96', build: '1.96.62' });
+  assert.deepEqual(parseIosNotesIssue('Release Notes for iOS Release 1.92.144 [Changelog]', '## 1.92.144\n### Web3'), { marketing: '1.92.144', build: '1.92.144' });
+  assert.deepEqual(parseIosNotesIssue('Release Notes for iOS Release 1.93 [Changelog]', '- Added QuickView toolbar actions.'), { marketing: '1.93', build: null }, 'no heading -> no mapping');
+  assert.equal(parseIosNotesIssue('Add Release Notes for iOS Release 1.94', '## [1.94.122](x)').marketing, null, 'PR-style titles are ignored');
+  assert.equal(parseIosNotesIssue('Release Notes for iOS Release 1.96', '## [1.97.10](x)').build, null, 'build must be in the marketing line');
+});

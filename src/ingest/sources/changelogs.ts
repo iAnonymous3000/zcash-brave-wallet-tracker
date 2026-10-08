@@ -6,6 +6,8 @@ import type { ChangelogEntry, ChannelVersion, EvidenceRecord, Platform } from '.
 import { sha256 } from '../../lib/util.ts';
 import type { Collector } from '../framework.ts';
 import type { GithubItemsData } from './github-items.ts';
+import type { BraveVersionsData } from './brave-versions.ts';
+import { compareVersions } from '../../lib/util.ts';
 import { changelogVersions, parseChangelog } from '../parsers.ts';
 
 export const CHANGELOG_FILES: { file: string; platform: Platform; archive: boolean }[] = [
@@ -30,7 +32,7 @@ export const changelogs: Collector<ChangelogsData> = {
   name: 'Brave platform changelogs (Desktop, Android, iOS)',
   url: 'https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md',
   schema: 1,
-  dependsOn: ['github-items'],
+  dependsOn: ['github-items', 'brave-versions'],
   budget: { 'github-core': 10 },
   async collect(ctx, prev) {
     const tracked = new Set(Object.keys(ctx.get<GithubItemsData>('github-items')?.data.items ?? {}));
@@ -64,6 +66,17 @@ export const changelogs: Collector<ChangelogsData> = {
         presentUpstream.add(evidenceId(e));
         if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
       }
+    }
+    // iOS release notes that are published in Brave's release-notes issue before reaching CHANGELOG_iOS.md.
+    const iosTop = latestStable.find((l) => l.platform === 'ios')?.version ?? '0';
+    for (const n of ctx.get<BraveVersionsData>('brave-versions')?.data.iosNotes ?? []) {
+      if (!n.build || compareVersions(n.build, iosTop) <= 0) continue;
+      const parsed = parseChangelog(n.body, { platform: 'ios', file: `iOS release notes issue #${n.number}`, commitSha: 'issue' }).map((e) => ({ ...e, permalink: n.url }));
+      for (const e of parsed) {
+        presentUpstream.add(evidenceId(e));
+        if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
+      }
+      files.push({ file: `iOS release notes issue #${n.number}`, platform: 'ios', commitSha: 'issue', commitDate: n.updatedAt, latestVersion: n.build, versions: 1, entries: parsed.length });
     }
     const evidence = mergeEvidence(prev?.evidence ?? [], entries, ctx.now, presentUpstream);
     return { data: { files, entries, latestStable, evidence }, itemCount: entries.length };

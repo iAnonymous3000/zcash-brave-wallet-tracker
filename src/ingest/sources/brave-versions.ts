@@ -23,9 +23,28 @@ export function inferBuild(rel: ReleasesData | null, marketing: string, channel:
   return { inferredTag: cands[0].tag, inferredBasis: `newest ${line}.x Release on GitHub with iOS assets (${cands.length} candidate build${cands.length > 1 ? 's' : ''}); Brave does not publish which build the App Store ${marketing} is` };
 }
 
+export interface IosNotes {
+  number: number;
+  url: string;
+  title: string;
+  marketing: string;
+  build: string | null;
+  updatedAt: string | null;
+  body: string;
+}
+
 export interface BraveVersionsData {
   current: ChannelVersion[];
   missing: string[];
+  /** Brave's "Release Notes for iOS Release X.Y" issues: map App Store versions to builds; their bullets are iOS release notes. */
+  iosNotes?: IosNotes[];
+}
+
+/** Parse "Release Notes for iOS Release 1.96 [Changelog]" + body "## [1.96.62](...)". */
+export function parseIosNotesIssue(title: string, body: string): { marketing: string | null; build: string | null } {
+  const marketing = title.match(/^Release Notes for iOS Release\s+(\d+\.\d+(?:\.\d+)?)/i)?.[1] ?? null;
+  const build = body.match(/^##\s*\[?(\d+\.\d+\.\d+)\]?/m)?.[1] ?? null;
+  return { marketing, build: marketing && build && build.startsWith(`${marketing.split('.').slice(0, 2).join('.')}.`) ? build : null };
 }
 
 export const braveVersions: Collector<BraveVersionsData> = {
@@ -72,6 +91,32 @@ export const braveVersions: Collector<BraveVersionsData> = {
     }
     if (!current.length) throw new Error('no version pointers could be read');
     const limitations = missing.length ? [`${missing.length} pointer(s) unavailable: ${missing.slice(0, 6).join(', ')}`] : [];
-    return { data: { current, missing }, limitations, itemCount: current.length };
+
+    // App Store marketing version -> build, from Brave's public iOS release-notes issues.
+    const iosNotes: IosNotes[] = [];
+    try {
+      const out = await ctx.gh.searchIssues('repo:brave/brave-browser "Release Notes for iOS Release" in:title is:issue');
+      for (const h of out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown })[]) {
+        if (h.pull_request) continue;
+        const { marketing, build } = parseIosNotesIssue(h.title, h.body ?? '');
+        if (!marketing) continue;
+        iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000) });
+      }
+    } catch (err) {
+      limitations.push(`iOS release-notes issue lookup failed: ${(err as Error).message.slice(0, 100)} (iOS App Store build not resolved this run)`);
+    }
+    const iosRel = current.find((c) => c.platform === 'ios' && c.channel === 'release');
+    if (iosRel && !iosRel.tag) {
+      const n = iosNotes.filter((x) => x.marketing === iosRel.version && x.build).sort((a, b) => b.number - a.number)[0];
+      if (n?.build) {
+        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s iOS release-notes issue #${n.number}`;
+        iosRel.detail = { ...(iosRel.detail ?? {}), 'ios-release-notes-issue': n.url };
+        iosRel.version = n.build;
+        iosRel.tag = `v${n.build}`;
+        iosRel.inferredTag = null;
+        iosRel.inferredBasis = null;
+      }
+    }
+    return { data: { current, missing, iosNotes }, limitations, itemCount: current.length };
   },
 };

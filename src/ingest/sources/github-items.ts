@@ -143,6 +143,8 @@ export const githubItems: Collector<GithubItemsData> = {
         ...item.subIssues,
         ...(item.parent ? [item.parent] : []),
         ...item.upliftOfRefs,
+        ...item.branchRefs,
+        ...(item.commentDuplicateOf ? [item.commentDuplicateOf] : []),
         ...(epicLike ? item.bodyRefs.filter((r) => r.startsWith('brave/brave-browser#')) : []),
       ]);
       for (const ref of strong) {
@@ -235,6 +237,24 @@ export function stripHtmlComments(s: string): string {
   return s.replace(/<!--[\s\S]*?-->/g, ' ');
 }
 
+/** Brave developers often name branches after the issue: "brave_57635_2" -> brave-browser#57635. */
+export function branchRefsOf(headRef: string | null): string[] {
+  const m = headRef?.match(/^brave_(\d{5,6})(?:_\d+)?$/);
+  return m ? [itemId('brave/brave-browser', Number(m[1]))] : [];
+}
+
+/** "Duplicate of #53219" / "Closing as a duplicate of https://github.com/brave/brave-browser/issues/N" in recent comments. */
+export function duplicateFromComments(bodies: string[], self: string): string | null {
+  for (const b of [...bodies].reverse()) {
+    const m = b.match(/duplicate (?:of|with|in favou?r of)\s+(?:https:\/\/github\.com\/brave\/brave-browser\/issues\/|brave\/brave-browser#|#)(\d+)/i);
+    if (m) {
+      const ref = itemId('brave/brave-browser', Number(m[1]));
+      if (ref !== self) return ref;
+    }
+  }
+  return null;
+}
+
 /** Closing keywords followed by a brave-browser issue URL or short ref. */
 export function resolvesRefsOf(body: string): string[] {
   const out = new Set<string>();
@@ -279,6 +299,7 @@ fragment I on Issue {
   __typename number title url state stateReason createdAt updatedAt closedAt issueType { name }
   author { login } assignees(first: 10) { nodes { login } } labels(first: 50) { nodes { name } }
   milestone { title dueOn state } body
+  comments(last: 3) { nodes { body } }
   parent { number repository { nameWithOwner } }
   subIssues(first: 50) { nodes { number repository { nameWithOwner } } }
   timelineItems(first: 100, itemTypes: [CLOSED_EVENT, REOPENED_EVENT, LABELED_EVENT, UNLABELED_EVENT, MILESTONED_EVENT, DEMILESTONED_EVENT, MARKED_AS_DUPLICATE_EVENT, UNMARKED_AS_DUPLICATE_EVENT, CROSS_REFERENCED_EVENT, CONNECTED_EVENT]) {
@@ -481,6 +502,8 @@ export function toWorkItem(node: any, repoIn: string, discovery: string[], now: 
     resolvesRefs: resolvesRefsOf(stripHtmlComments(body)).filter(isPublicRef),
     upliftOfRefs: isPr ? upliftRefsOf(stripHtmlComments(body), node.title ?? '', node.headRefName ?? null, repo) : [],
     issueType: !isPr ? (node.issueType?.name ?? null) : null,
+    branchRefs: isPr && repo === 'brave/brave-core' ? branchRefsOf(node.headRefName ?? null) : [],
+    commentDuplicateOf: !isPr && node.state !== 'OPEN' ? duplicateFromComments((node.comments?.nodes ?? []).map((c: any) => c.body ?? ''), id) : null,
     closingRefs: isPr ? (node.closingIssuesReferences?.nodes ?? []).map(refOf).filter(Boolean) : [],
     subIssues: !isPr ? (node.subIssues?.nodes ?? []).map(refOf).filter(Boolean) : [],
     parent: !isPr ? refOf(node.parent) : null,

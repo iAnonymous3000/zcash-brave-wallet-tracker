@@ -53,6 +53,7 @@ export const SOURCE_CHECKS: SourceCheckDef[] = [
   { id: 'orchard-to-ironwood-task', files: ['components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc'], pattern: /OrchardToIronwood|orchard_to_ironwood|ZCashCreateOrchardToIronwood/i, describe: 'Orchard → Ironwood migration transaction task' },
   { id: 'meld-zec', files: ['components/brave_wallet/browser/meld_integration_service.cc', 'components/brave_wallet_ui/common/slices/endpoints/meld_integration.endpoints.ts'], pattern: /['",]ZEC['",]|,ZEC,/, describe: 'ZEC requested from the Meld buy/on-ramp aggregator' },
   { id: 'bridge-hidden-ios', files: ['components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx'], pattern: /!isIOS\s*&&\s*isBridgeSupported/, describe: 'Bridge action hidden on iOS in the wallet UI' },
+  { id: 'testnet-ios-debug-only', files: ['ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift'], pattern: /isZcashTestnetEnabled/, describe: 'iOS shows Zcash testnet only behind a developer debug toggle' },
   { id: 'near-intents-zec', files: ['components/brave_wallet/browser/swap_service.cc'], pattern: /kZCashMainnet/, describe: 'NEAR Intents (gate3) supports the Zcash mainnet network' },
 ];
 
@@ -74,8 +75,9 @@ export const CAPABILITIES: CapabilityDef[] = [
     id: 'shielded',
     name: 'Shielded accounts & balances',
     description: 'Shielded accounts and shielded balances (Orchard, and Ironwood where enabled). Private sends after NU6.3 depend on Ironwood.',
-    releaseNoteIssues: [bb(44432)],
-    releaseNoteMatch: /\bzcash shielded support\.?$|\bshielded account modal\b/i,
+    // #46598 "Shield Account" alert = upgrade to a shielded account (no funds move).
+    releaseNoteIssues: [bb(44432), bb(46598)],
+    releaseNoteMatch: /\bzcash shielded support\.?$|\bshielded account modal\b|\bshield account\b/i,
     flags: [ZEC, SHIELDED],
     implementedBy: [bb(44432)],
     docMatch: /shielded/i,
@@ -86,8 +88,8 @@ export const CAPABILITIES: CapabilityDef[] = [
     requires: ['shielded'],
     name: 'Shield transparent funds',
     description: '"Shield Funds" / "Shield Account": move transparent ZEC into the shielded pool.',
-    releaseNoteIssues: [bb(46596), bb(46598), bb(49621)],
-    releaseNoteMatch: /\bshield funds\b|\bshield account\b|\bconfirm shield\b/i,
+    releaseNoteIssues: [bb(46596), bb(49621)],
+    releaseNoteMatch: /\bshield funds\b|\bconfirm shield\b/i,
     flags: [ZEC, SHIELDED],
     implementedBy: [bb(46596)],
   },
@@ -190,7 +192,7 @@ export const CAPABILITIES: CapabilityDef[] = [
     releaseNoteMatch: /\bbridge\b|\bnear intents\b/i,
     flags: [ZEC],
     sourceChecks: [
-      { id: 'near-intents-zec', describe: 'NEAR Intents network list includes Zcash', role: 'supports' },
+  { id: 'near-intents-zec', describe: 'NEAR Intents network list includes Zcash', role: 'supports' },
       { id: 'bridge-hidden-ios', describe: 'Bridge hidden on iOS', role: 'blocks', platforms: ['ios'] },
     ],
     implementedBy: [bb(52555)],
@@ -212,6 +214,7 @@ export const CAPABILITIES: CapabilityDef[] = [
     releaseNoteIssues: [bb(50116)],
     releaseNoteMatch: /\btestnet\b/i,
     flags: [ZEC],
+    sourceChecks: [{ id: 'testnet-ios-debug-only', describe: 'testnet hidden behind iOS debug toggle', role: 'blocks', platforms: ['ios'] }],
   },
   {
     id: 'default-currency',

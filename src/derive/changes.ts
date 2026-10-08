@@ -23,7 +23,7 @@ export const HISTORY_DAYS = 365;
  * source checks, build presence rules). Diff-only events are suppressed for the first run after a
  * bump, because differences would come from the tracker, not from the sources.
  */
-export const DERIVE_RULES_VERSION = 8;
+export const DERIVE_RULES_VERSION = 9;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {

@@ -43,7 +43,8 @@ export function isDuplicateIssue(it: WorkItem): { duplicate: boolean; canonical:
       canonical = null;
     }
   }
-  if (it.stateReason === 'duplicate') return { duplicate: true, canonical, basis: 'closed as duplicate' };
+  if (it.stateReason === 'duplicate') return { duplicate: true, canonical: canonical ?? it.commentDuplicateOf ?? null, basis: 'closed as duplicate' };
+  if (it.state === 'closed' && it.commentDuplicateOf) return { duplicate: true, canonical: it.commentDuplicateOf, basis: 'closing comment “Duplicate of …”' };
   if (marked) return { duplicate: true, canonical, basis: 'marked as duplicate' };
   if (it.labels.includes('closed/duplicate')) return { duplicate: true, canonical, basis: 'closed/duplicate label' };
   return { duplicate: false, canonical: null, basis: null };
@@ -89,7 +90,7 @@ export function buildRelations(items: Record<string, WorkItem>): Relations {
   // PR -> issues (closing refs from GraphQL for master PRs; body closing keywords for all PRs).
   for (const pr of Object.values(items)) {
     if (pr.kind !== 'pr') continue;
-    const refs = new Set([...pr.closingRefs, ...pr.resolvesRefs].filter((x) => x.startsWith('brave/brave-browser#')));
+    const refs = new Set([...pr.closingRefs, ...pr.resolvesRefs, ...(pr.branchRefs ?? [])].filter((x) => x.startsWith('brave/brave-browser#')));
     for (const iss of refs) {
       if (!has(iss)) continue;
       push(r.prIssues, pr.id, iss);
