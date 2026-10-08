@@ -126,7 +126,11 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
   </div>
   <p class="muted">Lead item ${ghLink(g.lead, lead.url)} · opened ${time(lead.createdAt)} by ${lead.author ?? 'unknown'} · last source update ${time(st.lastUpdated, { withTime: true })}</p>
   ${epic ? html`<p>Part of <a href="${itemHref(epic.id)}">${epic.title}</a> (${shortRef(epic.id)}).</p>` : ''}
-  ${st.duplicate ? html`<p class="banner banner-info">This issue is a duplicate${st.duplicate.canonical ? html` of ${d.items[st.duplicate.canonical] ? html`<a href="${itemHref(st.duplicate.canonical)}">${shortRef(st.duplicate.canonical)}</a>` : shortRef(st.duplicate.canonical)}` : ''} (${st.duplicate.basis}). A duplicate closure is not a shipped fix.</p>` : ''}
+  ${st.duplicate
+    ? st.duplicate.basis === 'closed/duplicate label' && lead.stateReason === 'completed' && !st.duplicate.canonical
+      ? html`<p class="banner banner-info">Brave labeled this issue <code>closed/duplicate</code>, but GitHub records it as closed (completed) and no canonical issue is linked. That combination is ambiguous: it is not evidence that a fix shipped, and not proof that it did not.</p>`
+      : html`<p class="banner banner-info">This issue is a duplicate${st.duplicate.canonical ? html` of ${d.items[st.duplicate.canonical] ? html`<a href="${itemHref(st.duplicate.canonical)}">${shortRef(st.duplicate.canonical)}</a>` : shortRef(st.duplicate.canonical)}` : ''} (${st.duplicate.basis}). A duplicate closure is not a shipped fix.</p>`
+    : ''}
   ${st.stage === 'not-planned' ? html`<p class="banner banner-info">Closed as not planned. Labels like <code>release-notes/include</code> or <code>QA/Yes</code> on this issue do not mean anything shipped.</p>` : ''}
 </div>
 
@@ -153,7 +157,10 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
   </section>
 </div>
 
-<section class="block" aria-labelledby="f-builds">
+${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2 id="f-builds">Where this applies</h2>
+  <p>This change was merged in a Brave server-side repository (${g.members.masterPrs.map((id) => shortRef(id)).join(', ')}). It is not part of any browser build: once Brave deploys it, it applies to every platform and channel at the same time. Deployment timing is not public.</p>
+  ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current repository state: ${ext(d.upstream.services.gate3.url, 'SWAP_DISABLED_CHAINS')} ${d.upstream.services.gate3.zcashDisabled ? 'includes' : 'does not include'} <code>Chain.ZCASH</code> (checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}).</p>` : ''}
+</section>` : html`<section class="block" aria-labelledby="f-builds">
   <h2 id="f-builds">Build presence</h2>
   <p class="muted">Whether a merged pull request in this group is an ancestor of the brave-core tag of each platform’s current build (from versions.brave.com). Code presence is not the same as a feature being exposed on that platform.</p>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Build presence table">
@@ -165,7 +172,7 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
     })}</tr>`)}
   </tbody></table>
   </div>
-</section>
+</section>`}
 
 ${children.length ? html`<section class="block" aria-labelledby="f-children"><h2 id="f-children">Linked sub-issues</h2><ul class="children">${children.map((c, i) => c ? html`<li><a href="${itemHref(c.id)}">${c.title}</a> ${chip(c.status.stageLabel, STAGE_CLASS[c.status.stage] ?? '')} <span class="muted">${shortRef(c.id)}</span></li>` : html`<li class="muted">${shortRef(g.members.children[i])} (folded into another group)</li>`)}</ul></section>` : ''}
 
@@ -179,6 +186,11 @@ ${reports.length ? html`<section class="block" aria-labelledby="f-reports"><h2 i
 
 ${related.length ? html`<section class="block" aria-labelledby="f-events"><h2 id="f-events">Recorded changes</h2><ol class="feed">${related.map((e) => eventCard(e, d))}</ol></section>` : ''}
 `;
+}
+
+function serviceOnly(g: SiteGroup, d: SiteData): boolean {
+  const ids = [...g.members.masterPrs, ...g.members.uplifts];
+  return ids.length > 0 && ids.every((id) => /^brave\/(gate3|brave-variations)#/.test(id)) && d.items[g.lead]?.kind === 'pr';
 }
 
 function memberBlock(it: WorkItem, d: SiteData): SafeHtml {
