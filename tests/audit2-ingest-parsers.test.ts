@@ -427,6 +427,7 @@ test('R-ING-23 repair: a release heading whose link has a title or points at a p
     ['## [1.3.0](https://brave.com/nightly/)', []],
     ['## [1.3.0]', ['[1.3.0]: https://github.com/brave/brave-browser/releases/tag/v1.3.0-rc.1']],
     ['## [1.3.0][next]', ['[next]: https://example.com/beta "Next"']],
+    ['## [1.3.0][beta]', []],
   ];
   for (const [heading, defs] of notReleased) {
     const text = md('# Changelog', '', heading, '', ' - Zcash next.', '', '## [1.2.3](https://github.com/brave/brave-browser/releases/tag/v1.2.3)', '', ' - Zcash shipped.', '', ...defs);
@@ -488,7 +489,9 @@ test('R-ING-23 repair: unclosed HTML and fence openers are read in linear time (
   const size = 96 * 1024;
   for (const unit of ['<!--', '<?', '<!X', '<pre>', '<![CDATA[', '```a', '~~~a']) {
     for (const [where, head, line] of [['top level', '', unit], ['list item', '- x\n', `  ${unit}`], ['quote', '', `> ${unit}`]]) {
-      const body = head + `${line}\n`.repeat(Math.floor(size / (line.length + 1)));
+      // The top-level "<!--" case is larger so the round-1 parser's quadratic rescans fail it on any machine.
+      const bytes = unit === '<!--' && where === 'top level' ? 256 * 1024 : size;
+      const body = head + `${line}\n`.repeat(Math.floor(bytes / (line.length + 1)));
       const t = performance.now();
       parseChangelog(body, { platform: 'ios', file: 'notes', commitSha: 'issue' });
       changelogVersions(body);

@@ -1,5 +1,6 @@
 // Pure, deterministic parsers for upstream formats. No I/O here so every rule
-// is unit-testable against captured fixtures.
+// is unit-testable against captured fixtures. (The changelog parsers compare
+// release dates with opts.now, which defaults to the current time.)
 
 import type { Channel, ChangelogEntry, FlagValue, Platform } from '../lib/types.ts';
 import { extractRefs, plainExcerpt } from '../lib/util.ts';
@@ -215,6 +216,8 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
       rest = rest.slice(inline.end);
     } else {
       const ref = rest.match(/^\[([^\]]*)\]/);
+      // A label such as "[beta]" says what it links to even when nothing defines it (then it is visible text).
+      if (ref && PRE_RELEASE_WORD.test(ref[1])) return null;
       link = refs.get(normalizeLabel(ref?.[1] || m[0].slice(1)));
       if (ref) rest = rest.slice(ref[0].length);
     }
