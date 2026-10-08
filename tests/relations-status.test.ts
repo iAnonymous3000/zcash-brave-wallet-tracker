@@ -195,3 +195,20 @@ test('PRs merged into a feature branch inherit build presence from the PR that c
   assert.match(rel.basis, /via brave-core#37116, which merged update_orchard_14 into master/);
   assert.equal(st.stage, 'in-release-build');
 });
+
+test('branch-name links need overlapping titles; duplicate comments ignore negations', async () => {
+  const { titlesOverlap } = await import('../src/derive/relations.ts');
+  const { duplicateFromComments } = await import('../src/ingest/sources/github-items.ts');
+  assert.equal(titlesOverlap('[ZCash] Fix ironwood fee calculation', 'fix: Zcash Ironwood transactions miscalculate fees and action counts'), true);
+  assert.equal(titlesOverlap('[ZCash] Scan and store Ironwood actions during block sync', '[ZCash] Add block decoding code for ironwood.'), true);
+  assert.equal(titlesOverlap('[ZCash] Migrate database to support ironwood pool.', '[ZCash] Update Orchard to v15 and librustzcash to the latest version'), false, 'reused branch name (#37999 vs #57124)');
+  assert.equal(titlesOverlap('Re-land zcash keyring support', '[ZCash] Shielding operation'), false);
+  assert.equal(duplicateFromComments(['This is not a duplicate of #123'], 'brave/brave-browser#1'), null);
+  assert.equal(duplicateFromComments(['Possibly a duplicate of #123?'], 'brave/brave-browser#1'), null);
+  assert.equal(duplicateFromComments(['Possible duplicate: Duplicate of #123'], 'brave/brave-browser#1'), null);
+  assert.equal(duplicateFromComments(['Duplicate of #53219'], 'brave/brave-browser#53218'), 'brave/brave-browser#53219');
+  const issue = wi('brave/brave-browser#57124', { title: '[ZCash] Update Orchard to v15 and librustzcash to the latest version' });
+  const wrong = wi('brave/brave-core#37999', { title: '[ZCash] Migrate database to support ironwood pool.', state: 'merged', mergeCommitSha: 'x', headRef: 'brave_57124', branchRefs: ['brave/brave-browser#57124'] });
+  const r = buildRelations(byId(issue, wrong));
+  assert.equal(r.issuePrs.get(issue.id), undefined, 'branch link rejected without title overlap');
+});

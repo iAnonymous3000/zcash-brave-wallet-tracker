@@ -25,6 +25,15 @@ function push(map: Map<string, string[]>, k: string, v: string): void {
   map.set(k, arr);
 }
 
+const STOP = new Set(['zcash', 'zec', 'add', 'adds', 'added', 'the', 'to', 'of', 'for', 'and', 'in', 'on', 'use', 'with', 'a', 'an', 'support', 'implement', 'fix', 'fixes', 'update', 'wallet', 'brave', 'from', 'into', 'by', 'is', 'be', 'when', 'it', 'as', 'at', 'or', 're', 'land']);
+/** Do two titles share a significant (non-stopword) token? Plural "s" is ignored. */
+export function titlesOverlap(a: string, b: string): boolean {
+  const toks = (s: string) => new Set(s.toLowerCase().replace(/\[[^\]]*\]/g, ' ').split(/[^a-z0-9_]+/).filter((t) => t.length > 2 && !STOP.has(t)).map((t) => t.replace(/s$/, '')));
+  const A = toks(a);
+  for (const t of toks(b)) if (A.has(t)) return true;
+  return false;
+}
+
 export function isUpliftPr(pr: WorkItem): boolean {
   return pr.kind === 'pr' && pr.repo === 'brave/brave-core' && isReleaseBranch(pr.baseRef) && !NON_UPLIFT_RELEASE_PR.test(pr.title);
 }
@@ -90,7 +99,9 @@ export function buildRelations(items: Record<string, WorkItem>): Relations {
   // PR -> issues (closing refs from GraphQL for master PRs; body closing keywords for all PRs).
   for (const pr of Object.values(items)) {
     if (pr.kind !== 'pr') continue;
-    const refs = new Set([...pr.closingRefs, ...pr.resolvesRefs, ...(pr.branchRefs ?? [])].filter((x) => x.startsWith('brave/brave-browser#')));
+    // Branch-name links ("brave_<issue>") are weaker: accept them only when the titles share a significant word.
+    const branch = (pr.branchRefs ?? []).filter((x) => items[x] && titlesOverlap(pr.title, items[x].title));
+    const refs = new Set([...pr.closingRefs, ...pr.resolvesRefs, ...branch].filter((x) => x.startsWith('brave/brave-browser#')));
     for (const iss of refs) {
       if (!has(iss)) continue;
       push(r.prIssues, pr.id, iss);

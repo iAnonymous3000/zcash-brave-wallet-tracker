@@ -71,12 +71,12 @@ export const changelogs: Collector<ChangelogsData> = {
     const iosTop = latestStable.find((l) => l.platform === 'ios')?.version ?? '0';
     for (const n of ctx.get<BraveVersionsData>('brave-versions')?.data.iosNotes ?? []) {
       if (!n.build || compareVersions(n.build, iosTop) <= 0) continue;
-      const parsed = parseChangelog(n.body, { platform: 'ios', file: `iOS release notes issue #${n.number}`, commitSha: 'issue' }).map((e) => ({ ...e, permalink: n.url }));
+      const parsed = parseChangelog(n.body, { platform: 'ios', file: `pending iOS release notes (draft issue #${n.number})`, commitSha: 'issue' }).map((e) => ({ ...e, permalink: n.url }));
       for (const e of parsed) {
         presentUpstream.add(evidenceId(e));
         if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
       }
-      files.push({ file: `iOS release notes issue #${n.number}`, platform: 'ios', commitSha: 'issue', commitDate: n.updatedAt, latestVersion: n.build, versions: 1, entries: parsed.length });
+      files.push({ file: `pending iOS release notes (draft issue #${n.number})`, platform: 'ios', commitSha: 'issue', commitDate: n.updatedAt, latestVersion: n.build, versions: 1, entries: parsed.length });
     }
     const evidence = mergeEvidence(prev?.evidence ?? [], entries, ctx.now, presentUpstream);
     return { data: { files, entries, latestStable, evidence }, itemCount: entries.length };

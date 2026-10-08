@@ -140,7 +140,7 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
     ${st.issueState ? html`<p class="big">${st.issueState.label}</p><p class="muted">${lead.closedAt ? html`Closed ${time(lead.closedAt, { withTime: true })}.` : 'Open.'} ${lead.issueType ? `GitHub type: ${lead.issueType}.` : ''}</p>` : html`<p class="muted">No tracked issue; this group is led by a pull request.</p>`}
   </section>
   <section class="facet" aria-labelledby="f-impl"><h2 id="f-impl">Implementation</h2>
-    ${g.members.masterPrs.length ? html`<ul class="plain">${g.members.masterPrs.map((id) => { const p = d.items[id]; return html`<li>${ghLink(id, p.url)} <strong>${prState(p)}</strong> into <code>${p.baseRef ?? '?'}</code>${p.author ? ` by ${p.author}` : ''}<br><span class="muted">${p.title}</span></li>`; })}</ul>` : html`<p class="muted">No pull request is linked by closing keywords, GitHub’s closing references or the issue timeline.</p>`}
+    ${g.members.masterPrs.length ? html`<ul class="plain">${g.members.masterPrs.map((id) => { const p = d.items[id]; return html`<li>${ghLink(id, p.url)} <strong>${prState(p)}</strong> into <code>${p.baseRef ?? '?'}</code>${p.author ? ` by ${p.author}` : ''}<br><span class="muted">${p.title}</span><br><span class="muted">Linked by: ${linkBasis(p, g.lead)}</span></li>`; })}</ul>` : html`<p class="muted">No pull request is linked by closing keywords, GitHub’s closing references, a <code>brave_&lt;issue&gt;</code> branch name or the issue timeline.</p>`}
     ${g.members.uplifts.length ? html`<h3>Uplifts to release branches</h3><ul class="plain">${g.members.uplifts.map((id) => { const p = d.items[id]; const line = (p.baseRef ?? '').replace(/\.x$/, ''); return html`<li>${ghLink(id, p.url)} → <code>${p.baseRef}</code>${d.lineChannel[line] ? html` <span class="muted">(currently ${d.lineChannel[line]})</span>` : ''}: <strong>${prState(p)}</strong></li>`; })}</ul>` : ''}
   </section>
   <section class="facet" aria-labelledby="f-notes"><h2 id="f-notes">Release notes (Stable)</h2>
@@ -187,6 +187,14 @@ ${reports.length ? html`<section class="block" aria-labelledby="f-reports"><h2 i
 
 ${related.length ? html`<section class="block" aria-labelledby="f-events"><h2 id="f-events">Recorded changes</h2><ol class="feed">${related.map((e) => eventCard(e, d))}</ol></section>` : ''}
 `;
+}
+
+function linkBasis(p: { closingRefs: string[]; resolvesRefs: string[]; branchRefs?: string[]; headRef: string | null }, issue: string): string {
+  const out: string[] = [];
+  if (p.closingRefs.includes(issue)) out.push('GitHub closing reference');
+  if (p.resolvesRefs.includes(issue)) out.push('“Resolves/Fixes” line in the PR description');
+  if ((p.branchRefs ?? []).includes(issue)) out.push(`branch name ${p.headRef} (weaker evidence; titles share a keyword)`);
+  return out.length ? out.join(', ') : 'issue timeline (closing cross-reference or closed by this PR)';
 }
 
 function serviceOnly(g: SiteGroup, d: SiteData): boolean {

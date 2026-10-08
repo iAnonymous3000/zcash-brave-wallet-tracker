@@ -107,9 +107,12 @@ export const braveVersions: Collector<BraveVersionsData> = {
     }
     const iosRel = current.find((c) => c.platform === 'ios' && c.channel === 'release');
     if (iosRel && !iosRel.tag) {
+      const rel = ctx.get<ReleasesData>('brave-releases')?.data;
       const n = iosNotes.filter((x) => x.marketing === iosRel.version && x.build).sort((a, b) => b.number - a.number)[0];
-      if (n?.build) {
-        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s iOS release-notes issue #${n.number}`;
+      const hasIosRelease = Boolean(n?.build && rel?.releases.some((r) => r.version === n.build && r.assetPlatforms.includes('ios')));
+      if (n?.build && !hasIosRelease) limitations.push(`iOS release-notes issue #${n.number} names build ${n.build}, but no GitHub release with iOS assets exists for it; not used`);
+      if (n?.build && hasIosRelease) {
+        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}; GitHub release v${n.build} carries the iOS build`;
         iosRel.detail = { ...(iosRel.detail ?? {}), 'ios-release-notes-issue': n.url };
         iosRel.version = n.build;
         iosRel.tag = `v${n.build}`;

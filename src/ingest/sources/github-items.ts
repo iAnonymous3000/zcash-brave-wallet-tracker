@@ -246,7 +246,12 @@ export function branchRefsOf(headRef: string | null): string[] {
 /** "Duplicate of #53219" / "Closing as a duplicate of https://github.com/brave/brave-browser/issues/N" in recent comments. */
 export function duplicateFromComments(bodies: string[], self: string): string | null {
   for (const b of [...bodies].reverse()) {
-    const m = b.match(/duplicate (?:of|with|in favou?r of)\s+(?:https:\/\/github\.com\/brave\/brave-browser\/issues\/|brave\/brave-browser#|#)(\d+)/i);
+    const re = /duplicate (?:of|with|in favou?r of)\s+(?:https:\/\/github\.com\/brave\/brave-browser\/issues\/|brave\/brave-browser#|#)(\d+)/i;
+    const m = b.match(re);
+    if (m) {
+      const before = b.slice(Math.max(0, (m.index ?? 0) - 30), m.index ?? 0).toLowerCase();
+      if (/\b(not|possibl[ey]|maybe|might|may|could|potential(ly)?|likely)\b[^.]*$/.test(before) || /possible duplicate/i.test(b)) continue;
+    }
     if (m) {
       const ref = itemId('brave/brave-browser', Number(m[1]));
       if (ref !== self) return ref;
