@@ -1,0 +1,74 @@
+{
+ "sourceId": "watch",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "items": [
+   {
+    "id": "watch-zakura",
+    "topic": "Zakura",
+    "title": "Zakura full node (Zebra fork) and Zakura Common crypto crates",
+    "url": "https://github.com/zakura-core/zakura",
+    "updatedAt": "2026-10-01T01:40:12Z",
+    "summary": "Rust Zcash full node forked from Zebra, with \"Zakura Common\" forks of librustzcash/orchard/halo2. Its sync, proving and verification speed-ups are self-reported by the project. Latest release: v1.6.0.",
+    "attribution": "Claims from zakura.com and the zakura-core/zakura README; not independently verified and not measured in Brave Wallet.",
+    "braveAdoption": "none-found",
+    "braveEvidence": [
+     "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
+    ]
+   },
+   {
+    "id": "watch-wallet-libraries",
+    "topic": "wallet-libraries",
+    "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
+    "url": "https://github.com/zakura-core/wallet-libraries",
+    "updatedAt": "2026-10-07T20:21:55Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: documentation clean up.",
+    "attribution": "Description from the repository README.",
+    "braveAdoption": "none-found",
+    "braveEvidence": [
+     "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
+    ]
+   },
+   {
+    "id": "watch-zkdragon",
+    "topic": "zkDragon",
+    "title": "zkDragon (X/Twitter handle, not a code project)",
+    "url": "https://x.com/zkDragon",
+    "updatedAt": null,
+    "summary": "No zkDragon repository or library exists; the name is an X/Twitter handle cited in Zcash ecosystem digests. It is not monitored live because X is not publicly readable without an account.",
+    "attribution": "Identity mapping (reported as Dev Ojha) comes from third-party ZecHub newsletters and is unconfirmed.",
+    "braveAdoption": "none-found",
+    "braveEvidence": [
+     "No zkdragon packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zkdragon\"."
+    ]
+   }
+  ],
+  "adoption": [
+   {
+    "term": "zakura",
+    "lockfileHits": [],
+    "depsHits": false,
+    "issueHits": 0,
+    "prHits": 0,
+    "checkedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "term": "wallet-libraries",
+    "lockfileHits": [],
+    "depsHits": false,
+    "issueHits": 3,
+    "prHits": 2,
+    "checkedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "term": "zkdragon",
+    "lockfileHits": [],
+    "depsHits": false,
+    "issueHits": 0,
+    "prHits": 0,
+    "checkedAt": "2026-10-08T14:35:45.102Z"
+   }
+  ]
+ }
+}

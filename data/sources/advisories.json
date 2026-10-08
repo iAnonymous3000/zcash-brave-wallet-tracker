@@ -1,0 +1,368 @@
+{
+ "sourceId": "advisories",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "advisories": [
+   {
+    "id": "GHSA-932p-ww36-57vg",
+    "aliases": [],
+    "summary": "Public GetAddressUtxos requests can overfetch backend UTXOs and degrade normal wallet requests",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.5.4"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd none"
+    ],
+    "publishedAt": "2026-08-27T18:58:26Z",
+    "updatedAt": "2026-08-27T18:58:26Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-932p-ww36-57vg"
+   },
+   {
+    "id": "GHSA-m7j5-wvx3-qj6j",
+    "aliases": [],
+    "summary": "lightwalletd can serve old-fork and new-fork blocks in one live GetBlockRange response during reorg repair",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.5.2"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.3"
+    ],
+    "publishedAt": "2026-08-05T03:51:20Z",
+    "updatedAt": "2026-08-05T03:51:20Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-m7j5-wvx3-qj6j"
+   },
+   {
+    "id": "GHSA-pwwg-h8q5-hq28",
+    "aliases": [],
+    "summary": "lightwalletd cache can stitch old-fork and new-chain blocks after restart",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.4.19"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.0"
+    ],
+    "publishedAt": "2026-07-31T04:47:45Z",
+    "updatedAt": "2026-07-31T04:47:45Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-pwwg-h8q5-hq28"
+   },
+   {
+    "id": "GHSA-9p9r-mggr-8q9g",
+    "aliases": [],
+    "summary": "lightwalletd GetMempoolTx holds shared mempool mutex across client-controlled streaming sends",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.2"
+    ],
+    "publishedAt": "2026-07-30T19:30:20Z",
+    "updatedAt": "2026-07-30T19:30:20Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-9p9r-mggr-8q9g"
+   },
+   {
+    "id": "GHSA-f9pw-q493-7qvh",
+    "aliases": [],
+    "summary": "Deadlock and Uncontrolled Resource Consumption in github.com/zcash/lightwalletd",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.2"
+    ],
+    "publishedAt": "2026-07-30T18:59:18Z",
+    "updatedAt": "2026-07-30T18:59:18Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-f9pw-q493-7qvh"
+   },
+   {
+    "id": "GHSA-9x94-88pq-6v7h",
+    "aliases": [],
+    "summary": "Lightwalletd cancelled block-range streams leak worker goroutines",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.4.19"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.0"
+    ],
+    "publishedAt": "2026-07-28T19:10:36Z",
+    "updatedAt": "2026-07-28T19:10:36Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-9x94-88pq-6v7h"
+   },
+   {
+    "id": "GHSA-4x4j-5972-376r",
+    "aliases": [],
+    "summary": "lightwalletd GetMempoolTx can crash a targeted node when a mempool transaction disappears",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.4.19"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.0"
+    ],
+    "publishedAt": "2026-07-28T19:02:29Z",
+    "updatedAt": "2026-07-28T19:02:29Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-4x4j-5972-376r"
+   },
+   {
+    "id": "GHSA-4hp3-3494-3f2m",
+    "aliases": [],
+    "summary": "lightwalletd GetMempoolTx large exclude suffix lists amplify CPU and heap under the method mutex",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.5.0"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.1"
+    ],
+    "publishedAt": "2026-07-28T18:27:49Z",
+    "updatedAt": "2026-07-28T18:27:49Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-4hp3-3494-3f2m"
+   },
+   {
+    "id": "GHSA-6ppp-r2gc-9q6v",
+    "aliases": [],
+    "summary": "lightwalletd SendTransaction oversized raw transactions can OOM a targeted node before backend rejection",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.5.0"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.1"
+    ],
+    "publishedAt": "2026-07-28T18:24:37Z",
+    "updatedAt": "2026-07-28T18:24:37Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-6ppp-r2gc-9q6v"
+   },
+   {
+    "id": "GHSA-q2c2-hpp9-58hm",
+    "aliases": [],
+    "summary": "lightwalletd GetTreeState oversized block hashes can OOM a targeted node before backend rejection",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.5.0"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.1"
+    ],
+    "publishedAt": "2026-07-28T18:14:43Z",
+    "updatedAt": "2026-07-28T18:17:51Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-q2c2-hpp9-58hm"
+   },
+   {
+    "id": "GHSA-x4m7-3gpp-xc36",
+    "aliases": [],
+    "summary": "lightwalletd transparent-address gRPC resource-exhaustion DoS",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= v0.4.19"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.5.0"
+    ],
+    "publishedAt": "2026-07-26T18:54:49Z",
+    "updatedAt": "2026-08-27T18:59:45Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-x4m7-3gpp-xc36"
+   },
+   {
+    "id": "GHSA-5h96-xw2v-jxgq",
+    "aliases": [],
+    "summary": "Goroutine Leak in GetBlockRange",
+    "severity": "high",
+    "packages": [
+     "repo:zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "zcash/lightwalletd <= v0.4.19"
+    ],
+    "patched": [
+     "zcash/lightwalletd v5.0"
+    ],
+    "publishedAt": "2026-07-19T16:51:28Z",
+    "updatedAt": "2026-07-20T19:51:17Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-5h96-xw2v-jxgq"
+   },
+   {
+    "id": "GHSA-ww9q-8r59-xv46",
+    "aliases": [
+     "CVE-2026-54496"
+    ],
+    "summary": "Zebra: Missing copy constraint in halo2gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
+    "severity": "critical",
+    "packages": [
+     "rust:zebrad",
+     "rust:halo2_gadgets",
+     "rust:orchard",
+     "rust:zcash_primitives"
+    ],
+    "vulnerableRanges": [
+     "zebrad <= 4.5.1",
+     "halo2_gadgets < 0.5.0",
+     "orchard < 0.14.0",
+     "zcash_primitives < 0.28.0"
+    ],
+    "patched": [
+     "zebrad 5.0.0",
+     "halo2_gadgets 0.5.0",
+     "orchard 0.14.0",
+     "zcash_primitives 0.28.0"
+    ],
+    "publishedAt": "2026-07-06T21:23:41Z",
+    "updatedAt": "2026-07-06T21:23:42Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46"
+   },
+   {
+    "id": "GHSA-j3f2-h3wv-wfr9",
+    "aliases": [],
+    "summary": "sendrawtransaction Forwards Unvalidated Hex to Validator",
+    "severity": "low",
+    "packages": [
+     "repo:zingolabs/zaino"
+    ],
+    "vulnerableRanges": [
+     "zingolabs/zaino <=0.4.2"
+    ],
+    "patched": [
+     "zingolabs/zaino 0.5.0"
+    ],
+    "publishedAt": "2026-07-03T09:13:34Z",
+    "updatedAt": "2026-07-03T09:13:34Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zingolabs/zaino/security/advisories/GHSA-j3f2-h3wv-wfr9"
+   },
+   {
+    "id": "GHSA-h268-r3v6-jqj6",
+    "aliases": [],
+    "summary": "gettreestate Proxies Arbitrary Hashes to Validator Without Validation",
+    "severity": "low",
+    "packages": [
+     "repo:zingolabs/zaino"
+    ],
+    "vulnerableRanges": [
+     "zingolabs/zaino <=0.4.2"
+    ],
+    "patched": [
+     "zingolabs/zaino 0.5.0"
+    ],
+    "publishedAt": "2026-07-03T09:13:25Z",
+    "updatedAt": "2026-07-03T09:13:25Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zingolabs/zaino/security/advisories/GHSA-h268-r3v6-jqj6"
+   },
+   {
+    "id": "GHSA-55pv-cqqp-mwj3",
+    "aliases": [],
+    "summary": "Validator Fork Acceptance — Height Equality Used as Sync Truth (No Hash/Work Check)",
+    "severity": "medium",
+    "packages": [
+     "repo:zingolabs/zaino"
+    ],
+    "vulnerableRanges": [
+     "zingolabs/zaino <=0.4.2"
+    ],
+    "patched": [
+     "zingolabs/zaino 0.5.0"
+    ],
+    "publishedAt": "2026-07-03T09:13:14Z",
+    "updatedAt": "2026-08-30T15:53:00Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zingolabs/zaino/security/advisories/GHSA-55pv-cqqp-mwj3"
+   },
+   {
+    "id": "GHSA-3whf-vgf2-9w6g",
+    "aliases": [],
+    "summary": "Non-Finalized State Reorg — No Cycle Detection or Depth Limit",
+    "severity": "high",
+    "packages": [
+     "rust:zaino-state"
+    ],
+    "vulnerableRanges": [
+     "zaino-state zaino-state v0.2.0"
+    ],
+    "patched": [
+     "zaino-state none"
+    ],
+    "publishedAt": "2026-06-09T18:00:35Z",
+    "updatedAt": "2026-08-30T15:51:49Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zingolabs/zaino/security/advisories/GHSA-3whf-vgf2-9w6g"
+   }
+  ],
+  "queried": [
+   "rust:orchard",
+   "rust:zcash_primitives",
+   "rust:zcash_protocol",
+   "rust:zcash_client_backend",
+   "rust:zcash_encoding",
+   "rust:zcash_note_encryption",
+   "rust:shardtree",
+   "rust:incrementalmerkletree",
+   "rust:zip32",
+   "rust:halo2_proofs",
+   "rust:halo2_gadgets",
+   "rust:pasta_curves",
+   "rust:reddsa",
+   "rust:sinsemilla",
+   "go:github.com/zcash/lightwalletd",
+   "repo:zcash/lightwalletd",
+   "repo:zingolabs/zaino",
+   "repo:zcash/orchard",
+   "repo:zcash/librustzcash",
+   "repo:zcash/halo2",
+   "repo:zcash/incrementalmerkletree",
+   "repo:zcash/zcash_note_encryption"
+  ],
+  "rustsecCrates": []
+ }
+}

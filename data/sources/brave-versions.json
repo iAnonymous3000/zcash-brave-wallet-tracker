@@ -1,0 +1,136 @@
+{
+ "sourceId": "brave-versions",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "current": [
+   {
+    "channel": "release",
+    "platform": "desktop",
+    "version": "1.97.56",
+    "tag": "v1.97.56",
+    "publishedAt": null,
+    "basis": "lowest of 7 desktop OS pointers on versions.brave.com",
+    "url": "https://versions.brave.com/latest/release-windows-x64.version",
+    "detail": {
+     "release-windows-x64": "1.97.56",
+     "release-windows-x86": "1.97.56",
+     "release-windows-arm64": "1.97.56",
+     "release-macos-x64": "1.97.56",
+     "release-macos-arm64": "1.97.56",
+     "release-linux-x64": "1.97.56",
+     "release-linux-arm64": "1.97.56"
+    }
+   },
+   {
+    "channel": "release",
+    "platform": "android",
+    "version": "1.96.61",
+    "tag": "v1.96.61",
+    "publishedAt": null,
+    "basis": "versions.brave.com/latest/release-android-google-play.version",
+    "url": "https://versions.brave.com/latest/release-android-google-play.version",
+    "detail": {
+     "release-android-google-play": "1.96.61"
+    }
+   },
+   {
+    "channel": "release",
+    "platform": "ios",
+    "version": "1.96",
+    "tag": null,
+    "publishedAt": null,
+    "basis": "App Store marketing version (release-ios-app-store); the matching build number is not published",
+    "url": "https://versions.brave.com/latest/release-ios-app-store.version",
+    "detail": {
+     "release-ios-app-store": "1.96"
+    }
+   },
+   {
+    "channel": "beta",
+    "platform": "desktop",
+    "version": "1.98.47",
+    "tag": "v1.98.47",
+    "publishedAt": null,
+    "basis": "lowest of 7 desktop OS pointers on versions.brave.com",
+    "url": "https://versions.brave.com/latest/beta-windows-x64.version",
+    "detail": {
+     "beta-windows-x64": "1.98.52",
+     "beta-windows-x86": "1.98.52",
+     "beta-windows-arm64": "1.98.52",
+     "beta-macos-x64": "1.98.52",
+     "beta-macos-arm64": "1.98.52",
+     "beta-linux-x64": "1.98.47",
+     "beta-linux-arm64": "1.98.52"
+    }
+   },
+   {
+    "channel": "beta",
+    "platform": "android",
+    "version": "1.98.52",
+    "tag": "v1.98.52",
+    "publishedAt": null,
+    "basis": "versions.brave.com/latest/beta-android-google-play.version",
+    "url": "https://versions.brave.com/latest/beta-android-google-play.version",
+    "detail": {
+     "beta-android-google-play": "1.98.52"
+    }
+   },
+   {
+    "channel": "beta",
+    "platform": "ios",
+    "version": "1.98.52",
+    "tag": "v1.98.52",
+    "publishedAt": null,
+    "basis": "versions.brave.com/latest/beta-ios.version",
+    "url": "https://versions.brave.com/latest/beta-ios.version",
+    "detail": {
+     "beta-ios": "1.98.52"
+    }
+   },
+   {
+    "channel": "nightly",
+    "platform": "desktop",
+    "version": "1.99.20",
+    "tag": "v1.99.20",
+    "publishedAt": null,
+    "basis": "lowest of 7 desktop OS pointers on versions.brave.com",
+    "url": "https://versions.brave.com/latest/nightly-windows-x64.version",
+    "detail": {
+     "nightly-windows-x64": "1.99.20",
+     "nightly-windows-x86": "1.99.20",
+     "nightly-windows-arm64": "1.99.20",
+     "nightly-macos-x64": "1.99.20",
+     "nightly-macos-arm64": "1.99.24",
+     "nightly-linux-x64": "1.99.25",
+     "nightly-linux-arm64": "1.99.25"
+    }
+   },
+   {
+    "channel": "nightly",
+    "platform": "android",
+    "version": "1.99.13",
+    "tag": "v1.99.13",
+    "publishedAt": null,
+    "basis": "versions.brave.com/latest/nightly-android-google-play.version",
+    "url": "https://versions.brave.com/latest/nightly-android-google-play.version",
+    "detail": {
+     "nightly-android-google-play": "1.99.13"
+    }
+   },
+   {
+    "channel": "nightly",
+    "platform": "ios",
+    "version": "1.99.20",
+    "tag": "v1.99.20",
+    "publishedAt": null,
+    "basis": "versions.brave.com/latest/nightly-ios.version",
+    "url": "https://versions.brave.com/latest/nightly-ios.version",
+    "detail": {
+     "nightly-ios": "1.99.20"
+    }
+   }
+  ],
+  "missing": []
+ }
+}

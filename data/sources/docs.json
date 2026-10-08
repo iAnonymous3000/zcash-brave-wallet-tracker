@@ -1,0 +1,129 @@
+{
+ "sourceId": "docs",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "pages": [
+   {
+    "id": "zendesk-26390040705165",
+    "source": "support",
+    "title": "Zcash and Address Types",
+    "url": "https://support.brave.app/hc/en-us/articles/26390040705165-Zcash-and-Address-Types",
+    "updatedAt": "2025-04-02T17:12:57Z",
+    "contentHash": "35330fe13fa96296",
+    "zcashStatements": [
+     "Zcash is a secure digital currency that helps protect your privacy.",
+     "With Zcash, there are two types of addresses:",
+     "Transparent addresses: Transactions with transparent addresses, or t-addresses, can be tracked on the Zcash blockchain the same way Bitcoin can."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "zendesk-12747992885389",
+    "source": "support",
+    "title": "What is Brave Wallet?",
+    "url": "https://support.brave.app/hc/en-us/articles/12747992885389-What-is-Brave-Wallet",
+    "updatedAt": "2025-11-13T22:16:24Z",
+    "contentHash": "b50a98de04250093",
+    "zcashStatements": [
+     "Support transparent and private shielded Zcash transactions."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "zendesk-4415497656461",
+    "source": "support",
+    "title": "Brave Wallet FAQ",
+    "url": "https://support.brave.app/hc/en-us/articles/4415497656461-Brave-Wallet-FAQ",
+    "updatedAt": "2024-08-06T14:17:49Z",
+    "contentHash": "e5f7d6f1ad6ac6de",
+    "zcashStatements": [
+     "Brave Wallet supports Ethereum, EVM-compatible chains and L2s, Solana, Bitcoin, Zcash, and Filecoin."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "zendesk-12744130666509",
+    "source": "support",
+    "title": "How does Brave Wallet differ from other wallets?",
+    "url": "https://support.brave.app/hc/en-us/articles/12744130666509-How-does-Brave-Wallet-differ-from-other-wallets",
+    "updatedAt": "2025-11-13T22:29:09Z",
+    "contentHash": "5ddad1adb949605b",
+    "zcashStatements": [
+     "Brave Wallet users can buy, receive, and send crypto assets across multiple chains, including Ethereum, EVM compatible chains, and Solana, Zcash, and Bitcoin."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "bravecom-wallet",
+    "source": "brave.com",
+    "title": "Brave Wallet - Secure Crypto Wallet | Brave",
+    "url": "https://brave.com/wallet/",
+    "updatedAt": "Tue, 06 Oct 2026 18:30:46 GMT",
+    "contentHash": "b1071b84443a85d8",
+    "zcashStatements": [
+     "Private transactions with Zcash",
+     "Brave Wallet supports transparent and private shielded Zcash transactions, providing accountability without sacrificing user privacy."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "bravecom-blog/shielded-zcash",
+    "source": "brave.com",
+    "title": "Brave Wallet adds shielded Zcash transactions on desktop, with Android and iOS coming soon | Brave",
+    "url": "https://brave.com/blog/shielded-zcash/",
+    "updatedAt": "2025-04-02T00:00:00+00:00",
+    "contentHash": "0813a3daf24de697",
+    "zcashStatements": [
+     "Brave Wallet adds shielded Zcash transactions on desktop, with Android and iOS coming soon",
+     "April 2, 2025 &mdash; Starting today, Brave users can conduct shielded Zcash transactions in the browser-native Brave Wallet with the updated desktop release (v1.77).",
+     "This integration is part of the ongoing partnership with Zcash/ECC and Filecoin Foundation announced at Mainnet 2023 , which now allows the privacy-preserving Zcash native currency (ZEC) to be bought, sent, and received directly within Brave Wallet.",
+     "Adding shielded transactions with Zcash to Brave Wallet gives users a way to send and store crypto privately.",
+     "Extending Brave Wallet privacy with Zcash",
+     "Zcash aims to solve this problem.",
+     "Zcash is a privacy-focused cryptocurrency that forked and adapted an early version of the Bitcoin codebase.",
+     "Transactions in Zcash can be controlled by either a transparent address (t-addr) or a shielded address (z-addr), allowing users to choose between public and private transactions."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "bravecom-blog/near-intents",
+    "source": "brave.com",
+    "title": "Brave Wallet now supports NEAR Intents | Brave",
+    "url": "https://brave.com/blog/near-intents/",
+    "updatedAt": "2026-03-11T00:00:00+00:00",
+    "contentHash": "99ee97b98fcfb60a",
+    "zcashStatements": [
+     "The Brave Wallet enables multi-chain access right from the Brave browser, and NEAR Intents is the first swap provider that ties together nearly all of our supported blockchains: Bitcoin, Solana, Zcash, Cardano, and EVM (including Ethereum, Base, Arbitrum, etc).",
+     "Brave Wallet users now have a decentralized way to swap assets like BTC and ZEC that traditionally lack DEX options.",
+     "Transparent ZEC to any chain",
+     "Any chain to transparent ZEC",
+     "Shielded ZEC to any chain",
+     "Any chain to shielded ZEC",
+     "Additionally, if the user is spending shielded ZEC, they are always returned back to the shielded pool in case of a refund.",
+     "Shielded transactions with Zcash in Brave Wallet give users a way to send and store crypto privately."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": "bravecom-blog/web3-privacy",
+    "source": "brave.com",
+    "title": "Brave, Electric Coin Co., and Filecoin Foundation announce partnership to bring new privacy tools to Web3 | Brave",
+    "url": "https://brave.com/blog/web3-privacy/",
+    "updatedAt": "2023-09-22T00:00:00+00:00",
+    "contentHash": "e2403dd6f28140bf",
+    "zcashStatements": [
+     "With support from ECC, Brave will integrate the Zcash protocol in the browser&rsquo;s built-in crypto wallet so users can securely store, send, and receive ZEC alongside other cryptocurrencies.",
+     "&ldquo;I&rsquo;m excited about integrating Zcash into the Brave web browser because privacy should be normal.",
+     "Not only do we hope to make it simple to use ZEC for private transactions, but we also aim to maximize privacy during key moments of purchase or exchange.&rdquo;",
+     "Brave, ECC, and Filecoin Foundation also teased plans on stage to develop a new, privacy-based feature in the Brave browser that will offer private messages and media transmission via the Zcash protocol.",
+     "Electric Coin Co. launched Zcash in 2016 and continues to support the protocol and user experience, alongside other developers and teams.",
+     "Zcash is a cryptocurrency built to empower economic freedom.",
+     "Our vision for Zcash is that it will provide equal access to economic systems and give everyone the ability to participate in economic activity."
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   }
+  ],
+  "history": []
+ }
+}

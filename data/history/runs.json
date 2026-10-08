@@ -1,0 +1,28 @@
+[
+ {
+  "id": "2c4cfdf40167",
+  "startedAt": "2026-10-08T14:35:45.102Z",
+  "finishedAt": "2026-10-08T14:42:11.244Z",
+  "trigger": "workflow_dispatch",
+  "outcome": "partial",
+  "sources": {
+   "brave-releases": "ok",
+   "brave-versions": "ok",
+   "github-items": "ok",
+   "brave-changelogs": "ok",
+   "build-inclusion": "partial",
+   "brave-flags": "ok",
+   "brave-deps": "ok",
+   "upstream": "ok",
+   "advisories": "ok",
+   "watch": "ok",
+   "community": "ok",
+   "docs": "ok"
+  },
+  "requests": 622,
+  "events": 595,
+  "notes": [
+   "438 work groups, 781 items, 595 new events"
+  ]
+ }
+]

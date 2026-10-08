@@ -1,0 +1,942 @@
+{
+ "sourceId": "community",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "topics": [
+   {
+    "id": 658535,
+    "title": "Funds are not received on Zcash Mainnet (Shielded )",
+    "url": "https://community.brave.app/t/funds-are-not-received-on-zcash-mainnet-shielded/658535",
+    "categoryId": 143,
+    "categoryName": "Community Account Deletion Requests",
+    "createdAt": "2026-09-20T18:44:28.807Z",
+    "lastPostedAt": "2026-09-22T18:01:00.384Z",
+    "postsCount": 4,
+    "replyCount": 1,
+    "views": 84,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "hi i have sent zcash from near to my brave wallet https://explorer.near-intents.org/mask/2abc412593b6d60a935efc3d2a8a5c4f5ef800304f120a5e95a655fa8c99092e now . nothing is shown on my wallet . i have sent zcash to my Shielded address . what can i do now?",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 658467,
+    "title": "Sent funds to ZCASH network but it isnt showing. Where to contact?",
+    "url": "https://community.brave.app/t/sent-funds-to-zcash-network-but-it-isnt-showing-where-to-contact/658467",
+    "categoryId": 161,
+    "categoryName": "Brave Origin",
+    "createdAt": "2026-09-18T20:40:04.772Z",
+    "lastPostedAt": "2026-09-22T17:59:20.102Z",
+    "postsCount": 4,
+    "replyCount": 1,
+    "views": 48,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "windows",
+     "browser"
+    ],
+    "excerpt": "Sent funds to Zcash shielded wallet but the funds aren’t showing. Double checked the address and this is not my fault. What to do",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "ironwood"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 657729,
+    "title": "Transferred ETH from the Ethereum mainnet to the Zcash mainnet via cross-chain, but after deducting the ETH, I haven't received any ZEC.",
+    "url": "https://community.brave.app/t/transferred-eth-from-the-ethereum-mainnet-to-the-zcash-mainnet-via-cross-chain-but-after-deducting-the-eth-i-havent-received-any-zec/657729",
+    "categoryId": 159,
+    "categoryName": "Custodian Support (Uphold, ZebPay, etc)",
+    "createdAt": "2026-09-03T13:01:24.611Z",
+    "lastPostedAt": "2026-09-03T13:03:11.396Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 38,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "bug"
+    ],
+    "excerpt": "Before you post! 在您发布之前请先检查一遍！ Please note that you are posting in the “Uncategorized” category. Topics posted here may be lost in the shuffle as they are not properly organized . Topics posted in the relevant categories here on Community are more visible to Brave staff members, Community moderators and are likely to receive more timely support. Please…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec",
+     "ironwood"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 657600,
+    "title": "bridge problem eth to zcash",
+    "url": "https://community.brave.app/t/bridge-problem-eth-to-zcash/657600",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-08-31T15:20:03.810Z",
+    "lastPostedAt": "2026-08-31T20:03:11.509Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 42,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "user-wallet"
+    ],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. You can submit Brave Wallet inquiries to us directly with this support form . The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: Is the issue occurring on a specific network? What…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 657305,
+    "title": "USDC on SOL swap to ZEC (shielded account) not showing up",
+    "url": "https://community.brave.app/t/usdc-on-sol-swap-to-zec-shielded-account-not-showing-up/657305",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-08-23T23:23:38.074Z",
+    "lastPostedAt": "2026-08-24T13:24:58.445Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 26,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Swapped USDC from SOL network to ZEC (Shielded account). Was done through near intent. Got success message that USDC was sent to deposit address. When I go back to the history in SOL account, I see the transaction show up as “Bridge on Solana Account 1”. When I click on tx id “open in new tab”, the near intent page shows 404. That opens with deposit…",
+    "githubRefs": [
+     "brave/brave-browser#58275"
+    ],
+    "matchedTerms": [
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 656660,
+    "title": "Newly sent shielded Zcash not showing",
+    "url": "https://community.brave.app/t/newly-sent-shielded-zcash-not-showing/656660",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-08-06T19:21:12.661Z",
+    "lastPostedAt": "2026-08-12T13:25:03.012Z",
+    "postsCount": 7,
+    "replyCount": 4,
+    "views": 116,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "I sent Zcash to the shielded Zcash address from my Brave wallet (got it from Deposit > Shielded address) but the shielded Zcash are not showing up in my Brave wallet. I tried twice and none of the Zcash are visible in the Brave wallet. So definitely not a manipulation error during the first transaction. Notes: I have other shielded Zcash from before and…",
+    "githubRefs": [
+     "brave/brave-browser#57861"
+    ],
+    "matchedTerms": [
+     "zcash",
+     "zec",
+     "ironwood"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 656647,
+    "title": "Unable to send shielded ZEC — Error -32603: An internal error has occurred",
+    "url": "https://community.brave.app/t/unable-to-send-shielded-zec-error-32603-an-internal-error-has-occurred/656647",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-08-06T08:06:17.966Z",
+    "lastPostedAt": "2026-09-03T13:03:57.800Z",
+    "postsCount": 5,
+    "replyCount": 2,
+    "views": 131,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "bug"
+    ],
+    "excerpt": "Hello Brave Wallet team, I am experiencing the same issue when trying to send shielded ZEC from Brave Wallet. Every transaction attempt fails with the following message: Unable to send There was an error attempting to send ZEC -32603: An internal error has occurred The problem occurs regardless of the amount being sent. I have tested several amounts,…",
+    "githubRefs": [
+     "brave/brave-browser#57861"
+    ],
+    "matchedTerms": [
+     "zcash",
+     "zec",
+     "ironwood"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 654399,
+    "title": "Zcash shielded unable to send",
+    "url": "https://community.brave.app/t/zcash-shielded-unable-to-send/654399",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-06-17T01:40:22.744Z",
+    "lastPostedAt": "2026-06-17T01:40:22.817Z",
+    "postsCount": 1,
+    "replyCount": 0,
+    "views": 46,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Linux OS Brave wallet tried all 3 beta night normal etc Unable to send There was an error attempting to send ZEC to -32603: An internal error has occurred I am not able to send shielded zcash funds or bridge or do anything I cannot get the private key for the wallet and also if I enter my seed into different wallets eg zkool or ywallet the funds don’t…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 654129,
+    "title": "Zcash Wallet Key Export Friction",
+    "url": "https://community.brave.app/t/zcash-wallet-key-export-friction/654129",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-06-11T14:36:58.050Z",
+    "lastPostedAt": "2026-06-11T14:36:58.120Z",
+    "postsCount": 1,
+    "replyCount": 0,
+    "views": 46,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Hi! quickly sharing some experiences with using zcash wallet here: 1. Unable/Unclear on distinction of exporting wallet keys specifically for zcash. Was looking to export my wallet into another zcash wallet provider (due to problem described below), and was unable to export/import my spending wallet such that i was able to see/my current shielded balances.…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 653867,
+    "title": "Brave Wallet ZCASH Wallet Not Working",
+    "url": "https://community.brave.app/t/brave-wallet-zcash-wallet-not-working/653867",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-06-06T01:49:20.613Z",
+    "lastPostedAt": "2026-06-09T15:50:47.324Z",
+    "postsCount": 3,
+    "replyCount": 0,
+    "views": 159,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "android",
+     "bug"
+    ],
+    "excerpt": "Brave Wallet ZCASH balance is not reflecting also unable to send. You can submit Brave Wallet inquiries to us directly with this support form . The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: Is the issue occurring on a specific network? What operating system are you using? Brave Version (check About…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 653222,
+    "title": "Unable to generate Zcash Testnet Address",
+    "url": "https://community.brave.app/t/unable-to-generate-zcash-testnet-address/653222",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-05-19T09:06:38.807Z",
+    "lastPostedAt": "2026-05-19T16:32:39.905Z",
+    "postsCount": 3,
+    "replyCount": 1,
+    "views": 40,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "browser",
+     "macos",
+     "bug"
+    ],
+    "excerpt": "Description of the issue: I am unable to generate a Zcash testnet receive address in Brave Wallet. Mainnet address generation works correctly, but testnet consistently fails. Errors shown in console: error in: makeAccountShielded: Error making account shielded: Failed to retrieve latest block error in: generateReceiveAddress: Unable generate receive…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 652421,
+    "title": "Near Intents Eth to Zec swap stuck on Pending_deposit",
+    "url": "https://community.brave.app/t/near-intents-eth-to-zec-swap-stuck-on-pending-deposit/652421",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-04-30T21:21:13.705Z",
+    "lastPostedAt": "2026-05-18T17:09:57.170Z",
+    "postsCount": 6,
+    "replyCount": 3,
+    "views": 182,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. You can submit Brave Wallet inquiries to us directly with this support form . The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: Trying to make an Eth to Zec swap using Near Intents…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 652023,
+    "title": "Shielded Wallet and Assets Gone",
+    "url": "https://community.brave.app/t/shielded-wallet-and-assets-gone/652023",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-04-20T20:05:45.885Z",
+    "lastPostedAt": "2026-04-21T18:54:17.737Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 173,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "feature-request"
+    ],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. You can submit Brave Wallet inquiries to us directly with this support form . The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: Is the issue occurring on a specific network? Brave…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 649319,
+    "title": "Zcash shielded goes back to zero",
+    "url": "https://community.brave.app/t/zcash-shielded-goes-back-to-zero/649319",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2026-02-13T11:05:50.846Z",
+    "lastPostedAt": "2026-02-15T17:31:48.249Z",
+    "postsCount": 3,
+    "replyCount": 1,
+    "views": 83,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "After swapping USDC for ZEC (transparent) I have then proceeded to Shield the ZEC and sync my account. Which has successfully synced and shielded. Then I return to my wallet (a day or so later) and the ZEC is in my transparent account and my Shieled account is 0.00. I’m not sure if there’s something wrong or I’m misunderstanding it completely or I’m not…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 647263,
+    "title": "Suggestion to a new feature",
+    "url": "https://community.brave.app/t/suggestion-to-a-new-feature/647263",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-12-23T02:40:21.963Z",
+    "lastPostedAt": "2025-12-23T02:40:22.022Z",
+    "postsCount": 1,
+    "replyCount": 0,
+    "views": 27,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "windows",
+     "feedback",
+     "performance"
+    ],
+    "excerpt": "Please consider allowing hardware wallets to connect to the Zcash network as well. Right now, hardware wallet support seems limited to EVM networks, Filecoin, SVM, and Bitcoin , but not Zcash. Adding Zcash support would be a really useful expansion for users who hold and transact ZEC securely.",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 646457,
+    "title": "ZEC Supported on what Networks?",
+    "url": "https://community.brave.app/t/zec-supported-on-what-networks/646457",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-12-03T08:45:48.831Z",
+    "lastPostedAt": "2025-12-03T17:33:19.659Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 56,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: What networks does Brave Wallet support ZEC on besides ZEC Mainnet? At this point all I can do is store it here since no other…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 646112,
+    "title": "Brave wallet not showing Shielded Zcash",
+    "url": "https://community.brave.app/t/brave-wallet-not-showing-shielded-zcash/646112",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-11-25T18:12:15.242Z",
+    "lastPostedAt": "2025-12-30T05:06:37.247Z",
+    "postsCount": 6,
+    "replyCount": 2,
+    "views": 118,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "windows",
+     "browser",
+     "bug",
+     "sync",
+     "funds-missing"
+    ],
+    "excerpt": "Hi, I have Zcash that was shielded using the Brave Browser wallet. But now that shielded zcash account does not show under my ‘portfolio’ when I click on the Wallet icon on the top right and my shielded zcash balance is 0. I checked under my visible assets to make sure the account wasn’t hidden. [image] image 394×646 29.4 KB After I confirmed that my…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 646047,
+    "title": "Problemas de envio de criptos",
+    "url": "https://community.brave.app/t/problemas-de-envio-de-criptos/646047",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-11-24T10:47:26.604Z",
+    "lastPostedAt": "2025-11-24T15:50:40.292Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 41,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Hola, Tengo un problema con una transacción de Zcash enviada desde Brave Wallet. El monedero muestra la transacción como “enviada” desde hace 17 horas, pero al revisar el hash (9799396255b75c6921e4ac21e4aaf7aa8f726c664da131ec3e3ee7676eefc0be), no aparece en la blockchain de Zcash. Además, el monedero no me permite volver a enviar los fondos, indicando que…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 645799,
+    "title": "Zec wallet How to recover a subwallet created under the same seed phrase?",
+    "url": "https://community.brave.app/t/zec-wallet-how-to-recover-a-subwallet-created-under-the-same-seed-phrase/645799",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-11-17T07:22:17.983Z",
+    "lastPostedAt": "2025-11-18T17:42:03.965Z",
+    "postsCount": 9,
+    "replyCount": 7,
+    "views": 126,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: How to recover a subwallet created under the same seed phrase? I accidentally deleted the created account 2, is there a way to reply?…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 645757,
+    "title": "Best Authenticator for Brave",
+    "url": "https://community.brave.app/t/best-authenticator-for-brave/645757",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-11-15T22:36:50.370Z",
+    "lastPostedAt": "2025-11-17T13:02:07.909Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 56,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: I am just starting using Brave Wallet and need to increase security with the KYC requirements from Coinbase. What is the best…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 644744,
+    "title": "ZCASH shielded balance and transactions disappeared. HELP please!",
+    "url": "https://community.brave.app/t/zcash-shielded-balance-and-transactions-disappeared-help-please/644744",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-10-26T19:01:47.609Z",
+    "lastPostedAt": "2025-10-27T13:04:52.394Z",
+    "postsCount": 5,
+    "replyCount": 3,
+    "views": 108,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "bug",
+     "sync"
+    ],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. The Brave Team will never ask you for your recovery phrase or private key. Description of the issue: ZCASH Balance and transactions disappeared!! Is the issue occurring on a specific network? Nope What operating system are you using?…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 644406,
+    "title": "Zec wallet - unable to sent out!",
+    "url": "https://community.brave.app/t/zec-wallet-unable-to-sent-out/644406",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-10-19T11:18:01.217Z",
+    "lastPostedAt": "2025-10-20T16:03:30.429Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 64,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "why cant sent back this wallet back to account with error msg There was an error attempting to sent -32602 there is already a zcash transaction in progress . please try again later Please note that you are posting in the “Uncategorized” category. Topics posted here may be lost in the shuffle as they are not properly organized . Topics posted in the…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 642979,
+    "title": "Zcash incompatibility",
+    "url": "https://community.brave.app/t/zcash-incompatibility/642979",
+    "categoryId": 1,
+    "categoryName": "Uncategorized",
+    "createdAt": "2025-09-23T14:28:51.048Z",
+    "lastPostedAt": "2025-11-01T17:14:42.305Z",
+    "postsCount": 9,
+    "replyCount": 3,
+    "views": 228,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "bug"
+    ],
+    "excerpt": "I understand that I am fully responsible for lost funds in the Brave wallet, however this is entirely the fault of the Brave wallet, it’s clearly a bug, and they clearly have not worked out the ZEC compatibility, especially regarding shielded. Im currentyly accepting the loss howevever I would like others to be warned not to deposit any ZEC despite Brave…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 642964,
+    "title": "ZEC showing zero balance",
+    "url": "https://community.brave.app/t/zec-showing-zero-balance/642964",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-09-23T08:17:22.422Z",
+    "lastPostedAt": "2025-10-17T14:48:52.774Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 96,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": true,
+    "tags": [],
+    "excerpt": "Please only post Brave Wallet inquiries in this category – visit the Brave Rewards category for all related rewards issues. The Brave Team will never ask you for your recovery phrase or private key. ZEC balance showing zero, no history of transactions. (I deposited ZEC twice in September). All networks are activated in the wallet, i’m using it on desktop,…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 636291,
+    "title": "Tried to pay nano-gpt.com, got mysterious error message",
+    "url": "https://community.brave.app/t/tried-to-pay-nano-gpt-com-got-mysterious-error-message/636291",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-07-29T17:26:45.080Z",
+    "lastPostedAt": "2025-07-30T14:45:33.343Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 57,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "The screenshot pretty much says it all. [image] Screenshot 2025-07-29 at 11.25.44 AM 2246×1720 282 KB",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 623548,
+    "title": "Brave Wallet Funds Not Visible After Restart",
+    "url": "https://community.brave.app/t/brave-wallet-funds-not-visible-after-restart/623548",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-06-05T21:41:17.016Z",
+    "lastPostedAt": "2025-06-17T21:30:09.551Z",
+    "postsCount": 11,
+    "replyCount": 9,
+    "views": 301,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "browser",
+     "macos",
+     "bug"
+    ],
+    "excerpt": "Description of the issue: My Brave wallet funds are not visible after resetting wallet. I tried to reset because I was unable to select a recipient address to send to. I attempted to recover the wallet using the backup code thinking it would fix the issue, but the funds are no longer visible. I checked to see if the asset (shielded zcash) was being hidden,…",
+    "githubRefs": [
+     "brave/brave-browser#46250"
+    ],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 620374,
+    "title": "ZEC issue shield address to transparent address not working",
+    "url": "https://community.brave.app/t/zec-issue-shield-address-to-transparent-address-not-working/620374",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-05-23T14:28:46.505Z",
+    "lastPostedAt": "2025-05-23T15:47:10.413Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 91,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Hi, I can successfully transfer ZEC from my transparent address to shielded address. But, I cannot do the reverse, shielded address to transparent address. Usually people use transparent address, so I wanted to move ZEC coin from my transparent address to shielded address. Description of the issue: Is the issue occurring on a specific network? ZEC mainnet…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 613038,
+    "title": "I can't figure out how to get Shielded Zcash in Brave",
+    "url": "https://community.brave.app/t/i-cant-figure-out-how-to-get-shielded-zcash-in-brave/613038",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-04-20T20:51:22.026Z",
+    "lastPostedAt": "2025-04-22T20:28:22.139Z",
+    "postsCount": 8,
+    "replyCount": 5,
+    "views": 303,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Description of the issue: I can’t figure out how to get shielded ZEC into the Brave wallet. Is the issue occurring on a specific network? Zcash What operating system are you using? MacOS Brave Version (check About Brave): 1.77.100 Additional Information: When I open the wallet I see this: [image] Screenshot 2025-04-19 at 11.24.24 PM 3024×1964 285 KB Typing…",
+    "githubRefs": [
+     "brave/brave-core#28746",
+     "brave/brave-browser#45185"
+    ],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 602862,
+    "title": "Make Brave Wallet perfect",
+    "url": "https://community.brave.app/t/make-brave-wallet-perfect/602862",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-03-06T23:26:04.860Z",
+    "lastPostedAt": "2025-03-24T14:56:07.438Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 323,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "browser",
+     "rewards",
+     "feature-request",
+     "payments",
+     "feedback"
+    ],
+    "excerpt": "In my opinion, your wallet (brave://wallet) is missing several blockchains & currencies, and these are TON , NOT , TRON & networks with TN ! [image] What is what? : TON - The Open Network, a decentralized blockchain platform designed for fast transactions, scalability, and integration with Telegram. NOT - a viral Telegram-based cryptocurrency that started…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 597505,
+    "title": "Zcash \"max\" send fails, probably due to insufficient fee reservation",
+    "url": "https://community.brave.app/t/zcash-max-send-fails-probably-due-to-insufficient-fee-reservation/597505",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2025-02-08T23:28:56.681Z",
+    "lastPostedAt": "2025-02-10T16:34:35.102Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 76,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "bug"
+    ],
+    "excerpt": "Description of the issue: I select \"Send->Zcash->“max”: [image] maxsendissue01 808×607 27.1 KB If I select “Review send” I am returned to the blank screen automatically: [image] maxsendissueblank 817×541 15.5 KB However if I reduce the send balance by 0.0001 ZEC which is sufficient to cover the sending fee, the transaction goes through. [image]…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 544669,
+    "title": "ZCash Wallet not loaded",
+    "url": "https://community.brave.app/t/zcash-wallet-not-loaded/544669",
+    "categoryId": 131,
+    "categoryName": "Brave Wallet (Self Custody)",
+    "createdAt": "2024-04-20T20:12:11.753Z",
+    "lastPostedAt": "2024-06-11T09:50:58.962Z",
+    "postsCount": 9,
+    "replyCount": 7,
+    "views": 414,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "Whenever I click on Zcash and deposit too see my address, I get an endless cycle of not loading. This is on the latest release of Brave on Windows 11. Been happening for a few weeks. [image] Screenshot 2024-04-20 160926 788×602 16.5 KB",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 538923,
+    "title": "Brave wallet and ZEC teams up",
+    "url": "https://community.brave.app/t/brave-wallet-and-zec-teams-up/538923",
+    "categoryId": 1,
+    "categoryName": "Uncategorized",
+    "createdAt": "2024-03-22T03:52:40.142Z",
+    "lastPostedAt": "2024-03-22T03:52:40.195Z",
+    "postsCount": 1,
+    "replyCount": 0,
+    "views": 228,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "So brave wallet now supports Transparent ZCash transactions. The Shielded should be coming soon. Thats a win win to me for the privacy community.",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash",
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 511407,
+    "title": "Add zcash please",
+    "url": "https://community.brave.app/t/add-zcash-please/511407",
+    "categoryId": 155,
+    "categoryName": "Brave Wallet Feedback",
+    "createdAt": "2023-10-18T16:56:47.708Z",
+    "lastPostedAt": "2024-04-26T02:44:14.078Z",
+    "postsCount": 2,
+    "replyCount": 0,
+    "views": 341,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "browser"
+    ],
+    "excerpt": "I recommend Brave browser to everyone I know who doesn’t like Chrome’s recent privacy policy changes. But what is surprising to me is that Brave wallet doesn’t support privacy coins like zcash.",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 459260,
+    "title": "Gemini is compatible for the Dominican Republic",
+    "url": "https://community.brave.app/t/gemini-is-compatible-for-the-dominican-republic/459260",
+    "categoryId": 71,
+    "categoryName": "Brave Rewards",
+    "createdAt": "2022-12-24T01:45:46.327Z",
+    "lastPostedAt": "2022-12-24T02:07:49.954Z",
+    "postsCount": 3,
+    "replyCount": 1,
+    "views": 339,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": true,
+    "tags": [],
+    "excerpt": "After this I would like to know what is the process to make everything work correctly for me, if Gemini is compatible with my country Brave also? Does this mean that I can connect my Brave Reward account to Gemini without any problems? Brave tells me that it does not support my country. ( Dominican Republic ) If we check the Gemini dominicana website it…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zec"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 434747,
+    "title": "Transcription of Weekly Community Call (27/09/20222)",
+    "url": "https://community.brave.app/t/transcription-of-weekly-community-call-27-09-20222/434747",
+    "categoryId": 23,
+    "categoryName": "Contributing",
+    "createdAt": "2022-09-28T07:59:57.553Z",
+    "lastPostedAt": "2022-10-12T08:36:32.761Z",
+    "postsCount": 6,
+    "replyCount": 2,
+    "views": 913,
+    "closed": true,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [],
+    "excerpt": "This Transcription is done by OpenAI Whisper [GitHub link omitted] . The transcription is done by the Base model. The only problem here right now is that the transcription cannot create new sentences (end of sentence, periods etc), so somebody else will have to create dialogue’s for this. If somebody can do it with the Medium or Large model it will be…",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   },
+   {
+    "id": 302620,
+    "title": "Add Monero to brave wallet",
+    "url": "https://community.brave.app/t/add-monero-to-brave-wallet/302620",
+    "categoryId": 57,
+    "categoryName": "Brave Feature Requests",
+    "createdAt": "2021-11-17T08:44:30.073Z",
+    "lastPostedAt": "2026-09-01T11:36:34.840Z",
+    "postsCount": 9,
+    "replyCount": 3,
+    "views": 3852,
+    "closed": false,
+    "archived": false,
+    "hasAcceptedAnswer": false,
+    "tags": [
+     "feature-request"
+    ],
+    "excerpt": "Hello everyone it would be nice to add Monero to the brave wallet accept crypto as it is the best choice for coin that respect the security and privacy of people thanks everyone and have a nice day [image]",
+    "githubRefs": [],
+    "matchedTerms": [
+     "zcash"
+    ],
+    "retrievedAt": "2026-10-08T14:35:45.102Z"
+   }
+  ],
+  "categories": {
+   "1": "Uncategorized",
+   "8": "Developers",
+   "19": "Creators",
+   "22": "Design",
+   "23": "Contributing",
+   "24": "Quality Assurance",
+   "25": "iOS",
+   "42": "Beta Builds",
+   "43": "Help Center and Resources",
+   "48": "Brave Browser",
+   "57": "Brave Feature Requests",
+   "63": "Desktop Requests",
+   "64": "iOS Requests",
+   "65": "Android Requests",
+   "71": "Brave Rewards",
+   "73": "Rewards Support",
+   "74": "Community Resources",
+   "75": "Desktop Support",
+   "76": "Mobile Support",
+   "77": "Web Compatibility",
+   "78": "Ad-Blocking",
+   "79": "Feedback",
+   "80": "Browser Feedback",
+   "81": "Community Feedback",
+   "82": "Rewards Feedback",
+   "83": "Help Center",
+   "87": "Android Rewards",
+   "89": "Nightly Builds",
+   "90": "Brave-Ads Support",
+   "98": "Release Notes",
+   "131": "Brave Wallet (Self Custody)",
+   "134": "Android Beta",
+   "135": "iOS Beta",
+   "136": "Brave Talk",
+   "137": "Firewall + VPN",
+   "139": "Sync",
+   "143": "Community Account Deletion Requests",
+   "145": "Brave Search",
+   "146": "Search Support",
+   "147": "Search Feedback",
+   "148": "日本語コミュニティ[JPN]",
+   "149": "ブラウザサポート[JPN]",
+   "150": "Brave Rewards[JPN]",
+   "155": "Brave Wallet Feedback",
+   "158": "Leo AI",
+   "159": "Custodian Support (Uphold, ZebPay, etc)",
+   "160": "Onchain Support (Solana)",
+   "161": "Brave Origin"
+  },
+  "searched": [
+   "zcash order:latest p1",
+   "zcash order:latest p2",
+   "zec order:latest p1",
+   "ironwood order:latest p1"
+  ]
+ }
+}

@@ -1,0 +1,2985 @@
+{
+ "sourceId": "upstream",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "crates": {
+   "orchard": {
+    "crate": "orchard",
+    "maxStable": "0.16.0",
+    "newest": "0.16.0",
+    "updatedAt": "2026-09-30T22:13:51.418592Z",
+    "recent": [
+     {
+      "version": "0.16.0",
+      "createdAt": "2026-09-30T22:13:51.418592Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.5",
+      "createdAt": "2026-08-03T06:01:53.889196Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.4",
+      "createdAt": "2026-07-23T16:32:53.171765Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.3",
+      "createdAt": "2026-07-22T13:59:25.651075Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.2",
+      "createdAt": "2026-07-21T20:57:11.849618Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.1",
+      "createdAt": "2026-07-21T07:14:43.046089Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.0",
+      "createdAt": "2026-07-09T20:05:03.041703Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.0-pre.2",
+      "createdAt": "2026-07-03T18:31:19.719628Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.0-pre.1",
+      "createdAt": "2026-06-30T02:05:14.169824Z",
+      "yanked": false
+     },
+     {
+      "version": "0.15.0-pre.0",
+      "createdAt": "2026-06-26T20:55:01.777624Z",
+      "yanked": false
+     },
+     {
+      "version": "0.14.0",
+      "createdAt": "2026-06-03T04:22:02.918814Z",
+      "yanked": false
+     },
+     {
+      "version": "0.13.1",
+      "createdAt": "2026-04-27T16:49:59.852659Z",
+      "yanked": true
+     }
+    ],
+    "url": "https://crates.io/crates/orchard"
+   },
+   "zcash_primitives": {
+    "crate": "zcash_primitives",
+    "maxStable": "0.30.1",
+    "newest": "0.31.0-pre.1",
+    "updatedAt": "2026-10-06T20:29:07.124941Z",
+    "recent": [
+     {
+      "version": "0.31.0-pre.1",
+      "createdAt": "2026-10-06T20:29:07.124941Z",
+      "yanked": false
+     },
+     {
+      "version": "0.31.0-pre.0",
+      "createdAt": "2026-10-01T02:25:12.366769Z",
+      "yanked": false
+     },
+     {
+      "version": "0.30.1",
+      "createdAt": "2026-08-19T22:21:56.288863Z",
+      "yanked": false
+     },
+     {
+      "version": "0.30.0",
+      "createdAt": "2026-07-24T12:39:02.463222Z",
+      "yanked": false
+     },
+     {
+      "version": "0.29.0",
+      "createdAt": "2026-07-09T22:22:51.666361Z",
+      "yanked": false
+     },
+     {
+      "version": "0.29.0-pre.0",
+      "createdAt": "2026-07-01T17:13:49.690787Z",
+      "yanked": false
+     },
+     {
+      "version": "0.28.0",
+      "createdAt": "2026-06-03T04:31:52.420338Z",
+      "yanked": false
+     },
+     {
+      "version": "0.27.1",
+      "createdAt": "2026-05-14T18:41:15.869082Z",
+      "yanked": false
+     },
+     {
+      "version": "0.27.0",
+      "createdAt": "2026-04-24T04:26:38.794712Z",
+      "yanked": false
+     },
+     {
+      "version": "0.26.4",
+      "createdAt": "2025-12-18T01:00:28.255396Z",
+      "yanked": false
+     },
+     {
+      "version": "0.26.3",
+      "createdAt": "2025-12-15T16:35:45.328748Z",
+      "yanked": false
+     },
+     {
+      "version": "0.26.2",
+      "createdAt": "2025-12-12T21:34:30.256328Z",
+      "yanked": true
+     }
+    ],
+    "url": "https://crates.io/crates/zcash_primitives"
+   },
+   "zcash_protocol": {
+    "crate": "zcash_protocol",
+    "maxStable": "0.10.6",
+    "newest": "0.11.0-pre.0",
+    "updatedAt": "2026-10-01T02:23:57.891392Z",
+    "recent": [
+     {
+      "version": "0.11.0-pre.0",
+      "createdAt": "2026-10-01T02:23:57.891392Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.6",
+      "createdAt": "2026-09-08T19:51:31.171836Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.5",
+      "createdAt": "2026-08-19T22:19:25.499728Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.4",
+      "createdAt": "2026-08-04T02:31:19.367345Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.3",
+      "createdAt": "2026-07-30T03:45:41.905108Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.2",
+      "createdAt": "2026-07-29T04:00:49.867010Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.1",
+      "createdAt": "2026-07-24T04:34:21.681501Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.0",
+      "createdAt": "2026-07-09T22:22:03.751308Z",
+      "yanked": false
+     },
+     {
+      "version": "0.10.0-pre.0",
+      "createdAt": "2026-07-01T17:11:39.102568Z",
+      "yanked": false
+     },
+     {
+      "version": "0.9.0",
+      "createdAt": "2026-06-03T04:30:21.947226Z",
+      "yanked": false
+     },
+     {
+      "version": "0.8.0",
+      "createdAt": "2026-04-24T04:24:25.485398Z",
+      "yanked": false
+     },
+     {
+      "version": "0.7.2",
+      "createdAt": "2025-12-11T16:32:11.296058Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/zcash_protocol"
+   },
+   "zcash_client_backend": {
+    "crate": "zcash_client_backend",
+    "maxStable": "0.24.0",
+    "newest": "0.25.0-pre.1",
+    "updatedAt": "2026-10-06T20:31:38.015499Z",
+    "recent": [
+     {
+      "version": "0.25.0-pre.1",
+      "createdAt": "2026-10-06T20:31:38.015499Z",
+      "yanked": false
+     },
+     {
+      "version": "0.25.0-pre.0",
+      "createdAt": "2026-10-02T16:35:59.678903Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0",
+      "createdAt": "2026-08-19T22:22:51.084222Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.7",
+      "createdAt": "2026-08-04T02:31:56.733580Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.6",
+      "createdAt": "2026-07-30T03:46:08.955607Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.5",
+      "createdAt": "2026-07-29T04:01:30.132223Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.4",
+      "createdAt": "2026-07-27T00:09:10.669931Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.3",
+      "createdAt": "2026-07-26T19:41:01.213005Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.2",
+      "createdAt": "2026-07-25T10:47:59.902655Z",
+      "yanked": false
+     },
+     {
+      "version": "0.24.0-rc.1",
+      "createdAt": "2026-07-12T16:58:47.385549Z",
+      "yanked": false
+     },
+     {
+      "version": "0.23.0",
+      "createdAt": "2026-06-03T04:57:15.201605Z",
+      "yanked": false
+     },
+     {
+      "version": "0.22.0",
+      "createdAt": "2026-04-28T04:09:58.031016Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/zcash_client_backend"
+   },
+   "zcash_encoding": {
+    "crate": "zcash_encoding",
+    "maxStable": "0.5.0",
+    "newest": "0.5.0",
+    "updatedAt": "2026-07-24T16:45:36.680457Z",
+    "recent": [
+     {
+      "version": "0.5.0",
+      "createdAt": "2026-07-24T16:45:36.680457Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2026-04-24T04:23:59.264181Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2025-02-21T14:22:18.331194Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.2",
+      "createdAt": "2024-12-13T16:59:09.538906Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.1",
+      "createdAt": "2024-08-19T22:15:13.309234Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2022-10-19T23:58:02.454679Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2022-05-10T23:57:09.549530Z",
+      "yanked": false
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2021-08-31T19:50:31.904424Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/zcash_encoding"
+   },
+   "zcash_note_encryption": {
+    "crate": "zcash_note_encryption",
+    "maxStable": "0.5.1",
+    "newest": "0.5.1",
+    "updatedAt": "2026-09-30T19:31:28.484183Z",
+    "recent": [
+     {
+      "version": "0.5.1",
+      "createdAt": "2026-09-30T19:31:28.484183Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2026-09-15T18:15:09.339177Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.2",
+      "createdAt": "2026-07-11T11:18:54.016647Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.1",
+      "createdAt": "2024-12-07T04:37:26.333977Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2023-06-06T17:04:08.157831Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2023-03-22T16:29:57.999384Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2022-10-13T21:37:41.248689Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2021-12-17T22:01:20.478386Z",
+      "yanked": false
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2021-03-19T20:56:43.074577Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/zcash_note_encryption"
+   },
+   "shardtree": {
+    "crate": "shardtree",
+    "maxStable": "0.8.0",
+    "newest": "0.8.0",
+    "updatedAt": "2026-09-30T19:38:58.517072Z",
+    "recent": [
+     {
+      "version": "0.8.0",
+      "createdAt": "2026-09-30T19:38:58.517072Z",
+      "yanked": false
+     },
+     {
+      "version": "0.7.1",
+      "createdAt": "2026-07-17T18:17:42.374487Z",
+      "yanked": false
+     },
+     {
+      "version": "0.7.0",
+      "createdAt": "2026-07-09T17:05:09.265204Z",
+      "yanked": false
+     },
+     {
+      "version": "0.6.2",
+      "createdAt": "2026-02-21T05:20:20.468962Z",
+      "yanked": false
+     },
+     {
+      "version": "0.6.1",
+      "createdAt": "2025-01-31T04:05:44.679820Z",
+      "yanked": false
+     },
+     {
+      "version": "0.6.0",
+      "createdAt": "2025-01-29T00:47:40.716014Z",
+      "yanked": true
+     },
+     {
+      "version": "0.3.2",
+      "createdAt": "2024-12-10T05:15:43.692743Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2024-10-04T14:32:44.257705Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2024-08-12T18:22:28.992621Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.1",
+      "createdAt": "2024-04-03T22:07:30.477218Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2024-03-25T02:14:41.716575Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2023-11-07T18:26:37.758163Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/shardtree"
+   },
+   "incrementalmerkletree": {
+    "crate": "incrementalmerkletree",
+    "maxStable": "0.9.0",
+    "newest": "0.9.0",
+    "updatedAt": "2026-09-30T04:18:34.586867Z",
+    "recent": [
+     {
+      "version": "0.9.0",
+      "createdAt": "2026-09-30T04:18:34.586867Z",
+      "yanked": false
+     },
+     {
+      "version": "0.8.2",
+      "createdAt": "2025-02-01T16:38:07.324668Z",
+      "yanked": false
+     },
+     {
+      "version": "0.8.1",
+      "createdAt": "2025-01-28T17:02:23.107668Z",
+      "yanked": false
+     },
+     {
+      "version": "0.7.1",
+      "createdAt": "2024-12-16T17:27:37.417207Z",
+      "yanked": false
+     },
+     {
+      "version": "0.8.0",
+      "createdAt": "2024-12-11T19:33:35.359502Z",
+      "yanked": false
+     },
+     {
+      "version": "0.7.0",
+      "createdAt": "2024-09-25T20:12:58.714718Z",
+      "yanked": false
+     },
+     {
+      "version": "0.6.0",
+      "createdAt": "2024-08-12T16:56:41.201930Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.1",
+      "createdAt": "2024-03-25T02:11:16.253039Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2023-09-08T17:05:05.237788Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2023-06-06T15:19:51.489511Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.1",
+      "createdAt": "2023-02-28T21:10:35.156214Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2022-05-10T15:40:08.625465Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/incrementalmerkletree"
+   },
+   "zip32": {
+    "crate": "zip32",
+    "maxStable": "0.3.0",
+    "newest": "0.3.0",
+    "updatedAt": "2026-09-29T18:03:42.386083Z",
+    "recent": [
+     {
+      "version": "0.3.0",
+      "createdAt": "2026-09-29T18:03:42.386083Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.1",
+      "createdAt": "2025-09-17T16:18:58.741527Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2025-02-20T20:57:14.675001Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.3",
+      "createdAt": "2024-12-13T23:02:17.009111Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.2",
+      "createdAt": "2024-10-22T20:27:58.748596Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.1",
+      "createdAt": "2024-03-14T22:45:21.340509Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2023-12-06T17:49:09.817520Z",
+      "yanked": false
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2018-07-10T22:23:18.460255Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/zip32"
+   },
+   "halo2_proofs": {
+    "crate": "halo2_proofs",
+    "maxStable": "0.4.0",
+    "newest": "0.4.0",
+    "updatedAt": "2026-09-29T03:43:34.222091Z",
+    "recent": [
+     {
+      "version": "0.4.0",
+      "createdAt": "2026-09-29T03:43:34.222091Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.5",
+      "createdAt": "2026-08-03T03:04:08.211307Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.4",
+      "createdAt": "2026-07-22T09:12:12.023019Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.3",
+      "createdAt": "2026-07-21T02:17:48.270097Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.2",
+      "createdAt": "2025-12-04T20:03:07.217330Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.1",
+      "createdAt": "2025-07-09T12:31:39.227359Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2023-03-22T18:35:41.954889Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2022-06-23T19:17:40.510977Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2022-05-10T22:32:01.740487Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0-beta.4",
+      "createdAt": "2022-04-06T11:25:43.836127Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0-beta.3",
+      "createdAt": "2022-03-22T20:29:46.438482Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0-beta.2",
+      "createdAt": "2022-02-15T01:58:14.393361Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/halo2_proofs"
+   },
+   "halo2_gadgets": {
+    "crate": "halo2_gadgets",
+    "maxStable": "0.6.0",
+    "newest": "0.6.0",
+    "updatedAt": "2026-09-29T03:43:36.689484Z",
+    "recent": [
+     {
+      "version": "0.6.0",
+      "createdAt": "2026-09-29T03:43:36.689484Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2026-06-03T04:16:34.385255Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2025-12-04T20:05:06.650809Z",
+      "yanked": true
+     },
+     {
+      "version": "0.3.1",
+      "createdAt": "2024-12-16T19:02:42.509652Z",
+      "yanked": true
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2023-03-22T18:36:04.712958Z",
+      "yanked": true
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2022-06-23T19:18:11.195641Z",
+      "yanked": true
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2022-05-10T22:43:40.807102Z",
+      "yanked": true
+     },
+     {
+      "version": "0.1.0-beta.3",
+      "createdAt": "2022-04-06T11:26:03.885738Z",
+      "yanked": true
+     },
+     {
+      "version": "0.1.0-beta.2",
+      "createdAt": "2022-03-22T20:31:16.072449Z",
+      "yanked": true
+     },
+     {
+      "version": "0.1.0-beta.1",
+      "createdAt": "2022-02-15T01:58:42.067478Z",
+      "yanked": true
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2021-10-21T13:51:20.843674Z",
+      "yanked": true
+     }
+    ],
+    "url": "https://crates.io/crates/halo2_gadgets"
+   },
+   "pasta_curves": {
+    "crate": "pasta_curves",
+    "maxStable": "0.6.0",
+    "newest": "0.6.0",
+    "updatedAt": "2026-09-25T20:12:32.178722Z",
+    "recent": [
+     {
+      "version": "0.6.0",
+      "createdAt": "2026-09-25T20:12:32.178722Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.2",
+      "createdAt": "2026-07-23T15:09:21.682608Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.1",
+      "createdAt": "2023-03-02T17:08:56.458926Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2022-12-06T04:46:05.186885Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.1",
+      "createdAt": "2022-10-13T21:08:11.019003Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2022-05-04T23:27:06.406714Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.1",
+      "createdAt": "2022-04-20T18:06:43.017525Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2022-01-04T16:05:05.422182Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.1",
+      "createdAt": "2021-09-17T15:44:15.246444Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2021-09-02T17:48:38.802598Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.2",
+      "createdAt": "2021-08-06T12:29:20.472017Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.1",
+      "createdAt": "2021-06-04T19:24:53.106510Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/pasta_curves"
+   },
+   "reddsa": {
+    "crate": "reddsa",
+    "maxStable": "0.6.1",
+    "newest": "0.6.1",
+    "updatedAt": "2026-09-25T21:32:10.094266Z",
+    "recent": [
+     {
+      "version": "0.6.1",
+      "createdAt": "2026-09-25T21:32:10.094266Z",
+      "yanked": false
+     },
+     {
+      "version": "0.6.0",
+      "createdAt": "2026-09-25T21:09:59.823337Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.2",
+      "createdAt": "2026-05-22T15:15:29.521512Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.1",
+      "createdAt": "2023-07-12T19:31:01.188546Z",
+      "yanked": false
+     },
+     {
+      "version": "0.5.0",
+      "createdAt": "2023-03-09T20:15:53.213921Z",
+      "yanked": false
+     },
+     {
+      "version": "0.4.0",
+      "createdAt": "2023-01-31T03:26:31.076672Z",
+      "yanked": false
+     },
+     {
+      "version": "0.3.0",
+      "createdAt": "2022-05-10T22:49:48.485828Z",
+      "yanked": false
+     },
+     {
+      "version": "0.2.0",
+      "createdAt": "2022-01-19T23:19:47.425875Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2021-11-19T23:10:02.188019Z",
+      "yanked": false
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2021-01-08T16:28:29.983882Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/reddsa"
+   },
+   "sinsemilla": {
+    "crate": "sinsemilla",
+    "maxStable": "0.2.0",
+    "newest": "0.2.0",
+    "updatedAt": "2026-09-25T21:15:48.907849Z",
+    "recent": [
+     {
+      "version": "0.2.0",
+      "createdAt": "2026-09-25T21:15:48.907849Z",
+      "yanked": false
+     },
+     {
+      "version": "0.1.0",
+      "createdAt": "2024-12-14T00:00:27.750568Z",
+      "yanked": false
+     },
+     {
+      "version": "0.0.0",
+      "createdAt": "2024-12-13T12:44:54.106759Z",
+      "yanked": false
+     }
+    ],
+    "url": "https://crates.io/crates/sinsemilla"
+   }
+  },
+  "releases": [
+   {
+    "id": "crates.io/zcash_client_backend@0.25.0-pre.1",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.25.0-pre.1",
+    "publishedAt": "2026-10-06T20:31:38.015499Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.25.0-pre.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.31.0-pre.1",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.31.0-pre.1",
+    "publishedAt": "2026-10-06T20:29:07.124941Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-pre.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.25.0-pre.0",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.25.0-pre.0",
+    "publishedAt": "2026-10-02T16:35:59.678903Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.25.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.31.0-pre.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.31.0-pre.0",
+    "publishedAt": "2026-10-01T02:25:12.366769Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.11.0-pre.0",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.11.0-pre.0",
+    "publishedAt": "2026-10-01T02:23:57.891392Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.11.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/orchard@0.16.0",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.16.0",
+    "publishedAt": "2026-09-30T22:13:51.418592Z",
+    "url": "https://crates.io/crates/orchard/0.16.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.8.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.8.0",
+    "publishedAt": "2026-09-30T19:38:58.517072Z",
+    "url": "https://crates.io/crates/shardtree/0.8.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.5.1",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.5.1",
+    "publishedAt": "2026-09-30T19:31:28.484183Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.5.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.9.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.9.0",
+    "publishedAt": "2026-09-30T04:18:34.586867Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.9.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.3.0",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.3.0",
+    "publishedAt": "2026-09-29T18:03:42.386083Z",
+    "url": "https://crates.io/crates/zip32/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.10.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.10.1",
+    "publishedAt": "2026-09-29T15:34:31Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.10.1",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.6.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.6.0",
+    "publishedAt": "2026-09-29T03:43:36.689484Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.6.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.4.0",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.4.0",
+    "publishedAt": "2026-09-29T03:43:34.222091Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.6.1",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.6.1",
+    "publishedAt": "2026-09-25T21:32:10.094266Z",
+    "url": "https://crates.io/crates/reddsa/0.6.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/sinsemilla@0.2.0",
+    "project": "sinsemilla",
+    "repo": "zcash/sinsemilla",
+    "version": "0.2.0",
+    "publishedAt": "2026-09-25T21:15:48.907849Z",
+    "url": "https://crates.io/crates/sinsemilla/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.6.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.6.0",
+    "publishedAt": "2026-09-25T21:09:59.823337Z",
+    "url": "https://crates.io/crates/reddsa/0.6.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.6.0",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.6.0",
+    "publishedAt": "2026-09-25T20:12:32.178722Z",
+    "url": "https://crates.io/crates/pasta_curves/0.6.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.5.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.5.0",
+    "publishedAt": "2026-09-15T18:15:09.339177Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.10.0",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.10.0",
+    "publishedAt": "2026-09-12T02:19:53Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.10.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.6",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.6",
+    "publishedAt": "2026-09-08T19:51:31.171836Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.6",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.9.0",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.9.0",
+    "publishedAt": "2026-08-29T04:35:48Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.9.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.5.4",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.4",
+    "publishedAt": "2026-08-27T18:07:51Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.4",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0",
+    "publishedAt": "2026-08-19T22:22:51.084222Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.30.1",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.30.1",
+    "publishedAt": "2026-08-19T22:21:56.288863Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.30.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.5",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.5",
+    "publishedAt": "2026-08-19T22:19:25.499728Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.5",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.8.0",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.8.0",
+    "publishedAt": "2026-08-19T01:31:28Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.8.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.7.0",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.7.0",
+    "publishedAt": "2026-08-05T00:58:28Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.7.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.5.3",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.3",
+    "publishedAt": "2026-08-04T22:05:54Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.3",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.7",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.7",
+    "publishedAt": "2026-08-04T02:31:56.733580Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.7",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.4",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.4",
+    "publishedAt": "2026-08-04T02:31:19.367345Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.5",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.5",
+    "publishedAt": "2026-08-03T06:01:53.889196Z",
+    "url": "https://crates.io/crates/orchard/0.15.5",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.5",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.5",
+    "publishedAt": "2026-08-03T03:04:08.211307Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.5",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.7.0-rc.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.7.0-rc.1",
+    "publishedAt": "2026-08-03T01:16:25Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.7.0-rc.1",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "zcash/lightwalletd@v0.5.2",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.2",
+    "publishedAt": "2026-07-30T18:31:52Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.2",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.6",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.6",
+    "publishedAt": "2026-07-30T03:46:08.955607Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.6",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.3",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.3",
+    "publishedAt": "2026-07-30T03:45:41.905108Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.5",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.5",
+    "publishedAt": "2026-07-29T04:01:30.132223Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.5",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.2",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.2",
+    "publishedAt": "2026-07-29T04:00:49.867010Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.5.1",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.1",
+    "publishedAt": "2026-07-27T18:34:17Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.1",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.4",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.4",
+    "publishedAt": "2026-07-27T00:09:10.669931Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.3",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.3",
+    "publishedAt": "2026-07-26T19:41:01.213005Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "zcash/lightwalletd@v0.5.0",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.0",
+    "publishedAt": "2026-07-26T19:04:32Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.2",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.2",
+    "publishedAt": "2026-07-25T10:47:59.902655Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.5.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.5.0",
+    "publishedAt": "2026-07-24T16:45:36.680457Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.30.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.30.0",
+    "publishedAt": "2026-07-24T12:39:02.463222Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.30.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.1",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.1",
+    "publishedAt": "2026-07-24T04:34:21.681501Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.4",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.4",
+    "publishedAt": "2026-07-23T16:32:53.171765Z",
+    "url": "https://crates.io/crates/orchard/0.15.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.5.2",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.5.2",
+    "publishedAt": "2026-07-23T15:09:21.682608Z",
+    "url": "https://crates.io/crates/pasta_curves/0.5.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.3",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.3",
+    "publishedAt": "2026-07-22T13:59:25.651075Z",
+    "url": "https://crates.io/crates/orchard/0.15.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.4",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.4",
+    "publishedAt": "2026-07-22T09:12:12.023019Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.2",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.2",
+    "publishedAt": "2026-07-21T20:57:11.849618Z",
+    "url": "https://crates.io/crates/orchard/0.15.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.1",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.1",
+    "publishedAt": "2026-07-21T07:14:43.046089Z",
+    "url": "https://crates.io/crates/orchard/0.15.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.3",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.3",
+    "publishedAt": "2026-07-21T02:17:48.270097Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.7.1",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.7.1",
+    "publishedAt": "2026-07-17T18:17:42.374487Z",
+    "url": "https://crates.io/crates/shardtree/0.7.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.6.0",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.6.0",
+    "publishedAt": "2026-07-13T20:26:14Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.6.0",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.6.0-rc.3",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.6.0-rc.3",
+    "publishedAt": "2026-07-13T20:14:09Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.6.0-rc.3",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.24.0-rc.1",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.24.0-rc.1",
+    "publishedAt": "2026-07-12T16:58:47.385549Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.24.0-rc.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.4.2",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.4.2",
+    "publishedAt": "2026-07-11T11:18:54.016647Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.4.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.29.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.29.0",
+    "publishedAt": "2026-07-09T22:22:51.666361Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.29.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.0",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.0",
+    "publishedAt": "2026-07-09T22:22:03.751308Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.0",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.0",
+    "publishedAt": "2026-07-09T20:05:03.041703Z",
+    "url": "https://crates.io/crates/orchard/0.15.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.7.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.7.0",
+    "publishedAt": "2026-07-09T17:05:09.265204Z",
+    "url": "https://crates.io/crates/shardtree/0.7.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zingolabs/zaino@0.6.0-rc.2",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.6.0-rc.2",
+    "publishedAt": "2026-07-09T06:07:03Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.6.0-rc.2",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.6.0-rc.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.6.0-rc.1",
+    "publishedAt": "2026-07-05T06:43:43Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.6.0-rc.1",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.5.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.5.1",
+    "publishedAt": "2026-07-03T23:07:40Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.5.1",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.15.0-pre.2",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.0-pre.2",
+    "publishedAt": "2026-07-03T18:31:19.719628Z",
+    "url": "https://crates.io/crates/orchard/0.15.0-pre.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.29.0-pre.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.29.0-pre.0",
+    "publishedAt": "2026-07-01T17:13:49.690787Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.29.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.10.0-pre.0",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.10.0-pre.0",
+    "publishedAt": "2026-07-01T17:11:39.102568Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.10.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.4.2",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.4.2",
+    "publishedAt": "2026-06-30T17:33:07Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.4.2",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.5.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.5.0",
+    "publishedAt": "2026-06-30T17:31:30Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.5.0",
+    "source": "github-tag"
+   },
+   {
+    "id": "crates.io/orchard@0.15.0-pre.1",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.0-pre.1",
+    "publishedAt": "2026-06-30T02:05:14.169824Z",
+    "url": "https://crates.io/crates/orchard/0.15.0-pre.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/orchard@0.15.0-pre.0",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.15.0-pre.0",
+    "publishedAt": "2026-06-26T20:55:01.777624Z",
+    "url": "https://crates.io/crates/orchard/0.15.0-pre.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.4.2-rc.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.4.2-rc.1",
+    "publishedAt": "2026-06-26T15:36:54Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.4.2-rc.1",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.5.0-rc.3",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.5.0-rc.3",
+    "publishedAt": "2026-06-21T02:50:22Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.5.0-rc.3",
+    "source": "github-release",
+    "prerelease": true
+   },
+   {
+    "id": "zingolabs/zaino@0.4.1",
+    "project": "Zaino",
+    "repo": "zingolabs/zaino",
+    "version": "0.4.1",
+    "publishedAt": "2026-06-18T18:47:46Z",
+    "url": "https://github.com/zingolabs/zaino/releases/tag/0.4.1",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.23.0",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.23.0",
+    "publishedAt": "2026-06-03T04:57:15.201605Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.23.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.28.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.28.0",
+    "publishedAt": "2026-06-03T04:31:52.420338Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.28.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.9.0",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.9.0",
+    "publishedAt": "2026-06-03T04:30:21.947226Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.9.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.14.0",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.14.0",
+    "publishedAt": "2026-06-03T04:22:02.918814Z",
+    "url": "https://crates.io/crates/orchard/0.14.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.5.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.5.0",
+    "publishedAt": "2026-06-03T04:16:34.385255Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.5.2",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.5.2",
+    "publishedAt": "2026-05-22T15:15:29.521512Z",
+    "url": "https://crates.io/crates/reddsa/0.5.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.27.1",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.27.1",
+    "publishedAt": "2026-05-14T18:41:15.869082Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.27.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_client_backend@0.22.0",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.22.0",
+    "publishedAt": "2026-04-28T04:09:58.031016Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.22.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/orchard@0.13.1",
+    "project": "orchard",
+    "repo": "zcash/orchard",
+    "version": "0.13.1",
+    "publishedAt": "2026-04-27T16:49:59.852659Z",
+    "url": "https://crates.io/crates/orchard/0.13.1",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.27.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.27.0",
+    "publishedAt": "2026-04-24T04:26:38.794712Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.27.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.8.0",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.8.0",
+    "publishedAt": "2026-04-24T04:24:25.485398Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.8.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.4.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.4.0",
+    "publishedAt": "2026-04-24T04:23:59.264181Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.19",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.19",
+    "publishedAt": "2026-03-30T15:39:49Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.19",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.4.1",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.4.1",
+    "publishedAt": "2026-03-24T18:24:18Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.4.1",
+    "source": "github-tag"
+   },
+   {
+    "id": "crates.io/shardtree@0.6.2",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.6.2",
+    "publishedAt": "2026-02-21T05:20:20.468962Z",
+    "url": "https://crates.io/crates/shardtree/0.6.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.26.4",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.26.4",
+    "publishedAt": "2025-12-18T01:00:28.255396Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.26.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.26.3",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.26.3",
+    "publishedAt": "2025-12-15T16:35:45.328748Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.26.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.26.2",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.26.2",
+    "publishedAt": "2025-12-12T21:34:30.256328Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.26.2",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.7.2",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.7.2",
+    "publishedAt": "2025-12-11T16:32:11.296058Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.7.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.4.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.4.0",
+    "publishedAt": "2025-12-04T20:05:06.650809Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.4.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.2",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.2",
+    "publishedAt": "2025-12-04T20:03:07.217330Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.4.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.4.0",
+    "publishedAt": "2025-12-03T19:16:37Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.4.0",
+    "source": "github-tag"
+   },
+   {
+    "id": "crates.io/zip32@0.2.1",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.2.1",
+    "publishedAt": "2025-09-17T16:18:58.741527Z",
+    "url": "https://crates.io/crates/zip32/0.2.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.1",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.1",
+    "publishedAt": "2025-07-09T12:31:39.227359Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.18",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.18",
+    "publishedAt": "2025-06-01T16:25:11Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.18",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.6",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.6",
+    "publishedAt": "2025-06-01T15:27:09Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.6",
+    "source": "github-tag"
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.3.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.3.0",
+    "publishedAt": "2025-02-21T14:22:18.331194Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.2.0",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.2.0",
+    "publishedAt": "2025-02-20T20:57:14.675001Z",
+    "url": "https://crates.io/crates/zip32/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.8.2",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.8.2",
+    "publishedAt": "2025-02-01T16:38:07.324668Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.8.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.6.1",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.6.1",
+    "publishedAt": "2025-01-31T04:05:44.679820Z",
+    "url": "https://crates.io/crates/shardtree/0.6.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.6.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.6.0",
+    "publishedAt": "2025-01-29T00:47:40.716014Z",
+    "url": "https://crates.io/crates/shardtree/0.6.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.8.1",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.8.1",
+    "publishedAt": "2025-01-28T17:02:23.107668Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.8.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.3.1",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.3.1",
+    "publishedAt": "2024-12-16T19:02:42.509652Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.3.1",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.7.1",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.7.1",
+    "publishedAt": "2024-12-16T17:27:37.417207Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.7.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/sinsemilla@0.1.0",
+    "project": "sinsemilla",
+    "repo": "zcash/sinsemilla",
+    "version": "0.1.0",
+    "publishedAt": "2024-12-14T00:00:27.750568Z",
+    "url": "https://crates.io/crates/sinsemilla/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.1.3",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.1.3",
+    "publishedAt": "2024-12-13T23:02:17.009111Z",
+    "url": "https://crates.io/crates/zip32/0.1.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.2.2",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.2.2",
+    "publishedAt": "2024-12-13T16:59:09.538906Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.2.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/sinsemilla@0.0.0",
+    "project": "sinsemilla",
+    "repo": "zcash/sinsemilla",
+    "version": "0.0.0",
+    "publishedAt": "2024-12-13T12:44:54.106759Z",
+    "url": "https://crates.io/crates/sinsemilla/0.0.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.8.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.8.0",
+    "publishedAt": "2024-12-11T19:33:35.359502Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.8.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.3.2",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.3.2",
+    "publishedAt": "2024-12-10T05:15:43.692743Z",
+    "url": "https://crates.io/crates/shardtree/0.3.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.4.1",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.4.1",
+    "publishedAt": "2024-12-07T04:37:26.333977Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.4.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.1.2",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.1.2",
+    "publishedAt": "2024-10-22T20:27:58.748596Z",
+    "url": "https://crates.io/crates/zip32/0.1.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.5.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.5.0",
+    "publishedAt": "2024-10-04T14:32:44.257705Z",
+    "url": "https://crates.io/crates/shardtree/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.7.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.7.0",
+    "publishedAt": "2024-09-25T20:12:58.714718Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.7.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.2.1",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.2.1",
+    "publishedAt": "2024-08-19T22:15:13.309234Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.2.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.4.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.4.0",
+    "publishedAt": "2024-08-12T18:22:28.992621Z",
+    "url": "https://crates.io/crates/shardtree/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.6.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.6.0",
+    "publishedAt": "2024-08-12T16:56:41.201930Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.6.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.3.1",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.3.1",
+    "publishedAt": "2024-04-03T22:07:30.477218Z",
+    "url": "https://crates.io/crates/shardtree/0.3.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.3.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.3.0",
+    "publishedAt": "2024-03-25T02:14:41.716575Z",
+    "url": "https://crates.io/crates/shardtree/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.5.1",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.5.1",
+    "publishedAt": "2024-03-25T02:11:16.253039Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.5.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.1.1",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.1.1",
+    "publishedAt": "2024-03-14T22:45:21.340509Z",
+    "url": "https://crates.io/crates/zip32/0.1.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.1.0",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.1.0",
+    "publishedAt": "2023-12-06T17:49:09.817520Z",
+    "url": "https://crates.io/crates/zip32/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.2.0",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.2.0",
+    "publishedAt": "2023-11-07T18:26:37.758163Z",
+    "url": "https://crates.io/crates/shardtree/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.5.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.5.0",
+    "publishedAt": "2023-09-08T17:05:05.237788Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.16",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.16",
+    "publishedAt": "2023-07-29T17:38:21Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.16",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.5.1",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.5.1",
+    "publishedAt": "2023-07-12T19:31:01.188546Z",
+    "url": "https://crates.io/crates/reddsa/0.5.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.15",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.15",
+    "publishedAt": "2023-07-07T05:24:18Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.15",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.14",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.14",
+    "publishedAt": "2023-07-04T19:42:42Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.14",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.5",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.5",
+    "publishedAt": "2023-07-04T17:05:41Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.5",
+    "source": "github-tag"
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.4.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.4.0",
+    "publishedAt": "2023-06-06T17:04:08.157831Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.4.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.4.0",
+    "publishedAt": "2023-06-06T15:19:51.489511Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.3.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.3.0",
+    "publishedAt": "2023-03-22T18:36:04.712958Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.3.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.3.0",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.3.0",
+    "publishedAt": "2023-03-22T18:35:41.954889Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.3.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.3.0",
+    "publishedAt": "2023-03-22T16:29:57.999384Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.5.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.5.0",
+    "publishedAt": "2023-03-09T20:15:53.213921Z",
+    "url": "https://crates.io/crates/reddsa/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.5.1",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.5.1",
+    "publishedAt": "2023-03-02T17:08:56.458926Z",
+    "url": "https://crates.io/crates/pasta_curves/0.5.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.3.1",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.3.1",
+    "publishedAt": "2023-02-28T21:10:35.156214Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.3.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.4.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.4.0",
+    "publishedAt": "2023-01-31T03:26:31.076672Z",
+    "url": "https://crates.io/crates/reddsa/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.5.0",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.5.0",
+    "publishedAt": "2022-12-06T04:46:05.186885Z",
+    "url": "https://crates.io/crates/pasta_curves/0.5.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.2.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.2.0",
+    "publishedAt": "2022-10-19T23:58:02.454679Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.2.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.2.0",
+    "publishedAt": "2022-10-13T21:37:41.248689Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.4.1",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.4.1",
+    "publishedAt": "2022-10-13T21:08:11.019003Z",
+    "url": "https://crates.io/crates/pasta_curves/0.4.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.13",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.13",
+    "publishedAt": "2022-07-21T17:59:25Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.13",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.2.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.2.0",
+    "publishedAt": "2022-06-23T19:18:11.195641Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.2.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.2.0",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.2.0",
+    "publishedAt": "2022-06-23T19:17:40.510977Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.12",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.12",
+    "publishedAt": "2022-05-24T23:27:10Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.12",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.11",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.11",
+    "publishedAt": "2022-05-24T15:25:50Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.11",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.1.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.1.0",
+    "publishedAt": "2022-05-10T23:57:09.549530Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.3.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.3.0",
+    "publishedAt": "2022-05-10T22:49:48.485828Z",
+    "url": "https://crates.io/crates/reddsa/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.1.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.1.0",
+    "publishedAt": "2022-05-10T22:43:40.807102Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.1.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.1.0",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.1.0",
+    "publishedAt": "2022-05-10T22:32:01.740487Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.3.0",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.3.0",
+    "publishedAt": "2022-05-10T15:40:08.625465Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.4.0",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.4.0",
+    "publishedAt": "2022-05-04T23:27:06.406714Z",
+    "url": "https://crates.io/crates/pasta_curves/0.4.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.10",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.10",
+    "publishedAt": "2022-04-26T03:22:00Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.10",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.3.1",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.3.1",
+    "publishedAt": "2022-04-20T18:06:43.017525Z",
+    "url": "https://crates.io/crates/pasta_curves/0.3.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.1.0-beta.3",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.3",
+    "publishedAt": "2022-04-06T11:26:03.885738Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.1.0-beta.3",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.1.0-beta.4",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.4",
+    "publishedAt": "2022-04-06T11:25:43.836127Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.1.0-beta.4",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.1.0-beta.2",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.2",
+    "publishedAt": "2022-03-22T20:31:16.072449Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.1.0-beta.2",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.1.0-beta.3",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.3",
+    "publishedAt": "2022-03-22T20:29:46.438482Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.1.0-beta.3",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.1.0-beta.1",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.1",
+    "publishedAt": "2022-02-15T01:58:42.067478Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.1.0-beta.1",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/halo2_proofs@0.1.0-beta.2",
+    "project": "halo2_proofs",
+    "repo": "zcash/halo2",
+    "version": "0.1.0-beta.2",
+    "publishedAt": "2022-02-15T01:58:14.393361Z",
+    "url": "https://crates.io/crates/halo2_proofs/0.1.0-beta.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/reddsa@0.2.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.2.0",
+    "publishedAt": "2022-01-19T23:19:47.425875Z",
+    "url": "https://crates.io/crates/reddsa/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.3.0",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.3.0",
+    "publishedAt": "2022-01-04T16:05:05.422182Z",
+    "url": "https://crates.io/crates/pasta_curves/0.3.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.1.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.1.0",
+    "publishedAt": "2021-12-17T22:01:20.478386Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwalletd@v0.4.9",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.4.9",
+    "publishedAt": "2021-12-09T22:40:02Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.9",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.1.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.1.0",
+    "publishedAt": "2021-11-19T23:10:02.188019Z",
+    "url": "https://crates.io/crates/reddsa/0.1.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/halo2_gadgets@0.0.0",
+    "project": "halo2_gadgets",
+    "repo": "zcash/halo2",
+    "version": "0.0.0",
+    "publishedAt": "2021-10-21T13:51:20.843674Z",
+    "url": "https://crates.io/crates/halo2_gadgets/0.0.0",
+    "source": "crates.io",
+    "yanked": true,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.2.1",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.2.1",
+    "publishedAt": "2021-09-17T15:44:15.246444Z",
+    "url": "https://crates.io/crates/pasta_curves/0.2.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.2.0",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.2.0",
+    "publishedAt": "2021-09-02T17:48:38.802598Z",
+    "url": "https://crates.io/crates/pasta_curves/0.2.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_encoding@0.0.0",
+    "project": "zcash_encoding",
+    "repo": "zcash/librustzcash",
+    "version": "0.0.0",
+    "publishedAt": "2021-08-31T19:50:31.904424Z",
+    "url": "https://crates.io/crates/zcash_encoding/0.0.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.1.2",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.1.2",
+    "publishedAt": "2021-08-06T12:29:20.472017Z",
+    "url": "https://crates.io/crates/pasta_curves/0.1.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/pasta_curves@0.1.1",
+    "project": "pasta_curves",
+    "repo": "zcash/pasta_curves",
+    "version": "0.1.1",
+    "publishedAt": "2021-06-04T19:24:53.106510Z",
+    "url": "https://crates.io/crates/pasta_curves/0.1.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zcash_note_encryption@0.0.0",
+    "project": "zcash_note_encryption",
+    "repo": "zcash/zcash_note_encryption",
+    "version": "0.0.0",
+    "publishedAt": "2021-03-19T20:56:43.074577Z",
+    "url": "https://crates.io/crates/zcash_note_encryption/0.0.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/reddsa@0.0.0",
+    "project": "reddsa",
+    "repo": "ZcashFoundation/reddsa",
+    "version": "0.0.0",
+    "publishedAt": "2021-01-08T16:28:29.983882Z",
+    "url": "https://crates.io/crates/reddsa/0.0.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/zip32@0.0.0",
+    "project": "zip32",
+    "repo": "zcash/zip32",
+    "version": "0.0.0",
+    "publishedAt": "2018-07-10T22:23:18.460255Z",
+    "url": "https://crates.io/crates/zip32/0.0.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.4",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.4",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.4",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.3",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.3",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.3",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.2",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.2",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.2",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.1",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.1",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.1",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.0",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.0",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.4",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.4",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.4",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.3",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.3",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.3",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.2",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.2",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.2",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.1",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.1",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.1",
+    "source": "github-tag"
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.2.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.2.0",
+    "publishedAt": null,
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.2.0",
+    "source": "github-tag"
+   }
+  ],
+  "fork": {
+   "repo": "brave/librustzcash",
+   "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
+   "aheadBy": 2,
+   "behindBy": 975,
+   "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
+   "mergeBaseDate": "2026-07-12T15:45:08Z",
+   "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
+   "checkedAt": "2026-10-08T14:35:45.102Z"
+  },
+  "zips": {
+   "2005": {
+    "num": "2005",
+    "title": "Ironwood Quantum Recoverability",
+    "status": "Proposed",
+    "lastCommitAt": "2026-08-25T15:10:57Z",
+    "lastCommitMessage": "(zip-2005) fix: remove dangling K",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/840b3f39f77fb3dcccdbc4c00191eda16dba8c7e",
+    "url": "https://zips.z.cash/zip-2005"
+   },
+   "0317": {
+    "num": "0317",
+    "title": null,
+    "status": null,
+    "lastCommitAt": null,
+    "lastCommitMessage": null,
+    "lastCommitUrl": null,
+    "url": "https://zips.z.cash/zip-0317"
+   },
+   "0302": {
+    "num": "0302",
+    "title": null,
+    "status": null,
+    "lastCommitAt": null,
+    "lastCommitMessage": null,
+    "lastCommitUrl": null,
+    "url": "https://zips.z.cash/zip-0302"
+   },
+   "0316": {
+    "num": "0316",
+    "title": null,
+    "status": null,
+    "lastCommitAt": null,
+    "lastCommitMessage": null,
+    "lastCommitUrl": null,
+    "url": "https://zips.z.cash/zip-0316"
+   },
+   "0225": {
+    "num": "0225",
+    "title": null,
+    "status": null,
+    "lastCommitAt": null,
+    "lastCommitMessage": null,
+    "lastCommitUrl": null,
+    "url": "https://zips.z.cash/zip-0225"
+   },
+   "0229": {
+    "num": "0229",
+    "title": "Version 6 Transaction Format",
+    "status": "Draft",
+    "lastCommitAt": "2026-07-28T13:36:35Z",
+    "lastCommitMessage": "zip-0229, zip-0213: describe the NU6.3 version 6 consensus-rule changes",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/2ac8505fc72942e3fb07aef98cd8024c4601c839",
+    "url": "https://zips.z.cash/zip-0229"
+   },
+   "0258": {
+    "num": "0258",
+    "title": "Deployment of the NU6.3 Network Upgrade",
+    "status": "Draft",
+    "lastCommitAt": "2026-07-20T14:23:04Z",
+    "lastCommitMessage": "ZIP 204: specify protocol version assignment; ZIP 258: assign NU6.3 versions",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/b93e824b3fecbfdbcbbb5b4205223780a1320a25",
+    "url": "https://zips.z.cash/zip-0258"
+   },
+   "0318": {
+    "num": "0318",
+    "title": "Orchard to Ironwood Migration",
+    "status": "Draft",
+    "lastCommitAt": "2026-07-31T11:41:43Z",
+    "lastCommitMessage": "Apply suggestions from review (nits and fixing an inaccurate time calculation)",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/60db9f1e6a1e9988da442b7d8436da6b16dd5c26",
+    "url": "https://zips.z.cash/zip-0318"
+   },
+   "0326": {
+    "num": "0326",
+    "title": "NU6.3 Consequences for Wallets",
+    "status": "Draft",
+    "lastCommitAt": "2026-07-09T10:12:54Z",
+    "lastCommitMessage": "ZIP 326: apply review suggestions (nuttycom, #1319)",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/02eac4c430503e50bc583140f6b5dd4cc1cab962",
+    "url": "https://zips.z.cash/zip-0326"
+   }
+  }
+ }
+}

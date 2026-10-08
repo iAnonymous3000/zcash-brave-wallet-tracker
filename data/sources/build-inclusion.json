@@ -1,0 +1,3616 @@
+{
+ "sourceId": "build-inclusion",
+ "schema": 2,
+ "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "data": {
+  "byPr": {
+   "brave/brave-core#40152": {
+    "sha": "f93e4a6ba05ad39714e8eb003f2ccf4d587dfdf2",
+    "domain": "1.97",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...f93e4a6b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39726": {
+    "sha": "c37d73e3017767e34ece4a6fee6ec6809f52b886",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.98.47",
+     "tag": "v1.98.47",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.98.47...c37d73e3: behind"
+    },
+    "maxExcluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...c37d73e3: diverged"
+    }
+   },
+   "brave/brave-core#39998": {
+    "sha": "9d40a222f3114d1f037e8ec890dad992c1e1c4f6",
+    "domain": "1.96",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9d40a222: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39997": {
+    "sha": "aede81175f82069d21d64c7c4848f30f799452f5",
+    "domain": "1.97",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...aede8117: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39977": {
+    "sha": "60c8ff0b59b84485c28cd4359c96325cd4a21b15",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.98.47",
+     "tag": "v1.98.47",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.98.47...60c8ff0b: behind"
+    },
+    "maxExcluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...60c8ff0b: diverged"
+    }
+   },
+   "brave/brave-core#39979": {
+    "sha": "509aefb7823f122e32ef7f1e8159dff1d01136b6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.98.47",
+     "tag": "v1.98.47",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.98.47...509aefb7: behind"
+    },
+    "maxExcluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...509aefb7: diverged"
+    }
+   },
+   "brave/brave-core#39877": {
+    "sha": "482afb5b2e4142faa47b6c6e94dcadc3766ca8c6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...482afb5b: behind"
+    },
+    "maxExcluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...482afb5b: diverged"
+    }
+   },
+   "brave/brave-core#39838": {
+    "sha": "7a8a8570d0e1fafb600b294d68eea08be08c1d89",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...7a8a8570: behind"
+    },
+    "maxExcluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7a8a8570: diverged"
+    }
+   },
+   "brave/brave-core#39811": {
+    "sha": "748099ff739e8ea22b8128ff2cd5e91b545e0183",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...748099ff: behind"
+    },
+    "maxExcluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...748099ff: diverged"
+    }
+   },
+   "brave/brave-core#39703": {
+    "sha": "aaa04be1fe7b6c03ba03d43d2a7999a0d9f975e3",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...aaa04be1: behind"
+    },
+    "maxExcluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...aaa04be1: diverged"
+    }
+   },
+   "brave/brave-core#39545": {
+    "sha": "cd07907ba3883ef03b985195fdd30028640b3cbc",
+    "domain": "1.95",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#39591": {
+    "sha": "ac05a8111c02b9aa558a952254e51220ccb427ee",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.97.56",
+     "tag": "v1.97.56",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.97.56...ac05a811: behind"
+    },
+    "maxExcluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ac05a811: diverged"
+    }
+   },
+   "brave/brave-core#39551": {
+    "sha": "db3ae7cb67ea35fccd46be3650e80f21993da6b8",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...db3ae7cb: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39547": {
+    "sha": "5eb78b0081eae42ce3a9707d1062c8ae20b83d78",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5eb78b00: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39539": {
+    "sha": "52ec821533fb31c9565dab333a1153b1d30080bd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...52ec8215: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38854": {
+    "sha": "78a6696c629cda95f1a63a9160cdae199de62c95",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...78a6696c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39446": {
+    "sha": "e723a3d9e16bf75252cfe4cc4329e96dca918291",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e723a3d9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39448": {
+    "sha": "4c1187f269175362a81fb950cd17edb2dd1d0d01",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...4c1187f2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39350": {
+    "sha": "baf1dda06a6306a9ae60396be087dd1713c92b64",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...baf1dda0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39232": {
+    "sha": "78e0dc50b3ce556f13ffc21118945a4b8d09f25f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...78e0dc50: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39159": {
+    "sha": "9482d34170a14897db25d15130aad8d0d7ea1366",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9482d341: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39115": {
+    "sha": "6fb854ac99c64d7df6062d6d5890b1885f4c1750",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6fb854ac: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#39021": {
+    "sha": "d132ed36df4db3ef72420f6526ccdfc0231ba5b1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d132ed36: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38802": {
+    "sha": "033db786a14046245739f803b142a2bf3efeb74c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...033db786: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38670": {
+    "sha": "ecd619c7685a5f43d99d9a71459b8a61a8e49420",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ecd619c7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38896": {
+    "sha": "725a0813c121808d4f10a65b134bb8e5728709d5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...725a0813: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38659": {
+    "sha": "853c9661a8a34833f7903128303aa87369805f4e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...853c9661: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38556": {
+    "sha": "cdc0c51e0928f75928c80291f162ba0820f46173",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...cdc0c51e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38505": {
+    "sha": "d1ac7fdf26dbd2ec993406205b2b55f7ab1fd539",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d1ac7fdf: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38305": {
+    "sha": "489a3bfcc5c94ad63e6b08a0a939e6831c87b403",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...489a3bfc: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38059": {
+    "sha": "f32f3eb8f0b3aa0322a3411ebf65796bb362284c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f32f3eb8: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#38169": {
+    "sha": "f26463c0250a9ca81780cc9ddafbecc6561772f6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f26463c0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37755": {
+    "sha": "914d6664f00faaa5eef81f6dcf5070d9da05141e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...914d6664: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37999": {
+    "sha": "9f1b4d71a9b38da2469874207de6a6d22fb3f856",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9f1b4d71: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37407": {
+    "sha": "7e1d8d2ecfe58021e3000bf517aa060df629100a",
+    "domain": "1.92",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#37541": {
+    "sha": "5c8759a42d5b41765f14f5c0599ab42340254be1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5c8759a4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37292": {
+    "sha": "09aacb65c6e57186f2f16a06f78a0f2e0f3152ac",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...09aacb65: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37365": {
+    "sha": "b54e8d4c634f7d319c656d8f2b6797dda00639b2",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b54e8d4c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37262": {
+    "sha": "bbe7dd80b980b683429d4882a9b16596403b5d42",
+    "domain": "1.91",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#37261": {
+    "sha": "613130c3a50ff7edcd6f27bdcc52358ab23908e8",
+    "domain": "1.92",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#37116": {
+    "sha": "282c2f53a1042afc8bbf11b329dd3d11301f5173",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...282c2f53: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#37122": {
+    "sha": "22e7f4a137c3f7b5b1e308916afec82e02659f2e",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.99.26",
+     "tag": "v1.99.26",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.99.26...22e7f4a1: diverged"
+    }
+   },
+   "brave/brave-core#36641": {
+    "sha": "78086ecdd3fcede41b48348d74b0c1444c42ed68",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...78086ecd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#36658": {
+    "sha": "d18b0cc77bcdf47505ccb32b68f28935c8002ca1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d18b0cc7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#36404": {
+    "sha": "6822c68310fc56cf6da82828964962a6c9281447",
+    "domain": "1.90",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#36403": {
+    "sha": "e1228f214ae578a920d6a631153bd2fbdcc875f9",
+    "domain": "1.91",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#36321": {
+    "sha": "e03576b44749fac912e460017944046a73c7abbf",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e03576b4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35426": {
+    "sha": "095628a8349deed590bf4e05a6ae57f0baab07d9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...095628a8: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35530": {
+    "sha": "de4decaef19a9ec34c93fdedbddf083a375c57b0",
+    "domain": "1.90",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#35523": {
+    "sha": "50a75dd58c87d5403dbcbe35f174cbf8c83dd1b0",
+    "domain": "1.90",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#35483": {
+    "sha": "23659ecf0edc0a1dabb45a5401dc17fb6f182056",
+    "domain": "1.90",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#35494": {
+    "sha": "adbc04e1f585ad07fb67fd8ffe92fd1e94372f96",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...adbc04e1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35466": {
+    "sha": "8616e885929f0645f1e6c05765fbe957cb486989",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8616e885: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35461": {
+    "sha": "383ae05f104148fbf3d1f3e2ed773e258a58279d",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...383ae05f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35225": {
+    "sha": "dc7db384754a3ef210cdc7caa6f72b26eb6e6652",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...dc7db384: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35292": {
+    "sha": "6449af702b511abcb416d8172499a16aaab39ef4",
+    "domain": "1.90",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#35012": {
+    "sha": "1938ece2b7f087064dc1245e0186348b7ac0fb35",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1938ece2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35025": {
+    "sha": "03d5d88745b4c1514c2f6c143c1dd25b0c26a3ad",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...03d5d887: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#35145": {
+    "sha": "4b7e435cb4cf3d60b3a047cd7e44cee6f1d5397a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...4b7e435c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34991": {
+    "sha": "363cc1cf900e6b708b78d2695186e448f1cc9695",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...363cc1cf: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34873": {
+    "sha": "53f3b523f7112d27b75b1bb397e2843f600d5ea8",
+    "domain": "1.89",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34821": {
+    "sha": "82b3db84014005df0b2d2168f345bca6a33764e9",
+    "domain": "1.89",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34835": {
+    "sha": "b189e6d9a32420759ba6eaa1270eb574ff3308c4",
+    "domain": "1.89",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34811": {
+    "sha": "09e1a46f74ebc1b1e82b0a951de70ccd7d28b7f4",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...09e1a46f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34829": {
+    "sha": "464eac5bd7dde8f56b646045967df0f192e0ee1e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...464eac5b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34794": {
+    "sha": "a21bec593fb326ad183ed6480664f5c0651812d5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a21bec59: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34774": {
+    "sha": "b6f067d9673fb12966e69619881c77d9ea778434",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b6f067d9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33537": {
+    "sha": "2a18724d1829628f9b2b72eb2729548a5bec0741",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2a18724d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34434": {
+    "sha": "c3ba5e702a95a79d3e97fc7768cab3f8185d6729",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34409": {
+    "sha": "814df8fec0ecacbd4e3ed276f1112cac0e4d1080",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...814df8fe: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33971": {
+    "sha": "297eb1c5de00f976124803af40afc28bcf0eaf83",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...297eb1c5: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34144": {
+    "sha": "bcb9b9ea3806ca3c5d24b063a93a360da757460d",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34108": {
+    "sha": "d3f03af795558a759b518b3e848716d9a293a218",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d3f03af7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#34065": {
+    "sha": "e06424e058cd1a90419d7e1e46f8e230793d19ed",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#34061": {
+    "sha": "9231c3ac20b19dde93d187da9ad534599af8b00e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9231c3ac: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33927": {
+    "sha": "36d70af5556b2d26113202fbf24c9ee600b5862d",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33905": {
+    "sha": "2581a6ed99f266bd80536c6191c04c7cd81525a6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2581a6ed: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33900": {
+    "sha": "a4f2c8090e823a666ec725eaaf527cba352b2032",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a4f2c809: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33771": {
+    "sha": "8a5e9ec7f6e4cb78ed70515ea6794cf4355cc1a5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8a5e9ec7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33860": {
+    "sha": "17cd198071864d88af192418a9ced886572aa6ba",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...17cd1980: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33763": {
+    "sha": "62db225cbdd73312f404d66f02bd992900606ec1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...62db225c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33654": {
+    "sha": "fc1fbcccca76091f2632cbffdb80efc1bdb70b01",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...fc1fbccc: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33674": {
+    "sha": "7ebfe5c2b4c5c075e20339e85d2152be09fbfd63",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7ebfe5c2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33625": {
+    "sha": "80521370d1f0098843888dace9e5a92e447e4c6f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...80521370: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33727": {
+    "sha": "12e7d40ae5b4a7daa4cb843267a80439fbc5d562",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33709": {
+    "sha": "386dc6f31f688fefc942e604defed72745beacda",
+    "domain": "1.88",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33678": {
+    "sha": "b9bbd4c44c238933710df62a36604ff668e21e04",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b9bbd4c4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33673": {
+    "sha": "dc5a852d22530887938582bb3f230eabcae1c0ac",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...dc5a852d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33665": {
+    "sha": "7a401e1105a43acb81cebe73c06c7050a8a76d19",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7a401e11: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33631": {
+    "sha": "9579407238f4e547979e10469684520338e5c319",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...95794072: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33618": {
+    "sha": "b79529dd8458cef34dc2ead9bcb62be17aad8515",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b79529dd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33583": {
+    "sha": "30f0c43cd8850af182762ba604ed2397008847bd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...30f0c43c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33448": {
+    "sha": "4a49a2929eae347682c5c4e3f7fd9fa6808ae0f5",
+    "domain": "1.86",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33447": {
+    "sha": "94817eb105807b8c5cdaa5a067b63ff07288a0f2",
+    "domain": "1.87",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33480": {
+    "sha": "167f29379b3b86a32a0b15d6e06435340fc0d218",
+    "domain": "1.86",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33479": {
+    "sha": "26b4b03e37f213c3306669f12949e6790908efe5",
+    "domain": "1.87",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#33468": {
+    "sha": "7825c99077d9e53d8cebcf3c8a8f57939127ed1d",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7825c990: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33435": {
+    "sha": "ca58949d08960550ce0e43bd1447b543ef4c66e0",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ca58949d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33385": {
+    "sha": "ce56a15cce113a10809f63d28946e0b383959ca8",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ce56a15c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33156": {
+    "sha": "a799843b37f2161942d8657703e3a70c3c1ec28b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a799843b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33213": {
+    "sha": "9e0527d3dda589a72c0545fd6f18f72ab6f28fb2",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9e0527d3: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33187": {
+    "sha": "f610bf02efc99ec0b1ee086091b052cb7d16addb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f610bf02: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32982": {
+    "sha": "de6a169327e9a03573a58a1fe96c15b2d2802349",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...de6a1693: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#33033": {
+    "sha": "fe2491f1f5d20cbead237a9221f157b407e78709",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...fe2491f1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32640": {
+    "sha": "946a6993f1cc056751d270a578633a790f761f0b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...946a6993: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32877": {
+    "sha": "f3351bd9515196d07a7b0354434038951ed84af3",
+    "domain": "1.85",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#32876": {
+    "sha": "8cf8f8286a86e1de8a7b6bf3a827489d40d90c49",
+    "domain": "1.86",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#32871": {
+    "sha": "3ff4091ae497fb0362f61e7553aca8af22c40915",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3ff4091a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32825": {
+    "sha": "6273b459bee31c4749399f9c6c335bf414350ff4",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6273b459: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32830": {
+    "sha": "68a84b8637fab8d71372941812bb7820f81622de",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...68a84b86: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32580": {
+    "sha": "b8e2b0a7b0aa1b2fa1c7c0c18dfbfed237d9e4eb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b8e2b0a7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32803": {
+    "sha": "eff677dd377ff231dad8a60489d9bff71608caa5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...eff677dd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32658": {
+    "sha": "8e588d2591415b69bd5908722a0bf5bd299102fe",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8e588d25: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32484": {
+    "sha": "a4d9248fcb5b00f09ff2a0d61047b76aa26bc822",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a4d9248f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32552": {
+    "sha": "dbd32ed2d847ea7a5abd4f4cbbc572d2ae8f58a1",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.99.26",
+     "tag": "v1.99.26",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.99.26...dbd32ed2: diverged"
+    }
+   },
+   "brave/brave-core#32507": {
+    "sha": "39b03f13a71397a97f1b72fa19804e013b927842",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...39b03f13: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32324": {
+    "sha": "083750cc537d6bd62263c354cdc32875b33ffa07",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...083750cc: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32528": {
+    "sha": "5d9e5f9b35e558273fcefd0afb2d7a7db0c33750",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5d9e5f9b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32274": {
+    "sha": "18f1a5cdc8f44776eceb9ecd1f27d4a1456e931a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...18f1a5cd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32386": {
+    "sha": "1af6dd296365ddb4967b777dc2d5c6a84531411a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1af6dd29: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32384": {
+    "sha": "7f916ce0997726d127ac2beea7b850773bfbf7e7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7f916ce0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32249": {
+    "sha": "aac110a798ba53b3f75bc4a32e7283d1e96f4b05",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...aac110a7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32235": {
+    "sha": "104388495d5e6174a40f33542f91029efda5eae4",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...10438849: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32273": {
+    "sha": "de072442fa1b25507fe4c26b08243b060a1d9fe0",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...de072442: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32090": {
+    "sha": "b79f8ac9a615f23198c834830ce50766d6df7ec9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b79f8ac9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32204": {
+    "sha": "b1a7e426384014fe6d32e801f0f8fe6b6ed94bb0",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b1a7e426: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#32164": {
+    "sha": "919ab4bbf8031b41c003e64b877fe6db61083a95",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...919ab4bb: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31974": {
+    "sha": "67b86db746aba59909d52ca7d75f15e9ad9e1006",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...67b86db7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31886": {
+    "sha": "37817d76e5b9237f50b928db9959dae46eadf8a5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...37817d76: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31905": {
+    "sha": "236b1042c0f0f3701eebabacd318df909efa1fab",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...236b1042: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31785": {
+    "sha": "081eaefeed4ef50a355087a0fe7ae64390f4c9a9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...081eaefe: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31802": {
+    "sha": "d4db62f69be6f2f6246657d9713a78036a890ae2",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d4db62f6: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31753": {
+    "sha": "25f8dc75599d76daf7f1d6642fd7a20ceaa61ce6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...25f8dc75: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31712": {
+    "sha": "e893241accad97f8804302b898a87d08b58f4e71",
+    "domain": "1.83",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#31711": {
+    "sha": "e7fa563d7d996e27f58715b182479ff2a73a0cf3",
+    "domain": "1.84",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#31690": {
+    "sha": "22655394b3d412c529a942ba0d30ca65619b7cd9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...22655394: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31605": {
+    "sha": "87584a51582db6be3ee428c7e2a340cac8d0088e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...87584a51: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31439": {
+    "sha": "35c4ca9189a296907a661bd6602d303dc40e46b3",
+    "domain": "1.84",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#31412": {
+    "sha": "c763f8cdf11cf57f22c41bb9431e143f3d7e2804",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c763f8cd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31054": {
+    "sha": "49e6623f4689c266af31294a1b7113da1f393275",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...49e6623f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#31215": {
+    "sha": "7803dbcc2b69dc5df1aa771d115d8120dd8a5487",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7803dbcc: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30592": {
+    "sha": "5969dea5825338914a8502c6204c6b746038c21b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5969dea5: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30723": {
+    "sha": "f7978e56076e69619113acff1f643179763aca31",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f7978e56: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30507": {
+    "sha": "604af826932d75035a3cb853951958b28f485003",
+    "domain": "1.81",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30506": {
+    "sha": "5cde9f4c71512adeef90fd7e3ff203f024e16f7b",
+    "domain": "1.82",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30462": {
+    "sha": "edd5bebd7846bad7ad900aab53cdc230f4d7a4cd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...edd5bebd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29995": {
+    "sha": "c011457e938bd4be45dbbebdd0c389da5e0cf996",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c011457e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30423": {
+    "sha": "5991b68d89e0d615cea92d50d7888b5a4f48c939",
+    "domain": "1.81",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30422": {
+    "sha": "04018bdd645715e5523df27f6e53ae3b17c437f7",
+    "domain": "1.82",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30332": {
+    "sha": "a1a191f5f6ec9c492d15b7d2fb597e23add30cef",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a1a191f5: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30340": {
+    "sha": "826e18a4eacaf3f9ee62da6bab035cab355cac44",
+    "domain": "1.81",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30338": {
+    "sha": "454d7dedd06fdf3c09f013ef72a1df7bb242fd0a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...454d7ded: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30320": {
+    "sha": "bf0a8ad4047244a3acaaeff45ca7144870e72924",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...bf0a8ad4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30162": {
+    "sha": "8c4a3f33bca513b5140822c51b7956b88c290f5f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8c4a3f33: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30236": {
+    "sha": "4de5d19b584270ebab608aecaab9ccd3c5782332",
+    "domain": "1.80",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30235": {
+    "sha": "aee7daedd6ae89468954e1aa7fb87f4b695f19fb",
+    "domain": "1.81",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30232": {
+    "sha": "6b4519718a57f501ac03956374e81a9a04a170cd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6b451971: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30205": {
+    "sha": "c402ff3f0588520a27d62a65e0e7d06135a66d45",
+    "domain": "1.80",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30204": {
+    "sha": "efca61d028ad17dc71939ff3daa5a4c7b14ed198",
+    "domain": "1.81",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#30195": {
+    "sha": "92693c59c14784ea8b0b7074533b52e304e51793",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...92693c59: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30095": {
+    "sha": "9624f01746f5a17b76d0a83dd577d75161841a2d",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9624f017: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#30072": {
+    "sha": "826aff93d25f06839537c53c4b40e1120119df86",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...826aff93: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29665": {
+    "sha": "856a4815d7333af6a0783e9880042f4802be9272",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...856a4815: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29695": {
+    "sha": "b3816f838ec591dc255ad91dcb2281d4b5679e02",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b3816f83: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29554": {
+    "sha": "43fbd1aef022c177c3fcfc70e4f08a28c6888dca",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...43fbd1ae: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29515": {
+    "sha": "818e361e2741481fdc859b6d4d80eeb8c5d60aa7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...818e361e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29489": {
+    "sha": "079e20b187dd5c6dff4d9e768d47a93b8b519b07",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...079e20b1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29429": {
+    "sha": "1d0a11e1fc64932bc2eb97c2b43132675aa5f4ba",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1d0a11e1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29378": {
+    "sha": "d05979d19c8da3aa82883b8672a9903a6c6774b9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d05979d1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29269": {
+    "sha": "feb56e3c689ca344502319231195da7ad72b1d08",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...feb56e3c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28897": {
+    "sha": "9cc5d7530da893fe7a929c5a8fd8de46609eb664",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9cc5d753: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29200": {
+    "sha": "a19a37576ead50b4fe537cbf375922fe19a76f8f",
+    "domain": "1.79",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#29199": {
+    "sha": "59f3cc186f1dc1a2aca1400d26591b60c91b4dcc",
+    "domain": "1.80",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#29196": {
+    "sha": "57c27b4e59654309bfd930063f69162b7778ed3f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...57c27b4e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28671": {
+    "sha": "f2d7581395f586de66ff9c0b9559e9c10e331f1a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f2d75813: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#29198": {
+    "sha": "6cbd0be28f9ca5d96a7695a3349a96395e11e8e0",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6cbd0be2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28975": {
+    "sha": "f8c330b051a23d600430df331ecb554d85a43f1b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f8c330b0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28880": {
+    "sha": "b19286967b1adc596cd11e6daafd22aa67ae0fe6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b1928696: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28883": {
+    "sha": "7850105ddd68376018266bac2ad0b32ba0bf3371",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7850105d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28872": {
+    "sha": "4b26e49a9fbad607b57b67f6bebff0a776f03294",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...4b26e49a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28772": {
+    "sha": "8a397e51d0be8356c6270f15f9332bd93d2e0b96",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8a397e51: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28343": {
+    "sha": "2a48f3a9d1de2c6ca656f8c37033eb060c2fed5c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2a48f3a9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28698": {
+    "sha": "474196957fe61723233d0c1ad2858d71cf3ed6cd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...47419695: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28746": {
+    "sha": "c7553db1ac66cb52072061c4ea1800615237a21b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c7553db1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28365": {
+    "sha": "aaa67605a9a07608edf29e3a7f0221a69c22d866",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...aaa67605: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28513": {
+    "sha": "577eee87a0dc89d325674cec04001ae8c932cba3",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...577eee87: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28370": {
+    "sha": "2a2e927da9d0a83e412ddd12d7d088d2d1632378",
+    "domain": "1.78",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28333": {
+    "sha": "bb3d4d4b5e41a0ceab2263e2070188afe60360d7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...bb3d4d4b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28262": {
+    "sha": "11c0158b3c88d22e53c162751d59a81b77e71da5",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28249": {
+    "sha": "7f12f370ce4d48925fef5465574cd958b5f7b452",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7f12f370: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28253": {
+    "sha": "9c1570a05f0640304c1ada237421639748b65342",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9c1570a0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28213": {
+    "sha": "15839397045e15cf1554f509c3c69f827a5129e4",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...15839397: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28165": {
+    "sha": "5185edc3b1efddc2f8207a9557535d21be797a64",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28163": {
+    "sha": "e7fba87f249478d53c209a9e08c1673568c1c75b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e7fba87f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28127": {
+    "sha": "6eb9a499c3aa42ec99c3172d021b722ac1c8cef1",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28106": {
+    "sha": "342ace9a648ebec01021d155161d9ead9f20b6bd",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28105": {
+    "sha": "c56791d7e28e26812d8adcde242df71f3ed7545a",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28025": {
+    "sha": "11e3aab6904a4a9c20d4c7245ce9fe8b1b469436",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28108": {
+    "sha": "c6915bd1153188c62cf63e0b3e34c4fe28504edb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c6915bd1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28055": {
+    "sha": "d13ce1cb68859f927da68478c5bb17978a14b874",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d13ce1cb: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28046": {
+    "sha": "7baa49ea1bfaa2100ff119022b0ef80a3f793eb5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7baa49ea: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27952": {
+    "sha": "aa1b311531a3414fd97c1620a1279307a87ebf04",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...aa1b3115: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28006": {
+    "sha": "1dc4565c0be79bc3d346e918ba27ec54ffd51248",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1dc4565c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#28012": {
+    "sha": "c0128ee16a489a3a56f6079a3dac5c774aa5c44a",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28013": {
+    "sha": "fcee450f6a44b8da6c6c27f3712d2f52ac274804",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#28018": {
+    "sha": "ce3151468668e110497db4eb16048005f28d0f6c",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#27994": {
+    "sha": "5a3b09a6ade14d4857e217c807ffce65510af02a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5a3b09a6: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27995": {
+    "sha": "946060c6206df354d7d99c7df618d05f62724273",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...946060c6: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27972": {
+    "sha": "5d492ea44e5c72f66d57c257dbb9187184052fb6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5d492ea4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27843": {
+    "sha": "80e635848d1de965c14f9fb720999feb2d643969",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...80e63584: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27826": {
+    "sha": "cd1c1fdf88965b409bea4a1cd87aa4638e21355b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...cd1c1fdf: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27879": {
+    "sha": "268c8dd59ee0658eed0e2883fd21c093d8731581",
+    "domain": "1.77",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#27842": {
+    "sha": "c29c0a3ce2848eccd18cbeb7564c3e431b7a0667",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c29c0a3c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27811": {
+    "sha": "37ada21777368d81f020b771e5ae55058afd0d95",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...37ada217: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27815": {
+    "sha": "de982f2567077f6c9349b4b0e79dc3073c6a46d1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...de982f25: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27813": {
+    "sha": "93d1d4aaee406ac2adef04c6aeb79bf5b4314ba4",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...93d1d4aa: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27730": {
+    "sha": "9446986819e1094ca960eb930c58c1e7bc8ac87d",
+    "domain": "1.76",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#27767": {
+    "sha": "272d10aa07c5447fab6d59769be0108e908bb7ea",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...272d10aa: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27736": {
+    "sha": "be242e4b4ce9a0da7a3996779e1c9326b82180e5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...be242e4b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27688": {
+    "sha": "6c255eea145c2fd33366d8da9e55001196fd7d75",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6c255eea: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27716": {
+    "sha": "0c27d2549f3f3909383cb840e5c2ac2888131cb9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...0c27d254: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27663": {
+    "sha": "28ea534745613b67658f97695a75f862a0715966",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...28ea5347: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27592": {
+    "sha": "5573c3e7deeedce9d3de4814dfc9fcb23f40ffdd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5573c3e7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27657": {
+    "sha": "1854e39ad38a83e5aab59e3837aec6ea93104bcd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1854e39a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27560": {
+    "sha": "1d6cc7fe3be5664aef07b899f92537dedb0f8eba",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1d6cc7fe: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27615": {
+    "sha": "3041d81eec1ea4cd44a2fd39c78cb182791533f9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3041d81e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27520": {
+    "sha": "0082ca85224d7a1cd5a42afc43384eecccc54526",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...0082ca85: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27525": {
+    "sha": "a6a0b65fbee7d89fe32704b03bc2a73e4de66846",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a6a0b65f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27362": {
+    "sha": "724a4b5af22f5f9d95c2aeb68f106336e0b7bd36",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...724a4b5a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27476": {
+    "sha": "b1e8087736d5005f4ce5b9aca533d123385341ab",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b1e80877: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27446": {
+    "sha": "b55418f7a3307fb836d584d9384739dd5956777c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b55418f7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27264": {
+    "sha": "ac0d19bdbd8446667a91c87aa891794b14aaed6e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ac0d19bd: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27352": {
+    "sha": "682c56dfacb4cd8829c1f2b908972119eea06538",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...682c56df: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27325": {
+    "sha": "dc0144c9609c947a128fb5af9f3ce253c3f739bf",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...dc0144c9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27293": {
+    "sha": "802e264b78c434e4e5c0509d6eb2a4d8e3c75e60",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...802e264b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27018": {
+    "sha": "7af577e22ca27fc6fd0503f37fdf3bd766c74a98",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7af577e2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27274": {
+    "sha": "8527299ed15413aa651a816e1bb24121dd2028a6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8527299e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27255": {
+    "sha": "c008daba6bfda3d30e37a6f9fe8538d4ae890c3c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c008daba: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27222": {
+    "sha": "5869407e33d2477efa8149d4258716c86b1cf643",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5869407e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27193": {
+    "sha": "afd4e0239d2abb0a5ddafef0f5cd2bc14f8f30a6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...afd4e023: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27118": {
+    "sha": "df7d7cf06842062d82119c1cc5da633702eead27",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...df7d7cf0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27094": {
+    "sha": "1ebc61c1fe9a375800ec91a09245eed5ceea59e7",
+    "domain": "1.73",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#27092": {
+    "sha": "2810f96bb25df2d93b1daaff14e031b9dd15d572",
+    "domain": "1.74",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#27089": {
+    "sha": "1c9725de10a383b03152ac7912f9013567832386",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1c9725de: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#27062": {
+    "sha": "deaa7a8f266c26bbb15fe0461ef99620f199a599",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...deaa7a8f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26997": {
+    "sha": "56bd657ccbb6b90b657c497c36a20368d38286ef",
+    "domain": "1.74",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#26477": {
+    "sha": "f6393b6c2d5f1f64257277a03df02054c0cf746f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f6393b6c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26966": {
+    "sha": "d6f3c15ee2e5b828c0a32a6945df4fc537803b53",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d6f3c15e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26954": {
+    "sha": "059a4374d678396ff18cca1f599b934328bbcd84",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...059a4374: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26935": {
+    "sha": "9821ee38262f451f52d53ca08db81f0fc37c3e35",
+    "domain": "1.74",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#26850": {
+    "sha": "195b7d5f01c8e2e5632da6f7f6e42929b2a4fb6e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...195b7d5f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26819": {
+    "sha": "c2872a26502cc41528af4c6dc62b0d5dbae33131",
+    "domain": "1.74",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#26803": {
+    "sha": "25fa26ea24bf373c50b030e8e3232f3a8a79e714",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...25fa26ea: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26602": {
+    "sha": "713f6cd68684b4b855b9e23ad96ce1e2da4ad508",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...713f6cd6: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26534": {
+    "sha": "90324f53015a05edc98cd458696c69c029985dc1",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...90324f53: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26588": {
+    "sha": "0c6e03012ae7ae6f0d0edee09351c4c54933c8cd",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...0c6e0301: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26469": {
+    "sha": "af020d2b71ec6b4d2b553ad5eb3a82cc60374c54",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...af020d2b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26533": {
+    "sha": "6817d4510eeb3d48404ac207cec920d269b64c7c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6817d451: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26564": {
+    "sha": "3484d231aed455910a738eac9c79bf13d98cf172",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3484d231: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26557": {
+    "sha": "b0fad21f8b111627138d3c48cc7fe4bc01683631",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b0fad21f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26380": {
+    "sha": "e4de839e685b450658d635648964ffca390419bb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e4de839e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26526": {
+    "sha": "6da3839de947a4fd8052e2107bc083cfe5bb4411",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6da3839d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26509": {
+    "sha": "2951621f985b980cbb318d3e062cfcfa1cf8bbe9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2951621f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26455": {
+    "sha": "9aafc10929780a1e892a69470df4a81cf6108e07",
+    "domain": "1.74",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#26442": {
+    "sha": "e07362f67baa8556e0bbc2c5ef5dfa9296597be9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e07362f6: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26419": {
+    "sha": "e6eceb00150d56af55574ec17d4249996c23964c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e6eceb00: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26370": {
+    "sha": "0d88fd9091483ec64c75610d57a232c977a9cd49",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...0d88fd90: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26364": {
+    "sha": "52b0c97417df7ed7fef62a42ac7ca09997eeb28b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...52b0c974: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26392": {
+    "sha": "c7289659bfc5603eec7797553bc0c9421678e087",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c7289659: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26253": {
+    "sha": "e8405573b0a676c3c2175fdaa9f4a7719ea6b085",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e8405573: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26343": {
+    "sha": "5c49113d9d8a12c23b0cb9f9a6a07abadb9e64e2",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5c49113d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26332": {
+    "sha": "6d0ffe2f71552f9db4b2b4392e19007827250a9c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6d0ffe2f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26141": {
+    "sha": "23cf8080bb9b2df6d8694679dd208ee901b640eb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...23cf8080: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26214": {
+    "sha": "62e8e1f30f9a85d12bd18ba305a2022ff4800df8",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...62e8e1f3: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#26244": {
+    "sha": "1a3eb65e920c64b131b5d5444744f9810619565a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1a3eb65e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25948": {
+    "sha": "5e19b6a577d9c5fb3fc17b7ce7805d56b0f633f0",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5e19b6a5: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25911": {
+    "sha": "3313ad628b2fc020d31fbaa301bb4406b24390e9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3313ad62: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25810": {
+    "sha": "e1f8a28431931c0d100e2eaaf320bee1faee6adc",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e1f8a284: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25797": {
+    "sha": "ddfe9004f3b73fe5578f7719f83fb7076558213f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ddfe9004: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25386": {
+    "sha": "2a4e38763bdf91951a0f66e67a63232e34963d22",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2a4e3876: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25284": {
+    "sha": "6b1965ced332e43e48f460c44dcfa688d17bec6e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6b1965ce: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#25304": {
+    "sha": "cedf0892a45f470cfdbd12d0cd800e57afbfa5a7",
+    "domain": "1.69",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#25303": {
+    "sha": "32e18d58ba3f79d6c3a813333fefee0a0aa5edbc",
+    "domain": "1.70",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#25296": {
+    "sha": "3cf6dbf2734d38f4a29f7bb637b4a77b914227ac",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3cf6dbf2: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24547": {
+    "sha": "bf6c28e16bc3a427676307a05e6314d5ba6286c9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...bf6c28e1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24738": {
+    "sha": "aa1fd2bc6515603303cc6bc7a653f3aa63f67270",
+    "domain": "1.69",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#24608": {
+    "sha": "8b94752e3d951b396ba9072262443fec222c2bee",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8b94752e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24655": {
+    "sha": "d7c421b9b248ef6ae59b64883da8c5fc1ce3c5a7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d7c421b9: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24607": {
+    "sha": "7785f3cc9cd5affad41cd78fc5e1e438bbfb5cfb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7785f3cc: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24600": {
+    "sha": "203035a31a2ea8177b693c2849017c8c434d7c80",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...203035a3: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23076": {
+    "sha": "faa4ae023cabedb16c1dc7bf972f5bf59c03e4ee",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...faa4ae02: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24365": {
+    "sha": "75a8cbc0e49a8b56e7607e068f8cd1b7d17ee4e2",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...75a8cbc0: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24375": {
+    "sha": "5276a2e789018cca93666faab011920e087862c5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5276a2e7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24220": {
+    "sha": "0b50112d2d63cc3572e126d216b9791aa214b8f5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...0b50112d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24249": {
+    "sha": "1ceff065567ddb6c71b0efd88f6352741e998dec",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...1ceff065: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24123": {
+    "sha": "623dd3c134315fbc15dcfd8687b14aee939fa1c7",
+    "domain": "1.68",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#24134": {
+    "sha": "6da30e88770965f57e01ee77d1a3518fccc0722d",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6da30e88: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24104": {
+    "sha": "7d8732934059d5690d4bdb01e99419d3a0bd912a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...7d873293: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24096": {
+    "sha": "c7c155b1292aed9583cc0a674dc2ae862de8cc2f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c7c155b1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#24012": {
+    "sha": "38f98819f11cf7f433aab01e5d0b89dc0322964c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...38f98819: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23994": {
+    "sha": "382ec5e214b9516ca5426980105805ee67918004",
+    "domain": "1.66",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#23993": {
+    "sha": "90809e27b3d52292a59256ccb0761de462d2faee",
+    "domain": "1.67",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#23981": {
+    "sha": "c7668e44d7104df8bad3a8fd0aabf38da6c95309",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...c7668e44: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23729": {
+    "sha": "2b63ed6e215d3d6afd21c8849360be35f7be0544",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...2b63ed6e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23363": {
+    "sha": "e153faab38030917bd0a14713ebf625c3edd906f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e153faab: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23598": {
+    "sha": "9b1b4f7019ac855793d971f952b83809037f27e5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9b1b4f70: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23383": {
+    "sha": "f5dc515f42ad86893d6cae1c09d6b0d959f7ac1e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f5dc515f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23375": {
+    "sha": "f3d6de51d64bf5f17f5c08d09c64481bed266b62",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f3d6de51: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23362": {
+    "sha": "df0e7d523079b1ae2c9e7187e80a3131fced0809",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...df0e7d52: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22870": {
+    "sha": "9e9c99e405b954ed1f112cd20bb9050f0a6f0412",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9e9c99e4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22864": {
+    "sha": "122e27b5132daa52fd9d9f6b6f37743850953faf",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...122e27b5: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#23075": {
+    "sha": "719f2cf7d6a6d6ec62395c2ae3d7445290947899",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...719f2cf7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22642": {
+    "sha": "1d8f22013cbea4b05cd072ea2ad60a896907ad9e",
+    "domain": "1.64",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22641": {
+    "sha": "3ed2a490987948de0a1d4f475304482784b6a718",
+    "domain": "1.65",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22547": {
+    "sha": "ddadee9d06b5812ac87baa4b43ec3b16587690fa",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...ddadee9d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22530": {
+    "sha": "8bc3d32d01614467adf2372dee966bc953ea2f6f",
+    "domain": "1.64",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22514": {
+    "sha": "edc4fca1e370915d8c04d498e09411c14dc16387",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...edc4fca1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22143": {
+    "sha": "eb0ff3c844a0767cf320beb8a8d551abecb965de",
+    "domain": "1.64",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22353": {
+    "sha": "a127e0ad0301a0baa8e55d9a3157b9b76cd2b3c1",
+    "domain": "1.63",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22352": {
+    "sha": "a9a66799fd5b6d68e26db3eb12ec3c1728fd83bc",
+    "domain": "1.64",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22158": {
+    "sha": "8b4257716854b6722f654ab3a9209e4248bbcc4d",
+    "domain": "1.63",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22157": {
+    "sha": "e8a92477960b588701614df3a15f6d9a7169c604",
+    "domain": "1.64",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#22120": {
+    "sha": "3507fbb7b9844a0da3f54b0a35e27886545f813c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3507fbb7: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22150": {
+    "sha": "f1101400424808d8d2d884863848c209864b0d56",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f1101400: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21982": {
+    "sha": "b61415ef341d5c1746bfd143c966564cac3ec00c",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b61415ef: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#22114": {
+    "sha": "6941147f64c52a93a70ad606fc204b65415ba52b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6941147f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21985": {
+    "sha": "4d80ad601facda3393fb394b48107db999c78e46",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...4d80ad60: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21875": {
+    "sha": "bde81004f4390e5b7366adb3563cd069a05d7429",
+    "domain": "1.63",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#21960": {
+    "sha": "31714086537ffe4f89c8b8666206fb3624f706f7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...31714086: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21935": {
+    "sha": "e345d575cc8bb1b72be0c096fe2f3370e83dded9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...e345d575: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21859": {
+    "sha": "3b9adeda99b3ef6179bb969310304bbf6af5cd13",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3b9adeda: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21869": {
+    "sha": "8d76b29cb1406805d386441fc4f1f0bd0c1d7660",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8d76b29c: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21819": {
+    "sha": "fc72364d39f16aa1ece4bac846c5288b68f775cb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...fc72364d: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21627": {
+    "sha": "5b8ea34b7306d534e0e4ef33b84b63775f482741",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...5b8ea34b: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21574": {
+    "sha": "71d83350ddafcb0bbde79166883bb07e7bd8c5cc",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...71d83350: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21644": {
+    "sha": "79ab8b56ac2ba4eb87290a9d63772a4fabbf67e3",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...79ab8b56: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21567": {
+    "sha": "707009f118619d9b944e94e15bb49d702e2b4343",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...707009f1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21460": {
+    "sha": "3a58a81aa5c894e10babbf3347f513921f4e5964",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...3a58a81a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21506": {
+    "sha": "6d737f23af0a43f2784cc8b1a5519298e77694a9",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6d737f23: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21415": {
+    "sha": "a835512441373a3c1d7ea4bac480af730f56f283",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...a8355124: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21150": {
+    "sha": "f1f1352f90a57efca2756863c05536d37463aa18",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...f1f1352f: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21296": {
+    "sha": "9ac4193a5de918fd98e45a59843ca91a5d3e5bc6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...9ac4193a: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#21156": {
+    "sha": "d1384a7872779a8261d4348ef87986adb549fac5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...d1384a78: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20895": {
+    "sha": "8c95bd6e6b7f44dfd81db66848b61834bc60c7e6",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...8c95bd6e: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20734": {
+    "sha": "78934b57dd2ab84569346e2b1adbca903c4ce8b7",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...78934b57: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20537": {
+    "sha": "39d644749d481b555b8b7112f2079e4cfd58d711",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...39d64474: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20488": {
+    "sha": "6b1d38c465d00973850a958d14f7f4d30cce743e",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6b1d38c4: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20351": {
+    "sha": "6cd0b6e1723bf86d2c07e3f8eb54ac15a59ee9eb",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...6cd0b6e1: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#19783": {
+    "sha": "b844bd229e95e2418ad12833667c6c187a741506",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:35:45.102Z",
+     "basis": "GitHub compare v1.96.61...b844bd22: behind"
+    },
+    "maxExcluded": null
+   },
+   "brave/brave-core#20145": {
+    "sha": "9d6ad1cd817a47bda4ee369e65927a7053d8e76d",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#19289": {
+    "sha": "fe8213958b65b9bf67b25c5374de1a6525e5324a",
+    "domain": "1.56",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#19288": {
+    "sha": "800ece6f089724329a6e33d002d1e6e5539d089f",
+    "domain": "1.57",
+    "minIncluded": null,
+    "maxExcluded": null
+   },
+   "brave/brave-core#19199": {
+    "sha": "c2cf5e90cd8c5f4348773c0a86ebe48dd96922ac",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": null
+   }
+  },
+  "targets": [
+   {
+    "tag": "v1.96.61",
+    "version": "1.96.61",
+    "publishedAt": "2026-10-02T12:12:00Z",
+    "usedBy": [
+     "android/release"
+    ]
+   },
+   {
+    "tag": "v1.97.56",
+    "version": "1.97.56",
+    "publishedAt": "2026-10-07T03:18:14Z",
+    "usedBy": [
+     "desktop/release",
+     "github/release"
+    ]
+   },
+   {
+    "tag": "v1.98.47",
+    "version": "1.98.47",
+    "publishedAt": "2026-10-01T05:33:16Z",
+    "usedBy": [
+     "desktop/beta"
+    ]
+   },
+   {
+    "tag": "v1.98.52",
+    "version": "1.98.52",
+    "publishedAt": "2026-10-08T05:23:38Z",
+    "usedBy": [
+     "android/beta",
+     "ios/beta",
+     "github/beta"
+    ]
+   },
+   {
+    "tag": "v1.99.13",
+    "version": "1.99.13",
+    "publishedAt": "2026-10-05T13:52:26Z",
+    "usedBy": [
+     "android/nightly"
+    ]
+   },
+   {
+    "tag": "v1.99.20",
+    "version": "1.99.20",
+    "publishedAt": "2026-10-07T13:33:11Z",
+    "usedBy": [
+     "desktop/nightly",
+     "ios/nightly"
+    ]
+   },
+   {
+    "tag": "v1.99.26",
+    "version": "1.99.26",
+    "publishedAt": "2026-10-08T13:54:13Z",
+    "usedBy": [
+     "github/nightly"
+    ]
+   }
+  ],
+  "pending": 14,
+  "calls": 301
+ }
+}
