@@ -220,6 +220,45 @@ test('ING-23: a version heading marked unreleased is not a release (entries and 
   assert.deepEqual(ref.map((e) => e.version), ['1.2.3']);
 });
 
+// Verifier follow-up: heading-shaped lines inside fenced code blocks are code, not headings, so the
+// ING-23 reset must not fire there. Expected output is identical to the pre-audit parser's.
+const verOf = (md: string) => parseChangelog(md, clOpts).map((e) => `${e.version}:${e.text}`);
+
+test('ING-23: a "# comment" inside a code fence does not end the release block', () => {
+  const md = ['## 1.2.3', '- a', '```sh', '# comment', '#', '```', '- b', '## 1.2.2', '- c'].join('\n');
+  assert.deepEqual(verOf(md), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  // Same with CRLF line endings (GitHub issue bodies), tilde fences, and a fence indented under a list item.
+  assert.deepEqual(verOf(md.replace(/\n/g, '\r\n')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  assert.deepEqual(verOf(md.replace('```sh', '~~~~').replace(/^```$/m, '~~~~')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  assert.deepEqual(verOf(md.replace('```sh', '  ```').replace(/^```$/m, '  ```')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  // A shorter or different-character line does not close the fence; a longer matching one does.
+  const nested = ['## 1.2.3', '- a', '````', '```', '# not a heading', '~~~', '`````', '- b'].join('\n');
+  assert.deepEqual(verOf(nested), ['1.2.3:a', '1.2.3:b']);
+  // Same for a multi-line HTML comment (e.g. an issue-template note).
+  assert.deepEqual(verOf(['## 1.2.3', '- a', '<!--', '# template note', '## Unreleased', '-->', '- b'].join('\n')), ['1.2.3:a', '1.2.3:b']);
+});
+
+test('ING-23: release and unreleased headings inside a code fence change neither attribution nor versions', () => {
+  const md = ['# Changelog', '## 1.2.3', '- Zcash a', '```', '## 9.9.9', '## Unreleased', '### Fake section', '```', '- Zcash b', '## 1.2.2', '- Zcash c'].join('\n');
+  const got = parseChangelog(md, clOpts);
+  assert.deepEqual(got.map((e) => [e.version, e.section, e.text]), [
+    ['1.2.3', null, 'Zcash a'],
+    ['1.2.3', null, 'Zcash b'],
+    ['1.2.2', null, 'Zcash c'],
+  ]);
+  assert.deepEqual(changelogVersions(md), ['1.2.3', '1.2.2']);
+  assert.deepEqual(changelogVersions(md.replace(/\n/g, '\r\n')), ['1.2.3', '1.2.2']);
+});
+
+test('ING-23: an unclosed fence or comment is plain text and cannot hide later release headings', () => {
+  const md = ['## 1.2.3', '- a', '```', '- b', '## Unreleased', '- future', '## 1.2.2', '- c'].join('\n');
+  assert.deepEqual(verOf(md), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  assert.deepEqual(changelogVersions(md), ['1.2.3', '1.2.2']);
+  assert.deepEqual(verOf(md.replace('```', '<!-- unterminated')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  // One-line inline code and one-line comments are not block openers.
+  assert.deepEqual(verOf(['## 1.2.3', '- a', '```x```', '<!-- note -->', '# Archive', '- gone', '## 1.2.2', '- c'].join('\n')), ['1.2.3:a', '1.2.2:c']);
+});
+
 // ---------------------------------------------------------------------------
 // ING-24: Cargo manifests (dependency tables, target tables, renames, quoted '#')
 // ---------------------------------------------------------------------------

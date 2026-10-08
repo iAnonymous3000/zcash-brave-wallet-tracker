@@ -59,25 +59,65 @@ function releaseHeadingVersion(line: string): string | null {
   return m[1];
 }
 
+/**
+ * Indices of lines that sit inside a closed fenced code block (``` or ~~~, any indentation, so
+ * fences under list items count) or a closed multi-line HTML comment, including the delimiter
+ * lines. Their text is not Markdown structure: a "# comment" or "## 1.2.3" there is not a heading.
+ * An opener that never closes is treated as ordinary text, so one stray fence cannot hide every
+ * later release heading. CRLF line endings are accepted.
+ */
+function literalBlockLines(lines: string[]): Set<number> {
+  const out = new Set<number>();
+  const ln = lines.map((l) => l.replace(/\r$/, ''));
+  const closeAt = (from: number, closes: (s: string) => boolean): number => {
+    for (let j = from; j < ln.length; j++) if (closes(ln[j])) return j;
+    return -1;
+  };
+  for (let i = 0; i < ln.length; i++) {
+    let end = -1;
+    const fence = ln[i].match(/^\s*(`{3,}|~{3,})(.*)$/);
+    // A backtick fence's info string cannot contain a backtick (that is inline code, not a fence).
+    if (fence && !(fence[1][0] === '`' && fence[2].includes('`'))) {
+      const marker = fence[1][0];
+      const minLen = fence[1].length;
+      end = closeAt(i + 1, (s) => {
+        const c = s.match(/^\s*(`{3,}|~{3,})\s*$/);
+        return !!c && c[1][0] === marker && c[1].length >= minLen;
+      });
+    } else if (/^\s*<!--/.test(ln[i]) && !ln[i].slice(ln[i].indexOf('<!--') + 4).includes('-->')) {
+      end = closeAt(i + 1, (s) => s.includes('-->'));
+    }
+    if (end < 0) continue;
+    for (let k = i; k <= end; k++) out.add(k);
+    i = end;
+  }
+  return out;
+}
+
 export function parseChangelog(text: string, opts: { platform: Platform; file: string; commitSha: string; repo?: string }): ChangelogEntry[] {
   const repo = opts.repo ?? 'brave/brave-browser';
   const lines = text.split('\n');
   const out: ChangelogEntry[] = [];
   let version: string | null = null;
   let section: string | null = null;
+  const literal = literalBlockLines(lines);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (TOP_HEADING.test(line)) {
-      // Every top-level heading starts a new block: bullets under a heading that is not a recognised
-      // release (e.g. "## Unreleased") must not inherit the previous release's version.
-      version = releaseHeadingVersion(line);
-      section = null;
-      continue;
-    }
-    const h3 = line.match(/^###\s+(.+?)\s*$/);
-    if (h3) {
-      section = h3[1].trim();
-      continue;
+    // Inside a code fence or HTML comment nothing is a heading, so neither the version nor the section
+    // changes there. Bullet-shaped lines inside are still read exactly as before (evidence ids stay stable).
+    if (!literal.has(i)) {
+      if (TOP_HEADING.test(line)) {
+        // Every top-level heading starts a new block: bullets under a heading that is not a recognised
+        // release (e.g. "## Unreleased") must not inherit the previous release's version.
+        version = releaseHeadingVersion(line);
+        section = null;
+        continue;
+      }
+      const h3 = line.match(/^###\s+(.+?)\s*$/);
+      if (h3) {
+        section = h3[1].trim();
+        continue;
+      }
     }
     const bullet = line.match(/^\s*[-*]\s+(.*\S)\s*$/);
     if (!bullet || !version) continue;
@@ -103,8 +143,11 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
 /** Ordered list of versions as they appear (newest first in Brave's files). */
 export function changelogVersions(text: string): string[] {
   const out: string[] = [];
-  for (const line of text.split('\n')) {
-    const v = releaseHeadingVersion(line);
+  const lines = text.split('\n');
+  const literal = literalBlockLines(lines);
+  for (let i = 0; i < lines.length; i++) {
+    if (literal.has(i)) continue;
+    const v = releaseHeadingVersion(lines[i]);
     if (v) out.push(v);
   }
   return out;
