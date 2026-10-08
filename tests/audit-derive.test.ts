@@ -44,6 +44,13 @@ const snap = (ref: string, channels: string[], lock: Lock): DepsData['snapshots'
 const LOCK: Lock = { orchard: { version: '0.13.0', source: 'crates.io' }, halo2_gadgets: { version: '0.5.0', source: 'crates.io' }, zcash_primitives: { version: '0.29.0', source: 'path' } };
 const DEPS: DepsData = { snapshots: { master: snap('master', ['master'], LOCK) } };
 const ABSENCE = /None of these packages appear|do(?:es)? not appear|not resolve/i;
+/**
+ * The same snapshot with a recorded dependency-graph resolution in which each `lock` version is the only version
+ * linked (R-ADV: a snapshot without one records only the newest version in Cargo.lock, so it cannot clear a build).
+ */
+const graphed = (s: DepsData['snapshots'][string]): DepsData['snapshots'][string] => ({ ...s, resolver: 3, resolution: { method: 'graph', root: { name: 'zcash', version: '1.0.0', from: 'cargo-toml' }, candidates: Object.fromEntries(Object.entries(s.lock).map(([k, v]) => [k, [{ ...v, reachable: true, direct: true }]])), multiple: [], ambiguous: [], unreachable: [], unresolvedEdges: [] } });
+const graphedAll = (d: DepsData): DepsData => ({ snapshots: Object.fromEntries(Object.entries(d.snapshots).map(([k, s]) => [k, graphed(s)])) });
+const ONE_RECORDED = /only one orchard version was recorded/;
 
 test('D1: missing or empty dependency evidence is unknown, never unaffected', () => {
   for (const [label, deps] of [['deps:null', null], ['snapshots:{}', { snapshots: {} }], ['empty lock (failed read)', { snapshots: { master: snap('master', ['master'], {}) } }], ['only unassigned old tags', { snapshots: { 'v1.90.1': snap('v1.90.1', [], LOCK) } }]] as [string, DepsData | null][]) {
@@ -83,9 +90,14 @@ test('D1: crates the tracker does not read from the lockfile are not confirmed a
 
 test('D1: known-safe pins stay unaffected, any vulnerable checked pin stays affected, genuine absence is worded explicitly', () => {
   const safe = { snapshots: { master: snap('master', ['master'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }), 'v1.97.56': snap('v1.97.56', ['desktop/release'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }) } };
-  const ok = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'] }, safe);
+  // Known pins: every linked version is recorded (graph resolution) and outside the ranges.
+  const ok = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'] }, graphedAll(safe));
   assert.equal(ok.affected, false);
   assert.match(ok.summary, /outside the vulnerable ranges/);
+  // R-ADV: snapshots that record only the newest version in Cargo.lock do not show which versions are linked.
+  const legacy = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'] }, safe);
+  assert.equal(legacy.affected, null);
+  assert.match(legacy.summary, ONE_RECORDED);
   // Vulnerable at a channel build, unknown elsewhere: affected wins.
   const mixed = { snapshots: { master: snap('master', ['master'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }), 'v1.96.61': snap('v1.96.61', ['android/release'], LOCK) } };
   const hit = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets ^0.4'] }, mixed);
@@ -301,12 +313,15 @@ test('D4: scoped required checks apply only on their platforms', () => {
   assert.equal(cellOf(rows, 'scoped', 'android', 'release').status, 'not-verified', 'android required check not completed');
 });
 
-test('D4: precedence — a platform release note outweighs an unknown required check, never an explicit negative', () => {
+test('D4: precedence — an unknown required check outweighs a platform release note (R-D4); an explicit negative stays absent', () => {
   const def: CapabilityDef = { ...BUY, id: 'buy-noted', releaseNoteIssues: ['brave/brave-browser#900'] };
   const changelog: ChangelogEntry[] = [{ platform: 'desktop', version: '1.90.1', section: 'Web3', text: 'Added ZEC to Buy.', issueRefs: ['brave/brave-browser#900'], line: 1, file: 'CHANGELOG_DESKTOP.md', commitSha: 'x', permalink: 'https://example.invalid', zcashRelated: true }];
   const unknown = buildCapabilities(capInputs({ defs: [def], current: CURRENT, changelog, flagsByTag: { 'v1.97.56': zecFlags('v1.97.56') } }));
   const c = cellOf(unknown, 'buy-noted', 'desktop', 'release');
-  assert.equal(c.status, 'available');
+  // Round 1 let the release note establish "available" here; round 2 (R-D4) makes the unknown check decisive.
+  assert.equal(c.status, 'not-verified');
+  assert.equal(c.since ?? null, null);
+  assert.match(c.summary, /Desktop Stable release notes list it \(1\.90\.1\).*required check could not be completed \(Meld chain list includes ZEC\)/);
   assert.ok(c.evidence.some((e) => /Meld chain list includes ZEC/.test(e.text) && /not checked|unknown|could not/i.test(e.text)), 'the incomplete check is disclosed');
   const negative = buildCapabilities(capInputs({ defs: [def], current: CURRENT, changelog, flagsByTag: { 'v1.97.56': zecFlags('v1.97.56') }, sourceChecks: meld('v1.97.56', false) }));
   assert.equal(cellOf(negative, 'buy-noted', 'desktop', 'release').status, 'absent');
@@ -557,11 +572,15 @@ test('D1 (repair): with the current build list, master-only evidence is never "n
 });
 
 test('D1 (repair): every current build needs an inspected lockfile before "not affected"', () => {
-  const deps: DepsData = { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } };
+  const deps: DepsData = graphedAll({ snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } });
   const two = [cv('desktop', 'release', '1.97.56', 'v1.97.56'), cv('desktop', 'beta', '1.98.52', 'v1.98.52')];
   const ok = advisoryVerdicts(ADV, deps, two);
   assert.equal(ok.affected, false);
   assert.match(ok.summary, /at every checked build \(master and 2 channel builds \(v1\.97\.56, v1\.98\.52\)\)/);
+  // R-ADV: the same pins in snapshots that record only the newest version in Cargo.lock cannot clear the builds.
+  const legacy = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } }, two);
+  assert.equal(legacy.affected, null);
+  assert.match(legacy.summary, ONE_RECORDED);
   // A current build whose tag was never read (e.g. dependency data older than a new release).
   const newer = advisoryVerdicts(ADV, deps, [...two, cv('desktop', 'nightly', '1.99.25', 'v1.99.25')]);
   assert.equal(newer.affected, null);
@@ -571,7 +590,7 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
   assert.equal(tagless.affected, null);
   assert.match(tagless.summary, /iOS Release 1\.96 is not pinned to a brave-core tag/);
   // A snapshot at a current tag counts even when the collector no longer lists a channel for it.
-  const unassigned: DepsData = { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], SAFE_LOCK) } };
+  const unassigned: DepsData = graphedAll({ snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], SAFE_LOCK) } });
   const v = advisoryVerdicts(ADV, unassigned, [two[0]]);
   assert.equal(v.affected, false);
   assert.ok(v.details.some((d) => d.startsWith('v1.97.56 (desktop/release): orchard 0.15.0 is outside')), v.details.join(' | '));
@@ -581,9 +600,13 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
 test('D1 (repair): the bare two-argument call names master as the only checked build', () => {
   // tests/capabilities-changes.test.ts pins master-only → false for callers that pass no build list (no production
   // caller does); the wording must still not claim channel builds were checked.
-  const v = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } });
+  const v = advisoryVerdicts(ADV, { snapshots: { master: graphed(snap('master', ['master'], SAFE_LOCK)) } });
   assert.doesNotMatch(v.summary, /checked channel builds/);
   assert.match(v.summary, /Only master was checked/);
+  // R-ADV: without a build list, a snapshot that records only the newest version still cannot clear master.
+  const legacy = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } });
+  assert.equal(legacy.affected, null);
+  assert.match(legacy.summary, ONE_RECORDED);
 });
 
 test('D1 (repair): the event pipeline passes the build list, so master-only evidence yields an unknown advisory event', () => {
@@ -790,14 +813,18 @@ test('Edges (repair): uplifts into an uplift cycle land in exactly one group, wh
   assert.deepEqual(groups.find(([id]) => id === m.id)?.[1], [both.id], 'an uplift that also names a real root PR goes under that root');
 });
 
-test('D4 (repair): a prerequisite lifted by a dependent’s release note discloses its unknown required check; an explicit negative blocks the lift', () => {
+test('D4 (repair): a dependent’s release note does not lift a prerequisite with an unknown required check (R-D4), and an explicit negative blocks the lift', () => {
   const pre: CapabilityDef = { id: 'pre', name: 'Pre', description: 'd', flags: [{ name: 'kBraveWalletZCashFeature', expect: true }], sourceChecks: [{ id: 'needed', describe: 'needed code', role: 'required' }] };
   const dep: CapabilityDef = { id: 'dep', name: 'Dep', description: 'd', requires: ['pre'], releaseNoteIssues: ['brave/brave-browser#77'] };
   const changelog: ChangelogEntry[] = [{ platform: 'desktop', version: '1.96.10', section: 'Web3', text: 'Dep shipped.', issueRefs: ['brave/brave-browser#77'], line: 1, file: 'CHANGELOG_DESKTOP.md', commitSha: 'x', permalink: 'https://example.invalid', zcashRelated: true }];
   const flagsByTag = { 'v1.97.56': zecFlags('v1.97.56') };
-  const lifted = cellOf(buildCapabilities(capInputs({ defs: [pre, dep], current: CURRENT, changelog, flagsByTag })), 'pre', 'desktop', 'release');
-  assert.equal(lifted.status, 'available', 'a release note (here implied) outranks an unknown required check, as for direct notes');
+  const rows = buildCapabilities(capInputs({ defs: [pre, dep], current: CURRENT, changelog, flagsByTag }));
+  const lifted = cellOf(rows, 'pre', 'desktop', 'release');
+  // Round 1 lifted it to "available"; round 2 (R-D4) keeps an unknown required check decisive on every path.
+  assert.equal(lifted.status, 'not-verified', 'an implied release note does not outrank an unknown required check, as for direct notes');
   assert.ok(lifted.evidence.some((e) => e.kind === 'note' && /Required check not completed at v1\.97\.56 \(needed code\)/.test(e.text)), 'the incomplete check is disclosed');
+  assert.ok(lifted.evidence.some((e) => e.kind === 'note' && /release notes for “Dep” \(1\.96\.10\).*not evidence that this build contains it/.test(e.text)), 'the dependent’s note is shown, not used');
+  assert.equal(cellOf(rows, 'dep', 'desktop', 'release').status, 'not-verified', 'the dependent is capped by it');
   const negRows = buildCapabilities(capInputs({ defs: [pre, dep], current: CURRENT, changelog, flagsByTag, sourceChecks: { 'v1.97.56': [{ id: 'needed', tag: 'v1.97.56', present: false, file: 'x.cc', line: null, url: 'https://example.invalid' }] } }));
   assert.equal(cellOf(negRows, 'pre', 'desktop', 'release').status, 'absent', 'an explicit negative is never lifted');
   assert.equal(cellOf(negRows, 'dep', 'desktop', 'release').status, 'absent', 'the dependent is capped by it');

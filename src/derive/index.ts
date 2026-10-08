@@ -7,7 +7,7 @@ import { CRATES, RELEASE_REPOS, ZIPS } from '../../config/upstream.ts';
 import { SEARCHES, CODE_PATHS, ZCASH_LABELS, SITE } from '../../config/tracker.ts';
 import { dataPath, readJson, writeJson } from '../lib/store.ts';
 import type { ChangeEvent, Channel, ChannelVersion, CommunityTopic, DocPage, Platform, SourceEnvelope, SourceStatus, WorkItem } from '../lib/types.ts';
-import { compareSemver, compareVersions, uniq } from '../lib/util.ts';
+import { compareVersions, uniq } from '../lib/util.ts';
 import type { GithubItemsData } from '../ingest/sources/github-items.ts';
 import type { ReleasesData } from '../ingest/sources/releases.ts';
 import type { BraveVersionsData } from '../ingest/sources/brave-versions.ts';
@@ -23,7 +23,7 @@ import type { ServicesData } from '../ingest/sources/services.ts';
 import { buildGroups, buildRelations, isEpic, isUpliftPr, type WorkGroup } from './relations.ts';
 import { computeGroupStatus, MERGED_LABEL, STAGE_HELP, STAGE_LABEL, type GroupStatus, type Stage } from './status.ts';
 import { applyUnknownServiceSwitches, buildCapabilities, CELL_HELP, CELL_LABEL, type CapabilityRow, type ServiceCheck } from './capabilities.ts';
-import { advisoryVerdicts, braveResolves, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
+import { adoptedAtLeast, advisoryVerdicts, braveResolves, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
 
 export const DERIVED_SCHEMA = 1;
 
@@ -56,9 +56,10 @@ export interface SiteData {
   upstream: {
     /**
      * `brave` per checked build: the highest version Brave's Zcash crate links there; `linked` lists every linked
-     * version when there are several (Cargo compiles each of them in).
+     * version when there are several (Cargo compiles each of them in). `possible` lists versions the dependency
+     * graph could not rule in or out; when no version is known to be linked, `version` and `linked` are such versions.
      */
-    crates: { crate: string; repo: string; impact: string; why: string; brave: Record<string, { version: string; source: string; linked?: string[] } | null>; upstreamStable: string | null; upstreamNewest: string | null; upstreamUpdatedAt: string | null; adoption: string; url: string }[];
+    crates: { crate: string; repo: string; impact: string; why: string; brave: Record<string, { version: string; source: string; linked?: string[]; possible?: string[] } | null>; upstreamStable: string | null; upstreamNewest: string | null; upstreamUpdatedAt: string | null; adoption: string; url: string }[];
     fork: UpstreamData['fork'];
     forkPin: { repo: string; sha: string; comment: string | null } | null;
     endpoints: string[];
@@ -229,24 +230,31 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   const masterSnap = deps?.snapshots['master'] ?? null;
   const channelSnaps = Object.values(deps?.snapshots ?? {}).filter((s) => s.ref !== 'master' && s.channels.length);
   // Adoption uses the highest version Brave's Zcash crate links at each build, whatever `lock` holds.
+  // A version the dependency graph shows only as possibly linked is marked (`possible`), never stated as linked.
   const resolvedAt = (s: typeof masterSnap, crate: string) => {
     const r = braveResolves(s, crate);
-    return r ? { version: r.version, source: r.source, ...(r.linked.length > 1 ? { linked: r.linked } : {}) } : null;
+    return r ? { version: r.version, source: r.source, ...(r.linked.length > 1 ? { linked: r.linked } : {}), ...(r.possible.length ? { possible: r.possible } : {}) } : null;
   };
   const crates = CRATES.map((c) => {
-    const brave: Record<string, { version: string; source: string; linked?: string[] } | null> = {};
+    const brave: Record<string, { version: string; source: string; linked?: string[]; possible?: string[] } | null> = {};
     brave['master'] = resolvedAt(masterSnap, c.crate);
     for (const s of channelSnaps) {
       const label = s.channels.filter((x) => !x.startsWith('github/')).join(', ') || s.channels.join(', ');
       brave[`${s.ref} (${label})`] = resolvedAt(s, c.crate);
     }
     const info = upstream?.crates[c.crate] ?? null;
-    const bm = brave['master']?.version ?? null;
+    const rm = braveResolves(masterSnap, c.crate);
+    const bm = rm?.version ?? null;
     let adoption = 'unknown';
-    if (bm && info?.maxStable) {
-      const cmp = compareSemver(bm, info.maxStable);
-      adoption = cmp >= 0 ? 'current' : `behind latest stable (${info.maxStable})`;
-      if (brave['master']?.source === 'path') adoption += ' · built from Brave’s librustzcash fork';
+    if (rm && info?.maxStable) {
+      const at = adoptedAtLeast(rm, info.maxStable);
+      adoption =
+        at === true
+          ? 'current'
+          : at === false
+            ? `behind latest stable (${info.maxStable})`
+            : `unknown: Brave master’s Cargo.lock has ${[...new Set([...(rm.certain ? rm.linked : []), ...rm.possible])].join(', ')}, and whether its Zcash crate links a version at or above ${info.maxStable} is not established`;
+      if (rm.source === 'path') adoption += ' · built from Brave’s librustzcash fork';
     } else if (!bm) adoption = 'not in Brave lockfile';
     return { crate: c.crate, repo: c.repo, impact: c.impact, why: c.why, brave, upstreamStable: info?.maxStable ?? null, upstreamNewest: info?.newest ?? null, upstreamUpdatedAt: info?.updatedAt ?? null, adoption, url: `https://crates.io/crates/${c.crate}` };
   });
