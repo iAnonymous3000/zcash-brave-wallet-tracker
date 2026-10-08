@@ -43,18 +43,25 @@ export const ADVISORY_QUERIES: { ecosystem: string; pkg: string }[] = [
 /** Repositories whose published repository security advisories are read directly (not all reach the global DB). */
 export const ADVISORY_REPOS = ['zcash/lightwalletd', 'zingolabs/zaino', 'zcash/orchard', 'zcash/librustzcash', 'zcash/halo2', 'zcash/incrementalmerkletree', 'zcash/zcash_note_encryption'];
 
-/** ZIPs that Brave implements or that govern wallet behaviour. */
+/**
+ * ZIPs that Brave implements or that govern wallet behaviour.
+ * `file` is the expected document in zcash/zips (branch main): older ZIPs are reStructuredText
+ * (zips/zip-NNNN.rst), newer ones Markdown (zips/zip-NNNN.md). The collector also tries the other
+ * format (and the path it last read) when `file` has no history or is no longer on main, and
+ * reports the source as partial when no document can be read.
+ */
 export const ZIPS: { num: string; topic: string; file?: string }[] = [
-  { num: '0317', topic: 'Proportional transfer fee mechanism (Brave hard-codes kMarginalFee/kGraceActionsCount)' },
+  { num: '0317', topic: 'Proportional transfer fee mechanism (Brave hard-codes kMarginalFee/kGraceActionsCount)', file: 'zips/zip-0317.rst' },
+  // Document format not confirmed: discovered from the candidates (zip-0302.md, then zip-0302.rst).
   { num: '0302', topic: 'Standardized memo field format' },
-  { num: '0316', topic: 'Unified addresses (implemented in Brave C++)' },
-  { num: '0225', topic: 'Version 5 transaction format' },
-  { num: '0229', topic: 'Version 6 transaction format (Ironwood)' },
-  { num: '0258', topic: 'NU6.3 deployment (Ironwood activation)' },
-  { num: '0318', topic: 'Orchard to Ironwood migration (wallet)' },
-  { num: '0326', topic: 'NU6.3 consequences for wallets' },
-  { num: '2005', topic: 'Ironwood quantum recoverability' },
-  { num: '0259', topic: 'NU7 deployment (next network upgrade)' },
+  { num: '0316', topic: 'Unified addresses (implemented in Brave C++)', file: 'zips/zip-0316.rst' },
+  { num: '0225', topic: 'Version 5 transaction format', file: 'zips/zip-0225.rst' },
+  { num: '0229', topic: 'Version 6 transaction format (Ironwood)', file: 'zips/zip-0229.md' },
+  { num: '0258', topic: 'NU6.3 deployment (Ironwood activation)', file: 'zips/zip-0258.md' },
+  { num: '0318', topic: 'Orchard to Ironwood migration (wallet)', file: 'zips/zip-0318.md' },
+  { num: '0326', topic: 'NU6.3 consequences for wallets', file: 'zips/zip-0326.md' },
+  { num: '2005', topic: 'Ironwood quantum recoverability', file: 'zips/zip-2005.md' },
+  { num: '0259', topic: 'NU7 deployment (next network upgrade)', file: 'zips/zip-0259.md' },
   { num: '2009', topic: 'Reduce marginal fee to 1000 zatoshis (updates ZIP 317)', file: 'zips/2009.md' },
 ];
 

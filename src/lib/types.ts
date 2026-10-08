@@ -75,6 +75,20 @@ export interface WorkItem {
   parent: string | null;
   timeline: TimelineEntry[];
   timelineTruncated: boolean;
+  /** Present (true) only when GitHub had more sub-issues than could be read; `subIssues` is then a known-incomplete subset. */
+  subIssuesTruncated?: boolean;
+  /** Present (true) only when GitHub had more closing references than could be read; `closingRefs` is then a known-incomplete subset. */
+  closingRefsTruncated?: boolean;
+  /** Present (true) only when not every label could be read. */
+  labelsTruncated?: boolean;
+  /** Present (true) only when not every assignee could be read. */
+  assigneesTruncated?: boolean;
+  /**
+   * Present only when GitHub returned an error for some fields of this item in the latest run
+   * (e.g. a GraphQL field error on `subIssues`). Those fields hold the last good copy when one
+   * existed, otherwise an empty/unknown value; they must not be read as a complete, fresh answer.
+   */
+  incompleteFields?: string[];
   /** How the item was discovered (e.g. "label:feature/web3/wallet/zcash", "search:ironwood", "path:components/...", "linked:brave/brave-browser#56872"). */
   discovery: string[];
   /** direct = Zcash term in title/labels or touches Zcash code; mention = Zcash only in the description (with wallet context);
