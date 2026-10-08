@@ -238,7 +238,45 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
     }
     rows.push({ id: def.id, name: def.name, description: def.description, cells, notes });
   }
+  // Prerequisites: a dependent capability is capped at its prerequisite's status (evidence is kept).
+  const RANK: Record<CellStatus, number> = { available: 7, 'in-build': 6, 'opt-in': 5, off: 4, 'service-off': 3, absent: 2, 'not-verified': 1, 'not-planned': 0 };
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const order = topoOrder(inp.defs);
+  for (const def of order) {
+    const row = byId.get(def.id)!;
+    for (const reqId of def.requires ?? []) {
+      const req = byId.get(reqId);
+      if (!req) continue;
+      for (const cell of row.cells) {
+        const rc = req.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel)!;
+        if (RANK[rc.status] < RANK[cell.status] && rc.status !== 'not-planned') {
+          cell.evidence.push({ kind: 'note', text: `Capped by prerequisite “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here. Uncapped: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null });
+          cell.status = rc.status;
+          cell.summary = `Limited by “${req.name}” (${CELL_LABEL[rc.status].toLowerCase()} here): ${rc.summary}`;
+        }
+      }
+    }
+  }
   return rows;
+}
+
+function topoOrder(defs: CapabilityDef[]): CapabilityDef[] {
+  const out: CapabilityDef[] = [];
+  const seen = new Set<string>();
+  const visit = (d: CapabilityDef, stack: Set<string>) => {
+    if (seen.has(d.id)) return;
+    if (stack.has(d.id)) throw new Error(`capability prerequisite cycle at ${d.id}`);
+    stack.add(d.id);
+    for (const r of d.requires ?? []) {
+      const rd = defs.find((x) => x.id === r);
+      if (rd) visit(rd, stack);
+    }
+    stack.delete(d.id);
+    seen.add(d.id);
+    out.push(d);
+  };
+  for (const d of defs) visit(d, new Set());
+  return out;
 }
 
 function matchesDef(def: CapabilityDef, e: ChangelogEntry): boolean {

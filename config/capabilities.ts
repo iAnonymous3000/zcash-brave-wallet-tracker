@@ -36,6 +36,8 @@ export interface CapabilityDef {
   implementedBy?: string[];
   notPlannedIssues?: string[];
   docMatch?: RegExp;
+  /** Capability ids this one depends on; a cell is never shown as more available than its prerequisites. */
+  requires?: string[];
   /** Server-side switch ids (see derive/index.ts) that can turn the capability off for everyone. */
   serviceChecks?: string[];
   /** Open tracked issues whose title matches are listed as known open issues for the row. */
@@ -80,6 +82,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'shielding',
+    requires: ['shielded'],
     name: 'Shield transparent funds',
     description: '"Shield Funds" / "Shield Account": move transparent ZEC into the shielded pool.',
     releaseNoteIssues: [bb(46596), bb(46598), bb(49621)],
@@ -88,6 +91,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'unshielding',
+    requires: ['shielded'],
     name: 'Unshield to transparent',
     description: 'Send from shielded balance to a transparent address (deshielding).',
     releaseNoteIssues: [bb(45875)],
@@ -96,6 +100,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'ironwood',
+    requires: ['shielded'],
     name: 'Ironwood pool (NU6.3)',
     description: 'Ironwood shielded pool support: Ironwood balances, v6 transactions, sends to/from Ironwood.',
     releaseNoteIssues: [bb(56872)],
@@ -114,6 +119,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'migration',
+    requires: ['ironwood'],
     name: 'Orchard → Ironwood migration',
     description: 'Move funds from the legacy Orchard pool into Ironwood (required after NU6.3 for new shielded value).',
     flags: [ZEC, SHIELDED, IRONWOOD],
@@ -128,6 +134,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'memos',
+    requires: ['shielded'],
     name: 'Memos on shielded sends',
     description: 'Attach a memo (up to 512 bytes) to shielded outputs.',
     releaseNoteIssues: [bb(41986), bb(42078), bb(52303)],
@@ -137,6 +144,7 @@ export const CAPABILITIES: CapabilityDef[] = [
   },
   {
     id: 'sync',
+    requires: ['shielded'],
     name: 'Sync, birthday & recovery tools',
     description: 'Shielded sync status, reset sync state, account birthday reset/validation.',
     releaseNoteIssues: [bb(42851), bb(44782), bb(55611), bb(58757)],

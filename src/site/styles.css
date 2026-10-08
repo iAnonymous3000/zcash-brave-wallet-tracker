@@ -346,3 +346,13 @@ thead .mx-cap { background: var(--paper-2); }
 @media print { .nav, .filters, .quick-search { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 .cell-service-off { color: var(--lion); background: var(--lion-wash); }
+
+/* Narrow screens: never let long refs, file names or URLs widen the page. */
+main a, .ref, code, .facets dd, .ev-title, .ev-impact, .cap-summary, .b-basis, .mono-sm, .sub, .watch-item, .adv h3 { overflow-wrap: anywhere; }
+.wrow, .wrow-main, .facets, .facets > div, .ev, .ev-foot, .report, .member, .facet, .cap-ev { min-width: 0; }
+.wrow { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 640px) {
+  .wrow-title { flex-basis: 100%; }
+  .facets > div { flex-wrap: wrap; }
+  .rel-list { columns: 1; }
+}

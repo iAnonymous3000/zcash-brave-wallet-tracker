@@ -95,9 +95,9 @@ export function homePage(d: SiteData, events: ChangeEvent[]): SafeHtml {
       <h3>${row.name}</h3>
       ${row.notes.length ? html`<ul class="notes">${row.notes.map((n) => html`<li>${n}</li>`)}</ul>` : ''}
       ${(row as any).openIssues?.length ? html`<p><strong>Known open issues:</strong> ${((row as any).openIssues as string[]).map((id, i) => html`${i ? ', ' : ''}<a href="${itemHref(id)}">${shortRef(id)}</a>`)}</p>` : ''}
-      <table class="ev-table"><thead><tr><th scope="col">Build</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="${row.name} evidence, scrollable"><table class="ev-table"><thead><tr><th scope="col">Build</th><th scope="col">Status</th><th scope="col">Evidence</th></tr></thead><tbody>
       ${row.cells.map((cell) => html`<tr><th scope="row">${PLATFORM_NAME[cell.platform]} ${CHANNEL_NAME[cell.channel]} <span class="mono">${cell.version ?? '?'}</span></th><td>${cellBadge(cell.status, label[cell.status] ?? cell.status)}</td><td><p>${cell.summary}</p>${cell.evidence.length ? html`<ul class="ev-list">${cell.evidence.map((e) => html`<li class="${e.contrary ? 'ev-contrary' : ''}"><span class="ev-kind">${e.kind}${e.contrary ? ' · contrary' : ''}</span> ${e.url ? ext(e.url, e.text) : e.text}</li>`)}</ul>` : ''}</td></tr>`)}
-      </tbody></table>
+      </tbody></table></div>
     </section>`)}
   </details>
 </section>

@@ -64,6 +64,22 @@ test('capability cells: per-platform release notes, flags at each tag, opt-in, i
   assert.equal(br.cells.find((x) => x.platform === 'ios' && x.channel === 'beta')!.status, 'absent', 'UI hides bridge on iOS');
 });
 
+test('dependent capabilities are capped by their prerequisites', () => {
+  const rows = buildCapabilities({
+    defs: [
+      { id: 'shielded', name: 'Shielded', description: 'd', releaseNoteIssues: ['brave/brave-browser#44432'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
+      { id: 'shielding', name: 'Shielding', description: 'd', requires: ['shielded'], releaseNoteIssues: ['brave/brave-browser#46598'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }] },
+    ],
+    current,
+    changelog: [note('android', '1.81.131', 'Added a "Shield Account" alert on the "Account Details" panel for Zcash accounts.', 'brave/brave-browser#46598')],
+    flagsByTag: { 'v1.96.61': flags('v1.96.61', false) }, sourceChecks: {}, items: {}, groupStatus: () => null, docs: [],
+  });
+  const sh = rows.find((r) => r.id === 'shielding')!.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
+  assert.equal(sh.status, 'in-build', 'cannot be more available than shielded accounts on Android');
+  assert.ok(sh.evidence.some((e) => e.kind === 'release-note'), 'release-note evidence is kept');
+  assert.ok(sh.evidence.some((e) => e.kind === 'note' && /Capped by prerequisite/.test(e.text)));
+});
+
 test('capability not-planned and contrary docs', () => {
   const np1 = wi('brave/brave-browser#51665', { state: 'closed', stateReason: 'not_planned', closedAt: '2026-09-30T23:09:57Z' });
   const docs: DocPage[] = [{ id: 'z', source: 'support', title: 'Zcash and Address Types', url: 'https://support.brave.app/hc/x', updatedAt: '2025-04-02T00:00:00Z', contentHash: 'h', zcashStatements: ['Shielded addresses are supported in 1.77.x; Android and iOS are unavailable at this time.'], retrievedAt: 'x' }];
