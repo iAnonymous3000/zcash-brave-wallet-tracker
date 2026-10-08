@@ -126,6 +126,9 @@ export const CAPABILITIES: CapabilityDef[] = [
     requires: ['ironwood'],
     name: 'Orchard → Ironwood migration',
     description: 'Move funds from the legacy Orchard pool into Ironwood (required after NU6.3 for new shielded value).',
+    // Migration (o→i task #58408) is part of the Ironwood root issue #56872, whose release note announced default-on.
+    releaseNoteIssues: [bb(56872)],
+    releaseNoteExclude: /migration banner/i,
     flags: [ZEC, SHIELDED, IRONWOOD],
     sourceChecks: [
       { id: 'orchard-to-ironwood-task', describe: 'Orchard → Ironwood transaction task', role: 'required' },
@@ -134,7 +137,7 @@ export const CAPABILITIES: CapabilityDef[] = [
     ],
     implementedBy: [bb(58408)],
     openIssueMatch: /migrat|padding|zip[- ]?318/i,
-    notes: ['No platform release note announces the migration flow itself; it ships as part of Ironwood support.'],
+    notes: ['No release note names the migration flow itself; it ships as part of Ironwood support (root issue #56872, which includes the Orchard → Ironwood task #58408), so that release note is used as its evidence. The “migration banner” note (#58493) predates default-on and is not counted.'],
   },
   {
     id: 'memos',
