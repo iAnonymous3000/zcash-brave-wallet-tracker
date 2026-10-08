@@ -32,7 +32,7 @@ export function homePage(d: SiteData, events: ChangeEvent[], notes: ReleaseVersi
 
   return html`
 <section class="hero" aria-labelledby="hero-h">
-  <p class="eyebrow">Independent · evidence-based · refreshed every 2 hours</p>
+  <p class="eyebrow">Personal project · evidence-based · public sources only</p>
   <h1 id="hero-h">Zcash in Brave Wallet</h1>
   <p class="lede">What works on your platform today, what is coming, known issues and what changed in each release. Every status links to the release note, code or service setting behind it.</p>
   <a class="hero-search" href="${u('work/')}" data-search-open>${raw(SEARCH_ICON)}<span>Search features, issues, pull requests, release notes…</span><kbd>/</kbd></a>

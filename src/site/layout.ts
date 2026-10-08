@@ -68,7 +68,7 @@ ${raw(GLYPH_SPRITE)}
   <div class="wrap top-row">
     <a class="brand" href="${u('')}" aria-label="${SITE.title}, overview">
       <span class="brand-mark" aria-hidden="true">${raw(MARK)}</span>
-      <span class="brand-text"><span class="brand-name">Zcash × Brave Wallet</span><span class="brand-sub">Independent tracker</span></span>
+      <span class="brand-text"><span class="brand-name">Zcash × Brave Wallet</span><span class="brand-sub">Personal project</span></span>
     </a>
     <nav class="nav-wide" aria-label="Sections">${navList(meta)}</nav>
     <div class="top-actions">
@@ -98,7 +98,7 @@ ${body}
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p class="disclaimer"><strong>Independent community tracker.</strong> Not affiliated with Brave Software, Electric Coin Co. or the Zcash Foundation.</p>
+    <p class="disclaimer"><strong>Personal project.</strong> Not an official Brave product, and not affiliated with Electric Coin Co. or the Zcash Foundation.</p>
     <div class="footer-grid">
       <p><strong>What this is.</strong> An automatically refreshed view of public Brave and Zcash sources: GitHub issues and pull requests, Brave’s platform changelogs and version pointers, brave-core source at each channel’s tag, upstream Zcash releases and advisories, the Brave Help Center and Brave Community. It has no access to private roadmaps.</p>
       <p><strong>How to read it.</strong> Issue state, pull-request state, build presence, release notes and QA validation are separate facts. A merged PR is not a release; a milestone is a target, not a promise. Every claim links to its source. <a href="${u('sources/#meanings')}">Status meanings</a>.</p>

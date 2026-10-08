@@ -1,11 +1,11 @@
 # Zcash × Brave Wallet Tracker
 
-An independent, automatically refreshed public tracker for Zcash support in Brave Wallet:
+A personal, automatically refreshed public tracker for Zcash support in Brave Wallet:
 what works today on each platform and release channel, what is being built, what is blocked,
 and what changed — with a source link behind every claim.
 
 **Live site:** https://ianonymous3000.github.io/zcash-brave-wallet-tracker/
-**Not affiliated** with Brave Software, Electric Coin Co. or the Zcash Foundation. Public sources only.
+**Personal project, not an official Brave product.** Not affiliated with Electric Coin Co. or the Zcash Foundation. Public sources only.
 
 ## What it answers
 
