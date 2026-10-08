@@ -196,9 +196,10 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         if (blocked) {
           status = 'absent';
           summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
-        } else if (serviceOff && (firstNote || flagState === 'on')) {
+        } else if (serviceOff) {
+          // A server-side switch applies to every client, whatever build it runs.
           status = 'service-off';
-          summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : 'Code present, but '}currently turned off server-side for Zcash.`;
+          summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : ''}currently turned off server-side for Zcash, for every client.`;
         } else if (notPlanned.length && !firstNote) {
           status = 'not-planned';
           summary = `Requested in ${notPlanned.map((i) => shortId(i.id)).join(', ')}; closed as not planned.`;
@@ -228,7 +229,11 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           summary = `Implementing code is in ${where}, but no ${PLATFORM_NAME[platform]} release note lists it.`;
         } else {
           status = 'not-verified';
-          summary = cv ? `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag ?? cv.version}.` : `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`;
+          summary = !cv
+            ? `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`
+            : !cv.tag
+              ? `No ${PLATFORM_NAME[platform]} release note lists it, and the ${cv.version} store build number is not published, so its code and flags cannot be checked.`
+              : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
         if (platform === 'ios' && channel === 'release' && cv && !cv.tag) {
           ev.push({ kind: 'note', text: `iOS App Store version ${cv.version} is a marketing version; Brave does not publish its build number, so flag/code checks cannot be pinned for iOS Release.`, url: cv.url });
