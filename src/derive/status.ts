@@ -23,12 +23,30 @@ export type Stage =
   | 'not-planned'
   | 'duplicate';
 
+/**
+ * Labels of the 'merged' stage by what the build checks say. Only explicit "not included" checks support absence;
+ * a build whose presence could not be determined stays unknown (see mergedStageLabel).
+ */
+export const MERGED_LABEL = {
+  /** Every current build was checked and none includes the fix. */
+  notIncluded: 'Merged, not yet in a checked build',
+  /** Presence could not be determined in any current build (or no current build is known). */
+  unknown: 'Merged, build presence unknown',
+  /** Some builds are confirmed not to include it; the rest could not be checked. Also the stage-wide label. */
+  partlyUnknown: 'Merged, not confirmed in a current build',
+} as const;
+
+/**
+ * Default label per stage. For 'merged' it is the absence wording, which a group gets only when every current
+ * build was checked and confirmed not to include the fix; groups get their own label from mergedStageLabel(), and
+ * the stage as a whole (filters, legend) is listed as MERGED_LABEL.partlyUnknown.
+ */
 export const STAGE_LABEL: Record<Stage, string> = {
   released: 'In release notes',
   'in-release-build': 'In a Release build',
   'in-beta': 'In a Beta build',
   'in-nightly': 'In a Nightly build',
-  merged: 'Merged, not yet in a checked build',
+  merged: MERGED_LABEL.notIncluded,
   'service-change': 'Merged in a Brave service',
   'in-progress': 'PR in progress',
   open: 'Open',
@@ -43,7 +61,7 @@ export const STAGE_HELP: Record<Stage, string> = {
   'in-release-build': 'A merged PR is an ancestor of the brave-core tag of a current Release build, but no release note lists it.',
   'in-beta': 'A merged PR is in a current Beta build. Beta is a pre-release channel.',
   'in-nightly': 'A merged PR is in a current Nightly build. Nightly is a development channel.',
-  merged: 'A linked PR is merged but has not been confirmed in a published build yet.',
+  merged: `A linked PR is merged, but no current build is confirmed to include it. A group reads “${MERGED_LABEL.unknown}” when its presence could not be determined in any current build, “${MERGED_LABEL.partlyUnknown}” when some builds were confirmed not to include it and the rest could not be checked, and “${MERGED_LABEL.notIncluded}” only when every checked build was confirmed not to include it.`,
   'service-change': 'Merged in a Brave server-side repository (swap backend or field-trial config). It takes effect when Brave deploys it, which is not public, and applies regardless of browser version.',
   'in-progress': 'An open (or draft) pull request exists.',
   open: 'Open issue with no merged or open PR found.',
@@ -221,8 +239,18 @@ export function computeGroupStatus(
     regression,
     security,
     stage,
-    stageLabel: STAGE_LABEL[stage],
+    stageLabel: stage === 'merged' ? mergedStageLabel(builds) : STAGE_LABEL[stage],
   };
+}
+
+/**
+ * Label of a group in the 'merged' stage (no build confirmed to include the fix). Absence is stated only when every
+ * current build was checked and confirmed not to include it; unknown presence is never worded as absence.
+ */
+export function mergedStageLabel(builds: Pick<BuildCell, 'included'>[]): string {
+  const absent = builds.filter((b) => b.included === false).length;
+  if (builds.length && absent === builds.length) return MERGED_LABEL.notIncluded;
+  return absent ? MERGED_LABEL.partlyUnknown : MERGED_LABEL.unknown;
 }
 
 /** For PRs merged into a feature branch: the merged PR whose head is that branch (it carried the change on). */
