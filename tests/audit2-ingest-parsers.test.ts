@@ -20,13 +20,20 @@ const md = (...lines: string[]) => lines.join('\n');
 // ATX headings: 0-3 spaces of indentation is a heading, 4+ is not; "#" needs a following space
 // ---------------------------------------------------------------------------
 
-test('R-ING-23: an ATX heading indented 1-3 spaces is a heading (unreleased block excluded)', () => {
+test('R-ING-23: an ATX heading indented 1-3 spaces is a heading; 4+ spaces (or a tab) is code or paragraph text', () => {
   for (const pad of [' ', '  ', '   ']) {
     const text = md('## 1.2.3', '', ' - Zcash shipped.', '', `${pad}## Unreleased`, '', ' - Zcash future.', '', '## 1.2.2', '', ' - Zcash older.');
     assert.deepEqual(got(text), ['1.2.3:Zcash shipped.', '1.2.2:Zcash older.'], `indent ${pad.length}`);
     // Same directly under a list item (no blank line): a doubtful heading ends the block rather than extending it.
     const tight = md('## 1.2.3', ' - Zcash shipped.', `${pad}## Unreleased`, ' - Zcash future.');
     assert.deepEqual(got(tight), ['1.2.3:Zcash shipped.'], `tight indent ${pad.length}`);
+  }
+  for (const pad of ['    ', '     ', '\t', '  \t']) {
+    const text = md('## 1.2.3', '', ' - Zcash a.', '', `${pad}## Unreleased`, `${pad}## 9.9.9`, `${pad}# Archive`, '', ' - Zcash b.');
+    assert.deepEqual(got(text), ['1.2.3:Zcash a.', '1.2.3:Zcash b.'], JSON.stringify(pad));
+    assert.deepEqual(changelogVersions(text), ['1.2.3']);
+    // Also as a continuation line of a paragraph.
+    assert.deepEqual(got(md('## 1.2.3', 'Some text', `${pad}## Unreleased`, '- Zcash c.')), ['1.2.3:Zcash c.']);
   }
 });
 
@@ -36,16 +43,6 @@ test('R-ING-23: an indented release heading starts that release and is listed', 
   assert.deepEqual(changelogVersions(text), ['1.2.4', '1.2.3']);
   // An indented level-3 heading sets the section; closing "#" sequences are not part of the heading text.
   assert.deepEqual(sections(md('## 1.2.3 ##', '  ### Web3 ###', ' - Zcash a.')), ['1.2.3/Web3:Zcash a.']);
-});
-
-test('R-ING-23: 4+ spaces (or a tab) of indentation is code or paragraph text, not a heading', () => {
-  for (const pad of ['    ', '     ', '\t', '  \t']) {
-    const text = md('## 1.2.3', '', ' - Zcash a.', '', `${pad}## Unreleased`, `${pad}## 9.9.9`, `${pad}# Archive`, '', ' - Zcash b.');
-    assert.deepEqual(got(text), ['1.2.3:Zcash a.', '1.2.3:Zcash b.'], JSON.stringify(pad));
-    assert.deepEqual(changelogVersions(text), ['1.2.3']);
-    // Also as a continuation line of a paragraph.
-    assert.deepEqual(got(md('## 1.2.3', 'Some text', `${pad}## Unreleased`, '- Zcash c.')), ['1.2.3:Zcash c.']);
-  }
 });
 
 test('R-ING-23: "##hashtag" (no space after the #s) is text and does not end the release block', () => {
@@ -60,7 +57,7 @@ test('R-ING-23: "##hashtag" (no space after the #s) is text and does not end the
 // Setext headings
 // ---------------------------------------------------------------------------
 
-test('R-ING-23: a setext heading ends the release block (=== and ---)', () => {
+test('R-ING-23: a setext heading ends the release block; "---" after a list item, lazy line or quote does not', () => {
   const h2 = md('## 1.2.3', '', ' - Zcash shipped.', '', 'Unreleased', '----------', '', ' - Zcash future.', '', '## 1.2.2', '', ' - Zcash older.');
   assert.deepEqual(got(h2), ['1.2.3:Zcash shipped.', '1.2.2:Zcash older.']);
   const h1 = md('## 1.2.3', '', ' - Zcash shipped.', '', 'Archive', '=======', '', ' - Zcash archived.');
@@ -72,9 +69,7 @@ test('R-ING-23: a setext heading ends the release block (=== and ---)', () => {
   const rel = md('[1.2.4](https://x)', '------------------', '', ' - Zcash new.', '', '1.2.3', '=====', '', ' - Zcash old.');
   assert.deepEqual(changelogVersions(rel), ['1.2.4']);
   assert.deepEqual(got(rel), ['1.2.4:Zcash new.']);
-});
 
-test('R-ING-23: "---" after a list item, its lazy continuation or a quote is a thematic break, not a heading', () => {
   // List item followed directly by --- (CommonMark: list, then <hr>).
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '---', '- Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
   assert.deepEqual(got(md('## 1.2.3', ' - Zcash a.', '', '---', '', ' - Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
@@ -137,7 +132,7 @@ test('R-ING-23: other HTML block kinds follow their CommonMark end conditions', 
 // Release qualifiers
 // ---------------------------------------------------------------------------
 
-test('R-ING-23: a version heading with a non-release qualifier is not a released version', () => {
+test('R-ING-23: a version heading with a non-release qualifier is not a released version; plain and dated ones are', () => {
   const qualified = [
     '## v1.3.0-beta',
     '## [1.3.0-rc.1]',
@@ -156,9 +151,8 @@ test('R-ING-23: a version heading with a non-release qualifier is not a released
     assert.deepEqual(changelogVersions(text), ['1.2.3'], h);
     assert.deepEqual(got(text), ['1.2.3:Zcash shipped.'], h);
   }
-});
 
-test('R-ING-23: released version headings (Brave, iOS-notes and Keep a Changelog forms) stay releases', () => {
+  // Released version headings (Brave's, its iOS release notes' and Keep a Changelog forms) stay releases.
   const released: [string, string][] = [
     ['## [1.97.56](https://github.com/brave/brave-browser/releases/tag/v1.97.56) ', '1.97.56'],
     ['## [1.23.71](https://github.com/brave/brave-ios/releases/tag/v1.23.71)', '1.23.71'],
