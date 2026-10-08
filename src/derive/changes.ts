@@ -475,6 +475,12 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     const parts = [list.some((s) => s.ref === 'master') ? 'master' : '', tags.length ? `${tags.length} channel build${tags.length > 1 ? 's' : ''} (${tags.join(', ')})` : ''].filter(Boolean);
     return parts.join(' and ');
   };
+  /**
+   * A snapshot's full Cargo.lock package list, when it is consistent: it must name every crate the snapshot's own
+   * lock lists (a list that lacks them is not a complete list, so it cannot show that a package is absent).
+   */
+  const fullList = (s: Snap): string[] | undefined =>
+    Array.isArray(s.lockPackages) && Object.keys(s.lock).every((n) => s.lockPackages!.some((p) => crateKey(p) === crateKey(n))) ? s.lockPackages : undefined;
   /** The name under which this snapshot records the crate with key `k` (its own spelling), else the shown name. */
   const nameIn = (s: Snap, k: string): string =>
     Object.keys(s.resolution?.candidates ?? {}).find((n) => crateKey(n) === k) ?? Object.keys(s.lock).find((n) => crateKey(n) === k) ?? monitored.get(k) ?? shown.get(k)!;
@@ -504,7 +510,10 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     else rustPkgs.push(k);
   }
   const seen = new Set<string>();
-  const outside = new Set<string>();
+  /** Shown package name -> inspected builds where its versions were compared, and where all were outside. */
+  const seenAt = new Map<string, Snap[]>();
+  const outsideAt = new Map<string, Snap[]>();
+  const mark = (m: Map<string, Snap[]>, pkg: string, s: Snap) => m.set(pkg, [...(m.get(pkg) ?? []), s]);
   const hitAt: string[] = [];
   /** Package key -> builds read before every linked version was recorded, where its one recorded version is outside. */
   const oneRecorded = new Map<string, string[]>();
@@ -515,7 +524,10 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return hits.includes(true) ? true : hits.includes(null) ? null : false;
   };
   // Details are listed build by build (packages within a build) so the first lines show one build's full picture.
-  for (const s of inspected) {
+  for (const s0 of inspected) {
+    // The full package list is used only when it is consistent with the snapshot's own lock (see fullList).
+    const s: Snap = { ...s0, lockPackages: fullList(s0) };
+    if (s0.lockPackages && !s.lockPackages) details.push(`${label(s0)}: the recorded Cargo.lock package list lacks crates its own lock lists, so it is not used`);
     for (const k of rustPkgs) {
       const pkg = shown.get(k)!;
       const crate = nameIn(s, k);
@@ -526,6 +538,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
         const { versions } = linkedVersions(s, crate);
         if (!versions.length) continue; // known not to be linked here
         seen.add(k);
+        mark(seenAt, pkg, s0);
         const possibly = (c: { reachable: boolean | null }) => (c.reachable === true ? '' : ' (possibly linked)');
         if (!rs.length) {
           for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
@@ -546,7 +559,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
         const ex = rangeExposure(s, crate, inRanges(rs));
         if (ex.exposed === true) {
           if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
-        } else if (ex.exposed === false) outside.add(pkg);
+        } else if (ex.exposed === false) mark(outsideAt, pkg, s0);
         else if (ex.inRange.length) unknown.set(`linked|${k}|${s.ref}`, `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}, but it is not established that Brave's Zcash crate links ${ex.inRange.length > 1 ? 'them' : 'it'}`);
         else if (!ex.unknown.length) unknown.set(`linked|${k}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
         continue;
@@ -556,6 +569,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
       const v = s.lock[crate]?.version;
       if (!v) continue;
       seen.add(k);
+      mark(seenAt, pkg, s0);
       if (!rs.length) {
         details.push(`${label(s)}: ${pkg} ${v} could not be checked: the advisory gives no parseable vulnerable range`);
         unknown.set(`range|${k}`, `${pkg} ${v} is resolved, but the advisory gives no parseable vulnerable range for it`);
@@ -578,7 +592,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
       if (hitAny) {
         if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
       } else if (!unparsed) {
-        outside.add(pkg);
+        mark(outsideAt, pkg, s0);
         oneRecorded.set(k, [...(oneRecorded.get(k) ?? []), label(s)]);
       }
     }
@@ -600,7 +614,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     }
     // A package this tracker does not resolve: only the full list of Cargo.lock packages (lockPackages) can show
     // that it is not there at all. A snapshot without that list leaves it unknown.
-    const lists = inspected.map((s) => s.lockPackages);
+    const lists = inspected.map(fullList);
     const presentAt = inspected.filter((_, i) => lists[i]?.some((p) => crateKey(p) === k));
     if (presentAt.length) {
       unknown.set(`unread|${k}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
@@ -621,8 +635,12 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return { summary: `Affects ${pkgs}. Brave's resolved dependency versions are not available${unknownText.some((t) => t.startsWith("Brave's lockfile")) ? ' (lockfile reads failed)' : ''}, so whether Brave is exposed is unknown.`, details, affected: null };
   }
   const at = where(inspected);
+  // "At every checked build" only for packages whose versions were outside wherever they were compared.
+  const outsideAll = [...outsideAt].filter(([p, list]) => list.length === seenAt.get(p)?.length).map(([p]) => p);
+  const outsideSome = [...outsideAt].filter(([p]) => !outsideAll.includes(p));
   const checked = [
-    outside.size ? `Brave's pins of ${[...outside].join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    outsideAll.length ? `Brave's pins of ${outsideAll.join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    ...outsideSome.map(([p, list]) => `Brave's pins of ${p} are outside the vulnerable ranges at ${where(list)}`),
     absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
     notInLock.length ? `${notInLock.join(', ')} ${notInLock.length > 1 ? 'are' : 'is'} not present in Brave's Cargo.lock at any checked build (${at})` : '',
   ].filter(Boolean);

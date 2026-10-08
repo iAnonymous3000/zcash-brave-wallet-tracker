@@ -598,6 +598,26 @@ test('R-ADV: a version the dependency graph only shows as possibly linked is nev
   });
 });
 
+test('R-ADV: "outside at every checked build" is said only of a package that was outside wherever it was compared', () => {
+  // Master clears orchard; at the Release build 0.13.0 is only possibly linked and inside the range.
+  const v = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.13.0', null), cand('0.15.0', true, true)] }, { ambiguous: ['orchard'] })), ONE_BUILD);
+  assert.equal(v.affected, null);
+  assert.doesNotMatch(v.summary, /outside the vulnerable ranges at every checked build/);
+  assert.match(v.summary, /Brave's pins of orchard are outside the vulnerable ranges at master, but the assessment is incomplete: orchard 0\.13\.0 is in the vulnerable range at v1\.97\.56 \(desktop\/release\), but it is not established/);
+});
+
+test('R-ADV: a Cargo.lock package list that lacks the snapshot’s own crates is not used to call a package absent', () => {
+  const safe = { orchard: [cand('0.15.0', true, true)] };
+  const ZEBRAD: Advisory = { ...ADV, packages: ['rust:zebrad'], vulnerableRanges: ['zebrad < 9.0.0'] };
+  const empty = advisoryVerdicts(ZEBRAD, depsOf(rsnap('master', ['master'], safe, { lockPackages: [] }), rsnap('v1.97.56', ['desktop/release'], safe, { lockPackages: [] })), ONE_BUILD);
+  assert.equal(empty.affected, null, empty.summary);
+  assert.doesNotMatch(empty.summary, /not present in Brave's Cargo\.lock/);
+  assert.ok(empty.details.some((d) => /the recorded Cargo\.lock package list lacks crates its own lock lists/.test(d)));
+  // A consistent list (it names orchard) still shows the absence.
+  const ok = advisoryVerdicts(ZEBRAD, depsOf(rsnap('master', ['master'], safe, { lockPackages: ['orchard', 'zcash'] }), rsnap('v1.97.56', ['desktop/release'], safe, { lockPackages: ['orchard', 'zcash'] })), ONE_BUILD);
+  assert.equal(ok.affected, false);
+});
+
 test('R-ADV: a possibly linked (ambiguous) version inside the range leaves the verdict unknown', () => {
   const amb = { orchard: [cand('0.13.0', null), cand('0.15.0', true, true)] };
   const deps = depsOf(rsnap('master', ['master'], amb, { ambiguous: ['orchard'] }), rsnap('v1.97.56', ['desktop/release'], amb, { ambiguous: ['orchard'] }));
