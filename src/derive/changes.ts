@@ -17,7 +17,7 @@ import type { WorkGroup } from './relations.ts';
 import { isUpliftPr } from './relations.ts';
 import type { ChangelogEntry } from '../lib/types.ts';
 import type { UpstreamData } from '../ingest/sources/upstream.ts';
-import type { DepsData } from '../ingest/sources/deps.ts';
+import { linkedVersions, rangeExposure, type DepsData, type LockSource } from '../ingest/sources/deps.ts';
 
 export const HISTORY_DAYS = 365;
 /**
@@ -30,8 +30,12 @@ export const HISTORY_DAYS = 365;
  * v12: transitive uplift/duplicate grouping (order-independent, cycle-safe), reconciled duplicate timelines,
  * unknown-preserving advisory verdicts (coverage of every current build) and required source checks, release-note
  * version bounds, repository/branch-specific merge text.
+ * v13: unknown required checks keep opt-in/off/in-build cells not verified; unread server-side switches make usable
+ * cells not verified in the derived data; per-group merged stage labels (unknown build presence is not absence);
+ * advisory verdicts over every linked dependency version (and the full Cargo.lock package list); adoption text and
+ * master dependency pins use the highest linked version; rebuild drops require every generating input read.
  */
-export const DERIVE_RULES_VERSION = 12;
+export const DERIVE_RULES_VERSION = 13;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -50,6 +54,19 @@ export interface Snapshot {
   goneEvidence: string[];
   services?: { gate3ZcashDisabled: boolean | null; studies: string[] };
   nu7?: { braveHasBranchId: boolean | null; mainnetHeight: string | null };
+  /**
+   * Events that left the history (dropped by a rebuild, or bounded out by size) with their first detection, so an
+   * event regenerated later with the same id keeps its original detectedAt and basis (see mergeHistory).
+   */
+  droppedEvents?: Record<string, DroppedEvent>;
+}
+
+/** First detection of an event no longer in the history. */
+export interface DroppedEvent {
+  detectedAt: string;
+  basis: ChangeEvent['basis'];
+  /** The event's source time (or null); used to prune entries older than the history window. */
+  sourceAt: string | null;
 }
 
 export interface GroupView {
@@ -234,19 +251,22 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
   }
 
   // 6. Upstream releases (high-impact crates and protocol servers only).
-  const masterLock = inp.deps?.snapshots['master']?.lock ?? {};
+  const masterSnap = inp.deps?.snapshots['master'] ?? null;
   const highImpact = new Set(CRATES.filter((c) => c.impact === 'high').map((c) => c.crate));
   for (const r of inp.upstream?.releases ?? []) {
     if (!r.publishedAt || !recent(r.publishedAt) || r.yanked) continue;
     if (r.source === 'crates.io' && !highImpact.has(r.project)) continue;
-    const brave = masterLock[r.project]?.version ?? null;
+    // The highest version Brave's Zcash crate links (several can be linked at once; see braveResolves).
+    const resolved = braveResolves(masterSnap, r.project);
+    const brave = resolved?.version ?? null;
+    const also = resolved && resolved.linked.length > 1 ? ` (it also links ${resolved.linked.filter((v) => v !== brave).join(', ')})` : '';
     const adopted = brave ? compareSemver(brave, r.version.replace(/^v/, '')) >= 0 : null;
     const impact =
       r.source === 'crates.io'
         ? brave
           ? adopted
-            ? `${r.project} ${r.version} was published upstream. Brave master already resolves ${brave}, which is at or above it.`
-            : `${r.project} ${r.version} was published upstream. Brave master still resolves ${brave}${masterLock[r.project]?.source === 'path' ? ' (from Brave’s librustzcash fork)' : ''}, so it has not adopted this release.`
+            ? `${r.project} ${r.version} was published upstream. Brave master already resolves ${brave}${also}, which is at or above it.`
+            : `${r.project} ${r.version} was published upstream. Brave master still resolves ${brave}${resolved?.source === 'path' ? ' (from Brave’s librustzcash fork)' : ''}${also}, so it has not adopted this release.`
           : `${r.project} ${r.version} was published upstream. Brave's lockfile does not include ${r.project}.`
         : `${r.project} ${r.version} was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.`;
     out.push(ev({ key: `${r.id}`, kind: 'upstream-release', sourceAt: r.publishedAt, title: `Upstream: ${r.project} ${r.version}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: null, links: [{ label: r.source === 'crates.io' ? 'crates.io' : 'Release', url: r.url }], evidence: [`published ${r.publishedAt}`, brave ? `Brave master: ${brave}` : 'not in Brave lockfile'] }));
@@ -372,11 +392,19 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
 /**
  * Compare an advisory's vulnerable ranges with Brave's resolved versions at master and channel tags.
  *
+ * Every version Brave's Zcash crate may link counts, not only `lock` (which holds one of them): for snapshots with
+ * a recorded dependency-graph resolution, linkedVersions()/rangeExposure() from deps.ts decide per build — a
+ * version known to be linked inside a range → affected; a possibly linked (ambiguous) version inside a range, or
+ * a linked set that could not be established, → unknown; a build is clear only when every linked version is known
+ * and outside. Snapshots resolved before candidates were recorded are compared through `lock` alone.
+ *
  * Precedence: any checked pin inside a vulnerable range → affected (true). Otherwise anything that could not be
  * checked → unknown (null): no dependency data, a build whose lockfile read is empty, a present crate whose range
- * is missing or unparseable, a crate this tracker does not read from Cargo.lock, or a non-Rust package. Only when
- * every package was checked is the verdict "not affected" (false). A crate counts as absent only when it is one
- * of the crates read from Brave's Cargo.lock and none of the inspected lockfiles resolves it.
+ * is missing or unparseable, a crate this tracker does not resolve that is (or may be) in Cargo.lock, or a non-Rust
+ * package. Only when every package was checked is the verdict "not affected" (false). A crate this tracker
+ * resolves counts as absent when none of the inspected lockfiles links it from the Zcash crate; any other crate
+ * counts as absent only when every inspected snapshot records its full Cargo.lock package list (lockPackages) and
+ * none contains it.
  *
  * `channels` (the current platform/channel builds) makes the check strict about coverage, and every production
  * caller passes it (an empty list included): "not affected" then also needs at least one inspected Release, Beta
@@ -409,7 +437,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   const strict = channels !== undefined;
   const current = (channels ?? []).filter((c) => c.platform !== 'all');
   const currentTags = new Set(current.map((c) => c.tag).filter((t): t is string => Boolean(t)));
-  type Snap = DepsData['snapshots'][string];
+  type Snap = DepsSnapshotWithPackages;
   const all: Snap[] = Object.values(deps?.snapshots ?? {});
   // Builds to check: master, the tags the collector assigned to a channel, and (strict) every current build's tag.
   const builds = all.filter((s) => s.ref === 'master' || s.channels.length || currentTags.has(s.ref));
@@ -450,13 +478,51 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   const seen = new Set<string>();
   const outside = new Set<string>();
   const hitAt: string[] = [];
+  /** Package is in range at this version: any range hit wins, then any range that cannot be compared. */
+  const inRanges = (rs: string[]) => (v: string): boolean | null => {
+    if (!rs.length) return null;
+    const hits = rs.map((r) => satisfiesRange(v, r));
+    return hits.includes(true) ? true : hits.includes(null) ? null : false;
+  };
   // Details are listed build by build (packages within a build) so the first lines show one build's full picture.
   for (const s of inspected) {
     for (const pkg of rustPkgs) {
+      const rs = ranges.get(pkg) ?? [];
+      if (s.resolution) {
+        // Graph-resolved snapshot: every version Brave's Zcash crate may link counts (deps.ts linkedVersions()).
+        if (!s.resolution.candidates[pkg] && !readCrates.has(pkg)) continue; // not resolved by the collector: see below
+        const { versions } = linkedVersions(s, pkg);
+        if (!versions.length) continue; // known not to be linked here
+        seen.add(pkg);
+        const possibly = (c: { reachable: boolean | null }) => (c.reachable === true ? '' : ' (possibly linked)');
+        if (!rs.length) {
+          for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
+          unknown.set(`range|${pkg}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
+          continue;
+        }
+        for (const c of versions) {
+          for (const range of rs) {
+            const hit = satisfiesRange(c.version, range);
+            if (hit === null) {
+              details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
+              unknown.set(`range|${pkg}`, `${pkg} ${c.version} could not be compared with its vulnerable range "${range}"`);
+              continue;
+            }
+            details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
+          }
+        }
+        const ex = rangeExposure(s, pkg, inRanges(rs));
+        if (ex.exposed === true) {
+          if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
+        } else if (ex.exposed === false) outside.add(pkg);
+        else if (ex.inRange.length) unknown.set(`linked|${pkg}|${s.ref}`, `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}, but it is not established that Brave's Zcash crate links ${ex.inRange.length > 1 ? 'them' : 'it'}`);
+        else if (!ex.unknown.length) unknown.set(`linked|${pkg}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
+        continue;
+      }
+      // Snapshot resolved before candidates were recorded: `lock` holds the one version that was reported.
       const v = s.lock[pkg]?.version;
       if (!v) continue;
       seen.add(pkg);
-      const rs = ranges.get(pkg) ?? [];
       if (!rs.length) {
         details.push(`${label(s)}: ${pkg} ${v} could not be checked: the advisory gives no parseable vulnerable range`);
         unknown.set(`range|${pkg}`, `${pkg} ${v} is resolved, but the advisory gives no parseable vulnerable range for it`);
@@ -482,11 +548,24 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     }
   }
   const absent: string[] = [];
+  const notInLock: string[] = [];
   for (const pkg of rustPkgs) {
     if (seen.has(pkg) || !inspected.length) continue;
     if (readCrates.has(pkg)) {
       absent.push(pkg);
       details.push(`${pkg}: not in Brave's resolved dependencies at ${inspected.map(label).join('; ')}`);
+      continue;
+    }
+    // A package this tracker does not resolve: only the full list of Cargo.lock packages (lockPackages) can show
+    // that it is not there at all. A snapshot without that list leaves it unknown.
+    const lists = inspected.map((s) => s.lockPackages);
+    const presentAt = inspected.filter((_, i) => lists[i]?.includes(pkg));
+    if (presentAt.length) {
+      unknown.set(`unread|${pkg}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
+      details.push(`${pkg}: present in Brave's Cargo.lock at ${presentAt.map(label).join('; ')}; its version is not resolved by this tracker`);
+    } else if (lists.every((l) => Array.isArray(l))) {
+      notInLock.push(pkg);
+      details.push(`${pkg}: not present in Brave's Cargo.lock at ${inspected.map(label).join('; ')}`);
     } else {
       unknown.set(`unread|${pkg}`, `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`);
       details.push(`${pkg}: not checked (not among the crates this tracker reads from Brave's Cargo.lock)`);
@@ -503,12 +582,40 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   const checked = [
     outside.size ? `Brave's pins of ${[...outside].join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
     absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
+    notInLock.length ? `${notInLock.join(', ')} ${notInLock.length > 1 ? 'are' : 'is'} not present in Brave's Cargo.lock at any checked build (${at})` : '',
   ].filter(Boolean);
   if (unknownText.length) {
     return { summary: `Affects ${pkgs}. ${checked.length ? `${checked.join('; ')}, but the` : 'The'} assessment is incomplete: ${unknownText.join('; ')}. Whether Brave is exposed is unknown.`, details, affected: null };
   }
   const masterOnly = !inspected.some((s) => s.ref !== 'master');
   return { summary: `Affects ${pkgs}. ${checked.join('; ')}.${masterOnly ? ' Only master was checked; no Release, Beta or Nightly build was compared.' : ''}`, details, affected: false };
+}
+
+/**
+ * A dependency snapshot with the optional full Cargo.lock package list written by the deps collector (sorted
+ * names of every package in Cargo.lock). Its absence means unknown: older snapshots do not record it.
+ */
+export type DepsSnapshotWithPackages = DepsData['snapshots'][string] & { lockPackages?: string[] };
+
+/**
+ * The version of `crate` Brave reports as resolving in this snapshot, for adoption text: the highest version known
+ * to be linked from Brave's Zcash crate (else the highest one not ruled out), with every such version. Snapshots
+ * resolved before candidates were recorded report their `lock` entry. Exposure checks must not use this (see
+ * advisoryVerdicts). null when the crate is not linked.
+ */
+export function braveResolves(s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution'> | null | undefined, crate: string): { version: string; source: LockSource; linked: string[] } | null {
+  if (!s) return null;
+  if (!s.resolution) {
+    const l = s.lock[crate];
+    return l ? { version: l.version, source: l.source, linked: [l.version] } : null;
+  }
+  const { versions } = linkedVersions(s, crate);
+  const sure = versions.filter((c) => c.reachable === true);
+  const pool = sure.length ? sure : versions;
+  if (!pool.length) return null;
+  const sorted = [...pool].sort((a, b) => compareSemver(a.version, b.version) || compareVersions(a.version, b.version));
+  const top = sorted[sorted.length - 1];
+  return { version: top.version, source: top.source, linked: sorted.map((c) => c.version) };
 }
 
 /** Server software (lightwalletd, Zaino) is not shipped in Brave; exposure of Brave's proxy is not public. */
@@ -535,14 +642,17 @@ function diffOnly(e: ChangeEvent): boolean {
 }
 
 /**
- * Were the inputs that generate this event read in this run? Used on a rules rebuild: an event the current rules
- * do not regenerate is dropped only when they had the chance to (its items are tracked and its source was read
- * without a partial result). Otherwise the event is kept and repaired when it is next regenerated.
+ * Were all the inputs that generate this event completely read in this run? Used on a rules rebuild: an event the
+ * current rules do not regenerate is dropped only when they had the chance to, i.e. every source that decides
+ * whether it is generated was read without a partial result and its items are tracked. Otherwise the event is kept
+ * (marked rulesOutdated) and repaired when it is next regenerated.
  */
 export function eventInputsRead(e: ChangeEvent, ctx: { items: Record<string, WorkItem>; sourceRead: (sourceId: string) => boolean }): boolean {
   switch (e.kind) {
     case 'released':
-      return ctx.sourceRead('brave-changelogs') && ctx.sourceRead('brave-releases');
+      // Release dates decide the window; a changelog entry that does not itself mention Zcash is generated only
+      // because a tracked item's group lists it, so the GitHub inventory is an input as well.
+      return ctx.sourceRead('brave-changelogs') && ctx.sourceRead('brave-releases') && ctx.sourceRead('github-items');
     case 'advisory':
       return ctx.sourceRead('advisories');
     case 'upstream-release':
@@ -550,8 +660,9 @@ export function eventInputsRead(e: ChangeEvent, ctx: { items: Record<string, Wor
     case 'community-report':
       return ctx.sourceRead('community');
     default:
-      // Item timeline events are regenerated from the items themselves, so every one of them must be tracked now.
-      return e.itemIds.every((id) => Boolean(ctx.items[id]));
+      // Item timeline events are regenerated from the items (and their groups, which decide whether work is shown),
+      // so the inventory must be complete and every item tracked now.
+      return ctx.sourceRead('github-items') && e.itemIds.every((id) => Boolean(ctx.items[id]));
   }
 }
 
@@ -566,9 +677,14 @@ export function eventInputsRead(e: ChangeEvent, ctx: { items: Record<string, Wor
  * events whose items or source were missing) are marked `rulesOutdated`, and any later run that regenerates them
  * replaces their text. Refresh-only candidates repair text the same way but never add events. Retracted ids are
  * removed and never re-added.
+ *
+ * `dropped` records events that left the history earlier (a rebuild drop, or the size bound) with their first
+ * detection: an event regenerated with such an id is restored with its original detectedAt and basis and is not
+ * counted as added. The returned `dropped` is the ledger to keep for the next run (pruned to the history window).
  */
-export function mergeHistory(history: ChangeEvent[], candidates: CandidateEvent[], now: string, lastRunAt: string | null, retracted: Record<string, string> = RETRACTED_EVENTS, opts: { rebuildBackfill?: boolean; inputsRead?: (e: ChangeEvent) => boolean } = {}): { events: ChangeEvent[]; added: number } {
+export function mergeHistory(history: ChangeEvent[], candidates: CandidateEvent[], now: string, lastRunAt: string | null, retracted: Record<string, string> = RETRACTED_EVENTS, opts: { rebuildBackfill?: boolean; inputsRead?: (e: ChangeEvent) => boolean; dropped?: Record<string, DroppedEvent> } = {}): { events: ChangeEvent[]; added: number; dropped: Record<string, DroppedEvent> } {
   const kept = history.filter((e) => !retracted[e.id]);
+  const ledger = opts.dropped ?? {};
   const generated = new Set(candidates.filter((c) => !c.refreshOnly).map((c) => c.id));
   // Without positive knowledge that an event's inputs were read, a rebuild keeps it (a partial read never erases history).
   const inputsRead = opts.inputsRead ?? (() => false);
@@ -593,6 +709,12 @@ export function mergeHistory(history: ChangeEvent[], candidates: CandidateEvent[
     }
     if (refreshOnly) continue; // repairs recorded text only; never adds history
     seen.add(e.id);
+    const before = Object.hasOwn(ledger, e.id) ? ledger[e.id] : undefined;
+    if (before) {
+      // Seen before and dropped since: restored with its first detection, not reported as new.
+      byId.set(e.id, { ...e, detectedAt: before.detectedAt, basis: before.basis });
+      continue;
+    }
     // Observed = it happened after our previous run (or has no source time and was found by a diff).
     const observed = lastRunAt !== null && (e.sourceAt === null || Date.parse(e.sourceAt) >= Date.parse(lastRunAt) - 6 * 3_600_000);
     byId.set(e.id, { ...e, detectedAt: now, basis: observed ? 'observed' : 'backfill' });
@@ -602,11 +724,23 @@ export function mergeHistory(history: ChangeEvent[], candidates: CandidateEvent[
     for (const [id, e] of prior) if (!replaced.has(id) && !diffOnly(e)) byId.set(id, { ...e, rulesOutdated: true });
   }
   const cutoff = Date.parse(now) - HISTORY_DAYS * 86_400_000;
+  const inWindow = (e: { sourceAt: string | null; detectedAt: string }) => Date.parse(e.sourceAt ?? e.detectedAt) >= cutoff;
   const events = [...byId.values()]
-    .filter((e) => Date.parse(e.sourceAt ?? e.detectedAt) >= cutoff)
+    .filter(inWindow)
     .sort((a, b) => (b.sourceAt ?? b.detectedAt).localeCompare(a.sourceAt ?? a.detectedAt) || a.id.localeCompare(b.id))
     .slice(0, MAX_EVENTS);
-  return { events, added };
+  // Ledger of first detections for events not in the history, within the window (older ones are never regenerated).
+  const inHistory = new Set(events.map((e) => e.id));
+  const next: Record<string, DroppedEvent> = {};
+  for (const [id, d] of Object.entries(ledger)) if (!inHistory.has(id) && !retracted[id] && inWindow(d)) next[id] = d;
+  for (const e of [...kept, ...byId.values()]) {
+    if (inHistory.has(e.id) || retracted[e.id] || Object.hasOwn(next, e.id) || !inWindow(e)) continue;
+    next[e.id] = { detectedAt: e.detectedAt, basis: e.basis, sourceAt: e.sourceAt };
+  }
+  // Bounded like the history (most recent first), stored in id order so the file diffs stay small.
+  const recentFirst = Object.entries(next).sort(([a, x], [b, y]) => (y.sourceAt ?? y.detectedAt).localeCompare(x.sourceAt ?? x.detectedAt) || a.localeCompare(b));
+  const dropped = Object.fromEntries(recentFirst.slice(0, MAX_EVENTS * 2).sort(([a], [b]) => a.localeCompare(b)));
+  return { events, added, dropped };
 }
 
 export { compareVersions };

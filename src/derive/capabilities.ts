@@ -17,10 +17,22 @@
 // current availability.
 //
 // Required source checks are three-valued. present:false makes the cell "absent" (it overrides release
-// notes, because the code is gone at this build). A missing result or present:null is unknown: it blocks
-// claims that rest only on a generic flag (e.g. the broad Zcash flag cannot show that the Meld integration
-// requests ZEC), while row-specific evidence — this platform's release note, or the row's implementing
-// PRs being in the build — still decides, with the incomplete check disclosed as evidence.
+// notes, because the code is gone at this build). A missing result or present:null is unknown, and then the
+// cell is "not-verified" on every build-level path: flag on ("in build"), flag off with a brave://flags option
+// ("opt-in"), flag off ("off"), implementing PRs in the build, and a Stable note seen from Beta/Nightly. None of
+// those shows that this build contains the row-specific code (e.g. the broad Zcash flag cannot show that the
+// Meld integration requests ZEC; a generic Ironwood brave://flags option cannot show the migration task). The
+// app-side facts are kept in the summary and evidence. One documented precedence remains: on Release, this
+// platform's own Stable release note (direct, or implied by a dependent capability's note) still establishes
+// "available", with the incomplete check disclosed as evidence. A missing flag stays "absent" (that is a
+// negative fact about the build, not a claim of presence).
+//
+// Server-side switches: a switch read as off makes the cell "service-off" here (it describes the checked public
+// repository, never the deployed service). A switch whose state is unknown (not read, or the setting not found)
+// is applied by applyUnknownServiceSwitches(), which deriveAll() runs before publishing and diffing: usable
+// cells (available, in build, opt-in) of a row that depends on it, directly or through a prerequisite, become
+// "not-verified", keeping their app-side status as `appStatus`. buildCapabilities() alone returns the app-side
+// statuses.
 
 import type { CapabilityDef } from '../../config/capabilities.ts';
 import type { ChangelogEntry, Channel, ChannelVersion, DocPage, FlagSnapshot, Platform, WorkItem } from '../lib/types.ts';
@@ -45,11 +57,14 @@ export const CELL_HELP: Record<CellStatus, string> = {
   'in-build': 'The code and an enabled-by-default flag are in this build (Beta/Nightly, or Stable without a release note). Not a release announcement.',
   'opt-in': 'Present but disabled by default; can be turned on in brave://flags.',
   off: 'The feature flag is disabled by default in this build.',
-  'service-off': 'The app code may be present, but a Brave backend service currently has this turned off for Zcash (per its public repository).',
+  'service-off': 'The app code may be present, but Brave’s public server-side code (e.g. its swap backend repository, brave/gate3) switches this off for Zcash, for every client. The deployed service is not public and could differ.',
   absent: 'The flag or code this capability depends on is not present in this build.',
   'not-planned': 'Brave closed the request as not planned.',
-  'not-verified': 'No platform-specific evidence was found. This does not mean it is unavailable.',
+  'not-verified': 'Not enough evidence that it works on this build: no platform-specific evidence was found, a required source check could not be completed, or a server-side switch it depends on could not be read. This does not mean it is unavailable.',
 };
+
+/** Statuses that say the feature can be used (or turned on) in that build. */
+const USABLE: ReadonlySet<CellStatus> = new Set<CellStatus>(['available', 'in-build', 'opt-in']);
 
 export interface Evidence {
   kind: 'release-note' | 'flag' | 'source' | 'build' | 'doc' | 'not-planned' | 'qa' | 'service' | 'note';
@@ -69,6 +84,11 @@ export interface Cell {
   since?: string | null;
   summary: string;
   evidence: Evidence[];
+  /**
+   * Set only by applyUnknownServiceSwitches(): the app-side status of a cell shown as "not-verified" because a
+   * server-side switch its row depends on (directly or through a prerequisite) could not be read.
+   */
+  appStatus?: CellStatus;
 }
 
 export interface CapabilityRow {
@@ -98,7 +118,19 @@ export interface CapabilityInputs {
   groupStatus: (issueId: string) => GroupStatus | null;
   docs: DocPage[];
   /** Server-side switches by id (e.g. 'gate3-zcash-swaps' -> disabled?). */
-  serviceChecks?: Record<string, { disabled: boolean | null; text: string; url: string; since?: string | null; sinceUrl?: string | null }>;
+  serviceChecks?: Record<string, ServiceCheck>;
+}
+
+/** A server-side switch as read from its public code. */
+export interface ServiceCheck {
+  /** true: the checked code switches Zcash off; false: it does not; null: the setting could not be found. */
+  disabled: boolean | null;
+  text: string;
+  url: string;
+  since?: string | null;
+  sinceUrl?: string | null;
+  /** What was checked, for summaries (e.g. "Brave’s public swap-service code (brave/gate3)"). */
+  what?: string;
 }
 
 const PLATFORM_NAME: Record<Platform, string> = { desktop: 'Desktop', android: 'Android', ios: 'iOS' };
@@ -205,13 +237,13 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         }
 
         // Server-side switches (apply to every platform and channel).
-        let serviceOff: { text: string; url: string } | null = null;
+        let serviceOff: ServiceCheck | null = null;
         for (const sid of def.serviceChecks ?? []) {
           const sc = inp.serviceChecks?.[sid];
           if (!sc) continue;
           ev.push({ kind: 'service', text: sc.text, url: sc.url, contrary: sc.disabled === true });
           if (sc.since && sc.sinceUrl) ev.push({ kind: 'service', text: sc.since, url: sc.sinceUrl, contrary: sc.disabled === true });
-          if (sc.disabled === true) serviceOff = { text: sc.text, url: sc.url };
+          if (sc.disabled === true) serviceOff = sc;
         }
 
         // Docs (shown, never decisive).
@@ -230,9 +262,9 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         const v = cv?.version ?? null;
         const where = `${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}${v ? ` ${v}` : ''}`;
         if (serviceOff) {
-          // A server-side switch applies to every client, whatever build it runs.
+          // A server-side switch applies to every client, whatever build it runs. Only the public code was checked.
           status = 'service-off';
-          summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : ''}currently turned off server-side for Zcash, for every client.`;
+          summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : ''}${serviceOff.what ?? 'Brave’s public server-side code'} disables Zcash for every platform and version. The deployed service is not public and could differ.`;
         } else if (blocked) {
           status = 'absent';
           summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
@@ -253,13 +285,12 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         } else if (flagState === 'missing') {
           status = 'absent';
           summary = `Flag not present in ${where}.`;
-        } else if (flagState === 'on' && (firstNote || built === true || (!(def.implementedBy?.length) && !requiredUnknown.length))) {
-          // A generic flag alone is enough only when no required row-specific check is left unknown.
+        } else if (flagState === 'on' && (firstNote || built === true || !(def.implementedBy?.length))) {
+          // A generic flag alone is enough only when no required row-specific check is left unknown (see below).
           status = channel === 'release' && firstNote ? 'available' : 'in-build';
           summary = firstNote
             ? `${channel === 'release' ? '' : 'Stable shipped it; '}flag on at ${cv?.tag ?? 'build'}.`
             : `Flag on and code present at ${cv?.tag ?? 'build'}; ${noteGap ?? `no ${PLATFORM_NAME[platform]} release note`}.`;
-          if (requiredUnknown.length) ev.push({ kind: 'note', text: `Required check not completed at ${cv?.tag ?? 'this build'} (${requiredUnknown.join('; ')}); ${firstNote ? 'the Stable release note' : 'the implementing PRs being in this build'} is used as the evidence.`, url: null });
         } else if (!def.flags?.length && cv?.tag && channel !== 'release' && (firstNote ? built !== false && compareVersions(cv.version, firstNote.version) >= 0 : built === true)) {
           status = 'in-build';
           summary = firstNote ? `Shipped in ${PLATFORM_NAME[platform]} Stable; implementing code present at ${cv?.tag ?? 'build'}.` : `Implementing code present at ${cv?.tag ?? 'build'}; ${noteGap ?? 'no release note'}.`;
@@ -272,8 +303,21 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           else if (channel === 'release' && pendingNote) summary = `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it, but the store version ${cv.version} does not say which ${cv.version} build is live, so availability is not verified.`;
           else if (channel === 'release' && newerNote) summary = `${PLATFORM_NAME[platform]} release notes list it first in ${newerNote.version}, newer than the current ${cv.version}, so it is not verified for this version.`;
           else if (!cv.tag) summary = `${noNote(true)}, and ${platform === 'ios' && channel === 'release' ? `the ${cv.version} store build number is not published` : `no brave-core tag is known for ${cv.version}`}, so its code and flags cannot be checked.`;
-          else if (flagState === 'on' && requiredUnknown.length) summary = `Flag on at ${cv.tag}, but the required check could not be completed (${requiredUnknown.join('; ')}), so it is not verified that this build contains it.`;
           else summary = noteGap ? `${noteGap}; no other ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.` : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
+        }
+        // An unknown required check: no build-level path shows that this build contains the row-specific code (see
+        // the header). The Stable release-note path above is the documented exception; absent stays absent.
+        if (requiredUnknown.length && cv?.tag && (status === 'in-build' || status === 'opt-in' || status === 'off')) {
+          const facts = [
+            flagState === 'on' ? `flag on at ${cv.tag}` : flagState === 'off' ? `flag off by default at ${cv.tag}` : '',
+            optIn ? 'a brave://flags option is present' : '',
+            built === true ? `the implementing PRs are in ${cv.tag}` : '',
+            firstNote && channel !== 'release' ? `${PLATFORM_NAME[platform]} Stable release notes list it (${firstNote.version})` : '',
+          ].filter(Boolean);
+          const lead = facts.length ? facts.join('; ') : `${where} was checked`;
+          ev.push({ kind: 'note', text: `Required check not completed at ${cv.tag} (${requiredUnknown.join('; ')}), so this build is not verified to contain it. Without that check the evidence would read: ${CELL_LABEL[status]} — ${summary}`, url: null });
+          status = 'not-verified';
+          summary = `${lead[0].toUpperCase()}${lead.slice(1)}, but the required check could not be completed (${requiredUnknown.join('; ')}), so it is not verified that this build contains it.`;
         }
         // Marketing-only versions: describe the likely build without upgrading the status.
         if (status === 'not-verified' && cv && !cv.tag && cv.inferredTag) {
@@ -352,6 +396,51 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
     }
   }
   return rows;
+}
+
+/** Wording shared with the site (src/site/view.ts) for a server-side switch whose state is unknown. */
+export const SERVICE_UNKNOWN_TEXT = 'whether Brave’s server-side switch turns it off for Zcash is unknown: the switch could not be read from its public code';
+
+/**
+ * Server-side switches whose state is unknown: not read at all (no service data) or read without finding the
+ * setting (disabled: null). A usable cell (available, in build, opt-in) of a row that names such a switch, or that
+ * requires (transitively) a row naming one, becomes "not-verified": the build may contain the feature, but whether
+ * Brave's backend lets it work for Zcash is unknown. The app-side status is kept as `appStatus` and in the evidence;
+ * other statuses are unchanged (a switch cannot make an absent feature present). Returns new rows.
+ */
+export function applyUnknownServiceSwitches(rows: CapabilityRow[], defs: CapabilityDef[], checks: Record<string, ServiceCheck> | undefined): CapabilityRow[] {
+  const defOf = new Map(defs.map((d) => [d.id, d]));
+  const rowOf = new Map(rows.map((r) => [r.id, r]));
+  const unknownSwitches = (id: string) => (defOf.get(id)?.serviceChecks ?? []).filter((sid) => (checks?.[sid]?.disabled ?? null) === null);
+  const prereqs = (id: string, seen = new Set<string>()): string[] => {
+    for (const r of defOf.get(id)?.requires ?? []) {
+      if (seen.has(r)) continue;
+      seen.add(r);
+      prereqs(r, seen);
+    }
+    return [...seen];
+  };
+  return rows.map((row) => {
+    const own = unknownSwitches(row.id);
+    const via = own.length ? null : (prereqs(row.id).map((id) => rowOf.get(id)).find((r): r is CapabilityRow => Boolean(r) && unknownSwitches(r!.id).length > 0) ?? null);
+    if (!own.length && !via) return row;
+    const cells = row.cells.map((cell): Cell => {
+      if (!USABLE.has(cell.status)) return cell;
+      const p = PLATFORM_NAME[cell.platform];
+      const v = cell.version ? ` ${cell.version}` : '';
+      const note = cell.since ?? cell.evidence.find((e) => e.kind === 'release-note' && e.version)?.version ?? null;
+      const app = cell.status === 'available' ? `Shipped in the ${p} app${note ? ` (release notes ${note})` : ''}` : cell.status === 'in-build' ? `The code is in ${p}${v} and on by default` : `The code is in ${p}${v} behind a brave://flags option`;
+      const unread = own.filter((sid) => !checks?.[sid]);
+      const evidence: Evidence[] = [
+        ...cell.evidence,
+        ...unread.map((sid) => ({ kind: 'service' as const, text: `Brave’s server-side switch for this feature (${sid}) was not read (no service data), so its state is unknown`, url: null, contrary: false })),
+        { kind: 'note', text: `Shown as not verified because ${SERVICE_UNKNOWN_TEXT}${via ? ` (it depends on “${via.name}”)` : ''}. App-side status: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null },
+      ];
+      const summary = via ? `Limited by “${via.name}” (not verified here): ${SERVICE_UNKNOWN_TEXT}.` : `${app}, but ${SERVICE_UNKNOWN_TEXT}.`;
+      return { ...cell, status: 'not-verified', since: null, summary, evidence, appStatus: cell.status };
+    });
+    return { ...row, cells };
+  });
 }
 
 function topoOrder(defs: CapabilityDef[]): CapabilityDef[] {
