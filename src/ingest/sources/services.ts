@@ -107,12 +107,16 @@ export interface ServicesData {
 
 const GATE3_FILE = 'app/api/swap/constants.py';
 /** Bump when relevance or parsing rules change, so an unchanged listing is still re-read. */
-export const STUDY_RULES = 3;
+export const STUDY_RULES = 4;
 /** Upper bound on raw study files fetched per run (the repository has ~125; an unchanged listing is not re-read). */
 export const MAX_STUDY_FETCHES = 220;
-/** File-level content test: the file must mention Zcash/Ironwood somewhere. */
+/**
+ * Zcash terms. File level: the file must mention one somewhere. Study level: a feature name (enable/disable/forcing),
+ * parameter name or parameter value must contain one (BraveWalletZCash, zcash_shielded_transactions_enabled,
+ * zcash_ironwood_enabled, ...). Every Zcash feature and parameter Brave defines contains "zcash" or "ironwood";
+ * other Brave Wallet features (BraveWalletWebUIFeature, BraveWalletCardano, ...) do not make a study relevant.
+ */
 const RELEVANT_TEXT = /zcash|ironwood/i;
-const RELEVANT_NAME = /zcash|ironwood|wallet/i;
 
 // ---------------------------------------------------------------------------
 // JSON5
@@ -443,61 +447,141 @@ function collectionElements(expr: string): string[] | null {
 
 const SWAP_VAR = 'SWAP_DISABLED_CHAINS';
 /** Methods that only read a tuple/list/set; any other method call on the switch may modify it. */
-const READ_ONLY_METHODS = ['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index'];
-const AUG = '(?:[-+*/%&|^@]|<<|>>|\\*\\*|//)?';
-/** Statements (other than the definition) that bind or modify the switch, so its final value is not the literal. */
-const SWAP_BINDING = new RegExp(
-  [
-    // (augmented/annotated) assignment at the start of a statement or after a compound-statement colon
-    // ("if X: SWAP_DISABLED_CHAINS = ...", "else: ...", "try: ...")
-    `(?:^|:)\\s*${SWAP_VAR}\\s*(?::[^=]*)?${AUG}=(?!=)`,
-    `\\b${SWAP_VAR}\\s*:=`,
-    `\\b${SWAP_VAR}\\s*\\[[^\\]]*\\]\\s*${AUG}=(?!=)`,
-    `\\b${SWAP_VAR}\\s*\\.\\s*(?!(?:${READ_ONLY_METHODS.join('|')})\\s*\\()[A-Za-z_]\\w*\\s*\\(`,
-    `\\bdel\\b.*\\b${SWAP_VAR}\\b`,
-    `\\b(?:as|for|global|nonlocal|def|class|case)\\s+${SWAP_VAR}\\b`,
-    `^\\(?\\s*(?:[A-Za-z_][\\w.]*\\s*,\\s*)+${SWAP_VAR}\\s*(?:,[\\w\\s,.]*)?\\)?\\s*=(?!=)`,
-    `^\\(?\\s*${SWAP_VAR}\\s*,[\\w\\s,.]*\\)?\\s*=(?!=)`,
-    `=\\s*${SWAP_VAR}\\s*=(?!=)`,
-  ].join('|'),
-);
-/** import rebinding ("from .overrides import SWAP_DISABLED_CHAINS", "import x as SWAP_DISABLED_CHAINS"). */
-const SWAP_IMPORT = new RegExp(`^(?:from\\s+\\S+\\s+)?import\\b.*\\b${SWAP_VAR}\\b`);
+const READ_ONLY_METHODS = new Set(['union', 'intersection', 'difference', 'symmetric_difference', 'issubset', 'issuperset', 'isdisjoint', 'copy', 'count', 'index']);
 const STAR_IMPORT = /^from\s+\S+\s+import\s+\*/;
-/** Dynamic binding by name: globals()/vars()/locals()/__dict__/setattr/exec/eval with the name in a string. */
-const DYNAMIC_BINDING = /\b(?:globals|vars|locals)\s*\(\s*\)|\bsetattr\s*\(|__dict__|\bexec\s*\(|\beval\s*\(/;
+/**
+ * Namespace primitives that can create or rebind module names at run time without naming them in code
+ * (globals()/vars()/locals(), sys.modules, __dict__, setattr/delattr, exec/eval). Any use makes the final value of a
+ * module constant undeterminable by reading the file: the name can be in a string, a variable or an alias.
+ */
+const DYNAMIC_NAMESPACE = /(?<![\w.])(?:globals|vars|locals|setattr|delattr|exec|eval)\s*\(|\b__dict__\b|\b__(?:set|del)attr__\b|\bsys\s*\.\s*modules\b/;
+
+interface PyToken {
+  t: string;
+  kind: 'name' | 'number' | 'string' | 'op';
+  /** Bracket depth the token is at (an opening bracket is at the outer depth, its contents one deeper). */
+  depth: number;
+}
+const PY_OPS = ['**=', '//=', '>>=', '<<=', '...', '->', ':=', '==', '!=', '<=', '>=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '@=', '**', '//', '<<', '>>'];
+/** Assignment operators: a name to their left (at bracket depth 0) is an assignment target. */
+const ASSIGN_OPS = new Set(['=', '+=', '-=', '*=', '/=', '//=', '%=', '**=', '>>=', '<<=', '&=', '|=', '^=', '@=']);
+const PY_KEYWORDS = new Set(['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']);
+/** Keywords whose following target list binds names: `for X in`, `... as X`, `del X`, `global X`, `import X`, `def X`, `class X`. */
+const BINDING_KEYWORDS = new Set(['for', 'as', 'del', 'global', 'nonlocal', 'import', 'def', 'class']);
+
+/** Tokens of one logical statement from pythonStatements (string literals are already ''). */
+function pyTokens(code: string): PyToken[] {
+  const out: PyToken[] = [];
+  const NAME = /[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*/uy;
+  const NUMBER = /(?:\d|\.\d)[\w.]*/y;
+  let depth = 0;
+  let i = 0;
+  while (i < code.length) {
+    const c = code[i];
+    if (/\s/.test(c)) {
+      i++;
+      continue;
+    }
+    if (code.startsWith("''", i)) {
+      out.push({ t: "''", kind: 'string', depth });
+      i += 2;
+      continue;
+    }
+    NAME.lastIndex = i;
+    const name = NAME.exec(code);
+    if (name) {
+      out.push({ t: name[0], kind: 'name', depth });
+      i += name[0].length;
+      continue;
+    }
+    NUMBER.lastIndex = i;
+    const num = NUMBER.exec(code);
+    if (num) {
+      out.push({ t: num[0], kind: 'number', depth });
+      i += num[0].length;
+      continue;
+    }
+    const op = PY_OPS.find((o) => code.startsWith(o, i)) ?? c;
+    if (op === ')' || op === ']' || op === '}') depth = Math.max(0, depth - 1);
+    out.push({ t: op, kind: 'op', depth });
+    if (op === '(' || op === '[' || op === '{') depth++;
+    i += op.length;
+  }
+  return out;
+}
+
+/**
+ * How a statement other than the definition binds or modifies the switch, or null when it only reads it.
+ * The name is a target when it stands left of an assignment operator at bracket depth 0 (plain, chained, augmented,
+ * annotated, tuple/list/starred, subscript and attribute targets, `type X = ...`, one-line `if c: X = ...`), when
+ * it is assigned with := or passed as a keyword (`globals().update(X=...)`), when it is in the target list of
+ * for/as/del/global/nonlocal/import/def/class or in a match-case pattern, or when a method that may modify it is
+ * called on it.
+ */
+function switchBinding(code: string): string | null {
+  const toks = pyTokens(code);
+  const hits = toks.flatMap((x, k) => (x.kind === 'name' && x.t === SWAP_VAR ? [k] : []));
+  if (!hits.length) return null;
+  let lastAssign = -1;
+  toks.forEach((x, k) => {
+    if (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)) lastAssign = k;
+  });
+  if (hits.some((k) => k < lastAssign)) return 'assignment target';
+  const first = toks[0];
+  if (first?.t === 'case' && toks[1] && !(toks[1].kind === 'op' && (ASSIGN_OPS.has(toks[1].t) || toks[1].t === '.'))) return 'match-case pattern';
+  for (const k of hits) {
+    const next = toks[k + 1];
+    if (next?.t === ':=') return 'assignment expression (:=)';
+    if (next?.t === '=' && toks[k].depth > 0) return 'keyword argument (e.g. globals().update(...))';
+    if (next?.t === '.' && toks[k + 2]?.kind === 'name' && toks[k + 3]?.t === '(' && !READ_ONLY_METHODS.has(toks[k + 2].t)) return `method call .${toks[k + 2].t}() that may modify it`;
+    // Walk back over a target list ("for a, (b, X) in", "import a, X", "with f() as X") to its keyword.
+    for (let j = k - 1; j >= 0; j--) {
+      const p = toks[j];
+      if (p.kind === 'name' && BINDING_KEYWORDS.has(p.t)) return `${p.t} target`;
+      if (p.kind === 'name' && !PY_KEYWORDS.has(p.t)) continue;
+      if (p.t === ',' || p.t === '*' || p.t === '.') continue;
+      if (p.t === '(' || p.t === '[') {
+        const before = toks[j - 1];
+        // A call or subscript ("f(X)", "a[X]") is a read, not a target list.
+        if (before && ((before.kind === 'name' && !PY_KEYWORDS.has(before.t)) || before.t === ')' || before.t === ']' || before.kind === 'string')) break;
+        continue;
+      }
+      break;
+    }
+  }
+  return null;
+}
 
 /**
  * Whether gate3's module-level SWAP_DISABLED_CHAINS contains Chain.ZCASH.
  * true/false only for a single top-level literal assignment whose relevant elements are all Chain.X and that no
- * other statement rebinds or modifies; null (unknown) for anything else (computed values, reassignment in any form,
- * conditional definitions, import or dynamic rebinding).
+ * other statement binds or modifies; null (unknown) for anything else: computed values, any other binding of the
+ * name (see switchBinding), conditional definitions, a later star import, or run-time namespace changes.
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);
   const assign = new RegExp(`^${SWAP_VAR}\\s*(?::[^=]+)?=(?!=)([\\s\\S]*)$`);
   const defs = stmts.filter((s) => assign.test(s.code));
   if (!defs.length) {
-    const bound = stmts.find((s) => SWAP_BINDING.test(s.code) || SWAP_IMPORT.test(s.code));
-    return { zcashDisabled: null, line: bound?.line ?? null, reason: bound ? `${SWAP_VAR} is bound only in a form other than a single literal assignment` : `${SWAP_VAR} assignment not found` };
+    const bound = stmts.find((s) => switchBinding(s.code));
+    return { zcashDisabled: null, line: bound?.line ?? null, reason: bound ? `${SWAP_VAR} is bound only in a form other than a single literal assignment (${switchBinding(bound.code)})` : `${SWAP_VAR} assignment not found` };
   }
   const top = defs.filter((d) => d.indent === 0);
   if (!top.length) return { zcashDisabled: null, line: defs[0].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
-  const firstLine = top[0].line;
-  const others = stmts.filter(
-    (s) =>
-      !defs.includes(s) &&
-      (SWAP_BINDING.test(s.code) ||
-        SWAP_IMPORT.test(s.code) ||
-        (STAR_IMPORT.test(s.code) && s.line > firstLine) ||
-        (DYNAMIC_BINDING.test(s.code) && s.strings.some((x) => x.includes(SWAP_VAR)))),
-  );
-  if (defs.length > 1 || others.length) {
-    const at = [...defs, ...others].map((s) => s.line).filter((l) => l !== firstLine);
-    return { zcashDisabled: null, line: firstLine, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
-  }
   const def = top[0];
+  const dynamic = stmts.find((s) => DYNAMIC_NAMESPACE.test(s.code));
+  if (dynamic) return { zcashDisabled: null, line: def.line, reason: `the module changes names at run time (line ${dynamic.line}: globals()/vars()/setattr/exec or similar); the final value of ${SWAP_VAR} is not determined statically` };
+  const others = stmts.filter((s) => s !== def && (defs.includes(s) || switchBinding(s.code) !== null || (STAR_IMPORT.test(s.code) && s.line > def.line)));
+  if (others.length) {
+    const at = others.map((s) => s.line);
+    return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
+  }
   const rhs = assign.exec(def.code)![1];
+  // The value itself must be a plain literal: no chained target, walrus or self-reference.
+  const rhsToks = pyTokens(rhs);
+  if (rhsToks.some((x) => (x.kind === 'name' && x.t === SWAP_VAR) || x.t === ':=' || (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)))) {
+    return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is not a literal tuple/list/set of Chain members` };
+  }
   const elements = collectionElements(rhs);
   if (elements === null) return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is not a literal tuple/list/set of Chain members` };
   const names = elements.map((el) => /^Chain\s*\.\s*([A-Za-z_]\w*)$/.exec(el)?.[1] ?? null);
@@ -564,11 +648,32 @@ function dateValue(v: unknown): number | null {
   return null;
 }
 
+/**
+ * One clause of a filter outcome. Clauses with the same `key` say the same thing about different builds, so the
+ * per-OS desktop builds of one channel can be summarised clause by clause instead of repeating every OS's reason.
+ */
+export interface FilterClause {
+  key: string;
+  /** platform: `key` + the excluded build; version: `full` + `key`; others: `text` is the same for every build with this key. */
+  kind: (typeof CLAUSE_ORDER)[number];
+  /** As stated for this one build. */
+  text: string;
+  /** version clauses: the full (Chromium-based) version that was compared. */
+  full?: string;
+}
+/** Clause kinds in the order a filter is evaluated (and reasons are written). */
+const CLAUSE_ORDER = ['platform', 'channel', 'version', 'version-unknown', 'date', 'key'] as const;
+
 /** Evaluate a study filter against one build. null = cannot be determined from public data. */
-export function evaluateStudyFilter(filter: Record<string, unknown> | null | undefined, b: StudyBuild, now: string): { applies: boolean | null; reason: string; desktopOs?: string[] } {
+export function evaluateStudyFilter(
+  filter: Record<string, unknown> | null | undefined,
+  b: StudyBuild,
+  now: string,
+): { applies: boolean | null; reason: string; desktopOs?: string[]; clauses: FilterClause[] } {
   const f = filter ?? {};
-  const excluded: string[] = [];
-  const unknown: string[] = [];
+  const excluded: FilterClause[] = [];
+  const unknown: FilterClause[] = [];
+  const other = (kind: FilterClause['kind'], text: string): FilterClause => ({ key: text, kind, text });
   let desktopOs: string[] | undefined;
 
   const platforms = asList(f.platform).map(normCode);
@@ -577,35 +682,70 @@ export function evaluateStudyFilter(filter: Record<string, unknown> | null | und
     const family = b.platform === 'desktop' && b.os ? osFamily(b.os) : null;
     const codes = family ? [family] : PLATFORM_CODES[b.platform];
     const hit = codes.filter((p) => platforms.includes(p));
-    if (!hit.length) excluded.push(`platform filter (${platforms.join(', ')}) excludes ${b.os ? `${PLATFORM_NAME.desktop} ${osName(b.os)}` : PLATFORM_NAME[b.platform]}`);
+    const key = `platform filter (${platforms.join(', ')}) excludes`;
+    if (!hit.length) excluded.push({ key, kind: 'platform', text: `${key} ${b.os ? `${PLATFORM_NAME.desktop} ${osName(b.os)}` : PLATFORM_NAME[b.platform]}` });
     else if (b.platform === 'desktop' && !family && hit.length < DESKTOP_FAMILIES.length) desktopOs = hit;
   }
   const channels = asList(f.channel).map(normCode);
-  if (channels.length && !CHANNEL_CODES[b.channel].some((c) => channels.includes(c))) excluded.push(`channel filter (${channels.join(', ')}) excludes ${b.channel}`);
+  if (channels.length && !CHANNEL_CODES[b.channel].some((c) => channels.includes(c))) excluded.push(other('channel', `channel filter (${channels.join(', ')}) excludes ${b.channel}`));
 
   const min = f.min_version === undefined || f.min_version === null ? null : String(f.min_version);
   const max = f.max_version === undefined || f.max_version === null ? null : String(f.max_version);
   if (min || max) {
-    if (b.chromiumMajor === null || !BUILD_VERSION_RE.test(b.version)) unknown.push(`the Chromium-based version of ${b.version} is not known, so the version range ${min ?? 'any'} – ${max ?? 'any'} cannot be checked`);
+    const range = `${min ?? 'any'} – ${max ?? 'any'}`;
+    if (b.chromiumMajor === null || !BUILD_VERSION_RE.test(b.version)) unknown.push(other('version-unknown', `the Chromium-based version of ${b.version} is not known, so the version range ${range} cannot be checked`));
     else {
       const full = `${b.chromiumMajor}.${b.version}`;
-      if (!inStudyRange(full, min, max)) excluded.push(`${full} is outside the version range ${min ?? 'any'} – ${max ?? 'any'}`);
+      const key = `outside the version range ${range}`;
+      if (!inStudyRange(full, min, max)) excluded.push({ key, kind: 'version', text: `${full} is ${key}`, full });
     }
   }
   const nowMs = Date.parse(now);
   for (const [key, cmp] of [['start_date', 1], ['end_date', -1]] as const) {
     if (f[key] === undefined || f[key] === null) continue;
     const t = dateValue(f[key]);
-    if (t === null || !Number.isFinite(nowMs)) unknown.push(`${key} ${String(f[key])} could not be interpreted`);
-    else if (cmp === 1 ? nowMs < t : nowMs > t) excluded.push(`${key} ${new Date(t).toISOString()} ${cmp === 1 ? 'is in the future' : 'has passed'}`);
+    if (t === null || !Number.isFinite(nowMs)) unknown.push(other('date', `${key} ${String(f[key])} could not be interpreted`));
+    else if (cmp === 1 ? nowMs < t : nowMs > t) excluded.push(other('date', `${key} ${new Date(t).toISOString()} ${cmp === 1 ? 'is in the future' : 'has passed'}`));
   }
   for (const key of Object.keys(f)) {
     if (BUILD_KEYS.has(key) || CLIENT_KEYS.has(key)) continue;
-    unknown.push(`filter key "${key}" is not evaluated`);
+    unknown.push(other('key', `filter key "${key}" is not evaluated`));
   }
-  if (excluded.length) return { applies: false, reason: excluded.join('; ') };
-  if (unknown.length) return { applies: null, reason: unknown.join('; ') };
-  return { applies: true, reason: desktopOs ? `admitted on ${desktopOs.join(', ')} only among desktop OSes` : 'platform, channel and version filters admit this build', ...(desktopOs ? { desktopOs } : {}) };
+  const join = (cs: FilterClause[]) => cs.map((c) => c.text).join('; ');
+  if (excluded.length) return { applies: false, reason: join(excluded), clauses: excluded };
+  if (unknown.length) return { applies: null, reason: join(unknown), clauses: unknown };
+  return { applies: true, reason: desktopOs ? `admitted on ${desktopOs.join(', ')} only among desktop OSes` : 'platform, channel and version filters admit this build', ...(desktopOs ? { desktopOs } : {}), clauses: [] };
+}
+
+/**
+ * One reason for the per-OS desktop builds of a channel that share an outcome: each clause once, naming the OSes it
+ * concerns only when it does not concern every build of the group ("platform filter (IOS) excludes Desktop (all 7 OS
+ * builds); channel filter (NIGHTLY, BETA) excludes release; 155.1.97.56 is outside the version range 146.1.89.116 – 152.*").
+ */
+function desktopGroupReason(results: { b: StudyBuild; r: ReturnType<typeof evaluateStudyFilter> }[], channelOs: string[]): string {
+  if (results.every((x) => !x.r.clauses.length)) return uniqStr(results.map((x) => x.r.reason)).join('; ');
+  const groupOs = results.map((x) => x.b.os!);
+  const covers = (os: string[], all: string[]) => all.every((o) => os.includes(o));
+  const where = (os: string[]) => describeOs(os, channelOs);
+  const merged = new Map<string, { c: FilterClause; os: string[]; versions: Map<string, string[]> }>();
+  for (const { b, r } of results) {
+    for (const c of r.clauses) {
+      const e = merged.get(c.key) ?? { c, os: [], versions: new Map<string, string[]>() };
+      merged.set(c.key, e);
+      e.os.push(b.os!);
+      if (c.full) e.versions.set(c.full, [...(e.versions.get(c.full) ?? []), b.os!]);
+    }
+  }
+  const out: string[] = [];
+  const rank = (c: FilterClause) => CLAUSE_ORDER.indexOf(c.kind);
+  for (const { c, os, versions } of [...merged.values()].sort((p, q) => rank(p.c) - rank(q.c))) {
+    if (c.kind === 'platform') out.push(`${c.key} ${PLATFORM_NAME.desktop}${covers(os, channelOs) && channelOs.length > 1 ? ` (all ${channelOs.length} OS builds)` : ` ${where(os)}`}`);
+    else if (c.kind === 'version' && versions.size > 1) {
+      const list = [...versions].sort((p, q) => compareVersions(q[0], p[0])).map(([v, vos]) => `${v} (${where(vos)})`);
+      out.push(`${list.join(' and ')} are ${c.key}`);
+    } else out.push(covers(os, groupOs) ? c.text : `${c.text} (${where(os)})`);
+  }
+  return out.join('; ');
 }
 
 /** Client-level conditions of a filter, as readable strings. */
@@ -692,7 +832,7 @@ function applicability(filter: Record<string, unknown> | undefined, builds: Stud
         const osList = g.map((x) => x.b.os!);
         const all = g.length === same.length;
         const build = `${PLATFORM_NAME.desktop} ${b.channel}${all ? '' : ` (${describeOs(osList, same.map((x) => x.os!))})`} ${versions.join(' / ')}`;
-        const reason = uniqStr(g.map((x) => x.r.reason)).join('; ') + note;
+        const reason = desktopGroupReason(g, same.map((x) => x.os!)) + note;
         if (outcome === 'null') appliesUnknown.push({ build, platform: 'desktop', channel: b.channel, version: sorted[0].version, reason });
         else appliesTo.push({ build, applies: outcome === 'true', platform: 'desktop', channel: b.channel, version: sorted[0].version, reason, ...(all ? {} : { desktopOs: osList }) });
       }
@@ -726,19 +866,31 @@ function refreshApplicability(st: StudyInfo, builds: StudyBuild[], now: string):
 
 const strList = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined).map(String) : typeof v === 'string' ? [v] : []);
 
-/** Whether a parsed study touches Zcash/Ironwood/Wallet features or parameters in any experiment. */
+/**
+ * Whether a parsed study touches Zcash: some experiment enables, disables or forces a Zcash/Ironwood feature, or
+ * sets a parameter whose name or value names Zcash/Ironwood. Other wallet features do not count.
+ */
 export function isRelevantStudy(st: any): boolean {
   if (!st || typeof st !== 'object') return false;
   for (const e of Array.isArray(st.experiment) ? st.experiment : []) {
     const fa = e?.feature_association ?? {};
-    const names = [...strList(fa.enable_feature), ...strList(fa.disable_feature), ...strList(fa.forcing_feature_on), ...strList(fa.forcing_feature_off)];
-    for (const p of Array.isArray(e?.param) ? e.param : []) {
-      names.push(String(p?.name ?? ''));
-      if (RELEVANT_TEXT.test(String(p?.value ?? ''))) return true;
-    }
-    if (names.some((x) => RELEVANT_NAME.test(x))) return true;
+    const terms = [...strList(fa.enable_feature), ...strList(fa.disable_feature), ...strList(fa.forcing_feature_on), ...strList(fa.forcing_feature_off)];
+    for (const p of Array.isArray(e?.param) ? e.param : []) terms.push(String(p?.name ?? ''), String(p?.value ?? ''));
+    if (terms.some((x) => RELEVANT_TEXT.test(x))) return true;
   }
   return false;
+}
+
+/** The same test for a stored StudyInfo (cohorts when stored, else the study-level features/params of older data). */
+export function studyInfoTouchesZcash(st: StudyInfo): boolean {
+  const terms: string[] = [];
+  for (const e of Array.isArray(st.experiments) ? st.experiments : []) {
+    terms.push(...strList(e.enable), ...strList(e.disable), ...strList(e.forcingOn), ...strList(e.forcingOff));
+    for (const [k, v] of Object.entries(e.params ?? {})) terms.push(k, String(v));
+  }
+  terms.push(...strList(st.features?.enable), ...strList(st.features?.disable));
+  for (const [k, v] of Object.entries(st.params ?? {})) terms.push(k, String(v));
+  return terms.some((x) => RELEVANT_TEXT.test(x));
 }
 
 /** Turn one parsed study into StudyInfo, keeping each cohort separately. */
@@ -877,7 +1029,12 @@ export const services: Collector<ServicesData> = {
     const versionsData = ctx.get<{ current?: ChannelVersion[] }>('brave-versions')?.data;
     const relData = ctx.get<ReleasesData>('brave-releases')?.data ?? null;
     const builds = studyBuilds(Array.isArray(versionsData?.current) ? versionsData!.current : null, relData);
-    const prevStudies = (Array.isArray(prev?.studies) ? prev!.studies : []).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    // Earlier data can hold studies selected by older, broader rules (e.g. any Brave Wallet feature); those never
+    // touched Zcash and are not carried, even while brave-variations cannot be re-read.
+    const prevAll = Array.isArray(prev?.studies) ? prev!.studies : [];
+    const prevStudies = prevAll.filter(studyInfoTouchesZcash).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    const notZcash = uniqStr(prevAll.filter((s) => !studyInfoTouchesZcash(s)).map((s) => s.name));
+    if (notZcash.length) limitations.push(`${notZcash.length} earlier stud${notZcash.length === 1 ? 'y was' : 'ies were'} dropped because no cohort sets a Zcash/Ironwood feature or parameter: ${notZcash.slice(0, 4).join(', ')}`);
     const prevByFile = new Map<string, StudyInfo[]>();
     for (const s of prevStudies) prevByFile.set(s.file, [...(prevByFile.get(s.file) ?? []), s]);
     const carry = (file: string) => (prevByFile.get(file) ?? []).map((s) => refreshApplicability(s, builds, ctx.now));

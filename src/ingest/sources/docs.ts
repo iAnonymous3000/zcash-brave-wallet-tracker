@@ -5,8 +5,8 @@
 // A Help Center article that drops out of the listing is only treated as removed when the
 // article itself answers 404/410; when it is still published without Zcash wording it is
 // recorded as no longer mentioning Zcash. Either way its last statements move to `history`.
-// When neither can be confirmed (truncated listing, request failure) the last captured copy
-// is kept and the source is reported partial.
+// When neither can be confirmed (truncated listing, request failure, article records without
+// a body) the last captured copy is kept and the source is reported partial.
 
 import type { DocPage } from '../../lib/types.ts';
 import { decodeEntities, sha256, uniq } from '../../lib/util.ts';
@@ -111,6 +111,13 @@ async function zendeskList(ctx: Ctx, firstUrl: string, key: string, maxPages: nu
   return { items, truncated: false, problem: null };
 }
 
+/**
+ * Whether a Zendesk article record carries its content. The listing, search and article endpoints all return `body`
+ * (HTML, possibly empty); a record without a string body is an API shape change, not an article without text, so its
+ * Zcash wording is unknown: it is never captured as a page and never archived as reworded.
+ */
+const hasBody = (a: any) => typeof a?.body === 'string';
+
 function supportPage(a: any, now: string): { page: DocPage; mentionsZcash: boolean } {
   const text = htmlToText(a.body ?? '');
   return {
@@ -163,11 +170,25 @@ export const docs: Collector<DocsData> = {
       limitations.push(`Help Center search for "zcash" incomplete (${search.problem}); articles not returned are kept from earlier runs unless confirmed removed`);
     }
     const articles = new Map<string, any>();
-    for (const a of [...list.items, ...search.items]) if (a && a.id !== undefined) articles.set(String(a.id), a);
+    for (const a of [...list.items, ...search.items]) {
+      if (!a || a.id === undefined) continue;
+      const had = articles.get(String(a.id));
+      if (had && hasBody(had) && !hasBody(a)) continue; // never replace a readable copy with a body-less one
+      articles.set(String(a.id), a);
+    }
+    const bodyless: string[] = [];
     for (const a of articles.values()) {
       if (a.draft) continue;
+      if (!hasBody(a)) {
+        bodyless.push(String(a.id));
+        continue;
+      }
       const { page, mentionsZcash } = supportPage(a, ctx.now);
       if (mentionsZcash) pages.push(page);
+    }
+    if (bodyless.length) {
+      partial = true;
+      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
     }
 
     // Earlier Help Center pages not captured this run: removed, reworded, or merely not listed?
@@ -178,11 +199,12 @@ export const docs: Collector<DocsData> = {
       if (pages.some((p) => p.id === old.id)) continue;
       const articleId = old.id.replace(/^zendesk-/, '');
       const listed = articles.get(articleId);
-      if (listed && !listed.draft) {
+      if (listed && !listed.draft && hasBody(listed)) {
         archive(old, 'no-longer-mentions-zcash'); // read this run: still published, no Zcash wording
         ended += 1;
         continue;
       }
+      // Not listed, or listed without its body: look the article up directly.
       let problem: string;
       if (verified < MAX_VERIFY && /^\d+$/.test(articleId)) {
         verified += 1;
@@ -201,6 +223,7 @@ export const docs: Collector<DocsData> = {
             ended += 1;
             continue;
           }
+          if (!hasBody(article)) throw new Error('article response has no body (API shape changed?)');
           const { page, mentionsZcash } = supportPage(article, ctx.now);
           if (mentionsZcash) pages.push(page); // still a Zcash article, just outside the listing/search
           else {
@@ -217,7 +240,7 @@ export const docs: Collector<DocsData> = {
     }
     if (unconfirmed.length) {
       partial = true;
-      limitations.push(`${unconfirmed.length} earlier Help Center article(s) were not found in the listing and could not be confirmed removed; last captured copy kept: ${unconfirmed.slice(0, 4).join(', ')}`);
+      limitations.push(`${unconfirmed.length} earlier Help Center article(s) were not found in the listing (or were listed without a body) and could not be re-read or confirmed removed; last captured copy kept: ${unconfirmed.slice(0, 4).join(', ')}`);
     }
 
     // brave.com static pages.
@@ -245,7 +268,9 @@ export const docs: Collector<DocsData> = {
         if (old) pages.push(old);
       }
     }
-    if (!pages.some((p) => p.source === 'support') && !ended) throw new Error('no Zcash articles found in the Help Center (API or category changed?)');
+    if (!pages.some((p) => p.source === 'support') && !ended) {
+      throw new Error(bodyless.length ? 'Help Center articles came without a body (API shape changed?) and no earlier copy exists' : 'no Zcash articles found in the Help Center (API or category changed?)');
+    }
 
     // Unchanged pages keep their previous record (retrieval time = when this content was first captured).
     for (let i = 0; i < pages.length; i++) {
