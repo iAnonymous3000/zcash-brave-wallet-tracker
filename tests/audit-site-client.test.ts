@@ -14,6 +14,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { build } from 'esbuild';
 import type { SiteData, SiteGroup } from '../src/derive/index.ts';
+import { STAGE_LABEL } from '../src/derive/status.ts';
 import { wi } from './helpers.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -951,7 +952,7 @@ function mergedGroup(builds: (boolean | null)[] | null): SiteGroup {
     status: {
       ...base.status,
       stage: 'merged',
-      stageLabel: 'Merged, not yet in a checked build',
+      stageLabel: STAGE_LABEL.merged,
       releaseNotes: [],
       implementation: { state: 'merged', mergedAt: '2026-01-01T00:00:00Z', prs: base.members.masterPrs },
       builds: (builds ?? []).map((included, i) => ({ ...all[i], version: '1.0.0', included, via: null, basis: 'test' })),
@@ -962,7 +963,6 @@ const nine = (v: boolean | null) => Array.from({ length: 9 }, () => v);
 
 test('UI-C5 (repair): the stage label states absence only when every checked build confirms it', async () => {
   const { stageView, fixFacts } = await import('../src/site/view.ts');
-  const { STAGE_LABEL } = await import('../src/derive/status.ts');
   for (const builds of [null, nine(null)]) {
     const v = stageView(mergedGroup(builds));
     assert.equal(v.label, 'Merged, build presence unknown');
@@ -1010,7 +1010,7 @@ test('UI-C5 (repair): a merged fix with unknown build presence reads unknown on 
 
   // Explicit "not included" in every checked build still reads as absence, with the derived badge.
   const absent = groupStageBadge(mergedGroup(nine(false))).value;
-  assert.match(absent, /Merged, not yet in a checked build/);
+  assert.ok(absent.includes(`</svg>${STAGE_LABEL.merged}</span>`), absent);
   assert.match(absent, /g-in-build/);
 });
 
