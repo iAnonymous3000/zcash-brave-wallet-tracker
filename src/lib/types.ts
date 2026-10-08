@@ -144,6 +144,11 @@ export interface ChannelVersion {
   /** When only a marketing version is known (iOS App Store): the newest matching release tag, used for clearly-labelled inference. */
   inferredTag?: string | null;
   inferredBasis?: string | null;
+  /** Pointers that could not be read in the latest run and whose value is carried from an earlier successful read
+   *  (pointer name -> time of that read; null when the earlier read time was not recorded). */
+  carriedPointers?: Record<string, string | null>;
+  /** Pointers that could not be read in the latest run and have no earlier value (coverage is incomplete). */
+  unavailablePointers?: string[];
 }
 
 export interface AncestryResult {
@@ -235,6 +240,10 @@ export interface WatchItem {
   attribution: string;
   braveAdoption: 'none-found' | 'evidence' | 'unknown';
   braveEvidence: string[];
+  /** Latest release/commit label read from the topic's repository (e.g. " Latest release: v1.6.0."); also part of `summary`. */
+  latest?: string | null;
+  /** When `updatedAt`/`latest` were last read successfully (they are kept from that read when the repository is unavailable). */
+  metadataReadAt?: string | null;
 }
 
 export interface CommunityTopic {
