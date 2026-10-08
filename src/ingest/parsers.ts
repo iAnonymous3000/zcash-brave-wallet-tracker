@@ -45,18 +45,228 @@ export function assetPlatforms(assetNames: string[]): string[] {
 
 export const ZCASH_TEXT = /\b(z\s?cash|zec|ironwood|orchard|lightwalletd|zaino|unified address(es)?|sapling|shielded|unshield\w*|deshield\w*)\b/i;
 
-/** A level-1/2 heading line ("# Changelog", "## [1.2.3](...)", "## Unreleased"); "#123" issue refs are not headings. */
-const TOP_HEADING = /^(?:#(?=\s|$)|##(?!#))/;
+/** A heading as CommonMark reads it: ATX ("## x"), setext ("x" over "---"/"===") or an HTML block opened by <h1>…<h6>. */
+interface MdHeading {
+  level: number;
+  /** Heading content: ATX closing "#"s removed, setext lines joined, HTML tags stripped; trimmed. */
+  text: string;
+}
+
+const MONTH = '(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?';
+const DATE = `(?:\\d{4}-\\d{2}-\\d{2}|\\d{4}/\\d{2}/\\d{2}|${MONTH}[ \\t]+\\d{1,2}(?:st|nd|rd|th)?,?[ \\t]+\\d{4}|\\d{1,2}(?:st|nd|rd|th)?[ \\t]+${MONTH},?[ \\t]+\\d{4})`;
+/** A note that may follow the version in a release heading: a release date, or a plain version/build number in parentheses. */
+const RELEASE_NOTE = `(?:${DATE}|\\([ \\t]*${DATE}[ \\t]*\\)|\\[[ \\t]*${DATE}[ \\t]*\\]|\\([ \\t]*(?:chromium[ \\t]+)?v?\\d+(?:\\.\\d+){1,3}[ \\t]*\\))`;
+/** Everything allowed after the version: nothing, or such notes ("- 2024-01-15", "(1.66.1)", "(Jan 15, 2024)"). */
+const RELEASE_SUFFIX = new RegExp(`^(?:(?:[-–—:|,][ \\t]*)?${RELEASE_NOTE}[ \\t]*)*$`, 'i');
 
 /**
- * The released version a level-2 heading names, or null when the heading is not a release
- * ("## Unreleased", "## [1.2.3] - Unreleased", "## Upcoming", any other text).
+ * The released version a level-2 heading's text names, or null when the heading is not known to be a
+ * release. Accepted: "1.2.3", "v1.2.3", "[1.2.3]", "[1.2.3](url)" (Brave's form), "[1.2.3][ref]", each
+ * optionally followed by a release date or a parenthesised version number ("1.66.123 (1.66.1)" in Brave's
+ * iOS release notes). Everything else is not a released version: a qualifier on the version itself
+ * ("v1.3.0-beta", "[1.3.0-rc.1]", "1.3.0+build", "1.3.0.1") or any other trailing text ("1.3.0 - TBD",
+ * "[1.3.0] - Unreleased", "1.3.0 (beta)", "Unreleased", "Upcoming changes").
  */
-function releaseHeadingVersion(line: string): string | null {
-  const m = line.match(/^##\s+\[?v?(\d+\.\d+\.\d+)\]?/);
+function releaseHeadingVersion(text: string): string | null {
+  const m = text.match(/^(\[)?v?(\d+\.\d+\.\d+)/);
   if (!m) return null;
-  if (/\b(unreleased|upcoming)\b/i.test(line)) return null;
-  return m[1];
+  let rest = text.slice(m[0].length);
+  if (m[1]) {
+    if (!rest.startsWith(']')) return null;
+    // Link destination or reference label of "[1.2.3](...)" / "[1.2.3][ref]" (release URLs say nothing about status).
+    rest = rest.slice(1).replace(/^(?:\([^)]*\)|\[[^\]]*\])/, '');
+  } else if (/^[\w.+-]/.test(rest)) {
+    return null;
+  }
+  return RELEASE_SUFFIX.test(rest.trim()) ? m[2] : null;
+}
+
+/** CommonMark blank line: nothing but spaces and tabs (after a CRLF's "\r" is removed). */
+const isBlankLine = (s: string) => /^[ \t]*$/.test(s);
+
+/** Columns of leading whitespace (tabs advance to the next multiple of 4 from `startCol`) and the text after it. */
+function splitIndent(s: string, startCol = 0): { indent: number; rest: string } {
+  let col = startCol;
+  let k = 0;
+  for (; k < s.length; k++) {
+    if (s[k] === ' ') col++;
+    else if (s[k] === '\t') col += 4 - (col % 4);
+    else break;
+  }
+  return { indent: col - startCol, rest: s.slice(k) };
+}
+
+/** ATX heading: 1-6 "#" followed by a space, tab or end of line ("##hashtag" and "#123" are text). */
+function atxHeading(rest: string): MdHeading | null {
+  const m = rest.match(/^(#{1,6})(?:[ \t]+(.*))?$/);
+  if (!m) return null;
+  return { level: m[1].length, text: (m[2] ?? '').replace(/(?:^|[ \t]+)#+[ \t]*$/, '').trim() };
+}
+
+const THEMATIC_BREAK = /^(?:(?:-[ \t]*){3,}|(?:\*[ \t]*){3,}|(?:_[ \t]*){3,})$/;
+const SETEXT_UNDERLINE = /^(?:=+|-+)[ \t]*$/;
+const BLOCK_QUOTE = /^>/;
+
+/** A list item start ("-", "+", "*", "1.", "1)") and the column its content starts at. */
+function listItem(rest: string, indent: number): { contentCol: number; empty: boolean; ordered: boolean; start: number } | null {
+  const m = rest.match(/^(?:[-+*]|(\d{1,9})[.)])/);
+  if (!m) return null;
+  const ordered = m[1] !== undefined;
+  const start = ordered ? Number(m[1]) : 0;
+  const after = rest.slice(m[0].length);
+  const markerEnd = indent + m[0].length;
+  if (isBlankLine(after)) return { contentCol: markerEnd + 1, empty: true, ordered, start };
+  const pad = splitIndent(after, markerEnd).indent;
+  if (pad === 0) return null; // "-foo", "1.5" are text
+  // Five or more spaces after the marker: the content is an indented code block one column in.
+  return { contentCol: markerEnd + (pad >= 5 ? 1 : pad), empty: false, ordered, start };
+}
+
+const HTML_BLOCK_TAGS =
+  'address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul';
+/** CommonMark HTML block start conditions 1-5, each ending at the line holding its closing marker. */
+const HTML_RAW_BLOCKS: [RegExp, RegExp][] = [
+  [/^<(?:pre|script|style|textarea)(?=[ \t>]|$)/i, /<\/(?:pre|script|style|textarea)>/i],
+  [/^<!--/, /-->/],
+  [/^<\?/, /\?>/],
+  [/^<![A-Za-z]/, />/],
+  [/^<!\[CDATA\[/, /\]\]>/],
+];
+/** Condition 6: a block-level tag (<details>, <div>, <h2>, …). Runs until a blank line. */
+const HTML_BLOCK_6 = new RegExp(`^</?(?:${HTML_BLOCK_TAGS})(?=[ \\t>]|/>|$)`, 'i');
+/** Condition 7: any other complete open or closing tag alone on its line. Runs until a blank line; cannot interrupt a paragraph. */
+const HTML_BLOCK_7 = /^(?:<[A-Za-z][A-Za-z0-9-]*(?:[ \t]+[A-Za-z_:][\w.:-]*(?:[ \t]*=[ \t]*(?:[^ \t"'=<>`]+|'[^']*'|"[^"]*"))?)*[ \t]*\/?>|<\/[A-Za-z][A-Za-z0-9-]*[ \t]*>)[ \t]*$/;
+
+/** <h1>…<h6> opening an HTML block is a heading of that level; its text is the element content without tags. */
+function htmlHeading(block: string): MdHeading | null {
+  const open = block.match(/^<h([1-6])(?=[ \t>/]|$)[^>]*>/i);
+  if (!open) return null;
+  const level = Number(open[1]);
+  let inner = block.slice(open[0].length);
+  const close = inner.search(new RegExp(`</h${level}[ \\t]*>`, 'i'));
+  if (close >= 0) inner = inner.slice(0, close);
+  return { level, text: inner.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() };
+}
+
+/**
+ * The HTML block starting at line i (whose text after indentation is `rest`): its last line and the heading
+ * it opens, or null when the line does not start one. Like an unclosed fence, a condition 1-5 block that
+ * never closes is plain text, so one stray "<!--" or "<pre>" cannot hide every later release heading.
+ */
+function htmlBlock(ln: string[], i: number, rest: string, inParagraph: boolean): { end: number; heading: MdHeading | null } | null {
+  for (const [start, end] of HTML_RAW_BLOCKS) {
+    const open = rest.match(start);
+    if (!open) continue;
+    if (end.test(rest.slice(open[0].length))) return { end: i, heading: null };
+    for (let j = i + 1; j < ln.length; j++) if (end.test(ln[j])) return { end: j, heading: null };
+    return null;
+  }
+  if (!HTML_BLOCK_6.test(rest) && (inParagraph || !HTML_BLOCK_7.test(rest))) return null;
+  let end = i;
+  while (end + 1 < ln.length && !isBlankLine(ln[end + 1])) end++;
+  return { end, heading: htmlHeading([rest, ...ln.slice(i + 1, end + 1)].join('\n')) };
+}
+
+/**
+ * The heading each line completes (null for every other line), following CommonMark's block rules where
+ * they decide which heading a bullet sits under:
+ * - an ATX heading ("## x") may be indented 0-3 spaces; with 4+ the line is an indented code block or
+ *   paragraph text. The 0-3 rule is applied by absolute indentation, also under a list item, so a doubtful
+ *   heading ends the release block instead of extending it to bullets it may not cover;
+ * - a setext heading ("Unreleased" over "---" or "===") is completed by its underline, which must follow a
+ *   top-level paragraph: after a list item or its lazy continuation line, "---" is a thematic break;
+ * - nothing inside an HTML block is a heading (conditions 6/7 such as <details> run until the next blank
+ *   line, after which Markdown resumes; conditions 1-5 run to their closing marker), but a block opened by
+ *   <h1>…<h6> is a heading of that level;
+ * - nothing inside a closed code fence or multi-line HTML comment is a heading (literalBlockLines).
+ */
+function markdownHeadings(lines: string[]): (MdHeading | null)[] {
+  const ln = lines.map((l) => l.replace(/\r$/, ''));
+  const literal = literalBlockLines(lines);
+  const out: (MdHeading | null)[] = ln.map(() => null);
+  // The open paragraph: none, top-level (its next line may be a setext underline), or inside a list item/quote.
+  let para: 'none' | 'top' | 'nested' = 'none';
+  let paraStart = 0;
+  // The open top-level container: a list item (lines indented to its content column belong to it) or a quote.
+  let container: { quote: boolean; contentCol: number } | null = null;
+  const leaves = (indent: number) => !!container && (container.quote || indent < container.contentCol);
+  for (let i = 0; i < ln.length; i++) {
+    const { indent, rest } = splitIndent(ln[i]);
+    if (literal.has(i)) {
+      if (!literal.has(i - 1) && leaves(indent)) container = null;
+      para = 'none';
+      continue;
+    }
+    if (isBlankLine(ln[i])) {
+      para = 'none';
+      if (container?.quote) container = null;
+      continue;
+    }
+    if (indent <= 3) {
+      const atx = atxHeading(rest);
+      if (atx) {
+        out[i] = atx;
+        container = null;
+        para = 'none';
+        continue;
+      }
+      const html = htmlBlock(ln, i, rest, para !== 'none');
+      if (html) {
+        if (html.heading) out[i] = html.heading;
+        if (html.heading || leaves(indent)) container = null;
+        para = 'none';
+        i = html.end;
+        continue;
+      }
+    }
+    if (container) {
+      if (container.quote && indent <= 3 && BLOCK_QUOTE.test(rest)) {
+        para = isBlankLine(rest.replace(/^>[ \t]?/, '')) ? 'none' : 'nested';
+        continue;
+      }
+      if (!container.quote && indent >= container.contentCol) {
+        // Content of the list item; nothing here is a top-level heading.
+        if (indent - container.contentCol >= 4 && para !== 'nested') para = 'none';
+        else if (THEMATIC_BREAK.test(rest) || atxHeading(rest) || (para === 'nested' && SETEXT_UNDERLINE.test(rest))) para = 'none';
+        else para = listItem(rest, indent)?.empty ? 'none' : 'nested';
+        continue;
+      }
+      // Lazy continuation: an open paragraph in the container goes on with a line that starts no other block.
+      if (para === 'nested' && !(indent <= 3 && (THEMATIC_BREAK.test(rest) || BLOCK_QUOTE.test(rest) || listItem(rest, indent)))) continue;
+      container = null;
+      para = 'none';
+    }
+    if (indent >= 4) {
+      if (para !== 'top') para = 'none'; // indented code; or paragraph continuation, which keeps the paragraph open
+      continue;
+    }
+    if (para === 'top' && SETEXT_UNDERLINE.test(rest)) {
+      out[i] = { level: rest[0] === '=' ? 1 : 2, text: ln.slice(paraStart, i).map((l) => l.trim()).join(' ') };
+      para = 'none';
+      continue;
+    }
+    if (THEMATIC_BREAK.test(rest)) {
+      para = 'none';
+      continue;
+    }
+    if (BLOCK_QUOTE.test(rest)) {
+      container = { quote: true, contentCol: 0 };
+      para = isBlankLine(rest.replace(/^>[ \t]?/, '')) ? 'none' : 'nested';
+      continue;
+    }
+    const item = listItem(rest, indent);
+    // An empty item, or an ordered one not numbered 1, cannot interrupt a paragraph.
+    if (item && !(para === 'top' && (item.empty || (item.ordered && item.start !== 1)))) {
+      container = { quote: false, contentCol: item.contentCol };
+      para = item.empty ? 'none' : 'nested';
+      continue;
+    }
+    if (para !== 'top') {
+      para = 'top';
+      paraStart = i;
+    }
+  }
+  return out;
 }
 
 /**
@@ -100,24 +310,22 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   const out: ChangelogEntry[] = [];
   let version: string | null = null;
   let section: string | null = null;
-  const literal = literalBlockLines(lines);
+  // Only headings change the version or section; inside a code fence, HTML block or comment nothing is a
+  // heading. Bullet-shaped lines are read exactly as before wherever they are (evidence ids stay stable).
+  const headings = markdownHeadings(lines);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    // Inside a code fence or HTML comment nothing is a heading, so neither the version nor the section
-    // changes there. Bullet-shaped lines inside are still read exactly as before (evidence ids stay stable).
-    if (!literal.has(i)) {
-      if (TOP_HEADING.test(line)) {
-        // Every top-level heading starts a new block: bullets under a heading that is not a recognised
-        // release (e.g. "## Unreleased") must not inherit the previous release's version.
-        version = releaseHeadingVersion(line);
+    const h = headings[i];
+    if (h) {
+      if (h.level <= 2) {
+        // Every level-1/2 heading starts a new block: bullets under one that is not a recognised release
+        // ("## Unreleased", "## 1.3.0 - TBD", "# Archive") must not inherit the previous release's version.
+        version = h.level === 2 ? releaseHeadingVersion(h.text) : null;
         section = null;
-        continue;
+      } else if (h.level === 3) {
+        section = h.text || null;
       }
-      const h3 = line.match(/^###\s+(.+?)\s*$/);
-      if (h3) {
-        section = h3[1].trim();
-        continue;
-      }
+      continue;
     }
     const bullet = line.match(/^\s*[-*]\s+(.*\S)\s*$/);
     if (!bullet || !version) continue;
@@ -143,11 +351,8 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
 /** Ordered list of versions as they appear (newest first in Brave's files). */
 export function changelogVersions(text: string): string[] {
   const out: string[] = [];
-  const lines = text.split('\n');
-  const literal = literalBlockLines(lines);
-  for (let i = 0; i < lines.length; i++) {
-    if (literal.has(i)) continue;
-    const v = releaseHeadingVersion(lines[i]);
+  for (const h of markdownHeadings(text.split('\n'))) {
+    const v = h?.level === 2 ? releaseHeadingVersion(h.text) : null;
     if (v) out.push(v);
   }
   return out;
