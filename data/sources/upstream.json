@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:57:35.157Z",
+ "retrievedAt": "2026-10-08T15:20:14.214Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-08T14:57:35.157Z"
+   "checkedAt": "2026-10-08T15:20:14.214Z"
   },
   "zips": {
    "2005": {
@@ -3012,7 +3012,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-08T14:57:35.157Z"
+   "checkedAt": "2026-10-08T15:20:14.214Z"
   }
  }
 }

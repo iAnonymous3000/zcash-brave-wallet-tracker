@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:57:35.157Z",
+ "retrievedAt": "2026-10-08T15:20:14.214Z",
  "data": {
   "releases": [
    {
@@ -26,6 +26,7 @@
     "publishedAt": "2026-10-08T13:34:26Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.25",
     "assetPlatforms": [
+     "ios",
      "linux",
      "windows"
     ],

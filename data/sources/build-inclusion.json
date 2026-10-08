@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-08T14:57:35.157Z",
+ "retrievedAt": "2026-10-08T15:20:14.214Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -95,10 +95,10 @@
      "basis": "GitHub compare v1.97.56...482afb5b: behind"
     },
     "maxExcluded": {
-     "version": "1.96.61",
-     "tag": "v1.96.61",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.96.61...482afb5b: diverged"
+     "version": "1.96.62",
+     "tag": "v1.96.62",
+     "checkedAt": "2026-10-08T15:20:14.214Z",
+     "basis": "GitHub compare v1.96.62...482afb5b: diverged"
     }
    },
    "brave/brave-core#39838": {
@@ -111,10 +111,10 @@
      "basis": "GitHub compare v1.97.56...7a8a8570: behind"
     },
     "maxExcluded": {
-     "version": "1.96.61",
-     "tag": "v1.96.61",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.96.61...7a8a8570: diverged"
+     "version": "1.96.62",
+     "tag": "v1.96.62",
+     "checkedAt": "2026-10-08T15:20:14.214Z",
+     "basis": "GitHub compare v1.96.62...7a8a8570: diverged"
     }
    },
    "brave/brave-core#39811": {
@@ -127,10 +127,10 @@
      "basis": "GitHub compare v1.97.56...748099ff: behind"
     },
     "maxExcluded": {
-     "version": "1.96.61",
-     "tag": "v1.96.61",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.96.61...748099ff: diverged"
+     "version": "1.96.62",
+     "tag": "v1.96.62",
+     "checkedAt": "2026-10-08T15:20:14.214Z",
+     "basis": "GitHub compare v1.96.62...748099ff: diverged"
     }
    },
    "brave/brave-core#39703": {
@@ -143,10 +143,10 @@
      "basis": "GitHub compare v1.97.56...aaa04be1: behind"
     },
     "maxExcluded": {
-     "version": "1.96.61",
-     "tag": "v1.96.61",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.96.61...aaa04be1: diverged"
+     "version": "1.96.62",
+     "tag": "v1.96.62",
+     "checkedAt": "2026-10-08T15:20:14.214Z",
+     "basis": "GitHub compare v1.96.62...aaa04be1: diverged"
     }
    },
    "brave/brave-core#39545": {
@@ -165,10 +165,10 @@
      "basis": "GitHub compare v1.97.56...ac05a811: behind"
     },
     "maxExcluded": {
-     "version": "1.96.61",
-     "tag": "v1.96.61",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.96.61...ac05a811: diverged"
+     "version": "1.96.62",
+     "tag": "v1.96.62",
+     "checkedAt": "2026-10-08T15:20:14.214Z",
+     "basis": "GitHub compare v1.96.62...ac05a811: diverged"
     }
    },
    "brave/brave-core#39551": {
@@ -3568,6 +3568,14 @@
     ]
    },
    {
+    "tag": "v1.96.62",
+    "version": "1.96.62",
+    "publishedAt": "2026-10-05T05:45:40Z",
+    "usedBy": [
+     "ios/release"
+    ]
+   },
+   {
     "tag": "v1.97.56",
     "version": "1.97.56",
     "publishedAt": "2026-10-07T03:18:14Z",
@@ -3621,6 +3629,6 @@
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 5
  }
 }

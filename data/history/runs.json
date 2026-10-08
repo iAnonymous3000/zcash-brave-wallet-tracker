@@ -1,5 +1,33 @@
 [
  {
+  "id": "145467c3c085",
+  "startedAt": "2026-10-08T15:20:14.214Z",
+  "finishedAt": "2026-10-08T15:23:53.619Z",
+  "trigger": "workflow_dispatch",
+  "outcome": "success",
+  "sources": {
+   "brave-releases": "ok",
+   "brave-versions": "ok",
+   "github-items": "ok",
+   "brave-changelogs": "ok",
+   "build-inclusion": "ok",
+   "brave-flags": "ok",
+   "brave-deps": "ok",
+   "upstream": "ok",
+   "advisories": "ok",
+   "watch": "ok",
+   "brave-services": "ok",
+   "community": "ok",
+   "docs": "ok"
+  },
+  "requests": 267,
+  "events": 0,
+  "notes": [
+   "derivation rules changed (v4 → v10); diff-only events suppressed for this run",
+   "434 work groups, 787 items, 0 new events"
+  ]
+ },
+ {
   "id": "e05ce287f642",
   "startedAt": "2026-10-08T14:57:35.157Z",
   "finishedAt": "2026-10-08T15:00:38.570Z",
