@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-10-08T15:25:17.817Z",
+ "retrievedAt": "2026-10-08T17:03:02.983Z",
  "data": {
   "current": [
    {
@@ -40,7 +40,7 @@
     "version": "1.96.62",
     "tag": "v1.96.62",
     "publishedAt": null,
-    "basis": "App Store version 1.96 (release-ios-app-store) = build 1.96.62 per Brave’s iOS release-notes issue #59758",
+    "basis": "App Store version 1.96 (release-ios-app-store) = build 1.96.62 per Brave’s draft iOS release-notes issue #59758; GitHub release v1.96.62 carries the iOS build",
     "url": "https://versions.brave.com/latest/release-ios-app-store.version",
     "detail": {
      "release-ios-app-store": "1.96",
@@ -124,18 +124,27 @@
    {
     "channel": "nightly",
     "platform": "ios",
-    "version": "1.99.20",
-    "tag": "v1.99.20",
+    "version": "1.99.25",
+    "tag": "v1.99.25",
     "publishedAt": null,
     "basis": "versions.brave.com/latest/nightly-ios.version",
     "url": "https://versions.brave.com/latest/nightly-ios.version",
     "detail": {
-     "nightly-ios": "1.99.20"
+     "nightly-ios": "1.99.25"
     }
    }
   ],
   "missing": [],
   "iosNotes": [
+   {
+    "number": 59793,
+    "url": "https://github.com/brave/brave-browser/issues/59793",
+    "title": "Release Notes for iOS Release 1.95 [Changelog]",
+    "marketing": "1.95",
+    "build": "1.95.104",
+    "updatedAt": "2026-10-08T17:02:47Z",
+    "body": "## [1.95.104](https://github.com/brave/brave-browser/releases/tag/v1.95.104)\n\n### Web3\n\n - Added Zcash Ironwood migration banner. ([#58493](https://github.com/brave/brave-browser/issues/58493))\n - Fixed spacing for asset loading skeleton on the \"Accounts\" page. ([#57871](https://github.com/brave/brave-browser/issues/57871))\n\n### Leo\n\n - Added the ability to share a Leo conversation. ([#56444](https://github.com/brave/brave-browser/issues/56444))\n - Removed 15 word limit from the Leo voice input. ([#57829](https://github.com/brave/brave-browser/issues/57829))\n\n### General\n\n - Added an option to reset the Rewards profile in \"Brave Rewards” settings page. ([#40768](https://github.com/brave/brave-browser/issues/40768))\n - Updated tab tray UI. ([#57053](https://github.com/brave/brave-browser/issues/57053))\n - Updated the design of the VPN promo callout in Settings menu. ([#57587](https://github.com/brave/brave-browser/issues/57587))\n - Fixed crashes related to the cosmetic filtering tab helper. ([#58967](https://github.com/brave/brave-browser/issues/58967))\n - Fixed regional filter lists not being enabled by default for certain locales. ([#58808](https://github.com/brave/brave-browser/issues/58808))\n - Fixed media being downloaded twice when adding to Playlist. ([#57523](https://github.com/brave/brave-browser/issues/57523))\n - Fixed blank screen being shown when opening the Brave app using CarPlay. ([#55775](https://github.com/brave/brave-browser/issues/55775))\n - Upgraded Chromium to 153.0.8010.53. ([#59125](https://github.com/brave/brave-browser/issues/59125))([Changelog for 153.0.8010.53](https://chromium.googlesource.com/chromium/src/+log/152.0.7977.83..153.0.8010.53?pretty=fuller&n=10000))\n"
+   },
    {
     "number": 59758,
     "url": "https://github.com/brave/brave-browser/issues/59758",

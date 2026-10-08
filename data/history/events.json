@@ -1055,6 +1055,38 @@
   "basis": "backfill"
  },
  {
+  "kind": "released",
+  "sourceAt": "2026-09-18T03:05:24Z",
+  "title": "iOS 1.95.104 release notes: Added Zcash Ironwood migration banner. (#58493)",
+  "impact": "Listed in Brave's iOS Stable release notes for 1.95.104. Release notes are per platform; other platforms need their own entry.",
+  "highlight": "migration",
+  "itemIds": [
+   "brave/brave-browser#58493"
+  ],
+  "topic": "ironwood",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "pending iOS release notes (draft issue #59793) L5",
+    "url": "https://github.com/brave/brave-browser/issues/59793"
+   },
+   {
+    "label": "brave-browser#58493",
+    "url": "https://github.com/brave/brave-browser/issues/58493"
+   }
+  ],
+  "evidence": [
+   "\"Added Zcash Ironwood migration banner. (#58493)\"",
+   "captured at commit issue"
+  ],
+  "id": "7ba0f1d0e3b6cbff",
+  "detectedAt": "2026-10-08T17:03:02.983Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-09-17T12:54:29Z",
   "title": "New issue: [Wallet] Hide Deposit/Bridge buttons for Zcash (Shielded Legacy) account",
@@ -14199,32 +14231,6 @@
   ],
   "id": "347890f42171eb7d",
   "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-10-08T15:47:14Z",
-  "title": "Merged: [ZCash] Fix Enabled group",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-08 include it; Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-variations#1533"
-  ],
-  "topic": "general",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave/brave-variations#1533",
-    "url": "https://github.com/brave/brave-variations/pull/1533"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-08T15:47:14Z",
-   "base branch main"
-  ],
-  "id": "7d85dd47d632b986",
-  "detectedAt": "2026-10-08T14:46:50.765Z",
   "basis": "backfill"
  }
 ]

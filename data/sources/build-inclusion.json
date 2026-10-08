@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-08T15:25:17.817Z",
+ "retrievedAt": "2026-10-08T17:03:02.983Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3615,7 +3615,14 @@
     "version": "1.99.20",
     "publishedAt": "2026-10-07T13:33:11Z",
     "usedBy": [
-     "desktop/nightly",
+     "desktop/nightly"
+    ]
+   },
+   {
+    "tag": "v1.99.25",
+    "version": "1.99.25",
+    "publishedAt": "2026-10-08T13:34:26Z",
+    "usedBy": [
      "ios/nightly"
     ]
    },
