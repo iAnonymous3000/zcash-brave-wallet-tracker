@@ -34,10 +34,12 @@ export interface Ctx {
  *   that field in `Collector.carryOnPartial`, and is otherwise named in a limitation. Either way
  *   nothing vanishes silently, and nothing a collector excluded on purpose is brought back.
  * - When a partial result keeps values that should have been refreshed (data that moves, such
- *   as brave-core master), set `staleSince` to the read time of the oldest of them. Once that is
- *   older than the site's staleness window (FRESHNESS.staleAfterMinutes) the orchestrator still
- *   stores the data but records the source as failed: `lastSuccessAt` stops advancing, the
- *   error says what has been stale since when, and the site counts the source as failing.
+ *   as brave-core master), set `staleSince` to the read time of the oldest of them and
+ *   `staleWhat` to what they are. Once that is older than the site's staleness window
+ *   (FRESHNESS.staleAfterMinutes) the orchestrator records the source as stale: the outcome stays
+ *   `partial` (usable data was read and stored), `SourceStatus.staleSince` is set for the site to
+ *   show and count, and the first limitation says what is stale, since when, and when the source
+ *   last completed. `failed` is reserved for a collection that threw and stored nothing.
  * - `partial` is absent/false only when every read this collector depends on succeeded.
  */
 export interface CollectResult<T> {
@@ -59,6 +61,8 @@ export interface CollectResult<T> {
    * snapshots) do not count.
    */
   staleSince?: string | null;
+  /** With `staleSince`: what the kept values are, in a few words (named in the staleness note). */
+  staleWhat?: string | null;
 }
 
 export interface Collector<T = unknown> {

@@ -307,9 +307,8 @@ export interface SourceStatus {
   url: string;
   lastAttemptAt: string | null;
   /**
-   * Last run that stored data for this source with outcome ok or partial. A partial run that kept
-   * values unrefreshed for longer than the staleness window is recorded failed and does not
-   * advance it (see CollectResult.staleSince).
+   * Last run that stored data for this source with outcome ok or partial (including a partial run
+   * whose kept values are stale: see `staleSince`).
    */
   lastSuccessAt: string | null;
   /**
@@ -319,6 +318,14 @@ export interface SourceStatus {
   lastCompleteAt?: string | null;
   /** Last run that stored a partial collection (some reads failed; last good values kept), whatever its outcome. */
   lastPartialAt?: string | null;
+  /**
+   * Present while the source is stale: the latest run was partial and kept values that should have
+   * been refreshed (CollectResult.staleSince) for longer than the staleness window
+   * (FRESHNESS.staleAfterMinutes). ISO time since which that kept data has not been refreshed;
+   * the first limitation names what it is. Absent after a complete run or a partial run within
+   * the window; left unchanged by a failed run (which stores nothing).
+   */
+  staleSince?: string;
   lastOutcome: SourceOutcome | null;
   lastError: string | null;
   consecutiveFailures: number;

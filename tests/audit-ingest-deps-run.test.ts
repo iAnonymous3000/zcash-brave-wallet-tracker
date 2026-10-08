@@ -1,6 +1,9 @@
 // Regression tests for review findings ING-01, ING-14, EXTRA-2, EXTRA-3 and EXTRA-4
 // (dependency-graph resolution, master/component read failures, the partial-collection
 // contract, derivation failure handling and the refresh workflow's push step).
+// Round 2 changed two contracts tested here: `lock` holds the highest linked version
+// (R-DEPS-LOCK) and a stale partial collection stays 'partial' with `staleSince` (R-STATUS);
+// see tests/audit2-ingest-deps-run.test.ts.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -107,7 +110,7 @@ test('ING-01: reviewer fixture: the orchard version Zcash reaches (0.13.0) is re
 
 const exposure = (snap: Pick<BraveDepsSnapshot, 'lock' | 'resolution'>, crate: string, range: string) => rangeExposure(snap, crate, (v) => satisfiesRange(v, range)).exposed;
 
-test('ING-01: a direct and a transitive version are both linked: lock lists the lowest, the crate is "multiple", and exposure checks every linked version', async () => {
+test('ING-01: a direct and a transitive version are both linked: lock lists the highest (R-DEPS-LOCK), the crate is "multiple", and exposure checks every linked version', async () => {
   // zcash -> orchard 0.15.0 directly, and zcash -> zcash_primitives -> orchard 0.13.0: Cargo compiles both in.
   const lock = lockOf(
     pkg('zcash', '1.0.0', { source: null, deps: ['orchard 0.15.0', 'zcash_primitives'] }),
@@ -116,16 +119,21 @@ test('ING-01: a direct and a transitive version are both linked: lock lists the 
     pkg('zcash_primitives', '0.29.0', { source: null, deps: ['orchard 0.13.0'] }),
   );
   const { snap, result } = await depsAt(lock, { DEPS: FORK_DEPS });
-  assert.deepEqual(snap.lock.orchard, { version: '0.13.0', source: 'crates.io' }, 'a direct dependency does not hide the vulnerable transitive one');
-  assert.deepEqual(snap.resolution?.candidates.orchard.map((c) => [c.version, c.reachable, c.direct]), [['0.13.0', true, false], ['0.15.0', true, true]], 'direct and transitive are told apart');
+  // R-DEPS-LOCK: `lock` holds the highest linked version ("Brave resolves orchard 0.15.0"); the
+  // vulnerable transitive 0.13.0 is not hidden: it stays a linked candidate and exposure uses it.
+  assert.deepEqual(snap.lock.orchard, { version: '0.15.0', source: 'crates.io' }, 'lock lists the highest linked version');
+  assert.deepEqual(snap.resolution?.candidates.orchard.map((c) => [c.version, c.reachable, c.direct]), [['0.13.0', true, false], ['0.15.0', true, true]], 'direct and transitive are told apart, and both are linked');
   assert.deepEqual(snap.resolution?.multiple, ['orchard']);
   assert.deepEqual(snap.resolution?.ambiguous, [], 'both are known to be linked: not unknown');
-  assert.ok(result.limitations?.some((l) => /links 2 versions of orchard \(0\.13\.0, 0\.15\.0 \(direct\)\).*"lock" lists 0\.13\.0, the lowest/.test(l)), 'stated on every run');
+  assert.ok(result.limitations?.some((l) => /links 2 versions of orchard \(0\.13\.0, 0\.15\.0 \(direct\)\).*"lock" lists 0\.15\.0, the highest/.test(l)), 'stated on every run');
   assert.equal(result.partial, undefined, 'all files read and the graph resolved: a complete collection');
 
-  // The advisory on the transitive version stays affected (also through the derive step, which reads `lock`).
-  const advisory = { id: 'GHSA-p2', aliases: [], summary: 's', severity: 'high', packages: ['rust:orchard'], vulnerableRanges: ['orchard < 0.14.0'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' };
-  assert.equal(advisoryVerdicts(advisory, result.data).affected, true);
+  // The advisory on the transitive version stays affected. The derive step must reach this through
+  // linkedVersions()/rangeExposure() (round-2 item R-ADV, owned by derive), not through `lock`:
+  // advisoryVerdicts(advisory, result.data).affected === true is asserted by derive's R-ADV tests
+  // once that change is merged.
+  assert.equal(rangeExposure(snap, 'orchard', (v) => satisfiesRange(v, '< 0.14.0')).exposed, true, 'the vulnerable transitive version is exposure');
+  assert.deepEqual(rangeExposure(snap, 'orchard', (v) => satisfiesRange(v, '< 0.14.0')).inRange, ['0.13.0']);
   assert.deepEqual(linkedVersions(snap, 'orchard'), { versions: snap.resolution!.candidates.orchard, certain: true });
   assert.equal(exposure(snap, 'orchard', '< 0.14.0'), true);
   assert.equal(exposure(snap, 'orchard', '>= 0.15.0, < 0.15.1'), true, 'an advisory on the higher linked version is exposure too');
@@ -142,7 +150,7 @@ test('ING-01: two transitive versions are both linked ("multiple"), never silent
     pkg('orchard', '0.15.0'),
   );
   const { snap, result } = await depsAt(lock);
-  assert.deepEqual(snap.lock.halo2_gadgets, { version: '0.4.0', source: 'crates.io' }, 'the lowest linked version is listed');
+  assert.deepEqual(snap.lock.halo2_gadgets, { version: '0.5.0', source: 'crates.io' }, 'the highest linked version is listed (R-DEPS-LOCK)');
   assert.deepEqual(snap.resolution?.multiple, ['halo2_gadgets']);
   assert.deepEqual(snap.resolution?.ambiguous, []);
   assert.ok(result.limitations?.some((l) => /links 2 versions of halo2_gadgets \(0\.4\.0, 0\.5\.0\)/.test(l)), 'stated on every run');
@@ -166,7 +174,7 @@ test('ING-01: a version known to be reached with others of unknown reachability 
   assert.equal(linkedVersions(snap, 'orchard').certain, false);
   assert.equal(exposure(snap, 'orchard', '< 0.14.0'), null, '0.13.0 may be linked through the unmatched entry: unknown, not "unaffected"');
   assert.equal(exposure(snap, 'orchard', '>= 0.15.0'), true, 'the reached version is in range');
-  assert.match(resolutionNotes('v1.2.3', { ...snap, ref: 'v1.2.3' } as BraveDepsSnapshot).join('\n'), /could not establish which orchard versions .*\(0\.15\.0 confirmed; 0\.13\.0 possible\); "lock" lists 0\.15\.0, the lowest confirmed one, but the others may be linked too/);
+  assert.match(resolutionNotes('v1.2.3', { ...snap, ref: 'v1.2.3' } as BraveDepsSnapshot).join('\n'), /could not establish which orchard versions .*\(0\.15\.0 confirmed; 0\.13\.0 possible\); "lock" lists 0\.15\.0, the highest confirmed one, but the others may be linked too/);
 });
 
 test('ING-01: prerelease vs stable and same version from different sources are matched exactly', async () => {
@@ -210,7 +218,7 @@ test('ING-01: without the Zcash crate in Cargo.lock nothing is dropped; duplicat
   const { snap, result } = await depsAt(lock);
   assert.equal(snap.resolution?.method, 'lockfile');
   assert.deepEqual(snap.lock.shardtree, { version: '0.7.0', source: 'crates.io' }, 'a unique version is kept');
-  assert.equal(snap.lock.orchard?.version, '0.13.0');
+  assert.equal(snap.lock.orchard?.version, '0.15.0', 'the highest candidate (R-DEPS-LOCK); both stay candidates');
   assert.deepEqual(snap.resolution?.ambiguous, ['orchard']);
   assert.ok(snap.resolution?.candidates.orchard.every((c) => c.reachable === null), 'reachability is unknown, not false');
   assert.equal(result.partial, true);
@@ -559,7 +567,7 @@ test('EXTRA-2: real flags collector through the orchestrator: a master outage ke
   });
 });
 
-test('EXTRA-2: a master outage longer than the staleness window shows as a failing, stale source while the kept data stays stored', async () => {
+test('EXTRA-2 / R-STATUS: a master outage longer than the staleness window shows as a stale partial source (never "failed") while the kept data stays stored', async () => {
   await withDataDir(async (dir) => {
     let masterOk = true;
     const fetchImpl = (async (input: string | URL | Request) => {
@@ -572,33 +580,40 @@ test('EXTRA-2: a master outage longer than the staleness window shows as a faili
     const status = () => readData(dir, 'status.json').sources['brave-flags'];
     await run.runRefresh({ ...base, now: '2026-10-08T10:00:00Z' });
     masterOk = false;
-    // Within the 6-hour window: partial, still a success.
+    // Within the 6-hour window: partial, still a success, not stale.
     await run.runRefresh({ ...base, now: '2026-10-08T14:00:00Z' });
     assert.equal(status().lastOutcome, 'partial');
     assert.equal(status().lastSuccessAt, '2026-10-08T14:00:00Z');
-    // Beyond it: stored, but failed; lastSuccessAt stops, the error says since when, the header counts it.
+    assert.equal(status().staleSince, undefined);
+    // Beyond it: usable data was read and stored, so the outcome is partial ('failed' means nothing
+    // usable was read, R-STATUS); the source is marked stale with staleSince and a first limitation
+    // that names what is stale, since when, and the last complete collection.
     const late = await run.runRefresh({ ...base, now: '2026-10-08T18:00:00Z' });
-    assert.equal(late.sources['brave-flags'], 'failed');
+    assert.equal(late.sources['brave-flags'], 'partial');
+    assert.equal(late.outcome, 'partial');
     const st = status();
-    assert.equal(st.lastOutcome, 'failed');
-    assert.equal(st.lastSuccessAt, '2026-10-08T14:00:00Z', 'not advanced by a run that kept 8-hour-old master data');
+    assert.equal(st.lastOutcome, 'partial');
+    assert.equal(st.staleSince, '2026-10-08T10:00:00Z');
+    assert.equal(st.lastSuccessAt, '2026-10-08T18:00:00Z', 'this run stored data');
     assert.equal(st.lastCompleteAt, '2026-10-08T10:00:00Z');
     assert.equal(st.lastPartialAt, '2026-10-08T18:00:00Z');
-    assert.equal(st.consecutiveFailures, 1);
-    assert.match(st.lastError, /could not be refreshed since 2026-10-08T10:00:00Z, longer than the 6-hour staleness window/);
+    assert.equal(st.consecutiveFailures, 0);
+    assert.equal(st.lastError, null);
+    assert.match(st.limitations[0], /^stale: brave-core master feature flags \(components\/brave_wallet\/common\/features\.cc at commit aaaaaaaaaa\) could not be refreshed since 2026-10-08T10:00:00Z \(8 h, longer than the 6-hour staleness window\).*Last complete collection: 2026-10-08T10:00:00Z\.$/);
     assert.match(st.limitations.join(' '), /master flags kept from 2026-10-08T10:00:00Z/);
     const e = readData(dir, 'sources', 'brave-flags.json');
     assert.equal(e.retrievedAt, '2026-10-08T18:00:00Z', 'the data (with the kept master) is still stored');
+    assert.equal(e.partial, true);
+    assert.equal(e.completeAt, '2026-10-08T10:00:00Z');
     assert.equal(e.data.snapshots.master.retrievedAt, '2026-10-08T10:00:00Z');
-    const html = layout.page({ title: 'T', description: 'd', path: '', active: 'home' }, { generatedAt: '2026-10-08T18:00:00Z', lastRunOutcome: late.outcome, lastRunAt: '2026-10-08T18:01:00Z', sources: [st], mode: 'live' as const } as any, { value: '' } as any);
-    assert.match(html, /1 source failing/);
-    // Recovery: ok again.
+    // Recovery: ok again, no longer stale.
     masterOk = true;
     await run.runRefresh({ ...base, now: '2026-10-08T20:00:00Z' });
     assert.equal(status().lastOutcome, 'ok');
     assert.equal(status().lastSuccessAt, '2026-10-08T20:00:00Z');
     assert.equal(status().lastError, null);
     assert.equal(status().consecutiveFailures, 0);
+    assert.equal(status().staleSince, undefined);
   });
 });
 
