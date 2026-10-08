@@ -1,5 +1,11 @@
 // Current public version per platform and channel from versions.brave.com,
 // Brave's official "currently published versions" pointers.
+//
+// A pointer that cannot be read keeps its last good value (with the time it was read) for at most
+// MAX_POINTER_CARRY_MS and the source is reported partial; older values are dropped, so a retired
+// pointer cannot pin a platform to a stale build. A pointer that answers "not published" (403/404)
+// never lowers the desktop version while other desktop OS pointers are readable. A desktop version
+// is only described as common to every desktop OS when every OS pointer was read in this run.
 
 import type { Channel, ChannelVersion, Platform } from '../../lib/types.ts';
 import { compareVersions } from '../../lib/util.ts';
@@ -35,9 +41,17 @@ export interface IosNotes {
 
 export interface BraveVersionsData {
   current: ChannelVersion[];
+  /** Pointers that could not be read in the latest run (with the HTTP status or error). */
   missing: string[];
   /** Brave's "Release Notes for iOS Release X.Y" issues: map App Store versions to builds; their bullets are iOS release notes. */
   iosNotes?: IosNotes[];
+  /**
+   * Last good value of every pointer with the time it was read, so a pointer outage keeps its earlier value.
+   * `missingSince`: first run in which a carried pointer could not be read (bounds the carry when `readAt` is unknown).
+   */
+  pointers?: Record<string, PointerValue>;
+  /** When the iOS release-notes issues were last read completely. */
+  iosNotesReadAt?: string | null;
 }
 
 /** Parse "Release Notes for iOS Release 1.96 [Changelog]" + body "## [1.96.62](...)". */
@@ -47,53 +61,188 @@ export function parseIosNotesIssue(title: string, body: string): { marketing: st
   return { marketing, build: marketing && build && build.startsWith(`${marketing.split('.').slice(0, 2).join('.')}.`) ? build : null };
 }
 
+export interface PointerValue {
+  version: string;
+  readAt: string | null;
+  missingSince?: string | null;
+}
+
+const VERSION_RE = /^\d+\.\d+(\.\d+)?$/;
+const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
+const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
+const ALL_POINTERS = new Set(CHANNELS.flatMap((c) => PLATFORMS.flatMap((p) => pointerNames(c, p))));
+/** How long an unreadable pointer keeps its last good value (measured from that read, or from the first failed run when the read time is unknown). */
+export const MAX_POINTER_CARRY_MS = 30 * 86_400_000;
+/** HTTP statuses with which versions.brave.com says a pointer is not published (S3/CloudFront answer 403 for a missing object). */
+const NOT_PUBLISHED = new Set([403, 404]);
+
+/** Whether a carried pointer value is too old to stand in for the current one. */
+export function carryExpired(v: PointerValue, now: string): boolean {
+  const since = v.readAt ?? v.missingSince ?? null;
+  if (!since) return false; // first failed run: missingSince is set now
+  const age = Date.parse(now) - Date.parse(since);
+  return Number.isFinite(age) && age > MAX_POINTER_CARRY_MS;
+}
+
+/** Last good pointer values from earlier data: the `pointers` map, else per-record `detail` (legacy data). */
+export function lastGoodPointers(prev: Partial<BraveVersionsData> | null, prevReadAt: string | null): Record<string, PointerValue> {
+  const out: Record<string, PointerValue> = {};
+  for (const [k, v] of Object.entries(prev?.pointers ?? {})) {
+    if (ALL_POINTERS.has(k) && v && typeof v.version === 'string' && VERSION_RE.test(v.version)) out[k] = { version: v.version, readAt: v.readAt ?? null, ...(v.missingSince ? { missingSince: v.missingSince } : {}) };
+  }
+  const records = Array.isArray(prev?.current) ? prev!.current : [];
+  for (const c of records) {
+    for (const [k, v] of Object.entries(c?.detail ?? {})) {
+      if (out[k] || !ALL_POINTERS.has(k) || typeof v !== 'string' || !VERSION_RE.test(v)) continue;
+      out[k] = { version: v, readAt: c.carriedPointers && k in c.carriedPointers ? c.carriedPointers[k] : prevReadAt };
+    }
+  }
+  // Legacy records without per-pointer detail: a single-pointer platform's version is that pointer's value
+  // (not for iOS Release, whose stored version may already be the mapped build rather than the marketing version).
+  for (const c of records) {
+    if (!c || c.detail || c.platform === 'all' || c.platform === 'desktop' || (c.platform === 'ios' && c.channel === 'release')) continue;
+    const names = pointerNames(c.channel, c.platform);
+    if (names.length === 1 && !out[names[0]] && typeof c.version === 'string' && VERSION_RE.test(c.version)) out[names[0]] = { version: c.version, readAt: prevReadAt };
+  }
+  return out;
+}
+
+const errText = (err: unknown) => (err instanceof Error ? err.message : String(err)).slice(0, 100);
+
+function readTimes(times: (string | null)[]): string {
+  const known = [...new Set(times.filter((t): t is string => Boolean(t)))].sort();
+  if (!known.length) return 'in an earlier run';
+  return known.length === 1 ? `at ${known[0]}` : `between ${known[0]} and ${known[known.length - 1]}`;
+}
+
 export const braveVersions: Collector<BraveVersionsData> = {
   id: 'brave-versions',
   name: 'versions.brave.com current version pointers',
   url: 'https://versions.brave.com/',
   schema: 1,
   dependsOn: ['brave-releases'],
-  async collect(ctx) {
+  async collect(ctx, prev) {
+    // Read time of the previous data, for legacy records that do not carry per-pointer times.
+    const ownPrev = ctx.get<BraveVersionsData>('brave-versions');
+    const prevReadAt = ownPrev?.sourceId === 'brave-versions' ? ownPrev.retrievedAt : null;
+    const lastGood = lastGoodPointers(prev, prevReadAt);
+    const pointers: NonNullable<BraveVersionsData['pointers']> = {};
     const current: ChannelVersion[] = [];
     const missing: string[] = [];
-    for (const channel of ['release', 'beta', 'nightly'] as Channel[]) {
-      for (const platform of ['desktop', 'android', 'ios'] as Platform[]) {
+    let carriedCount = 0;
+    let expiredCount = 0;
+    let unreadableCount = 0; // outage with no usable earlier value: coverage gap
+    let notPublishedCount = 0; // 403/404 with no usable earlier value: a determinate "not published"
+    let fresh = 0;
+    for (const channel of CHANNELS) {
+      for (const platform of PLATFORMS) {
+        const names = pointerNames(channel, platform);
         const detail: Record<string, string> = {};
-        for (const name of pointerNames(channel, platform)) {
+        const readNow: string[] = [];
+        const carried: Record<string, string | null> = {};
+        const carriedNotPublished: string[] = [];
+        const unavailable: string[] = [];
+        const unavailableWhy: Record<string, string> = {};
+        for (const name of names) {
           const url = `https://versions.brave.com/latest/${name}.version`;
-          const res = await ctx.http.request(url, { okStatuses: [403, 404], scope: 'versions.brave.com' });
-          const body = (await res.text()).trim();
-          if (res.ok && /^\d+\.\d+(\.\d+)?$/.test(body)) detail[name] = body;
-          else missing.push(`${name} (${res.status})`);
+          let problem: string;
+          let notPublished = false;
+          try {
+            const res = await ctx.http.request(url, { okStatuses: [403, 404], scope: 'versions.brave.com' });
+            const body = (await res.text()).trim();
+            if (res.ok && VERSION_RE.test(body)) {
+              detail[name] = body;
+              readNow.push(name);
+              pointers[name] = { version: body, readAt: ctx.now };
+              fresh += 1;
+              continue;
+            }
+            notPublished = NOT_PUBLISHED.has(res.status);
+            problem = res.ok ? 'unexpected content' : String(res.status);
+          } catch (err) {
+            problem = errText(err);
+          }
+          missing.push(`${name} (${problem})`);
+          const lg = lastGood[name];
+          if (lg && !carryExpired(lg, ctx.now)) {
+            // Keep the last good value together with the time it was actually read.
+            detail[name] = lg.version;
+            carried[name] = lg.readAt;
+            if (notPublished) carriedNotPublished.push(name);
+            pointers[name] = { version: lg.version, readAt: lg.readAt, missingSince: lg.missingSince ?? ctx.now };
+            carriedCount += 1;
+          } else {
+            if (lg) expiredCount += 1;
+            unavailable.push(name);
+            unavailableWhy[name] = `${notPublished ? `not published (HTTP ${problem})` : 'unreadable'}${lg ? `; its value ${lg.version} from ${lg.readAt ?? lg.missingSince ?? 'an earlier run'} is older than ${MAX_POINTER_CARRY_MS / 86_400_000} days and was dropped` : ''}`;
+            if (notPublished) notPublishedCount += 1;
+            else unreadableCount += 1;
+          }
         }
-        const versions = Object.values(detail);
-        if (!versions.length) continue;
-        // Desktop: the lowest version across OS pointers is the one available on all desktop OSes.
-        const version = versions.sort(compareVersions)[0];
+        const known = names.filter((n) => n in detail);
+        if (!known.length) continue;
+        // Desktop: the lowest version across OS pointers is the one available on every desktop OS. A pointer that
+        // answered "not published" does not lower it while another desktop OS pointer was read in this run.
+        const used = platform === 'desktop' && readNow.length ? known.filter((n) => !carriedNotPublished.includes(n)) : known;
+        const version = used.map((n) => detail[n]).sort(compareVersions)[0];
         const isBuild = /^\d+\.\d+\.\d+$/.test(version);
+        const carriedNames = Object.keys(carried);
+        let basis: string;
+        if (platform === 'desktop') {
+          if (readNow.length === names.length) basis = `lowest of ${names.length} desktop OS pointers on versions.brave.com`;
+          else {
+            const notes: string[] = [];
+            const outageCarried = carriedNames.filter((n) => !carriedNotPublished.includes(n));
+            if (outageCarried.length) notes.push(`${outageCarried.join(', ')} not readable this run; value(s) last read ${readTimes(outageCarried.map((n) => carried[n]))} included`);
+            const excluded = carriedNotPublished.filter((n) => !used.includes(n));
+            if (excluded.length) notes.push(`${excluded.join(', ')} answered "not published" this run; earlier value(s) ${excluded.map((n) => detail[n]).join(', ')} (read ${readTimes(excluded.map((n) => carried[n]))}) not used`);
+            const keptNotPublished = carriedNotPublished.filter((n) => used.includes(n));
+            if (keptNotPublished.length) notes.push(`${keptNotPublished.join(', ')} answered "not published" this run; value(s) last read ${readTimes(keptNotPublished.map((n) => carried[n]))}`);
+            if (unavailable.length) {
+              const byWhy = new Map<string, string[]>();
+              for (const n of unavailable) byWhy.set(unavailableWhy[n], [...(byWhy.get(unavailableWhy[n]) ?? []), n]);
+              notes.push(`${[...byWhy].map(([why, ns]) => `${ns.join(', ')} ${why}`).join('; ')} (no value from the last ${MAX_POINTER_CARRY_MS / 86_400_000} days)`);
+            }
+            basis = `lowest of ${used.length} of ${names.length} desktop OS pointer values on versions.brave.com (${readNow.length} read this run); ${notes.join('; ')}; so this version is not confirmed for every desktop OS this run`;
+          }
+        } else {
+          const carriedNote = carriedNames.length ? ` (${carriedNotPublished.length ? 'answered "not published" this run' : 'not readable this run'}; value last read ${readTimes(Object.values(carried))})` : '';
+          basis = platform === 'ios' && channel === 'release' ? `App Store marketing version (release-ios-app-store); the matching build number is not published${carriedNote}` : `versions.brave.com/latest/${known[0]}.version${carriedNote}`;
+        }
         current.push({
           channel,
           platform,
           version,
           tag: isBuild ? `v${version}` : null,
           publishedAt: null,
-          basis:
-            platform === 'desktop'
-              ? `lowest of ${Object.keys(detail).length} desktop OS pointers on versions.brave.com`
-              : platform === 'ios' && channel === 'release'
-                ? 'App Store marketing version (release-ios-app-store); the matching build number is not published'
-                : `versions.brave.com/latest/${Object.keys(detail)[0]}.version`,
-          url: `https://versions.brave.com/latest/${Object.keys(detail)[0]}.version`,
-          detail,
+          basis,
+          url: `https://versions.brave.com/latest/${(readNow[0] ?? known[0])}.version`,
+          detail: Object.fromEntries(known.map((n) => [n, detail[n]])),
+          ...(carriedNames.length ? { carriedPointers: carried } : {}),
+          ...(carriedNotPublished.length ? { notPublishedPointers: carriedNotPublished } : {}),
+          ...(unavailable.length ? { unavailablePointers: unavailable } : {}),
           ...(isBuild ? {} : inferBuild(ctx.get<ReleasesData>('brave-releases')?.data ?? null, version, channel)),
         });
       }
     }
-    if (!current.length) throw new Error('no version pointers could be read');
-    const limitations = missing.length ? [`${missing.length} pointer(s) unavailable: ${missing.slice(0, 6).join(', ')}`] : [];
+    if (!fresh) throw new Error('no version pointers could be read');
+    const limitations: string[] = [];
+    // Partial when this run serves earlier values or could not establish a pointer; a pointer that is simply
+    // not published (and has no recent value) is a determinate answer, reported but not a coverage gap.
+    let partial = carriedCount > 0 || unreadableCount > 0;
+    if (missing.length) {
+      limitations.push(
+        `${missing.length} pointer(s) unavailable: ${missing.slice(0, 6).join(', ')}${missing.length > 6 ? ', …' : ''}` +
+          (carriedCount ? `; ${carriedCount} kept from their last successful read` : '') +
+          (notPublishedCount ? `; ${notPublishedCount} not published (HTTP 403/404) with no value from the last ${MAX_POINTER_CARRY_MS / 86_400_000} days` : '') +
+          (unreadableCount ? `; ${unreadableCount} unreadable with no value from the last ${MAX_POINTER_CARRY_MS / 86_400_000} days` : '') +
+          (expiredCount ? `; ${expiredCount} earlier value(s) older than ${MAX_POINTER_CARRY_MS / 86_400_000} days dropped` : ''),
+      );
+    }
 
     // App Store marketing version -> build, from Brave's public iOS release-notes issues.
-    const iosNotes: IosNotes[] = [];
+    let iosNotes: IosNotes[] = [];
+    let iosNotesReadAt: string | null = prev?.iosNotesReadAt ?? (prev?.iosNotes ? prevReadAt : null);
     try {
       const out = await ctx.gh.searchIssues('repo:brave/brave-browser "Release Notes for iOS Release" in:title is:issue');
       for (const h of out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown })[]) {
@@ -102,17 +251,28 @@ export const braveVersions: Collector<BraveVersionsData> = {
         if (!marketing) continue;
         iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000) });
       }
+      if (out.incomplete) {
+        // An incomplete search does not show that earlier notes are gone: keep the ones it did not return.
+        const seen = new Set(iosNotes.map((x) => x.number));
+        const kept = (prev?.iosNotes ?? []).filter((x) => !seen.has(x.number));
+        iosNotes.push(...kept);
+        partial = true;
+        limitations.push(`iOS release-notes issue search was incomplete; ${kept.length} earlier note(s) kept`);
+      } else iosNotesReadAt = ctx.now;
     } catch (err) {
-      limitations.push(`iOS release-notes issue lookup failed: ${(err as Error).message.slice(0, 100)} (iOS App Store build not resolved this run)`);
+      iosNotes = prev?.iosNotes ?? [];
+      partial = true;
+      limitations.push(`iOS release-notes issue lookup failed: ${errText(err)} (${iosNotes.length ? `keeping ${iosNotes.length} note(s) read ${iosNotesReadAt ? `at ${iosNotesReadAt}` : 'in an earlier run'}` : 'iOS App Store build not resolved this run'})`);
     }
     const iosRel = current.find((c) => c.platform === 'ios' && c.channel === 'release');
     if (iosRel && !iosRel.tag) {
       const rel = ctx.get<ReleasesData>('brave-releases')?.data;
       const n = iosNotes.filter((x) => x.marketing === iosRel.version && x.build).sort((a, b) => b.number - a.number)[0];
-      const hasIosRelease = Boolean(n?.build && rel?.releases.some((r) => r.version === n.build && r.assetPlatforms.includes('ios')));
+      const hasIosRelease = Boolean(n?.build && rel?.releases?.some((r) => r.version === n.build && r.assetPlatforms.includes('ios')));
       if (n?.build && !hasIosRelease) limitations.push(`iOS release-notes issue #${n.number} names build ${n.build}, but no GitHub release with iOS assets exists for it; not used`);
       if (n?.build && hasIosRelease) {
-        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}; GitHub release v${n.build} carries the iOS build`;
+        const pointerNote = iosRel.carriedPointers ? ` (App Store pointer not readable this run; value last read ${readTimes(Object.values(iosRel.carriedPointers))})` : '';
+        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}; GitHub release v${n.build} carries the iOS build${pointerNote}`;
         iosRel.detail = { ...(iosRel.detail ?? {}), 'ios-release-notes-issue': n.url };
         iosRel.version = n.build;
         iosRel.tag = `v${n.build}`;
@@ -120,6 +280,6 @@ export const braveVersions: Collector<BraveVersionsData> = {
         iosRel.inferredBasis = null;
       }
     }
-    return { data: { current, missing, iosNotes }, limitations, itemCount: current.length };
+    return { data: { current, missing, iosNotes, pointers, iosNotesReadAt }, limitations, partial, itemCount: current.length };
   },
 };
