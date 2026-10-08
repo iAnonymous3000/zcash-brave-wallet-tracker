@@ -447,6 +447,22 @@ const RESTORABLE_FIELDS: Record<string, string[]> = {
   mergeCommit: ['mergeCommitSha'],
 };
 
+/**
+ * Whether a connection came back as a usable list. GitHub never answers a readable connection with
+ * null, nor with a null `nodes` list, nor with null entries: a failed connection is nulled, a failed
+ * list is nulled, and an entry it could not resolve comes back as null, with or without an error path.
+ * An empty list (`nodes: []`) is a real "none". Only the entries are checked; null values inside an
+ * entry (e.g. a closed event without a closer) are ordinary answers.
+ */
+export function connectionComplete(conn: unknown): boolean {
+  if (!conn || typeof conn !== 'object') return false;
+  const nodes = (conn as { nodes?: unknown }).nodes;
+  return Array.isArray(nodes) && nodes.every((x) => x !== null && x !== undefined);
+}
+
+/** Stand-in for a failed connection while the item is built; the field is then restored from the last good copy. */
+const UNREAD_CONNECTION = () => ({ pageInfo: { hasNextPage: false, endCursor: null }, nodes: [] as unknown[] });
+
 export interface FetchedNode {
   node: any;
   repo: string;
@@ -489,12 +505,11 @@ async function fetchDetails(ctx: Ctx, ids: string[], limitations: string[]): Pro
           const node = data.repository?.[`n${n}`];
           if (!node) continue;
           const errored = new Set(fieldErrors.get(n) ?? []);
+          // Errors without a response path (e.g. a timeout part-way through the query) cannot be
+          // attributed, so the shape of each connection decides: anything but a complete list is unknown.
           for (const [f, on] of Object.entries(CONNECTION_FIELDS)) {
             if ((on !== 'both' && on !== node.__typename) || !(f in node)) continue;
-            // A failed nullable connection comes back as null; an empty connection is never null.
-            if (node[f] === null) errored.add(f);
-            // An entry GitHub could not resolve comes back as null: the list is not the full answer.
-            else if (PAGED_CONNECTIONS[f] && Array.isArray(node[f].nodes) && node[f].nodes.some((x: unknown) => x === null || x === undefined)) errored.add(f);
+            if (!connectionComplete(node[f])) errored.add(f);
           }
           const id = itemId(repo, n);
           const unfinished = await completeConnections(ctx, { owner, name, number: n, id }, node, errored, followUps, limitations);
@@ -590,7 +605,12 @@ export function buildItem(raw: FetchedNode, tags: string[], prevItem: WorkItem |
     limitations.push(`${id}: GitHub returned errors for ${[...raw.errored].sort().join(', ')} and there is no last good copy to keep; not recorded this run`);
     return null;
   }
-  const item = toWorkItem(raw.node, raw.repo, tags, now);
+  // A failed connection (null, a null list, or a list with unresolved entries) never reaches
+  // toWorkItem: the item is built without it and the field is then restored from the last good copy,
+  // so a partial list can neither replace the previous values nor break the build of the item.
+  const node: Record<string, unknown> = { ...raw.node };
+  for (const f of raw.errored) if (CONNECTION_FIELDS[f]) node[f] = UNREAD_CONNECTION();
+  const item = toWorkItem(node, raw.repo, tags, now);
   const target = item as unknown as Record<string, unknown>;
   const previous = prevItem as unknown as Record<string, unknown> | undefined;
   const incomplete = new Set<string>();
