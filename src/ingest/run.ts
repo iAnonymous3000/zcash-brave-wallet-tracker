@@ -6,9 +6,11 @@
 // as partial; records it dropped without saying so are carried forward (collectors that
 // opt in with carryOnPartial) or named in a limitation, never lost silently. A partial
 // collection whose kept values are older than the staleness window is stored and recorded as
-// partial with `staleSince` set and a first limitation naming what is stale since when, so a
-// lasting outage is visible as a stale source. 'failed' always means the collector threw and
-// nothing was stored (the previous envelope is untouched).
+// partial with `staleSince` set and a first limitation naming what is stale since when; it is
+// not a success: `lastSuccessAt` does not advance, the stale note is the source's `lastError`
+// and `consecutiveFailures` counts it, so a lasting outage stays visible as a stale source.
+// 'failed' always means the collector threw and nothing was stored (the previous envelope is
+// untouched).
 // After collection, derived views and change history are rebuilt from the
 // persisted envelopes (see src/derive). If derivation fails, the previously
 // derived files are restored byte for byte (so they keep their own generatedAt),
@@ -131,7 +133,8 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       }
       // Kept values older than the staleness window: usable data was read and is stored, so the
       // outcome is partial (never 'failed', which means nothing usable was read), but the source is
-      // stale: staleSince is recorded for the site and the first limitation says what and since when.
+      // stale: staleSince is recorded for the site and the first limitation says what and since when
+      // (and, below, the run is not counted as a success).
       const keptSince = partial ? validTime(result.staleSince) : null;
       const stale = keptSince !== null && Date.parse(now) - Date.parse(keptSince) > FRESHNESS.staleAfterMinutes * 60_000;
       const outcome: SourceOutcome = partial ? 'partial' : 'ok';
@@ -148,10 +151,19 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       st.itemCount = result.itemCount ?? null;
       st.limitations = limitations;
       outcomes[c.id] = outcome;
-      st.lastSuccessAt = now;
-      st.lastError = null;
-      st.consecutiveFailures = 0;
-      log(`${stale ? '!' : '✓'} ${c.id}: ${outcome}${stale ? ` (stale since ${keptSince})` : ''}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
+      if (stale) {
+        // Stored, but the source still has not refreshed what it should: this run does not count
+        // as a success. lastSuccessAt stays where it was (the site ages the source from it), the
+        // stale note is the source's error (shown outside the collapsed limitations), and the run
+        // counts towards consecutive failures to refresh, as a failed run does.
+        st.lastError = limitations[0];
+        st.consecutiveFailures += 1;
+      } else {
+        st.lastSuccessAt = now;
+        st.lastError = null;
+        st.consecutiveFailures = 0;
+      }
+      log(`${stale ? '!' : '✓'} ${c.id}: ${outcome}${stale ? ` (stale since ${keptSince}; keeping last success ${st.lastSuccessAt ?? 'never'})` : ''}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
     } catch (err) {
       st.lastOutcome = 'failed';
       st.lastError = errorMessage(err);

@@ -2,7 +2,8 @@
 // (dependency-graph resolution, master/component read failures, the partial-collection
 // contract, derivation failure handling and the refresh workflow's push step).
 // Round 2 changed two contracts tested here: `lock` holds the highest linked version
-// (R-DEPS-LOCK) and a stale partial collection stays 'partial' with `staleSince` (R-STATUS);
+// (R-DEPS-LOCK; advisory verdicts read every linked version, R-ADV) and a stale partial
+// collection stays 'partial' with `staleSince` but is not a success (R-STATUS);
 // see tests/audit2-ingest-deps-run.test.ts.
 
 import { test } from 'node:test';
@@ -128,10 +129,10 @@ test('ING-01: a direct and a transitive version are both linked: lock lists the 
   assert.ok(result.limitations?.some((l) => /links 2 versions of orchard \(0\.13\.0, 0\.15\.0 \(direct\)\).*"lock" lists 0\.15\.0, the highest/.test(l)), 'stated on every run');
   assert.equal(result.partial, undefined, 'all files read and the graph resolved: a complete collection');
 
-  // The advisory on the transitive version stays affected. The derive step must reach this through
-  // linkedVersions()/rangeExposure() (round-2 item R-ADV, owned by derive), not through `lock`:
-  // advisoryVerdicts(advisory, result.data).affected === true is asserted by derive's R-ADV tests
-  // once that change is merged.
+  // The advisory on the transitive version stays affected, also through the derive step, which
+  // reads every linked version (linkedVersions()/rangeExposure(), R-ADV), not `lock` alone.
+  const advisory = { id: 'GHSA-p2', aliases: [], summary: 's', severity: 'high', packages: ['rust:orchard'], vulnerableRanges: ['orchard < 0.14.0'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' };
+  assert.equal(advisoryVerdicts(advisory, result.data).affected, true);
   assert.equal(rangeExposure(snap, 'orchard', (v) => satisfiesRange(v, '< 0.14.0')).exposed, true, 'the vulnerable transitive version is exposure');
   assert.deepEqual(rangeExposure(snap, 'orchard', (v) => satisfiesRange(v, '< 0.14.0')).inRange, ['0.13.0']);
   assert.deepEqual(linkedVersions(snap, 'orchard'), { versions: snap.resolution!.candidates.orchard, certain: true });
@@ -587,25 +588,34 @@ test('EXTRA-2 / R-STATUS: a master outage longer than the staleness window shows
     assert.equal(status().staleSince, undefined);
     // Beyond it: usable data was read and stored, so the outcome is partial ('failed' means nothing
     // usable was read, R-STATUS); the source is marked stale with staleSince and a first limitation
-    // that names what is stale, since when, and the last complete collection.
+    // that names what is stale, since when, and the last complete collection. It is not a success:
+    // lastSuccessAt stops advancing, the stale note is the error, and the run counts as a failure
+    // to refresh.
     const late = await run.runRefresh({ ...base, now: '2026-10-08T18:00:00Z' });
     assert.equal(late.sources['brave-flags'], 'partial');
     assert.equal(late.outcome, 'partial');
     const st = status();
     assert.equal(st.lastOutcome, 'partial');
     assert.equal(st.staleSince, '2026-10-08T10:00:00Z');
-    assert.equal(st.lastSuccessAt, '2026-10-08T18:00:00Z', 'this run stored data');
+    assert.equal(st.lastSuccessAt, '2026-10-08T14:00:00Z', 'not advanced by a run that kept 8-hour-old master data');
     assert.equal(st.lastCompleteAt, '2026-10-08T10:00:00Z');
     assert.equal(st.lastPartialAt, '2026-10-08T18:00:00Z');
-    assert.equal(st.consecutiveFailures, 0);
-    assert.equal(st.lastError, null);
+    assert.equal(st.consecutiveFailures, 1);
     assert.match(st.limitations[0], /^stale: brave-core master feature flags \(components\/brave_wallet\/common\/features\.cc at commit aaaaaaaaaa\) could not be refreshed since 2026-10-08T10:00:00Z \(8 h, longer than the 6-hour staleness window\).*Last complete collection: 2026-10-08T10:00:00Z\.$/);
+    assert.equal(st.lastError, st.limitations[0], 'the error says what has been stale since when');
     assert.match(st.limitations.join(' '), /master flags kept from 2026-10-08T10:00:00Z/);
     const e = readData(dir, 'sources', 'brave-flags.json');
     assert.equal(e.retrievedAt, '2026-10-08T18:00:00Z', 'the data (with the kept master) is still stored');
     assert.equal(e.partial, true);
     assert.equal(e.completeAt, '2026-10-08T10:00:00Z');
     assert.equal(e.data.snapshots.master.retrievedAt, '2026-10-08T10:00:00Z');
+    // The Sources page (rendered from this run's derived site data) shows it: the stale note is a
+    // visible error outside the collapsed limitations, and the row ages from the frozen last success.
+    const { sourcesPage } = await import('../src/site/pages/other.ts');
+    const page = sourcesPage(readData(dir, 'derived', 'site.json'), readData(dir, 'history', 'runs.json'), {}).value;
+    const row = page.split('<tr class="src"').find((r) => r.includes('Zcash feature flags in brave-core'))!.split('</tr>')[0];
+    assert.match(row, /^ data-last-success="2026-10-08T14:00:00Z" data-outcome="partial">/);
+    assert.match(row, /<p class="err">stale: brave-core master feature flags .*could not be refreshed since 2026-10-08T10:00:00Z \(8 h, longer than the 6-hour staleness window\)[^<]*<\/p><details>/);
     // Recovery: ok again, no longer stale.
     masterOk = true;
     await run.runRefresh({ ...base, now: '2026-10-08T20:00:00Z' });

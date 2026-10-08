@@ -1,5 +1,8 @@
 // Round-2 regression tests for the ingest-deps-run group: R-DEPS-LOCK, R-DEPS-AMB, R-DEPS-PKG,
 // R-STATUS, R-EXTRA-2 and R-WF. Everything runs offline (injected fetch, stubbed binaries).
+// "(repair)" tests cover the two regressions found on review of the first round-2 fix: a false
+// "not affected" advisory once `lock` holds the highest version (needs derive's R-ADV, merged on
+// this branch), and a stale source that looked fresh on the Sources page.
 //
 // Modules whose exports changed in this round are imported as namespaces so the file still loads
 // on the pre-fix code and each test fails there on its own assertion.
@@ -23,6 +26,8 @@ import { services } from '../src/ingest/sources/services.ts';
 import { watch } from '../src/ingest/sources/watch.ts';
 import * as run from '../src/ingest/run.ts';
 import { satisfiesRange } from '../src/lib/util.ts';
+import { advisoryVerdicts } from '../src/derive/changes.ts';
+import { FRESHNESS } from '../config/tracker.ts';
 
 const NOW = '2026-10-08T20:00:00Z';
 const OLD = '2026-10-01T00:00:00Z';
@@ -148,6 +153,29 @@ test('R-DEPS-LOCK: a complete tag snapshot from the previous resolver (lowest in
   assert.equal(snap.lock.orchard.version, '0.15.0');
   assert.equal(snap.resolver, deps.DEPS_RESOLVER);
   assert.ok(deps.DEPS_RESOLVER >= 4);
+});
+
+test('R-DEPS-LOCK (repair): with lock = highest, real collector output for 0.15.0 direct + 0.13.0 transitive is "affected" through derive for an advisory on either linked version', async () => {
+  // The round-1 fixture. With `lock` holding 0.15.0, a derive step that judged advisories from `lock`
+  // alone said "outside the vulnerable ranges" for orchard < 0.14.0 (a false "not affected"); the
+  // previous lowest-lock contract instead missed an advisory on 0.15.0. Every linked version counts.
+  const lock = lockOf(
+    pkg('zcash', '1.0.0', { source: null, deps: ['orchard 0.15.0', 'zcash_primitives'] }),
+    pkg('orchard', '0.13.0'),
+    pkg('orchard', '0.15.0'),
+    pkg('zcash_primitives', '0.29.0', { source: null, deps: ['orchard 0.13.0'] }),
+  );
+  const { snap, result } = await collectTag(lock);
+  assert.equal(snap.lock.orchard.version, '0.15.0', 'lock is the highest linked version');
+  const advisory = (range: string) => ({ id: 'GHSA-r2', aliases: [], summary: 's', severity: 'high', packages: ['rust:orchard'], vulnerableRanges: [`orchard ${range}`], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' });
+  const low = advisoryVerdicts(advisory('< 0.14.0'), result.data);
+  assert.equal(low.affected, true, 'the vulnerable transitive 0.13.0 is linked');
+  assert.doesNotMatch(low.summary, /outside the vulnerable ranges/);
+  assert.match(low.details.join('\n'), /orchard 0\.13\.0 is in the vulnerable range < 0\.14\.0/);
+  assert.equal(advisoryVerdicts(advisory('>= 0.15.0, < 0.15.1'), result.data).affected, true, 'the direct 0.15.0 is linked too');
+  const neither = advisoryVerdicts(advisory('>= 0.16.0'), result.data);
+  assert.equal(neither.affected, false, 'every linked version known and outside');
+  assert.match(neither.details.join('\n'), /orchard 0\.13\.0 is outside[\s\S]*orchard 0\.15\.0 is outside/);
 });
 
 // ---------------------------------------------------------------------------
@@ -298,8 +326,10 @@ test('R-STATUS: kept data older than the staleness window is stored as partial w
     assert.equal(st.staleSince, '2026-10-08T08:00:00Z', 'explicit field the site can count');
     assert.equal(st.lastCompleteAt, '2026-10-08T08:00:00Z');
     assert.equal(st.lastPartialAt, '2026-10-08T17:00:00Z');
-    assert.equal(st.lastError, null);
-    assert.equal(st.consecutiveFailures, 0);
+    // Not a success (see the stale-visibility test below): last success stays, the note is the error.
+    assert.equal(st.lastSuccessAt, '2026-10-08T08:00:00Z');
+    assert.equal(st.lastError, st.limitations[0]);
+    assert.equal(st.consecutiveFailures, 1);
     assert.equal(st.limitations[0], 'stale: brave-core master pins could not be refreshed since 2026-10-08T08:00:00Z (9 h, longer than the 6-hour staleness window); the last good values are kept and shown. Last complete collection: 2026-10-08T08:00:00Z.');
     assert.equal(st.limitations[1], 'master could not be resolved');
     const e = readData(dir, 'sources', 'src.json');
@@ -331,11 +361,80 @@ test('R-STATUS: "failed" means the envelope is untouched; staleSince is kept by 
     assert.equal(status().lastOutcome, 'failed');
     assert.equal(status().lastError, 'Error: HTTP 503');
     assert.equal(status().staleSince, '2026-10-08T08:00:00Z');
+    assert.equal(status().lastSuccessAt, '2026-10-08T12:00:00Z', 'neither the stale run nor the failed one is a success');
+    assert.equal(status().consecutiveFailures, 2, 'the stale run and the failed run');
     // A complete run clears it.
     await run.runRefresh({ ...base, now: '2026-10-08T19:00:00Z', collectors: [scripted('src', () => ({ data: { v: 4 } }))] });
     assert.equal(status().lastOutcome, 'ok');
     assert.equal(status().staleSince, undefined);
     assert.equal(status().lastCompleteAt, '2026-10-08T19:00:00Z');
+    assert.equal(status().lastSuccessAt, '2026-10-08T19:00:00Z');
+    assert.equal(status().lastError, null);
+    assert.equal(status().consecutiveFailures, 0);
+  });
+});
+
+test('R-STATUS (repair): a stale source stays visible: last success freezes, the stale note is a visible error on the Sources page, stale runs are counted; recovery clears it', async () => {
+  // The verifier's 12-hour master outage: on the first repair, a stale run advanced lastSuccessAt and
+  // cleared lastError, so the Sources page row read "data age N min" with no visible error.
+  await withDataDir(async (dir) => {
+    let masterOk = true;
+    const fetchImpl = (async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.startsWith('https://api.github.com/repos/brave/brave-core/commits/master')) return masterOk ? new Response(SHA_A) : new Response('{"message":"Server Error"}', { status: 404 });
+      if (url === `https://raw.githubusercontent.com/brave/brave-core/${SHA_A}/${FEATURES}`) return new Response(FEATURES_SRC);
+      return new Response('not found', { status: 404 });
+    }) as typeof fetch;
+    const base = { trigger: 'test', token: null, log: quiet, fetchImpl, sleep: async () => {}, collectors: [flagsModule.flags] };
+    const status = () => readData(dir, 'status.json').sources['brave-flags'];
+    const { sourcesPage } = await import('../src/site/pages/other.ts');
+    const row = () => {
+      const page = sourcesPage(readData(dir, 'derived', 'site.json'), readData(dir, 'history', 'runs.json'), {}).value;
+      return page.split('<tr class="src"').find((r) => r.includes('Zcash feature flags in brave-core'))!.split('</tr>')[0];
+    };
+    await run.runRefresh({ ...base, now: '2026-10-08T06:00:00Z' });
+    masterOk = false;
+    // Within the window (kept master at most 6 h old): partial runs are successes.
+    for (const now of ['2026-10-08T08:00:00Z', '2026-10-08T10:00:00Z', '2026-10-08T12:00:00Z']) {
+      const r = await run.runRefresh({ ...base, now });
+      assert.equal(r.sources['brave-flags'], 'partial');
+      const st = status();
+      assert.equal(st.lastSuccessAt, now);
+      assert.equal(st.staleSince, undefined);
+      assert.equal(st.lastError, null);
+      assert.equal(st.consecutiveFailures, 0);
+    }
+    // Beyond it: still partial (never 'failed': data was stored), but not a success.
+    const late = ['2026-10-08T14:00:00Z', '2026-10-08T16:00:00Z', '2026-10-08T18:00:00Z'];
+    for (const [i, now] of late.entries()) {
+      const r = await run.runRefresh({ ...base, now });
+      assert.equal(r.sources['brave-flags'], 'partial', `${now}: kept master data is a partial read, not a failure`);
+      assert.equal(readData(dir, 'sources', 'brave-flags.json').retrievedAt, now, `${now}: the data was stored`);
+      const st = status();
+      assert.equal(st.lastOutcome, 'partial');
+      assert.equal(st.staleSince, '2026-10-08T06:00:00Z');
+      assert.equal(st.lastSuccessAt, '2026-10-08T12:00:00Z', `${now}: last success does not advance while the source is stale`);
+      assert.equal(st.consecutiveFailures, i + 1);
+      assert.equal(st.lastError, st.limitations[0]);
+      assert.match(st.lastError, /^stale: brave-core master feature flags \(components\/brave_wallet\/common\/features\.cc at commit aaaaaaaaaa\) could not be refreshed since 2026-10-08T06:00:00Z \(\d+ h, longer than the 6-hour staleness window\)/);
+    }
+    // The Sources page (from this run's derived site data): the row ages from the frozen last success,
+    // which is past the staleness window by now, and the stale note is a visible error, not only an
+    // entry inside the collapsed limitations.
+    const r = row();
+    assert.match(r, /^ data-last-success="2026-10-08T12:00:00Z" data-outcome="partial">/);
+    assert.ok(Date.parse('2026-10-08T18:00:00Z') - Date.parse('2026-10-08T12:00:00Z') >= FRESHNESS.staleAfterMinutes * 60_000, 'the client marks a row stale once its last success is older than the window');
+    assert.match(r, /<p class="err">stale: brave-core master feature flags [^<]*could not be refreshed since 2026-10-08T06:00:00Z \(12 h, longer than the 6-hour staleness window\)[^<]* \(3 consecutive failures\)<\/p><details>/);
+    // Recovery: a success again, nothing stale left on the page.
+    masterOk = true;
+    await run.runRefresh({ ...base, now: '2026-10-08T20:00:00Z' });
+    const st = status();
+    assert.equal(st.lastOutcome, 'ok');
+    assert.equal(st.lastSuccessAt, '2026-10-08T20:00:00Z');
+    assert.equal(st.lastError, null);
+    assert.equal(st.consecutiveFailures, 0);
+    assert.equal(st.staleSince, undefined);
+    assert.doesNotMatch(row(), /class="err"/);
   });
 });
 
