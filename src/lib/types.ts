@@ -306,7 +306,19 @@ export interface SourceStatus {
   name: string;
   url: string;
   lastAttemptAt: string | null;
+  /**
+   * Last run that stored data for this source with outcome ok or partial. A partial run that kept
+   * values unrefreshed for longer than the staleness window is recorded failed and does not
+   * advance it (see CollectResult.staleSince).
+   */
   lastSuccessAt: string | null;
+  /**
+   * Last run in which every read of this source succeeded (outcome ok). Data carried forward by
+   * later partial runs is at least this fresh. Absent in status written before this field existed.
+   */
+  lastCompleteAt?: string | null;
+  /** Last run that stored a partial collection (some reads failed; last good values kept), whatever its outcome. */
+  lastPartialAt?: string | null;
   lastOutcome: SourceOutcome | null;
   lastError: string | null;
   consecutiveFailures: number;
@@ -325,6 +337,11 @@ export interface RunRecord {
   requests: number;
   events: number;
   notes: string[];
+  /**
+   * Derivation of site data and change history from the stored envelopes. When it fails the run
+   * outcome is 'failed' and the previously derived files (with their own generatedAt) are kept.
+   */
+  derive?: { outcome: 'ok' | 'failed'; error: string | null };
 }
 
 // ---------------------------------------------------------------------------
@@ -337,6 +354,10 @@ export interface SourceEnvelope<T> {
   /** Retrieval time of the data currently stored (i.e. the last successful collection). */
   retrievedAt: string | null;
   data: T;
+  /** True when the stored data came from a partial collection (some records carried forward from earlier runs). */
+  partial?: boolean;
+  /** Time of the last complete collection; everything in `data` is at least this fresh. Null when none has completed yet. */
+  completeAt?: string | null;
 }
 
 // ---------------------------------------------------------------------------

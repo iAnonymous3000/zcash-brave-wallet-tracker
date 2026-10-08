@@ -61,11 +61,20 @@ jobs:
             echo "no data changes"
           else
             git commit -q -m "data: refresh ($GITHUB_EVENT_NAME, run $GITHUB_RUN_ID)"
+            pushed=false
             for attempt in 1 2 3; do
-              if git push; then break; fi
-              echo "push rejected; rebasing (attempt $attempt)"
-              git pull --rebase --autostash
+              if git push; then pushed=true; break; fi
+              if [ "$attempt" -lt 3 ]; then
+                echo "push rejected; rebasing (attempt $attempt)"
+                git pull --rebase --autostash
+              fi
             done
+            # Never report success for data that did not reach the repository: the deploy below
+            # would otherwise publish state that the auditable history does not contain.
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not push refreshed data after 3 attempts; nothing was published."
+              exit 1
+            fi
           fi
 
       - name: Build site
@@ -94,8 +103,25 @@ jobs:
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
-      - name: Report total refresh failure
-        if: steps.refresh.outcome == 'failure'
+      # The refresh step exits non-zero when every source failed or when derivation failed
+      # (src/ingest/run.ts refreshExitCode). Its run record was committed above; when the steps
+      # after it succeeded, the site was redeployed from the last successfully derived data, which
+      # keeps its own generation time and shows a "Latest refresh failed" banner. This step runs
+      # even when a later step failed too (e.g. Build site on a corrupt history file), so the job
+      # always ends with the recorded reason.
+      - name: Report refresh failure
+        if: always() && steps.refresh.outcome == 'failure'
         run: |
-          echo "::error::Every source failed in this run. The site was redeployed with the previous data and marks it as stale."
+          node -e '
+            const fs = require("node:fs");
+            let run = null;
+            try { run = JSON.parse(fs.readFileSync("data/status.json", "utf8")).lastRun ?? null; } catch {}
+            const reason = !run ? "no run record was written"
+              : `last recorded run ${run.id} started ${run.startedAt}: ` + (run.derive && run.derive.outcome === "failed" ? `derivation failed: ${run.derive.error}`
+              : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
+            const site = !run ? ""
+              : run.derive && run.derive.outcome === "failed" ? " The published site keeps the previously derived data and its original generation time."
+              : " The site was derived from the last stored source data and carries a failed-refresh banner.";
+            console.log(`::error::Refresh failed (${reason.replace(/[\r\n]+/g, " ")}).${site}`);
+          '
           exit 1
