@@ -80,6 +80,10 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
     'exec(OVERRIDES)',
     'setattr(module, name, (Chain.ZCASH,))',
     'sys.modules[__name__].__dict__.update(cfg)',
+    // f-string replacement fields are code too.
+    'log.info(f"{(SWAP_DISABLED_CHAINS := (Chain.ZCASH,))}")',
+    "NOTE = f'disabled: {SWAP_DISABLED_CHAINS.append(Chain.ZCASH)}'",
+    'NOTE = f"{globals().update(SWAP_DISABLED_CHAINS=(Chain.ZCASH,))}"',
   ];
   for (const form of rebinding) {
     const r = parseGate3Switch(`${DEF}${form}\n`);
@@ -100,6 +104,8 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
     ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\ndef f(chain, disabled=SWAP_DISABLED_CHAINS):\n    return chain in disabled\n', true],
     ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\n', true],
     ['SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n', false],
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nlog.info(f"{SWAP_DISABLED_CHAINS} loaded; {SWAP_DISABLED_CHAINS=}; {{SWAP_DISABLED_CHAINS := x}}")\n', true],
+    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nDOC = "SWAP_DISABLED_CHAINS = (Chain.ZCASH,) and globals() are only words here"\n', false],
   ];
   for (const [src, v] of reads) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
 

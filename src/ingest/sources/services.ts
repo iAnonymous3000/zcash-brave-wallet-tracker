@@ -287,6 +287,8 @@ interface PyStatement {
   indent: number;
   /** Contents of the string literals in this statement (replaced by '' in `code`). */
   strings: string[];
+  /** Contents of the f-string literals among them: their {…} parts are code that runs. */
+  fstrings?: string[];
 }
 
 /**
@@ -304,10 +306,12 @@ export function pythonStatements(src: string): PyStatement[] {
   let startLine = 1;
   let indent = 0;
   let strings: string[] = [];
+  let fstrings: string[] = [];
   const flush = () => {
-    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings });
+    if (buf.trim()) out.push({ code: buf.trim(), line: startLine, indent, strings, ...(fstrings.length ? { fstrings } : {}) });
     buf = '';
     strings = [];
+    fstrings = [];
   };
   const begin = (at: number) => {
     if (buf.trim() === '') {
@@ -373,7 +377,9 @@ export function pythonStatements(src: string): PyStatement[] {
           }
           i++;
         }
-        strings.push(src.slice(contentStart, Math.min(contentEnd, n)));
+        const content = src.slice(contentStart, Math.min(contentEnd, n));
+        strings.push(content);
+        if (/f/i.test(m[1])) fstrings.push(content);
         buf += "''";
         continue;
       }
@@ -518,17 +524,20 @@ function pyTokens(code: string): PyToken[] {
  * for/as/del/global/nonlocal/import/def/class or in a match-case pattern, or when a method that may modify it is
  * called on it.
  */
-function switchBinding(code: string): string | null {
+function switchBinding(code: string, expression = false): string | null {
   const toks = pyTokens(code);
   const hits = toks.flatMap((x, k) => (x.kind === 'name' && x.t === SWAP_VAR ? [k] : []));
   if (!hits.length) return null;
-  let lastAssign = -1;
-  toks.forEach((x, k) => {
-    if (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)) lastAssign = k;
-  });
-  if (hits.some((k) => k < lastAssign)) return 'assignment target';
-  const first = toks[0];
-  if (first?.t === 'case' && toks[1] && !(toks[1].kind === 'op' && (ASSIGN_OPS.has(toks[1].t) || toks[1].t === '.'))) return 'match-case pattern';
+  // An f-string replacement field is an expression: "{X=}" is the debug form of a read, not an assignment.
+  if (!expression) {
+    let lastAssign = -1;
+    toks.forEach((x, k) => {
+      if (x.depth === 0 && x.kind === 'op' && ASSIGN_OPS.has(x.t)) lastAssign = k;
+    });
+    if (hits.some((k) => k < lastAssign)) return 'assignment target';
+    const first = toks[0];
+    if (first?.t === 'case' && toks[1] && !(toks[1].kind === 'op' && (ASSIGN_OPS.has(toks[1].t) || toks[1].t === '.'))) return 'match-case pattern';
+  }
   for (const k of hits) {
     const next = toks[k + 1];
     if (next?.t === ':=') return 'assignment expression (:=)';
@@ -552,11 +561,41 @@ function switchBinding(code: string): string | null {
   return null;
 }
 
+/** The replacement fields ("{...}", not "{{") of an f-string's contents: code that runs when the string is built. */
+function fstringFields(content: string): string[] {
+  const out: string[] = [];
+  let i = 0;
+  while (i < content.length) {
+    if (content.startsWith('{{', i) || content.startsWith('}}', i)) {
+      i += 2;
+      continue;
+    }
+    if (content[i] !== '{') {
+      i++;
+      continue;
+    }
+    let depth = 1;
+    let j = i + 1;
+    for (; j < content.length && depth > 0; j++) {
+      if ('([{'.includes(content[j])) depth++;
+      else if (')]}'.includes(content[j])) depth--;
+    }
+    out.push(content.slice(i + 1, depth === 0 ? j - 1 : j));
+    i = j;
+  }
+  return out;
+}
+
+/** Code of a statement that string blanking hides: the replacement fields of its f-strings. */
+const fstringCode = (s: PyStatement) => (s.fstrings ?? []).flatMap(fstringFields);
+
 /**
  * Whether gate3's module-level SWAP_DISABLED_CHAINS contains Chain.ZCASH.
  * true/false only for a single top-level literal assignment whose relevant elements are all Chain.X and that no
  * other statement binds or modifies; null (unknown) for anything else: computed values, any other binding of the
- * name (see switchBinding), conditional definitions, a later star import, or run-time namespace changes.
+ * name (see switchBinding, also inside f-string replacement fields), conditional definitions, a later star import,
+ * or run-time namespace changes anywhere in the module (an alias such as `g = globals()` can hide the name, so any
+ * use of those primitives leaves the value unknown).
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);
@@ -569,9 +608,13 @@ export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; 
   const top = defs.filter((d) => d.indent === 0);
   if (!top.length) return { zcashDisabled: null, line: defs[0].line, reason: `${SWAP_VAR} is only assigned inside a block (conditional or nested definition)` };
   const def = top[0];
-  const dynamic = stmts.find((s) => DYNAMIC_NAMESPACE.test(s.code));
+  const dynamic = stmts.find((s) => [s.code, ...fstringCode(s)].some((c) => DYNAMIC_NAMESPACE.test(c)));
   if (dynamic) return { zcashDisabled: null, line: def.line, reason: `the module changes names at run time (line ${dynamic.line}: globals()/vars()/setattr/exec or similar); the final value of ${SWAP_VAR} is not determined statically` };
-  const others = stmts.filter((s) => s !== def && (defs.includes(s) || switchBinding(s.code) !== null || (STAR_IMPORT.test(s.code) && s.line > def.line)));
+  const others = stmts.filter(
+    (s) =>
+      s !== def &&
+      (defs.includes(s) || switchBinding(s.code) !== null || fstringCode(s).some((c) => switchBinding(c, true) !== null) || (STAR_IMPORT.test(s.code) && s.line > def.line)),
+  );
   if (others.length) {
     const at = others.map((s) => s.line);
     return { zcashDisabled: null, line: def.line, reason: `${SWAP_VAR} is assigned, imported or modified more than once (line${at.length === 1 ? '' : 's'} ${at.join(', ')}); its final value is not determined statically` };
