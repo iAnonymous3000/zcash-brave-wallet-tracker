@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.cache/
+*.log
+.DS_Store
+.env
+.env.*
+# local-only files
+BUILD_PROMPT.md
+fixtures-out/
