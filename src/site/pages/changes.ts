@@ -85,6 +85,7 @@ export function changesPage(d: SiteData, events: ChangeEvent[]): SafeHtml {
   <div class="f-field"><label for="cbasis">Basis</label><select id="cbasis"><option value="">Observed and backfilled</option><option value="observed">Observed between refreshes</option><option value="backfill">Backfilled from history</option></select></div>
 </form>
 <p class="result-count" id="change-count" aria-live="polite">${events.length} changes</p>
+<h2 class="vh">Change feed</h2>
 <ol class="feed" id="change-feed">${events.map((e) => eventCard(e, d))}</ol>
 <p class="empty" id="change-empty" hidden>No changes match these filters. Clear the search or choose “All”.</p>
 `;
