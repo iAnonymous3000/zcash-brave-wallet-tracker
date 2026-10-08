@@ -405,7 +405,7 @@ test('R-STATUS (repair): a stale source stays visible: last success freezes, the
       assert.equal(st.consecutiveFailures, 0);
     }
     // Beyond it: still partial (never 'failed': data was stored), but not a success.
-    const late = ['2026-10-08T14:00:00Z', '2026-10-08T16:00:00Z', '2026-10-08T18:00:00Z'];
+    const late = ['2026-10-08T14:00:00Z', '2026-10-08T16:00:00Z', '2026-10-08T18:00:00Z', '2026-10-08T20:00:00Z'];
     for (const [i, now] of late.entries()) {
       const r = await run.runRefresh({ ...base, now });
       assert.equal(r.sources['brave-flags'], 'partial', `${now}: kept master data is a partial read, not a failure`);
@@ -419,18 +419,22 @@ test('R-STATUS (repair): a stale source stays visible: last success freezes, the
       assert.match(st.lastError, /^stale: brave-core master feature flags \(components\/brave_wallet\/common\/features\.cc at commit aaaaaaaaaa\) could not be refreshed since 2026-10-08T06:00:00Z \(\d+ h, longer than the 6-hour staleness window\)/);
     }
     // The Sources page (from this run's derived site data): the row ages from the frozen last success,
-    // which is past the staleness window by now, and the stale note is a visible error, not only an
-    // entry inside the collapsed limitations.
+    // and the stale note is a visible error, not only an entry inside the collapsed limitations.
     const r = row();
-    assert.match(r, /^ data-last-success="2026-10-08T12:00:00Z" data-outcome="partial">/);
-    assert.ok(Date.parse('2026-10-08T18:00:00Z') - Date.parse('2026-10-08T12:00:00Z') >= FRESHNESS.staleAfterMinutes * 60_000, 'the client marks a row stale once its last success is older than the window');
-    assert.match(r, /<p class="err">stale: brave-core master feature flags [^<]*could not be refreshed since 2026-10-08T06:00:00Z \(12 h, longer than the 6-hour staleness window\)[^<]* \(3 consecutive failures\)<\/p><details>/);
+    const lastSuccess = r.match(/^ data-last-success="([^"]*)" data-outcome="partial">/)?.[1];
+    assert.equal(lastSuccess, '2026-10-08T12:00:00Z');
+    // The client's rule (src/site/client/app.ts freshness()): a row is stale when the minutes since
+    // data-last-success exceed FRESHNESS.staleAfterMinutes. Viewed when this run finished, it already is.
+    const clientStale = (last: string, viewAt: string) => (Date.parse(viewAt) - Date.parse(last)) / 60_000 > FRESHNESS.staleAfterMinutes;
+    assert.equal(clientStale(lastSuccess!, '2026-10-08T20:00:00Z'), true, 'the row reads "stale: last success 8 h ago"');
+    assert.equal(clientStale('2026-10-08T20:00:00Z', '2026-10-08T20:00:00Z'), false, 'had the stale run advanced last success, the row would read "data age 0 min"');
+    assert.match(r, /<p class="err">stale: brave-core master feature flags [^<]*could not be refreshed since 2026-10-08T06:00:00Z \(14 h, longer than the 6-hour staleness window\)[^<]* \(4 consecutive failures\)<\/p><details>/);
     // Recovery: a success again, nothing stale left on the page.
     masterOk = true;
-    await run.runRefresh({ ...base, now: '2026-10-08T20:00:00Z' });
+    await run.runRefresh({ ...base, now: '2026-10-08T22:00:00Z' });
     const st = status();
     assert.equal(st.lastOutcome, 'ok');
-    assert.equal(st.lastSuccessAt, '2026-10-08T20:00:00Z');
+    assert.equal(st.lastSuccessAt, '2026-10-08T22:00:00Z');
     assert.equal(st.lastError, null);
     assert.equal(st.consecutiveFailures, 0);
     assert.equal(st.staleSince, undefined);
