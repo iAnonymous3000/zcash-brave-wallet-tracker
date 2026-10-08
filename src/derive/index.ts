@@ -23,7 +23,7 @@ import type { ServicesData } from '../ingest/sources/services.ts';
 import { buildGroups, buildRelations, isEpic, isUpliftPr, type WorkGroup } from './relations.ts';
 import { computeGroupStatus, STAGE_HELP, STAGE_LABEL, type GroupStatus, type Stage } from './status.ts';
 import { buildCapabilities, CELL_HELP, CELL_LABEL, type CapabilityRow } from './capabilities.ts';
-import { advisoryVerdicts, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
+import { advisoryVerdicts, DERIVE_RULES_VERSION, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
 
 export const DERIVED_SCHEMA = 1;
 
@@ -294,6 +294,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   }
   const currentSnap: Snapshot = {
     at: inp.now,
+    rulesVersion: DERIVE_RULES_VERSION,
     builds: Object.fromEntries(siteGroups.map((g) => [g.id, Object.fromEntries(g.status.builds.map((b) => [`${b.platform}/${b.channel}`, b.included]))])),
     flags: flagView,
     masterDeps: Object.fromEntries(Object.entries(masterSnap?.lock ?? {}).map(([k, v]) => [k, v.version])),
@@ -307,7 +308,8 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   const snapPath = dataPath('derived', 'snapshot.json');
   const prevSnap = readJson<Snapshot | null>(snapPath, null);
   const releaseDates = new Map<string, string | null>((releases?.releases ?? []).map((r) => [r.version, r.publishedAt]));
-  const gviews: GroupView[] = siteGroups.map((g) => ({ group: groups.find((x) => x.id === g.id)!, status: g.status, topic: g.topic, title: g.title }));
+  const gviews: GroupView[] = siteGroups.map((g) => ({ group: groups.find((x) => x.id === g.id)!, status: g.status, topic: g.topic, title: g.title, relevance: g.relevance }));
+  if (prevSnap && prevSnap.rulesVersion !== DERIVE_RULES_VERSION) notes.push(`derivation rules changed (v${prevSnap.rulesVersion ?? 'none'} → v${DERIVE_RULES_VERSION}); diff-only events suppressed for this run`);
   const candidates = generateEvents({
     now: inp.now,
     prev: prevSnap,
@@ -328,7 +330,8 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   });
   const histPath = dataPath('history', 'events.json');
   const history = readJson<ChangeEvent[]>(histPath, []);
-  const { events, added } = mergeHistory(history, candidates, inp.now, prevSnap?.at ?? null);
+  const rulesChanged = Boolean(prevSnap) && prevSnap!.rulesVersion !== DERIVE_RULES_VERSION;
+  const { events, added } = mergeHistory(history, candidates, inp.now, prevSnap?.at ?? null, undefined, { rebuildBackfill: rulesChanged });
   writeJson(histPath, events);
   writeJson(snapPath, currentSnap);
 

@@ -49,7 +49,7 @@ function workRow(g: SiteGroup, d: SiteData): SafeHtml {
   const lead = d.items[g.lead];
   const st = g.status;
   const members = [...g.members.issues, ...g.members.masterPrs, ...g.members.uplifts, ...g.members.duplicates].map((id) => d.items[id]).filter(Boolean);
-  const text = [g.title, shortRef(g.lead), `#${lead.number}`, lead.number, ...members.map((m) => `${m.title} #${m.number}`), ...lead.labels, ...st.owners, ...st.authors, g.topic.name].join(' ').toLowerCase();
+  const text = [g.title, shortRef(g.lead), `#${lead.number}`, lead.number, ...members.map((m) => `${m.title} #${m.number}`), ...lead.labels, ...st.owners, ...st.authors].join(' ').toLowerCase();
   const notes = notesSummary(g);
   const masters = g.members.masterPrs.map((id) => d.items[id]).filter(Boolean);
   const open = lead.state === 'open' || masters.some((m) => m.state === 'open');

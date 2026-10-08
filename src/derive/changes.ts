@@ -7,6 +7,7 @@
 // Explanations are deterministic templates filled only with captured facts.
 
 import { CRATES } from '../../config/upstream.ts';
+import { RETRACTED_EVENTS } from '../../config/retractions.ts';
 import type { ChangeEvent, ChangeKind, Channel, CommunityTopic, DocPage, Platform, WorkItem, Advisory, EvidenceRecord } from '../lib/types.ts';
 import { compareSemver, compareVersions, itemUrl, satisfiesRange, shortHash } from '../lib/util.ts';
 import type { GroupStatus } from './status.ts';
@@ -17,10 +18,17 @@ import type { UpstreamData } from '../ingest/sources/upstream.ts';
 import type { DepsData } from '../ingest/sources/deps.ts';
 
 export const HISTORY_DAYS = 365;
+/**
+ * Bump whenever derivation logic changes in a way that alters derived state (capability rules,
+ * source checks, build presence rules). Diff-only events are suppressed for the first run after a
+ * bump, because differences would come from the tracker, not from the sources.
+ */
+export const DERIVE_RULES_VERSION = 3;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
   at: string;
+  rulesVersion?: number;
   /** groupId -> "platform/channel" -> included */
   builds: Record<string, Record<string, boolean | null>>;
   /** "platform/channel" -> { tag, flags: name -> default } */
@@ -38,6 +46,7 @@ export interface Snapshot {
 
 export interface GroupView {
   group: WorkGroup;
+  relevance?: 'direct' | 'mention';
   status: GroupStatus;
   topic: { id: string; name: string };
   title: string;
@@ -97,9 +106,13 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   const gv = new Map(inp.groups.map((g) => [g.group.id, g]));
   const ctxOf = (itemId: string) => gv.get(inp.groupOfItem.get(itemId) ?? '') ?? null;
 
-  // 1. Item timelines.
+  // Diff-only events need a previous snapshot made by the same derivation rules.
+  const diffOk = Boolean(inp.prev) && inp.prev!.rulesVersion === inp.current.rulesVersion;
+
+  // 1. Item timelines (only for work that is about Zcash; description-only mentions stay browsable but quiet).
   for (const it of Object.values(inp.items)) {
     const g = ctxOf(it.id);
+    if (!g || g.relevance === 'mention') continue;
     const topic = g?.topic.id ?? null;
     const st = g?.status ?? null;
     const platforms = st?.platforms ?? [];
@@ -155,12 +168,13 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   }
 
   // 3. Build inclusion (diff only; no source timestamp for "became part of a build").
-  if (inp.prev) {
+  if (inp.prev && diffOk) {
     for (const g of inp.groups) {
       const before = inp.prev.builds[g.group.id] ?? {};
       for (const b of g.status.builds) {
         const k = `${b.platform}/${b.channel}`;
-        if (b.included === true && before[k] !== true && inp.prev.builds[g.group.id]) {
+        // Only a known "not included" turning into "included" is news; unknown -> included is backlog resolution.
+        if (b.included === true && before[k] === false) {
           out.push(ev({ key: `${g.group.id}|${k}|${b.version}`, kind: 'in-build', sourceAt: inp.releaseDates.get(b.version) ?? null, title: `In ${PLATFORM_NAME[b.platform]} ${CHANNEL_NAME[b.channel]} ${b.version}: ${g.title}`, impact: `The merged code (${shortRef(b.via ?? g.group.lead)}) is now part of the ${PLATFORM_NAME[b.platform]} ${CHANNEL_NAME[b.channel]} build ${b.version}. This shows the code is in the build, not that every platform exposes the feature.`, highlight: highlightFor(g.topic.id, g.status, 'in-build'), itemIds: [g.group.lead], topic: g.topic.id, platforms: [b.platform], channel: b.channel, links: [link(g.group.lead, inp.items)], evidence: [b.basis] }));
         }
       }
@@ -168,7 +182,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   }
 
   // 4. Flag defaults per platform/channel (diff).
-  if (inp.prev) {
+  if (inp.prev && diffOk) {
     for (const [k, cur] of Object.entries(inp.current.flags)) {
       const old = inp.prev.flags[k];
       if (!old || old.tag === cur.tag) continue;
@@ -181,7 +195,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   }
 
   // 5. Dependency pins on master (diff).
-  if (inp.prev) {
+  if (inp.prev && diffOk) {
     for (const [crate, v] of Object.entries(inp.current.masterDeps)) {
       const old = inp.prev.masterDeps[crate];
       if (old && old !== v) {
@@ -228,14 +242,14 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
 
   // 9. Docs: content edits.
   for (const d of inp.docs) {
-    const changed = inp.prev && inp.prev.docs[d.id] && inp.prev.docs[d.id] !== d.contentHash;
+    const changed = diffOk && inp.prev && inp.prev.docs[d.id] && inp.prev.docs[d.id] !== d.contentHash;
     if (changed) {
       out.push(ev({ key: `doc|${d.id}|${d.contentHash}`, kind: 'doc-changed', sourceAt: d.updatedAt, title: `Documentation changed: ${d.title}`, impact: 'The Zcash-related text of this official page changed since the previous check. The previous statements are kept on the Sources page.', highlight: null, itemIds: [], topic: null, platforms: [], channel: null, links: [{ label: d.source === 'support' ? 'Help Center' : 'brave.com', url: d.url }], evidence: d.zcashStatements.slice(0, 2) }));
     }
   }
 
   // 10. Capability matrix (diff).
-  if (inp.prev) {
+  if (inp.prev && diffOk) {
     for (const [cap, cells] of Object.entries(inp.current.capabilities)) {
       for (const [k, status] of Object.entries(cells)) {
         const old = inp.prev.capabilities[cap]?.[k];
@@ -247,7 +261,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   }
 
   // 11a. Server-side switches (diff).
-  if (inp.prev?.services && inp.current.services) {
+  if (diffOk && inp.prev?.services && inp.current.services) {
     const a = inp.prev.services.gate3ZcashDisabled;
     const b = inp.current.services.gate3ZcashDisabled;
     if (a !== null && b !== null && a !== b) {
@@ -258,7 +272,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   }
 
   // 11b. Network-upgrade readiness (diff).
-  if (inp.prev?.nu7 && inp.current.nu7) {
+  if (diffOk && inp.prev?.nu7 && inp.current.nu7) {
     if (inp.prev.nu7.braveHasBranchId === false && inp.current.nu7.braveHasBranchId === true) {
       out.push(ev({ key: `nu7-ready|${inp.now.slice(0, 10)}`, kind: 'dependency-bumped', sourceAt: null, title: 'Brave master now knows the final NU7 consensus branch ID', impact: 'brave-core master now pins a librustzcash fork that defines NU7 (branch 0x77190AD9). It reaches users once a build with it ships.', highlight: 'migration', itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [], evidence: ['braveHasBranchId: false → true'] }));
     }
@@ -270,7 +284,7 @@ export function generateEvents(inp: ChangeInputs): (ChangeEvent & { key: string 
   // 11. Release evidence that disappeared upstream (kept, but flagged).
   const prevGone = new Set(inp.prev?.goneEvidence ?? []);
   for (const r of inp.evidence) {
-    if (r.goneSince && inp.prev && !prevGone.has(r.id)) {
+    if (r.goneSince && diffOk && !prevGone.has(r.id)) {
       out.push(ev({ key: `gone|${r.id}`, kind: 'release-evidence-changed', sourceAt: null, title: `Release note text changed upstream: ${r.text.slice(0, 120)}`, impact: `This ${r.source} line (${r.version}) is no longer present upstream. The captured copy and its permalink are kept as evidence.`, highlight: null, itemIds: [], topic: null, platforms: r.platform ? [r.platform] : [], channel: 'release', links: [{ label: 'Captured permalink', url: r.permalink }], evidence: [`first seen ${r.firstSeenAt}`, `gone since ${r.goneSince}`] }));
     }
   }
@@ -333,15 +347,19 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null): { summary:
 }
 
 /** Merge new candidate events into history: keep first detection time, mark backfill vs observed, bound size. */
-export function mergeHistory(history: ChangeEvent[], candidates: (ChangeEvent & { key: string })[], now: string, lastRunAt: string | null): { events: ChangeEvent[]; added: number } {
-  const byId = new Map(history.map((e) => [e.id, e]));
+export function mergeHistory(history: ChangeEvent[], candidates: (ChangeEvent & { key: string })[], now: string, lastRunAt: string | null, retracted: Record<string, string> = RETRACTED_EVENTS, opts: { rebuildBackfill?: boolean } = {}): { events: ChangeEvent[]; added: number } {
+  const kept = history.filter((e) => !retracted[e.id]);
+  // After a rules change, backfilled events are regenerated under the current rules; observed events are kept.
+  const firstSeen = new Map(kept.map((e) => [e.id, e.detectedAt]));
+  const base = opts.rebuildBackfill ? kept.filter((e) => e.basis === 'observed' || candidates.some((c) => c.id === e.id)) : kept;
+  const byId = new Map(base.map((e) => [e.id, e]));
   let added = 0;
   for (const c of candidates) {
     const { key: _key, ...e } = c;
-    if (byId.has(e.id)) continue;
+    if (byId.has(e.id) || retracted[e.id]) continue;
     // Observed = it happened after our previous run (or has no source time and was found by a diff).
     const observed = lastRunAt !== null && (e.sourceAt === null || Date.parse(e.sourceAt) >= Date.parse(lastRunAt) - 6 * 3_600_000);
-    byId.set(e.id, { ...e, detectedAt: now, basis: observed ? 'observed' : 'backfill' });
+    byId.set(e.id, { ...e, detectedAt: firstSeen.get(e.id) ?? now, basis: observed && !firstSeen.has(e.id) ? 'observed' : 'backfill' });
     added += 1;
   }
   const cutoff = Date.parse(now) - HISTORY_DAYS * 86_400_000;

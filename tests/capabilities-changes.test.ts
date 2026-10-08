@@ -100,7 +100,9 @@ function baseInputs(over: Partial<Parameters<typeof generateEvents>[0]> = {}): P
 test('events: timeline events use source timestamps; cosmetic changes produce nothing', () => {
   const issue = wi('brave/brave-browser#58957', { title: 'fix: Zcash Ironwood transactions miscalculate fees', createdAt: '2026-09-10T00:00:00Z', labels: ['bug', 'regression'], timeline: [tl('labeled', '2026-09-11T00:00:00Z', { detail: 'regression' }), tl('labeled', '2026-09-11T00:00:00Z', { detail: 'OS/Desktop' })] });
   const merged = wi('brave/brave-core#39877', { title: 'Fix ironwood fee calculation', state: 'merged', mergedAt: '2026-09-16T10:00:00Z' });
-  const evs = generateEvents(baseInputs({ items: byId(issue, merged) }));
+  const gv = (id: string, relevance: 'direct' | 'mention' = 'direct') => ({ group: { id, lead: id, issues: [], masterPrs: [], uplifts: [], duplicates: [], mentions: [], epic: null, children: [] }, status: null as any, topic: { id: 'ironwood', name: 'Ironwood' }, title: id, relevance });
+  const groupInputs = { groups: [gv(issue.id), gv(merged.id)], groupOfItem: new Map([[issue.id, issue.id], [merged.id, merged.id]]) };
+  const evs = generateEvents(baseInputs({ items: byId(issue, merged), ...groupInputs }));
   const kinds = evs.map((e) => e.kind).sort();
   assert.deepEqual(kinds, ['item-tracked', 'pr-merged', 'regression-flagged']);
   const m = evs.find((e) => e.kind === 'pr-merged')!;
@@ -108,7 +110,10 @@ test('events: timeline events use source timestamps; cosmetic changes produce no
   assert.match(m.impact, /Nightly/);
   assert.doesNotMatch(m.impact, /Release builds include/);
   // Same inputs again -> same ids (dedupe across runs).
-  const again = generateEvents(baseInputs({ items: byId(issue, merged) }));
+  const again = generateEvents(baseInputs({ items: byId(issue, merged), ...groupInputs }));
+  // Description-only mentions stay quiet in the feed.
+  const quiet = generateEvents(baseInputs({ items: byId(issue, merged), groups: [gv(issue.id, 'mention'), gv(merged.id, 'mention')], groupOfItem: groupInputs.groupOfItem }));
+  assert.equal(quiet.length, 0);
   assert.deepEqual(again.map((e) => e.id).sort(), evs.map((e) => e.id).sort());
 });
 
@@ -124,9 +129,27 @@ test('events: diffs need a previous snapshot; flag changes and dependency bumps 
   assert.ok(evs.some((e) => e.kind === 'dependency-bumped' && /0\.15\.0 → 0\.16\.0/.test(e.title)));
 });
 
+test('diff events: rules-version changes suppress them; only known-absent -> included counts as a new build inclusion', () => {
+  const g = { group: { id: 'brave/brave-browser#1', lead: 'brave/brave-browser#1', issues: [], masterPrs: [], uplifts: [], duplicates: [], mentions: [], epic: null, children: [] }, status: { builds: [{ platform: 'desktop', channel: 'release', version: '1.97.56', included: true, via: 'brave/brave-core#2', basis: 'compare behind' }], platforms: [], kind: 'bug', security: false, regression: false } as any, topic: { id: 'sync', name: 'Sync' }, title: 'x', relevance: 'direct' as const };
+  const cur = { ...emptySnap('2026-10-08T12:00:00Z'), rulesVersion: 3, builds: { 'brave/brave-browser#1': { 'desktop/release': true } } };
+  const fromUnknown = generateEvents(baseInputs({ prev: { ...emptySnap('x'), rulesVersion: 3, builds: { 'brave/brave-browser#1': { 'desktop/release': null } } }, current: cur, groups: [g] }));
+  assert.equal(fromUnknown.filter((e) => e.kind === 'in-build').length, 0, 'unknown -> included is backlog resolution');
+  const fromAbsent = generateEvents(baseInputs({ prev: { ...emptySnap('x'), rulesVersion: 3, builds: { 'brave/brave-browser#1': { 'desktop/release': false } } }, current: cur, groups: [g] }));
+  assert.equal(fromAbsent.filter((e) => e.kind === 'in-build').length, 1);
+  const rulesChanged = generateEvents(baseInputs({ prev: { ...emptySnap('x'), rulesVersion: 2, builds: { 'brave/brave-browser#1': { 'desktop/release': false } }, capabilities: { buy: { 'desktop/release': 'absent' } } }, current: { ...cur, capabilities: { buy: { 'desktop/release': 'in-build' } } }, groups: [g] }));
+  assert.equal(rulesChanged.filter((e) => e.kind === 'in-build' || e.kind === 'capability-changed').length, 0, 'tracker rule changes are not reported as source changes');
+});
+
+test('retracted events are removed from history and never re-added', () => {
+  const mk = (id: string): ChangeEvent & { key: string } => ({ key: id, id, kind: 'capability-changed', sourceAt: null, detectedAt: '', basis: 'observed', title: id, impact: 'i', highlight: null, itemIds: [], topic: null, platforms: [], channel: null, links: [], evidence: [] });
+  const hist = mergeHistory([], [mk('keep'), mk('bad')], '2026-10-08T00:00:00Z', null, {}).events;
+  const after = mergeHistory(hist, [mk('keep'), mk('bad')], '2026-10-08T02:00:00Z', '2026-10-08T00:00:00Z', { bad: 'tracker defect' });
+  assert.deepEqual(after.events.map((e) => e.id), ['keep']);
+});
+
 test('history merge keeps first detection, marks backfill vs observed, and is bounded', () => {
   const mk = (id: string, sourceAt: string | null): ChangeEvent & { key: string } => ({ key: id, id, kind: 'pr-merged', sourceAt, detectedAt: '', basis: 'observed', title: id, impact: 'i', highlight: null, itemIds: [], topic: null, platforms: [], channel: null, links: [], evidence: [] });
-  const first = mergeHistory([], [mk('a', '2026-09-01T00:00:00Z')], '2026-10-08T00:00:00Z', null);
+  const first = mergeHistory([], [mk('a', '2026-09-01T00:00:00Z')], '2026-10-08T00:00:00Z', null, {});
   assert.equal(first.events[0].basis, 'backfill');
   const second = mergeHistory(first.events, [mk('a', '2026-09-01T00:00:00Z'), mk('b', '2026-10-08T01:00:00Z'), mk('c', null)], '2026-10-08T02:00:00Z', '2026-10-08T00:00:00Z');
   assert.equal(second.added, 2);
