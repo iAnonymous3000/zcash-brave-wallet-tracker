@@ -104,8 +104,10 @@ export class GitHub {
     const url = `${API}/search/issues?q=${encodeURIComponent(q)}&per_page=100&page=${page}&sort=updated&order=desc`;
     // Search is limited to 30 req/min; pace requests to stay under it.
     await pace(this, 2100);
-    const { data } = await this.http.json<{ total_count: number; incomplete_results: boolean; items: SearchIssueHit[] }>(url, { scope: 'github-search' });
-    return { items: data.items ?? [], total: data.total_count ?? 0, incomplete: Boolean(data.incomplete_results) };
+    const { data, res } = await this.http.json<{ total_count: number; incomplete_results: boolean; items: SearchIssueHit[] }>(url, { scope: 'github-search' });
+    // A body without an items list is an unread page, not zero hits.
+    if (!data || !Array.isArray(data.items)) throw new HttpError(res.status, redact(url), `unexpected search response shape: ${JSON.stringify(data).slice(0, 80)}`);
+    return { items: data.items, total: data.total_count ?? 0, incomplete: Boolean(data.incomplete_results) };
   }
 
   /**

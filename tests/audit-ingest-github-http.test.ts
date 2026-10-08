@@ -882,3 +882,8 @@ test('ING-12: gh.paginate rejects a non-list page instead of reading it as an em
   // The collector does not report an unread label listing as a successful run.
   await assert.rejects(githubItems.collect(ctx, EMPTY_ITEMS), /unexpected response shape/);
 });
+
+test('ING-12: a search page without an items list is an error, not zero hits from a complete search', async () => {
+  const ctx = ctxFor(routed((u) => (u.pathname === '/search/issues' ? json({ message: 'unexpected object' }) : undefined)));
+  await assert.rejects(ctx.gh.searchIssues('repo:brave/brave-browser zcash'), /unexpected search response shape/);
+});
