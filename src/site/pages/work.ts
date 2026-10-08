@@ -2,10 +2,21 @@ import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { ChangeEvent, CommunityTopic, Platform, TimelineEntry, WorkItem } from '../../lib/types.ts';
 import { CHANNEL_NAME, PLATFORM_NAME, chip, ext, ghLink, glyph, html, itemHref, raw, shortRef, stageBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { fixFacts } from '../view.ts';
+import { fixFacts, gate3Facts, presentStages, stageView } from '../view.ts';
 import { eventCard } from './changes.ts';
+import { gate3Clause } from './home.ts';
 
 const KIND_LABEL: Record<string, string> = { bug: 'Bug', feature: 'Feature', proposal: 'Proposal', task: 'Task', issue: 'Issue', pr: 'Pull request' };
+
+/**
+ * A group's stage as glyph + label (see stageView). Unknown build presence of a merged fix gets the
+ * "not verified" glyph instead of the build glyph, so neither the label nor the shape implies absence.
+ */
+export function groupStageBadge(g: Pick<SiteGroup, 'status'>, title?: string): SafeHtml {
+  const s = stageView(g);
+  if (!s.unknown) return stageBadge(s.stage, s.label, title);
+  return html`<span class="stage st-merged" ${title ? html`title="${title}"` : ''}>${glyph('not-verified')}${s.label}</span>`;
+}
 
 function prState(it: Pick<WorkItem, "state" | "mergedAt" | "isDraft">): string {
   if (it.state === 'merged') return `merged ${it.mergedAt?.slice(0, 10) ?? ''}`.trim();
@@ -20,7 +31,7 @@ function notesSummary(g: SiteGroup): string {
 }
 
 export function workPage(d: SiteData): SafeHtml {
-  const stages = d.stages.filter((s) => s.count);
+  const stages = presentStages(d.stages).filter((s) => s.count);
   const topics = d.topics.filter((t) => t.count);
   return html`
 <div class="page-head">
@@ -56,7 +67,7 @@ function workRow(g: SiteGroup, d: SiteData): SafeHtml {
   const open = lead.state === 'open' || masters.some((m) => m.state === 'open');
   return html`<li class="wrow" data-relevance="${g.relevance}" data-stage="${st.stage}" data-topic="${g.topic.id}" data-kind="${st.kind}" data-platforms="${st.platforms.join(' ') || 'none'}" data-state="${open ? 'open' : 'closed'}" data-updated="${st.lastUpdated}" data-created="${lead.createdAt}" data-number="${lead.number}" data-text="${text}">
   <div class="wrow-main">
-    ${stageBadge(st.stage, st.stageLabel, 'Stage')}
+    ${groupStageBadge(g, 'Stage')}
     <h2 class="wrow-title"><a href="${itemHref(g.id)}">${g.title}</a></h2>
     <div class="wrow-chips">
       ${chip(KIND_LABEL[st.kind] ?? st.kind, 'kind')}
@@ -119,7 +130,7 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
 <div class="page-head detail-head">
   <h1>${g.title}</h1>
   <div class="wrow-chips">
-    ${stageBadge(st.stage, st.stageLabel)}
+    ${groupStageBadge(g)}
     ${chip(KIND_LABEL[st.kind] ?? st.kind, 'kind')}
     ${chip(g.topic.name, 'topic')}
     ${st.regression ? chip('Regression', 'warn') : ''}
@@ -163,7 +174,7 @@ ${factStrip(g, d)}
 
 ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2 id="f-builds">Where this applies</h2>
   <p>This change was merged in a Brave server-side repository (${g.members.masterPrs.map((id) => shortRef(id)).join(', ')}). It is not part of any browser build: once Brave deploys it, it applies to every platform and channel at the same time. Deployment timing is not public.</p>
-  ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current repository state: ${ext(d.upstream.services.gate3.url, 'SWAP_DISABLED_CHAINS')} ${d.upstream.services.gate3.zcashDisabled ? 'includes' : 'does not include'} <code>Chain.ZCASH</code> (checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}).</p>` : ''}
+  ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current state of the public repository: ${gate3Clause(gate3Facts(d.upstream.services.gate3.zcashDisabled).state)} (${ext(d.upstream.services.gate3.url, 'source')}, checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}). The deployed service could differ.</p>` : ''}
 </section>` : html`<section class="block" aria-labelledby="f-builds">
   <h2 id="f-builds">Build presence</h2>
   <p class="muted">Whether a merged pull request in this group is an ancestor of the brave-core tag of each platform’s current build (from versions.brave.com). Code presence is not the same as a feature being exposed on that platform.</p>
@@ -178,7 +189,7 @@ ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2
   </div>
 </section>`}
 
-${children.length ? html`<section class="block" aria-labelledby="f-children"><h2 id="f-children">Linked sub-issues</h2><ul class="children">${children.map((c, i) => c ? html`<li><a href="${itemHref(c.id)}">${c.title}</a> ${stageBadge(c.status.stage, c.status.stageLabel)} <span class="muted">${shortRef(c.id)}</span></li>` : html`<li class="muted">${shortRef(g.members.children[i])} (folded into another group)</li>`)}</ul></section>` : ''}
+${children.length ? html`<section class="block" aria-labelledby="f-children"><h2 id="f-children">Linked sub-issues</h2><ul class="children">${children.map((c, i) => c ? html`<li><a href="${itemHref(c.id)}">${c.title}</a> ${groupStageBadge(c)} <span class="muted">${shortRef(c.id)}</span></li>` : html`<li class="muted">${shortRef(g.members.children[i])} (folded into another group)</li>`)}</ul></section>` : ''}
 
 <section class="block" aria-labelledby="f-members">
   <h2 id="f-members">Members and their history</h2>
@@ -198,7 +209,7 @@ function factStrip(g: SiteGroup, d: SiteData): SafeHtml {
   const known = st.builds.filter((b) => b.included !== null);
   const yes = st.builds.filter((b) => b.included === true);
   const notePlatforms = [...new Set(st.releaseNotes.map((n) => `${PLATFORM_NAME[n.platform]} ${n.version}`))];
-  const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
+  const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : !known.length ? `Unknown for all ${st.builds.length} current builds` : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
   return html`<ul class="factstrip" aria-label="Key facts, each from its own source">
     <li><span class="fs-k">Issue</span><span class="fs-v">${st.issueState ? st.issueState.label : 'None (led by a pull request)'}</span></li>
     <li><span class="fs-k">Linked fix</span><span class="fs-v">${f.fix === 'merged' ? 'Merged' : f.fix === 'open' || f.fix === 'draft' ? 'In review' : f.fix === 'closed-unmerged' ? 'Closed without merging' : 'None linked'}</span></li>

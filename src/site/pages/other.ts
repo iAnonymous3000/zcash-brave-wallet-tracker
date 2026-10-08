@@ -2,6 +2,8 @@ import type { SiteData } from '../../derive/index.ts';
 import type { RunRecord } from '../../lib/types.ts';
 import { ext, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
+import { gate3Facts, presentSite } from '../view.ts';
+import { gate3Clause } from './home.ts';
 
 // ---------------------------------------------------------------------------
 // Upstream
@@ -85,14 +87,14 @@ function readinessSection(d: SiteData): SafeHtml {
   <h2 id="ready-h">Readiness and server-side switches</h2>
   <div class="facet-grid">
     ${n ? html`<section class="facet" aria-labelledby="nu7-h"><h3 id="nu7-h">Next network upgrade: ${n.name} (${ext(`https://zips.z.cash/zip-${n.zip}`, `ZIP ${Number(n.zip)}`)}, ${n.zipStatus ?? 'status unknown'})</h3>
-      <p>Testnet activation: <span class="mono">${n.testnetHeight ?? '?'}</span> · Mainnet: <span class="mono">${n.mainnetHeight ?? '?'}</span></p>
-      <p><strong>Brave:</strong> ${n.braveHasBranchId === true ? 'its pinned librustzcash fork defines the final consensus branch ID' : n.braveHasBranchId === false ? html`its pinned librustzcash fork does <strong>not</strong> define the final consensus branch ID ${html`<code>${n.branchId}</code>`}${n.braveGatedUnstable ? ' (NU7 exists only behind an unstable build flag)' : ''}` : 'unknown'}. ${n.braveUrl ? ext(n.braveUrl, 'Fork source') : ''}</p>
-      <p><strong>Upstream librustzcash main:</strong> ${n.upstreamHasBranchId === true ? 'defines it' : n.upstreamHasBranchId === false ? 'does not define it yet' : 'unknown'}. ${ext(n.upstreamUrl, 'Upstream source')}</p>
+      <p>Testnet activation: <span class="mono">${n.testnetHeight ?? 'unknown'}</span> · Mainnet: <span class="mono">${n.mainnetHeight ?? 'unknown'}</span></p>
+      <p><strong>Brave:</strong> ${n.braveHasBranchId === true ? 'its pinned librustzcash fork defines the final consensus branch ID' : n.braveHasBranchId === false ? html`its pinned librustzcash fork does <strong>not</strong> define the final consensus branch ID ${html`<code>${n.branchId}</code>`}${n.braveGatedUnstable ? ' (NU7 exists only behind an unstable build flag)' : ''}` : 'unknown whether its pinned librustzcash fork defines the final consensus branch ID'}. ${n.braveUrl ? ext(n.braveUrl, 'Fork source') : ''}</p>
+      <p><strong>Upstream librustzcash main:</strong> ${n.upstreamHasBranchId === true ? 'defines it' : n.upstreamHasBranchId === false ? 'does not define it yet' : 'unknown whether it defines it'}. ${ext(n.upstreamUrl, 'Upstream source')}</p>
       <p class="muted">Brave takes the consensus branch ID for signing from the light-client server at runtime (GetLightdInfo), so the practical effect at activation depends on that path as well. Checked ${time(n.checkedAt, { rel: true })}.</p>
     </section>` : ''}
     ${sv?.gate3 ? html`<section class="facet" aria-labelledby="g3-h"><h3 id="g3-h">ZEC swaps and bridges (gate3 backend)</h3>
-      <p class="big">${sv.gate3.zcashDisabled === true ? 'Zcash routing is turned off' : sv.gate3.zcashDisabled === false ? 'Zcash routing is not disabled' : 'Switch not found'}</p>
-      <p>${ext(sv.gate3.url, `app/api/swap/constants.py @ ${sv.gate3.commitSha.slice(0, 8)}`)}: <code>SWAP_DISABLED_CHAINS</code> ${sv.gate3.zcashDisabled ? 'includes' : 'does not include'} <code>Chain.ZCASH</code>.</p>
+      <p class="big">${gate3Facts(sv.gate3.zcashDisabled).big}</p>
+      <p>${ext(sv.gate3.url, `app/api/swap/constants.py @ ${sv.gate3.commitSha.slice(0, 8)}`)}: ${gate3Clause(gate3Facts(sv.gate3.zcashDisabled).state)}.</p>
       <p class="muted">This is the public repository of Brave’s swap backend. The deployed service could differ; deployment timing is not public. It applies to every platform and browser version.</p>
     </section>` : ''}
     ${sv ? html`<section class="facet" aria-labelledby="st-h"><h3 id="st-h">Field-trial studies touching Zcash (brave-variations)</h3>
@@ -140,7 +142,8 @@ function groupFor(d: SiteData, id: string): string {
 // Sources, freshness, coverage, meanings
 // ---------------------------------------------------------------------------
 
-export function sourcesPage(d: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>): SafeHtml {
+export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>): SafeHtml {
+  const d = presentSite(data);
   const c = d.coverage.counts;
   return html`
 <div class="page-head">

@@ -1,42 +1,75 @@
 // Minimal static server for local preview of dist/ under the configured base path.
 // Usage: node scripts/serve.ts [port]   (env: TRACKER_OUT_DIR, TRACKER_BASE_PATH)
-import { createServer } from 'node:http';
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { extname, join, normalize, resolve } from 'node:path';
+import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
+import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
+import { extname, join, normalize, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { SITE } from '../config/tracker.ts';
 import { ROOT } from '../src/lib/store.ts';
 
-const dir = resolve(process.env.TRACKER_OUT_DIR ?? join(ROOT, 'dist'));
-const base = SITE.basePath;
-const port = Number(process.argv[2] ?? process.env.PORT ?? 4173);
 const types: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.txt': 'text/plain' };
 
-createServer((req, res) => {
-  const url = new URL(req.url ?? '/', 'http://localhost');
-  if (url.pathname === '/' && base !== '/') {
-    res.writeHead(302, { Location: base });
-    return res.end();
-  }
-  if (!url.pathname.startsWith(base)) {
-    res.writeHead(404);
-    return res.end('not under base path');
-  }
-  let rel = decodeURIComponent(url.pathname.slice(base.length));
-  let file = normalize(join(dir, rel));
-  if (!file.startsWith(dir)) {
-    res.writeHead(403);
-    return res.end();
-  }
-  if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
-  if (!existsSync(file)) {
-    // Mimic GitHub Pages: directory without trailing slash redirects; otherwise 404.html.
-    if (existsSync(join(file, 'index.html'))) {
-      res.writeHead(301, { Location: `${url.pathname}/` });
-      return res.end();
+/**
+ * Request handler for `dir` served under `base`. A malformed request (bad percent-encoding, a
+ * NUL byte, an unparsable URL) is answered 400; an unexpected error is answered 500. Nothing a
+ * client sends can throw out of the handler and stop the server.
+ */
+export function previewHandler(dirIn: string, base: string): (req: IncomingMessage, res: ServerResponse) => void {
+  const dir = resolve(dirIn);
+  const send = (res: ServerResponse, status: number, body: string | Buffer = '', headers: Record<string, string> = {}) => {
+    if (res.headersSent) return void res.end();
+    res.writeHead(status, headers);
+    res.end(body);
+  };
+  return (req, res) => {
+    try {
+      let url: URL;
+      let rel: string;
+      try {
+        url = new URL(req.url ?? '/', 'http://localhost');
+        rel = url.pathname.startsWith(base) ? decodeURIComponent(url.pathname.slice(base.length)) : '';
+      } catch {
+        return send(res, 400, 'bad request', { 'Content-Type': 'text/plain' });
+      }
+      if (rel.includes('\0')) return send(res, 400, 'bad request', { 'Content-Type': 'text/plain' });
+      if (url.pathname === '/' && base !== '/') return send(res, 302, '', { Location: base });
+      if (!url.pathname.startsWith(base)) return send(res, 404, 'not under base path');
+      let file = normalize(join(dir, rel));
+      // Inside dir only: a sibling such as "<dir>-private" shares the prefix but is outside.
+      if (file !== dir && !file.startsWith(dir + sep)) return send(res, 403);
+      if (existsSync(file) && statSync(file).isDirectory()) {
+        // Mimic GitHub Pages: a directory without a trailing slash redirects to it.
+        if (!url.pathname.endsWith('/')) return send(res, 301, '', { Location: `${url.pathname}/${url.search}` });
+        file = join(file, 'index.html');
+      }
+      if (!existsSync(file) || !statSync(file).isFile()) {
+        const notFound = join(dir, '404.html');
+        return send(res, 404, existsSync(notFound) ? readFileSync(notFound) : 'not found', { 'Content-Type': types['.html'] });
+      }
+      return send(res, 200, readFileSync(file), { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' });
+    } catch (err) {
+      console.error(err);
+      return send(res, 500, 'internal error', { 'Content-Type': 'text/plain' });
     }
-    res.writeHead(404, { 'Content-Type': types['.html'] });
-    return res.end(existsSync(join(dir, '404.html')) ? readFileSync(join(dir, '404.html')) : 'not found');
+  };
+}
+
+export function createPreviewServer(dir: string, base: string): Server {
+  return createServer(previewHandler(dir, base));
+}
+
+/** True when this file is the entry point (not imported by a test), even through a symlinked path. */
+function isMain(): boolean {
+  try {
+    return Boolean(process.argv[1]) && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]);
+  } catch {
+    return false;
   }
-  res.writeHead(200, { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' });
-  res.end(readFileSync(file));
-}).listen(port, () => console.log(`serving ${dir} at http://localhost:${port}${base}`));
+}
+
+if (isMain()) {
+  const dir = resolve(process.env.TRACKER_OUT_DIR ?? join(ROOT, 'dist'));
+  const base = SITE.basePath;
+  const port = Number(process.argv[2] ?? process.env.PORT ?? 4173);
+  createPreviewServer(dir, base).listen(port, () => console.log(`serving ${dir} at http://localhost:${port}${base}`));
+}
