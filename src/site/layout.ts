@@ -84,6 +84,9 @@ ${raw(GLYPH_SPRITE)}
     </div>
   </div>
   ${fresh.mode === 'fixture' ? html`<div class="wrap"><div class="banner banner-warn" role="alert"><strong>Fixture data.</strong> This build uses isolated test fixtures and must not be published.</div></div>` : ''}
+  ${lastRunFailed(fresh) ? html`<div class="wrap run-failed-banner"><div class="banner banner-warn" role="status">
+    <strong>Latest refresh failed.</strong> The refresh run that finished ${time(fresh.lastRunAt, { withTime: true })} failed. The information here was generated ${time(fresh.generatedAt, { withTime: true })} from the last successfully collected data and may be missing newer upstream changes. <a href="${u('sources/')}">Check source status</a>.
+  </div></div>` : ''}
   <div class="wrap stale-banner" role="status" hidden><div class="banner banner-warn">
     <strong>Data may be stale.</strong> <span class="stale-text"></span> <a href="${u('sources/')}">Check source status</a>.
   </div></div>
@@ -110,6 +113,18 @@ ${body}
 </html>
 `;
   return doc.value;
+}
+
+/**
+ * True when the latest refresh run failed (every source failed, or derivation failed and the
+ * previously derived data was kept), or when that run finished well after the shown data was
+ * generated. A normal run finishes within its 45-minute job timeout of its own generatedAt.
+ */
+export function lastRunFailed(fresh: Pick<Freshness, 'generatedAt' | 'lastRunOutcome' | 'lastRunAt'>): boolean {
+  if (!fresh.lastRunAt) return false;
+  if (fresh.lastRunOutcome === 'failed') return true;
+  const gap = Date.parse(fresh.lastRunAt) - Date.parse(fresh.generatedAt);
+  return Number.isFinite(gap) && gap > 60 * 60_000;
 }
 
 function navList(meta: PageMeta): SafeHtml {

@@ -1,8 +1,9 @@
 // Zcash feature-flag defaults at each channel build's brave-core tag (and master).
-// Tags are immutable, so each tag's parse is cached forever.
+// Tags are immutable, so each tag's parse is cached forever. master is re-read every run; when
+// that read fails the previous master snapshot is kept and the collection is marked partial.
 
 import type { Channel, FlagSnapshot } from '../../lib/types.ts';
-import { compareVersions, sha256 } from '../../lib/util.ts';
+import { compareVersions, errorMessage, sha256 } from '../../lib/util.ts';
 import type { Collector } from '../framework.ts';
 import type { BraveVersionsData } from './brave-versions.ts';
 import type { ReleasesData } from './releases.ts';
@@ -55,19 +56,44 @@ export const flags: Collector<FlagsData> = {
       for (const sc of missing) results.push(await runSourceCheck(ctx, tag, sc));
       checks[tag] = results;
     }
-    // master moves; always refresh, pinned to the commit we read.
-    const sha = await ctx.gh.commitSha('brave/brave-core', 'master');
-    if (sha) {
-      const src = await rawFile(ctx, sha, FLAGS_FILE);
-      if (src) snapshots['master'] = { tag: 'master', channel: 'nightly', version: 'master', file: FLAGS_FILE, permalink: `https://github.com/brave/brave-core/blob/${sha}/${FLAGS_FILE}`, flags: parseFeatureFlags(src, ZCASH_FLAG_FILTER), retrievedAt: ctx.now, commitSha: sha };
+    // master moves; always refresh, pinned to the commit we read. A failed or implausible read
+    // keeps the previous master snapshot, with its own commit and retrievedAt, and marks the
+    // collection partial: master flags are never blanked or silently left stale.
+    const limitations: string[] = [];
+    let partial = false;
+    const keepMaster = (why: string) => {
+      partial = true;
+      const old = snapshots['master'];
+      limitations.push(`brave-core master: ${why}; ${old ? `master flags kept from ${old.retrievedAt} (commit ${old.commitSha?.slice(0, 10) ?? 'unknown'})` : 'no earlier master snapshot to keep'}`);
+    };
+    try {
+      const sha = await ctx.gh.commitSha('brave/brave-core', 'master');
+      if (!sha) keepMaster('master commit could not be resolved');
+      else {
+        const src = await rawFile(ctx, sha, FLAGS_FILE);
+        const parsed = src === null ? null : parseFeatureFlags(src, ZCASH_FLAG_FILTER);
+        if (parsed === null) keepMaster(`${FLAGS_FILE} not found at ${sha.slice(0, 10)} (file moved?)`);
+        else if (!parsed.some((f) => /ZCash/i.test(f.name))) keepMaster(`no Zcash flags parsed from ${FLAGS_FILE} at ${sha.slice(0, 10)} (format changed?)`);
+        else snapshots['master'] = { tag: 'master', channel: 'nightly', version: 'master', file: FLAGS_FILE, permalink: `https://github.com/brave/brave-core/blob/${sha}/${FLAGS_FILE}`, flags: parsed, retrievedAt: ctx.now, commitSha: sha };
+      }
+    } catch (err) {
+      keepMaster(`read failed (${errorMessage(err)})`);
     }
     // Bound the cache: keep wanted tags + the 12 newest others (history for flag-change events).
     const keep = new Set([...wanted.keys(), 'master']);
     const others = Object.keys(snapshots).filter((t) => !keep.has(t)).sort((a, b) => compareVersions(b, a));
-    for (const t of others.slice(12)) delete snapshots[t];
-    for (const t of Object.keys(checks)) if (!wanted.has(t) && !snapshots[t]) delete checks[t];
+    const removed: string[] = [];
+    for (const t of others.slice(12)) {
+      delete snapshots[t];
+      removed.push(`snapshots.${t}`);
+    }
+    for (const t of Object.keys(checks)) {
+      if (wanted.has(t) || snapshots[t]) continue;
+      delete checks[t];
+      removed.push(`checks.${t}`);
+    }
     void fetched;
-    return { data: { snapshots, checks }, itemCount: Object.keys(snapshots).length };
+    return { data: { snapshots, checks }, itemCount: Object.keys(snapshots).length, ...(partial ? { partial } : {}), limitations, removed };
   },
 };
 
