@@ -1,6 +1,6 @@
 import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { ChangeEvent, CommunityTopic, Platform, TimelineEntry, WorkItem } from '../../lib/types.ts';
-import { CHANNEL_NAME, PLATFORM_NAME, STAGE_CLASS, chip, ext, ghLink, html, itemHref, raw, shortRef, time, u } from '../components.ts';
+import { CHANNEL_NAME, PLATFORM_NAME, chip, ext, ghLink, glyph, html, itemHref, raw, shortRef, stageBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
 import { eventCard } from './changes.ts';
 
@@ -55,9 +55,9 @@ function workRow(g: SiteGroup, d: SiteData): SafeHtml {
   const open = lead.state === 'open' || masters.some((m) => m.state === 'open');
   return html`<li class="wrow" data-relevance="${g.relevance}" data-stage="${st.stage}" data-topic="${g.topic.id}" data-kind="${st.kind}" data-platforms="${st.platforms.join(' ') || 'none'}" data-state="${open ? 'open' : 'closed'}" data-updated="${st.lastUpdated}" data-created="${lead.createdAt}" data-number="${lead.number}" data-text="${text}">
   <div class="wrow-main">
+    ${stageBadge(st.stage, st.stageLabel, 'Stage')}
     <h2 class="wrow-title"><a href="${itemHref(g.id)}">${g.title}</a></h2>
     <div class="wrow-chips">
-      ${chip(st.stageLabel, STAGE_CLASS[st.stage] ?? '', 'Stage')}
       ${chip(KIND_LABEL[st.kind] ?? st.kind, 'kind')}
       ${chip(g.topic.name, 'topic')}
       ${st.regression ? chip('Regression', 'warn') : ''}
@@ -118,7 +118,7 @@ export function detailPage(g: SiteGroup, d: SiteData, full: Record<string, WorkI
 <div class="page-head detail-head">
   <h1>${g.title}</h1>
   <div class="wrow-chips">
-    ${chip(st.stageLabel, STAGE_CLASS[st.stage] ?? '')}
+    ${stageBadge(st.stage, st.stageLabel)}
     ${chip(KIND_LABEL[st.kind] ?? st.kind, 'kind')}
     ${chip(g.topic.name, 'topic')}
     ${st.regression ? chip('Regression', 'warn') : ''}
@@ -168,14 +168,14 @@ ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2
   <table class="builds"><thead><tr><th scope="col">Platform</th>${channels.map((c) => html`<th scope="col">${CHANNEL_NAME[c]}</th>`)}</tr></thead><tbody>
     ${platforms.map((p) => html`<tr><th scope="row">${PLATFORM_NAME[p]}</th>${channels.map((c) => {
       const b = st.builds.find((x) => x.platform === p && x.channel === c);
-      if (!b) return html`<td class="b-unknown"><span class="mono">—</span><span class="b-basis">No tagged build (iOS App Store versions have no published build number).</span></td>`;
-      return html`<td class="${b.included === true ? 'b-yes' : b.included === false ? 'b-no' : 'b-unknown'}"><span class="b-state">${b.included === true ? 'Included' : b.included === false ? 'Not included' : 'Unknown'}</span> <span class="mono">${b.version}</span><span class="b-basis">${b.basis}${b.via ? ` (${shortRef(b.via)})` : ''}</span></td>`;
+      if (!b) return html`<td class="b-unknown"><span class="b-state">${glyph('not-verified')}No build</span><span class="b-basis">No tagged build (iOS App Store versions have no published build number).</span></td>`;
+      return html`<td class="${b.included === true ? 'b-yes' : b.included === false ? 'b-no' : 'b-unknown'}"><span class="b-state">${glyph(b.included === true ? 'available' : b.included === false ? 'off' : 'not-verified')}${b.included === true ? 'Included' : b.included === false ? 'Not included' : 'Unknown'}</span> <span class="mono">${b.version}</span><span class="b-basis">${b.basis}${b.via ? ` (${shortRef(b.via)})` : ''}</span></td>`;
     })}</tr>`)}
   </tbody></table>
   </div>
 </section>`}
 
-${children.length ? html`<section class="block" aria-labelledby="f-children"><h2 id="f-children">Linked sub-issues</h2><ul class="children">${children.map((c, i) => c ? html`<li><a href="${itemHref(c.id)}">${c.title}</a> ${chip(c.status.stageLabel, STAGE_CLASS[c.status.stage] ?? '')} <span class="muted">${shortRef(c.id)}</span></li>` : html`<li class="muted">${shortRef(g.members.children[i])} (folded into another group)</li>`)}</ul></section>` : ''}
+${children.length ? html`<section class="block" aria-labelledby="f-children"><h2 id="f-children">Linked sub-issues</h2><ul class="children">${children.map((c, i) => c ? html`<li><a href="${itemHref(c.id)}">${c.title}</a> ${stageBadge(c.status.stage, c.status.stageLabel)} <span class="muted">${shortRef(c.id)}</span></li>` : html`<li class="muted">${shortRef(g.members.children[i])} (folded into another group)</li>`)}</ul></section>` : ''}
 
 <section class="block" aria-labelledby="f-members">
   <h2 id="f-members">Members and their history</h2>

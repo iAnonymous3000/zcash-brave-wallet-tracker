@@ -67,11 +67,12 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   copyFileSync(join(ROOT, 'src/site/styles.css'), join(assets, 'styles.css'));
   copyFileSync(join(ROOT, 'src/site/icon.svg'), join(assets, 'icon.svg'));
   const fonts: [string, string][] = [
-    ['@fontsource-variable/big-shoulders-stencil-display/files/big-shoulders-stencil-display-latin-wght-normal.woff2', 'display.woff2'],
-    ['@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-400-normal.woff2', 'body-400.woff2'],
-    ['@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-400-italic.woff2', 'body-400-italic.woff2'],
-    ['@fontsource/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-700-normal.woff2', 'body-700.woff2'],
-    ['@fontsource-variable/martian-mono/files/martian-mono-latin-wght-normal.woff2', 'mono.woff2'],
+    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2', 'sans-400.woff2'],
+    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff2', 'sans-400-italic.woff2'],
+    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2', 'sans-500.woff2'],
+    ['@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2', 'sans-600.woff2'],
+    ['@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2', 'mono-400.woff2'],
+    ['@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2', 'mono-500.woff2'],
   ];
   for (const [src, dest] of fonts) copyFileSync(join(ROOT, 'node_modules', src), join(assets, 'fonts', dest));
   await esbuild({

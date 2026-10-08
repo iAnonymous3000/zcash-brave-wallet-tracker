@@ -73,48 +73,83 @@ function freshness(): void {
 }
 
 // ---------------------------------------------------------------------------
-// Home: platform/channel selector
+// Home: build picker (platform × channel) driving the capability detail column
 // ---------------------------------------------------------------------------
 
-function capabilitySelector(): void {
-  const ps = $<HTMLSelectElement>('#sel-platform');
-  const cs = $<HTMLSelectElement>('#sel-channel');
-  if (!ps || !cs) return;
-  const params = new URLSearchParams(location.search);
-  const validP = Array.from(ps.options).map((o) => o.value);
-  const validC = Array.from(cs.options).map((o) => o.value);
-  const initP = params.get('platform') ?? store('zbt-platform') ?? 'desktop';
-  const initC = params.get('channel') ?? store('zbt-channel') ?? 'release';
-  ps.value = validP.includes(initP) ? initP : 'desktop';
-  cs.value = validC.includes(initC) ? initC : 'release';
+const keyOf = (el: HTMLElement) => `${el.dataset.platform}/${el.dataset.channel}`;
 
-  const show = (animate: boolean) => {
-    for (const panel of $$('.cap-panel')) {
-      const on = panel.dataset.platform === ps.value && panel.dataset.channel === cs.value;
-      panel.hidden = !on;
-      panel.classList.toggle('just-shown', on && animate);
-    }
-    for (const b of $$('.mx-btn')) b.setAttribute('aria-pressed', String(b.dataset.platform === ps.value && b.dataset.channel === cs.value));
-    store('zbt-platform', ps.value);
-    store('zbt-channel', cs.value);
+function capabilitySelector(): void {
+  const buttons = $$<HTMLButtonElement>('.bsel');
+  if (!buttons.length) return;
+  const keys = buttons.map(keyOf);
+  const params = new URLSearchParams(location.search);
+  const initial = `${params.get('platform') ?? store('zbt-platform') ?? 'desktop'}/${params.get('channel') ?? store('zbt-channel') ?? 'release'}`;
+  const head = $('#sel-head');
+
+  const select = (k: string, persist: boolean) => {
+    for (const b of buttons) b.setAttribute('aria-pressed', String(keyOf(b) === k));
+    for (const b of $$<HTMLButtonElement>('.mx-btn')) b.setAttribute('aria-pressed', String(keyOf(b) === k));
+    for (const el of $$('.dv, .bb')) el.hidden = el.dataset.k !== k;
+    for (const el of $$('.mx-ch, .mx-cell')) el.classList.toggle('is-sel', el.dataset.k === k);
+    const th = $(`.mx-ch[data-k="${k}"]`);
+    if (head && th) head.textContent = th.getAttribute('title') ?? '';
+    if (!persist) return;
+    const [p, c] = k.split('/');
+    store('zbt-platform', p);
+    store('zbt-channel', c);
     const url = new URL(location.href);
-    url.searchParams.set('platform', ps.value);
-    url.searchParams.set('channel', cs.value);
+    url.searchParams.set('platform', p);
+    url.searchParams.set('channel', c);
     history.replaceState(null, '', url);
   };
-  ps.addEventListener('change', () => show(true));
-  cs.addEventListener('change', () => show(true));
-  for (const b of $$<HTMLButtonElement>('.mx-btn')) {
-    b.addEventListener('click', () => {
-      ps.value = b.dataset.platform ?? 'desktop';
-      cs.value = b.dataset.channel ?? 'release';
-      show(true);
-      const panel = $(`#cap-${ps.value}-${cs.value}`);
-      panel?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      ps.focus({ preventScroll: true });
-    });
+  for (const b of buttons) b.addEventListener('click', () => select(keyOf(b), true));
+  for (const b of $$<HTMLButtonElement>('.mx-btn')) b.addEventListener('click', () => select(keyOf(b), true));
+  select(keys.includes(initial) ? initial : 'desktop/release', false);
+}
+
+/** Open a <details> section when the URL points at it (e.g. #cap-ironwood). */
+function openHashTarget(): void {
+  const open = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id ? document.getElementById(id) : null;
+    if (el instanceof HTMLDetailsElement) el.open = true;
+  };
+  window.addEventListener('hashchange', open);
+  open();
+}
+
+// ---------------------------------------------------------------------------
+// "New since your last visit": a per-browser marker, never shown on stale data
+// ---------------------------------------------------------------------------
+
+function newSinceLastVisit(): void {
+  const fresh = $<HTMLAnchorElement>('.fresh');
+  const gen = fresh?.dataset.generated;
+  if (!fresh || !gen) return;
+  let prev = '';
+  try {
+    // The previous visit's data time is fixed for this browsing session so every page agrees.
+    const held = sessionStorage.getItem('zbt-prev-seen');
+    prev = held ?? localStorage.getItem('zbt-seen') ?? '';
+    if (held === null) sessionStorage.setItem('zbt-prev-seen', prev);
+    const last = localStorage.getItem('zbt-seen');
+    if (!last || last < gen) localStorage.setItem('zbt-seen', gen);
+  } catch {
+    return; // storage unavailable: show no markers rather than guess
   }
-  show(false);
+  if (!prev) return; // first visit: nothing is "new" yet
+  if (fresh.classList.contains('is-stale') || fresh.classList.contains('has-failing')) return;
+  const fresh_ = $$('[data-detected]').filter((el) => (el.dataset.detected ?? '') > prev);
+  for (const el of fresh_) {
+    el.classList.add('is-new');
+    const tag = $('.new-tag', el);
+    if (tag) tag.hidden = false;
+  }
+  if (!fresh_.length) return;
+  for (const c of $$('.new-count')) {
+    c.textContent = document.body.dataset.page === 'home' ? `${fresh_.length} new here since your last visit` : `${fresh_.length} new since your last visit`;
+    c.hidden = false;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -280,7 +315,9 @@ function init(): void {
   relTimes();
   freshness();
   capabilitySelector();
+  openHashTarget();
   filters();
+  newSinceLastVisit();
   keyboard();
 }
 

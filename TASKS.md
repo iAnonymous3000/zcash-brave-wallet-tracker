@@ -25,7 +25,8 @@ Concise working checklist. `[x]` done · `[~]` in progress · `[ ]` open · `[!]
 
 ## 3. Site
 - [x] Static generator (escaped templates), CSP, self-hosted fonts, base path, 404
-- [x] Overview (selector + crate label + matrix), Tracked work, item details, Changes, Upstream, Community reports, Sources & freshness
+- [x] Overview (build picker + capability table with per-build detail + latest changes + readiness), Tracked work, item details, Changes, Upstream, Community reports, Sources & freshness
+- [x] Redesign for builders (dark only, IBM Plex Sans/Mono, glyph+label statuses, build picker, "new since your last visit" markers that never show on stale data); verified at 1280 and 375 px, stale fixture, 0 broken links
 - [x] Browser verification: search/filters (URL-synced), "/" + Esc keyboard, empty state, detail pages, mobile 375px (no page overflow on 9 page types), light/dark contrast, headings/labels/IDs
 - [x] Server-side signals: gate3 swap routing (Zcash disabled), brave-variations studies (none apply to Chromium 155 builds); NU7 readiness (Brave fork lacks final branch ID)
 - [x] Capability prerequisites (no cell more available than its prerequisite)
