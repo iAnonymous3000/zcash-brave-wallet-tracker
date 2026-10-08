@@ -104,10 +104,13 @@ jobs:
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
       # The refresh step exits non-zero when every source failed or when derivation failed
-      # (src/ingest/run.ts refreshExitCode). Its run record was committed above and the site was
-      # redeployed from the last successfully derived data, which keeps its own generation time.
+      # (src/ingest/run.ts refreshExitCode). Its run record was committed above; when the steps
+      # after it succeeded, the site was redeployed from the last successfully derived data, which
+      # keeps its own generation time and shows a "Latest refresh failed" banner. This step runs
+      # even when a later step failed too (e.g. Build site on a corrupt history file), so the job
+      # always ends with the recorded reason.
       - name: Report refresh failure
-        if: steps.refresh.outcome == 'failure'
+        if: always() && steps.refresh.outcome == 'failure'
         run: |
           node -e '
             const fs = require("node:fs");

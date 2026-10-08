@@ -1,6 +1,7 @@
 // Zcash feature-flag defaults at each channel build's brave-core tag (and master).
 // Tags are immutable, so each tag's parse is cached forever. master is re-read every run; when
-// that read fails the previous master snapshot is kept and the collection is marked partial.
+// that read fails the previous master snapshot is kept, the collection is marked partial and the
+// kept snapshot's age is reported (see CollectResult.staleSince in ../framework.ts).
 
 import type { Channel, FlagSnapshot } from '../../lib/types.ts';
 import { compareVersions, errorMessage, sha256 } from '../../lib/util.ts';
@@ -28,6 +29,8 @@ export const flags: Collector<FlagsData> = {
   schema: 1,
   dependsOn: ['brave-versions', 'brave-releases'],
   budget: { 'github-core': 6 },
+  // Every pruned snapshot and check is listed in `removed`.
+  carryOnPartial: ['snapshots', 'checks'],
   async collect(ctx, prev) {
     const snapshots: FlagsData['snapshots'] = { ...(prev?.snapshots ?? {}) };
     const checks: FlagsData['checks'] = { ...(prev?.checks ?? {}) };
@@ -58,12 +61,15 @@ export const flags: Collector<FlagsData> = {
     }
     // master moves; always refresh, pinned to the commit we read. A failed or implausible read
     // keeps the previous master snapshot, with its own commit and retrievedAt, and marks the
-    // collection partial: master flags are never blanked or silently left stale.
+    // collection partial: master flags are never blanked or silently left stale. The kept
+    // snapshot's age is reported (staleSince) so a lasting outage shows as a failing source.
     const limitations: string[] = [];
     let partial = false;
+    let staleSince: string | null = null;
     const keepMaster = (why: string) => {
       partial = true;
       const old = snapshots['master'];
+      staleSince = old?.retrievedAt ?? null;
       limitations.push(`brave-core master: ${why}; ${old ? `master flags kept from ${old.retrievedAt} (commit ${old.commitSha?.slice(0, 10) ?? 'unknown'})` : 'no earlier master snapshot to keep'}`);
     };
     try {
@@ -93,7 +99,7 @@ export const flags: Collector<FlagsData> = {
       removed.push(`checks.${t}`);
     }
     void fetched;
-    return { data: { snapshots, checks }, itemCount: Object.keys(snapshots).length, ...(partial ? { partial } : {}), limitations, removed };
+    return { data: { snapshots, checks }, itemCount: Object.keys(snapshots).length, ...(partial ? { partial } : {}), ...(staleSince ? { staleSince } : {}), limitations, removed };
   },
 };
 

@@ -280,14 +280,18 @@ export interface SourceStatus {
   name: string;
   url: string;
   lastAttemptAt: string | null;
-  /** Last run that stored data for this source (outcome ok or partial). */
+  /**
+   * Last run that stored data for this source with outcome ok or partial. A partial run that kept
+   * values unrefreshed for longer than the staleness window is recorded failed and does not
+   * advance it (see CollectResult.staleSince).
+   */
   lastSuccessAt: string | null;
   /**
    * Last run in which every read of this source succeeded (outcome ok). Data carried forward by
    * later partial runs is at least this fresh. Absent in status written before this field existed.
    */
   lastCompleteAt?: string | null;
-  /** Last run that stored data with outcome partial (some reads failed; last good values kept). */
+  /** Last run that stored a partial collection (some reads failed; last good values kept), whatever its outcome. */
   lastPartialAt?: string | null;
   lastOutcome: SourceOutcome | null;
   lastError: string | null;

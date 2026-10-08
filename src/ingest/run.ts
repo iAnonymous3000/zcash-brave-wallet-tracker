@@ -3,7 +3,10 @@
 // Runs every collector in isolation. A collector failure never erases data: the
 // previous successful envelope is kept and the source is marked failed/stale.
 // A partial collection (see CollectResult in framework.ts) is stored and recorded
-// as partial; record entries it dropped without saying so are carried forward.
+// as partial; records it dropped without saying so are carried forward (collectors that
+// opt in with carryOnPartial) or named in a limitation, never lost silently. A partial
+// collection whose kept values are older than the staleness window is stored but recorded
+// as failed, so a lasting outage is visible as a failing, stale source.
 // After collection, derived views and change history are rebuilt from the
 // persisted envelopes (see src/derive). If derivation fails, the previously
 // derived files are restored byte for byte (so they keep their own generatedAt),
@@ -23,6 +26,7 @@ import { errorMessage, shortHash } from '../lib/util.ts';
 import type { Collector, Ctx } from './framework.ts';
 import { COLLECTORS } from './collectors.ts';
 import { deriveAll } from '../derive/index.ts';
+import { FRESHNESS } from '../../config/tracker.ts';
 
 export interface RunOptions {
   only?: string[];
@@ -111,28 +115,42 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       let data: unknown = result.data;
       const limitations = [...(result.limitations ?? [])];
       if (partial) {
-        const carried = carryForward(prevData, data, result.removed ?? []);
-        data = carried.data;
-        if (carried.keys.length) {
-          limitations.push(`partial collection: ${carried.keys.length} previously collected record(s) not returned this run were kept from earlier runs (${carried.keys.slice(0, 5).join(', ')}${carried.keys.length > 5 ? ', …' : ''})`);
-          log(`! ${c.id}: partial result dropped ${carried.keys.length} last-good record(s); carried forward`);
+        const checked = carryForward(prevData, data, result.removed ?? [], c.carryOnPartial ?? []);
+        data = checked.data;
+        if (checked.keys.length) {
+          limitations.push(`partial collection: ${checked.keys.length} previously collected record(s) not returned this run were kept from earlier runs (${sample(checked.keys)})`);
+          log(`! ${c.id}: partial result dropped ${checked.keys.length} last-good record(s); carried forward`);
+        }
+        if (checked.dropped.length) {
+          limitations.push(`partial collection: ${checked.dropped.length} previously collected record(s) are missing from this result and were not marked removed; they may not have been re-read (${sample(checked.dropped)})`);
+          log(`! ${c.id}: partial result dropped ${checked.dropped.length} record(s) without marking them removed: ${sample(checked.dropped)}`);
         }
         if (!limitations.length) limitations.push('partial collection: some reads failed or were deferred; last good data was kept for them');
       }
-      const outcome: SourceOutcome = partial ? 'partial' : 'ok';
+      // Kept values older than the staleness window: the data is still the best available and is
+      // stored, but the source has failed to refresh it, so it is not a success.
+      const staleSince = partial ? (result.staleSince ?? null) : null;
+      const overdue = staleSince !== null && Date.parse(now) - Date.parse(staleSince) > FRESHNESS.staleAfterMinutes * 60_000;
+      const outcome: SourceOutcome = overdue ? 'failed' : partial ? 'partial' : 'ok';
       if (outcome === 'ok') st.lastCompleteAt = now;
       else st.lastPartialAt = now;
       const env: SourceEnvelope<unknown> = { sourceId: c.id, schema: c.schema, retrievedAt: now, data, ...(partial ? { partial: true } : {}), completeAt: st.lastCompleteAt ?? null };
       writeJson(dataPath('sources', `${c.id}.json`), env);
       fresh.set(c.id, env);
       st.lastOutcome = outcome;
-      st.lastSuccessAt = now;
-      st.lastError = null;
-      st.consecutiveFailures = 0;
       st.itemCount = result.itemCount ?? null;
       st.limitations = limitations;
       outcomes[c.id] = outcome;
-      log(`✓ ${c.id}: ${outcome}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
+      if (overdue) {
+        st.lastError = `some data could not be refreshed since ${staleSince}, longer than the ${FRESHNESS.staleAfterMinutes / 60}-hour staleness window; the last good values are kept (see limitations)`;
+        st.consecutiveFailures += 1;
+        log(`✗ ${c.id}: ${st.lastError}`);
+      } else {
+        st.lastSuccessAt = now;
+        st.lastError = null;
+        st.consecutiveFailures = 0;
+        log(`✓ ${c.id}: ${outcome}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
+      }
     } catch (err) {
       st.lastOutcome = 'failed';
       st.lastError = errorMessage(err);
@@ -206,36 +224,47 @@ export function refreshExitCode(r: RunRecord): number {
 }
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+const sample = (keys: string[]) => `${keys.slice(0, 5).join(', ')}${keys.length > 5 ? ', …' : ''}`;
 
 /**
- * Floor for the partial-collection contract (framework.ts): every top-level field of the
- * previous data, and every entry of a top-level record map, that a partial result dropped
- * without listing it in `removed` is carried forward. Returns the merged data and the carried
- * keys ("field" or "field.key"). Arrays and scalar values remain the collector's responsibility.
+ * Check a partial result against the previous data (contract in framework.ts). Every top-level
+ * field of `prev`, and every entry of a top-level record map, that `next` no longer has and that
+ * is not listed in `removed` is carried forward when its field is in `carryFields` (returned in
+ * `keys`). Otherwise it is returned in `dropped` so the caller can name it, unless it reappears
+ * in another top-level record map of `next` (moved on purpose, e.g. from `items` to `excluded`).
+ * Keys are "field" or "field.key". Arrays and scalar values remain the collector's responsibility.
  */
-export function carryForward(prev: unknown, next: unknown, removed: string[] = []): { data: unknown; keys: string[] } {
-  if (!isRecord(prev) || !isRecord(next)) return { data: next, keys: [] };
+export function carryForward(prev: unknown, next: unknown, removed: readonly string[] = [], carryFields: readonly string[] = []): { data: unknown; keys: string[]; dropped: string[] } {
+  if (!isRecord(prev) || !isRecord(next)) return { data: next, keys: [], dropped: [] };
   const skip = new Set(removed);
+  const carry = new Set(carryFields);
   const out: Record<string, unknown> = { ...next };
   const keys: string[] = [];
+  const dropped: string[] = [];
+  const movedElsewhere = (field: string, k: string) => Object.entries(next).some(([f, v]) => f !== field && isRecord(v) && Object.hasOwn(v, k));
   for (const [field, pv] of Object.entries(prev)) {
     if (skip.has(field)) continue;
     const nv = out[field];
     if (nv === undefined) {
-      out[field] = pv;
-      keys.push(field);
+      if (carry.has(field)) {
+        out[field] = pv;
+        keys.push(field);
+      } else dropped.push(field);
       continue;
     }
     if (!isRecord(pv) || !isRecord(nv)) continue;
     let merged: Record<string, unknown> | null = null;
     for (const [k, v] of Object.entries(pv)) {
-      if (k in nv || skip.has(`${field}.${k}`)) continue;
-      (merged ??= { ...nv })[k] = v;
-      keys.push(`${field}.${k}`);
+      if (Object.hasOwn(nv, k) || skip.has(`${field}.${k}`)) continue;
+      if (carry.has(field)) {
+        // The collector lists every deliberate removal, so anything else is a record it lost.
+        (merged ??= { ...nv })[k] = v;
+        keys.push(`${field}.${k}`);
+      } else if (!movedElsewhere(field, k)) dropped.push(`${field}.${k}`);
     }
     if (merged) out[field] = merged;
   }
-  return { data: out, keys };
+  return { data: out, keys, dropped };
 }
 
 /** Files derivation writes: everything under derived/ plus the change history. */
