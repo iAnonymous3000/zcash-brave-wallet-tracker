@@ -5,7 +5,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildCapabilities, CELL_HELP, type CapabilityInputs, type CapabilityRow, type Cell } from '../src/derive/capabilities.ts';
@@ -91,20 +91,79 @@ test('R-D4: implementing PRs in the build do not outweigh an unknown required ch
 const REQ: CapabilityDef = { id: 'req', name: 'Req', description: 'd', releaseNoteIssues: ['brave/brave-browser#900'], flags: [{ name: 'kBraveWalletZCashFeature', expect: true }], sourceChecks: [{ id: 'needed', describe: 'needed code', role: 'required' }] };
 const reqNote: ChangelogEntry = { platform: 'desktop', version: '1.97.56', section: 'Web3', text: 'Added Req.', issueRefs: ['brave/brave-browser#900'], line: 1, file: 'CHANGELOG_DESKTOP.md', commitSha: 'x', permalink: 'https://example.invalid', zcashRelated: true };
 
-test('R-D4: a Stable release note seen from Beta/Nightly does not outweigh an unknown required check; the documented Release precedence stays', () => {
+test('R-D4: a Stable release note does not outweigh an unknown required check, on Release or seen from Beta/Nightly', () => {
   const flagsByTag = Object.fromEntries(CURRENT.map((c) => [c.tag!, flagsAt(c.tag!, { kBraveWalletZCashFeature: true })]));
   const rows = buildCapabilities(capInputs({ defs: [REQ], current: CURRENT, changelog: [reqNote], flagsByTag }));
-  for (const channel of ['beta', 'nightly']) {
+  for (const channel of ['release', 'beta', 'nightly']) {
     const c = cellOf(rows, 'req', 'desktop', channel);
     assert.equal(c.status, 'not-verified', channel);
+    assert.equal(c.since ?? null, null, channel);
     assert.match(c.summary, /Desktop Stable release notes list it \(1\.97\.56\)/, channel);
     assert.match(c.summary, /required check could not be completed \(needed code\)/, channel);
+    assert.ok(c.evidence.some((e) => e.kind === 'note' && /Required check not completed at v1\.9\d\.\d+ \(needed code\)/.test(e.text)), `${channel}: the reading without the check is kept as evidence`);
   }
-  // Documented precedence (see the header of src/derive/capabilities.ts): on Release, this platform's own Stable
-  // release note still establishes availability, and the incomplete check is disclosed.
-  const rel = cellOf(rows, 'req', 'desktop', 'release');
-  assert.equal(rel.status, 'available');
-  assert.ok(rel.evidence.some((e) => e.kind === 'note' && /Required check not completed at v1\.97\.56 \(needed code\)/.test(e.text)));
+  assert.ok(cellOf(rows, 'req', 'desktop', 'release').evidence.some((e) => e.kind === 'release-note'), 'the release note is still shown');
+  // Controls: a completed check restores "available"; an explicit negative is "absent".
+  const ok = buildCapabilities(capInputs({ defs: [REQ], current: CURRENT, changelog: [reqNote], flagsByTag, sourceChecks: { 'v1.97.56': [check('needed', 'v1.97.56', true)] } }));
+  assert.equal(cellOf(ok, 'req', 'desktop', 'release').status, 'available');
+  const neg = buildCapabilities(capInputs({ defs: [REQ], current: CURRENT, changelog: [reqNote], flagsByTag, sourceChecks: { 'v1.97.56': [check('needed', 'v1.97.56', false)] } }));
+  assert.equal(cellOf(neg, 'req', 'desktop', 'release').status, 'absent');
+});
+
+// Live data (Desktop Release v1.97.56): Zcash, shielded and Ironwood flags on; the only Migration release note is the
+// generic Ironwood note #56872 ("Enabled Zcash Ironwood support by default."); Desktop notes for accounts and
+// shielded support. Captured from CHANGELOG_DESKTOP.md at 23d9de6d (accounts: the archive file at 4771aa10).
+const DESKTOP_NOTES: ChangelogEntry[] = [
+  { platform: 'desktop', version: '1.64.109', section: null, text: 'Enabled Zcash support by default. (#36613)', issueRefs: ['brave/brave-browser#36613'], line: 169, file: 'CHANGELOG_DESKTOP_ARCHIVE.md', commitSha: '4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5', permalink: 'https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169', zcashRelated: true },
+  { platform: 'desktop', version: '1.77.95', section: null, text: 'Added Zcash shielded support. (#44432)', issueRefs: ['brave/brave-browser#44432'], line: 1198, file: 'CHANGELOG_DESKTOP.md', commitSha: '23d9de6dbaa115d4d77d400dd56277da48895fca', permalink: 'https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198', zcashRelated: true },
+  { platform: 'desktop', version: '1.97.56', section: 'Web3', text: 'Enabled Zcash Ironwood support by default. (#56872)', issueRefs: ['brave/brave-browser#56872'], line: 7, file: 'CHANGELOG_DESKTOP.md', commitSha: '23d9de6dbaa115d4d77d400dd56277da48895fca', permalink: 'https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7', zcashRelated: true },
+];
+const DESKTOP_REL = [cv('desktop', 'release', '1.97.56', 'v1.97.56')];
+const DESKTOP_FLAGS = { 'v1.97.56': flagsAt('v1.97.56', { kBraveWalletZCashFeature: true, kZCashShieldedTransactionsEnabled: true, kZCashIronwoodEnabled: true }) };
+
+test('R-D4: Migration on Desktop Release with only the generic Ironwood release note and its task check missing or unknown is not verified (verifier repro)', () => {
+  for (const [label, task] of [['missing', []], ['present:null', [check('orchard-to-ironwood-task', 'v1.97.56', null)]]] as const) {
+    const rows = buildCapabilities(capInputs({ defs: MIG_DEFS, current: DESKTOP_REL, changelog: DESKTOP_NOTES, flagsByTag: DESKTOP_FLAGS, sourceChecks: { 'v1.97.56': [check('ironwood-option-desktop-android', 'v1.97.56', true), ...task] } }));
+    const c = cellOf(rows, 'migration', 'desktop', 'release');
+    assert.equal(c.status, 'not-verified', label);
+    assert.equal(c.since ?? null, null, label);
+    assert.doesNotMatch(c.summary, /^Since Desktop/, label);
+    assert.match(c.summary, /^Desktop Stable release notes list it \(1\.97\.56\); flag on at v1\.97\.56; a brave:\/\/flags option is present, but the required check could not be completed \(Orchard → Ironwood transaction task\)/, label);
+    assert.ok(c.evidence.some((e) => e.kind === 'note' && /Without that check the evidence would read: Available — Since Desktop 1\.97\.56/.test(e.text)), `${label}: the release-note reading is kept as evidence`);
+    assert.equal(cellOf(rows, 'ironwood', 'desktop', 'release').status, 'available', `${label}: Ironwood has no required check`);
+  }
+  const ok = buildCapabilities(capInputs({ defs: MIG_DEFS, current: DESKTOP_REL, changelog: DESKTOP_NOTES, flagsByTag: DESKTOP_FLAGS, sourceChecks: { 'v1.97.56': [check('ironwood-option-desktop-android', 'v1.97.56', true), check('orchard-to-ironwood-task', 'v1.97.56', true)] } }));
+  assert.equal(cellOf(ok, 'migration', 'desktop', 'release').status, 'available', 'the live reading with the check completed is unchanged');
+});
+
+test('R-D4: a Release build without a brave-core tag cannot run a required check, so a release note does not make it available', () => {
+  const iosNote: ChangelogEntry = { ...reqNote, platform: 'ios', version: '1.90.1', file: 'CHANGELOG_IOS.md' };
+  const rows = buildCapabilities(capInputs({ defs: [REQ], current: [cv('ios', 'release', '1.96', null)], changelog: [iosNote] }));
+  const c = cellOf(rows, 'req', 'ios', 'release');
+  assert.equal(c.status, 'not-verified');
+  assert.match(c.summary, /^iOS Stable release notes list it \(1\.90\.1\), but the required check could not be completed \(needed code\) because no brave-core tag is known for iOS Release 1\.96/);
+  // Without a required check the documented note-only availability stands.
+  const plain = buildCapabilities(capInputs({ defs: [{ ...REQ, sourceChecks: [] }], current: [cv('ios', 'release', '1.96', null)], changelog: [iosNote] }));
+  assert.equal(cellOf(plain, 'req', 'ios', 'release').status, 'available');
+});
+
+test('R-D4: a dependent’s release note does not lift a prerequisite whose required check is unknown; the dependent is capped', () => {
+  const dep: CapabilityDef = { id: 'dep', name: 'Dep', description: 'd', requires: ['req'], releaseNoteIssues: ['brave/brave-browser#901'] };
+  const depNote: ChangelogEntry = { ...reqNote, version: '1.96.10', text: 'Added Dep.', issueRefs: ['brave/brave-browser#901'] };
+  const flagsByTag = { 'v1.97.56': flagsAt('v1.97.56', { kBraveWalletZCashFeature: true }) };
+  const def: CapabilityDef = { ...REQ, releaseNoteIssues: undefined };
+  const rows = buildCapabilities(capInputs({ defs: [def, dep], current: DESKTOP_REL, changelog: [depNote], flagsByTag }));
+  const pre = cellOf(rows, 'req', 'desktop', 'release');
+  assert.equal(pre.status, 'not-verified');
+  assert.equal(pre.evidence.some((e) => e.kind === 'release-note'), false, 'the implied note is not release-note evidence');
+  assert.ok(pre.evidence.some((e) => e.kind === 'note' && /release notes for “Dep” \(1\.96\.10\), which requires it, imply that it shipped, but the required check was not completed at v1\.97\.56 \(needed code\)/.test(e.text)));
+  const d = cellOf(rows, 'dep', 'desktop', 'release');
+  assert.equal(d.status, 'not-verified');
+  assert.match(d.summary, /^Limited by “Req” \(not verified here\)/);
+  // With the check completed, the lift works as before.
+  const ok = buildCapabilities(capInputs({ defs: [def, dep], current: DESKTOP_REL, changelog: [depNote], flagsByTag, sourceChecks: { 'v1.97.56': [check('needed', 'v1.97.56', true)] } }));
+  assert.equal(cellOf(ok, 'req', 'desktop', 'release').status, 'available');
+  assert.equal(cellOf(ok, 'dep', 'desktop', 'release').status, 'available');
 });
 
 test('R-D4: flag off by default with an unknown required check is not verified; a missing flag and an explicit negative stay absent', () => {
@@ -279,21 +338,41 @@ test('R-STAGE: site.json lists the merged stage with a neutral label and every m
   });
 });
 
-test('R-STAGE: the committed merged group brave-core#32552 (all builds unknown) is not labelled as absent (read-only)', (t) => {
-  const read = <T>(name: string): T | null => {
-    const path = new URL(`../data/sources/${name}.json`, import.meta.url);
-    return existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')) as { data: T }).data : null;
-  };
-  const items = read<{ items: Record<string, WorkItem> }>('github-items')?.items;
-  const current = read<{ current: ChannelVersion[] }>('brave-versions')?.current;
-  const inclusion = read<{ byPr: Record<string, PrInclusion> }>('build-inclusion')?.byPr;
-  if (!items || !current || !inclusion || !items['brave/brave-core#32552']) return t.skip('committed data does not have this item');
+// Captured public data (2026-10-08): brave-core#32552 merged into the feature branch wallet-build-flag-5, with its
+// build-inclusion record and the current builds of that run. Inlined so the test never depends on (or skips with)
+// later data refreshes.
+const PR_32552 = wi('brave/brave-core#32552', {
+  title: '[Part 6 enable_brave_wallet flag] Add static_assert for ENABLE_BRAVE_WALLET in wallet headers',
+  state: 'merged',
+  createdAt: '2025-11-26T03:17:59Z',
+  updatedAt: '2025-11-28T15:08:53Z',
+  closedAt: '2025-11-28T12:59:40Z',
+  mergedAt: '2025-11-28T12:59:40Z',
+  mergeCommitSha: 'dbd32ed2d847ea7a5abd4f4cbbc572d2ae8f58a1',
+  baseRef: 'wallet-build-flag-5',
+  headRef: 'wallet-build-flag-6',
+  labels: ['CI/skip', 'CI/run-network-audit', 'feature/web3/wallet', 'feature/web3/wallet/core'],
+  relevance: 'mention',
+  timeline: [tl('merged', '2025-11-28T12:59:40Z', { detail: 'wallet-build-flag-5' }), tl('closed', '2025-11-28T12:59:40Z')],
+});
+const INCLUSION_32552 = { sha: 'dbd32ed2d847ea7a5abd4f4cbbc572d2ae8f58a1', domain: 'master', minIncluded: null, maxExcluded: { version: '1.99.26', tag: 'v1.99.26', checkedAt: '2026-10-08T14:35:45.102Z', basis: 'GitHub compare v1.99.26...dbd32ed2: diverged' } } as unknown as PrInclusion;
+const CURRENT_20261008: ChannelVersion[] = [
+  cv('desktop', 'release', '1.97.56', 'v1.97.56'), cv('android', 'release', '1.96.61', 'v1.96.61'), cv('ios', 'release', '1.96.62', 'v1.96.62'),
+  cv('desktop', 'beta', '1.98.47', 'v1.98.47'), cv('android', 'beta', '1.98.52', 'v1.98.52'), cv('ios', 'beta', '1.98.52', 'v1.98.52'),
+  cv('desktop', 'nightly', '1.99.20', 'v1.99.20'), cv('android', 'nightly', '1.99.13', 'v1.99.13'), cv('ios', 'nightly', '1.99.25', 'v1.99.25'),
+];
+
+test('R-STAGE: the captured merged group brave-core#32552 (feature-branch merge, every build unknown) is not labelled as absent', () => {
+  const items = byId(PR_32552);
   const r = buildRelations(items);
-  const g = buildGroups(items, r).find((x) => x.lead === 'brave/brave-core#32552');
-  if (!g) return t.skip('no group led by brave-core#32552');
-  const st = computeGroupStatus(g, items, r, { inclusion, current, changelog: [] });
-  if (st.stage !== 'merged' || st.builds.some((b) => b.included !== null)) return t.skip('the committed group is no longer merged with unknown builds');
+  const g = buildGroups(items, r).find((x) => x.lead === PR_32552.id);
+  assert.ok(g, 'the PR leads its own group');
+  const st = computeGroupStatus(g!, items, r, { inclusion: { [PR_32552.id]: INCLUSION_32552 }, current: CURRENT_20261008, changelog: [] });
+  assert.equal(st.stage, 'merged');
+  assert.equal(st.builds.length, CURRENT_20261008.length);
+  assert.ok(st.builds.every((b) => b.included === null), JSON.stringify(st.builds.map((b) => b.included)));
   assert.equal(st.stageLabel, 'Merged, build presence unknown');
+  assert.doesNotMatch(st.stageLabel, /not yet in a checked build/);
 });
 
 // ---------------------------------------------------------------------------
@@ -426,14 +505,135 @@ test('R-ADV: a vulnerable lower version linked next to a safe higher one is "aff
     assert.equal(neither.affected, false, 'every linked version known and outside');
     assert.match(neither.summary, /outside the vulnerable ranges at every checked build/);
   }
-  // Unchanged: snapshots written before a resolution was recorded (the committed data) are compared through `lock`,
-  // and a graph-resolved single version reads exactly as `lock` did.
+  // A vulnerable version recorded by a snapshot written before resolutions were recorded (the committed data) still
+  // counts (see the next tests for what such a snapshot cannot show), and a graph-resolved single version reads as
+  // `lock` did.
   const legacy: DepsData = { snapshots: { master: { ref: 'master', commitSha: 'x', channels: ['master'], lock: { orchard: { version: '0.13.0', source: 'crates.io' } }, requirements: {}, forkPin: null, endpoints: [], retrievedAt: NOW, links: { lockfile: '', deps: '', cargo: '' } } } };
   assert.equal(advisoryVerdicts(ADV, legacy).affected, true);
   const single = depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] }));
   const v = advisoryVerdicts(ADV, single, ONE_BUILD);
   assert.equal(v.affected, false);
   assert.deepEqual(v.details, ['master: orchard 0.15.0 is outside the vulnerable range < 0.14.0', 'v1.97.56 (desktop/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0']);
+});
+
+/** A snapshot written before resolutions were recorded: `lock` holds the newest version of each crate in Cargo.lock. */
+const legacySnap = (ref: string, channels: string[], lock: Record<string, string>): Snap => ({ ref, commitSha: ref === 'master' ? 'abc' : null, channels, lock: Object.fromEntries(Object.entries(lock).map(([k, v]) => [k, { version: v, source: 'crates.io' as const }])), requirements: {}, forkPin: null, endpoints: [], retrievedAt: NOW, links: { lockfile: '', deps: '', cargo: '' } });
+
+test('R-ADV: a snapshot that records only the newest version in Cargo.lock cannot clear a build (verifier repro)', () => {
+  // Legacy snapshots only, recorded version outside the range: another (older) vendored version may be linked.
+  const legacyOnly = advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD);
+  assert.equal(legacyOnly.affected, null);
+  assert.match(legacyOnly.summary, /at master; v1\.97\.56 \(desktop\/release\) only one orchard version was recorded \(the newest in Cargo\.lock/);
+  assert.match(legacyOnly.summary, /Whether Brave is exposed is unknown\.$/);
+  // Mixed: master graph-resolved and clear, the Release build only legacy.
+  const mixed = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD);
+  assert.equal(mixed.affected, null);
+  assert.match(mixed.summary, /at v1\.97\.56 \(desktop\/release\) only one orchard version was recorded/);
+  assert.doesNotMatch(mixed.summary, /at master;/, 'the graph-resolved master is not listed as incomplete');
+  // Without a build list the same applies.
+  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }))).affected, null);
+  // Controls: a recorded version inside the range still counts; a monitored crate absent from the recorded lock is
+  // absent from Cargo.lock; graph-resolved snapshots with the same version clear the build.
+  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.13.0' })), ONE_BUILD).affected, true);
+  assert.equal(advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD).affected, false);
+  const graph = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] })), ONE_BUILD);
+  assert.equal(graph.affected, false);
+});
+
+test('R-ADV: crate names match case-insensitively with "-" and "_" alike, in the advisory, its ranges and the Cargo.lock package list (merge regression)', () => {
+  const zp = { orchard: [cand('0.15.0', true, true)], zcash_primitives: [cand('0.20.0', true, true)] };
+  const PKGS = ['Inflector', 'halo2_gadgets', 'orchard', 'zcash', 'zcash_primitives', 'zebra-chain'];
+  const deps = depsOf(rsnap('master', ['master'], zp, { lockPackages: PKGS }), rsnap('v1.97.56', ['desktop/release'], zp, { lockPackages: PKGS }));
+  // The verifier's repro: "zcash-primitives" is Brave's zcash_primitives, linked at 0.20.0, inside "< 1.0.0".
+  const hyphen = advisoryVerdicts({ ...ADV, packages: ['rust:zcash-primitives'], vulnerableRanges: ['zcash-primitives < 1.0.0'] }, deps, ONE_BUILD);
+  assert.equal(hyphen.affected, true, hyphen.summary);
+  assert.doesNotMatch(hyphen.summary, /not present in Brave's Cargo\.lock/);
+  assert.ok(hyphen.details.some((d) => d === 'v1.97.56 (desktop/release): zcash_primitives 0.20.0 is in the vulnerable range < 1.0.0'), hyphen.details.join(' | '));
+  // Mixed spellings between the package list and the range, and a range the version is outside.
+  assert.equal(advisoryVerdicts({ ...ADV, packages: ['rust:zcash_primitives'], vulnerableRanges: ['zcash-primitives < 1.0.0'] }, deps, ONE_BUILD).affected, true);
+  const safe = advisoryVerdicts({ ...ADV, packages: ['rust:Zcash-Primitives'], vulnerableRanges: ['zcash-primitives < 0.10.0'] }, deps, ONE_BUILD);
+  assert.equal(safe.affected, false);
+  assert.match(safe.summary, /Brave's pins of zcash_primitives are outside the vulnerable ranges at every checked build/);
+  // Packages this tracker does not resolve: present in Cargo.lock under another spelling → unknown, never absent.
+  for (const [pkg, inLock] of [['inflector', 'Inflector'], ['zebra_chain', 'zebra-chain'], ['ZEBRA-CHAIN', 'zebra-chain']]) {
+    const v = advisoryVerdicts({ ...ADV, packages: [`rust:${pkg}`], vulnerableRanges: [`${pkg} < 9.0.0`] }, deps, ONE_BUILD);
+    assert.equal(v.affected, null, `${pkg} vs ${inLock}: ${v.summary}`);
+    assert.match(v.summary, new RegExp(`${pkg} is in Brave's Cargo\\.lock`), pkg);
+    assert.doesNotMatch(v.summary, /not present in Brave's Cargo\.lock/, pkg);
+  }
+  // Control: a package no spelling of which is in Cargo.lock is absent.
+  const zebrad = advisoryVerdicts({ ...ADV, packages: ['rust:zebrad'], vulnerableRanges: ['zebrad < 9.0.0'] }, deps, ONE_BUILD);
+  assert.equal(zebrad.affected, false);
+  assert.match(zebrad.summary, /zebrad is not present in Brave's Cargo\.lock at any checked build/);
+});
+
+test('R-ADV: a version the dependency graph only shows as possibly linked is never stated as resolved in adoption text or the crates table', () => {
+  const release = (version: string) => ({ id: `crates.io/orchard/${version}`, project: 'orchard', repo: 'zcash/orchard', version, publishedAt: '2026-09-01T00:00:00Z', url: `https://crates.io/crates/orchard/${version}`, source: 'crates.io' });
+  const impactFor = (master: Snap, version: string) => {
+    const inputs: Parameters<typeof generateEvents>[0] = { now: NOW, prev: null, current: emptySnap(NOW), items: {}, groups: [], groupOfItem: new Map(), changelog: [], releaseDates: new Map(), upstream: { crates: {}, releases: [release(version)], fork: null, zips: {}, nextUpgrade: null } as unknown as Parameters<typeof generateEvents>[0]['upstream'], deps: depsOf(master), advisories: [], community: [], docs: [], evidence: [], capabilityNames: {}, lineChannel: {} };
+    return generateEvents(inputs).find((e) => e.kind === 'upstream-release')!;
+  };
+  const RESOLVED = /already resolves|still resolves|Brave master resolves/;
+  // Every candidate only possibly linked (the verifier's repro).
+  const onlyPossible = rsnap('master', ['master'], { orchard: [cand('0.13.0', null), cand('0.16.0', null)] }, { ambiguous: ['orchard'] });
+  const e = impactFor(onlyPossible, '0.16.0');
+  assert.doesNotMatch(e.impact, RESOLVED);
+  assert.match(e.impact, /Brave master's Cargo\.lock has orchard 0\.13\.0, 0\.16\.0, but which of them Brave's Zcash crate links is not established, so whether it has adopted this release is unknown\./);
+  assert.ok(e.evidence.includes('Brave master: possibly 0.13.0, 0.16.0 (not established)'), e.evidence.join(' | '));
+  const newer = impactFor(onlyPossible, '0.17.0');
+  assert.match(newer.impact, /none of them is at or above it: it has not adopted this release/);
+  // A known-linked lower version next to a possibly linked higher one.
+  const both = impactFor(rsnap('master', ['master'], { orchard: [cand('0.13.0', true, true), cand('0.16.0', null)] }, { ambiguous: ['orchard'] }), '0.16.0');
+  assert.match(both.impact, /Brave master resolves 0\.13\.0 \(it may also link 0\.16\.0: not established\), so whether it has adopted this release is unknown\./);
+  assert.doesNotMatch(both.impact, /still resolves|already resolves/);
+  // Crates table: the possible versions are marked and adoption is not claimed.
+  withDataDir(() => {
+    const { site } = runDerive({
+      'brave-deps': envelope('brave-deps', depsOf(onlyPossible)),
+      upstream: envelope('upstream', { crates: { orchard: { crate: 'orchard', maxStable: '0.16.0', newest: '0.16.0', updatedAt: null, recent: [], url: 'https://crates.io/crates/orchard' } }, releases: [], fork: null, zips: {}, nextUpgrade: null }),
+    });
+    const orchard = site.upstream.crates.find((c) => c.crate === 'orchard')!;
+    assert.deepEqual((orchard.brave['master'] as { possible?: string[] } | null)?.possible, ['0.13.0', '0.16.0']);
+    assert.match(orchard.adoption, /^unknown: Brave master’s Cargo\.lock has 0\.13\.0, 0\.16\.0, and whether its Zcash crate links a version at or above 0\.16\.0 is not established/);
+  });
+});
+
+test('R-ADV: "outside at every checked build" is said only of a package that was outside wherever it was compared', () => {
+  // Master clears orchard; at the Release build 0.13.0 is only possibly linked and inside the range.
+  const v = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.13.0', null), cand('0.15.0', true, true)] }, { ambiguous: ['orchard'] })), ONE_BUILD);
+  assert.equal(v.affected, null);
+  assert.doesNotMatch(v.summary, /outside the vulnerable ranges at every checked build/);
+  assert.match(v.summary, /Brave's pins of orchard are outside the vulnerable ranges at master, but the assessment is incomplete: orchard 0\.13\.0 is in the vulnerable range at v1\.97\.56 \(desktop\/release\), but it is not established/);
+});
+
+test('R-ADV: a Cargo.lock package list that lacks the snapshot’s own crates is not used to call a package absent', () => {
+  const safe = { orchard: [cand('0.15.0', true, true)] };
+  const ZEBRAD: Advisory = { ...ADV, packages: ['rust:zebrad'], vulnerableRanges: ['zebrad < 9.0.0'] };
+  const empty = advisoryVerdicts(ZEBRAD, depsOf(rsnap('master', ['master'], safe, { lockPackages: [] }), rsnap('v1.97.56', ['desktop/release'], safe, { lockPackages: [] })), ONE_BUILD);
+  assert.equal(empty.affected, null, empty.summary);
+  assert.doesNotMatch(empty.summary, /not present in Brave's Cargo\.lock/);
+  assert.ok(empty.details.some((d) => /the recorded Cargo\.lock package list lacks crates its own lock lists/.test(d)));
+  // A consistent list (it names orchard) still shows the absence.
+  const ok = advisoryVerdicts(ZEBRAD, depsOf(rsnap('master', ['master'], safe, { lockPackages: ['orchard', 'zcash'] }), rsnap('v1.97.56', ['desktop/release'], safe, { lockPackages: ['orchard', 'zcash'] })), ONE_BUILD);
+  assert.equal(ok.affected, false);
+});
+
+test('R-ADV: a dependency-bump event does not state a possibly linked version as resolved, and an inconsistent package list is not used for it', async () => {
+  const { braveResolves } = await import('../src/derive/changes.ts');
+  const bumpFor = (master: Snap) => {
+    const inputs = { now: NOW, prev: { ...emptySnap('2026-10-07T00:00:00Z'), masterDeps: { orchard: '0.15.0' } }, current: { ...emptySnap(NOW), masterDeps: { orchard: '0.16.0' } }, items: {}, groups: [], groupOfItem: new Map(), changelog: [], releaseDates: new Map(), upstream: null, deps: depsOf(master), advisories: [], community: [], docs: [], evidence: [], capabilityNames: {}, lineChannel: {} } as Parameters<typeof generateEvents>[0];
+    return generateEvents(inputs).find((e) => e.kind === 'dependency-bumped')!;
+  };
+  const maybe = bumpFor(rsnap('master', ['master'], { orchard: [cand('0.15.0', null), cand('0.16.0', null)] }, { ambiguous: ['orchard'] }));
+  assert.ok(maybe);
+  assert.doesNotMatch(maybe.impact, /now resolves/);
+  assert.match(maybe.impact, /^brave-core master's Cargo\.lock now has orchard 0\.15\.0, 0\.16\.0 \(0\.15\.0 was reported before\), but which of them Brave's Zcash crate links is not established\./);
+  assert.match(maybe.title, /^Brave master: orchard 0\.15\.0 → 0\.16\.0 \(possibly linked\)$/);
+  // Control: a version known to be linked keeps the plain wording.
+  const sure = bumpFor(rsnap('master', ['master'], { orchard: [cand('0.16.0', true, true)] }));
+  assert.match(sure.impact, /^brave-core master now resolves orchard 0\.16\.0 \(was 0\.15\.0\)\./);
+  // A package list that lacks the snapshot's own crates does not make a linked crate look absent.
+  assert.equal(braveResolves(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }, { lockPackages: ['zcash'] }), 'orchard')?.version, '0.15.0');
 });
 
 test('R-ADV: a possibly linked (ambiguous) version inside the range leaves the verdict unknown', () => {

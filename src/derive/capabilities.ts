@@ -17,15 +17,15 @@
 // current availability.
 //
 // Required source checks are three-valued. present:false makes the cell "absent" (it overrides release
-// notes, because the code is gone at this build). A missing result or present:null is unknown, and then the
-// cell is "not-verified" on every build-level path: flag on ("in build"), flag off with a brave://flags option
-// ("opt-in"), flag off ("off"), implementing PRs in the build, and a Stable note seen from Beta/Nightly. None of
-// those shows that this build contains the row-specific code (e.g. the broad Zcash flag cannot show that the
-// Meld integration requests ZEC; a generic Ironwood brave://flags option cannot show the migration task). The
-// app-side facts are kept in the summary and evidence. One documented precedence remains: on Release, this
-// platform's own Stable release note (direct, or implied by a dependent capability's note) still establishes
-// "available", with the incomplete check disclosed as evidence. A missing flag stays "absent" (that is a
-// negative fact about the build, not a claim of presence).
+// notes, because the code is gone at this build). A missing result or present:null is unknown (so is a build
+// without a brave-core tag, where the check cannot run), and then the cell is "not-verified" on every path that
+// would otherwise call it usable or off: a release note ("available", on Release or seen from Beta/Nightly), flag
+// on ("in build"), flag off with a brave://flags option ("opt-in"), flag off ("off"), and implementing PRs in the
+// build. None of those shows that this build contains the row-specific code: the broad Zcash flag cannot show
+// that the Meld integration requests ZEC, and a generic Ironwood release note or brave://flags option cannot show
+// the migration task. A dependent capability's release note does not lift such a prerequisite either. The facts
+// that were found are kept in the summary and evidence. A missing flag stays "absent" (that is a negative fact
+// about the build, not a claim of presence).
 //
 // Server-side switches: a switch read as off makes the cell "service-off" here (it describes the checked public
 // repository, never the deployed service). A switch whose state is unknown (not read, or the setting not found)
@@ -53,7 +53,7 @@ export const CELL_LABEL: Record<CellStatus, string> = {
 };
 
 export const CELL_HELP: Record<CellStatus, string> = {
-  available: 'Listed in this platform’s Stable release notes at or below the current Stable version, with no contrary flag evidence at the current build.',
+  available: 'Listed in this platform’s Stable release notes at or below the current Stable version, with no contrary flag evidence at the current build and every required source check completed there.',
   'in-build': 'The code and an enabled-by-default flag are in this build (Beta/Nightly, or Stable without a release note). Not a release announcement.',
   'opt-in': 'Present but disabled by default; can be turned on in brave://flags.',
   off: 'The feature flag is disabled by default in this build.',
@@ -278,7 +278,6 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         } else if (channel === 'release' && firstNote && flagState !== 'off' && flagState !== 'missing') {
           status = 'available';
           summary = `Since ${PLATFORM_NAME[platform]} ${firstNote.version} (release notes).${flagState === 'on' ? ' Flag on at current build.' : ''}`;
-          if (requiredUnknown.length) ev.push({ kind: 'note', text: `Required check not completed at ${cv?.tag ?? 'this build'} (${requiredUnknown.join('; ')}); the ${PLATFORM_NAME[platform]} release note is used as the evidence. An explicit negative check would mark it absent.`, url: null });
         } else if (flagState === 'off') {
           status = optIn ? 'opt-in' : 'off';
           summary = optIn ? `Off by default; brave://flags option present in ${where}.` : `Flag off by default in ${where}.`;
@@ -305,19 +304,21 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           else if (!cv.tag) summary = `${noNote(true)}, and ${platform === 'ios' && channel === 'release' ? `the ${cv.version} store build number is not published` : `no brave-core tag is known for ${cv.version}`}, so its code and flags cannot be checked.`;
           else summary = noteGap ? `${noteGap}; no other ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.` : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
-        // An unknown required check: no build-level path shows that this build contains the row-specific code (see
-        // the header). The Stable release-note path above is the documented exception; absent stays absent.
-        if (requiredUnknown.length && cv?.tag && (status === 'in-build' || status === 'opt-in' || status === 'off')) {
+        // An unknown required check: no path shows that this build contains the row-specific code, a release note
+        // included (see the header). An explicit negative is handled above (absent stays absent).
+        if (requiredUnknown.length && cv && (status === 'available' || status === 'in-build' || status === 'opt-in' || status === 'off')) {
+          const at = cv.tag ?? where;
           const facts = [
-            flagState === 'on' ? `flag on at ${cv.tag}` : flagState === 'off' ? `flag off by default at ${cv.tag}` : '',
+            firstNote ? `${PLATFORM_NAME[platform]} Stable release notes list it (${firstNote.version})` : '',
+            flagState === 'on' ? `flag on at ${at}` : flagState === 'off' ? `flag off by default at ${at}` : '',
             optIn ? 'a brave://flags option is present' : '',
-            built === true ? `the implementing PRs are in ${cv.tag}` : '',
-            firstNote && channel !== 'release' ? `${PLATFORM_NAME[platform]} Stable release notes list it (${firstNote.version})` : '',
+            built === true ? `the implementing PRs are in ${at}` : '',
           ].filter(Boolean);
           const lead = facts.length ? facts.join('; ') : `${where} was checked`;
-          ev.push({ kind: 'note', text: `Required check not completed at ${cv.tag} (${requiredUnknown.join('; ')}), so this build is not verified to contain it. Without that check the evidence would read: ${CELL_LABEL[status]} — ${summary}`, url: null });
+          const why = cv.tag ? '' : ` because no brave-core tag is known for ${where}`;
+          ev.push({ kind: 'note', text: `Required check not completed at ${at} (${requiredUnknown.join('; ')})${why}, so this build is not verified to contain it. Without that check the evidence would read: ${CELL_LABEL[status]} — ${summary}`, url: null });
           status = 'not-verified';
-          summary = `${lead[0].toUpperCase()}${lead.slice(1)}, but the required check could not be completed (${requiredUnknown.join('; ')}), so it is not verified that this build contains it.`;
+          summary = `${lead.startsWith(PLATFORM_NAME.ios) ? lead : `${lead[0].toUpperCase()}${lead.slice(1)}`}, but the required check could not be completed (${requiredUnknown.join('; ')})${why}, so it is not verified that this build contains it.`;
         }
         // Marketing-only versions: describe the likely build without upgrading the status.
         if (status === 'not-verified' && cv && !cv.tag && cv.inferredTag) {
@@ -362,11 +363,15 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         const req = byId.get(reqId);
         const rc = req?.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel);
         if (!req || !rc || !LIFTABLE.includes(rc.status) || rc.evidence.some((e) => e.contrary && (e.kind === 'flag' || e.kind === 'source'))) continue;
-        rc.evidence.unshift({ kind: 'release-note', text: `Implied by “${row.name}”: ${note.text}`, url: note.url, version: note.version });
-        // Same precedence as a direct note: an unknown required check does not block it, but it is disclosed
-        // (an explicit negative check makes the cell "absent", which is never lifted).
+        // Same rule as a direct note: a required check of the prerequisite left unknown blocks the lift (it stays
+        // "not-verified" and step 2 caps the dependent); an explicit negative made it "absent", which is never lifted.
         const pending = incompleteRequired.get(`${reqId}|${rc.platform}|${rc.channel}`) ?? [];
-        if (pending.length) rc.evidence.push({ kind: 'note', text: `Required check not completed at ${inp.current.find((c) => c.platform === rc.platform && c.channel === rc.channel)?.tag ?? 'this build'} (${pending.join('; ')}); the release note for “${row.name}”, which requires it, is used as the evidence. An explicit negative check would mark it absent.`, url: null });
+        if (pending.length) {
+          const tag = inp.current.find((c) => c.platform === rc.platform && c.channel === rc.channel)?.tag ?? null;
+          rc.evidence.push({ kind: 'note', text: `${PLATFORM_NAME[cell.platform]} release notes for “${row.name}” (${note.version}), which requires it, imply that it shipped, but the required check was not completed${tag ? ` at ${tag}` : ''} (${pending.join('; ')}), so that note is not evidence that this build contains it: ${note.text}`, url: note.url, version: note.version });
+          continue;
+        }
+        rc.evidence.unshift({ kind: 'release-note', text: `Implied by “${row.name}”: ${note.text}`, url: note.url, version: note.version });
         rc.status = 'available';
         rc.since = note.version ?? null;
         rc.summary = `Implied by ${PLATFORM_NAME[cell.platform]} release notes for “${row.name}” (${note.version}), which require it.`;

@@ -30,10 +30,12 @@ export const HISTORY_DAYS = 365;
  * v12: transitive uplift/duplicate grouping (order-independent, cycle-safe), reconciled duplicate timelines,
  * unknown-preserving advisory verdicts (coverage of every current build) and required source checks, release-note
  * version bounds, repository/branch-specific merge text.
- * v13: unknown required checks keep opt-in/off/in-build cells not verified; unread server-side switches make usable
- * cells not verified in the derived data; per-group merged stage labels (unknown build presence is not absence);
- * advisory verdicts over every linked dependency version (and the full Cargo.lock package list); adoption text and
- * master dependency pins use the highest linked version; rebuild drops require every generating input read.
+ * v13: unknown required checks keep every usable or off cell not verified (release-note "available" and lifts by a
+ * dependent's note included); unread server-side switches make usable cells not verified in the derived data;
+ * per-group merged stage labels (unknown build presence is not absence); advisory verdicts over every linked
+ * dependency version (and the full Cargo.lock package list, names compared as crates.io does), where a snapshot that
+ * records one version per crate cannot clear a build; adoption text and master dependency pins use the highest linked
+ * version and never state a possibly linked one as resolved; rebuild drops require every generating input read.
  */
 export const DERIVE_RULES_VERSION = 13;
 export const MAX_EVENTS = 2500;
@@ -242,7 +244,13 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
     for (const [crate, v] of Object.entries(inp.current.masterDeps)) {
       const old = inp.prev.masterDeps[crate];
       if (old && old !== v) {
-        out.push(ev({ key: `master|${crate}|${old}|${v}`, kind: 'dependency-bumped', sourceAt: null, title: `Brave master: ${crate} ${old} → ${v}`, impact: `brave-core master now resolves ${crate} ${v} (was ${old}). It reaches users only once a build containing this commit ships.`, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [{ label: 'Cargo.lock (master)', url: inp.deps?.snapshots['master']?.links.lockfile ?? 'https://github.com/brave/brave-core' }], evidence: [`${crate}: ${old} → ${v}`] }));
+        // A version the dependency graph only shows as possibly linked is not stated as resolved (see braveResolves).
+        const r = braveResolves(inp.deps?.snapshots['master'], crate);
+        const maybe = r && !r.certain && r.version === v;
+        const impact = maybe
+          ? `brave-core master's Cargo.lock now has ${crate} ${r.linked.join(', ')} (${old} was reported before), but which of them Brave's Zcash crate links is not established. It reaches users only once a build containing this commit ships.`
+          : `brave-core master now resolves ${crate} ${v} (was ${old}). It reaches users only once a build containing this commit ships.`;
+        out.push(ev({ key: `master|${crate}|${old}|${v}`, kind: 'dependency-bumped', sourceAt: null, title: `Brave master: ${crate} ${old} → ${v}${maybe ? ' (possibly linked)' : ''}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: 'nightly', links: [{ label: 'Cargo.lock (master)', url: inp.deps?.snapshots['master']?.links.lockfile ?? 'https://github.com/brave/brave-core' }], evidence: [`${crate}: ${old} → ${v}${maybe ? ` (possibly linked; candidates ${r.linked.join(', ')})` : ''}`] }));
       }
     }
     if (inp.prev.forkPin && inp.current.forkPin && inp.prev.forkPin !== inp.current.forkPin) {
@@ -256,20 +264,29 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
   for (const r of inp.upstream?.releases ?? []) {
     if (!r.publishedAt || !recent(r.publishedAt) || r.yanked) continue;
     if (r.source === 'crates.io' && !highImpact.has(r.project)) continue;
-    // The highest version Brave's Zcash crate links (several can be linked at once; see braveResolves).
+    // The highest version Brave's Zcash crate links (several can be linked at once; see braveResolves). A version
+    // the dependency graph only shows as possibly linked is never stated as resolved (see adoptedAtLeast).
     const resolved = braveResolves(masterSnap, r.project);
     const brave = resolved?.version ?? null;
-    const also = resolved && resolved.linked.length > 1 ? ` (it also links ${resolved.linked.filter((v) => v !== brave).join(', ')})` : '';
-    const adopted = brave ? compareSemver(brave, r.version.replace(/^v/, '')) >= 0 : null;
+    const sureOthers = resolved?.certain ? resolved.linked.filter((v) => v !== brave) : [];
+    const maybe = resolved?.certain ? resolved.possible : [];
+    const also = `${sureOthers.length ? ` (it also links ${sureOthers.join(', ')})` : ''}${maybe.length ? ` (it may also link ${maybe.join(', ')}: not established)` : ''}`;
+    const adopted = resolved ? adoptedAtLeast(resolved, r.version) : null;
+    const fork = resolved?.source === 'path' ? ' (from Brave’s librustzcash fork)' : '';
     const impact =
       r.source === 'crates.io'
-        ? brave
-          ? adopted
-            ? `${r.project} ${r.version} was published upstream. Brave master already resolves ${brave}${also}, which is at or above it.`
-            : `${r.project} ${r.version} was published upstream. Brave master still resolves ${brave}${resolved?.source === 'path' ? ' (from Brave’s librustzcash fork)' : ''}${also}, so it has not adopted this release.`
-          : `${r.project} ${r.version} was published upstream. Brave's lockfile does not include ${r.project}.`
+        ? !resolved
+          ? `${r.project} ${r.version} was published upstream. Brave's lockfile does not include ${r.project}.`
+          : !resolved.certain
+            ? `${r.project} ${r.version} was published upstream. Brave master's Cargo.lock has ${r.project} ${resolved.linked.join(', ')}, but which of them Brave's Zcash crate links is not established, so ${adopted === false ? 'none of them is at or above it: it has not adopted this release' : 'whether it has adopted this release is unknown'}.`
+            : adopted === true
+              ? `${r.project} ${r.version} was published upstream. Brave master already resolves ${brave}${also}, which is at or above it.`
+              : adopted === null
+                ? `${r.project} ${r.version} was published upstream. Brave master resolves ${brave}${fork}${also}, so whether it has adopted this release is unknown.`
+                : `${r.project} ${r.version} was published upstream. Brave master still resolves ${brave}${fork}${also}, so it has not adopted this release.`
         : `${r.project} ${r.version} was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.`;
-    out.push(ev({ key: `${r.id}`, kind: 'upstream-release', sourceAt: r.publishedAt, title: `Upstream: ${r.project} ${r.version}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: null, links: [{ label: r.source === 'crates.io' ? 'crates.io' : 'Release', url: r.url }], evidence: [`published ${r.publishedAt}`, brave ? `Brave master: ${brave}` : 'not in Brave lockfile'] }));
+    const braveEvidence = !resolved ? 'not in Brave lockfile' : resolved.certain ? `Brave master: ${brave}${maybe.length ? ` (possibly also ${maybe.join(', ')})` : ''}` : `Brave master: possibly ${resolved.linked.join(', ')} (not established)`;
+    out.push(ev({ key: `${r.id}`, kind: 'upstream-release', sourceAt: r.publishedAt, title: `Upstream: ${r.project} ${r.version}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: null, links: [{ label: r.source === 'crates.io' ? 'crates.io' : 'Release', url: r.url }], evidence: [`published ${r.publishedAt}`, braveEvidence] }));
   }
 
   // 7. Advisories.
@@ -396,15 +413,21 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
  * a recorded dependency-graph resolution, linkedVersions()/rangeExposure() from deps.ts decide per build — a
  * version known to be linked inside a range → affected; a possibly linked (ambiguous) version inside a range, or
  * a linked set that could not be established, → unknown; a build is clear only when every linked version is known
- * and outside. Snapshots resolved before candidates were recorded are compared through `lock` alone.
+ * and outside. Snapshots read before candidates were recorded hold one version per crate in `lock` (the newest in
+ * Cargo.lock): inside a range it counts as affected, but outside every range it cannot clear the build, because
+ * another vendored version may be linked (unknown).
+ *
+ * Crate names are compared by crateKey() (case-insensitive, "-" and "_" alike, as crates.io does), so an advisory
+ * naming "zcash-primitives" is checked against Brave's zcash_primitives, and a Cargo.lock package "Inflector"
+ * counts as present for an advisory naming "inflector".
  *
  * Precedence: any checked pin inside a vulnerable range → affected (true). Otherwise anything that could not be
  * checked → unknown (null): no dependency data, a build whose lockfile read is empty, a present crate whose range
- * is missing or unparseable, a crate this tracker does not resolve that is (or may be) in Cargo.lock, or a non-Rust
- * package. Only when every package was checked is the verdict "not affected" (false). A crate this tracker
- * resolves counts as absent when none of the inspected lockfiles links it from the Zcash crate; any other crate
- * counts as absent only when every inspected snapshot records its full Cargo.lock package list (lockPackages) and
- * none contains it.
+ * is missing or unparseable, a build whose linked versions are not all known, a crate this tracker does not
+ * resolve that is (or may be) in Cargo.lock, or a non-Rust package. Only when every package was checked is the
+ * verdict "not affected" (false). A crate this tracker resolves counts as absent when none of the inspected
+ * lockfiles links it from the Zcash crate; any other crate counts as absent only when every inspected snapshot
+ * records its full Cargo.lock package list (lockPackages) and none contains it.
  *
  * `channels` (the current platform/channel builds) makes the check strict about coverage, and every production
  * caller passes it (an empty list included): "not affected" then also needs at least one inspected Release, Beta
@@ -417,23 +440,31 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   const pkgs = a.packages.join(', ');
   if (a.packages.some((p) => /lightwalletd|zaino/i.test(p))) return serverAdvisoryVerdict(a, deps, details);
 
-  // Vulnerable ranges by package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]).
-  const ranges = new Map<string, string[]>();
-  for (const r of a.vulnerableRanges) {
-    const i = r.indexOf(' ');
-    const pkg = i === -1 ? r.trim() : r.slice(0, i);
-    ranges.set(pkg, [...(ranges.get(pkg) ?? []), i === -1 ? '' : r.slice(i + 1).trim()]);
-  }
+  // Packages by crateKey(). Text uses the monitored crate's own name, else the advisory's first spelling.
+  const monitored = new Map(CRATES.map((c) => [crateKey(c.crate), c.crate]));
+  const shown = new Map<string, string>();
+  const keyOf = (name: string) => {
+    const k = crateKey(name);
+    if (!shown.has(k)) shown.set(k, monitored.get(k) ?? name);
+    return k;
+  };
   // Packages named by the advisory ("rust:orchard"), plus any package named only in a range.
   const named = new Map<string, string>();
   for (const p of a.packages) {
     const i = p.indexOf(':');
-    named.set(i === -1 ? p : p.slice(i + 1), i === -1 ? '' : p.slice(0, i).toLowerCase());
+    const k = keyOf(i === -1 ? p : p.slice(i + 1));
+    if (!named.has(k)) named.set(k, i === -1 ? '' : p.slice(0, i).toLowerCase());
   }
-  for (const pkg of ranges.keys()) if (!named.has(pkg)) named.set(pkg, '');
+  // Vulnerable ranges by package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]).
+  const ranges = new Map<string, string[]>();
+  for (const r of a.vulnerableRanges) {
+    const i = r.indexOf(' ');
+    const k = keyOf(i === -1 ? r.trim() : r.slice(0, i));
+    ranges.set(k, [...(ranges.get(k) ?? []), i === -1 ? '' : r.slice(i + 1).trim()]);
+  }
+  for (const k of ranges.keys()) if (!named.has(k)) named.set(k, '');
   if (!named.size) return { summary: `The advisory names no affected package, so whether Brave is exposed is unknown.`, details, affected: null };
 
-  const readCrates = new Set(CRATES.map((c) => c.crate));
   const strict = channels !== undefined;
   const current = (channels ?? []).filter((c) => c.platform !== 'all');
   const currentTags = new Set(current.map((c) => c.tag).filter((t): t is string => Boolean(t)));
@@ -450,6 +481,10 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     const parts = [list.some((s) => s.ref === 'master') ? 'master' : '', tags.length ? `${tags.length} channel build${tags.length > 1 ? 's' : ''} (${tags.join(', ')})` : ''].filter(Boolean);
     return parts.join(' and ');
   };
+  const fullList = fullLockPackages;
+  /** The name under which this snapshot records the crate with key `k` (its own spelling), else the shown name. */
+  const nameIn = (s: Snap, k: string): string =>
+    Object.keys(s.resolution?.candidates ?? {}).find((n) => crateKey(n) === k) ?? Object.keys(s.lock).find((n) => crateKey(n) === k) ?? monitored.get(k) ?? shown.get(k)!;
   const unknown = new Map<string, string>(); // reason key -> text
   for (const s of builds) if (!hasLock(s)) unknown.set(`lock|${s.ref}`, `Brave's lockfile could not be read at ${label(s)}`);
   if (strict) {
@@ -471,13 +506,18 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
 
   // Rust packages to check; other ecosystems cannot be judged from Cargo.lock.
   const rustPkgs: string[] = [];
-  for (const [pkg, eco] of named) {
-    if (eco && eco !== 'rust') unknown.set(`eco|${pkg}`, `${eco}:${pkg} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
-    else rustPkgs.push(pkg);
+  for (const [k, eco] of named) {
+    if (eco && eco !== 'rust') unknown.set(`eco|${k}`, `${eco}:${shown.get(k)} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
+    else rustPkgs.push(k);
   }
   const seen = new Set<string>();
-  const outside = new Set<string>();
+  /** Shown package name -> inspected builds where its versions were compared, and where all were outside. */
+  const seenAt = new Map<string, Snap[]>();
+  const outsideAt = new Map<string, Snap[]>();
+  const mark = (m: Map<string, Snap[]>, pkg: string, s: Snap) => m.set(pkg, [...(m.get(pkg) ?? []), s]);
   const hitAt: string[] = [];
+  /** Package key -> builds read before every linked version was recorded, where its one recorded version is outside. */
+  const oneRecorded = new Map<string, string[]>();
   /** Package is in range at this version: any range hit wins, then any range that cannot be compared. */
   const inRanges = (rs: string[]) => (v: string): boolean | null => {
     if (!rs.length) return null;
@@ -485,19 +525,25 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return hits.includes(true) ? true : hits.includes(null) ? null : false;
   };
   // Details are listed build by build (packages within a build) so the first lines show one build's full picture.
-  for (const s of inspected) {
-    for (const pkg of rustPkgs) {
-      const rs = ranges.get(pkg) ?? [];
+  for (const s0 of inspected) {
+    // The full package list is used only when it is consistent with the snapshot's own lock (see fullList).
+    const s: Snap = { ...s0, lockPackages: fullList(s0) };
+    if (s0.lockPackages && !s.lockPackages) details.push(`${label(s0)}: the recorded Cargo.lock package list lacks crates its own lock lists, so it is not used`);
+    for (const k of rustPkgs) {
+      const pkg = shown.get(k)!;
+      const crate = nameIn(s, k);
+      const rs = ranges.get(k) ?? [];
       if (s.resolution) {
         // Graph-resolved snapshot: every version Brave's Zcash crate may link counts (deps.ts linkedVersions()).
-        if (!s.resolution.candidates[pkg] && !readCrates.has(pkg)) continue; // not resolved by the collector: see below
-        const { versions } = linkedVersions(s, pkg);
+        if (!s.resolution.candidates[crate] && !monitored.has(k)) continue; // not resolved by the collector: see below
+        const { versions } = linkedVersions(s, crate);
         if (!versions.length) continue; // known not to be linked here
-        seen.add(pkg);
+        seen.add(k);
+        mark(seenAt, pkg, s0);
         const possibly = (c: { reachable: boolean | null }) => (c.reachable === true ? '' : ' (possibly linked)');
         if (!rs.length) {
           for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
-          unknown.set(`range|${pkg}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
+          unknown.set(`range|${k}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
           continue;
         }
         for (const c of versions) {
@@ -505,27 +551,29 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
             const hit = satisfiesRange(c.version, range);
             if (hit === null) {
               details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
-              unknown.set(`range|${pkg}`, `${pkg} ${c.version} could not be compared with its vulnerable range "${range}"`);
+              unknown.set(`range|${k}`, `${pkg} ${c.version} could not be compared with its vulnerable range "${range}"`);
               continue;
             }
             details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
           }
         }
-        const ex = rangeExposure(s, pkg, inRanges(rs));
+        const ex = rangeExposure(s, crate, inRanges(rs));
         if (ex.exposed === true) {
           if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
-        } else if (ex.exposed === false) outside.add(pkg);
-        else if (ex.inRange.length) unknown.set(`linked|${pkg}|${s.ref}`, `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}, but it is not established that Brave's Zcash crate links ${ex.inRange.length > 1 ? 'them' : 'it'}`);
-        else if (!ex.unknown.length) unknown.set(`linked|${pkg}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
+        } else if (ex.exposed === false) mark(outsideAt, pkg, s0);
+        else if (ex.inRange.length) unknown.set(`linked|${k}|${s.ref}`, `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}, but it is not established that Brave's Zcash crate links ${ex.inRange.length > 1 ? 'them' : 'it'}`);
+        else if (!ex.unknown.length) unknown.set(`linked|${k}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
         continue;
       }
-      // Snapshot resolved before candidates were recorded: `lock` holds the one version that was reported.
-      const v = s.lock[pkg]?.version;
+      // Snapshot read before candidates were recorded: `lock` holds the newest version in Cargo.lock, which counts
+      // when it is inside a range; outside every range it does not clear the build (another version may be linked).
+      const v = s.lock[crate]?.version;
       if (!v) continue;
-      seen.add(pkg);
+      seen.add(k);
+      mark(seenAt, pkg, s0);
       if (!rs.length) {
         details.push(`${label(s)}: ${pkg} ${v} could not be checked: the advisory gives no parseable vulnerable range`);
-        unknown.set(`range|${pkg}`, `${pkg} ${v} is resolved, but the advisory gives no parseable vulnerable range for it`);
+        unknown.set(`range|${k}`, `${pkg} ${v} is resolved, but the advisory gives no parseable vulnerable range for it`);
         continue;
       }
       // A pin is affected if it is in any of the package's ranges, outside only if it is outside all of them.
@@ -536,7 +584,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
         if (hit === null) {
           unparsed = true;
           details.push(`${label(s)}: ${pkg} ${v} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
-          unknown.set(`range|${pkg}`, `${pkg} ${v} could not be compared with its vulnerable range "${range}"`);
+          unknown.set(`range|${k}`, `${pkg} ${v} could not be compared with its vulnerable range "${range}"`);
           continue;
         }
         if (hit) hitAny = true;
@@ -544,30 +592,39 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
       }
       if (hitAny) {
         if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
-      } else if (!unparsed) outside.add(pkg);
+      } else if (!unparsed) {
+        mark(outsideAt, pkg, s0);
+        oneRecorded.set(k, [...(oneRecorded.get(k) ?? []), label(s)]);
+      }
     }
+  }
+  for (const [k, at] of oneRecorded) {
+    const pkg = shown.get(k)!;
+    unknown.set(`one|${k}`, `at ${at.join('; ')} only one ${pkg} version was recorded (the newest in Cargo.lock; that dependency data predates recording every linked version), so whether Brave's Zcash crate also links another ${pkg} version inside the vulnerable range is unknown`);
+    details.push(`${pkg}: only the newest version in Cargo.lock was recorded at ${at.join('; ')}; other linked versions are unknown`);
   }
   const absent: string[] = [];
   const notInLock: string[] = [];
-  for (const pkg of rustPkgs) {
-    if (seen.has(pkg) || !inspected.length) continue;
-    if (readCrates.has(pkg)) {
+  for (const k of rustPkgs) {
+    if (seen.has(k) || !inspected.length) continue;
+    const pkg = shown.get(k)!;
+    if (monitored.has(k)) {
       absent.push(pkg);
       details.push(`${pkg}: not in Brave's resolved dependencies at ${inspected.map(label).join('; ')}`);
       continue;
     }
     // A package this tracker does not resolve: only the full list of Cargo.lock packages (lockPackages) can show
     // that it is not there at all. A snapshot without that list leaves it unknown.
-    const lists = inspected.map((s) => s.lockPackages);
-    const presentAt = inspected.filter((_, i) => lists[i]?.includes(pkg));
+    const lists = inspected.map(fullList);
+    const presentAt = inspected.filter((_, i) => lists[i]?.some((p) => crateKey(p) === k));
     if (presentAt.length) {
-      unknown.set(`unread|${pkg}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
+      unknown.set(`unread|${k}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
       details.push(`${pkg}: present in Brave's Cargo.lock at ${presentAt.map(label).join('; ')}; its version is not resolved by this tracker`);
     } else if (lists.every((l) => Array.isArray(l))) {
       notInLock.push(pkg);
       details.push(`${pkg}: not present in Brave's Cargo.lock at ${inspected.map(label).join('; ')}`);
     } else {
-      unknown.set(`unread|${pkg}`, `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`);
+      unknown.set(`unread|${k}`, `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`);
       details.push(`${pkg}: not checked (not among the crates this tracker reads from Brave's Cargo.lock)`);
     }
   }
@@ -579,8 +636,12 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return { summary: `Affects ${pkgs}. Brave's resolved dependency versions are not available${unknownText.some((t) => t.startsWith("Brave's lockfile")) ? ' (lockfile reads failed)' : ''}, so whether Brave is exposed is unknown.`, details, affected: null };
   }
   const at = where(inspected);
+  // "At every checked build" only for packages whose versions were outside wherever they were compared.
+  const outsideAll = [...outsideAt].filter(([p, list]) => list.length === seenAt.get(p)?.length).map(([p]) => p);
+  const outsideSome = [...outsideAt].filter(([p]) => !outsideAll.includes(p));
   const checked = [
-    outside.size ? `Brave's pins of ${[...outside].join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    outsideAll.length ? `Brave's pins of ${outsideAll.join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    ...outsideSome.map(([p, list]) => `Brave's pins of ${p} are outside the vulnerable ranges at ${where(list)}`),
     absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
     notInLock.length ? `${notInLock.join(', ')} ${notInLock.length > 1 ? 'are' : 'is'} not present in Brave's Cargo.lock at any checked build (${at})` : '',
   ].filter(Boolean);
@@ -591,6 +652,11 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   return { summary: `Affects ${pkgs}. ${checked.join('; ')}.${masterOnly ? ' Only master was checked; no Release, Beta or Nightly build was compared.' : ''}`, details, affected: false };
 }
 
+/** Cargo package names compare case-insensitively with "-" and "_" alike (crates.io treats them as one name). */
+export function crateKey(name: string): string {
+  return name.toLowerCase().replace(/-/g, '_');
+}
+
 /**
  * A dependency snapshot with the optional full Cargo.lock package list written by the deps collector (sorted
  * names of every package in Cargo.lock). Its absence means unknown: older snapshots do not record it.
@@ -598,24 +664,61 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
 export type DepsSnapshotWithPackages = DepsData['snapshots'][string] & { lockPackages?: string[] };
 
 /**
- * The version of `crate` Brave reports as resolving in this snapshot, for adoption text: the highest version known
- * to be linked from Brave's Zcash crate (else the highest one not ruled out), with every such version. Snapshots
- * resolved before candidates were recorded report their `lock` entry. Exposure checks must not use this (see
- * advisoryVerdicts). null when the crate is not linked.
+ * A snapshot's full Cargo.lock package list, when it is consistent: it must name every crate the snapshot's own
+ * `lock` lists (a list that lacks them is not complete, so it cannot show that a package is absent). Every derive
+ * reader of `lockPackages` goes through this.
  */
-export function braveResolves(s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution'> | null | undefined, crate: string): { version: string; source: LockSource; linked: string[] } | null {
-  if (!s) return null;
-  if (!s.resolution) {
-    const l = s.lock[crate];
-    return l ? { version: l.version, source: l.source, linked: [l.version] } : null;
+export function fullLockPackages(s: Pick<DepsSnapshotWithPackages, 'lock' | 'lockPackages'>): string[] | undefined {
+  const list = s.lockPackages;
+  return Array.isArray(list) && Object.keys(s.lock).every((n) => list.some((p) => crateKey(p) === crateKey(n))) ? list : undefined;
+}
+
+/** What braveResolves() reports for one crate in one snapshot. */
+export interface BraveResolved {
+  /** The highest version known to be linked; when none is known, the highest version not ruled out. */
+  version: string;
+  source: LockSource;
+  /** Versions known to be linked (sorted); when none is known, every version not ruled out. */
+  linked: string[];
+  /** Versions Brave's Zcash crate may or may not link (the dependency graph could not tell), sorted. */
+  possible: string[];
+  /** false when `version` is only possibly linked: no version is known to be linked. */
+  certain: boolean;
+}
+
+/**
+ * The version of `crate` Brave reports as resolving in this snapshot, for adoption text: the highest version known
+ * to be linked from Brave's Zcash crate (else the highest one not ruled out, with `certain: false`), with every such
+ * version. Snapshots read before candidates were recorded report their `lock` entry (the newest version in
+ * Cargo.lock). Exposure checks must not use this (see advisoryVerdicts). null when the crate is not linked.
+ */
+export function braveResolves(s0: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> | null | undefined, crate: string): BraveResolved | null {
+  if (!s0) return null;
+  if (!s0.resolution) {
+    const l = s0.lock[crate];
+    return l ? { version: l.version, source: l.source, linked: [l.version], possible: [], certain: true } : null;
   }
+  // deps.ts linkedVersions() reads `lockPackages`; an inconsistent list is not passed on (see fullLockPackages).
+  const s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> = { ...s0, lockPackages: fullLockPackages(s0) };
   const { versions } = linkedVersions(s, crate);
-  const sure = versions.filter((c) => c.reachable === true);
-  const pool = sure.length ? sure : versions;
+  const order = (x: { version: string }, y: { version: string }) => compareSemver(x.version, y.version) || compareVersions(x.version, y.version);
+  const sure = versions.filter((c) => c.reachable === true).sort(order);
+  const maybe = versions.filter((c) => c.reachable !== true).sort(order);
+  const pool = sure.length ? sure : maybe;
   if (!pool.length) return null;
-  const sorted = [...pool].sort((a, b) => compareSemver(a.version, b.version) || compareVersions(a.version, b.version));
-  const top = sorted[sorted.length - 1];
-  return { version: top.version, source: top.source, linked: sorted.map((c) => c.version) };
+  const top = pool[pool.length - 1];
+  return { version: top.version, source: top.source, linked: pool.map((c) => c.version), possible: maybe.map((c) => c.version), certain: sure.length > 0 };
+}
+
+/**
+ * Whether the resolved versions include `version` or newer: true only when a version known to be linked is at or
+ * above it; null when only a possibly linked version is; false when no linked or possibly linked version is.
+ */
+export function adoptedAtLeast(r: BraveResolved, version: string): boolean | null {
+  const v = version.replace(/^v/, '');
+  if (r.certain && compareSemver(r.version, v) >= 0) return true;
+  if (r.possible.some((p) => compareSemver(p, v) >= 0)) return null;
+  return false;
 }
 
 /** Server software (lightwalletd, Zaino) is not shipped in Brave; exposure of Brave's proxy is not public. */
