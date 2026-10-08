@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-08T19:12:49.999Z",
+ "generatedAt": "2026-10-08T21:20:57.822Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -117,13 +117,13 @@
   {
    "channel": "nightly",
    "platform": "android",
-   "version": "1.99.13",
-   "tag": "v1.99.13",
+   "version": "1.99.26",
+   "tag": "v1.99.26",
    "publishedAt": null,
    "basis": "versions.brave.com/latest/nightly-android-google-play.version",
    "url": "https://versions.brave.com/latest/nightly-android-google-play.version",
    "detail": {
-    "nightly-android-google-play": "1.99.13"
+    "nightly-android-google-play": "1.99.26"
    }
   },
   {
@@ -245,7 +245,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39977",
       "basis": "in v1.98.47 (GitHub compare v1.98.47...60c8ff0b: behind); later builds of the same history include it"
@@ -437,7 +437,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39726",
       "basis": "in v1.98.47 (GitHub compare v1.98.47...c37d73e3: behind); later builds of the same history include it"
@@ -595,7 +595,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38659",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...853c9661: behind); later builds of the same history include it"
@@ -738,7 +738,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38556",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...cdc0c51e: behind); later builds of the same history include it"
@@ -874,7 +874,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38305",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...489a3bfc: behind); later builds of the same history include it"
@@ -1014,7 +1014,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39703",
       "basis": "in v1.97.56 (GitHub compare v1.97.56...aaa04be1: behind); later builds of the same history include it"
@@ -1169,7 +1169,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -1300,7 +1300,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -1433,7 +1433,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -1564,7 +1564,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -1692,7 +1692,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39547",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5eb78b00: behind); later builds of the same history include it"
@@ -1830,7 +1830,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39811",
       "basis": "in v1.97.56 (GitHub compare v1.97.56...748099ff: behind); later builds of the same history include it"
@@ -1985,7 +1985,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39591",
       "basis": "in v1.97.56 (GitHub compare v1.97.56...ac05a811: behind); later builds of the same history include it"
@@ -2148,7 +2148,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39726",
       "basis": "in v1.98.47 (GitHub compare v1.98.47...c37d73e3: behind); later builds of the same history include it"
@@ -2287,7 +2287,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39838",
       "basis": "in v1.97.56 (GitHub compare v1.97.56...7a8a8570: behind); later builds of the same history include it"
@@ -2448,7 +2448,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39979",
       "basis": "in v1.98.47 (GitHub compare v1.98.47...509aefb7: behind); later builds of the same history include it"
@@ -2597,7 +2597,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39159",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9482d341: behind); later builds of the same history include it"
@@ -2746,7 +2746,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39446",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e723a3d9: behind); later builds of the same history include it"
@@ -2893,7 +2893,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38854",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...78a6696c: behind); later builds of the same history include it"
@@ -3045,7 +3045,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39877",
       "basis": "in v1.97.56 (GitHub compare v1.97.56...482afb5b: behind); later builds of the same history include it"
@@ -3181,7 +3181,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39232",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...78e0dc50: behind); later builds of the same history include it"
@@ -3319,7 +3319,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -3451,7 +3451,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39551",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...db3ae7cb: behind); later builds of the same history include it"
@@ -3595,7 +3595,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38169",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f26463c0: behind); later builds of the same history include it"
@@ -3748,7 +3748,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38505",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d1ac7fdf: behind); later builds of the same history include it"
@@ -3891,7 +3891,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38670",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ecd619c7: behind); later builds of the same history include it"
@@ -4031,7 +4031,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39539",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...52ec8215: behind); later builds of the same history include it"
@@ -4169,7 +4169,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -4316,7 +4316,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39448",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...4c1187f2: behind); later builds of the same history include it"
@@ -4491,7 +4491,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -4621,7 +4621,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -4749,7 +4749,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -4879,7 +4879,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5007,7 +5007,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5135,7 +5135,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/gate3#335",
       "basis": "not checked"
@@ -5263,7 +5263,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5395,7 +5395,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5525,7 +5525,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5665,7 +5665,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39159",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9482d341: behind); later builds of the same history include it"
@@ -5797,7 +5797,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -5933,7 +5933,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39350",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...baf1dda0: behind); later builds of the same history include it"
@@ -6071,7 +6071,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -6210,7 +6210,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37999",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9f1b4d71: behind); later builds of the same history include it"
@@ -6359,7 +6359,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39115",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6fb854ac: behind); later builds of the same history include it"
@@ -6493,7 +6493,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -6623,7 +6623,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -6753,7 +6753,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -6883,7 +6883,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7013,7 +7013,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7143,7 +7143,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7273,7 +7273,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7403,7 +7403,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7539,7 +7539,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37755",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...914d6664: behind); later builds of the same history include it"
@@ -7677,7 +7677,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7811,7 +7811,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -7941,7 +7941,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#39021",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d132ed36: behind); later builds of the same history include it"
@@ -8081,7 +8081,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38802",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...033db786: behind); later builds of the same history include it"
@@ -8223,7 +8223,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38896",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...725a0813: behind); later builds of the same history include it"
@@ -8365,7 +8365,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37541",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5c8759a4: behind); later builds of the same history include it"
@@ -8522,7 +8522,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38670",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ecd619c7: behind); later builds of the same history include it"
@@ -8668,7 +8668,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38556",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...cdc0c51e: behind); later builds of the same history include it"
@@ -8798,7 +8798,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -8936,7 +8936,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38505",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d1ac7fdf: behind); later builds of the same history include it"
@@ -9080,7 +9080,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#38059",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f32f3eb8: behind); later builds of the same history include it"
@@ -9218,7 +9218,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37292",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...09aacb65: behind); later builds of the same history include it"
@@ -9381,7 +9381,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37365",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b54e8d4c: behind); later builds of the same history include it"
@@ -9533,7 +9533,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -9681,7 +9681,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": false,
       "via": "brave/brave-core#37262",
       "basis": "merged only into the 1.91.x branch"
@@ -9846,7 +9846,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37116",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...282c2f53: behind); later builds of the same history include it"
@@ -9995,7 +9995,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#37116",
       "basis": "via brave-core#37116, which merged update_orchard_14 into master: in v1.96.61 (GitHub compare v1.96.61...282c2f53: behind); later builds of the same history include it"
@@ -10126,7 +10126,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -10262,7 +10262,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35225",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...dc7db384: behind); later builds of the same history include it"
@@ -10404,7 +10404,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#36641",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...78086ecd: behind); later builds of the same history include it"
@@ -10542,7 +10542,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#36658",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d18b0cc7: behind); later builds of the same history include it"
@@ -10702,7 +10702,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#36321",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e03576b4: behind); later builds of the same history include it"
@@ -10874,7 +10874,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#36321",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e03576b4: behind); later builds of the same history include it"
@@ -11026,7 +11026,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -11157,7 +11157,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/brave-variations#1689",
       "basis": "merged into feature branch main; the PR that carried it to master is not tracked"
@@ -11292,7 +11292,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -11439,7 +11439,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35494",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...adbc04e1: behind); later builds of the same history include it"
@@ -11585,7 +11585,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35426",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...095628a8: behind); later builds of the same history include it"
@@ -11727,7 +11727,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34829",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...464eac5b: behind); later builds of the same history include it"
@@ -11870,7 +11870,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -12004,7 +12004,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34829",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...464eac5b: behind); later builds of the same history include it"
@@ -12151,7 +12151,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34991",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...363cc1cf: behind); later builds of the same history include it"
@@ -12298,7 +12298,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33537",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2a18724d: behind); later builds of the same history include it"
@@ -12455,7 +12455,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35466",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8616e885: behind); later builds of the same history include it"
@@ -12614,7 +12614,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35025",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...03d5d887: behind); later builds of the same history include it"
@@ -12773,7 +12773,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35461",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...383ae05f: behind); later builds of the same history include it"
@@ -12930,7 +12930,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34794",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a21bec59: behind); later builds of the same history include it"
@@ -13087,7 +13087,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34774",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b6f067d9: behind); later builds of the same history include it"
@@ -13262,7 +13262,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -13394,7 +13394,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -13541,7 +13541,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34811",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...09e1a46f: behind); later builds of the same history include it"
@@ -13684,7 +13684,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -13814,7 +13814,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -13944,7 +13944,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -14072,7 +14072,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35012",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1938ece2: behind); later builds of the same history include it"
@@ -14210,7 +14210,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33860",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...17cd1980: behind); later builds of the same history include it"
@@ -14351,7 +14351,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#35145",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...4b7e435c: behind); later builds of the same history include it"
@@ -14483,7 +14483,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/brave-variations#1649",
       "basis": "merged into feature branch main; the PR that carried it to master is not tracked"
@@ -14617,7 +14617,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -14753,7 +14753,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -14889,7 +14889,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33625",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...80521370: behind); later builds of the same history include it"
@@ -15031,7 +15031,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33763",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...62db225c: behind); later builds of the same history include it"
@@ -15173,7 +15173,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33674",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7ebfe5c2: behind); later builds of the same history include it"
@@ -15315,7 +15315,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33771",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8a5e9ec7: behind); later builds of the same history include it"
@@ -15453,7 +15453,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -15585,7 +15585,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -15716,7 +15716,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -15852,7 +15852,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -15982,7 +15982,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -16114,7 +16114,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -16256,7 +16256,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -16390,7 +16390,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32982",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...de6a1693: behind); later builds of the same history include it"
@@ -16545,7 +16545,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33385",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ce56a15c: behind); later builds of the same history include it"
@@ -16700,7 +16700,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33971",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...297eb1c5: behind); later builds of the same history include it"
@@ -16858,7 +16858,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34409",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...814df8fe: behind); later builds of the same history include it"
@@ -17013,7 +17013,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -17160,7 +17160,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34108",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d3f03af7: behind); later builds of the same history include it"
@@ -17310,7 +17310,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33654",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...fc1fbccc: behind); later builds of the same history include it"
@@ -17452,7 +17452,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33156",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a799843b: behind); later builds of the same history include it"
@@ -17618,7 +17618,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34061",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9231c3ac: behind); later builds of the same history include it"
@@ -17775,7 +17775,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#34061",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9231c3ac: behind); later builds of the same history include it"
@@ -17932,7 +17932,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33905",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2581a6ed: behind); later builds of the same history include it"
@@ -18078,7 +18078,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -18208,7 +18208,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -18338,7 +18338,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -18468,7 +18468,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33900",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a4f2c809: behind); later builds of the same history include it"
@@ -18602,7 +18602,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -18745,7 +18745,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33678",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b9bbd4c4: behind); later builds of the same history include it"
@@ -18907,7 +18907,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33673",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...dc5a852d: behind); later builds of the same history include it"
@@ -19075,7 +19075,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24655",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d7c421b9: behind); later builds of the same history include it"
@@ -19211,7 +19211,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33665",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7a401e11: behind); later builds of the same history include it"
@@ -19343,7 +19343,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33631",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...95794072: behind); later builds of the same history include it"
@@ -19475,7 +19475,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33618",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b79529dd: behind); later builds of the same history include it"
@@ -19613,7 +19613,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32507",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...39b03f13: behind); later builds of the same history include it"
@@ -19776,7 +19776,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33435",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ca58949d: behind); later builds of the same history include it"
@@ -19932,7 +19932,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33583",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...30f0c43c: behind); later builds of the same history include it"
@@ -20090,7 +20090,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33468",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7825c990: behind); later builds of the same history include it"
@@ -20234,7 +20234,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -20364,7 +20364,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -20498,7 +20498,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -20628,7 +20628,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -20758,7 +20758,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -20888,7 +20888,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21018,7 +21018,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21148,7 +21148,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21278,7 +21278,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21408,7 +21408,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21538,7 +21538,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21668,7 +21668,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21798,7 +21798,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -21928,7 +21928,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22058,7 +22058,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22188,7 +22188,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22318,7 +22318,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22448,7 +22448,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22582,7 +22582,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33213",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9e0527d3: behind); later builds of the same history include it"
@@ -22722,7 +22722,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22850,7 +22850,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -22988,7 +22988,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27815",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...de982f25: behind); later builds of the same history include it"
@@ -23134,7 +23134,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26966",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d6f3c15e: behind); later builds of the same history include it"
@@ -23279,7 +23279,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26477",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f6393b6c: behind); later builds of the same history include it"
@@ -23426,7 +23426,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -23578,7 +23578,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22114",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6941147f: behind); later builds of the same history include it"
@@ -23726,7 +23726,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33187",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f610bf02: behind); later builds of the same history include it"
@@ -23868,7 +23868,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#33033",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...fe2491f1: behind); later builds of the same history include it"
@@ -24023,7 +24023,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32274",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...18f1a5cd: behind); later builds of the same history include it"
@@ -24170,7 +24170,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32580",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b8e2b0a7: behind); later builds of the same history include it"
@@ -24321,7 +24321,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -24451,7 +24451,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/gate3#161",
       "basis": "not checked"
@@ -24585,7 +24585,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32090",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b79f8ac9: behind); later builds of the same history include it"
@@ -24728,7 +24728,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -24864,7 +24864,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32640",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...946a6993: behind); later builds of the same history include it"
@@ -25020,7 +25020,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32871",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3ff4091a: behind); later builds of the same history include it"
@@ -25174,7 +25174,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -25305,7 +25305,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32825",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6273b459: behind); later builds of the same history include it"
@@ -25437,7 +25437,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32830",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...68a84b86: behind); later builds of the same history include it"
@@ -25575,7 +25575,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28880",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b1928696: behind); later builds of the same history include it"
@@ -25715,7 +25715,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30162",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8c4a3f33: behind); later builds of the same history include it"
@@ -25857,7 +25857,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30592",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5969dea5: behind); later builds of the same history include it"
@@ -25999,7 +25999,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32658",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8e588d25: behind); later builds of the same history include it"
@@ -26136,7 +26136,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32803",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...eff677dd: behind); later builds of the same history include it"
@@ -26274,7 +26274,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32204",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b1a7e426: behind); later builds of the same history include it"
@@ -26420,7 +26420,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -26558,7 +26558,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31785",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...081eaefe: behind); later builds of the same history include it"
@@ -26713,7 +26713,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32235",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...10438849: behind); later builds of the same history include it"
@@ -26851,7 +26851,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32484",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a4d9248f: behind); later builds of the same history include it"
@@ -26983,7 +26983,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/brave-core#32552",
       "basis": "merged into feature branch wallet-build-flag-5; the PR that carried it to master is not tracked"
@@ -27117,7 +27117,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32324",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...083750cc: behind); later builds of the same history include it"
@@ -27259,7 +27259,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31802",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d4db62f6: behind); later builds of the same history include it"
@@ -27406,7 +27406,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32273",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...de072442: behind); later builds of the same history include it"
@@ -27548,7 +27548,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32249",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...aac110a7: behind); later builds of the same history include it"
@@ -27684,7 +27684,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32386",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1af6dd29: behind); later builds of the same history include it"
@@ -27816,7 +27816,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32528",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5d9e5f9b: behind); later builds of the same history include it"
@@ -27948,7 +27948,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32384",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7f916ce0: behind); later builds of the same history include it"
@@ -28080,7 +28080,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#32164",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...919ab4bb: behind); later builds of the same history include it"
@@ -28218,7 +28218,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31753",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...25f8dc75: behind); later builds of the same history include it"
@@ -28367,7 +28367,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31974",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...67b86db7: behind); later builds of the same history include it"
@@ -28499,7 +28499,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31886",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...37817d76: behind); later builds of the same history include it"
@@ -28637,7 +28637,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31905",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...236b1042: behind); later builds of the same history include it"
@@ -28797,7 +28797,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30332",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a1a191f5: behind); later builds of the same history include it"
@@ -28961,7 +28961,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31690",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...22655394: behind); later builds of the same history include it"
@@ -29123,7 +29123,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/brave-variations#1533",
       "basis": "merged into feature branch main; the PR that carried it to master is not tracked"
@@ -29257,7 +29257,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31215",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7803dbcc: behind); later builds of the same history include it"
@@ -29420,7 +29420,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": "brave/brave-variations#1527",
       "basis": "merged into feature branch main; the PR that carried it to master is not tracked"
@@ -29568,7 +29568,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31412",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c763f8cd: behind); later builds of the same history include it"
@@ -29732,7 +29732,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31054",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...49e6623f: behind); later builds of the same history include it"
@@ -29871,7 +29871,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#31605",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...87584a51: behind); later builds of the same history include it"
@@ -30009,7 +30009,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30320",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...bf0a8ad4: behind); later builds of the same history include it"
@@ -30156,7 +30156,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30723",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f7978e56: behind); later builds of the same history include it"
@@ -30294,7 +30294,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -30444,7 +30444,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30462",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...edd5bebd: behind); later builds of the same history include it"
@@ -30612,7 +30612,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29665",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...856a4815: behind); later builds of the same history include it"
@@ -30767,7 +30767,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28897",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9cc5d753: behind); later builds of the same history include it"
@@ -30914,7 +30914,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28671",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f2d75813: behind); later builds of the same history include it"
@@ -31070,7 +31070,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30338",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...454d7ded: behind); later builds of the same history include it"
@@ -31234,7 +31234,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30232",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6b451971: behind); later builds of the same history include it"
@@ -31379,7 +31379,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21627",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5b8ea34b: behind); later builds of the same history include it"
@@ -31522,7 +31522,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30095",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9624f017: behind); later builds of the same history include it"
@@ -31680,7 +31680,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30195",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...92693c59: behind); later builds of the same history include it"
@@ -31823,7 +31823,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29196",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...57c27b4e: behind); later builds of the same history include it"
@@ -32002,7 +32002,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#30072",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...826aff93: behind); later builds of the same history include it"
@@ -32140,7 +32140,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -32274,7 +32274,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29554",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...43fbd1ae: behind); later builds of the same history include it"
@@ -32428,7 +32428,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -32564,7 +32564,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29429",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1d0a11e1: behind); later builds of the same history include it"
@@ -32731,7 +32731,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29695",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b3816f83: behind); later builds of the same history include it"
@@ -32873,7 +32873,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28975",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f8c330b0: behind); later builds of the same history include it"
@@ -33020,7 +33020,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29515",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...818e361e: behind); later builds of the same history include it"
@@ -33162,7 +33162,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29489",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...079e20b1: behind); later builds of the same history include it"
@@ -33302,7 +33302,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -33438,7 +33438,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28883",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7850105d: behind); later builds of the same history include it"
@@ -33585,7 +33585,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28872",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...4b26e49a: behind); later builds of the same history include it"
@@ -33740,7 +33740,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29378",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d05979d1: behind); later builds of the same history include it"
@@ -33881,7 +33881,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -34017,7 +34017,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29269",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...feb56e3c: behind); later builds of the same history include it"
@@ -34161,7 +34161,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28343",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2a48f3a9: behind); later builds of the same history include it"
@@ -34324,7 +34324,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#29198",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6cbd0be2: behind); later builds of the same history include it"
@@ -34492,7 +34492,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28698",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...47419695: behind); later builds of the same history include it"
@@ -34635,7 +34635,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -34769,7 +34769,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -34901,7 +34901,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35035,7 +35035,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28365",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...aaa67605: behind); later builds of the same history include it"
@@ -35186,7 +35186,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35318,7 +35318,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35448,7 +35448,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35580,7 +35580,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35712,7 +35712,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35844,7 +35844,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -35976,7 +35976,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -36108,7 +36108,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -36240,7 +36240,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -36372,7 +36372,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -36504,7 +36504,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -36641,7 +36641,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28513",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...577eee87: behind); later builds of the same history include it"
@@ -36785,7 +36785,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28746",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c7553db1: behind); later builds of the same history include it"
@@ -36940,7 +36940,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28772",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8a397e51: behind); later builds of the same history include it"
@@ -37081,7 +37081,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -37215,7 +37215,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27716",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...0c27d254: behind); later builds of the same history include it"
@@ -37371,7 +37371,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27972",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5d492ea4: behind); later builds of the same history include it"
@@ -37544,7 +37544,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28333",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...bb3d4d4b: behind); later builds of the same history include it"
@@ -37687,7 +37687,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27560",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1d6cc7fe: behind); later builds of the same history include it"
@@ -37843,7 +37843,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28163",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e7fba87f: behind); later builds of the same history include it"
@@ -37991,7 +37991,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28213",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...15839397: behind); later builds of the same history include it"
@@ -38146,7 +38146,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27657",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1854e39a: behind); later builds of the same history include it"
@@ -38297,7 +38297,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -38433,7 +38433,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27352",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...682c56df: behind); later builds of the same history include it"
@@ -38591,7 +38591,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28253",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9c1570a0: behind); later builds of the same history include it"
@@ -38749,7 +38749,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27826",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...cd1c1fdf: behind); later builds of the same history include it"
@@ -38906,7 +38906,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27995",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...946060c6: behind); later builds of the same history include it"
@@ -39063,7 +39063,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28108",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c6915bd1: behind); later builds of the same history include it"
@@ -39220,7 +39220,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28046",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7baa49ea: behind); later builds of the same history include it"
@@ -39378,7 +39378,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28055",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d13ce1cb: behind); later builds of the same history include it"
@@ -39526,7 +39526,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28249",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7f12f370: behind); later builds of the same history include it"
@@ -39670,7 +39670,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27520",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...0082ca85: behind); later builds of the same history include it"
@@ -39825,7 +39825,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27264",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ac0d19bd: behind); later builds of the same history include it"
@@ -39989,7 +39989,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#28006",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1dc4565c: behind); later builds of the same history include it"
@@ -40133,7 +40133,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -40267,7 +40267,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27767",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...272d10aa: behind); later builds of the same history include it"
@@ -40410,7 +40410,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -40555,7 +40555,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27994",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5a3b09a6: behind); later builds of the same history include it"
@@ -40716,7 +40716,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27615",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3041d81e: behind); later builds of the same history include it"
@@ -40871,7 +40871,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24012",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...38f98819: behind); later builds of the same history include it"
@@ -41013,7 +41013,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24249",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1ceff065: behind); later builds of the same history include it"
@@ -41151,7 +41151,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26442",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e07362f6: behind); later builds of the same history include it"
@@ -41315,7 +41315,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26850",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...195b7d5f: behind); later builds of the same history include it"
@@ -41463,7 +41463,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26214",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...62e8e1f3: behind); later builds of the same history include it"
@@ -41634,7 +41634,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27089",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1c9725de: behind); later builds of the same history include it"
@@ -41798,7 +41798,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26954",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...059a4374: behind); later builds of the same history include it"
@@ -41948,7 +41948,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26442",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e07362f6: behind); later builds of the same history include it"
@@ -42103,7 +42103,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26533",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6817d451: behind); later builds of the same history include it"
@@ -42268,7 +42268,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27274",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8527299e: behind); later builds of the same history include it"
@@ -42423,7 +42423,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27222",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5869407e: behind); later builds of the same history include it"
@@ -42578,7 +42578,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27293",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...802e264b: behind); later builds of the same history include it"
@@ -42718,7 +42718,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -42851,7 +42851,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -42984,7 +42984,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43114,7 +43114,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43244,7 +43244,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43376,7 +43376,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43510,7 +43510,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43643,7 +43643,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43776,7 +43776,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -43909,7 +43909,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -44042,7 +44042,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -44175,7 +44175,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -44312,7 +44312,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27811",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...37ada217: behind); later builds of the same history include it"
@@ -44468,7 +44468,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27994",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5a3b09a6: behind); later builds of the same history include it"
@@ -44616,7 +44616,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27952",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...aa1b3115: behind); later builds of the same history include it"
@@ -44770,7 +44770,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27842",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c29c0a3c: behind); later builds of the same history include it"
@@ -44909,7 +44909,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -45046,7 +45046,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27592",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5573c3e7: behind); later builds of the same history include it"
@@ -45188,7 +45188,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27663",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...28ea5347: behind); later builds of the same history include it"
@@ -45326,7 +45326,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -45458,7 +45458,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27736",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...be242e4b: behind); later builds of the same history include it"
@@ -45600,7 +45600,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27843",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...80e63584: behind); later builds of the same history include it"
@@ -45738,7 +45738,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -45870,7 +45870,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -46003,7 +46003,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -46138,7 +46138,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -46275,7 +46275,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27255",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c008daba: behind); later builds of the same history include it"
@@ -46413,7 +46413,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27476",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b1e80877: behind); later builds of the same history include it"
@@ -46555,7 +46555,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27688",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6c255eea: behind); later builds of the same history include it"
@@ -46701,7 +46701,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27813",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...93d1d4aa: behind); later builds of the same history include it"
@@ -46848,7 +46848,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": false,
       "via": "brave/brave-core#27879",
       "basis": "merged only into the 1.77.x branch"
@@ -46986,7 +46986,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27446",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b55418f7: behind); later builds of the same history include it"
@@ -47129,7 +47129,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27525",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a6a0b65f: behind); later builds of the same history include it"
@@ -47269,7 +47269,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -47403,7 +47403,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26370",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...0d88fd90: behind); later builds of the same history include it"
@@ -47545,7 +47545,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26364",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...52b0c974: behind); later builds of the same history include it"
@@ -47687,7 +47687,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26509",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2951621f: behind); later builds of the same history include it"
@@ -47829,7 +47829,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26534",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...90324f53: behind); later builds of the same history include it"
@@ -47973,7 +47973,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26564",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3484d231: behind); later builds of the same history include it"
@@ -48120,7 +48120,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27062",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...deaa7a8f: behind); later builds of the same history include it"
@@ -48267,7 +48267,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26253",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e8405573: behind); later builds of the same history include it"
@@ -48407,7 +48407,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27362",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...724a4b5a: behind); later builds of the same history include it"
@@ -48549,7 +48549,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27325",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...dc0144c9: behind); later builds of the same history include it"
@@ -48691,7 +48691,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27018",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7af577e2: behind); later builds of the same history include it"
@@ -48831,7 +48831,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -48963,7 +48963,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -49099,7 +49099,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25911",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3313ad62: behind); later builds of the same history include it"
@@ -49237,7 +49237,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -49373,7 +49373,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27193",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...afd4e023: behind); later builds of the same history include it"
@@ -49515,7 +49515,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#27118",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...df7d7cf0: behind); later builds of the same history include it"
@@ -49657,7 +49657,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26557",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b0fad21f: behind); later builds of the same history include it"
@@ -49812,7 +49812,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26803",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...25fa26ea: behind); later builds of the same history include it"
@@ -49948,7 +49948,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23075",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...719f2cf7: behind); later builds of the same history include it"
@@ -50094,7 +50094,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -50224,7 +50224,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -50359,7 +50359,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24547",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...bf6c28e1: behind); later builds of the same history include it"
@@ -50494,7 +50494,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -50626,7 +50626,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -50758,7 +50758,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -50896,7 +50896,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26469",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...af020d2b: behind); later builds of the same history include it"
@@ -51039,7 +51039,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26526",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6da3839d: behind); later builds of the same history include it"
@@ -51181,7 +51181,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25948",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5e19b6a5: behind); later builds of the same history include it"
@@ -51327,7 +51327,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -51463,7 +51463,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26380",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e4de839e: behind); later builds of the same history include it"
@@ -51605,7 +51605,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26602",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...713f6cd6: behind); later builds of the same history include it"
@@ -51741,7 +51741,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26588",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...0c6e0301: behind); later builds of the same history include it"
@@ -51878,7 +51878,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -52040,7 +52040,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26419",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e6eceb00: behind); later builds of the same history include it"
@@ -52188,7 +52188,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26392",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c7289659: behind); later builds of the same history include it"
@@ -52332,7 +52332,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26332",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6d0ffe2f: behind); later builds of the same history include it"
@@ -52474,7 +52474,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26244",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...1a3eb65e: behind); later builds of the same history include it"
@@ -52616,7 +52616,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#26141",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...23cf8080: behind); later builds of the same history include it"
@@ -52760,7 +52760,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25386",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2a4e3876: behind); later builds of the same history include it"
@@ -52907,7 +52907,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23076",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...faa4ae02: behind); later builds of the same history include it"
@@ -53049,7 +53049,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25797",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ddfe9004: behind); later builds of the same history include it"
@@ -53185,7 +53185,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25810",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e1f8a284: behind); later builds of the same history include it"
@@ -53323,7 +53323,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25284",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6b1965ce: behind); later builds of the same history include it"
@@ -53482,7 +53482,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#25296",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3cf6dbf2: behind); later builds of the same history include it"
@@ -53638,7 +53638,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24220",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...0b50112d: behind); later builds of the same history include it"
@@ -53795,7 +53795,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24607",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7785f3cc: behind); later builds of the same history include it"
@@ -53959,7 +53959,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24608",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8b94752e: behind); later builds of the same history include it"
@@ -54105,7 +54105,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -54242,7 +54242,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24104",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...7d873293: behind); later builds of the same history include it"
@@ -54397,7 +54397,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24134",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6da30e88: behind); later builds of the same history include it"
@@ -54552,7 +54552,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24375",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...5276a2e7: behind); later builds of the same history include it"
@@ -54703,7 +54703,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -54840,7 +54840,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24365",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...75a8cbc0: behind); later builds of the same history include it"
@@ -54982,7 +54982,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24600",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...203035a3: behind); later builds of the same history include it"
@@ -55121,7 +55121,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -55255,7 +55255,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -55392,7 +55392,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23363",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e153faab: behind); later builds of the same history include it"
@@ -55544,7 +55544,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23729",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...2b63ed6e: behind); later builds of the same history include it"
@@ -55711,7 +55711,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20488",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6b1d38c4: behind); later builds of the same history include it"
@@ -55849,7 +55849,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -55994,7 +55994,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#24096",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c7c155b1: behind); later builds of the same history include it"
@@ -56142,7 +56142,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23598",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9b1b4f70: behind); later builds of the same history include it"
@@ -56289,7 +56289,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23598",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9b1b4f70: behind); later builds of the same history include it"
@@ -56452,7 +56452,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23981",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c7668e44: behind); later builds of the same history include it"
@@ -56608,7 +56608,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21150",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f1f1352f: behind); later builds of the same history include it"
@@ -56747,7 +56747,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -56887,7 +56887,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23383",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f5dc515f: behind); later builds of the same history include it"
@@ -57032,7 +57032,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22864",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...122e27b5: behind); later builds of the same history include it"
@@ -57169,7 +57169,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23375",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f3d6de51: behind); later builds of the same history include it"
@@ -57307,7 +57307,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#23362",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...df0e7d52: behind); later builds of the same history include it"
@@ -57451,7 +57451,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21574",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...71d83350: behind); later builds of the same history include it"
@@ -57592,7 +57592,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -57729,7 +57729,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21982",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b61415ef: behind); later builds of the same history include it"
@@ -57892,7 +57892,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22547",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...ddadee9d: behind); later builds of the same history include it"
@@ -58040,7 +58040,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21960",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...31714086: behind); later builds of the same history include it"
@@ -58196,7 +58196,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22514",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...edc4fca1: behind); later builds of the same history include it"
@@ -58352,7 +58352,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21935",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...e345d575: behind); later builds of the same history include it"
@@ -58499,7 +58499,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21644",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...79ab8b56: behind); later builds of the same history include it"
@@ -58646,7 +58646,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21859",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3b9adeda: behind); later builds of the same history include it"
@@ -58789,7 +58789,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -58941,7 +58941,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22120",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...3507fbb7: behind); later builds of the same history include it"
@@ -59113,7 +59113,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#22150",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...f1101400: behind); later builds of the same history include it"
@@ -59261,7 +59261,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21985",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...4d80ad60: behind); later builds of the same history include it"
@@ -59404,7 +59404,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21296",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9ac4193a: behind); later builds of the same history include it"
@@ -59560,7 +59560,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21869",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8d76b29c: behind); later builds of the same history include it"
@@ -59703,7 +59703,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -59839,7 +59839,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21415",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a8355124: behind); later builds of the same history include it"
@@ -59986,7 +59986,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21415",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...a8355124: behind); later builds of the same history include it"
@@ -60131,7 +60131,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -60266,7 +60266,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21819",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...fc72364d: behind); later builds of the same history include it"
@@ -60407,7 +60407,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -60538,7 +60538,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21567",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...707009f1: behind); later builds of the same history include it"
@@ -60676,7 +60676,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21506",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6d737f23: behind); later builds of the same history include it"
@@ -60819,7 +60819,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20895",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...8c95bd6e: behind); later builds of the same history include it"
@@ -60962,7 +60962,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20734",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...78934b57: behind); later builds of the same history include it"
@@ -61125,7 +61125,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#21156",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...d1384a78: behind); later builds of the same history include it"
@@ -61267,7 +61267,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#19783",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...b844bd22: behind); later builds of the same history include it"
@@ -61407,7 +61407,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -61538,7 +61538,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20537",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...39d64474: behind); later builds of the same history include it"
@@ -61676,7 +61676,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20351",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...6cd0b6e1: behind); later builds of the same history include it"
@@ -61819,7 +61819,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#20145",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
@@ -61957,7 +61957,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -62090,7 +62090,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -62243,7 +62243,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": true,
       "via": "brave/brave-core#19199",
       "basis": "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
@@ -62388,7 +62388,7 @@
      {
       "platform": "android",
       "channel": "nightly",
-      "version": "1.99.13",
+      "version": "1.99.26",
       "included": null,
       "via": null,
       "basis": "no merged PR is linked, so presence in this build is unknown"
@@ -108103,9 +108103,9 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Stable shipped it; flag on at v1.99.13.",
+     "summary": "Stable shipped it; flag on at v1.99.26.",
      "evidence": [
       {
        "kind": "release-note",
@@ -108115,9 +108115,9 @@
       },
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       }
      ],
@@ -108631,9 +108631,9 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Stable shipped it; flag on at v1.99.13.",
+     "summary": "Stable shipped it; flag on at v1.99.26.",
      "evidence": [
       {
        "kind": "release-note",
@@ -108643,23 +108643,23 @@
       },
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#44432 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...5d492ea4: behind); later builds of the same history include it)",
+       "text": "brave-browser#44432 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...5d492ea4: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/44432",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -109018,29 +109018,29 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#46596 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...43fbd1ae: behind); later builds of the same history include it)",
+       "text": "brave-browser#46596 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...43fbd1ae: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/46596",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -109413,9 +109413,9 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Stable shipped it; flag on at v1.99.13.",
+     "summary": "Stable shipped it; flag on at v1.99.26.",
      "evidence": [
       {
        "kind": "release-note",
@@ -109425,23 +109425,23 @@
       },
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#45875 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...b8e2b0a7: behind); later builds of the same history include it)",
+       "text": "brave-browser#45875 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...b8e2b0a7: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/45875",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -109854,43 +109854,43 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashIronwoodEnabled (zcash_ironwood_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashIronwoodEnabled (zcash_ironwood_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "brave://flags Ironwood option: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/browser/about_flags.cc#L184",
-       "version": "1.99.13",
+       "text": "brave://flags Ironwood option: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/browser/about_flags.cc#L185",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#56872 included in v1.99.13 (in v1.98.47 (GitHub compare v1.98.47...c37d73e3: behind); later builds of the same history include it)",
+       "text": "brave-browser#56872 included in v1.99.26 (in v1.98.47 (GitHub compare v1.98.47...c37d73e3: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/56872",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -110371,50 +110371,50 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashIronwoodEnabled (zcash_ironwood_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashIronwoodEnabled (zcash_ironwood_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "Orchard → Ironwood transaction task: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
-       "version": "1.99.13",
+       "text": "Orchard → Ironwood transaction task: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "brave://flags Ironwood option: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/browser/about_flags.cc#L184",
-       "version": "1.99.13",
+       "text": "brave://flags Ironwood option: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/browser/about_flags.cc#L185",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#58408 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...e723a3d9: behind); later builds of the same history include it)",
+       "text": "brave-browser#58408 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...e723a3d9: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/58408",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -110854,29 +110854,29 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#41986 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...e07362f6: behind); later builds of the same history include it)",
+       "text": "brave-browser#41986 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...e07362f6: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/41986",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -111246,29 +111246,29 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "flag",
-       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kZCashShieldedTransactionsEnabled (zcash_shielded_transactions_enabled) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#44782 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...aaa67605: behind); later builds of the same history include it)",
+       "text": "brave-browser#44782 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...aaa67605: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/44782",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -111616,9 +111616,9 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Stable shipped it; flag on at v1.99.13.",
+     "summary": "Stable shipped it; flag on at v1.99.26.",
      "evidence": [
       {
        "kind": "release-note",
@@ -111628,16 +111628,16 @@
       },
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#45185 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...c7553db1: behind); later builds of the same history include it)",
+       "text": "brave-browser#45185 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...c7553db1: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/45185",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -111894,22 +111894,22 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "ZIP-317 constants: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/zcash_utils.h#L34",
-       "version": "1.99.13",
+       "text": "ZIP-317 constants: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/zcash_utils.h#L34",
+       "version": "1.99.26",
        "contrary": false
       }
      ],
@@ -112268,7 +112268,7 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "service-off",
      "summary": "Shipped in Android 1.88.128, but currently turned off server-side for Zcash, for every client.",
      "evidence": [
@@ -112280,23 +112280,23 @@
       },
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "NEAR Intents network list includes Zcash: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/browser/swap_service.cc#L114",
-       "version": "1.99.13",
+       "text": "NEAR Intents network list includes Zcash: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/browser/swap_service.cc#L114",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "build",
-       "text": "brave-browser#52555 included in v1.99.13 (in v1.96.61 (GitHub compare v1.96.61...dc5a852d: behind); later builds of the same history include it)",
+       "text": "brave-browser#52555 included in v1.99.26 (in v1.96.61 (GitHub compare v1.96.61...dc5a852d: behind); later builds of the same history include it)",
        "url": "https://github.com/brave/brave-browser/issues/52555",
-       "version": "1.99.13"
+       "version": "1.99.26"
       },
       {
        "kind": "qa",
@@ -112618,22 +112618,22 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       },
       {
        "kind": "source",
-       "text": "Meld chain list includes ZEC: present at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/browser/meld_integration_service.cc#L36",
-       "version": "1.99.13",
+       "text": "Meld chain list includes ZEC: present at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/browser/meld_integration_service.cc#L36",
+       "version": "1.99.26",
        "contrary": false
       }
      ],
@@ -112827,15 +112827,15 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "in-build",
-     "summary": "Flag on and code present at v1.99.13; no Android release note.",
+     "summary": "Flag on and code present at v1.99.26; no Android release note.",
      "evidence": [
       {
        "kind": "flag",
-       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.13",
-       "url": "https://github.com/brave/brave-core/blob/v1.99.13/components/brave_wallet/common/features.cc",
-       "version": "1.99.13",
+       "text": "kBraveWalletZCashFeature (BraveWalletZCash) default enabled on Android at v1.99.26",
+       "url": "https://github.com/brave/brave-core/blob/v1.99.26/components/brave_wallet/common/features.cc",
+       "version": "1.99.26",
        "contrary": false
       }
      ],
@@ -113024,7 +113024,7 @@
     {
      "platform": "android",
      "channel": "nightly",
-     "version": "1.99.13",
+     "version": "1.99.26",
      "status": "not-planned",
      "summary": "Requested in brave-browser#51665, brave-browser#59532; closed as not planned.",
      "evidence": [
@@ -113334,7 +113334,7 @@
       "version": "0.15.0",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.15.0",
       "source": "crates.io"
      },
@@ -113387,7 +113387,7 @@
       "version": "0.29.0",
       "source": "path"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.29.0",
       "source": "path"
      },
@@ -113440,7 +113440,7 @@
       "version": "0.10.0",
       "source": "path"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.10.0",
       "source": "path"
      },
@@ -113493,7 +113493,7 @@
       "version": "0.24.0-rc.1",
       "source": "path"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      },
@@ -113546,7 +113546,7 @@
       "version": "0.4.0",
       "source": "path"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.4.0",
       "source": "path"
      },
@@ -113599,7 +113599,7 @@
       "version": "0.4.1",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.4.1",
       "source": "crates.io"
      },
@@ -113652,7 +113652,7 @@
       "version": "0.7.0",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.7.0",
       "source": "crates.io"
      },
@@ -113705,7 +113705,7 @@
       "version": "0.8.2",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.8.2",
       "source": "crates.io"
      },
@@ -113758,7 +113758,7 @@
       "version": "0.2.1",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.2.1",
       "source": "crates.io"
      },
@@ -113811,7 +113811,7 @@
       "version": "0.3.2",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.3.2",
       "source": "crates.io"
      },
@@ -113864,7 +113864,7 @@
       "version": "0.5.0",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.5.0",
       "source": "crates.io"
      },
@@ -113917,7 +113917,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      },
@@ -113970,7 +113970,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      },
@@ -114023,7 +114023,7 @@
       "version": "0.1.0",
       "source": "crates.io"
      },
-     "v1.99.13 (android/nightly)": {
+     "v1.99.26 (android/nightly)": {
       "version": "0.1.0",
       "source": "crates.io"
      },
@@ -114055,7 +114055,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-08T19:12:49.999Z"
+   "checkedAt": "2026-10-08T21:20:57.822Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -115788,9 +115788,9 @@
      "v1.99.20 (desktop/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.20 (desktop/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.99.20 (desktop/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
-     "v1.99.13 (android/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.99.13 (android/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.13 (android/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.99.26 (android/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.99.26 (android/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.99.26 (android/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
      "master (master): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "master (master): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "master (master): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
@@ -115918,8 +115918,8 @@
     "topic": "wallet-libraries",
     "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
     "url": "https://github.com/zakura-core/wallet-libraries",
-    "updatedAt": "2026-10-07T20:21:55Z",
-    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: documentation clean up.",
+    "updatedAt": "2026-10-08T20:37:50Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: feat(transparent): txid details — display v2 facts with senders, review….",
     "attribution": "Description from the repository README.",
     "braveAdoption": "none-found",
     "braveEvidence": [
@@ -115970,7 +115970,7 @@
     "zcashDisabled": true,
     "line": 18,
     "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-    "checkedAt": "2026-10-08T19:12:49.999Z"
+    "checkedAt": "2026-10-08T21:20:57.822Z"
    },
    "studies": [
     {
@@ -116219,7 +116219,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-08T19:12:49.999Z"
+   "checkedAt": "2026-10-08T21:20:57.822Z"
   }
  },
  "community": [
@@ -117273,8 +117273,8 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117288,8 +117288,8 @@
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117303,8 +117303,8 @@
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117316,8 +117316,8 @@
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117331,8 +117331,8 @@
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117344,8 +117344,8 @@
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117357,8 +117357,8 @@
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117370,8 +117370,8 @@
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117385,8 +117385,8 @@
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117398,8 +117398,8 @@
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117411,8 +117411,8 @@
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117424,8 +117424,8 @@
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117437,8 +117437,8 @@
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-10-08T19:12:49.999Z",
-   "lastSuccessAt": "2026-10-08T19:12:49.999Z",
+   "lastAttemptAt": "2026-10-08T21:20:57.822Z",
+   "lastSuccessAt": "2026-10-08T21:20:57.822Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,

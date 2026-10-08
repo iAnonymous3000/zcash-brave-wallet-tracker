@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-10-08T19:12:49.999Z",
+ "retrievedAt": "2026-10-08T21:20:57.822Z",
  "data": {
   "current": [
    {
@@ -112,13 +112,13 @@
    {
     "channel": "nightly",
     "platform": "android",
-    "version": "1.99.13",
-    "tag": "v1.99.13",
+    "version": "1.99.26",
+    "tag": "v1.99.26",
     "publishedAt": null,
     "basis": "versions.brave.com/latest/nightly-android-google-play.version",
     "url": "https://versions.brave.com/latest/nightly-android-google-play.version",
     "detail": {
-     "nightly-android-google-play": "1.99.13"
+     "nightly-android-google-play": "1.99.26"
     }
    },
    {

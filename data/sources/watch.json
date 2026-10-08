@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-08T19:12:49.999Z",
+ "retrievedAt": "2026-10-08T21:20:57.822Z",
  "data": {
   "items": [
    {
@@ -22,8 +22,8 @@
     "topic": "wallet-libraries",
     "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
     "url": "https://github.com/zakura-core/wallet-libraries",
-    "updatedAt": "2026-10-07T20:21:55Z",
-    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: documentation clean up.",
+    "updatedAt": "2026-10-08T20:37:50Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: feat(transparent): txid details — display v2 facts with senders, review….",
     "attribution": "Description from the repository README.",
     "braveAdoption": "none-found",
     "braveEvidence": [
@@ -51,7 +51,7 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-08T19:12:49.999Z"
+    "checkedAt": "2026-10-08T21:20:57.822Z"
    },
    {
     "term": "wallet-libraries",
@@ -59,7 +59,7 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-08T19:12:49.999Z"
+    "checkedAt": "2026-10-08T21:20:57.822Z"
    },
    {
     "term": "zkdragon",
@@ -67,7 +67,7 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-08T19:12:49.999Z"
+    "checkedAt": "2026-10-08T21:20:57.822Z"
    }
   ]
  }
