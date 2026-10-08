@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "retrievedAt": "2026-10-08T14:46:50.765Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2450,6 +2450,15 @@
     "prerelease": false
    },
    {
+    "id": "zcash/lightwallet-protocol@v0.3.4",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.4",
+    "publishedAt": "2022-06-24T01:01:34Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.4",
+    "source": "github-tag"
+   },
+   {
     "id": "crates.io/halo2_gadgets@0.2.0",
     "project": "halo2_gadgets",
     "repo": "zcash/halo2",
@@ -2490,6 +2499,15 @@
     "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.11",
     "source": "github-release",
     "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.3",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.3",
+    "publishedAt": "2022-05-11T05:21:26Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.3",
+    "source": "github-tag"
    },
    {
     "id": "crates.io/zcash_encoding@0.1.0",
@@ -2623,6 +2641,15 @@
     "prerelease": true
    },
    {
+    "id": "zcash/lightwallet-protocol@v0.3.2",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.2",
+    "publishedAt": "2022-02-17T05:22:46Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.2",
+    "source": "github-tag"
+   },
+   {
     "id": "crates.io/halo2_gadgets@0.1.0-beta.1",
     "project": "halo2_gadgets",
     "repo": "zcash/halo2",
@@ -2686,6 +2713,15 @@
     "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.9",
     "source": "github-release",
     "prerelease": false
+   },
+   {
+    "id": "zcash/lightwallet-protocol@v0.3.1",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.1",
+    "publishedAt": "2021-12-09T22:26:55Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.1",
+    "source": "github-tag"
    },
    {
     "id": "crates.io/reddsa@0.1.0",
@@ -2754,6 +2790,15 @@
     "prerelease": false
    },
    {
+    "id": "zcash/lightwallet-protocol@v0.3.0",
+    "project": "lightwallet-protocol",
+    "repo": "zcash/lightwallet-protocol",
+    "version": "v0.3.0",
+    "publishedAt": "2021-07-29T19:47:53Z",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.0",
+    "source": "github-tag"
+   },
+   {
     "id": "crates.io/pasta_curves@0.1.1",
     "project": "pasta_curves",
     "repo": "zcash/pasta_curves",
@@ -2796,51 +2841,6 @@
     "source": "crates.io",
     "yanked": false,
     "prerelease": false
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.3.4",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.3.4",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.4",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.3.3",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.3.3",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.3",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.3.2",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.3.2",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.2",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.3.1",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.3.1",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.1",
-    "source": "github-tag"
-   },
-   {
-    "id": "zcash/lightwallet-protocol@v0.3.0",
-    "project": "lightwallet-protocol",
-    "repo": "zcash/lightwallet-protocol",
-    "version": "v0.3.0",
-    "publishedAt": null,
-    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.3.0",
-    "source": "github-tag"
    },
    {
     "id": "zcash/lightwallet-protocol@v0.2.4",
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-08T14:35:45.102Z"
+   "checkedAt": "2026-10-08T14:46:50.765Z"
   },
   "zips": {
    "2005": {
@@ -2907,6 +2907,15 @@
     "lastCommitMessage": "(zip-2005) fix: remove dangling K",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/840b3f39f77fb3dcccdbc4c00191eda16dba8c7e",
     "url": "https://zips.z.cash/zip-2005"
+   },
+   "2009": {
+    "num": "2009",
+    "title": "Reduce Marginal Fee to 1000 Zatoshis and Raise the Weight Ratio Cap to 10",
+    "status": "Draft",
+    "lastCommitAt": "2026-10-06T23:03:22Z",
+    "lastCommitMessage": "Update zips/2009.md",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/d1c001d8b0076a8488cb25a8759ec6d3d32853ee",
+    "url": "https://zips.z.cash/zip-2009"
    },
    "0317": {
     "num": "0317",
@@ -2979,7 +2988,31 @@
     "lastCommitMessage": "ZIP 326: apply review suggestions (nuttycom, #1319)",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/02eac4c430503e50bc583140f6b5dd4cc1cab962",
     "url": "https://zips.z.cash/zip-0326"
+   },
+   "0259": {
+    "num": "0259",
+    "title": "Deployment of the NU7 Network Upgrade",
+    "status": "Draft",
+    "lastCommitAt": "2026-09-30T20:57:39Z",
+    "lastCommitMessage": "Set the NU7 testnet activation height to 4465026",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/b344587acf6d33650bfffbb227e0bc928752721f",
+    "url": "https://zips.z.cash/zip-0259"
    }
+  },
+  "nextUpgrade": {
+   "name": "NU7",
+   "zip": "0259",
+   "zipStatus": "Draft",
+   "testnetHeight": "4465026",
+   "mainnetHeight": "TBD (To be set on OCT 20)",
+   "branchId": "0x77190AD9",
+   "braveForkSha": "f01f50d64214278552edbe4a34b9049244ce03c1",
+   "braveHasBranchId": false,
+   "braveGatedUnstable": true,
+   "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
+   "upstreamHasBranchId": true,
+   "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
+   "checkedAt": "2026-10-08T14:46:50.765Z"
   }
  }
 }

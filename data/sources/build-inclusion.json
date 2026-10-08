@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "retrievedAt": "2026-10-08T14:46:50.765Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3526,7 +3526,12 @@
    "brave/brave-core#20145": {
     "sha": "9d6ad1cd817a47bda4ee369e65927a7053d8e76d",
     "domain": "master",
-    "minIncluded": null,
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:46:50.765Z",
+     "basis": "GitHub compare v1.96.61...9d6ad1cd: behind"
+    },
     "maxExcluded": null
    },
    "brave/brave-core#19289": {
@@ -3544,7 +3549,12 @@
    "brave/brave-core#19199": {
     "sha": "c2cf5e90cd8c5f4348773c0a86ebe48dd96922ac",
     "domain": "master",
-    "minIncluded": null,
+    "minIncluded": {
+     "version": "1.96.61",
+     "tag": "v1.96.61",
+     "checkedAt": "2026-10-08T14:46:50.765Z",
+     "basis": "GitHub compare v1.96.61...c2cf5e90: behind"
+    },
     "maxExcluded": null
    }
   },
@@ -3610,7 +3620,7 @@
     ]
    }
   ],
-  "pending": 14,
-  "calls": 301
+  "pending": 0,
+  "calls": 2
  }
 }

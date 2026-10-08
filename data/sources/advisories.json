@@ -1,7 +1,7 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-10-08T14:35:45.102Z",
+ "retrievedAt": "2026-10-08T14:46:50.765Z",
  "data": {
   "advisories": [
    {
@@ -237,7 +237,7 @@
     "aliases": [
      "CVE-2026-54496"
     ],
-    "summary": "Zebra: Missing copy constraint in halo2gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
+    "summary": "Zebra: Missing copy constraint in halo2_gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
     "severity": "critical",
     "packages": [
      "rust:zebrad",
@@ -265,7 +265,7 @@
    {
     "id": "GHSA-j3f2-h3wv-wfr9",
     "aliases": [],
-    "summary": "sendrawtransaction Forwards Unvalidated Hex to Validator",
+    "summary": "send_raw_transaction Forwards Unvalidated Hex to Validator",
     "severity": "low",
     "packages": [
      "repo:zingolabs/zaino"
@@ -284,7 +284,7 @@
    {
     "id": "GHSA-h268-r3v6-jqj6",
     "aliases": [],
-    "summary": "gettreestate Proxies Arbitrary Hashes to Validator Without Validation",
+    "summary": "get_treestate Proxies Arbitrary Hashes to Validator Without Validation",
     "severity": "low",
     "packages": [
      "repo:zingolabs/zaino"

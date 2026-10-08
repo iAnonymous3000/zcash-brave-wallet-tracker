@@ -1,5 +1,407 @@
 [
  {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Beta: in-build → service-off",
+  "impact": "The evidence for this capability changed for Android Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "in-build → service-off"
+  ],
+  "id": "0d35329ee997e12a",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Release: available → service-off",
+  "impact": "The evidence for this capability changed for Desktop Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "available → service-off"
+  ],
+  "id": "1a9bf184e8075973",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Nightly: in-build → service-off",
+  "impact": "The evidence for this capability changed for Desktop Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "in-build → service-off"
+  ],
+  "id": "68fd7ca7082909df",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Nightly: in-build → service-off",
+  "impact": "The evidence for this capability changed for Android Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "in-build → service-off"
+  ],
+  "id": "6aa2ba09b93f7965",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Release: available → service-off",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "available → service-off"
+  ],
+  "id": "6d2780f1ef2bb045",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Android Release: absent → in-build",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "absent → in-build"
+  ],
+  "id": "84d70f61d8f0d124",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Beta: in-build → service-off",
+  "impact": "The evidence for this capability changed for Desktop Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "in-build → service-off"
+  ],
+  "id": "9971d3b1281041a1",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Desktop Release: absent → in-build",
+  "impact": "The evidence for this capability changed for Desktop Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "absent → in-build"
+  ],
+  "id": "c8dacff4cde7a57a",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "release-evidence-changed",
+  "sourceAt": null,
+  "title": "Release note text changed upstream: Added support for Zcash deshielding (Shielded - Transparent) transactions. (#45875)",
+  "impact": "This CHANGELOG_DESKTOP.md line (1.87.186) is no longer present upstream. The captured copy and its permalink are kept as evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "Captured permalink",
+    "url": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556"
+   }
+  ],
+  "evidence": [
+   "first seen 2026-10-08T14:35:45.102Z",
+   "gone since 2026-10-08T14:46:50.765Z"
+  ],
+  "id": "c9c413d9c5d0a703",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-08T05:23:38Z",
+  "title": "In iOS Beta 1.98.52: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the iOS Beta build 1.98.52. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "00d1a85d8f92034b",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-08T05:23:38Z",
+  "title": "In iOS Beta 1.98.52: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the iOS Beta build 1.98.52. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "37cb428244ccf050",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-08T05:23:38Z",
+  "title": "In Android Beta 1.98.52: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Android Beta build 1.98.52. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "a047fb40f734786a",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-08T05:23:38Z",
+  "title": "In Android Beta 1.98.52: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Android Beta build 1.98.52. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "ca731b9a47210da0",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T13:33:11Z",
+  "title": "In iOS Nightly 1.99.20: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the iOS Nightly build 1.99.20. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "57111d5cebb39f46",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T13:33:11Z",
+  "title": "In Desktop Nightly 1.99.20: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Desktop Nightly build 1.99.20. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "5fb314fe55dfbada",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T13:33:11Z",
+  "title": "In Desktop Nightly 1.99.20: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Desktop Nightly build 1.99.20. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "69cf94e08baf1b38",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T13:33:11Z",
+  "title": "In iOS Nightly 1.99.20: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the iOS Nightly build 1.99.20. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "849f5c2ceeffed97",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "qa-passed",
   "sourceAt": "2026-10-07T05:04:12Z",
   "title": "QA Pass-Win64: [Wallet] Hide Deposit/Bridge buttons for Zcash (Shielded Legacy) account",
@@ -123,6 +525,60 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Desktop Release 1.97.56: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Desktop Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "d444a065bd4e1879",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Desktop Release 1.97.56: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Desktop Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "f4d7b64d8b6d93c6",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-10-06T20:31:38.015499Z",
   "title": "Upstream: zcash_client_backend 0.25.0-pre.1",
@@ -199,6 +655,60 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-05T13:52:26Z",
+  "title": "In Android Nightly 1.99.13: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Android Nightly build 1.99.13. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "8103f1e261fab6f6",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-05T13:52:26Z",
+  "title": "In Android Nightly 1.99.13: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Android Nightly build 1.99.13. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "f668da7d3ed24c0f",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "qa-passed",
   "sourceAt": "2026-10-05T09:42:42Z",
   "title": "QA Pass-Win64: [ZCash] Ironwood support root issue.",
@@ -250,6 +760,60 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-02T12:12:00Z",
+  "title": "In Android Release 1.96.61: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Android Release build 1.96.61. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.96.61...9d6ad1cd: behind"
+  ],
+  "id": "06915954626935ad",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-02T12:12:00Z",
+  "title": "In Android Release 1.96.61: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Android Release build 1.96.61. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.96.61...c2cf5e90: behind"
+  ],
+  "id": "b1737c45cbdf31e1",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "issue-closed",
   "sourceAt": "2026-10-01T13:32:20Z",
   "title": "Closed (not planned): [Wallet] Ethereum & Solana Testnets are not shown in Create Account screen",
@@ -298,6 +862,60 @@
   ],
   "id": "629cfb3a40e9f113",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-01T05:33:16Z",
+  "title": "In Desktop Beta 1.98.47: Bump trezor-connect and protobufjs",
+  "impact": "The merged code (brave-core#19199) is now part of the Desktop Beta build 1.98.47. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "security",
+  "itemIds": [
+   "brave/brave-browser#31633"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#31633",
+    "url": "https://github.com/brave/brave-browser/issues/31633"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...c2cf5e90: behind); later builds of the same history include it"
+  ],
+  "id": "2c7a61b921900367",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-01T05:33:16Z",
+  "title": "In Desktop Beta 1.98.47: [ZCash] Add Zcash flag to brave://flags",
+  "impact": "The merged code (brave-core#20145) is now part of the Desktop Beta build 1.98.47. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#32104"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-browser#32104",
+    "url": "https://github.com/brave/brave-browser/issues/32104"
+   }
+  ],
+  "evidence": [
+   "in v1.96.61 (GitHub compare v1.96.61...9d6ad1cd: behind); later builds of the same history include it"
+  ],
+  "id": "7ade0f91ab02864b",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
   "basis": "backfill"
  },
  {
@@ -2097,6 +2715,32 @@
   ],
   "id": "2ae39356809abffa",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-09-03T14:47:42Z",
+  "title": "Merged: fix(swap): disable Zcash swap/bridge routing",
+  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-03 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/gate3#335"
+  ],
+  "topic": "swaps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/gate3#335",
+    "url": "https://github.com/brave/gate3/pull/335"
+   }
+  ],
+  "evidence": [
+   "merged 2026-09-03T14:47:42Z",
+   "base branch master"
+  ],
+  "id": "b8e76cd34ee18ae0",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
   "basis": "backfill"
  },
  {
@@ -7762,6 +8406,32 @@
   "basis": "backfill"
  },
  {
+  "kind": "pr-merged",
+  "sourceAt": "2026-05-13T00:58:58Z",
+  "title": "Merged: Set iOS wallet webui 25% on release (1.89.x) ",
+  "impact": "Merged into brave-core master. Nightly builds made after 2026-05-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-variations#1689"
+  ],
+  "topic": "general",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/brave-variations#1689",
+    "url": "https://github.com/brave/brave-variations/pull/1689"
+   }
+  ],
+  "evidence": [
+   "merged 2026-05-13T00:58:58Z",
+   "base branch main"
+  ],
+  "id": "e5653f797cbb37a2",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "issue-closed",
   "sourceAt": "2026-05-11T17:35:55Z",
   "title": "Closed (completed): [ZCash] Shielded/Unified address are not shown when deposit is loaded via Token details page or side navigation Deposit",
@@ -9113,6 +9783,32 @@
   ],
   "id": "aaef51e12ce2036a",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-04-02T05:48:25Z",
+  "title": "Merged: Enable wallet webui, zcash shielded tx, cardano support in Nightly and Beta",
+  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-02 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-variations#1649"
+  ],
+  "topic": "shielded",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/brave-variations#1649",
+    "url": "https://github.com/brave/brave-variations/pull/1649"
+   }
+  ],
+  "evidence": [
+   "merged 2026-04-02T05:48:25Z",
+   "base branch main"
+  ],
+  "id": "197ed9e03ac3eabf",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
   "basis": "backfill"
  },
  {
@@ -13258,6 +13954,32 @@
   "basis": "backfill"
  },
  {
+  "kind": "pr-merged",
+  "sourceAt": "2026-01-06T18:40:24Z",
+  "title": "Merged: feat(swap): add Cardano and Zcash support for Near Intents",
+  "impact": "Merged into brave-core master. Nightly builds made after 2026-01-06 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/gate3#161"
+  ],
+  "topic": "swaps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/gate3#161",
+    "url": "https://github.com/brave/gate3/pull/161"
+   }
+  ],
+  "evidence": [
+   "merged 2026-01-06T18:40:24Z",
+   "base branch master"
+  ],
+  "id": "93270f2ddb9b9052",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "qa-passed",
   "sourceAt": "2026-01-06T10:31:51Z",
   "title": "QA Pass-Win64: [ZCash] Refactor tx fee calculation",
@@ -16231,6 +16953,32 @@
   ],
   "id": "347890f42171eb7d",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2025-10-08T15:47:14Z",
+  "title": "Merged: [ZCash] Fix Enabled group",
+  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-08 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-variations#1533"
+  ],
+  "topic": "general",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/brave-variations#1533",
+    "url": "https://github.com/brave/brave-variations/pull/1533"
+   }
+  ],
+  "evidence": [
+   "merged 2025-10-08T15:47:14Z",
+   "base branch main"
+  ],
+  "id": "7d85dd47d632b986",
+  "detectedAt": "2026-10-08T14:46:50.765Z",
   "basis": "backfill"
  }
 ]

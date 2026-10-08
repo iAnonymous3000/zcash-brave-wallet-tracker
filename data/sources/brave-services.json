@@ -1,0 +1,248 @@
+{
+ "sourceId": "brave-services",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T14:46:50.765Z",
+ "data": {
+  "gate3": {
+   "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
+   "file": "app/api/swap/constants.py",
+   "zcashDisabled": true,
+   "line": 18,
+   "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
+   "checkedAt": "2026-10-08T14:46:50.765Z"
+  },
+  "studies": [
+   {
+    "file": "ZCashStudy.json5",
+    "name": "ZCashStudy_EnabledWithShieldingOnNewVersions",
+    "features": {
+     "enable": [
+      "BraveWalletZCash"
+     ],
+     "disable": []
+    },
+    "params": {
+     "zcash_shielded_transactions_enabled": "true"
+    },
+    "minVersion": "139.1.81.129",
+    "maxVersion": "152.*",
+    "channels": [
+     "RELEASE",
+     "NIGHTLY",
+     "BETA"
+    ],
+    "platforms": [
+     "WINDOWS",
+     "MAC",
+     "LINUX",
+     "ANDROID"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5"
+   },
+   {
+    "file": "ZCashStudy.json5",
+    "name": "ZCashStudy_DisabledOnOldVersions",
+    "features": {
+     "enable": [],
+     "disable": [
+      "BraveWalletZCash"
+     ]
+    },
+    "params": {},
+    "minVersion": null,
+    "maxVersion": "139.1.81.128",
+    "channels": [
+     "RELEASE",
+     "NIGHTLY",
+     "BETA"
+    ],
+    "platforms": [
+     "WINDOWS",
+     "MAC",
+     "LINUX",
+     "ANDROID"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5"
+   },
+   {
+    "file": "iOSWalletWebUIStudy.json5",
+    "name": "iOSWalletWebUIStudy",
+    "features": {
+     "enable": [
+      "BraveWalletWebUIFeature",
+      "BraveWalletCardano"
+     ],
+     "disable": []
+    },
+    "params": {},
+    "minVersion": "146.1.89.116",
+    "maxVersion": "152.*",
+    "channels": [
+     "NIGHTLY",
+     "BETA"
+    ],
+    "platforms": [
+     "IOS"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+   },
+   {
+    "file": "iOSWalletWebUIStudy.json5",
+    "name": "iOSWalletWebUIStudy_ZcashEnabledWithShielding",
+    "features": {
+     "enable": [
+      "BraveWalletZCash"
+     ],
+     "disable": []
+    },
+    "params": {
+     "zcash_shielded_transactions_enabled": "true"
+    },
+    "minVersion": "146.1.89.116",
+    "maxVersion": "152.*",
+    "channels": [
+     "NIGHTLY",
+     "BETA"
+    ],
+    "platforms": [
+     "IOS"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+   },
+   {
+    "file": "iOSWalletWebUIStudy.json5",
+    "name": "iOSWalletWebUIStudy",
+    "features": {
+     "enable": [
+      "BraveWalletWebUIFeature",
+      "BraveWalletCardano"
+     ],
+     "disable": []
+    },
+    "params": {},
+    "minVersion": "147.1.89.144",
+    "maxVersion": "152.*",
+    "channels": [
+     "RELEASE"
+    ],
+    "platforms": [
+     "IOS"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+   },
+   {
+    "file": "iOSWalletWebUIStudy.json5",
+    "name": "iOSWalletWebUIStudy_ZcashEnabledWithShielding",
+    "features": {
+     "enable": [
+      "BraveWalletZCash"
+     ],
+     "disable": []
+    },
+    "params": {
+     "zcash_shielded_transactions_enabled": "true"
+    },
+    "minVersion": "147.1.89.144",
+    "maxVersion": "152.*",
+    "channels": [
+     "RELEASE"
+    ],
+    "platforms": [
+     "IOS"
+    ],
+    "probability": 100,
+    "appliesTo": [
+     {
+      "build": "release 1.97.56 (155.1.97.56)",
+      "applies": false
+     },
+     {
+      "build": "beta 1.98.52 (155.1.98.52)",
+      "applies": false
+     },
+     {
+      "build": "nightly 1.99.26 (155.1.99.26)",
+      "applies": false
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+   }
+  ],
+  "studiesCommit": "5a54118717fec842b9441634125bba7d32dc8163"
+ }
+}
