@@ -117,9 +117,13 @@ test('advisory ranges are compared with Brave pins; server advisories are not ma
   const deps = { snapshots: { master: { ref: 'master', commitSha: 'x', channels: ['master'], lock: { orchard: { version: '0.15.0', source: 'crates.io' as const }, halo2_gadgets: { version: '0.5.0', source: 'crates.io' as const } }, requirements: {}, forkPin: null, endpoints: [], retrievedAt: 'x', links: { lockfile: '', deps: '', cargo: '' } } } };
   const v = advisoryVerdicts({ id: 'GHSA-ww9q-8r59-xv46', aliases: ['CVE-2026-54496'], summary: 's', severity: 'critical', packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, deps);
   assert.equal(v.affected, false);
-  const lw = advisoryVerdicts({ id: 'GHSA-932p-ww36-57vg', aliases: [], summary: 's', severity: 'medium', packages: ['go:github.com/zcash/lightwalletd'], vulnerableRanges: ['github.com/zcash/lightwalletd <= 0.5.4'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, deps);
-  assert.equal(lw.affected, null);
-  assert.match(lw.summary, /cannot be determined/);
+  const depsRpc = { snapshots: { master: { ...deps.snapshots.master, rpcMethods: ['GetAddressUtxos', 'GetBlockRange', 'GetTreeState', 'SendTransaction'] } } };
+  const lw = advisoryVerdicts({ id: 'GHSA-932p-ww36-57vg', aliases: [], summary: 'Public `GetAddressUtxos` requests can overfetch backend UTXOs', severity: 'medium', packages: ['go:github.com/zcash/lightwalletd'], vulnerableRanges: ['github.com/zcash/lightwalletd <= 0.5.4'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, depsRpc);
+  assert.equal(lw.affected, null, 'server-side exposure is never asserted');
+  assert.match(lw.summary, /not public/);
+  assert.match(lw.summary, /Brave Wallet’s Zcash client calls GetAddressUtxos/);
+  const mp = advisoryVerdicts({ id: 'GHSA-9p9r-mggr-8q9g', aliases: [], summary: 'lightwalletd GetMempoolTx holds shared mempool mutex', severity: 'medium', packages: ['go:github.com/zcash/lightwalletd'], vulnerableRanges: ['github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, depsRpc);
+  assert.match(mp.summary, /GetMempoolTx, which Brave Wallet’s Zcash client does not call/);
 });
 
 const emptySnap = (at: string): Snapshot => ({ at, builds: {}, flags: {}, masterDeps: {}, forkPin: null, capabilities: {}, docs: {}, goneEvidence: [] });

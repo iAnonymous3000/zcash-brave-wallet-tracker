@@ -23,7 +23,7 @@ export const HISTORY_DAYS = 365;
  * source checks, build presence rules). Diff-only events are suppressed for the first run after a
  * bump, because differences would come from the tracker, not from the sources.
  */
-export const DERIVE_RULES_VERSION = 9;
+export const DERIVE_RULES_VERSION = 10;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -336,7 +336,18 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null): { summary:
   const pkgs = a.packages.join(', ');
   if (a.packages.some((p) => /lightwalletd|zaino/i.test(p))) {
     const server = a.packages.some((p) => /zaino/i.test(p)) ? 'Zaino' : 'lightwalletd';
-    return { summary: `Affects ${server} servers (${a.vulnerableRanges.join('; ')}). Brave Wallet does not ship ${server}; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.`, details, affected: null };
+    const called = deps?.snapshots['master']?.rpcMethods ?? [];
+    const named = [...new Set([...`${a.summary}`.matchAll(/\b((?:Get|Send)[A-Z]\w+|get_\w+|send_\w+)\b/g)].map((m) => m[1]))];
+    const camel = (s: string) => s.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase()).replace(/^./, (c) => c.toUpperCase());
+    const hits = named.filter((m) => called.includes(m) || called.includes(camel(m)));
+    let methodNote = '';
+    if (named.length && called.length) {
+      methodNote = hits.length
+        ? ` The advisory concerns ${named.join(', ')}; Brave Wallet’s Zcash client calls ${hits.join(', ')}.`
+        : ` The advisory concerns ${named.join(', ')}, which Brave Wallet’s Zcash client does not call (it calls ${called.length} CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.`;
+      details.push(`Brave master calls: ${called.join(', ')}`);
+    }
+    return { summary: `Affects ${server} servers (${a.vulnerableRanges.join('; ')}). Brave Wallet does not ship ${server}; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.${methodNote}`, details, affected: null };
   }
   if (!anyChecked) return { summary: `Affects ${pkgs}. None of these packages appear in Brave's resolved Zcash dependencies at the checked builds.`, details, affected: false };
   return {

@@ -193,13 +193,13 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         let summary: string;
         const v = cv?.version ?? null;
         const where = `${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}${v ? ` ${v}` : ''}`;
-        if (blocked) {
-          status = 'absent';
-          summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
-        } else if (serviceOff) {
+        if (serviceOff) {
           // A server-side switch applies to every client, whatever build it runs.
           status = 'service-off';
           summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : ''}currently turned off server-side for Zcash, for every client.`;
+        } else if (blocked) {
+          status = 'absent';
+          summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
         } else if (notPlanned.length && !firstNote) {
           status = 'not-planned';
           summary = `Requested in ${notPlanned.map((i) => shortId(i.id)).join(', ')}; closed as not planned.`;

@@ -131,7 +131,17 @@ export function computeGroupStatus(
       builds.push({ ...base, included: null, via: null, basis: 'no merged PR is linked, so presence in this build is unknown' });
       continue;
     }
-    const verdicts = mergedAll.map((pr) => ({ pr: pr.id, v: inclusionAt(ctx.inclusion[pr.id], cv.version) }));
+    const verdicts = mergedAll.map((pr) => {
+      const carrier = carrierOf(pr, items);
+      if (carrier) {
+        const v = inclusionAt(ctx.inclusion[carrier.id], cv.version);
+        return { pr: carrier.id, v: { ...v, basis: `via ${carrier.id.replace('brave/', '')}, which merged ${pr.baseRef} into ${carrier.baseRef}: ${v.basis}` } };
+      }
+      if (pr.baseRef && pr.baseRef !== 'master' && !/^\d+\.\d+\.x$/.test(pr.baseRef)) {
+        return { pr: pr.id, v: { included: null, exact: false, basis: `merged into feature branch ${pr.baseRef}; the PR that carried it to master is not tracked` } };
+      }
+      return { pr: pr.id, v: inclusionAt(ctx.inclusion[pr.id], cv.version) };
+    });
     const yes = verdicts.find((x) => x.v.included === true);
     const unknown = verdicts.find((x) => x.v.included === null);
     if (yes) builds.push({ ...base, included: true, via: yes.pr, basis: yes.v.basis });
@@ -204,6 +214,12 @@ export function computeGroupStatus(
     stage,
     stageLabel: STAGE_LABEL[stage],
   };
+}
+
+/** For PRs merged into a feature branch: the merged PR whose head is that branch (it carried the change on). */
+export function carrierOf(pr: WorkItem, items: Record<string, WorkItem>): WorkItem | null {
+  if (!pr.baseRef || pr.baseRef === 'master' || /^\d+\.\d+\.x$/.test(pr.baseRef)) return null;
+  return Object.values(items).find((x) => x.kind === 'pr' && x.repo === pr.repo && x.state === 'merged' && x.headRef === pr.baseRef && x.id !== pr.id) ?? null;
 }
 
 export { isUpliftPr };

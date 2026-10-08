@@ -193,7 +193,7 @@ export const CAPABILITIES: CapabilityDef[] = [
     flags: [ZEC],
     sourceChecks: [
   { id: 'near-intents-zec', describe: 'NEAR Intents network list includes Zcash', role: 'supports' },
-      { id: 'bridge-hidden-ios', describe: 'Bridge hidden on iOS', role: 'blocks', platforms: ['ios'] },
+      { id: 'bridge-hidden-ios', describe: 'Bridge buttons hidden on iOS (the shared swap screen can still pick a cross-chain route)', role: 'supports', platforms: ['ios'] },
     ],
     implementedBy: [bb(52555)],
     serviceChecks: ['gate3-zcash-swaps'],

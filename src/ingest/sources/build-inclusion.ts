@@ -99,6 +99,8 @@ export const buildInclusion: Collector<InclusionData> = {
       .sort((a, b) => (b.mergedAt ?? '').localeCompare(a.mergedAt ?? ''));
 
     for (const pr of prs) {
+      // PRs merged into feature branches reach master through another PR; their own merge commit is not on master.
+      if (pr.baseRef && pr.baseRef !== 'master' && !isReleaseBranch(pr.baseRef)) continue;
       const sha = pr.mergeCommitSha!;
       const domain = isReleaseBranch(pr.baseRef) ? pr.baseRef!.replace(/\.x$/, '') : 'master';
       let st = byPr[pr.id];

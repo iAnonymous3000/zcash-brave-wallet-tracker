@@ -18,6 +18,8 @@ export interface BraveDepsSnapshot {
   requirements: Record<string, string>;
   forkPin: { repo: string; sha: string; comment: string | null } | null;
   endpoints: string[];
+  /** lightwalletd CompactTxStreamer methods Brave's Zcash client calls (from zcash_rpc.cc). */
+  rpcMethods?: string[];
   retrievedAt: string;
   links: { lockfile: string; deps: string; cargo: string };
 }
@@ -70,11 +72,11 @@ export const braveDeps: Collector<DepsData> = {
     const refs: [string, string, string[]][] = [...[...wanted].map(([t, w]) => [t, t, w] as [string, string, string[]])];
     if (masterSha) refs.push(['master', masterSha, ['master']]);
     for (const [key, ref, who] of refs) {
-      if (key !== 'master' && snapshots[key]) {
+      if (key !== 'master' && snapshots[key] && snapshots[key].rpcMethods) {
         snapshots[key].channels = who;
         continue; // tags are immutable
       }
-      const [lock, depsFile, cargo, network] = await Promise.all([rawFile(ctx, ref, BRAVE_LOCKFILE), rawFile(ctx, ref, 'DEPS'), rawFile(ctx, ref, BRAVE_ZCASH_CARGO), rawFile(ctx, ref, BRAVE_NETWORK_FILE)]);
+      const [lock, depsFile, cargo, network, rpc] = await Promise.all([rawFile(ctx, ref, BRAVE_LOCKFILE), rawFile(ctx, ref, 'DEPS'), rawFile(ctx, ref, BRAVE_ZCASH_CARGO), rawFile(ctx, ref, BRAVE_NETWORK_FILE), rawFile(ctx, ref, 'components/brave_wallet/browser/zcash/zcash_rpc.cc')]);
       if (!lock) throw new Error(`${BRAVE_LOCKFILE} missing at ${key} (layout changed?)`);
       const entries = parseLockEntries(lock);
       const picked: BraveDepsSnapshot['lock'] = {};
@@ -94,6 +96,7 @@ export const braveDeps: Collector<DepsData> = {
         requirements: cargo ? parseCargoDependencies(cargo) : {},
         forkPin: depsFile ? parseForkPin(depsFile) : null,
         endpoints: network ? parseZcashEndpoints(network) : [],
+        rpcMethods: rpc ? [...new Set([...rpc.matchAll(/CompactTxStreamer\/(\w+)/g)].map((m) => m[1]))].sort() : undefined,
         retrievedAt: ctx.now,
         links: {
           lockfile: `https://github.com/brave/brave-core/blob/${pinRef}/${BRAVE_LOCKFILE}`,

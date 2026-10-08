@@ -178,3 +178,20 @@ test('branch-name links and "Duplicate of" comments (real Brave cases)', async (
   assert.ok(lone.builds.every((b) => b.included === null && /unknown/.test(b.basis)), 'no linked PR -> presence unknown, not "not included"');
   assert.deepEqual(groups.find((g) => g.lead === canon.id)!.duplicates, [dupe.id]);
 });
+
+test('PRs merged into a feature branch inherit build presence from the PR that carried the branch to master', async () => {
+  const { carrierOf } = await import('../src/derive/status.ts');
+  const issue = wi('brave/brave-browser#1');
+  const child = wi('brave/brave-core#37122', { state: 'merged', baseRef: 'update_orchard_14', headRef: 'update_orchard_14_1', mergedAt: '2026-06-10T18:59:30Z', mergeCommitSha: '22e7f4a1', resolvesRefs: [issue.id] });
+  const carrier = wi('brave/brave-core#37116', { state: 'merged', baseRef: 'master', headRef: 'update_orchard_14', mergedAt: '2026-06-11T04:31:53Z', mergeCommitSha: '282c2f53' });
+  const items = byId(issue, child, carrier);
+  assert.equal(carrierOf(child, items)?.id, carrier.id);
+  const r = buildRelations(items);
+  const g = buildGroups(items, r).find((x) => x.lead === issue.id)!;
+  const inclusion = { [carrier.id]: { sha: '282c2f53', domain: 'master', minIncluded: { version: '1.93.10', tag: 'v1.93.10', checkedAt: 'x', basis: 'compare behind' }, maxExcluded: null } };
+  const st = computeGroupStatus(g, items, r, { inclusion, current, changelog: [] });
+  const rel = st.builds.find((b) => b.platform === 'desktop' && b.channel === 'release')!;
+  assert.equal(rel.included, true);
+  assert.match(rel.basis, /via brave-core#37116, which merged update_orchard_14 into master/);
+  assert.equal(st.stage, 'in-release-build');
+});
