@@ -5,8 +5,12 @@
 // A partial collection (see CollectResult in framework.ts) is stored and recorded
 // as partial; records it dropped without saying so are carried forward (collectors that
 // opt in with carryOnPartial) or named in a limitation, never lost silently. A partial
-// collection whose kept values are older than the staleness window is stored but recorded
-// as failed, so a lasting outage is visible as a failing, stale source.
+// collection whose kept values are older than the staleness window is stored and recorded as
+// partial with `staleSince` set and a first limitation naming what is stale since when; it is
+// not a success: `lastSuccessAt` does not advance, the stale note is the source's `lastError`
+// and `consecutiveFailures` counts it, so a lasting outage stays visible as a stale source.
+// 'failed' always means the collector threw and nothing was stored (the previous envelope is
+// untouched).
 // After collection, derived views and change history are rebuilt from the
 // persisted envelopes (see src/derive). If derivation fails, the previously
 // derived files are restored byte for byte (so they keep their own generatedAt),
@@ -127,13 +131,19 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
         }
         if (!limitations.length) limitations.push('partial collection: some reads failed or were deferred; last good data was kept for them');
       }
-      // Kept values older than the staleness window: the data is still the best available and is
-      // stored, but the source has failed to refresh it, so it is not a success.
-      const staleSince = partial ? (result.staleSince ?? null) : null;
-      const overdue = staleSince !== null && Date.parse(now) - Date.parse(staleSince) > FRESHNESS.staleAfterMinutes * 60_000;
-      const outcome: SourceOutcome = overdue ? 'failed' : partial ? 'partial' : 'ok';
+      // Kept values older than the staleness window: usable data was read and is stored, so the
+      // outcome is partial (never 'failed', which means nothing usable was read), but the source is
+      // stale: staleSince is recorded for the site and the first limitation says what and since when
+      // (and, below, the run is not counted as a success).
+      const keptSince = partial ? validTime(result.staleSince) : null;
+      const stale = keptSince !== null && Date.parse(now) - Date.parse(keptSince) > FRESHNESS.staleAfterMinutes * 60_000;
+      const outcome: SourceOutcome = partial ? 'partial' : 'ok';
       if (outcome === 'ok') st.lastCompleteAt = now;
       else st.lastPartialAt = now;
+      if (stale) {
+        st.staleSince = keptSince!;
+        limitations.unshift(staleNote(result.staleWhat ?? null, keptSince!, now, st.lastCompleteAt ?? null));
+      } else delete st.staleSince;
       const env: SourceEnvelope<unknown> = { sourceId: c.id, schema: c.schema, retrievedAt: now, data, ...(partial ? { partial: true } : {}), completeAt: st.lastCompleteAt ?? null };
       writeJson(dataPath('sources', `${c.id}.json`), env);
       fresh.set(c.id, env);
@@ -141,16 +151,19 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       st.itemCount = result.itemCount ?? null;
       st.limitations = limitations;
       outcomes[c.id] = outcome;
-      if (overdue) {
-        st.lastError = `some data could not be refreshed since ${staleSince}, longer than the ${FRESHNESS.staleAfterMinutes / 60}-hour staleness window; the last good values are kept (see limitations)`;
+      if (stale) {
+        // Stored, but the source still has not refreshed what it should: this run does not count
+        // as a success. lastSuccessAt stays where it was (the site ages the source from it), the
+        // stale note is the source's error (shown outside the collapsed limitations), and the run
+        // counts towards consecutive failures to refresh, as a failed run does.
+        st.lastError = limitations[0];
         st.consecutiveFailures += 1;
-        log(`✗ ${c.id}: ${st.lastError}`);
       } else {
         st.lastSuccessAt = now;
         st.lastError = null;
         st.consecutiveFailures = 0;
-        log(`✓ ${c.id}: ${outcome}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
       }
+      log(`${stale ? '!' : '✓'} ${c.id}: ${outcome}${stale ? ` (stale since ${keptSince}; keeping last success ${st.lastSuccessAt ?? 'never'})` : ''}${result.itemCount !== undefined ? ` (${result.itemCount} items)` : ''} in ${((Date.now() - t0) / 1000).toFixed(1)}s, ${http.meter.requests - before} requests`);
     } catch (err) {
       st.lastOutcome = 'failed';
       st.lastError = errorMessage(err);
@@ -225,6 +238,18 @@ export function refreshExitCode(r: RunRecord): number {
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const sample = (keys: string[]) => `${keys.slice(0, 5).join(', ')}${keys.length > 5 ? ', …' : ''}`;
+const validTime = (t: string | null | undefined): string | null => (typeof t === 'string' && Number.isFinite(Date.parse(t)) ? t : null);
+
+/** Hours between two ISO times, rounded for display ("8 h", "2.5 h"). */
+function hoursBetween(from: string, to: string): string {
+  const h = (Date.parse(to) - Date.parse(from)) / 3_600_000;
+  return `${h >= 10 ? Math.round(h) : Math.round(h * 10) / 10} h`;
+}
+
+/** First limitation of a stale source: what was kept, since when, and when the source last completed. */
+export function staleNote(what: string | null, since: string, now: string, lastCompleteAt: string | null): string {
+  return `stale: ${what ?? 'some values this source should refresh every run'} could not be refreshed since ${since} (${hoursBetween(since, now)}, longer than the ${FRESHNESS.staleAfterMinutes / 60}-hour staleness window); the last good values are kept and shown. Last complete collection: ${lastCompleteAt ?? 'never'}.`;
+}
 
 /**
  * Check a partial result against the previous data (contract in framework.ts). Every top-level

@@ -44,13 +44,20 @@ jobs:
       - name: Typecheck and test
         run: npm run check
 
+      # The start time and the process exit code are step outputs, so the failure report below can
+      # tell a recorded failure from a crash before or after the run record was written.
       - name: Refresh sources
         id: refresh
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TRACKER_TRIGGER: ${{ github.event_name }}
-        run: node src/ingest/run.ts
+        run: |
+          echo "started=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          code=0
+          node src/ingest/run.ts || code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit "$code"
 
       - name: Commit refreshed data
         run: |
@@ -104,24 +111,50 @@ jobs:
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
       # The refresh step exits non-zero when every source failed or when derivation failed
-      # (src/ingest/run.ts refreshExitCode). Its run record was committed above; when the steps
-      # after it succeeded, the site was redeployed from the last successfully derived data, which
-      # keeps its own generation time and shows a "Latest refresh failed" banner. This step runs
-      # even when a later step failed too (e.g. Build site on a corrupt history file), so the job
-      # always ends with the recorded reason.
+      # (src/ingest/run.ts refreshExitCode), and also when the process crashed. Its run record was
+      # committed above; when the steps after it succeeded, the site was redeployed from the last
+      # successfully derived data, which keeps its own generation time and shows a "Latest refresh
+      # failed" banner. This step runs even when a later step failed too (e.g. Build site on a
+      # corrupt history file), so the job always ends with the reason. The reason comes from the
+      # actual exit code and start time of the refresh step, not only from status.json: a crash
+      # after the run record was written (record says success) or before it (record is from an
+      # earlier refresh) is reported as such.
       - name: Report refresh failure
         if: always() && steps.refresh.outcome == 'failure'
+        env:
+          REFRESH_EXIT_CODE: ${{ steps.refresh.outputs.exit_code }}
+          REFRESH_STARTED: ${{ steps.refresh.outputs.started }}
         run: |
           node -e '
             const fs = require("node:fs");
             let run = null;
             try { run = JSON.parse(fs.readFileSync("data/status.json", "utf8")).lastRun ?? null; } catch {}
-            const reason = !run ? "no run record was written"
-              : `last recorded run ${run.id} started ${run.startedAt}: ` + (run.derive && run.derive.outcome === "failed" ? `derivation failed: ${run.derive.error}`
-              : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
-            const site = !run ? ""
-              : run.derive && run.derive.outcome === "failed" ? " The published site keeps the previously derived data and its original generation time."
-              : " The site was derived from the last stored source data and carries a failed-refresh banner.";
-            console.log(`::error::Refresh failed (${reason.replace(/[\r\n]+/g, " ")}).${site}`);
+            const code = /^[0-9]+$/.test(process.env.REFRESH_EXIT_CODE || "") ? Number(process.env.REFRESH_EXIT_CODE) : null;
+            const started = Date.parse(process.env.REFRESH_STARTED || "");
+            const exited = code === null ? "failed" : `exited with code ${code}`;
+            const exitNote = code === null ? "" : ` The refresh process exited with code ${code}.`;
+            // A record that started before this refresh step belongs to an earlier refresh.
+            const earlier = Boolean(run) && Number.isFinite(started) && !(Date.parse(run.startedAt) >= started);
+            const derived = run && run.derive && run.derive.outcome === "failed";
+            const recorded = run && (derived || run.outcome === "failed");
+            let reason, site;
+            if (!run) {
+              reason = "no run record was written";
+              site = "";
+            } else if (earlier) {
+              reason = `the refresh process ${exited} before writing a run record; the latest record (run ${run.id} started ${run.startedAt}, outcome ${run.outcome}) is from an earlier refresh`;
+              site = " The site was built from whatever data this refresh stored before it stopped; no run record describes it.";
+            } else if (!recorded) {
+              reason = Number.isFinite(started)
+                ? `the refresh process ${exited} after recording run ${run.id} started ${run.startedAt} with outcome ${run.outcome}; it crashed or was interrupted after writing that record, so the record does not show how the run ended`
+                : `the refresh process ${exited}, but the latest run record (run ${run.id} started ${run.startedAt}) says outcome ${run.outcome}; the process crashed or was interrupted after writing that record or before writing its own`;
+              site = " The site was built from the data and derived files written before the crash; see the Refresh sources log for the error.";
+            } else {
+              reason = `last recorded run ${run.id} started ${run.startedAt}: ` + (derived ? `derivation failed: ${run.derive.error}`
+                : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
+              site = derived ? " The published site keeps the previously derived data and its original generation time."
+                : " The site was derived from the last stored source data and carries a failed-refresh banner.";
+            }
+            console.log(`::error::Refresh failed (${reason.replace(/[\r\n]+/g, " ")}).${site}${exitNote}`);
           '
           exit 1

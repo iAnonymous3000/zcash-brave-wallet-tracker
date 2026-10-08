@@ -8,17 +8,23 @@
 //
 // When the Zcash crate reaches several versions of a crate (say orchard 0.15 directly and 0.13
 // through another dependency), Cargo compiles all of them in: `lock` can hold only one, so it
-// holds the lowest, the crate is listed in `resolution.multiple`, and every run says so. When it
-// cannot be established which versions are used (no graph), the crate is listed in
-// `resolution.ambiguous` and the collection is partial. Range checks (advisories) must use
-// linkedVersions()/rangeExposure(), which consider every linked version and keep unknown unknown.
+// holds the highest (what "Brave resolves X" and adoption comparisons mean), the crate is listed
+// in `resolution.multiple`, every version stays in `resolution.candidates`, and every run says so.
+// When it cannot be established which versions are used (no graph, or a dependency entry that
+// matches several packages), the crate is listed in `resolution.ambiguous` and the collection is
+// partial. Range checks (advisories) must use linkedVersions()/rangeExposure(), which consider
+// every linked version and keep unknown unknown; `lock` alone never answers them.
+//
+// `lockPackages` lists the name of every package in the full Cargo.lock (not only the monitored
+// crates), so a consumer can tell that a package an advisory names is not in the lockfile at all.
+// It is omitted when the lockfile could not be parsed completely; its absence means unknown.
 //
 // Failure handling (see CollectResult in ../framework.ts): a ref whose files cannot be read keeps
 // its previous snapshot; a component file that is missing at a ref, or read but yielding nothing,
 // keeps its last good value (however many runs it stays missing) and is retried on later runs
 // (tag snapshots are only cached once complete); an unresolved master commit keeps the previous
 // master snapshot. All of these mark the collection partial, and kept master values report their
-// age (staleSince) so a lasting master outage shows as a failing, stale source.
+// age (staleSince, staleWhat) so a lasting master outage shows as a stale source.
 
 import { BRAVE_DEPS_KEY, BRAVE_LOCKFILE, BRAVE_NETWORK_FILE, BRAVE_ZCASH_CARGO, CRATES } from '../../../config/upstream.ts';
 import type { Channel } from '../../lib/types.ts';
@@ -35,8 +41,11 @@ export type LockSource = 'crates.io' | 'path' | 'other';
  * Version of the resolution logic; tag snapshots resolved by an older version are re-read.
  * 3: several reachable versions are all reported as linked (`multiple`, lowest in `lock`)
  * instead of the direct one winning; unparseable component files are tracked.
+ * 4: `lock` holds the highest linked version (highest candidate when unresolved); a dependency
+ * entry matching several packages leaves their reachability unknown (`ambiguous`) instead of
+ * marking all of them linked; `lockPackages` records every package name in Cargo.lock.
  */
-export const DEPS_RESOLVER = 3;
+export const DEPS_RESOLVER = 4;
 /** Package name of Brave's Zcash crate, used when BRAVE_ZCASH_CARGO cannot be read. */
 export const DEFAULT_ZCASH_ROOT = 'zcash';
 export const BRAVE_ZCASH_RPC_FILE = 'components/brave_wallet/browser/zcash/zcash_rpc.cc';
@@ -64,15 +73,15 @@ export interface DepResolution {
   candidates: Record<string, LockCandidate[]>;
   /**
    * Monitored crates of which Brave's Zcash crate reaches more than one version. Each of them is
-   * compiled in; `lock` holds the lowest, `candidates` (reachable: true) lists them all. Absent in
-   * snapshots resolved before DEPS_RESOLVER 3.
+   * compiled in; `lock` holds the highest (the lowest before DEPS_RESOLVER 4), `candidates`
+   * (reachable: true) lists them all. Absent in snapshots resolved before DEPS_RESOLVER 3.
    */
   multiple?: string[];
   /**
    * Monitored crates for which it could not be established which of several vendored versions
-   * Brave's Zcash crate uses (no usable graph, or unmatched dependency entries leave some
-   * candidates' reachability unknown). `lock` holds the lowest version known to be reached, or
-   * else the lowest candidate not ruled out; other candidates may be linked too.
+   * Brave's Zcash crate uses (no usable graph, or unmatched or multiply-matching dependency
+   * entries leave some candidates' reachability unknown). `lock` holds the highest version known
+   * to be reached, or else the highest candidate not ruled out; other candidates may be linked too.
    */
   ambiguous: string[];
   /** Monitored crates present in Cargo.lock that the Zcash crate does not reach (absent from `lock`). */
@@ -90,10 +99,18 @@ export interface BraveDepsSnapshot {
   channels: string[];
   /**
    * crate -> version reached from Brave's Zcash crate and whether it is path-patched (from Brave's
-   * librustzcash fork). When several versions are reached (resolution.multiple) or the version
-   * could not be established (resolution.ambiguous) this is the lowest one; see linkedVersions().
+   * librustzcash fork). When several versions are reached (resolution.multiple) this is the
+   * highest; when the version could not be established (resolution.ambiguous) it is the highest
+   * confirmed one, else the highest candidate. Exposure checks must use linkedVersions().
+   * Snapshots resolved before DEPS_RESOLVER 4 held the lowest.
    */
   lock: Record<string, { version: string; source: LockSource }>;
+  /**
+   * Sorted, de-duplicated names of every package in the full Cargo.lock at this ref (all of
+   * Chromium's and Brave's Rust packages, not only the monitored crates). Absent when the lockfile
+   * could not be parsed completely, and in snapshots read before DEPS_RESOLVER 4: unknown.
+   */
+  lockPackages?: string[];
   requirements: Record<string, string>;
   forkPin: { repo: string; sha: string; comment: string | null } | null;
   endpoints: string[];
@@ -177,6 +194,18 @@ export function parseLockPackages(lock: string): LockPackage[] {
   return out;
 }
 
+/**
+ * Sorted, de-duplicated names of every package in a Cargo.lock, or null when not every
+ * [[package]] table could be parsed (a name/version missing or in an unexpected form): a package
+ * the parser skipped must never look absent.
+ */
+export function lockPackageNames(lock: string): string[] | null {
+  const tables = lock.split(/\r?\n/).filter((l) => l.trim() === '[[package]]').length;
+  const packages = parseLockPackages(lock);
+  if (!tables || packages.length !== tables) return null;
+  return [...new Set(packages.map((p) => p.name))].sort();
+}
+
 export function lockSource(src: string | null): LockSource {
   return !src ? 'path' : src.includes('crates.io') ? 'crates.io' : 'other';
 }
@@ -221,15 +250,16 @@ const pkgKey = (p: LockPackage) => `${p.name} ${p.version} ${p.source ?? ''}`;
 /**
  * Resolve each monitored crate to the version Brave's Zcash crate reaches in Cargo.lock.
  * Versions are matched by exact strings from the lockfile (no version ordering is involved
- * when the graph decides).
+ * when the graph decides which versions are linked).
  * - One version reachable: that version.
- * - Several reachable (directly or transitively): all are compiled in. `lock` gets the lowest and
+ * - Several reachable (directly or transitively): all are compiled in. `lock` gets the highest and
  *   the crate is listed in `multiple`; whether one of them is a direct dependency is kept in
  *   `candidates`, but a direct dependency does not hide the others.
  * - None reachable in a complete graph: not reported (listed in `unreachable`).
- * - Reachability not established for some candidates (no graph, unmatched entries): `lock` gets
- *   the lowest version known to be reached, or else the lowest candidate not ruled out, and if
- *   more than one candidate remains possible the crate is `ambiguous`.
+ * - Reachability not established for some candidates (no graph, unmatched entries, or an entry
+ *   that matches several packages, which names none of them for certain): `lock` gets the highest
+ *   version known to be reached, or else the highest candidate not ruled out, and if more than one
+ *   candidate remains possible the crate is `ambiguous`.
  */
 export function resolveZcashDependencies(
   lock: string,
@@ -246,6 +276,8 @@ export function resolveZcashDependencies(
 
   const reachable = new Set<string>();
   const direct = new Set<string>();
+  /** Packages a dependency entry of the root matched together with others: possibly direct. */
+  const maybeDirect = new Set<string>();
   const unresolvedEdges: string[] = [];
   if (rootPkg) {
     const queue: LockPackage[] = [rootPkg];
@@ -254,29 +286,38 @@ export function resolveZcashDependencies(
       const p = queue.shift()!;
       for (const spec of p.dependencies) {
         const hits = matchDependency(spec, byName);
-        if (hits.length !== 1) unresolvedEdges.push(`${p.name} ${p.version} -> ${spec}${hits.length ? ` (${hits.length} matches)` : ''}`);
-        for (const h of hits) {
-          if (p === rootPkg) direct.add(pkgKey(h));
-          if (reachable.has(pkgKey(h))) continue;
-          reachable.add(pkgKey(h));
-          queue.push(h);
+        if (hits.length !== 1) {
+          unresolvedEdges.push(`${p.name} ${p.version} -> ${spec}${hits.length ? ` (${hits.length} matches)` : ''}`);
+          // An entry that matches several packages (a bare name while several versions are
+          // vendored) does not say which one is used: none of them is known to be reached through
+          // it. The graph is then incomplete, so their reachability (and that of anything reached
+          // only through them) stays unknown rather than becoming certain.
+          if (p === rootPkg) for (const h of hits) maybeDirect.add(pkgKey(h));
+          continue;
         }
+        const h = hits[0];
+        if (p === rootPkg) direct.add(pkgKey(h));
+        if (reachable.has(pkgKey(h))) continue;
+        reachable.add(pkgKey(h));
+        queue.push(h);
       }
     }
   }
   const graphComplete = Boolean(rootPkg) && unresolvedEdges.length === 0;
+  const isDirect = (p: LockPackage): boolean | null => (!rootPkg ? null : direct.has(pkgKey(p)) ? true : maybeDirect.has(pkgKey(p)) ? null : false);
 
   const picked: BraveDepsSnapshot['lock'] = {};
   const candidates: DepResolution['candidates'] = {};
   const multiple: string[] = [];
   const ambiguous: string[] = [];
   const unreachable: string[] = [];
-  const lowest = (xs: LockPackage[]) => [...xs].sort((a, b) => compareSemver(a.version, b.version) || compareVersions(a.version, b.version))[0];
+  // Highest by SemVer precedence; equal versions (different sources) keep lockfile order.
+  const highest = (xs: LockPackage[]) => [...xs].sort((a, b) => compareSemver(b.version, a.version) || compareVersions(b.version, a.version))[0];
   for (const crate of crates) {
     const all = byName.get(crate) ?? [];
     if (!all.length) continue;
     const reach = (p: LockPackage): boolean | null => (rootPkg ? (reachable.has(pkgKey(p)) ? true : graphComplete ? false : null) : null);
-    candidates[crate] = all.map((p) => ({ version: p.version, source: lockSource(p.source), reachable: reach(p), direct: rootPkg ? direct.has(pkgKey(p)) : null }));
+    candidates[crate] = all.map((p) => ({ version: p.version, source: lockSource(p.source), reachable: reach(p), direct: isDirect(p) }));
     const hit = all.filter((p) => reach(p) === true);
     const unknown = all.filter((p) => reach(p) === null);
     if (hit.length > 1) multiple.push(crate);
@@ -288,7 +329,7 @@ export function resolveZcashDependencies(
       continue;
     }
     // A version known to be reached is preferred over one that merely is not ruled out.
-    const choice = lowest(hit.length ? hit : unknown);
+    const choice = highest(hit.length ? hit : unknown);
     picked[crate] = { version: choice.version, source: lockSource(choice.source) };
   }
   return {
@@ -310,8 +351,14 @@ export function resolveZcashDependencies(
  * dependency graph does not rule out. `certain` is true only when the graph established exactly
  * which versions are linked; otherwise some listed version may be unused, or (for a snapshot
  * without recorded candidates) other vendored versions may be linked as well.
+ * A package missing from the snapshot's full package list (`lockPackages`, when recorded) is not in
+ * Cargo.lock at all, so it is certainly not linked, monitored or not; without that list, a package
+ * this collector does not inspect stays unknown.
  */
-export function linkedVersions(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution'>, crate: string): { versions: { version: string; source: LockSource; reachable: boolean | null; direct: boolean | null }[]; certain: boolean } {
+export function linkedVersions(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution' | 'lockPackages'>, crate: string): { versions: { version: string; source: LockSource; reachable: boolean | null; direct: boolean | null }[]; certain: boolean } {
+  // crates.io treats "-" and "_" as the same name, so only a package matching neither spelling is absent.
+  const norm = (n: string) => n.toLowerCase().replace(/-/g, '_');
+  if (Array.isArray(s.lockPackages) && !s.lockPackages.some((p) => norm(p) === norm(crate))) return { versions: [], certain: true };
   const res = s.resolution;
   if (!res) {
     // Resolved before candidates were recorded (newest vendored version): which versions Brave links is not known.
@@ -335,7 +382,7 @@ export function linkedVersions(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution'>
  *   set is uncertain, or a comparison was impossible (`inRange` returned null).
  * The version lists are for explanations: in range, outside, and not comparable.
  */
-export function rangeExposure(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution'>, crate: string, inRange: (version: string) => boolean | null): { exposed: boolean | null; inRange: string[]; outside: string[]; unknown: string[] } {
+export function rangeExposure(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution' | 'lockPackages'>, crate: string, inRange: (version: string) => boolean | null): { exposed: boolean | null; inRange: string[]; outside: string[]; unknown: string[] } {
   const { versions, certain } = linkedVersions(s, crate);
   const out = { inRange: [] as string[], outside: [] as string[], unknown: [] as string[] };
   let surelyExposed = false;
@@ -368,12 +415,15 @@ export function isCompleteSnapshot(s: BraveDepsSnapshot | undefined): boolean {
       !s.missing?.length &&
       !s.unparsed?.length &&
       s.rpcMethods !== undefined &&
+      s.lockPackages !== undefined &&
       s.resolution?.method === 'graph' &&
       !s.resolution.unresolvedEdges.length,
   );
 }
 
 const COMPONENT_FILE: Record<DepsComponent, string> = { deps: 'DEPS', cargo: BRAVE_ZCASH_CARGO, network: BRAVE_NETWORK_FILE, rpc: BRAVE_ZCASH_RPC_FILE };
+/** What each component's kept value is, for staleness reports. */
+const COMPONENT_VALUE: Record<DepsComponent, string> = { deps: 'librustzcash fork pin (DEPS)', cargo: 'Zcash crate requirements (Cargo.toml)', network: 'Zcash endpoints (network_manager.cc)', rpc: 'lightwalletd RPC methods (zcash_rpc.cc)' };
 const COMPONENT_WHAT: Record<DepsComponent, string> = { deps: `no librustzcash fork pin ("${BRAVE_DEPS_KEY}")`, cargo: 'no dependency requirements', network: 'no Zcash endpoints', rpc: 'no CompactTxStreamer methods' };
 
 /**
@@ -423,8 +473,12 @@ export function buildDepsSnapshot(
   const { lock, resolution } = resolveZcashDependencies(files.lock, CRATES.map((c) => c.crate), root);
   if (!lock.orchard) throw new Error(`orchard not found in ${BRAVE_LOCKFILE} at ${key} (parser or layout changed?)`);
   if (resolution.method !== 'graph') problems.push(`${key}: crate "${root.name}" not found in ${BRAVE_LOCKFILE}; versions are taken from the lockfile without dependency-graph resolution`);
-  else if (resolution.unresolvedEdges.length) problems.push(`${key}: ${resolution.unresolvedEdges.length} Cargo.lock dependency entr${resolution.unresolvedEdges.length === 1 ? 'y' : 'ies'} could not be matched; crates not reached are reported from the lockfile`);
+  else if (resolution.unresolvedEdges.length) problems.push(`${key}: ${resolution.unresolvedEdges.length} Cargo.lock dependency entr${resolution.unresolvedEdges.length === 1 ? 'y' : 'ies'} could not be matched to exactly one package (${resolution.unresolvedEdges.slice(0, 3).join('; ')}${resolution.unresolvedEdges.length > 3 ? '; …' : ''}); which versions those entries link is unknown, and crates not reached otherwise are reported from the lockfile`);
   if (files.cargo !== null && !cargoPkg) problems.push(`${key}: no [package] name in ${BRAVE_ZCASH_CARGO}; assumed "${DEFAULT_ZCASH_ROOT}"`);
+  // Every package name in the lockfile, so a package that is not there at all can be told apart
+  // from one that was not inspected. Recorded only when every [[package]] table was parsed.
+  const lockPackages = lockPackageNames(files.lock);
+  if (!lockPackages) problems.push(`${key}: not every [[package]] in ${BRAVE_LOCKFILE} could be parsed, so the list of packages it contains is not recorded (whether a package is absent from it is unknown)`);
 
   const rpcMethods = carry<string[] | undefined>('rpc', (t) => [...new Set([...t.matchAll(/CompactTxStreamer\/(\w+)/g)].map((m) => m[1]))].sort(), (v) => !v?.length, prev?.rpcMethods, undefined);
   const pinRef = key === 'master' ? ref : key;
@@ -433,6 +487,7 @@ export function buildDepsSnapshot(
     commitSha: key === 'master' ? ref : null,
     channels: who,
     lock,
+    ...(lockPackages ? { lockPackages } : {}),
     requirements: carry('cargo', (t) => parseCargoDependencies(t), (v) => !Object.keys(v).length, prev?.requirements, {}),
     forkPin: carry('deps', (t) => parseForkPin(t), (v) => v === null, prev?.forkPin, null),
     endpoints: carry('network', (t) => parseZcashEndpoints(t), (v) => !v.length, prev?.endpoints, []),
@@ -528,11 +583,18 @@ export const braveDeps: Collector<DepsData> = {
       const s = snapshots[key];
       if (s) limitations.push(...resolutionNotes(key, s));
     }
-    // Master moves, so master values kept from an earlier read get older every run; their age lets
-    // the orchestrator report a lasting outage as a failing, stale source (CollectResult.staleSince).
+    // Master moves, so master values kept from an earlier read get older every run; their age (and
+    // what they are) lets the orchestrator report a lasting outage as a stale source
+    // (CollectResult.staleSince / staleWhat).
     const master = snapshots['master'];
     const keptTimes = master ? [...(masterFresh ? [] : [master.retrievedAt]), ...Object.values(master.carriedFrom ?? {}).map((c) => c.retrievedAt)] : [];
-    const staleSince = keptTimes.length ? keptTimes.sort()[0] : null;
+    const staleSince = keptTimes.length ? keptTimes.reduce((a, b) => (Date.parse(b) < Date.parse(a) ? b : a)) : null;
+    const carriedNames = Object.keys(master?.carriedFrom ?? {}) as DepsComponent[];
+    const staleWhat = !master || !keptTimes.length
+      ? null
+      : !masterFresh
+        ? `brave-core master dependency snapshot (${BRAVE_LOCKFILE}, DEPS, Zcash Cargo.toml, endpoints, RPC methods; commit ${master.commitSha?.slice(0, 10) ?? 'unknown'})`
+        : `brave-core master ${carriedNames.map((c) => COMPONENT_VALUE[c]).join(', ')}`;
 
     // Bound the cache: keep wanted tags + master + the 12 newest others.
     const keep = new Set([...wanted.keys(), 'master']);
@@ -543,14 +605,17 @@ export const braveDeps: Collector<DepsData> = {
       removed.push(`snapshots.${t}`);
     }
     for (const t of others.slice(0, 12)) snapshots[t] = { ...snapshots[t], channels: [] };
-    return { data: { snapshots }, itemCount: Object.keys(snapshots).length, ...(partial ? { partial } : {}), ...(partial && staleSince ? { staleSince } : {}), limitations, removed };
+    return { data: { snapshots }, itemCount: Object.keys(snapshots).length, ...(partial ? { partial } : {}), ...(partial && staleSince ? { staleSince, ...(staleWhat ? { staleWhat } : {}) } : {}), limitations, removed };
   },
 };
 
 /** Whether nothing about a freshly built snapshot is incomplete (all files read and parsed, graph resolved). */
 function isComplete(s: BraveDepsSnapshot): boolean {
-  return !s.missing?.length && !s.unparsed?.length && s.resolution?.method === 'graph' && !s.resolution.unresolvedEdges.length && !s.resolution.ambiguous.length;
+  return !s.missing?.length && !s.unparsed?.length && s.lockPackages !== undefined && s.resolution?.method === 'graph' && !s.resolution.unresolvedEdges.length && !s.resolution.ambiguous.length;
 }
+
+/** Which of several versions `lock` holds: the highest, or the lowest in snapshots resolved before DEPS_RESOLVER 4. */
+const heldBy = (s: BraveDepsSnapshot) => (s.resolver !== undefined && s.resolver < 4 ? 'lowest' : 'highest');
 
 /** Plain-language notes for crates whose `lock` entry is one of several linked or possible versions. */
 export function resolutionNotes(key: string, s: BraveDepsSnapshot): string[] {
@@ -559,13 +624,13 @@ export function resolutionNotes(key: string, s: BraveDepsSnapshot): string[] {
   if (!res) return out;
   for (const crate of res.multiple ?? []) {
     const linked = (res.candidates[crate] ?? []).filter((c) => c.reachable === true).map((c) => `${c.version}${c.direct ? ' (direct)' : ''}`);
-    out.push(`${key}: Brave's Zcash crate links ${linked.length} versions of ${crate} (${linked.join(', ')}); Cargo compiles each of them in, so version checks must consider all of them, and "lock" lists ${s.lock[crate]?.version ?? 'none'}, the lowest`);
+    out.push(`${key}: Brave's Zcash crate links ${linked.length} versions of ${crate} (${linked.join(', ')}); Cargo compiles each of them in, so version checks must consider all of them, and "lock" lists ${s.lock[crate]?.version ?? 'none'}, the ${heldBy(s)}`);
   }
   for (const crate of res.ambiguous) {
     const cands = (res.candidates[crate] ?? []).filter((c) => c.reachable !== false);
     const sure = cands.filter((c) => c.reachable === true).map((c) => c.version);
     const maybe = cands.filter((c) => c.reachable === null).map((c) => c.version);
-    out.push(`${key}: could not establish which ${crate} versions Brave's Zcash crate uses (${sure.length ? `${sure.join(', ')} confirmed; ` : ''}${maybe.join(', ')} possible); "lock" lists ${s.lock[crate]?.version ?? 'none'}, ${sure.length ? 'the lowest confirmed one, but the others may be linked too' : 'which is not a confirmed resolution'}`);
+    out.push(`${key}: could not establish which ${crate} versions Brave's Zcash crate uses (${sure.length ? `${sure.join(', ')} confirmed; ` : ''}${maybe.join(', ')} possible); "lock" lists ${s.lock[crate]?.version ?? 'none'}, ${sure.length ? `the ${heldBy(s)} confirmed one, but the others may be linked too` : 'which is not a confirmed resolution'}`);
   }
   return out;
 }
