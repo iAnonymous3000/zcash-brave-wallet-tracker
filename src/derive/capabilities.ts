@@ -9,6 +9,18 @@
 //   not-planned   — request closed as not planned
 // A cell without sufficient evidence is "not-verified". Nothing is inferred from
 // another platform, and release-asset presence is never used.
+//
+// Release notes count only up to the current Stable version of that platform. A marketing version
+// (MAJOR.MINOR, e.g. the iOS App Store "1.96") bounds the version line: notes from older lines count,
+// notes from the same line are shown but not decisive (the live build number is not published), and
+// notes from newer lines never count. Without a valid current Stable version, notes cannot establish
+// current availability.
+//
+// Required source checks are three-valued. present:false makes the cell "absent" (it overrides release
+// notes, because the code is gone at this build). A missing result or present:null is unknown: it blocks
+// claims that rest only on a generic flag (e.g. the broad Zcash flag cannot show that the Meld integration
+// requests ZEC), while row-specific evidence — this platform's release note, or the row's implementing
+// PRs being in the build — still decides, with the incomplete check disclosed as evidence.
 
 import type { CapabilityDef } from '../../config/capabilities.ts';
 import type { ChangelogEntry, Channel, ChannelVersion, DocPage, FlagSnapshot, Platform, WorkItem } from '../lib/types.ts';
@@ -106,15 +118,20 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         const cv = inp.current.find((c) => c.platform === platform && c.channel === channel) ?? null;
         const ev: Evidence[] = [];
 
-        // Release notes on THIS platform at or below the current Stable version.
-        const stable = inp.current.find((c) => c.platform === platform && c.channel === 'release');
-        const notes = inp.changelog
-          .filter((e) => e.platform === platform && matchesDef(def, e))
-          .filter((e) => !stable || !/^\d+\.\d+\.\d+$/.test(stable.version) || compareVersions(e.version, stable.version) <= 0 || platform === 'ios')
-          .sort((a, b) => compareVersions(a.version, b.version));
+        // Release notes on THIS platform at or below the current Stable version (see the header for the policy).
+        const stable = inp.current.find((c) => c.platform === platform && c.channel === 'release') ?? null;
+        const matching = inp.changelog.filter((e) => e.platform === platform && matchesDef(def, e)).sort((a, b) => compareVersions(a.version, b.version));
+        const bound = noteBound(stable?.version);
+        const notes = bound ? matching.filter((e) => bound(e.version) === 'within') : [];
+        const sameLine = bound ? matching.filter((e) => bound(e.version) === 'same-line') : [];
         const firstNote = notes[0] ?? null;
         if (firstNote) ev.push({ kind: 'release-note', text: `${PLATFORM_NAME[platform]} ${firstNote.version}: “${firstNote.text}”`, url: firstNote.permalink, version: firstNote.version });
         for (const n of notes.slice(1, 3)) ev.push({ kind: 'release-note', text: `${PLATFORM_NAME[platform]} ${n.version}: “${n.text}”`, url: n.permalink, version: n.version });
+        const pendingNote = !firstNote && sameLine.length ? sameLine[0] : null;
+        const newerNote = bound && !firstNote && !pendingNote ? (matching.find((e) => bound(e.version) === 'newer') ?? null) : null;
+        if (newerNote && stable) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${newerNote.version} release notes list it, which is newer than the current ${PLATFORM_NAME[platform]} Stable version ${stable.version}, so they are not evidence for it.`, url: newerNote.permalink, version: newerNote.version });
+        if (pendingNote && stable) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it (“${pendingNote.text}”), but ${stable.version} is a marketing version that does not identify the live build, so it is not known whether it includes ${pendingNote.version}.`, url: pendingNote.permalink, version: pendingNote.version });
+        if (!bound && matching.length) ev.push({ kind: 'note', text: `${PLATFORM_NAME[platform]} ${matching[0].version} release notes list it, but the current ${PLATFORM_NAME[platform]} Stable version is ${stable ? `not a recognised version (“${stable.version}”)` : 'unknown'}, so they cannot establish current availability.`, url: matching[0].permalink, version: matching[0].version });
 
         // Flags at this build's tag.
         const snap = cv?.tag ? inp.flagsByTag[cv.tag] : undefined;
@@ -140,9 +157,14 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         let optIn = false;
         let platformCodeMissing = false;
         let blocked = false;
+        const requiredUnknown: string[] = [];
         for (const sc of def.sourceChecks ?? []) {
           if (sc.platforms && !sc.platforms.includes(platform)) continue;
           const res = cv?.tag ? inp.sourceChecks[cv.tag]?.find((x) => x.id === sc.id) : undefined;
+          if (sc.role === 'required' && (!res || res.present === null)) {
+            requiredUnknown.push(sc.describe);
+            if (cv?.tag && !res) ev.push({ kind: 'source', text: `${sc.describe}: not checked at ${cv.tag}`, url: null, version: cv.version, contrary: false });
+          }
           if (!res) continue;
           ev.push({ kind: 'source', text: `${sc.describe}: ${res.present === null ? 'unknown' : res.present ? 'present' : 'absent'} at ${res.tag}`, url: res.url, version: cv?.version ?? null, contrary: (sc.role === 'required' && res.present === false) || (sc.role === 'blocks' && res.present === true) });
           if (sc.role === 'opt-in' && res.present) optIn = true;
@@ -212,18 +234,21 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         } else if (channel === 'release' && firstNote && flagState !== 'off' && flagState !== 'missing') {
           status = 'available';
           summary = `Since ${PLATFORM_NAME[platform]} ${firstNote.version} (release notes).${flagState === 'on' ? ' Flag on at current build.' : ''}`;
+          if (requiredUnknown.length) ev.push({ kind: 'note', text: `Required check not completed at ${cv?.tag ?? 'this build'} (${requiredUnknown.join('; ')}); the ${PLATFORM_NAME[platform]} release note is used as the evidence. An explicit negative check would mark it absent.`, url: null });
         } else if (flagState === 'off') {
           status = optIn ? 'opt-in' : 'off';
           summary = optIn ? `Off by default; brave://flags option present in ${where}.` : `Flag off by default in ${where}.`;
         } else if (flagState === 'missing') {
           status = 'absent';
           summary = `Flag not present in ${where}.`;
-        } else if (flagState === 'on' && (firstNote || built === true || !(def.implementedBy?.length))) {
+        } else if (flagState === 'on' && (firstNote || built === true || (!(def.implementedBy?.length) && !requiredUnknown.length))) {
+          // A generic flag alone is enough only when no required row-specific check is left unknown.
           status = channel === 'release' && firstNote ? 'available' : 'in-build';
           summary = firstNote
             ? `${channel === 'release' ? '' : 'Stable shipped it; '}flag on at ${cv?.tag ?? 'build'}.`
             : `Flag on and code present at ${cv?.tag ?? 'build'}; no ${PLATFORM_NAME[platform]} release note.`;
-        } else if (!def.flags?.length && channel !== 'release' && (firstNote ? built !== false : built === true)) {
+          if (requiredUnknown.length) ev.push({ kind: 'note', text: `Required check not completed at ${cv?.tag ?? 'this build'} (${requiredUnknown.join('; ')}); ${firstNote ? 'the Stable release note' : 'the implementing PRs being in this build'} is used as the evidence.`, url: null });
+        } else if (!def.flags?.length && cv?.tag && channel !== 'release' && (firstNote ? built !== false && compareVersions(cv.version, firstNote.version) >= 0 : built === true)) {
           status = 'in-build';
           summary = firstNote ? `Shipped in ${PLATFORM_NAME[platform]} Stable; implementing code present at ${cv?.tag ?? 'build'}.` : `Implementing code present at ${cv?.tag ?? 'build'}; no release note.`;
         } else if (!def.flags?.length && channel === 'release' && built === true && !firstNote) {
@@ -231,11 +256,12 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           summary = `Implementing code is in ${where}, but no ${PLATFORM_NAME[platform]} release note lists it.`;
         } else {
           status = 'not-verified';
-          summary = !cv
-            ? `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`
-            : !cv.tag
-              ? `No ${PLATFORM_NAME[platform]} release note lists it, and the ${cv.version} store build number is not published, so its code and flags cannot be checked.`
-              : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
+          if (!cv) summary = `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`;
+          else if (channel === 'release' && pendingNote) summary = `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it, but the store version ${cv.version} does not say which ${cv.version} build is live, so availability is not verified.`;
+          else if (channel === 'release' && newerNote) summary = `${PLATFORM_NAME[platform]} release notes list it first in ${newerNote.version}, newer than the current ${cv.version}, so it is not verified for this version.`;
+          else if (!cv.tag) summary = `No ${PLATFORM_NAME[platform]} release note lists it, and the ${cv.version} store build number is not published, so its code and flags cannot be checked.`;
+          else if (flagState === 'on' && requiredUnknown.length) summary = `Flag on at ${cv.tag}, but the required check could not be completed (${requiredUnknown.join('; ')}), so it is not verified that this build contains it.`;
+          else summary = `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
         // Marketing-only versions: describe the likely build without upgrading the status.
         if (status === 'not-verified' && cv && !cv.tag && cv.inferredTag) {
@@ -329,6 +355,25 @@ function topoOrder(defs: CapabilityDef[]): CapabilityDef[] {
   };
   for (const d of defs) visit(d, new Set());
   return out;
+}
+
+/**
+ * Classify a release-note version against the current Stable version: 'within' (at or below it), 'same-line'
+ * (same MAJOR.MINOR as a marketing version that does not identify the build), or 'newer'. Returns null when the
+ * current version is missing or not a recognised version, so no note can be admitted.
+ */
+function noteBound(current: string | null | undefined): ((version: string) => 'within' | 'same-line' | 'newer') | null {
+  const m = current?.trim().replace(/^v/, '').match(/^(\d+)\.(\d+)(?:\.(\d+))?$/);
+  if (!m) return null;
+  if (m[3] !== undefined) {
+    const exact = `${m[1]}.${m[2]}.${m[3]}`;
+    return (v) => (compareVersions(v, exact) <= 0 ? 'within' : 'newer');
+  }
+  const line = `${m[1]}.${m[2]}`;
+  return (v) => {
+    const c = compareVersions(v.replace(/^v/, '').split('.').slice(0, 2).join('.'), line);
+    return c < 0 ? 'within' : c === 0 ? 'same-line' : 'newer';
+  };
 }
 
 function matchesDef(def: CapabilityDef, e: ChangelogEntry): boolean {

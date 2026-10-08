@@ -7,7 +7,7 @@ import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { compareVersions } from '../lib/util.ts';
 import { inclusionAt, type PrInclusion } from '../ingest/sources/build-inclusion.ts';
 import { osLabels, parseMilestone, parseQaLabels, qaPlatform } from '../ingest/parsers.ts';
-import { isDuplicateIssue, isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
+import { isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
 
 export type Stage =
   | 'released'
@@ -105,8 +105,10 @@ export function computeGroupStatus(
     if (/\b(proposal|rfc|idea|consider)\b/i.test(issue.title) || labels.includes('needs-discussion')) kind = kind === 'bug' ? kind : 'proposal';
   }
 
-  // Issue state.
-  const dup = issue ? isDuplicateIssue(issue) : { duplicate: false, canonical: null, basis: null };
+  // Issue state. Duplicate state comes from the relations, which reconcile both issues' timelines.
+  const dup = issue && r.duplicateOf.has(issue.id)
+    ? { duplicate: true, canonical: r.duplicateOf.get(issue.id) ?? null, basis: r.duplicateBasis.get(issue.id) ?? null }
+    : { duplicate: false, canonical: null, basis: null };
   const issueState = issue
     ? {
         state: issue.state === 'open' ? ('open' as const) : ('closed' as const),
@@ -115,7 +117,7 @@ export function computeGroupStatus(
       }
     : null;
 
-  // Implementation (master PRs, plus duplicates' PRs are already folded by grouping).
+  // Implementation (master PRs; buildGroups folds the duplicates' implementing PRs into masterPrs/uplifts).
   const merged = masters.filter((p) => p.state === 'merged');
   const open = masters.filter((p) => p.state === 'open');
   const implState: GroupStatus['implementation']['state'] = merged.length ? 'merged' : open.some((p) => !p.isDraft) ? 'open' : open.length ? 'draft' : masters.length ? 'closed-unmerged' : 'none';
