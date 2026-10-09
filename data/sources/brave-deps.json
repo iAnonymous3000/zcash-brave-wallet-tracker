@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-deps",
  "schema": 1,
- "retrievedAt": "2026-10-09T17:01:23.705Z",
+ "retrievedAt": "2026-10-09T22:40:09.528Z",
  "data": {
   "snapshots": {
    "v1.97.56": {
@@ -2073,9 +2073,7 @@
    "v1.99.20": {
     "ref": "v1.99.20",
     "commitSha": null,
-    "channels": [
-     "desktop/nightly"
-    ],
+    "channels": [],
     "lock": {
      "orchard": {
       "version": "0.15.0",
@@ -3205,7 +3203,7 @@
    },
    "master": {
     "ref": "master",
-    "commitSha": "1a3fa018935497d8d6952bacdb28df1751de04a4",
+    "commitSha": "9f167dec81089be26903e4ac7c80672b1793f6a0",
     "channels": [
      "master"
     ],
@@ -3585,11 +3583,11 @@
      "GetTreeState",
      "SendTransaction"
     ],
-    "retrievedAt": "2026-10-09T17:01:23.705Z",
+    "retrievedAt": "2026-10-09T22:40:09.528Z",
     "links": {
-     "lockfile": "https://github.com/brave/brave-core/blob/1a3fa018935497d8d6952bacdb28df1751de04a4/third_party/rust/chromium_crates_io/Cargo.lock",
-     "deps": "https://github.com/brave/brave-core/blob/1a3fa018935497d8d6952bacdb28df1751de04a4/DEPS",
-     "cargo": "https://github.com/brave/brave-core/blob/1a3fa018935497d8d6952bacdb28df1751de04a4/components/brave_wallet/browser/zcash/rust/Cargo.toml"
+     "lockfile": "https://github.com/brave/brave-core/blob/9f167dec81089be26903e4ac7c80672b1793f6a0/third_party/rust/chromium_crates_io/Cargo.lock",
+     "deps": "https://github.com/brave/brave-core/blob/9f167dec81089be26903e4ac7c80672b1793f6a0/DEPS",
+     "cargo": "https://github.com/brave/brave-core/blob/9f167dec81089be26903e4ac7c80672b1793f6a0/components/brave_wallet/browser/zcash/rust/Cargo.toml"
     },
     "resolver": 4,
     "resolution": {
@@ -4238,7 +4236,9 @@
    "v1.99.25": {
     "ref": "v1.99.25",
     "commitSha": null,
-    "channels": [],
+    "channels": [
+     "desktop/nightly"
+    ],
     "lock": {
      "orchard": {
       "version": "0.15.0",
@@ -6399,9 +6399,7 @@
    "v1.99.30": {
     "ref": "v1.99.30",
     "commitSha": null,
-    "channels": [
-     "github/nightly"
-    ],
+    "channels": [],
     "lock": {
      "orchard": {
       "version": "0.15.0",
@@ -6911,8 +6909,524 @@
      "unreachable": [],
      "unresolvedEdges": []
     }
+   },
+   "v1.99.31": {
+    "ref": "v1.99.31",
+    "commitSha": null,
+    "channels": [
+     "github/nightly"
+    ],
+    "lock": {
+     "orchard": {
+      "version": "0.15.0",
+      "source": "crates.io"
+     },
+     "zcash_primitives": {
+      "version": "0.29.0",
+      "source": "path"
+     },
+     "zcash_protocol": {
+      "version": "0.10.0",
+      "source": "path"
+     },
+     "zcash_client_backend": {
+      "version": "0.24.0-rc.1",
+      "source": "path"
+     },
+     "zcash_encoding": {
+      "version": "0.4.0",
+      "source": "path"
+     },
+     "zcash_note_encryption": {
+      "version": "0.4.1",
+      "source": "crates.io"
+     },
+     "shardtree": {
+      "version": "0.7.0",
+      "source": "crates.io"
+     },
+     "incrementalmerkletree": {
+      "version": "0.8.2",
+      "source": "crates.io"
+     },
+     "zip32": {
+      "version": "0.2.1",
+      "source": "crates.io"
+     },
+     "halo2_proofs": {
+      "version": "0.3.2",
+      "source": "crates.io"
+     },
+     "halo2_gadgets": {
+      "version": "0.5.0",
+      "source": "crates.io"
+     },
+     "pasta_curves": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "reddsa": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "sinsemilla": {
+      "version": "0.1.0",
+      "source": "crates.io"
+     }
+    },
+    "lockPackages": [
+     "adblock",
+     "adblock-cxx",
+     "addchain",
+     "adss",
+     "aead",
+     "aes",
+     "aho-corasick",
+     "allocator-api2",
+     "anonymous-credentials",
+     "anstyle",
+     "arrayref",
+     "arrayvec",
+     "async-trait",
+     "autocfg",
+     "base-x",
+     "base64",
+     "bech32",
+     "bigdecimal",
+     "bincode",
+     "bitflags",
+     "bitvec",
+     "blake2b_simd",
+     "block-buffer",
+     "bls-signatures",
+     "bls12_381",
+     "brave-miracl",
+     "brave-news-cxx",
+     "brave_wallet",
+     "byte-slice-cast",
+     "byteorder",
+     "bytes",
+     "cbc",
+     "cc",
+     "cfg-if",
+     "chacha20",
+     "chacha20poly1305",
+     "challenge-bypass-ristretto",
+     "challenge-bypass-ristretto-cxx",
+     "chromium",
+     "chrono",
+     "ciborium",
+     "ciborium-io",
+     "ciborium-ll",
+     "cid",
+     "cipher",
+     "clap",
+     "clap_builder",
+     "clap_lex",
+     "codespan-reporting",
+     "const_format",
+     "const_format_proc_macros",
+     "constant_time_eq",
+     "constellation-cxx",
+     "convert_case",
+     "core2",
+     "corez",
+     "cpufeatures",
+     "crc32fast",
+     "crunchy",
+     "crypto-common",
+     "crypto-mac",
+     "cssparser",
+     "cssparser-macros",
+     "curve25519-dalek",
+     "curve25519-dalek-derive",
+     "cxx",
+     "cxx-build",
+     "cxxbridge-cmd",
+     "cxxbridge-flags",
+     "cxxbridge-macro",
+     "data-encoding",
+     "data-encoding-macro",
+     "data-encoding-macro-internal",
+     "derive_more",
+     "derive_more-impl",
+     "digest",
+     "document-extractor",
+     "dtoa",
+     "dtoa-short",
+     "ego-tree",
+     "either",
+     "encoding_rs",
+     "equivalent",
+     "feed-rs",
+     "ff",
+     "ff_derive",
+     "fiat-crypto",
+     "filecoin-cxx",
+     "find-msvc-tools",
+     "flatbuffers",
+     "fnv",
+     "foldhash",
+     "fpe",
+     "funty",
+     "futf",
+     "futures",
+     "futures-channel",
+     "futures-core",
+     "futures-executor",
+     "futures-io",
+     "futures-macro",
+     "futures-retry",
+     "futures-sink",
+     "futures-task",
+     "futures-timer",
+     "futures-util",
+     "fxhash",
+     "generic-array",
+     "getopts",
+     "getrandom",
+     "getrandom_or_panic",
+     "getset",
+     "group",
+     "half",
+     "halo2_gadgets",
+     "halo2_legacy_pdqsort",
+     "halo2_poseidon",
+     "halo2_proofs",
+     "hashbrown",
+     "hex",
+     "hkdf",
+     "hmac",
+     "html5ever",
+     "http",
+     "idna",
+     "impl-trait-for-tuples",
+     "incrementalmerkletree",
+     "indexmap",
+     "inout",
+     "itertools",
+     "itoa",
+     "json-cxx",
+     "jubjub",
+     "keccak",
+     "kuchikiki",
+     "lazy_static",
+     "libc",
+     "libm",
+     "lifeguard",
+     "link-cplusplus",
+     "lock_api",
+     "log",
+     "lol_html",
+     "mac",
+     "markup5ever",
+     "match_token",
+     "maybe-rayon",
+     "memchr",
+     "memuse",
+     "merlin",
+     "mime",
+     "multibase",
+     "multihash",
+     "new_debug_unreachable",
+     "nonempty",
+     "num-bigint",
+     "num-integer",
+     "num-traits",
+     "once_cell",
+     "opaque-debug",
+     "orchard",
+     "pairing",
+     "parity-scale-codec",
+     "parking_lot",
+     "parking_lot_core",
+     "pasta_curves",
+     "percent-encoding",
+     "phf",
+     "phf_codegen",
+     "phf_generator",
+     "phf_macros",
+     "phf_shared",
+     "pin-project",
+     "pin-project-internal",
+     "pin-project-lite",
+     "pin-utils",
+     "poly1305",
+     "ppoprf",
+     "ppv-lite86",
+     "precomputed-hash",
+     "proc-macro-error-attr2",
+     "proc-macro-error2",
+     "proc-macro2",
+     "quick-xml",
+     "quote",
+     "radium",
+     "rand",
+     "rand_chacha",
+     "rand_core",
+     "readability",
+     "reddsa",
+     "redox_syscall",
+     "regex",
+     "regex-automata",
+     "regex-syntax",
+     "rustc-hash",
+     "rustc_version",
+     "rustversion",
+     "schnorrkel",
+     "scopeguard",
+     "scraper",
+     "scratch",
+     "seahash",
+     "selectors",
+     "semver",
+     "serde",
+     "serde_bytes",
+     "serde_core",
+     "serde_derive",
+     "serde_json",
+     "servo_arc",
+     "sha2",
+     "shardtree",
+     "shlex",
+     "sinsemilla",
+     "siphasher",
+     "skus",
+     "skus-cxx",
+     "slab",
+     "smallvec",
+     "speedreader",
+     "speedreader-ffi",
+     "spin",
+     "sta-rs",
+     "stable_deref_trait",
+     "star-constellation",
+     "star-sharks",
+     "static_assertions",
+     "string_cache",
+     "string_cache_codegen",
+     "strobe-rs",
+     "strsim",
+     "subtle",
+     "syn",
+     "tap",
+     "tendril",
+     "termcolor",
+     "thiserror",
+     "thiserror-impl",
+     "tracing",
+     "tracing-attributes",
+     "tracing-core",
+     "tracing-log",
+     "typenum",
+     "uint",
+     "unicode-ident",
+     "unicode-width",
+     "unicode-xid",
+     "universal-hash",
+     "unsigned-varint",
+     "url",
+     "urlencoding",
+     "utf-8",
+     "uuid",
+     "valuable",
+     "version_check",
+     "visibility",
+     "wasi",
+     "web_atoms",
+     "winapi-util",
+     "windows-sys",
+     "windows-targets",
+     "windows_aarch64_gnullvm",
+     "windows_aarch64_msvc",
+     "windows_i686_gnu",
+     "windows_i686_gnullvm",
+     "windows_i686_msvc",
+     "windows_x86_64_gnu",
+     "windows_x86_64_gnullvm",
+     "windows_x86_64_msvc",
+     "wyz",
+     "zcash",
+     "zcash_client_backend",
+     "zcash_encoding",
+     "zcash_note_encryption",
+     "zcash_primitives",
+     "zcash_protocol",
+     "zcash_spec",
+     "zerocopy",
+     "zerocopy-derive",
+     "zeroize",
+     "zeroize_derive",
+     "zip32",
+     "zmij"
+    ],
+    "requirements": {
+     "brave_wallet": "1",
+     "cxx": "1",
+     "orchard": "0.15",
+     "rand": "0.8",
+     "zcash_primitives": "0.29",
+     "zcash_note_encryption": "0.4.1",
+     "zcash_client_backend": "0.24.0-rc.1",
+     "shardtree": "0.7.0"
+    },
+    "forkPin": {
+     "repo": "brave/librustzcash",
+     "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
+     "comment": "brave_ironwood_support"
+    },
+    "endpoints": [
+     "https://3xpl.com/zcash/transaction",
+     "https://blockexplorer.one/zcash/testnet/tx",
+     "https://testnet.zec.rocks/",
+     "https://zcash.wallet.brave.com/"
+    ],
+    "rpcMethods": [
+     "GetAddressUtxos",
+     "GetBlockRange",
+     "GetLatestBlock",
+     "GetLatestTreeState",
+     "GetLightdInfo",
+     "GetTaddressTxids",
+     "GetTransaction",
+     "GetTreeState",
+     "SendTransaction"
+    ],
+    "retrievedAt": "2026-10-09T22:40:09.528Z",
+    "links": {
+     "lockfile": "https://github.com/brave/brave-core/blob/v1.99.31/third_party/rust/chromium_crates_io/Cargo.lock",
+     "deps": "https://github.com/brave/brave-core/blob/v1.99.31/DEPS",
+     "cargo": "https://github.com/brave/brave-core/blob/v1.99.31/components/brave_wallet/browser/zcash/rust/Cargo.toml"
+    },
+    "resolver": 4,
+    "resolution": {
+     "method": "graph",
+     "root": {
+      "name": "zcash",
+      "version": "1.0.0",
+      "from": "cargo-toml"
+     },
+     "candidates": {
+      "orchard": [
+       {
+        "version": "0.15.0",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": true
+       }
+      ],
+      "zcash_primitives": [
+       {
+        "version": "0.29.0",
+        "source": "path",
+        "reachable": true,
+        "direct": true
+       }
+      ],
+      "zcash_protocol": [
+       {
+        "version": "0.10.0",
+        "source": "path",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "zcash_client_backend": [
+       {
+        "version": "0.24.0-rc.1",
+        "source": "path",
+        "reachable": true,
+        "direct": true
+       }
+      ],
+      "zcash_encoding": [
+       {
+        "version": "0.4.0",
+        "source": "path",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "zcash_note_encryption": [
+       {
+        "version": "0.4.1",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": true
+       }
+      ],
+      "shardtree": [
+       {
+        "version": "0.7.0",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": true
+       }
+      ],
+      "incrementalmerkletree": [
+       {
+        "version": "0.8.2",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "zip32": [
+       {
+        "version": "0.2.1",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "halo2_proofs": [
+       {
+        "version": "0.3.2",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "halo2_gadgets": [
+       {
+        "version": "0.5.0",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "pasta_curves": [
+       {
+        "version": "0.5.1",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "reddsa": [
+       {
+        "version": "0.5.1",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ],
+      "sinsemilla": [
+       {
+        "version": "0.1.0",
+        "source": "crates.io",
+        "reachable": true,
+        "direct": false
+       }
+      ]
+     },
+     "multiple": [],
+     "ambiguous": [],
+     "unreachable": [],
+     "unresolvedEdges": []
+    }
    }
   }
  },
- "completeAt": "2026-10-09T17:01:23.705Z"
+ "completeAt": "2026-10-09T22:40:09.528Z"
 }

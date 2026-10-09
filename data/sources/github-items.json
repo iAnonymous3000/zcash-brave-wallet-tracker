@@ -1,9 +1,111 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-09T17:01:23.705Z",
+ "retrievedAt": "2026-10-09T22:40:09.528Z",
  "data": {
   "items": {
+   "brave/brave-browser#59828": {
+    "id": "brave/brave-browser#59828",
+    "repo": "brave/brave-browser",
+    "number": 59828,
+    "kind": "issue",
+    "title": "Allow users to choose a priority fee for Zcash sends",
+    "url": "https://github.com/brave/brave-browser/issues/59828",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-10-09T19:30:13Z",
+    "updatedAt": "2026-10-09T19:31:08Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "iAnonymous3000",
+    "assignees": [],
+    "labels": [
+     "QA/Yes",
+     "release-notes/include",
+     "feature-request",
+     "feature/web3/wallet",
+     "feature/web3/wallet/core",
+     "feature/web3/wallet/zcash"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Allow users to choose an optional priority fee when sending Zcash in Brave Wallet, with the total fee shown before confirmation. This should let users pay more to improve their chance of earlier block inclusion, as proposed by Shielded Labs, without guaranteeing faster confirmation. Evaluate using the node-recommended standard fee as the baseline; availability through Brave’s backend and the priority fee calculation still need confirmation.",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:14Z",
+      "actor": "iAnonymous3000",
+      "detail": "QA/Yes"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:15Z",
+      "actor": "iAnonymous3000",
+      "detail": "release-notes/include"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:15Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature-request"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:15Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:16Z",
+      "actor": "iAnonymous3000",
+      "detail": "front-end-change"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:16Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-09T19:30:16Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet/zcash"
+     },
+     {
+      "type": "unlabeled",
+      "at": "2026-10-09T19:31:08Z",
+      "actor": "iAnonymous3000",
+      "detail": "front-end-change"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "label:feature/web3/wallet/zcash",
+     "search:shielded wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "label:feature/web3/wallet/zcash",
+     "title:zcash",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-10-09T22:40:09.528Z"
+   },
    "brave/brave-browser#57713": {
     "id": "brave/brave-browser#57713",
     "repo": "brave/brave-browser",
@@ -89463,6 +89565,7 @@
    "brave/brave-browser#20554": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
+   "brave/brave-core#40696": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40695": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40325": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89544,15 +89647,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 818,
-   "searchHits": 1164,
-   "tracked": 787,
-   "direct": 621,
+   "discovered": 820,
+   "searchHits": 1168,
+   "tracked": 788,
+   "direct": 622,
    "mention": 64,
    "linked": 102,
-   "excluded": 133,
+   "excluded": 134,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-09T17:01:23.705Z"
+ "completeAt": "2026-10-09T22:40:09.528Z"
 }

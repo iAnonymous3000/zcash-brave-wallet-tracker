@@ -1,5 +1,30 @@
 [
  {
+  "kind": "item-tracked",
+  "sourceAt": "2026-10-09T19:30:13Z",
+  "title": "New feature request: Allow users to choose a priority fee for Zcash sends",
+  "impact": "Opened in brave-browser#59828. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#59828"
+  ],
+  "topic": "transactions",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#59828",
+    "url": "https://github.com/brave/brave-browser/issues/59828"
+   }
+  ],
+  "evidence": [
+   "created 2026-10-09T19:30:13Z"
+  ],
+  "id": "7d2d66956bcd5709",
+  "detectedAt": "2026-10-09T22:40:09.528Z",
+  "basis": "observed"
+ },
+ {
   "kind": "qa-passed",
   "sourceAt": "2026-10-07T05:04:12Z",
   "title": "QA Pass-Win64: [Wallet] Hide Deposit/Bridge buttons for Zcash (Shielded Legacy) account",
@@ -14259,66 +14284,6 @@
    "base branch master"
   ],
   "id": "f6ded67bad95d466",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "uplift-merged",
-  "sourceAt": "2025-10-09T17:09:03Z",
-  "title": "Uplifted to 1.83.x: [Wallet]: Fix Copy Address for Zcash (uplift to 1.83.x)",
-  "impact": "Merged into the 1.83.x branch. It ships when a 1.83.x build is published; see build presence on the item.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-core#31712"
-  ],
-  "topic": "addresses",
-  "platforms": [
-   "android",
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31712",
-    "url": "https://github.com/brave/brave-core/pull/31712"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-09T17:09:03Z",
-   "repository brave/brave-core",
-   "base branch 1.83.x"
-  ],
-  "id": "9cde5a6fe7c1234c",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "uplift-merged",
-  "sourceAt": "2025-10-09T17:08:06Z",
-  "title": "Uplifted to 1.84.x: [Wallet]: Fix Copy Address for Zcash (uplift to 1.84.x)",
-  "impact": "Merged into the 1.84.x branch. It ships when a 1.84.x build is published; see build presence on the item.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-core#31711"
-  ],
-  "topic": "addresses",
-  "platforms": [
-   "android",
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31711",
-    "url": "https://github.com/brave/brave-core/pull/31711"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-09T17:08:06Z",
-   "repository brave/brave-core",
-   "base branch 1.84.x"
-  ],
-  "id": "6085b7d9c4f5237a",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }
