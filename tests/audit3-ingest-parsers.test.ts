@@ -2,7 +2,7 @@
 // or explicitly unknown) and R3-PERF (parsing in linear time). Every test fails on audit/integration.
 //
 // The R3-ING-23 expectations were checked against two CommonMark implementations (micromark with its GFM extension,
-// and markdown-it 14.1.0: the round-2 verifier's oracles). No bullet is credited to a release that CommonMark does not
+// and unpatched markdown-it 15.0.2, the version this repository pins: the round-2 verifier's oracles). No bullet is credited to a release that CommonMark does not
 // put it under. Where the structure is in doubt (a stray opener hides headings from CommonMark, or CommonMark keeps a
 // heading its author wrote inside an HTML block) the bullets it decides are credited to no release, and a release
 // heading CommonMark does not see is not listed.
@@ -129,6 +129,18 @@ test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the s
   for (const header of ['| Unreleased |', 'Unreleased |']) {
     assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', header, '---', '- Zcash future.')), ['1.2.3:Zcash a.'], header);
   }
+  // Repair round 2: a row that starts with "-" and a space or tab ("- | -", "-   |") is a list item, not a delimiter row
+  // (GitHub, micromark and markdown-it try list items first), so the heading indented under it is nested in the item.
+  // The first repair read a table there: it listed 1.99.0 as the latest release and credited an Unreleased bullet to
+  // 1.2.3.
+  const listRow = md('# Changelog', '', 'Feature | Status', '- | -', '  ## 1.99.0', '- Zcash x.', '', '## 1.98.0', '- Zcash y.');
+  assert.deepEqual(changelogVersions(listRow), ['1.98.0']);
+  assert.deepEqual(got(listRow), ['1.98.0:Zcash y.']);
+  assert.deepEqual(got(md('## 1.2.3', '| a |', '-   |', '    ## Unreleased', '- Zcash future.')), ['1.2.3:|']);
+  assert.deepEqual(got(md('## 1.2.3', '', 'a | b', '- | -', '', '  ## 1.2.4', '- Zcash b.')), ['1.2.3:| -']);
+  assert.deepEqual(got(md('## 1.2.3', 'a | b', '-\t| -', '  ## 1.2.4', '- Zcash b.')), ['1.2.3:| -', '1.2.4:Zcash b.']);
+  // "-|-" and ":- | -" stay delimiter rows (a table, then the top-level heading).
+  for (const row of ['-|-', ':- | -']) assert.deepEqual(got(md('## 1.2.3', 'a | b', row, '  ## 1.2.4', '- Zcash b.')), ['1.2.4:Zcash b.'], row);
   // Link reference definitions are paragraph content (CommonMark): an underline below text that is no definition makes
   // it a heading ("[Unreleased]:" has no destination), and the lines after a definition continue the paragraph ("2)
   // Next" cannot interrupt it to start a list, "    Next" is no code block), so the underline below them makes a heading.
@@ -268,6 +280,14 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
     ['table rows', `| a | b |\n|---|---|\n${fill('| c | d |\n')}`],
     ['header and delimiter rows', fill('a\n-|-\n')],
     ['link reference definitions under underlines', fill('[a]: /u\n-\n')],
+    // Repair round 2: a long run of digits before the first release (changelogVersions looked for an x.y.z there with
+    // an expression that rescanned the rest of the run from each digit: 67 s for 256 KB).
+    ['a line of digits before the first release', `${fill('1')}\n## 1.2.3\n- a`],
+    ['a bullet of digits before the first release', `- ${fill('1')}\n## 1.2.3\n- a`],
+    ['a heading of digits before the first release', `# ${fill('2')}\n## 1.2.3\n- a`],
+    ['a line of digits and no release', `${fill('1')}\n- a`],
+    ['an iOS release-notes title of digits', `Release ${fill('9')}\n\n## 1.2.3\n- a`],
+    ['digit runs between dots before the first release', `${fill('1.11111111')}\n## 1.2.3\n- a`],
   ];
   // Yardstick: a 256 KB changelog of ordinary lines (entries under release headings, one long paragraph).
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
@@ -283,6 +303,29 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
   const entries = got(deep);
   assert.ok(entries.includes('1.2.3:Zcash a.'), JSON.stringify(entries));
   assert.ok(entries.every((e) => ['1.2.3:Zcash a.', '1.2.2:Zcash b.'].includes(e)), JSON.stringify(entries));
+});
+
+test('R3-PERF repair 2: a 256 KB line of any one common character or short unit, wherever it stands, is read in linear time', () => {
+  // A sweep for expressions like the one the first repair added (an x.y.z search that rescanned a digit run from
+  // each of its digits): every unit below, repeated over one 256 KB line, in each position a changelog line can have.
+  const units = ['1', '1.', '1.2', '.1', '9 ', '#', '-', '- ', '>', '<', '<!--', '[', '](', '`', ' ', '\t', '|', ':', '*', '(', '=', '\\'];
+  const positions: [string, (line: string) => string][] = [
+    ['before the first release', (l) => `${l}\n## 1.2.3\n- a`],
+    ['in a bullet before the first release', (l) => `- ${l}\n## 1.2.3\n- a`],
+    ['in a level-1 heading', (l) => `# ${l}\n## 1.2.3\n- a`],
+    ['in a release heading', (l) => `## 1.2.3 ${l}\n- a`],
+    ['in a release link', (l) => `## [1.2.3](${l})\n- a`],
+    ['in a bullet under a release', (l) => `## 1.2.3\n- ${l}`],
+    ['in a block quote', (l) => `> ${l}\n## 1.2.3\n- a`],
+    ['in a text without a release', (l) => `${l}\n- a`],
+  ];
+  const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
+  for (const unit of units) {
+    for (const [where, place] of positions) {
+      const took = ms(parse(place(fill(unit))), limit);
+      assert.ok(took < limit, `${JSON.stringify(unit)} ${where}: ${Math.round(took)} ms (limit ${Math.round(limit)} ms)`);
+    }
+  }
 });
 
 test('R3-PERF: plainExcerpt is linear on 256 KB issue bodies and its output is unchanged', () => {

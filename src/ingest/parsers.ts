@@ -340,9 +340,12 @@ const skipSpaceTab = (s: string, i: number) => {
 /**
  * The cell count of a GFM table delimiter row (`s` from its first non-space character), or -1 when it is not one.
  * As micromark-extension-gfm-table reads it: cells of "-" with optional ":" at either end, separated by "|", with
- * optional outer pipes; a row without any ":" or "|" is a thematic break or a setext underline instead.
+ * optional outer pipes; a row without any ":" or "|" is a thematic break or a setext underline instead. A row that
+ * starts with "-" and a space or tab ("- | -", "-   |") is a list item: GitHub (cmark-gfm) and micromark try list
+ * items before tables, and markdown-it's own table rule has the same guard.
  */
 function delimiterRowCells(s: string): number {
+  if (s[0] === '-' && (s[1] === ' ' || s[1] === '\t')) return -1;
   let i = 0;
   let cells = 0;
   let seen = false;
@@ -1287,6 +1290,12 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
 }
 
 /**
+ * An x.y.z anywhere in a line. (?<!\d): a match is tried only from the start of a digit run, so a long run of digits
+ * without the dots costs linear time (without it, every position in the run rescans the rest of it: 18 s for 128 KB).
+ */
+const VERSION_IN_TEXT = /(?<!\d)\d+\.\d+\.\d+/;
+
+/**
  * Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). The
  * first one is read as the latest release, so when a doubtful line that could name a version (one with an x.y.z in it
  * or in the lines of text just above it, for a setext underline) comes before it, the latest release is not known
@@ -1303,7 +1312,7 @@ export function changelogVersions(text: string, opts: { now?: string | number | 
     const mark = marks[i];
     if (mark?.t === 'stop') break;
     if (out.length === 0) {
-      versionInRun = /\S/.test(lines[i]) && (versionInRun || /\d+\.\d+\.\d+/.test(lines[i]));
+      versionInRun = /\S/.test(lines[i]) && (versionInRun || VERSION_IN_TEXT.test(lines[i]));
       if (mark?.t === 'doubt' && versionInRun) return [];
     }
     const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now, refsComplete) : null;
