@@ -4,7 +4,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { advisoryVerdicts, crateKey, DERIVE_RULES_VERSION, fullLockPackages, generateEvents, type Snapshot } from '../src/derive/changes.ts';
+import { advisoryVerdicts, braveResolves, crateKey, DERIVE_RULES_VERSION, fullLockPackages, generateEvents, type Snapshot } from '../src/derive/changes.ts';
 import { Http } from '../src/lib/http.ts';
 import { satisfiesRange } from '../src/lib/util.ts';
 import { braveDeps, linkedVersions, rangeExposure, type BraveDepsSnapshot, type DepResolution, type DepsData, type LockCandidate, type LockSource } from '../src/ingest/sources/deps.ts';
@@ -399,6 +399,9 @@ test('R3-ADV-NAMES (repair): pins and absences that base tests pinned as "not af
     ['graph unlinked', adv(['rust:sinsemilla'], ['sinsemilla < 1.0.0']), (l) => pair(UNLINKED, l), ONE_BUILD, /sinsemilla does not appear in Brave's resolved Zcash dependencies at any checked build/],
     // tests/audit-derive.test.ts D1: a monitored crate in no inspected Cargo.lock.
     ['absent', adv(['rust:sinsemilla'], ['sinsemilla < 1.0.0']), (l) => pair(S, l), ONE_BUILD, /sinsemilla does not appear in Brave's resolved Zcash dependencies at any checked build/],
+    // tests/audit-derive.test.ts D1 (repair) "unassigned current tag" (repair 2): a snapshot at a current build's tag
+    // that the collector assigned no channel still covers that build, so with the list recorded it can clear it.
+    ['D1 unassigned current tag', ORCHARD, (l) => depsOf(rsnap('master', ['master'], S, { listed: l }), rsnap('v1.97.56', [], S, { listed: l })), ONE_BUILD, /^Affects rust:orchard\. Brave's pins of orchard are outside the vulnerable ranges at every checked build \(master and 1 channel build \(v1\.97\.56\)\)\.$/],
   ];
   for (const [label, a, deps, channels, wording] of cases) {
     const clear = advisoryVerdicts(a, deps(true), channels);
@@ -411,6 +414,13 @@ test('R3-ADV-NAMES (repair): pins and absences that base tests pinned as "not af
     assert.equal(count(bare.summary, 'package list was not recorded'), 1, `${label}: one reason for every build and package`);
     assert.doesNotMatch(bare.summary, NOT_THERE, `${label}: absence is not claimed without the list`);
   }
+  // The unassigned current tag is what covers the Release build (repair 2): it is compared under that build's label,
+  // and without it master alone leaves the Release build unread.
+  const unassigned = advisoryVerdicts(ORCHARD, cases[cases.length - 1][2](true), ONE_BUILD);
+  assert.ok(unassigned.details.includes('v1.97.56 (desktop/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0'), unassigned.details.join(' | '));
+  const masterAlone = advisoryVerdicts(ORCHARD, depsOf(rsnap('master', ['master'], S, { listed: true })), ONE_BUILD);
+  assert.equal(masterAlone.affected, null, masterAlone.summary);
+  assert.match(masterAlone.summary, /Brave's Cargo\.lock has not been read at v1\.97\.56 \(desktop\/release\)/);
   // A coverage gap still decides on its own when the list is recorded (D1 repair): a current build never read.
   const listedCoverage = cases[1][2](true);
   const newer = advisoryVerdicts(ORCHARD, listedCoverage, [...two, cv('desktop', 'nightly', '1.99.25', 'v1.99.25')]);
@@ -529,4 +539,114 @@ test('R3-ADV-FORK (repair): a version that is a fork label at some builds and a 
 
 test('R3: the rules version is bumped so recorded advisory events are regenerated under the new verdict rules', () => {
   assert.ok(DERIVE_RULES_VERSION >= 14, `DERIVE_RULES_VERSION is ${DERIVE_RULES_VERSION}`);
+});
+
+// ---------------------------------------------------------------------------
+// Repair round 2 (R3-ADV-NAMES): malformed package lists, one example spelling per package, an unmonitored crate
+// whose list is recorded at some builds only, and a lock entry its own dependency graph does not link.
+// ---------------------------------------------------------------------------
+
+test('R3-ADV-NAMES (repair 2): a malformed package list is not used, is reported as such, and never throws (verifier: TypeError at 7340d50)', () => {
+  // scratchpad/vfy-r3d/edge.ts: lockPackages 'orchard' (a string) made listLacks() call list.some on it. Not
+  // reachable from collector output (string[] or omitted), but a malformed record must read as unknown, not crash.
+  const S = { orchard: [cand('0.15.0', true, 'crates.io', true)], halo2_gadgets: [cand('0.5.0', true)] };
+  const malformed: unknown[] = ['orchard', {}, 42, true, ['halo2_gadgets', 'orchard', 'zcash', null], ['halo2_gadgets', 'orchard', 'zcash', 7]];
+  for (const bad of malformed) {
+    const name = JSON.stringify(bad);
+    const withBad = (s: Snap): Snap => ({ ...s, lockPackages: bad as string[] });
+    const master = withBad(rsnap('master', ['master'], S));
+    const release = withBad(rsnap('v1.97.56', ['desktop/release'], S));
+    assert.equal(fullLockPackages(master), undefined, `${name}: not a usable list`);
+    assert.equal(braveResolves(master, 'orchard')?.version, '0.15.0', `${name}: adoption text still reads the resolution`);
+    for (const a of [ORCHARD, adv(['rust:zebrad'], ['zebrad < 9.0.0']), adv(['rust:sinsemilla'], ['sinsemilla < 1.0.0'])]) {
+      const v = advisoryVerdicts(a, depsOf(master, release), ONE_BUILD);
+      assert.equal(v.affected, null, `${name} ${a.packages}: ${v.summary}`);
+      assert.doesNotMatch(v.summary, NOT_THERE, `${name} ${a.packages}`);
+      assert.ok(v.details.includes('master: the recorded Cargo.lock package list is not a list of package names, so it is not used'), `${name}: ${v.details.join(' | ')}`);
+      assert.ok(v.details.includes('v1.97.56 (desktop/release): the recorded Cargo.lock package list is not a list of package names, so it is not used'), name);
+      // A list that was recorded but is not used is not called "not recorded".
+      assert.match(v.summary, /Brave's full Cargo\.lock package list recorded at master and 1 channel build \(v1\.97\.56\) is not usable \(see details\)/, `${name} ${a.packages}`);
+      assert.doesNotMatch(v.summary, NO_LIST, `${name} ${a.packages}`);
+    }
+    // The event pipeline takes the same path.
+    assert.match(eventFor(ORCHARD, depsOf(master, release), ONE_BUILD).impact, /Whether Brave is exposed is unknown\./);
+    // One build without a list and one with a malformed list: both facts, once each.
+    const mixed = advisoryVerdicts(ORCHARD, depsOf(master, rsnap('v1.97.56', ['desktop/release'], S)), ONE_BUILD);
+    assert.equal(mixed.affected, null);
+    assert.match(mixed.summary, /package list was not recorded at 1 channel build \(v1\.97\.56\), and the one recorded at master is not usable \(see details\), so another spelling of orchard there/, name);
+    assert.equal(count(mixed.summary, 'package list was not recorded'), 1, name);
+  }
+  // The inconsistent list (lacks a crate its own record shows) is likewise "not usable", not "not recorded".
+  const crates = { orchard: [cand('0.15.0', true, 'crates.io', true)], sinsemilla: [cand('0.1.0', false)] };
+  const lacking = depsOf(rsnap('master', ['master'], crates, { lockPackages: ['orchard', 'zcash'] }), rsnap('v1.97.56', ['desktop/release'], crates, { lockPackages: ['orchard', 'zcash'] }));
+  const v = advisoryVerdicts(ORCHARD, lacking, ONE_BUILD);
+  assert.equal(v.affected, null);
+  assert.match(v.summary, /package list recorded at master and 1 channel build \(v1\.97\.56\) is not usable \(see details\)/);
+  assert.doesNotMatch(v.summary, NO_LIST);
+});
+
+test('R3-ADV-NAMES (repair 2): several packages without the package list each get an example spelling', () => {
+  const S = { orchard: [cand('0.15.0', true, 'crates.io', true)], halo2_gadgets: [cand('0.5.0', true)] };
+  const deps = depsOf(rsnap('master', ['master'], S), rsnap('v1.97.56', ['desktop/release'], S));
+  const v = advisoryVerdicts(adv(['rust:orchard', 'rust:halo2_gadgets', 'rust:sinsemilla'], ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0', 'sinsemilla < 1.0.0']), deps, ONE_BUILD);
+  assert.equal(v.affected, null);
+  assert.match(v.summary, /another spelling of orchard, halo2_gadgets or sinsemilla there \(such as "Orchard", "halo2-gadgets" or "Sinsemilla"\), which this tracker would not have resolved/);
+  assert.equal(count(v.summary, 'package list was not recorded'), 1, 'one reason for every build and package');
+  // One package: one example, as before.
+  assert.match(advisoryVerdicts(ORCHARD, deps, ONE_BUILD).summary, /another spelling of orchard there \(such as "Orchard"\), which/);
+});
+
+test('R3-ADV-NAMES (repair 2): an unmonitored crate whose package list is recorded at some builds only names the builds without it, and its absence elsewhere stays a separate fact', () => {
+  const S = { orchard: [cand('0.15.0', true, 'crates.io', true)], halo2_gadgets: [cand('0.5.0', true)] };
+  const ZEBRA = adv(['rust:zebrad'], ['zebrad <= 4.5.1']);
+  // scratchpad/vfy-r3d2/probe3.ts "zebrad listed master only".
+  const v = advisoryVerdicts(ZEBRA, depsOf(rsnap('master', ['master'], S, { listed: true }), rsnap('v1.97.56', ['desktop/release'], S)), ONE_BUILD);
+  assert.equal(v.affected, null, v.summary);
+  assert.match(v.summary, /^Affects rust:zebrad\. zebrad is not present in Brave's Cargo\.lock at master, but the assessment is incomplete: /);
+  assert.match(v.summary, /zebrad is not among the crates this tracker reads from Brave's Cargo\.lock, and Brave's full Cargo\.lock package list was not recorded at 1 channel build \(v1\.97\.56\), so whether zebrad is in Brave's Cargo\.lock there is unknown/);
+  assert.doesNotMatch(v.summary, /at any checked build/);
+  assert.ok(v.details.includes("zebrad: not present in Brave's Cargo.lock at master"), v.details.join(' | '));
+  assert.ok(v.details.some((d) => d.startsWith('zebrad: not checked at v1.97.56 (desktop/release) (')), v.details.join(' | '));
+  // GHSA-ww9q shape on data without any list: the zebrad clause joins the one package-list reason (no build list twice).
+  const ww9q = adv(['rust:zebrad', 'rust:halo2_gadgets', 'rust:orchard'], ['zebrad <= 4.5.1', 'halo2_gadgets < 0.5.0', 'orchard < 0.14.0'], 'GHSA-ww9q-8r59-xv46');
+  const none = advisoryVerdicts(ww9q, depsOf(rsnap('master', ['master'], S), rsnap('v1.97.56', ['desktop/release'], S)), ONE_BUILD);
+  assert.equal(none.affected, null);
+  assert.match(none.summary, /cannot be ruled out; zebrad is not among the crates this tracker reads from Brave's Cargo\.lock, and without that list whether zebrad is in Brave's Cargo\.lock there is unknown\. Whether Brave is exposed is unknown\.$/);
+  assert.equal(count(none.summary, 'package list was not recorded'), 1);
+  assert.equal(count(none.summary, 'v1.97.56'), 2, 'the builds are named once for the outside pins and once for the missing list');
+  // With the list everywhere: clear, as before.
+  const listed = advisoryVerdicts(ww9q, depsOf(rsnap('master', ['master'], S, { listed: true }), rsnap('v1.97.56', ['desktop/release'], S, { listed: true })), ONE_BUILD);
+  assert.equal(listed.affected, false, listed.summary);
+  assert.match(listed.summary, /zebrad is not present in Brave's Cargo\.lock at any checked build/);
+});
+
+test('R3-ADV-NAMES (repair 2): a lock entry its own dependency graph does not link leaves the build unknown, never "does not appear"', () => {
+  // Pre-existing gap noted by the verifier: deps.ts linkedVersions() says certain:true with no version for these
+  // shapes, which resolveZcashDependencies() never writes (its lock is always a candidate that is not ruled out).
+  const S = { halo2_gadgets: [cand('0.5.0', true, 'crates.io', true)] };
+  const PK = ['halo2_gadgets', 'orchard', 'zcash'];
+  const shapes: [string, Record<string, LockCandidate[]>][] = [
+    ['no candidates', S],
+    ['only an unreachable candidate', { ...S, orchard: [cand('0.15.0', false)] }],
+    ['no candidate with the lock version', { ...S, orchard: [cand('0.16.0', true)] }],
+  ];
+  const offGraph = (crates: Record<string, LockCandidate[]>, ref: string, channels: string[]): Snap => {
+    const s = rsnap(ref, channels, crates, { lockPackages: PK });
+    return { ...s, lock: { ...s.lock, orchard: { version: '0.15.0', source: 'crates.io' } } };
+  };
+  for (const [label, crates] of shapes) {
+    const deps = depsOf(offGraph(crates, 'master', ['master']), offGraph(crates, 'v1.97.56', ['desktop/release']));
+    assert.ok(fullLockPackages(deps.snapshots.master as Snap), `${label}: fixture list is complete`);
+    const v = advisoryVerdicts(ORCHARD, deps, ONE_BUILD);
+    assert.equal(v.affected, null, `${label}: ${v.summary}`);
+    assert.doesNotMatch(v.summary, NOT_THERE, label);
+    assert.match(v.summary, /Brave's dependency record at master and 1 channel build \(v1\.97\.56\) lists orchard at a version its own dependency graph does not show Brave's Zcash crate linking, so that record is inconsistent/, label);
+    assert.ok(v.details.includes("master: the recorded lock lists orchard 0.15.0, but the recorded dependency graph does not show Brave's Zcash crate linking that version, so this record is inconsistent"), `${label}: ${v.details.join(' | ')}`);
+  }
+  // Downgrade only: a version known to be linked inside the range still makes the build affected.
+  const IN = { ...S, orchard: [cand('0.13.0', true)] };
+  assert.equal(advisoryVerdicts(ORCHARD, depsOf(offGraph(IN, 'master', ['master']), offGraph(IN, 'v1.97.56', ['desktop/release'])), ONE_BUILD).affected, true);
+  // Control: the consistent record is clear.
+  const OK = { ...S, orchard: [cand('0.15.0', true)] };
+  assert.equal(advisoryVerdicts(ORCHARD, depsOf(rsnap('master', ['master'], OK, { lockPackages: PK }), rsnap('v1.97.56', ['desktop/release'], OK, { lockPackages: PK })), ONE_BUILD).affected, false);
 });
