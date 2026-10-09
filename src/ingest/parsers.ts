@@ -1286,13 +1286,26 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   return out;
 }
 
-/** Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). */
+/**
+ * Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). The
+ * first one is read as the latest release, so when a doubtful line that could name a version (one with an x.y.z in it
+ * or in the lines of text just above it, for a setext underline) comes before it, the latest release is not known
+ * and the list is empty.
+ */
 export function changelogVersions(text: string, opts: { now?: string | number | Date } = {}): string[] {
   const now = epochMs(opts.now);
   const { marks, refs, refsComplete } = structureOf(text);
   const out: string[] = [];
-  for (const mark of marks) {
+  const lines = text.split('\n');
+  // Whether the run of non-blank lines up to the current one holds a version number.
+  let versionInRun = false;
+  for (let i = 0; i < marks.length; i++) {
+    const mark = marks[i];
     if (mark?.t === 'stop') break;
+    if (out.length === 0) {
+      versionInRun = /\S/.test(lines[i]) && (versionInRun || /\d+\.\d+\.\d+/.test(lines[i]));
+      if (mark?.t === 'doubt' && versionInRun) return [];
+    }
     const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now, refsComplete) : null;
     if (v) out.push(v);
   }

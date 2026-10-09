@@ -154,6 +154,14 @@ test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the s
   const tagHeader = md('## 1.2.3', '- Zcash a.', '', 'Notes', '<span>', '|-', '## 1.2.4', '- Zcash future.');
   assert.deepEqual(got(tagHeader), ['1.2.3:Zcash a.']);
   assert.deepEqual(changelogVersions(tagHeader), ['1.2.3']);
+  // When a doubtful heading that could name a version comes before the first release, the latest release is not
+  // known: no version is listed (the changelog collector reads an empty list as a failed read), rather than the
+  // next release down being taken for the latest.
+  for (const lead of [['Notes', '<span>', '|-'], ['Text', '<search>']]) {
+    const top = md(...lead, tag('1.99.0'), '- Zcash x.', '', '## 1.98.0', '- Zcash y.');
+    assert.deepEqual(changelogVersions(top), [], lead.join(' '));
+    assert.deepEqual(got(top), ['1.98.0:Zcash y.'], lead.join(' '));
+  }
   // A lazy line of a block quote can be a table header ("> Note" + "b | c" + "> -|-" is a quote holding a paragraph
   // and a table), and a table takes no lazy line: "Unreleased" + "===" after it is a heading outside the quote.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '> Note', 'b | c', '> -|-', 'Unreleased', '===', '- Zcash future.')), ['1.2.3:Zcash a.']);
