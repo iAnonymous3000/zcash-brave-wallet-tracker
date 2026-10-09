@@ -1,5 +1,5 @@
 {
- "description": "Inputs on which parseGate3Switch (src/ingest/sources/services.ts) breaks the oracle invariant: the oracle (tests/fixtures/gate3_oracle.py) says unknown and the hand reader gives a determinate answer. These are findings that this branch reports but may not fix (services.ts is out of its scope). Matched by exact src, hand verdict, kind and labels; only kinds 1-4 may be listed and oracle must be null, so an opposite value, a determinate answer on a module Python rejects or a missed rebinding can never be listed. When services.ts is fixed the oracle test reports the entry as stale: delete it. Same on Python 3.9, 3.11 and 3.13.",
+ "description": "Inputs on which parseGate3Switch (src/ingest/sources/services.ts) breaks the oracle invariant, findings that this branch reports but may not fix (services.ts is out of its scope). Kinds 1-4: the oracle (tests/fixtures/gate3_oracle.py) says unknown and the hand reader gives a determinate answer; oracle must be null. Kind 5: the hand reader misses a coding cookie Python honours (U+2028 or U+2029 between '#' and 'coding' on line 1 or 2, where the '.' of encodingProblem's regex stops), so it reads the bytes as UTF-8 while Python decodes them with the declared codec; these include OPPOSITE VALUES (oracle true, hand false) and answers on modules Python rejects (oracle null). Kind 5 is listable only when the test's hiddenCookie() check passes on the input itself, so no other opposite value, answer on a rejected module or missed rebinding can be listed. Kind 6 (oracle null): the module imports itself (app.api.swap.constants) and uses the import; run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, so the hand reader's false is the opposite of what running it gives for the first six entries. Matched by exact src, hand verdict, oracle verdict, kind and labels. When services.ts is fixed the oracle test reports the entry as stale: delete it. Same on Python 3.9, 3.11 and 3.13.",
  "findings": [
   {
    "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
@@ -370,6 +370,654 @@
     "literal shapes of the definition: $S = {}"
    ],
    "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = {}\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: gb18030\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2028coding: gb18030\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: gbk\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2028coding: gbk\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: shift_jis\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2028coding: shift_jis\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=gb18030\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2029coding=gb18030\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=gbk\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2029coding=gbk\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=shift_jis\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2029coding=shift_jis\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: shift_jis -*-\\n\" + a backslash after U+4E01"
+   ],
+   "src": "# note\u2028 -*- coding: shift_jis -*-\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": true,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=shift_jis :\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=shift_jis :\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: gb18030\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2028coding: gb18030\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: gbk\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2028coding: gbk\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: shift_jis\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2028coding: shift_jis\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: big5\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2028coding: big5\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: big5\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#\u2028coding: big5\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: big5\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#\u2028coding: big5\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: big5\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2028coding: big5\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: utf-16\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2028coding: utf-16\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: utf-16\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#\u2028coding: utf-16\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: utf-16\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#\u2028coding: utf-16\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2028coding: utf-16\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2028coding: utf-16\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=gb18030\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2029coding=gb18030\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=gbk\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2029coding=gbk\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=shift_jis\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2029coding=shift_jis\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=big5\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2029coding=big5\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=big5\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#\u2029coding=big5\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=big5\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#\u2029coding=big5\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=big5\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2029coding=big5\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=utf-16\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#\u2029coding=utf-16\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=utf-16\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#\u2029coding=utf-16\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=utf-16\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#\u2029coding=utf-16\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#\u2029coding=utf-16\\n\" + non-ASCII comment"
+   ],
+   "src": "#\u2029coding=utf-16\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gb18030 -*-\\n\" + a backslash after U+4E01"
+   ],
+   "src": "# note\u2028 -*- coding: gb18030 -*-\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gb18030 -*-\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "# note\u2028 -*- coding: gb18030 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gb18030 -*-\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "# note\u2028 -*- coding: gb18030 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gb18030 -*-\\n\" + non-ASCII comment"
+   ],
+   "src": "# note\u2028 -*- coding: gb18030 -*-\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gbk -*-\\n\" + a backslash after U+4E01"
+   ],
+   "src": "# note\u2028 -*- coding: gbk -*-\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gbk -*-\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "# note\u2028 -*- coding: gbk -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gbk -*-\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "# note\u2028 -*- coding: gbk -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: gbk -*-\\n\" + non-ASCII comment"
+   ],
+   "src": "# note\u2028 -*- coding: gbk -*-\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: shift_jis -*-\\n\" + non-ASCII comment"
+   ],
+   "src": "# note\u2028 -*- coding: shift_jis -*-\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: big5 -*-\\n\" + a backslash after U+4E01"
+   ],
+   "src": "# note\u2028 -*- coding: big5 -*-\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: big5 -*-\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "# note\u2028 -*- coding: big5 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: big5 -*-\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "# note\u2028 -*- coding: big5 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: big5 -*-\\n\" + non-ASCII comment"
+   ],
+   "src": "# note\u2028 -*- coding: big5 -*-\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: utf-16 -*-\\n\" + a backslash after U+4E01"
+   ],
+   "src": "# note\u2028 -*- coding: utf-16 -*-\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: utf-16 -*-\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "# note\u2028 -*- coding: utf-16 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: utf-16 -*-\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "# note\u2028 -*- coding: utf-16 -*-\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"# note\u2028 -*- coding: utf-16 -*-\\n\" + non-ASCII comment"
+   ],
+   "src": "# note\u2028 -*- coding: utf-16 -*-\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gb18030 :\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gb18030 :\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gb18030 :\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gb18030 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gb18030 :\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gb18030 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gb18030 :\\n\" + non-ASCII comment"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gb18030 :\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gbk :\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gbk :\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gbk :\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gbk :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gbk :\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gbk :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=gbk :\\n\" + non-ASCII comment"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=gbk :\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=shift_jis :\\n\" + non-ASCII comment"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=shift_jis :\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=big5 :\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=big5 :\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=big5 :\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=big5 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=big5 :\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=big5 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=big5 :\\n\" + non-ASCII comment"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=big5 :\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=utf-16 :\\n\" + a backslash after U+4E01"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=utf-16 :\nfrom app.api.common.models import Chain\nA = \"\"\"\u4e01\\\"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nB = \"\"\"\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n# \"\"\"\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=utf-16 :\\n\" + ASCII body, ZCASH out"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=utf-16 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=utf-16 :\\n\" + ASCII body, ZCASH in"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=utf-16 :\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n"
+  },
+  {
+   "kind": "kind 5: OPPOSITE VALUE or an answer on a module Python rejects - the hand reader misses a coding cookie Python honours (U+2028/U+2029 between \"#\" and \"coding\" on line 1 or 2), so it reads the bytes as UTF-8 while Python decodes them otherwise",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "coding cookies (some behind U+2028/U+2029): \"#!/usr/bin/env python3\\n#\u2029 vim: set fileencoding=utf-16 :\\n\" + non-ASCII comment"
+   ],
+   "src": "#!/usr/bin/env python3\n#\u2029 vim: set fileencoding=utf-16 :\nfrom app.api.common.models import Chain\n# caf\u00e9 \u4e01\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nimport app.api.swap.constants as Chain\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nimport app.api.swap.constants as Chain\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nfrom app.api.swap import constants as Chain\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nfrom app.api.swap import constants as Chain\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nfrom . import constants as Chain\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nfrom . import constants as Chain\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nimport app.api.swap.constants as me\\nChain = me\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nimport app.api.swap.constants as me\nChain = me\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nfrom ..swap import constants as Chain\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nfrom ..swap import constants as Chain\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nfrom ...api.swap import constants as Chain\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nfrom ...api.swap import constants as Chain\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nfrom .constants import RealChain as Chain\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nfrom .constants import RealChain as Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
+  },
+  {
+   "kind": "kind 6: hand reader determinate on a module that imports itself (app.api.swap.constants) and uses the import - run under that name, Chain.ETH can be this file's own ETH = RealChain.ZCASH, which gives the opposite value when run",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "self-imports (app.api.swap.constants): \"from app.api.common.models import Chain as RealChain\\nimport app.api.swap.constants\\nChain = app.api.swap.constants\\nETH = RealChain.ZCASH\\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\\n\""
+   ],
+   "src": "from app.api.common.models import Chain as RealChain\nimport app.api.swap.constants\nChain = app.api.swap.constants\nETH = RealChain.ZCASH\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n"
   }
  ]
 }
