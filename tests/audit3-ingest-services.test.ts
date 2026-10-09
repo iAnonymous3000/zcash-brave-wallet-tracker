@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { Http } from '../src/lib/http.ts';
 import type { Ctx } from '../src/ingest/framework.ts';
 import type { DocPage } from '../src/lib/types.ts';
-import { parseGate3Switch, pythonStatements, services } from '../src/ingest/sources/services.ts';
+import { parseGate3Switch, services } from '../src/ingest/sources/services.ts';
 import type { ServicesData } from '../src/ingest/sources/services.ts';
 import { docs } from '../src/ingest/sources/docs.ts';
 
@@ -52,16 +52,6 @@ function assertGate3Unknown(r: Awaited<ReturnType<typeof collectGate3>>, label: 
 }
 
 test('R3-ING-08: a statement after ";" on a compound header line belongs to the block, never to the module', async () => {
-  // The splitter keeps a compound header's one-line suite in the header's statement; simple statements still split.
-  const split = (src: string) => pythonStatements(src).map((s) => [s.line, s.indent, s.code]);
-  assert.deepEqual(split('def f(): pass; X = 1\nY = 2; Z = 3\nif A: raise E; B = 1\n'), [
-    [1, 0, 'def f(): pass; X = 1'],
-    [2, 0, 'Y = 2'],
-    [2, 0, 'Z = 3'],
-    [3, 0, 'if A: raise E; B = 1'],
-  ]);
-  assert.deepEqual(split('def f(): pass; \\\n  X = 1\n'), [[1, 0, 'def f(): pass;    X = 1']]);
-
   // In each module the assignment is a local of f, a class attribute or a statement of the block: CPython leaves the
   // module-level name unbound (or, after the star import, takes it from the imported module). Never a value.
   const suites = [

@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { Http } from '../src/lib/http.ts';
 import type { Ctx } from '../src/ingest/framework.ts';
 import type { ChannelVersion, DocPage, SourceEnvelope } from '../src/lib/types.ts';
-import { isRelevantStudy, parseGate3Switch, pythonStatements, services } from '../src/ingest/sources/services.ts';
+import { isRelevantStudy, parseGate3Switch, services } from '../src/ingest/sources/services.ts';
 import type { ServicesData, StudyInfo } from '../src/ingest/sources/services.ts';
 import { docs } from '../src/ingest/sources/docs.ts';
 
@@ -258,28 +258,8 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
   assert.ok(r.limitations?.some((l) => /gate3 at cccccccc: line 2: /.test(l)), 'the limitation names the statement that made the value unknown');
 });
 
-test('R-ING-08 (repair): Python statement splitting follows the tokenizer for prefixes, keywords before quotes and line ends', () => {
-  const split = (src: string) => pythonStatements(src).map((s) => [s.line, s.indent, s.code]);
-  // A quote right after a keyword starts a string; the statement after ';' keeps the line's indentation.
-  assert.deepEqual(split('X = a if b else"""\n"""; SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n'), [
-    [1, 0, "X = a if b else''"],
-    [2, 0, 'SWAP_DISABLED_CHAINS = (Chain.ZCASH,)'],
-  ]);
-  assert.deepEqual(split("X = 1 in'#'; Y = 2\n"), [
-    [1, 0, "X = 1 in''"],
-    [1, 0, 'Y = 2'],
-  ]);
-  // String prefixes (any case, t-strings included) belong to the string; other words before a quote do not.
-  const st = pythonStatements('A = Rb"x" + T"{y}" + fR\'{z}\' + u"w"\n')[0];
-  assert.equal(st.code, "A = '' + '' + '' + ''");
-  assert.deepEqual(st.fstrings, ['{y}', '{z}']);
-  // Carriage returns end lines as in Python.
-  assert.deepEqual(split('A = 1\rB = 2\r\nC = 3\n'), [
-    [1, 0, 'A = 1'],
-    [2, 0, 'B = 2'],
-    [3, 0, 'C = 3'],
-  ]);
-});
+// The statement-splitter unit test that stood here tested the hand-written Python tokenizer, which was replaced by
+// the strict constants-module allowlist in parseGate3Switch; the gate3 behaviour tests in this file still apply.
 
 // ---------------------------------------------------------------------------
 // R-DOCS: Zendesk article records without a body

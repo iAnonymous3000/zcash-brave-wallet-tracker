@@ -1066,8 +1066,8 @@ test('gate3 oracle: kind-3 triage counts plain assignments (S = A; S: T; S = B i
     assert.equal(got[i].zcashDisabled, null, `${preview(src)}: ${got[i].reason}`);
     assert.equal(violationKind(got[i], src), want, `${preview(src)}: ${got[i].reason}`);
   }
+  // Any kind-3 entries still listed must triage as kind 3 (the list is empty since the reader became a strict allowlist).
   const bare = KNOWN.filter((k) => k.kind === KIND.bare);
-  assert.ok(bare.length > 0, 'kind-3 entries are listed');
   const listed = oracleMany(bare.map((k) => k.src));
   for (const [i, k] of bare.entries()) assert.equal(violationKind(listed[i], k.src), KIND.bare, `listed kind-3 entry ${preview(k.src)}: ${listed[i].reason}`);
 });
