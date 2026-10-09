@@ -175,7 +175,7 @@ test('D2: three-level uplift chains work regardless of input order', () => {
 });
 
 test('D2: every item in the committed GitHub inventory belongs to at least one group (read-only)', (t) => {
-  const path = new URL('../data/sources/github-items.json', import.meta.url);
+  const path = new URL('./fixtures/frozen/sources/github-items.json', import.meta.url); // frozen copy of the committed data
   if (!existsSync(path)) return t.skip('no committed github-items envelope');
   const items = (JSON.parse(readFileSync(path, 'utf8')) as { data: { items: Record<string, WorkItem> } }).data.items;
   assertEveryItemGrouped(items, buildGroups(items, buildRelations(items)), 'committed data');
@@ -640,7 +640,7 @@ test('D1 (repair): the event pipeline passes the build list, so master-only evid
 
 test('D1 (repair): committed GHSA-ww9q is unknown only because zebrad is not read; its evidence shows one build’s checked pins (read-only)', (t) => {
   const read = <T>(name: string): T | null => {
-    const path = new URL(`../data/sources/${name}.json`, import.meta.url);
+    const path = new URL(`./fixtures/frozen/sources/${name}.json`, import.meta.url); // frozen copy of the committed data
     return existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')) as { data: T }).data : null;
   };
   const advisories = read<{ advisories: Advisory[] }>('advisories')?.advisories ?? [];
