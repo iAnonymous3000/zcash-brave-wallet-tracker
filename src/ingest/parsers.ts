@@ -236,8 +236,11 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
 //   the lines after it start new blocks where CommonMark continues the paragraph, and it reads a setext underline as
 //   the definition's destination);
 // - blockquoteRule: block quotes, read in windows (markdown-it's rule is quadratic in some texts), with the lazy lines
-//   of an enclosing quote kept lazy (markdown-it checks them again with their indentation lost).
-// Only public markdown-it API is used: Ruler.at/after/before/disable/getRules and the documented StateBlock fields.
+//   of an enclosing quote kept lazy (markdown-it checks them again with their indentation lost) and no ">" indented
+//   4 columns or more taken for a quote marker;
+// - lazyIndented: a lazy line of a list item indented 4 columns or more past its container starts no block.
+// Only public markdown-it API is used: Ruler.at/after/before/disable/getRules, the documented StateBlock fields and a
+// wrapper around the block parser's tokenize method (to know the indentation of the containers being read).
 
 /**
  * Block quotes and list items open at once beyond which the structure is not read (Brave's changelogs nest at most
