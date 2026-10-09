@@ -3,23 +3,29 @@
 // It works on the TypeScript syntax tree, so comments and prose in strings never count. Two rules:
 //
 //  path      An expression that builds a path inside <repo>/data: new URL('../data/…', import.meta.url),
-//            join/resolve(ROOT or import.meta.dirname …, 'data', …), `${ROOT}/data/…`, [ROOT, 'data'].join('/'), or a
-//            cwd-relative 'data/…' handed to an fs function. A directory named data under a temporary directory is not
-//            affected: its base is not a path the scan can place in the repository.
+//            join/resolve(ROOT or import.meta.dirname …, 'data', …), `${ROOT}/data/…`, [ROOT, 'data'].join('/'), a
+//            cwd-relative 'data/…' handed to an fs function, a glob that can reach into data/ from where it runs, or a
+//            child process started in data/. A directory named data under a temporary directory is not affected: its base
+//            is not a path the scan can place in the repository. Also every symbolic link under tests/ that leads to
+//            data/, into it, or to a directory that holds it (dangling ones by the path they name).
 //  indirect  Code that reads data/ through src: a call to a src function that reaches dataPath()/dataDir() (found by
 //            scanning src/, scripts/ and config/, so a new entry point is covered without editing this file; renamed
 //            imports and destructured or reassigned bindings are followed), a child process that runs a CLI module that
 //            does or an npm script that runs one (`npm run build`, `node --run refresh`, …), unless TRACKER_DATA_DIR is
 //            set to a real value first (an empty value, `undefined`, a delete or a restore of the previous value does not
 //            count); and any import of a module that reads data/ when it is loaded.
+// Code given to node as a static string and run in the repository root (node -e/--eval/-p/--print, a Worker's eval
+// code) is scanned with both rules as a file of its own.
 //
 // The scan cannot see every dynamic construction (a path assembled from values computed at run time, a command read
-// from a file). The runtime trace (tests/live-data-trace.ts, run by tests/no-live-data.test.ts) covers what node itself
-// opens; the scan adds the file and line. The frozen copy in tests/fixtures/frozen/ is what tests should read.
+// from a file, a shell command string). The runtime trace (tests/live-data-trace.ts, run by tests/no-live-data.test.ts)
+// covers what node itself opens; the scan adds the file and line. The frozen copy in tests/fixtures/frozen/ is what
+// tests should read.
 
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { existsSync, lstatSync, readdirSync, readFileSync, readlinkSync, realpathSync, statSync } from 'node:fs';
+import { dirname, isAbsolute, join, matchesGlob, relative, resolve, sep } from 'node:path';
 import ts from 'typescript';
+import { resolveLinks } from './live-data-trace.ts';
 
 export interface Finding {
   file: string;
@@ -45,13 +51,56 @@ function parseFile(file: string, text = readFileSync(file, 'utf8')): ts.SourceFi
   return ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, /\.(js|mjs|cjs)$/.test(file) ? ts.ScriptKind.JS : ts.ScriptKind.TS);
 }
 
-/** Code files under dir (node_modules excluded). Fixture directories are included: a helper placed there is code. */
-function walkCode(dir: string): string[] {
+/**
+ * Code files under dir (node_modules excluded), each once, by its real path. Fixture directories are included: a helper
+ * placed there is code. As `node --test` does, a link to a file counts (it is scanned where it really is, which is
+ * where node runs it from) and a link to a directory is not followed (a link to an ancestor would never end);
+ * scanTests reports the links that reach data/.
+ */
+function walkCode(dir: string, seen = new Set<string>()): string[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).flatMap((n) => {
     const p = join(dir, n);
-    if (statSync(p).isDirectory()) return n === 'node_modules' ? [] : walkCode(p);
-    return CODE.test(p) && !p.endsWith('.d.ts') ? [p] : [];
+    const st = lstatSync(p);
+    if (st.isDirectory()) return n === 'node_modules' ? [] : walkCode(p, seen);
+    if (!CODE.test(p) || p.endsWith('.d.ts')) return [];
+    let file = p;
+    if (st.isSymbolicLink()) {
+      try {
+        if (!statSync(p).isFile()) return [];
+        file = realpathSync(p);
+      } catch {
+        return []; // dangling: nothing runs
+      }
+    }
+    if (seen.has(file)) return [];
+    seen.add(file);
+    return [file];
+  });
+}
+
+/** Every symbolic link under dir (not followed). */
+function walkLinks(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).flatMap((n) => {
+    const p = join(dir, n);
+    const st = lstatSync(p);
+    if (st.isSymbolicLink()) return [p];
+    return st.isDirectory() && n !== 'node_modules' ? walkLinks(p) : [];
+  });
+}
+
+/**
+ * Symbolic links under tests/ that reach data/: to it, into it, or to a directory that holds it (the repository root).
+ * A test reading through one names no data/ path the scan could see.
+ */
+export function linksIntoData(root: string): Finding[] {
+  // Both sides fully resolved, the way the trace resolves a path (a dangling link is followed by the path it names).
+  const data = resolveLinks(resolve(root, 'data'));
+  return walkLinks(join(root, 'tests')).flatMap((link) => {
+    const target = resolveLinks(link);
+    const reaches = target === data || target.startsWith(data + sep) || data.startsWith(target + sep);
+    return reaches ? [{ file: relative(root, link), line: 0, rule: 'path' as const, detail: `a symbolic link to ${readlinkSync(link)} reaches data/` }] : [];
   });
 }
 
@@ -329,7 +378,8 @@ export function runsScript(command: string, name: string): boolean {
   return LIFECYCLE.has(name) && new RegExp(`(?:^|["'\`\\s;&|(])npm(?:\\s+-{1,2}[\\w-]+(?:=\\S+)?)*\\s+${n}${end}`).test(command);
 }
 
-export function dataReaders(root: string): DataReaders {
+export function dataReaders(given: string): DataReaders {
+  const root = realpathSync(given); // walkCode gives real paths
   const store = resolve(root, 'src/lib/store.ts');
   const files = ['src', 'scripts', 'config'].flatMap((d) => walkCode(join(root, d)));
   const mods = files.map((file) => {
@@ -414,6 +464,11 @@ export function dataReaders(root: string): DataReaders {
 /** The data/ directory of a repository root, for the guard to name what it watches. A call anywhere else is reported. */
 export function liveDataDir(root: string): string {
   return resolve(root, 'data');
+}
+
+/** The guard: the one file that may name data/ (through liveDataDir), and the one test file the runtime run leaves out. */
+export function guardFile(root: string): string {
+  return resolve(root, 'tests', 'no-live-data.test.ts');
 }
 
 const isProcessEnv = (e: ts.Expression) => /^process\.env$/.test(strip(e).getText());
@@ -601,9 +656,73 @@ export function scanSource(file: string, text: string, root: string, readers: Da
     return state === 'inherit' ? callProtected(call) : state === true;
   };
   const isSpawn = (n: ts.Node): n is ts.CallExpression => ts.isCallExpression(n) && SPAWN_CALLS.has(original(calleeName(n) ?? ''));
+  /** The directory a child process or a glob works in: its cwd option, or this process's (the root under npm test). */
+  const cwdOf = (opts: ts.ObjectLiteralExpression | null): string | null => {
+    const prop = opts?.properties.find((p) => propName(p) === 'cwd');
+    if (!prop) return root;
+    const expr = ts.isPropertyAssignment(prop) ? prop.initializer : ts.isShorthandPropertyAssignment(prop) ? prop.name : null;
+    const v = expr ? ev.evaluate(expr) : null;
+    if (!v || v.partial) return null;
+    return v.kind === 'path' ? resolve(v.value) : resolve(root, v.value);
+  };
+  const optionsOf = (call: ts.CallExpression | ts.NewExpression): ts.ObjectLiteralExpression | null =>
+    [...(call.arguments ?? [])].reverse().map(objectOf).find((o) => o !== null) ?? null;
+  /** Code given to node on its command line (-e, --eval, -p, --print), when it is static. */
+  const nodeEvalCode = (call: ts.CallExpression): string | null => {
+    const [file, args] = call.arguments;
+    if (!file || !args) return null;
+    const exe = ev.evaluate(file);
+    const isNode = strip(file).getText(sf) === 'process.execPath' || (!!exe && !exe.partial && /(^|[\\/])node(\.exe)?$/.test(exe.value));
+    if (!isNode) return null;
+    let list = strip(args);
+    if (ts.isIdentifier(list)) list = strip(ev.constOf(list.text) ?? list);
+    if (!ts.isArrayLiteralExpression(list)) return null;
+    const values = list.elements.map((el) => (ts.isSpreadElement(el) ? null : ev.evaluate(el)));
+    for (const [i, v] of values.entries()) {
+      if (!v || v.partial) continue;
+      const inline = /^--(?:eval|print)=([\s\S]*)$/.exec(v.value);
+      if (inline) return inline[1];
+      const next = values[i + 1];
+      if (/^(?:-e|--eval|-p|--print)$/.test(v.value) && next && !next.partial) return next.value;
+    }
+    return null;
+  };
+  /** Code run in the repository root (node -e, a Worker's eval code) is scanned like a file of its own. */
+  const checkCode = (n: ts.Node, what: string, code: string | null, cwd: string | null): void => {
+    if (code === null || cwd !== root) return; // run elsewhere: its relative paths are not in the repository
+    for (const f of scanSource(join(root, `[${what}]`), code, root, readers)) report(n, f.rule, `${what} code: ${f.detail}`);
+  };
   const checkSpawn = (call: ts.CallExpression): void => {
     const what = runsReader(call);
     if (what && !spawnProtected(call)) report(call, 'indirect', `starts ${what} (reads data/) without a TRACKER_DATA_DIR`);
+    const opts = optionsOf(call);
+    const cwd = cwdOf(opts);
+    if (cwd && inData(cwd)) report(call, 'path', 'starts a child process in data/');
+    checkCode(call, 'node --eval', nodeEvalCode(call), cwd);
+  };
+  /** Whether a glob pattern, read from cwd, can reach a path inside data/. */
+  const globReaches = (pattern: string, cwd: string): boolean => {
+    if (inData(cwd)) return true;
+    const rel = relative(cwd, data);
+    if (rel.startsWith('..') || rel === '' || isAbsolute(rel)) return false;
+    const dataSegs = rel.split(sep);
+    const segs = pattern.split('/').filter((s, i, all) => !(s === '.' && all.slice(0, i).every((x) => x === '.')));
+    for (const [i, d] of dataSegs.entries()) {
+      const s = segs[i];
+      if (s === undefined) return false;
+      if (s === '**') return true;
+      if (!matchesGlob(d, s)) return false;
+    }
+    return segs.length > dataSegs.length;
+  };
+  const checkGlob = (call: ts.CallExpression): void => {
+    const first = call.arguments[0];
+    if (!first) return;
+    const cwd = cwdOf(objectOf(call.arguments[1]));
+    if (!cwd) return;
+    const arr = strip(first);
+    const patterns = (ts.isArrayLiteralExpression(arr) ? [...arr.elements] : [first]).map((e) => (ts.isSpreadElement(e) ? null : ev.evaluate(e)));
+    if (patterns.some((p) => p && !p.partial && p.kind === 'str' && globReaches(p.value, cwd))) report(call, 'path', 'a glob that reaches into data/');
   };
   /** A path to a CLI named outside a child-process call: follow the variable it is stored in to the calls that use it. */
   const checkCliName = (n: ts.Node): void => {
@@ -662,9 +781,16 @@ export function scanSource(file: string, text: string, root: string, readers: Da
       if (v && v.kind === 'path' && inData(v.value)) return report(n, 'path', 'builds a path inside data/');
       if (v && v.kind === 'path' && !v.partial && cliPaths.has(v.value)) checkCliName(n);
     }
+    // new Worker(code, { eval: true }): the code runs in this process's directory.
+    if (ts.isNewExpression(n) && original(calleeName(n) ?? '') === 'Worker' && n.arguments?.[0]) {
+      const evalProp = objectOf(n.arguments[1])?.properties.find((p) => propName(p) === 'eval');
+      const code = ev.evaluate(n.arguments[0]);
+      if (evalProp && ts.isPropertyAssignment(evalProp) && evalProp.initializer.kind === ts.SyntaxKind.TrueKeyword && code && !code.partial) checkCode(n, 'Worker eval', code.value, root);
+    }
     if (ts.isCallExpression(n)) {
       const name = original(calleeName(n) ?? '');
       const first = n.arguments[0];
+      if (name === 'glob' || name === 'globSync') checkGlob(n);
       if (FS_CALLS.has(name) && first) {
         const v = ev.evaluate(first);
         if (v && v.kind === 'str' && inData(resolve(root, v.value))) return report(n, 'path', 'reads a cwd-relative path inside data/');
@@ -673,8 +799,9 @@ export function scanSource(file: string, text: string, root: string, readers: Da
         const dir = v && !v.partial ? (v.kind === 'path' ? resolve(v.value) : resolve(root, v.value)) : null;
         if (recursive && dir && data.startsWith(dir + sep)) return report(n, 'path', 'works recursively on a directory that contains data/');
       }
-      // liveDataDir() names data/ for the guard (tests/no-live-data.test.ts, checked by review); anywhere else it is a read.
-      if (name === 'liveDataDir' && basename(file) !== 'no-live-data.test.ts') report(n, 'path', 'names data/ through liveDataDir()');
+      // liveDataDir() names data/ for the guard (tests/no-live-data.test.ts itself, by its full path, checked by review);
+      // anywhere else, a file of the same name in another directory included, it is a read.
+      if (name === 'liveDataDir' && resolve(file) !== guardFile(root)) report(n, 'path', 'names data/ through liveDataDir()');
       if (SPAWN_CALLS.has(name)) checkSpawn(n);
       if (readers.functions.has(name) && !callProtected(n)) report(n, 'indirect', `calls ${name}() (reads through dataPath/dataDir) without setting TRACKER_DATA_DIR first`);
       // A reader function handed to other code (a helper, a mock, Promise.then) runs there: the same rule applies here.
@@ -690,7 +817,9 @@ export function scanSource(file: string, text: string, root: string, readers: Da
   return findings;
 }
 
-/** Scan every code file under tests/ (fixture directories included). */
-export function scanTests(root: string, readers = dataReaders(root)): Finding[] {
-  return walkCode(join(root, 'tests')).flatMap((f) => scanSource(f, readFileSync(f, 'utf8'), root, readers)).map((x) => ({ ...x, file: relative(root, x.file) }));
+/** Scan every code file under tests/ (fixture directories included), and every symbolic link there. */
+export function scanTests(given: string, readers = dataReaders(given)): Finding[] {
+  const root = realpathSync(given); // walkCode gives real paths; paths are judged against the real data/
+  const code = walkCode(join(root, 'tests')).flatMap((f) => scanSource(f, readFileSync(f, 'utf8'), root, readers)).map((x) => ({ ...x, file: relative(root, x.file) }));
+  return [...code, ...linksIntoData(root)];
 }
