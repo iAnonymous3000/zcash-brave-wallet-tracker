@@ -38,39 +38,101 @@ export interface IosNotes {
   updatedAt: string | null;
   body: string;
   /**
-   * The issue author's GitHub `author_association` when the note was read (OWNER, MEMBER or COLLABORATOR; notes
-   * from anyone else are not stored). Absent only on notes stored before provenance was recorded.
+   * Provenance, recorded when the note was read; only notes from a trusted author (see `authorTrust`) are stored.
+   * `authorAssociation`: GitHub's `author_association` for the issue author (null when absent or malformed).
+   * `authorId`: the author's numeric GitHub user id (immutable, unlike the login). `authorLogin`: display only.
+   * All three are absent only on notes stored before provenance was recorded (see `LEGACY_IOS_NOTE_AUTHORS`).
    */
   authorAssociation?: string | null;
+  authorId?: number | null;
+  authorLogin?: string | null;
 }
 
-/** GitHub author associations of people who own or can write to brave/brave-browser; only their release-notes issues are used. */
+/** GitHub author associations of people who own or can write to brave/brave-browser. */
 export const TRUSTED_AUTHOR_ASSOCIATIONS: ReadonlySet<string> = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
+/**
+ * Numeric GitHub user ids (immutable, unlike logins) of the people who write Brave's iOS release notes, trusted even
+ * though GitHub reports them to this tracker as CONTRIBUTOR (org membership that is not public is not visible to it).
+ * Policy list kept by hand: an issue by anyone else (and not an owner, member or collaborator) is ignored and named
+ * in a limitation with its author's id, so a new release-notes author shows up there and can be added here.
+ * - 17885425 (Uni-verse): opened all 36 "Release Notes for iOS Release" issues in brave/brave-browser and authored 29
+ *   of the last 30 commits to brave-browser's CHANGELOG_iOS.md (merged by Brave); checked on 2026-10-08.
+ */
+export const TRUSTED_IOS_NOTES_AUTHOR_IDS: ReadonlySet<number> = new Set([17885425]);
+
+/**
+ * Notes stored before provenance was recorded carry no author: their issue numbers, with the author id each was
+ * verified to have on 2026-10-08 through the GitHub API (an issue's author never changes). Only these legacy notes
+ * may stand in for an issue a run could not re-read; any other note without provenance is not used.
+ */
+export const LEGACY_IOS_NOTE_AUTHORS: ReadonlyMap<number, number> = new Map(
+  [59793, 59758, 59011, 58174, 57652, 56749, 56298, 55757, 54941, 53984, 53487, 52362, 51442, 50926, 50237, 49811, 49455, 48323, 47114, 46888, 46130, 45383, 44724, 43960, 43403, 42712, 42214, 41772, 41109, 41013, 39765].map((n) => [n, 17885425]),
+);
 
 /** Whether an issue's `author_association` is a trusted one. A missing or unexpected value is untrusted. */
 export function trustedAssociation(association: unknown): association is string {
   return typeof association === 'string' && TRUSTED_AUTHOR_ASSOCIATIONS.has(association);
 }
 
+/** Whether a GitHub user id is a listed Brave iOS release-notes author. Only a numeric id counts (never a login). */
+export function trustedAuthorId(id: unknown): id is number {
+  return typeof id === 'number' && Number.isSafeInteger(id) && TRUSTED_IOS_NOTES_AUTHOR_IDS.has(id);
+}
+
+/** Why an issue author is trusted (their association, else their listed user id), or null when they are not. */
+export function authorTrust(association: unknown, authorId: unknown): 'association' | 'author-id' | null {
+  if (trustedAssociation(association)) return 'association';
+  if (trustedAuthorId(authorId)) return 'author-id';
+  return null;
+}
+
+const hasProvenance = (n: IosNotes) => n.authorAssociation !== undefined || n.authorId !== undefined;
+
 /**
- * Whether a stored note may stand in for one this run could not re-read: its recorded author association is trusted,
- * or it was stored before provenance was recorded (no `authorAssociation`; such notes are re-checked, and replaced or
- * dropped, by the next complete search). A note with a recorded untrusted association is never kept.
+ * Whether a stored note came from a trusted issue, so it may map a build or stand in for an issue this run could not
+ * re-read: its recorded author is trusted now, or it predates provenance and its issue is a verified legacy one whose
+ * author is trusted now. Anything else (an untrusted or missing author, a malformed note) is not kept.
  */
 export function keepableNote(n: IosNotes): boolean {
-  return n.authorAssociation === undefined || trustedAssociation(n.authorAssociation);
+  if (!n || typeof n !== 'object') return false;
+  if (hasProvenance(n)) return authorTrust(n.authorAssociation, n.authorId) !== null;
+  return Number.isSafeInteger(n.number) && trustedAuthorId(LEGACY_IOS_NOTE_AUTHORS.get(n.number));
+}
+
+/** How a kept note's author was established, for the iOS Release basis. */
+function provenanceText(n: IosNotes): string {
+  if (trustedAssociation(n.authorAssociation)) return `, opened by a brave/brave-browser ${n.authorAssociation.toLowerCase()}`;
+  const id = trustedAuthorId(n.authorId) ? n.authorId : hasProvenance(n) ? null : LEGACY_IOS_NOTE_AUTHORS.get(n.number);
+  if (!trustedAuthorId(id)) return '';
+  return `, opened by GitHub user id ${id}${n.authorLogin ? ` (${n.authorLogin})` : ''}, a listed Brave iOS release-notes author`;
 }
 
 const MAX_IGNORED_LISTED = 25;
+const MAX_IGNORED_AUTHORS = 10;
 
-/** Limitation naming the release-notes issues ignored because their author is not a Brave owner, member or collaborator. */
-function ignoredIssuesNote(ignored: { number: number; association: string }[]): string {
+interface IgnoredIssue {
+  number: number;
+  association: string;
+  authorId: number | null;
+  authorLogin: string | null;
+}
+
+/** Limitation naming the release-notes issues ignored because their author is not trusted, with the authors' user ids. */
+function ignoredIssuesNote(ignored: IgnoredIssue[]): string {
   const listed = ignored.slice(0, MAX_IGNORED_LISTED);
   const byAssociation = new Map<string, number[]>();
   for (const x of listed) byAssociation.set(x.association, [...(byAssociation.get(x.association) ?? []), x.number]);
   const groups = [...byAssociation].map(([a, ns]) => `${a}: ${ns.map((n) => `#${n}`).join(', ')}`).join('; ');
   const more = ignored.length > listed.length ? `; and ${ignored.length - listed.length} more` : '';
-  return `ignored ${ignored.length} iOS release-notes issue(s) whose author is not a brave/brave-browser owner, member or collaborator (author_association ${groups}${more}); their build mappings and notes were not used`;
+  const authors = new Map<string, string>();
+  for (const x of ignored) {
+    const key = x.authorId === null ? 'not reported' : String(x.authorId);
+    if (!authors.has(key)) authors.set(key, x.authorId === null ? 'not reported' : `${x.authorId}${x.authorLogin ? ` (${x.authorLogin})` : ''}`);
+  }
+  const authorList = [...authors.values()];
+  const authorText = `${authorList.slice(0, MAX_IGNORED_AUTHORS).join(', ')}${authorList.length > MAX_IGNORED_AUTHORS ? `, and ${authorList.length - MAX_IGNORED_AUTHORS} more` : ''}`;
+  return `ignored ${ignored.length} iOS release-notes issue(s) whose author is neither a brave/brave-browser owner, member or collaborator nor a listed Brave iOS release-notes author (author_association ${groups}${more}; author GitHub user id(s): ${authorText}); their build mappings and notes were not used`;
 }
 
 export interface BraveVersionsData {
@@ -275,32 +337,37 @@ export const braveVersions: Collector<BraveVersionsData> = {
     }
 
     // App Store marketing version -> build, from Brave's public iOS release-notes issues. Anyone can open an issue with
-    // that title, so only issues opened by a brave/brave-browser owner, member or collaborator (GitHub's
-    // author_association) are stored and used; any other issue never maps a build or contributes release notes.
+    // that title, so only issues whose author is trusted (a brave/brave-browser owner, member or collaborator per
+    // GitHub's author_association, or a listed Brave iOS release-notes author by numeric user id) are stored and used;
+    // any other issue never maps a build or contributes release notes.
     let iosNotes: IosNotes[] = [];
     let iosNotesReadAt: string | null = prev?.iosNotesReadAt ?? (prev?.iosNotes ? prevReadAt : null);
     const prevNotes: IosNotes[] = Array.isArray(prev?.iosNotes) ? prev!.iosNotes : [];
-    /** Earlier notes that may stand in for issues this run could not re-read, and the count dropped for an untrusted author. */
+    /** Earlier notes that may stand in for issues this run could not re-read, and the count not kept for lack of a trusted author. */
     const carryNotes = (reread: Set<number>) => {
       const unread = prevNotes.filter((x) => x && !reread.has(x.number));
       const kept = unread.filter(keepableNote);
       const dropped = unread.length - kept.length;
-      return { kept, droppedNote: dropped ? `; ${dropped} earlier note(s) from authors that are not brave/brave-browser owners, members or collaborators dropped` : '' };
+      return { kept, droppedNote: dropped ? `; ${dropped} earlier note(s) not kept because their author is not trusted or was never recorded` : '' };
     };
     try {
       const out = await ctx.gh.searchIssues('repo:brave/brave-browser "Release Notes for iOS Release" in:title is:issue');
-      const hits = out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown; author_association?: unknown })[];
-      const ignored: { number: number; association: string }[] = [];
+      const hits = out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown; author_association?: unknown; user?: unknown })[];
+      const ignored: IgnoredIssue[] = [];
       for (const h of hits) {
         if (h.pull_request) continue;
         const { marketing, build } = parseIosNotesIssue(h.title, h.body ?? '');
         if (!marketing) continue;
-        if (!trustedAssociation(h.author_association)) {
-          const a = h.author_association;
-          ignored.push({ number: h.number, association: typeof a === 'string' && /^[A-Z_]{1,40}$/.test(a) ? a : 'not reported' });
+        const a = h.author_association;
+        const authorAssociation = typeof a === 'string' && /^[A-Z_]{1,40}$/.test(a) ? a : null;
+        const user = h.user && typeof h.user === 'object' ? (h.user as { id?: unknown; login?: unknown }) : null;
+        const authorId = typeof user?.id === 'number' && Number.isSafeInteger(user.id) && user.id > 0 ? user.id : null;
+        const authorLogin = typeof user?.login === 'string' && /^[A-Za-z0-9-]{1,39}$/.test(user.login) ? user.login : null;
+        if (!authorTrust(a, authorId)) {
+          ignored.push({ number: h.number, association: authorAssociation ?? 'not reported', authorId, authorLogin });
           continue;
         }
-        iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000), authorAssociation: h.author_association });
+        iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000), authorAssociation, authorId, authorLogin });
       }
       // Ignoring an issue by its author is a determinate answer (the issue was read), not a coverage gap.
       if (ignored.length) limitations.push(ignoredIssuesNote(ignored));
@@ -327,8 +394,7 @@ export const braveVersions: Collector<BraveVersionsData> = {
       if (n?.build && !hasIosRelease) limitations.push(`iOS release-notes issue #${n.number} names build ${n.build}, but no GitHub release with iOS assets exists for it; not used`);
       if (n?.build && hasIosRelease) {
         const pointerNote = iosRel.carriedPointers ? ` (App Store pointer not readable this run; value last read ${readTimes(Object.values(iosRel.carriedPointers))})` : '';
-        const author = n.authorAssociation ? `, opened by a brave/brave-browser ${n.authorAssociation.toLowerCase()}` : '';
-        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}${author}; GitHub release v${n.build} carries the iOS build${pointerNote}`;
+        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}${provenanceText(n)}; GitHub release v${n.build} carries the iOS build${pointerNote}`;
         iosRel.detail = { ...(iosRel.detail ?? {}), 'ios-release-notes-issue': n.url };
         iosRel.version = n.build;
         iosRel.tag = `v${n.build}`;
