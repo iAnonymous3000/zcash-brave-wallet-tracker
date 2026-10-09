@@ -113,12 +113,165 @@ async function zendeskList(ctx: Ctx, firstUrl: string, key: string, maxPages: nu
 }
 
 /**
- * Whether a Zendesk article record carries readable content. The listing, search and article endpoints all return
- * `body` (HTML). A record without a string body, or whose body has no text ("", "<p></p>", whitespace), is not an
- * article that was reworded: a published Help Center article is never empty, so this is an API shape change or a
- * failed render, and the article's Zcash wording is unknown. It is never captured as a page and never archived.
+ * HTML named character references for whitespace and invisible characters (spaces, zero-width characters, the soft
+ * hyphen, direction marks, invisible operators). decodeEntities leaves these as literal text, so they would read as
+ * words. `&nbsp` and `&shy` are also decoded without the semicolon, as browsers do.
  */
-const hasBody = (a: any) => typeof a?.body === 'string' && htmlToText(a.body).trim() !== '';
+const INVISIBLE_ENTITY =
+  /&(?:(?:Tab|NewLine|nbsp|NonBreakingSpace|shy|ensp|emsp|emsp13|emsp14|numsp|puncsp|thinsp|ThinSpace|hairsp|VeryThinSpace|MediumSpace|ThickSpace|ZeroWidthSpace|NegativeVeryThinSpace|NegativeThinSpace|NegativeMediumSpace|NegativeThickSpace|zwnj|zwj|lrm|rlm|NoBreak|af|ApplyFunction|it|InvisibleTimes|ic|InvisibleComma);|(?:nbsp|shy)(?![A-Za-z0-9]))/g;
+/** Numeric character references, with or without the closing semicolon (browsers decode both). */
+const NUMERIC_REF = /&#(?:[xX]([0-9a-fA-F]+)|(\d+));?/g;
+/** Characters that render as nothing: default-ignorable code points (zero-width, format, filler) and the blank braille pattern. */
+const IGNORABLE = /[\p{Default_Ignorable_Code_Point}\u2800]/gu;
+/** What makes text readable: a letter, digit, punctuation mark or symbol that is not ignorable. */
+const READABLE = /[\p{L}\p{N}\p{P}\p{S}]/u;
+
+/** Elements whose content is raw text up to their end tag and is never rendered (a title in a body is not shown either). */
+const RAW_HIDDEN = new Set(['script', 'style', 'title', 'noscript', 'iframe', 'noembed', 'noframes']);
+/** Elements whose content is not rendered as page text: inert templates, the document head, media fallback content. */
+const CONTENT_HIDDEN = new Set(['template', 'head', 'object', 'video', 'audio', 'canvas', 'datalist', 'desc', 'metadata']);
+/** Void elements: they have no content, so a hidden attribute on them hides nothing that follows. */
+const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr', 'param', 'keygen']);
+/** Inline styles that hide an element's text. */
+const HIDING_STYLE = /(?:^|[;\s])(?:display\s*:\s*none|visibility\s*:\s*(?:hidden|collapse)|font-size\s*:\s*0(?![.\d]*[1-9])|opacity\s*:\s*0(?![.\d]*[1-9]))/i;
+const ATTRIBUTE = /([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
+
+/** Index just past the '>' that ends the start tag at `lt` (quoted attribute values may contain '>'), or the end of the input. */
+function startTagEnd(html: string, lt: number): number {
+  let i = lt + 1;
+  while (i < html.length) {
+    const c = html[i];
+    if (c === '>') return i + 1;
+    if (c === '=') {
+      let j = i + 1;
+      while (/\s/.test(html[j] ?? '')) j++;
+      if (html[j] === '"' || html[j] === "'") {
+        const close = html.indexOf(html[j], j + 1);
+        if (close < 0) return html.length;
+        i = close + 1;
+        continue;
+      }
+    }
+    i++;
+  }
+  return html.length;
+}
+
+/** Whether a start tag's attributes hide the element: `hidden`, or an inline style such as display:none. */
+function hidesElement(tag: string): boolean {
+  const attrs = tag.replace(/^<[^\s/>]+/, '').replace(/\/?>$/, '');
+  for (const m of attrs.matchAll(ATTRIBUTE)) {
+    const name = m[1].toLowerCase();
+    if (name === 'hidden') return true;
+    if (name === 'style' && HIDING_STYLE.test(m[2] ?? m[3] ?? m[4] ?? '')) return true;
+  }
+  return false;
+}
+
+/**
+ * The HTML that renders as text: comments (including `<!-->`, `--!>` endings and an unclosed comment), doctype,
+ * CDATA and processing instructions, raw-text elements that are not shown (script, style, title, ... closed or not),
+ * templates, media fallback content and elements hidden by a `hidden` attribute or an inline display:none,
+ * visibility:hidden, font-size:0 or opacity:0 style are dropped (nested elements of the same name are counted); every
+ * other tag becomes a space. Where this errs toward unreadable (which keeps the last captured copy): an end tag that
+ * HTML's rules imply but the body does not write (`<p hidden>a<p>b`), or a hiding element never closed, hides the
+ * rest of the body. Hiding it cannot see reads as visible: stylesheet rules and classes (`class="hidden"`) and other
+ * inline CSS (`height:0; overflow:hidden`) are not evaluated.
+ */
+function renderedMarkupText(html: string): string {
+  let out = '';
+  let i = 0;
+  /** Inside a hidden element: its name and how many elements of that name are open. */
+  let hidden: { name: string; depth: number } | null = null;
+  const emit = (s: string) => {
+    if (!hidden) out += s;
+  };
+  while (i < html.length) {
+    const lt = html.indexOf('<', i);
+    if (lt < 0) {
+      emit(html.slice(i));
+      break;
+    }
+    emit(html.slice(i, lt));
+    if (html.startsWith('<!--', lt)) {
+      if (html.startsWith('<!-->', lt) || html.startsWith('<!--->', lt)) {
+        i = html.indexOf('>', lt + 4) + 1;
+        continue;
+      }
+      const commentEnd = /--!?>/g;
+      commentEnd.lastIndex = lt + 4;
+      const end = commentEnd.exec(html);
+      i = end ? end.index + end[0].length : html.length;
+      emit(' ');
+      continue;
+    }
+    const next = html[lt + 1] ?? '';
+    if (next === '!' || next === '?' || (next === '/' && !/[A-Za-z]/.test(html[lt + 2] ?? ''))) {
+      // Doctype, CDATA, a processing instruction or a bogus comment: up to the next '>'.
+      const gt = html.indexOf('>', lt + 1);
+      i = gt < 0 ? html.length : gt + 1;
+      emit(' ');
+      continue;
+    }
+    if (next === '/') {
+      const gt = html.indexOf('>', lt);
+      const name = /^<\/([^\s/>]+)/.exec(html.slice(lt, gt < 0 ? undefined : gt + 1))?.[1].toLowerCase() ?? '';
+      i = gt < 0 ? html.length : gt + 1;
+      if (hidden && name === hidden.name && --hidden.depth === 0) hidden = null;
+      emit(' ');
+      continue;
+    }
+    if (!/[A-Za-z]/.test(next)) {
+      emit('<'); // a '<' that does not start markup is text
+      i = lt + 1;
+      continue;
+    }
+    const end = startTagEnd(html, lt);
+    const tag = html.slice(lt, end);
+    const name = /^<([^\s/>]+)/.exec(tag)![1].toLowerCase();
+    i = end;
+    emit(' ');
+    if (RAW_HIDDEN.has(name)) {
+      // Raw text: no markup inside, the element ends at the first matching end tag (or the end of the body).
+      const closeTag = new RegExp(`</${name}[\\s/>]`, 'gi');
+      closeTag.lastIndex = i;
+      const close = closeTag.exec(html);
+      if (!close) i = html.length;
+      else {
+        const gt = html.indexOf('>', close.index);
+        i = gt < 0 ? html.length : gt + 1;
+      }
+      continue;
+    }
+    if (hidden) {
+      if (name === hidden.name) hidden.depth++;
+      continue;
+    }
+    if (CONTENT_HIDDEN.has(name) || (!VOID.has(name) && hidesElement(tag))) hidden = { name, depth: 1 };
+  }
+  return out;
+}
+
+/**
+ * Whether a Zendesk article record carries readable content. The listing, search and article endpoints all return
+ * `body` (HTML). A record without a string body, or whose body has no visible text ("", "<p></p>", whitespace, only
+ * invisible characters such as &ensp;, &ZeroWidthSpace;, U+200B, U+00AD or U+FEFF, or only markup that renders no
+ * text: comments, scripts, styles, titles, templates, hidden elements), is not an article that was reworded: a
+ * published Help Center article is never empty, so this is an API shape change or a failed render, and the article's
+ * Zcash wording is unknown. It is never captured as a page and never archived. (Only this test strips invisible
+ * characters and markup; page text and content hashes are computed as before, so captured pages do not change.)
+ */
+function hasBody(a: any): boolean {
+  if (typeof a?.body !== 'string') return false;
+  const html = renderedMarkupText(a.body).replace(INVISIBLE_ENTITY, ' ').replace(NUMERIC_REF, (ref: string, hex: string | undefined, dec: string | undefined) => {
+    const cp = hex !== undefined ? parseInt(hex, 16) : Number(dec);
+    // Invalid code points render as U+FFFD, which is no text either.
+    if (!Number.isFinite(cp) || cp <= 0 || cp > 0x10ffff || (cp >= 0xd800 && cp <= 0xdfff)) return ' ';
+    const ch = String.fromCodePoint(cp);
+    return READABLE.test(ch.replace(IGNORABLE, '')) ? ref : ' ';
+  });
+  return READABLE.test(htmlToText(html).replace(IGNORABLE, ''));
+}
 
 function supportPage(a: any, now: string): { page: DocPage; mentionsZcash: boolean } {
   const text = htmlToText(a.body ?? '');
@@ -171,21 +324,54 @@ export const docs: Collector<DocsData> = {
       partial = true;
       limitations.push(`Help Center search for "zcash" incomplete (${search.problem}); articles not returned are kept from earlier runs unless confirmed removed`);
     }
-    const articles = new Map<string, any>();
+    // One record per article id from the listing and the search. Being published is a fact about the article, not
+    // about the copy that is kept: when any source in this run shows it as published it is treated as published, and
+    // its content comes from a published copy only (a readable draft copy never stands in for a body-less published
+    // one). Between copies in the same state, a readable copy is never replaced by a body-less one. Two readable
+    // published copies that say different things about Zcash (one mentions it and the other does not, or their Zcash
+    // statements differ) contradict each other: the article's Zcash wording is unknown this run (`disagree`), so
+    // neither copy is captured, archived or read as a rewording. Copies that differ elsewhere are not a contradiction.
+    const articles = new Map<string, { a: any; published: boolean; disagree?: true }>();
+    const zcashView = (a: any) => {
+      const { page, mentionsZcash } = supportPage(a, ctx.now);
+      return JSON.stringify([mentionsZcash, page.zcashStatements]);
+    };
     for (const a of [...list.items, ...search.items]) {
       if (!a || a.id === undefined) continue;
-      const had = articles.get(String(a.id));
-      if (had && hasBody(had) && !hasBody(a)) continue; // never replace a readable copy with a body-less one
-      articles.set(String(a.id), a);
+      const id = String(a.id);
+      const published = !a.draft;
+      const had = articles.get(id);
+      if (had) {
+        if (had.published && !published) continue; // a draft copy never replaces a published one
+        if (had.published === published) {
+          if (published && hasBody(had.a) && hasBody(a) && zcashView(had.a) !== zcashView(a)) {
+            had.disagree = true;
+            continue;
+          }
+          if (hasBody(had.a) && !hasBody(a)) continue;
+          if (had.disagree) {
+            articles.set(id, { a, published, disagree: true });
+            continue;
+          }
+        }
+      }
+      articles.set(id, { a, published });
     }
     const bodyless: string[] = [];
+    const disagreeing: string[] = [];
     const prevIds = new Set(prevPages.map((p) => p.id));
-    for (const a of articles.values()) {
-      if (a.draft) continue;
+    const searchIds = new Set(search.items.filter((a) => a && a.id !== undefined).map((a) => String(a.id)));
+    for (const { a, published, disagree } of articles.values()) {
+      if (!published) continue;
+      if (disagree) {
+        disagreeing.push(String(a.id));
+        continue;
+      }
       if (!hasBody(a)) {
         // A missing body hides whether the article mentions Zcash at all; an empty one matters when the article was
-        // captured before or its title names Zcash (an unrelated empty Wallet article cannot be a Zcash page).
-        if (typeof a.body !== 'string' || prevIds.has(`zendesk-${a.id}`) || ZCASH.test(String(a.title ?? ''))) bodyless.push(String(a.id));
+        // captured before, its title names Zcash, or the search for "zcash" returned it (an unrelated empty Wallet
+        // article cannot be a Zcash page).
+        if (typeof a.body !== 'string' || prevIds.has(`zendesk-${a.id}`) || ZCASH.test(String(a.title ?? '')) || searchIds.has(String(a.id))) bodyless.push(String(a.id));
         continue;
       }
       const { page, mentionsZcash } = supportPage(a, ctx.now);
@@ -193,7 +379,11 @@ export const docs: Collector<DocsData> = {
     }
     if (bodyless.length) {
       partial = true;
-      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (missing or empty; API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
+      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (missing or empty, or invisible characters or markup only; API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
+    }
+    if (disagreeing.length) {
+      partial = true;
+      limitations.push(`${disagreeing.length} Help Center article(s) came back published from the listing and the search with bodies that say different things about Zcash; their Zcash wording is unknown this run, earlier captured copies are kept and none is treated as reworded or new: ${disagreeing.slice(0, 4).join(', ')}`);
     }
 
     // Earlier Help Center pages not captured this run: removed, reworded, or merely not listed?
@@ -203,9 +393,17 @@ export const docs: Collector<DocsData> = {
     for (const old of prevPages.filter((p) => p.source === 'support')) {
       if (pages.some((p) => p.id === old.id)) continue;
       const articleId = old.id.replace(/^zendesk-/, '');
-      const listed = articles.get(articleId);
-      // This run's listing or search shows the article as published (with or without a readable body).
-      const listedPublished = !!listed && !listed.draft;
+      const entry = articles.get(articleId);
+      // This run's listing or search shows the article as published (with or without a readable body); `listed` is
+      // then a published copy.
+      const listedPublished = !!entry?.published;
+      const listed = entry?.a;
+      if (entry?.disagree) {
+        // Contradictory copies this run: neither is evidence of a rewording.
+        pages.push(old);
+        unconfirmed.push(`${old.id} (the listing and the search say different things about Zcash)`);
+        continue;
+      }
       if (listedPublished && hasBody(listed)) {
         archive(old, 'no-longer-mentions-zcash'); // read this run: still published, no Zcash wording
         ended += 1;
@@ -233,7 +431,7 @@ export const docs: Collector<DocsData> = {
             ended += 1;
             continue;
           }
-          if (!hasBody(article)) throw new Error('article response has no body or an empty one (API shape changed?)');
+          if (!hasBody(article)) throw new Error('article response has no body, an empty one or one without visible text (API shape changed?)');
           const { page, mentionsZcash } = supportPage(article, ctx.now);
           if (mentionsZcash) pages.push(page); // still a Zcash article, just outside the listing/search
           else {

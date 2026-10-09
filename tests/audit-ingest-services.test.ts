@@ -613,8 +613,10 @@ test('ING-08: any other binding of the switch (one-line compound, import, dynami
     'A = SWAP_DISABLED_CHAINS = ()\n',
   ];
   for (const src of unknown) assert.equal(parseGate3Switch(src).zcashDisabled, null, src);
-  const determinate: [string, boolean][] = [
-    ['from app.models import *\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n', false],
+  const determinate: [string, boolean | null][] = [
+    // R3-ING-08: a star import never leaves the value determinate. The star-imported SWAP_DISABLED_CHAINS object is
+    // released when the definition replaces it, and its finaliser can rebind the switch after the store.
+    ['from app.models import *\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n', null],
     ["__all__ = ['SWAP_DISABLED_CHAINS']\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\n", true],
     ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nif chain in SWAP_DISABLED_CHAINS: raise ValueError(chain)\n', false],
     ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\ndef f(x=SWAP_DISABLED_CHAINS): pass\nALL = SWAP_DISABLED_CHAINS.union(OTHER)\n', true],
