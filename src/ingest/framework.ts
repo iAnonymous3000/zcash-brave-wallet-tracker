@@ -40,8 +40,10 @@ export interface Ctx {
  *   `partial` (usable data was read and stored), `SourceStatus.staleSince` is set for the site to
  *   show and count, and the first limitation says what is stale, since when, and when the source
  *   last completed. Such a run is not a success: `lastSuccessAt` does not advance, the note is
- *   also the source's `lastError`, and `consecutiveFailures` counts it. `failed` is reserved for
- *   a collection that threw and stored nothing.
+ *   also the source's `lastError`, and `consecutiveFailures` counts it. The run record lists the
+ *   source in `stale` and the refresh exits non-zero (EXIT_STALE in run.ts) after everything was
+ *   stored and derived, so the workflow publishes and then fails the job while the outage lasts.
+ *   `failed` is reserved for a collection that threw and stored nothing.
  * - `partial` is absent/false only when every read this collector depends on succeeded.
  */
 export interface CollectResult<T> {
