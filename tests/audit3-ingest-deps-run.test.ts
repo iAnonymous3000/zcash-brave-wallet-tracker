@@ -11,7 +11,8 @@ import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, wr
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Http } from '../src/lib/http.ts';
-import type { RunRecord, SourceEnvelope } from '../src/lib/types.ts';
+import type { Advisory, ChannelVersion, RunRecord, SourceEnvelope } from '../src/lib/types.ts';
+import { advisoryVerdicts } from '../src/derive/changes.ts';
 import type { Collector, Ctx } from '../src/ingest/framework.ts';
 import * as deps from '../src/ingest/sources/deps.ts';
 import type { BraveDepsSnapshot, DepsData } from '../src/ingest/sources/deps.ts';
@@ -357,7 +358,9 @@ const lockWithHeader = (header: string) => [
 ].join('\n');
 
 test('R3-LOCKHDR: valid TOML spellings of the [[package]] header are read: the package is listed and the dependency graph resolves through it', async () => {
-  const valid = ['[[ package ]]', '[[package]] # vendored', '[[package]]#x', '\t[[\tpackage\t]]\t', '[["package"]]', "[['package']]", '[[ "package" ]]   # quoted', '  [[package]]'];
+  // '[["package"]]' (a TOML escape in a quoted key) moved here from the unreadable list in the
+  // R3-LOCKHDR repair round: keys and strings are now read as TOML, escapes decoded.
+  const valid = ['[[ package ]]', '[[package]] # vendored', '[[package]]#x', '\t[[\tpackage\t]]\t', '[["package"]]', "[['package']]", '[[ "package" ]]   # quoted', '  [[package]]', '[["pack\\u0061ge"]]'];
   for (const header of valid) {
     const lock = lockWithHeader(header);
     assert.deepEqual(deps.lockPackageNames(lock), ['orchard', 'zcash', 'zebrad'], `${JSON.stringify(header)}: the full list`);
@@ -376,7 +379,9 @@ test('R3-LOCKHDR: valid TOML spellings of the [[package]] header are read: the p
 });
 
 test('R3-LOCKHDR: a header form that cannot be read leaves the package list unknown, never a short list; the graph stays uncertain, the snapshot is partial, says why and is re-read', async () => {
-  const unreadable = ['[[ package ]', '[[package]] trailing', '[ [package] ]', '[["pack\\u0061ge"]]', '[package]', '[[package.x]]', '[[package]]]', ' [[package]]'];
+  // '[["pack\qge"]]' (an invalid TOML escape) stands in for '[["package"]]', which is valid
+  // TOML and is now read (R3-LOCKHDR repair round, see the test above).
+  const unreadable = ['[[ package ]', '[[package]] trailing', '[ [package] ]', '[["pack\\qge"]]', '[package]', '[[package.x]]', '[[package]]]', ' [[package]]'];
   for (const header of unreadable) {
     const lock = lockWithHeader(header);
     assert.equal(deps.lockPackageNames(lock), null, `${JSON.stringify(header)}: unknown, not a list without orchard`);
@@ -436,4 +441,226 @@ test('R3-LOCKHDR: valid TOML inside a package table (a comment containing "]", q
   const r = deps.resolveZcashDependencies(lock, ['orchard'], root);
   assert.deepEqual(r.resolution.candidates.orchard.map((c) => [c.version, c.reachable, c.direct]), [['0.13.0', true, true], ['0.15.0', false, false]], 'orchard 0.13.0 is linked, never "unreachable"');
   assert.equal(exposed({ ...r, lockPackages: deps.lockPackageNames(lock)! }, 'orchard', '< 0.14.0'), true);
+});
+
+// ---------------------------------------------------------------------------
+// R3-LOCKHDR repair: what the lockfile reader cannot read never turns into "not affected"
+// ---------------------------------------------------------------------------
+
+const RELEASE: ChannelVersion[] = [{ channel: 'release', platform: 'desktop', version: '1.2.3', tag: 'v1.2.3', publishedAt: null, basis: 'fixture', url: 'https://example.invalid' }];
+const advisory = (pkg: string, range: string): Advisory => ({ id: 'GHSA-test', aliases: [], summary: 'fixture', severity: 'high', packages: [`rust:${pkg}`], vulnerableRanges: [`${pkg} ${range}`], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' });
+const depFiles = (lock: string) => ({ lock, cargo: ZCASH_TOML, deps: FORK_DEPS, network: '"https://zcash.wallet.brave.com/"', rpc: '"/cash.z.wallet.sdk.rpc.CompactTxStreamer/GetLightdInfo"' });
+/** Master and the v1.2.3 tag built from one lockfile, as the collector stores them. */
+function snapshotsOf(lock: string) {
+  const master = deps.buildDepsSnapshot('master', 'a'.repeat(40), ['master'], depFiles(lock), null, NOW);
+  const tag = deps.buildDepsSnapshot('v1.2.3', 'v1.2.3', ['desktop/release'], depFiles(lock), null, NOW);
+  return { data: { snapshots: { master: master.snapshot, 'v1.2.3': tag.snapshot } } as DepsData, tag };
+}
+const verdictFor = (lock: string, pkg: string, range: string) => advisoryVerdicts(advisory(pkg, range), snapshotsOf(lock).data, RELEASE);
+
+/** zcash 1.0.0 -> [halo2_gadgets, orchard]; halo2_gadgets 0.3.0 is the only table under `header`. */
+const halo2Lock = (header: string) =>
+  ['version = 4', '', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = [', ' "halo2_gadgets",', ' "orchard",', ']', '', '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`, '', header, 'name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`, ''].join('\n');
+
+test('R3-LOCKHDR repair: a monitored crate whose only table sits behind a header that cannot be read is possibly linked, and the advisory verdict is unknown, never "not affected"', () => {
+  for (const header of ['[[ package ]', '[[package]] x', '[package]', '[[package]]]', '[[pack age]]', '[["pack\\qge"]]']) {
+    const lock = halo2Lock(header);
+    const { data, tag } = snapshotsOf(lock);
+    const s = data.snapshots['v1.2.3'];
+    assert.ok(s.resolution?.lockProblems?.length, `${header}: the unread part is recorded`);
+    assert.deepEqual(s.resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: null, direct: null, doubtful: true }], `${header}: possibly linked, never absent`);
+    assert.deepEqual(deps.linkedVersions(s, 'halo2_gadgets').versions.map((c) => c.version), ['0.3.0']);
+    assert.equal(deps.linkedVersions(s, 'halo2_gadgets').certain, false);
+    assert.equal(exposed(s, 'halo2_gadgets', '< 0.4.0'), null);
+    assert.equal(exposed(s, 'halo2_gadgets', '< 0.2.0'), null, 'outside the range, but the unread part may hold another version');
+    assert.ok(tag.problems.some((p) => /^v1\.2\.3: halo2_gadgets 0\.3\.0 was found only in a part of .*Cargo\.lock that could not be read with certainty, so it is listed as possibly linked$/.test(p)), JSON.stringify(tag.problems));
+    assert.equal(deps.isCompleteSnapshot(s), false, 're-read next run');
+    for (const range of ['< 0.4.0', '< 0.2.0']) {
+      const v = advisoryVerdicts(advisory('halo2_gadgets', range), data, RELEASE);
+      assert.equal(v.affected, null, `${header} ${range}: ${v.summary}`);
+      assert.doesNotMatch(v.summary, /does not appear|outside the vulnerable ranges at every checked build/);
+    }
+  }
+  // Valid TOML spellings are read: the package is linked, and the verdict says so.
+  for (const header of ['[[package]]', '[["pack\\u0061ge"]]', "[[ 'package' ]] # c"]) {
+    const { data } = snapshotsOf(halo2Lock(header));
+    assert.deepEqual(data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: true, direct: true }], header);
+    assert.equal(advisoryVerdicts(advisory('halo2_gadgets', '< 0.4.0'), data, RELEASE).affected, true, header);
+  }
+  // orchard found only in a table that could not be read is no reading of orchard: the ref fails and keeps its last snapshot.
+  const hidden = ['version = 4', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = ["orchard"]', '[[ package ]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`].join('\n');
+  assert.throws(() => deps.buildDepsSnapshot('v1.2.3', 'v1.2.3', [], depFiles(hidden), null, NOW), /orchard not found in .*Cargo\.lock at v1\.2\.3 \(parser or layout changed\? line 6: table header not understood/);
+});
+
+test('R3-LOCKHDR repair: an unread part of Cargo.lock may hold another version of a crate that was read, so the linked set is never certain and "outside the range" is never concluded', () => {
+  const lock = (header: string, nameLine = 'name = "orchard"') =>
+    ['version = 4', '', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = [', ' "orchard 0.15.0",', ']', '', '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`, '', header, nameLine, 'version = "0.13.0"', `source = "${CRATES_IO}"`, ''].join('\n');
+  // Read completely: 0.13.0 is vendored but not reached, so orchard < 0.14.0 does not affect Brave.
+  assert.equal(verdictFor(lock('[[package]]'), 'orchard', '< 0.14.0').affected, false);
+  // 0.13.0 behind a header that cannot be read: possibly linked.
+  const hiddenHeader = lock('[[ package ]');
+  const s1 = snapshotsOf(hiddenHeader).data.snapshots['v1.2.3'];
+  assert.deepEqual(s1.resolution?.candidates.orchard.map((c) => [c.version, c.reachable, c.doubtful ?? false]), [['0.15.0', true, false], ['0.13.0', null, true]]);
+  assert.equal(s1.lock.orchard.version, '0.15.0', 'the version read with certainty stays the resolution');
+  assert.equal(exposed(s1, 'orchard', '< 0.14.0'), null);
+  assert.equal(verdictFor(hiddenHeader, 'orchard', '< 0.14.0').affected, null);
+  // 0.13.0 in a table whose name cannot be read: nothing to list, but the read set is not certain.
+  const unreadName = lock('[[package]]', 'name = ["orchard"]');
+  const s2 = snapshotsOf(unreadName).data.snapshots['v1.2.3'];
+  assert.deepEqual(s2.resolution?.candidates.orchard.map((c) => [c.version, c.reachable]), [['0.15.0', true]]);
+  assert.equal(deps.linkedVersions(s2, 'orchard').certain, false);
+  assert.equal(exposed(s2, 'orchard', '< 0.14.0'), null);
+  assert.equal(exposed(s2, 'orchard', '< 0.16.0'), true, 'a version known to be linked still counts');
+  const v = verdictFor(unreadName, 'orchard', '< 0.14.0');
+  assert.equal(v.affected, null, v.summary);
+  assert.doesNotMatch(v.summary, /outside the vulnerable ranges at every checked build/);
+});
+
+test('R3-LOCKHDR repair: linkedVersions never reports a monitored crate as certainly absent when the lockfile was not read completely or a dependency entry names it', () => {
+  const lines = ['version = 4', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = ["orchard"]', '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`];
+  const crates = ['orchard', 'halo2_gadgets'];
+  const complete = deps.resolveZcashDependencies(lines.join('\n'), crates, root);
+  assert.deepEqual(deps.linkedVersions(complete, 'halo2_gadgets'), { versions: [], certain: true }, 'read completely: not in Cargo.lock');
+  assert.equal(deps.linkedVersions(complete, 'orchard').certain, true);
+  // A line that cannot be read, anywhere in the file.
+  const junk = deps.resolveZcashDependencies([...lines, '[metadata]', 'what is this'].join('\n'), crates, root);
+  assert.ok(junk.resolution.lockProblems?.some((p) => /line 11: line not understood/.test(p)), JSON.stringify(junk.resolution.lockProblems));
+  assert.deepEqual(deps.linkedVersions(junk, 'halo2_gadgets'), { versions: [], certain: false });
+  assert.equal(exposed(junk, 'halo2_gadgets', '< 0.4.0'), null);
+  assert.equal(deps.linkedVersions(junk, 'orchard').certain, false, 'nor the versions of a crate that was read');
+  // A dependency entry naming the crate (in either spelling) that matches no package.
+  const dangling = deps.resolveZcashDependencies(lines.join('\n').replace('dependencies = ["orchard"]', 'dependencies = ["orchard", "halo2-gadgets 0.3.0"]'), crates, root);
+  assert.deepEqual(dangling.resolution.unresolvedEdges, ['zcash 1.0.0 -> halo2-gadgets 0.3.0']);
+  assert.deepEqual(deps.linkedVersions(dangling, 'halo2_gadgets'), { versions: [], certain: false });
+  assert.equal(exposed(dangling, 'halo2_gadgets', '< 0.4.0'), null);
+  assert.equal(deps.linkedVersions(dangling, 'orchard').certain, true, 'other crates are unaffected');
+});
+
+test('R3-LOCKHDR repair: text inside a multi-line string or array is never read as a header or key; such strings are reported, and one never closed leaves what follows doubtful', () => {
+  // A string holding "[[package]]" followed by the package's real dependencies (valid TOML).
+  const lock = [
+    'version = 4', '',
+    '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = [', ' "foo",', ' "orchard",', ']', '',
+    '[[package]]', 'name = "foo"', 'version = "1.0.0"', `source = "${CRATES_IO}"`, 'checksum = """', '[[package]]', 'name = "fake"', 'version = "9.9.9"', 'x = 1"""',
+    'dependencies = [', ' "halo2_gadgets",', ']', '',
+    '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`, '',
+    '[[package]]', 'name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`, '',
+  ].join('\n');
+  assert.deepEqual(deps.parseLockPackages(lock).map((p) => `${p.name} ${p.version}: ${p.dependencies.join('|')}`), ['zcash 1.0.0: foo|orchard', 'foo 1.0.0: halo2_gadgets', 'orchard 0.15.0: ', 'halo2_gadgets 0.3.0: ']);
+  const scan = deps.scanCargoLock(lock);
+  assert.equal(scan.tables, 4);
+  assert.deepEqual(scan.problems, ['line 15: multi-line string (Cargo never writes one): "checksum = \\"\\"\\""']);
+  assert.equal(deps.lockPackageNames(lock), null, 'reported, so the list is not recorded');
+  const { data } = snapshotsOf(lock);
+  assert.deepEqual(data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets.map((c) => [c.version, c.reachable]), [['0.3.0', true]]);
+  assert.equal(advisoryVerdicts(advisory('halo2_gadgets', '< 0.4.0'), data, RELEASE).affected, true);
+
+  // Every kind of multi-line value, in a package table and in [metadata]: no line inside is a header or key.
+  const tricky = [
+    'version = 4',
+    'note = """',
+    '[[package]]',
+    'name = "fake-a"',
+    'version = "9.9.9" \\"""',
+    '"""',
+    '[[package]]',
+    'name = "zcash"',
+    'version = "1.0.0"',
+    'extra = [',
+    '  1, # [[package]]',
+    '  """',
+    '[[package]]',
+    'name = "fake-b"',
+    '""",',
+    "  [ \"nested\", '''",
+    "[[package]]''' ],",
+    ']',
+    'dependencies = [',
+    ' "orchard",',
+    ']',
+    '',
+    '[[package]]',
+    'name = "orchard"',
+    'version = "0.15.0"',
+    `source = "${CRATES_IO}"`,
+    '',
+    '[metadata]',
+    "x = '''",
+    '[[package]]',
+    "name = 'zebra'",
+    "version = '1'",
+    "y = 2''''",
+  ].join('\n');
+  const t = deps.scanCargoLock(tricky);
+  assert.deepEqual(t.packages.map((p) => `${p.name} ${p.version}: ${p.dependencies.join('|')}`), ['zcash 1.0.0: orchard', 'orchard 0.15.0: ']);
+  assert.equal(t.tables, 2);
+  assert.deepEqual(t.problems.map((p) => p.replace(/:.*/, '')), ['line 2', 'line 10', 'line 29'], JSON.stringify(t.problems));
+  assert.deepEqual(t.doubtful, []);
+  assert.equal(deps.resolveZcashDependencies(tricky, ['orchard'], root).lock.orchard.version, '0.15.0');
+
+  // A multi-line string that is never closed: as TOML reads it, everything after it is inside it.
+  const open = [
+    'version = 4',
+    '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = ["orchard", "halo2_gadgets"]',
+    '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`,
+    '[[package]]', 'name = "foo"', 'version = "1.0.0"', 'checksum = """',
+    '[[package]]', 'name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`,
+  ].join('\n');
+  const o = deps.scanCargoLock(open);
+  assert.deepEqual(o.packages.map((p) => p.name), ['zcash', 'orchard', 'foo']);
+  assert.match(o.problems.join(' '), /line 13: multi-line string never closed/);
+  assert.deepEqual(o.doubtful.map((d) => `${d.name} ${d.version}`), ['halo2_gadgets 0.3.0']);
+  const os = snapshotsOf(open).data.snapshots['v1.2.3'];
+  assert.deepEqual(os.resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: null, direct: null, doubtful: true }]);
+  assert.equal(verdictFor(open, 'halo2_gadgets', '< 0.4.0').affected, null);
+});
+
+test('R3-LOCKHDR repair: keys and strings are read as TOML (escapes decoded, invalid ones reported), and a package whose identity is unclear is kept as doubtful, never dropped', () => {
+  const head = ['version = 4', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = ["orchard", "halo2_gadgets"]', '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`];
+  // Escapes in a name and in a key are decoded: the package is read with certainty.
+  const escaped = [...head, '[[package]]', '"n\\u0061me" = "halo2\\u005Fgadgets"', "version = '0.3.0'", `source = "registry+https://github.com/rust-lang/crates.io-index"`].join('\n');
+  assert.deepEqual(deps.lockPackageNames(escaped), ['halo2_gadgets', 'orchard', 'zcash']);
+  assert.equal(verdictFor(escaped, 'halo2_gadgets', '< 0.4.0').affected, true);
+  // A name that is not TOML (an invalid escape, a bare word) is reported and never read as certain;
+  // its best-effort reading is a possible package, so the verdict is unknown.
+  for (const bad of ['name = "halo2\\_gadgets"', 'name = halo2_gadgets']) {
+    const lock = [...head, '[[package]]', bad, 'version = "0.3.0"'].join('\n');
+    assert.equal(deps.lockPackageNames(lock), null, bad);
+    assert.match(deps.scanCargoLock(lock).problems.join(' '), /line 11: line not understood/, bad);
+    assert.deepEqual(deps.scanCargoLock(lock).packages.map((p) => p.name), ['zcash', 'orchard'], bad);
+    assert.deepEqual(snapshotsOf(lock).data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'path', reachable: null, direct: null, doubtful: true }], bad);
+    assert.equal(verdictFor(lock, 'halo2_gadgets', '< 0.4.0').affected, null, bad);
+  }
+  // A name that cannot be read at all (a surrogate escape): no version of the crate is known, which
+  // linkedVersions reports as uncertain, never as "not linked".
+  const unreadable = [...head, '[[package]]', 'name = "halo2_gadgets\\uD800"', 'version = "0.3.0"'].join('\n');
+  assert.match(deps.scanCargoLock(unreadable).problems.join(' '), /line 11: line not understood/);
+  assert.deepEqual(deps.linkedVersions(snapshotsOf(unreadable).data.snapshots['v1.2.3'], 'halo2_gadgets'), { versions: [], certain: false });
+  // Likewise a table without a name (a misspelt key).
+  const nameless = [...head, '[[package]]', 'nmae = "halo2_gadgets"', 'version = "0.3.0"'].join('\n');
+  assert.match(deps.scanCargoLock(nameless).problems.join(' '), /line 10: \[\[package\]\] without a name/);
+  assert.deepEqual(deps.linkedVersions(snapshotsOf(nameless).data.snapshots['v1.2.3'], 'halo2_gadgets'), { versions: [], certain: false });
+  // Package fields at the top level (the first [[package]] header missing): a possible package, and reported.
+  const headless = ['name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`, ...head.slice(1)].join('\n');
+  assert.match(deps.scanCargoLock(headless).problems.join(' '), /line 1: package field outside a \[\[package\]\] table \(header missing\?\)/);
+  assert.deepEqual(snapshotsOf(headless).data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: null, direct: null, doubtful: true }]);
+  assert.equal(verdictFor(headless, 'halo2_gadgets', '< 0.4.0').affected, null);
+  // A key or table defined twice is not TOML: reported (here a duplicate top-level version).
+  const dup = ['version = 4', ...head].join('\n');
+  assert.match(deps.scanCargoLock(dup).problems.join(' '), /line 2: key defined twice/);
+  assert.equal(deps.lockPackageNames(dup), null);
+  // A version given twice: either may be the package's; both are possible, neither certain.
+  const twice = [...head, '[[package]]', 'name = "halo2_gadgets"', 'version = "0.3.0"', 'version = "0.5.0"', `source = "${CRATES_IO}"`].join('\n');
+  const tw = deps.scanCargoLock(twice);
+  assert.match(tw.problems.join(' '), /line 13: version given twice/);
+  assert.deepEqual(tw.doubtful.map((d) => `${d.name} ${d.version} ${d.source}`), [`halo2_gadgets 0.3.0 ${CRATES_IO}`, `halo2_gadgets 0.5.0 ${CRATES_IO}`]);
+  const ts = snapshotsOf(twice).data.snapshots['v1.2.3'];
+  assert.deepEqual(ts.resolution?.candidates.halo2_gadgets.map((c) => [c.version, c.reachable, c.doubtful]), [['0.3.0', null, true], ['0.5.0', null, true]]);
+  assert.ok(ts.resolution?.ambiguous.includes('halo2_gadgets'));
+  assert.equal(verdictFor(twice, 'halo2_gadgets', '< 0.4.0').affected, null);
+  // Packages defined outside [[package]] tables (an array of inline tables) are possible packages too.
+  const inline = [...head.slice(0, 1), `package = [{ name = "halo2_gadgets", version = "0.3.0", source = "${CRATES_IO}" }]`, ...head.slice(1)].join('\n');
+  assert.match(deps.scanCargoLock(inline).problems.join(' '), /line 2: packages defined outside \[\[package\]\] tables/);
+  assert.deepEqual(snapshotsOf(inline).data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: null, direct: null, doubtful: true }]);
+  assert.equal(verdictFor(inline, 'halo2_gadgets', '< 0.4.0').affected, null);
 });
