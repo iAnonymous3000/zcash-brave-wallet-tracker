@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-09T09:06:04.939Z",
+ "retrievedAt": "2026-10-09T10:48:28.257Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-09T09:06:04.939Z"
+   "checkedAt": "2026-10-09T10:48:28.257Z"
   },
   "zips": {
    "2005": {
@@ -2906,7 +2906,8 @@
     "lastCommitAt": "2026-08-25T15:10:57Z",
     "lastCommitMessage": "(zip-2005) fix: remove dangling K",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/840b3f39f77fb3dcccdbc4c00191eda16dba8c7e",
-    "url": "https://zips.z.cash/zip-2005"
+    "url": "https://zips.z.cash/zip-2005",
+    "path": "zips/zip-2005.md"
    },
    "2009": {
     "num": "2009",
@@ -2915,43 +2916,48 @@
     "lastCommitAt": "2026-10-08T17:06:15Z",
     "lastCommitMessage": "Fix fat-fingered move of ZIP 2009 to its correct location.",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/51df2a4070fcf4718d995958a4809f8ab4ff8222",
-    "url": "https://zips.z.cash/zip-2009"
+    "url": "https://zips.z.cash/zip-2009",
+    "path": "zips/zip-2009.md"
    },
    "0317": {
     "num": "0317",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0317"
+    "title": "Proportional Transfer Fee Mechanism",
+    "status": "[Revision 0] Active, [Revision 1: NU6.3] Draft, [Revision 2] Draft",
+    "lastCommitAt": "2026-07-01T05:27:18Z",
+    "lastCommitMessage": "Apply suggestions from code review",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/561b5b4bf692c53e697b5f660fc4fe8a45747edd",
+    "url": "https://zips.z.cash/zip-0317",
+    "path": "zips/zip-0317.rst"
    },
    "0302": {
     "num": "0302",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0302"
+    "title": "Standardized Memo Field Format",
+    "status": "Draft",
+    "lastCommitAt": "2026-02-10T21:17:45Z",
+    "lastCommitMessage": "Change @str4d and @daira's email addresses to their personal addresses.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/7b9e678ff3eabf8514f9d0e32cfbf11b27e12696",
+    "url": "https://zips.z.cash/zip-0302",
+    "path": "zips/zip-0302.rst"
    },
    "0316": {
     "num": "0316",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0316"
+    "title": "Unified Addresses and Unified Viewing Keys",
+    "status": "[Revision 0] Active, [Revision 1] Withdrawn, [Revision 2] Draft",
+    "lastCommitAt": "2026-06-24T16:24:12Z",
+    "lastCommitMessage": "Fix the punctuation-after-math problem once and for all.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/a9b838e8c90217fd5a94b2330d92d61cfb262459",
+    "url": "https://zips.z.cash/zip-0316",
+    "path": "zips/zip-0316.rst"
    },
    "0225": {
     "num": "0225",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0225"
+    "title": "Version 5 Transaction Format",
+    "status": "Final",
+    "lastCommitAt": "2026-07-09T10:09:06Z",
+    "lastCommitMessage": "ZIPs 225, 229, 258: specify the version group ID via protocol spec § 7.1.2, not a ZIP",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/1183725fec88445f6704b3ff4fff76c2a51ea43e",
+    "url": "https://zips.z.cash/zip-0225",
+    "path": "zips/zip-0225.rst"
    },
    "0229": {
     "num": "0229",
@@ -2960,7 +2966,8 @@
     "lastCommitAt": "2026-07-28T13:36:35Z",
     "lastCommitMessage": "zip-0229, zip-0213: describe the NU6.3 version 6 consensus-rule changes",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/2ac8505fc72942e3fb07aef98cd8024c4601c839",
-    "url": "https://zips.z.cash/zip-0229"
+    "url": "https://zips.z.cash/zip-0229",
+    "path": "zips/zip-0229.md"
    },
    "0258": {
     "num": "0258",
@@ -2969,7 +2976,8 @@
     "lastCommitAt": "2026-07-20T14:23:04Z",
     "lastCommitMessage": "ZIP 204: specify protocol version assignment; ZIP 258: assign NU6.3 versions",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/b93e824b3fecbfdbcbbb5b4205223780a1320a25",
-    "url": "https://zips.z.cash/zip-0258"
+    "url": "https://zips.z.cash/zip-0258",
+    "path": "zips/zip-0258.md"
    },
    "0318": {
     "num": "0318",
@@ -2978,7 +2986,8 @@
     "lastCommitAt": "2026-07-31T11:41:43Z",
     "lastCommitMessage": "Apply suggestions from review (nits and fixing an inaccurate time calculation)",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/60db9f1e6a1e9988da442b7d8436da6b16dd5c26",
-    "url": "https://zips.z.cash/zip-0318"
+    "url": "https://zips.z.cash/zip-0318",
+    "path": "zips/zip-0318.md"
    },
    "0326": {
     "num": "0326",
@@ -2987,7 +2996,8 @@
     "lastCommitAt": "2026-07-09T10:12:54Z",
     "lastCommitMessage": "ZIP 326: apply review suggestions (nuttycom, #1319)",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/02eac4c430503e50bc583140f6b5dd4cc1cab962",
-    "url": "https://zips.z.cash/zip-0326"
+    "url": "https://zips.z.cash/zip-0326",
+    "path": "zips/zip-0326.md"
    },
    "0259": {
     "num": "0259",
@@ -2996,7 +3006,8 @@
     "lastCommitAt": "2026-09-30T20:57:39Z",
     "lastCommitMessage": "Set the NU7 testnet activation height to 4465026",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/b344587acf6d33650bfffbb227e0bc928752721f",
-    "url": "https://zips.z.cash/zip-0259"
+    "url": "https://zips.z.cash/zip-0259",
+    "path": "zips/zip-0259.md"
    }
   },
   "nextUpgrade": {
@@ -3012,7 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-09T09:06:04.939Z"
+   "checkedAt": "2026-10-09T10:48:28.257Z"
   }
- }
+ },
+ "completeAt": "2026-10-09T10:48:28.257Z"
 }

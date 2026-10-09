@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-09T09:06:04.939Z",
+ "retrievedAt": "2026-10-09T10:48:28.257Z",
  "data": {
   "items": [
    {
@@ -15,7 +15,9 @@
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
-    ]
+    ],
+    "latest": " Latest release: v1.6.0.",
+    "metadataReadAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -28,7 +30,9 @@
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
-    ]
+    ],
+    "latest": " Last commit: feat(transparent): txid details — display v2 facts with senders, review….",
+    "metadataReadAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "id": "watch-zkdragon",
@@ -51,7 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-09T09:06:04.939Z"
+    "checkedAt": "2026-10-09T10:48:28.257Z",
+    "searchCheckedAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "term": "wallet-libraries",
@@ -59,7 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-09T09:06:04.939Z"
+    "checkedAt": "2026-10-09T10:48:28.257Z",
+    "searchCheckedAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "term": "zkdragon",
@@ -67,8 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-09T09:06:04.939Z"
+    "checkedAt": "2026-10-09T10:48:28.257Z",
+    "searchCheckedAt": "2026-10-09T10:48:28.257Z"
    }
   ]
- }
+ },
+ "completeAt": "2026-10-09T10:48:28.257Z"
 }

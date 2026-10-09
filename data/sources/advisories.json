@@ -1,7 +1,7 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-10-09T09:06:04.939Z",
+ "retrievedAt": "2026-10-09T10:48:28.257Z",
  "data": {
   "advisories": [
    {
@@ -364,5 +364,6 @@
    "repo:zcash/zcash_note_encryption"
   ],
   "rustsecCrates": []
- }
+ },
+ "completeAt": "2026-10-09T10:48:28.257Z"
 }

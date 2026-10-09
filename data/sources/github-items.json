@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-09T09:06:04.939Z",
+ "retrievedAt": "2026-10-09T10:48:28.257Z",
  "data": {
   "items": {
    "brave/brave-browser#57713": {
@@ -89377,7 +89377,30 @@
      39877,
      39979
     ],
-    "commitsWithoutPr": 21
+    "commitsWithoutPr": 21,
+    "shasWithoutPr": [
+     "09feab1a3f0876223a4b88f483603b94d0dd9469",
+     "10727642d9aef6ec659a62a2c05d68f648b58450",
+     "13a2651e70b602da46cdf335fa0cd7a6c4de5688",
+     "24efc971f048b82323a985f5f922100bc4b3bc36",
+     "2aa6342c39fb3949df6a7eb1f3c67bc5ab5a6189",
+     "2eac5b39896b0e6c29fbacab23cc926d2d1e42df",
+     "2efa720bd06cdcd763b1b62dd55c818f9f630298",
+     "664d94be400fe8926698ae949253943678c80af4",
+     "6c60c40ad9f03b2491b0eb6714048c97dd25cd1d",
+     "91180e1184cce0103af40cc826587507ec2d0113",
+     "92a8341c61eecbb96da4eaf98df4355815c66a79",
+     "a19c44fed1bddeef4a609f5055d7e32075ca4af4",
+     "a8e6269ddc8e114f5e10e57f761eb03eb974765d",
+     "c164d6759c8ae7daf74f0ec997a7f7b0236e4ad2",
+     "d2231dd4c80a5b3c56f12c495bdd813341d0407a",
+     "d9fd06e9df0e14dd3f231198904299e0f549ba4f",
+     "dc611e393c16c05aa3ed5985e45ecc01b676468d",
+     "e750304bae6067fc639eac2c5f920a03112eb2cc",
+     "eb21b0f9fdce69dbd20968c3149f193dcd4ad3f2",
+     "ef8636fe9903f691533b36d94b037b2d6eef6a1b",
+     "ef8d6d5e2d7e336a54653d0c88a058ee7e1f452b"
+    ]
    }
   },
   "excluded": {
@@ -89529,5 +89552,6 @@
    "excluded": 132,
    "mentionsDropped": 30
   }
- }
+ },
+ "completeAt": "2026-10-09T10:48:28.257Z"
 }

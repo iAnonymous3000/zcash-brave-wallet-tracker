@@ -1,6 +1,6 @@
 {
- "at": "2026-10-09T09:06:04.939Z",
- "rulesVersion": 11,
+ "at": "2026-10-09T10:48:28.257Z",
+ "rulesVersion": 15,
  "builds": {
   "brave/brave-browser#59103": {
    "desktop/release": false,
@@ -5053,8 +5053,6 @@
   "studies": [
    "ZCashStudy.json5:ZCashStudy_DisabledOnOldVersions",
    "ZCashStudy.json5:ZCashStudy_EnabledWithShieldingOnNewVersions",
-   "iOSWalletWebUIStudy.json5:iOSWalletWebUIStudy",
-   "iOSWalletWebUIStudy.json5:iOSWalletWebUIStudy",
    "iOSWalletWebUIStudy.json5:iOSWalletWebUIStudy_ZcashEnabledWithShielding",
    "iOSWalletWebUIStudy.json5:iOSWalletWebUIStudy_ZcashEnabledWithShielding"
   ]
@@ -5062,5 +5060,6 @@
  "nu7": {
   "braveHasBranchId": false,
   "mainnetHeight": "TBD (To be set on OCT 20)"
- }
+ },
+ "droppedEvents": {}
 }

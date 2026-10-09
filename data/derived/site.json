@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-09T09:06:04.939Z",
+ "generatedAt": "2026-10-09T10:48:28.257Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -45,7 +45,7 @@
    "version": "1.96.62",
    "tag": "v1.96.62",
    "publishedAt": null,
-   "basis": "App Store version 1.96 (release-ios-app-store) = build 1.96.62 per Brave’s draft iOS release-notes issue #59758; GitHub release v1.96.62 carries the iOS build",
+   "basis": "App Store version 1.96 (release-ios-app-store) = build 1.96.62 per Brave’s draft iOS release-notes issue #59758, opened by GitHub user id 17885425 (Uni-verse), a listed Brave iOS release-notes author; GitHub release v1.96.62 carries the iOS build",
    "url": "https://versions.brave.com/latest/release-ios-app-store.version",
    "detail": {
     "release-ios-app-store": "1.96",
@@ -2346,7 +2346,8 @@
     "uplifts": [
      "brave/brave-core#39998",
      "brave/brave-core#39997",
-     "brave/brave-core#40007"
+     "brave/brave-core#40007",
+     "brave/brave-core#40008"
     ],
     "duplicates": [],
     "mentions": [],
@@ -2384,6 +2385,12 @@
      {
       "id": "brave/brave-core#40007",
       "base": "1.96.x",
+      "state": "closed",
+      "mergedAt": null
+     },
+     {
+      "id": "brave/brave-core#40008",
+      "base": "1.97.x",
       "state": "closed",
       "mergedAt": null
      }
@@ -15770,9 +15777,7 @@
     "duplicates": [
      "brave/brave-browser#53218"
     ],
-    "mentions": [
-     "brave/brave-browser#53218"
-    ],
+    "mentions": [],
     "children": [],
     "epic": null
    },
@@ -27014,7 +27019,7 @@
     "regression": false,
     "security": false,
     "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
+    "stageLabel": "Merged, build presence unknown"
    }
   },
   {
@@ -112005,7 +112010,7 @@
      "channel": "release",
      "version": "1.97.56",
      "status": "service-off",
-     "summary": "Shipped in Desktop 1.88.127, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Desktop 1.88.127, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112058,7 +112063,7 @@
      "channel": "beta",
      "version": "1.98.47",
      "status": "service-off",
-     "summary": "Shipped in Desktop 1.88.127, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Desktop 1.88.127, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112111,7 +112116,7 @@
      "channel": "nightly",
      "version": "1.99.20",
      "status": "service-off",
-     "summary": "Shipped in Desktop 1.88.127, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Desktop 1.88.127, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112164,7 +112169,7 @@
      "channel": "release",
      "version": "1.96.61",
      "status": "service-off",
-     "summary": "Shipped in Android 1.88.128, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Android 1.88.128, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112217,7 +112222,7 @@
      "channel": "beta",
      "version": "1.98.52",
      "status": "service-off",
-     "summary": "Shipped in Android 1.88.128, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Android 1.88.128, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112270,7 +112275,7 @@
      "channel": "nightly",
      "version": "1.99.26",
      "status": "service-off",
-     "summary": "Shipped in Android 1.88.128, but currently turned off server-side for Zcash, for every client.",
+     "summary": "Shipped in Android 1.88.128, but Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "release-note",
@@ -112323,7 +112328,7 @@
      "channel": "release",
      "version": "1.96.62",
      "status": "service-off",
-     "summary": "currently turned off server-side for Zcash, for every client.",
+     "summary": "Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "flag",
@@ -112378,7 +112383,7 @@
      "channel": "beta",
      "version": "1.98.52",
      "status": "service-off",
-     "summary": "currently turned off server-side for Zcash, for every client.",
+     "summary": "Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "flag",
@@ -112433,7 +112438,7 @@
      "channel": "nightly",
      "version": "1.99.25",
      "status": "service-off",
-     "summary": "currently turned off server-side for Zcash, for every client.",
+     "summary": "Brave’s public swap-service code (brave/gate3) disables Zcash for every platform and version. The deployed service is not public and could differ.",
      "evidence": [
       {
        "kind": "flag",
@@ -113213,8 +113218,8 @@
   },
   {
    "id": "merged",
-   "label": "Merged, not yet in a checked build",
-   "help": "A linked PR is merged but has not been confirmed in a published build yet.",
+   "label": "Merged, not confirmed in a current build",
+   "help": "A linked PR is merged, but no current build is confirmed to include it. A group reads “Merged, build presence unknown” when its presence could not be determined in any current build, “Merged, not confirmed in a current build” when some builds were confirmed not to include it and the rest could not be checked, and “Merged, not yet in a checked build” only when every checked build was confirmed not to include it.",
    "count": 1
   },
   {
@@ -113238,7 +113243,7 @@
   {
    "id": "closed-unverified",
    "label": "Closed, no linked fix found",
-   "help": "Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.",
+   "help": "Closed, but no merged PR or release note is linked (closed as completed, without a reason, or as a duplicate whose records contradict each other). Treat as unknown, not shipped.",
    "count": 27
   },
   {
@@ -113264,7 +113269,7 @@
   {
    "id": "available",
    "label": "Available",
-   "help": "Listed in this platform’s Stable release notes at or below the current Stable version, with no contrary flag evidence at the current build."
+   "help": "Listed in this platform’s Stable release notes at or below the current Stable version, with no contrary flag evidence at the current build and every required source check completed there."
   },
   {
    "id": "in-build",
@@ -113284,7 +113289,7 @@
   {
    "id": "service-off",
    "label": "Off server-side",
-   "help": "The app code may be present, but a Brave backend service currently has this turned off for Zcash (per its public repository)."
+   "help": "The app code may be present, but Brave’s public server-side code (e.g. its swap backend repository, brave/gate3) switches this off for Zcash, for every client. The deployed service is not public and could differ."
   },
   {
    "id": "absent",
@@ -113299,7 +113304,7 @@
   {
    "id": "not-verified",
    "label": "Not verified",
-   "help": "No platform-specific evidence was found. This does not mean it is unavailable."
+   "help": "Not enough evidence that it works on this build: no platform-specific evidence was found, a required source check could not be completed, or a server-side switch it depends on could not be read. This does not mean it is unavailable."
   }
  ],
  "upstream": {
@@ -114055,7 +114060,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-09T09:06:04.939Z"
+   "checkedAt": "2026-10-09T10:48:28.257Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -115368,7 +115373,8 @@
     "lastCommitAt": "2026-08-25T15:10:57Z",
     "lastCommitMessage": "(zip-2005) fix: remove dangling K",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/840b3f39f77fb3dcccdbc4c00191eda16dba8c7e",
-    "url": "https://zips.z.cash/zip-2005"
+    "url": "https://zips.z.cash/zip-2005",
+    "path": "zips/zip-2005.md"
    },
    "2009": {
     "num": "2009",
@@ -115377,43 +115383,48 @@
     "lastCommitAt": "2026-10-08T17:06:15Z",
     "lastCommitMessage": "Fix fat-fingered move of ZIP 2009 to its correct location.",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/51df2a4070fcf4718d995958a4809f8ab4ff8222",
-    "url": "https://zips.z.cash/zip-2009"
+    "url": "https://zips.z.cash/zip-2009",
+    "path": "zips/zip-2009.md"
    },
    "0317": {
     "num": "0317",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0317"
+    "title": "Proportional Transfer Fee Mechanism",
+    "status": "[Revision 0] Active, [Revision 1: NU6.3] Draft, [Revision 2] Draft",
+    "lastCommitAt": "2026-07-01T05:27:18Z",
+    "lastCommitMessage": "Apply suggestions from code review",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/561b5b4bf692c53e697b5f660fc4fe8a45747edd",
+    "url": "https://zips.z.cash/zip-0317",
+    "path": "zips/zip-0317.rst"
    },
    "0302": {
     "num": "0302",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0302"
+    "title": "Standardized Memo Field Format",
+    "status": "Draft",
+    "lastCommitAt": "2026-02-10T21:17:45Z",
+    "lastCommitMessage": "Change @str4d and @daira's email addresses to their personal addresses.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/7b9e678ff3eabf8514f9d0e32cfbf11b27e12696",
+    "url": "https://zips.z.cash/zip-0302",
+    "path": "zips/zip-0302.rst"
    },
    "0316": {
     "num": "0316",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0316"
+    "title": "Unified Addresses and Unified Viewing Keys",
+    "status": "[Revision 0] Active, [Revision 1] Withdrawn, [Revision 2] Draft",
+    "lastCommitAt": "2026-06-24T16:24:12Z",
+    "lastCommitMessage": "Fix the punctuation-after-math problem once and for all.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/a9b838e8c90217fd5a94b2330d92d61cfb262459",
+    "url": "https://zips.z.cash/zip-0316",
+    "path": "zips/zip-0316.rst"
    },
    "0225": {
     "num": "0225",
-    "title": null,
-    "status": null,
-    "lastCommitAt": null,
-    "lastCommitMessage": null,
-    "lastCommitUrl": null,
-    "url": "https://zips.z.cash/zip-0225"
+    "title": "Version 5 Transaction Format",
+    "status": "Final",
+    "lastCommitAt": "2026-07-09T10:09:06Z",
+    "lastCommitMessage": "ZIPs 225, 229, 258: specify the version group ID via protocol spec § 7.1.2, not a ZIP",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/1183725fec88445f6704b3ff4fff76c2a51ea43e",
+    "url": "https://zips.z.cash/zip-0225",
+    "path": "zips/zip-0225.rst"
    },
    "0229": {
     "num": "0229",
@@ -115422,7 +115433,8 @@
     "lastCommitAt": "2026-07-28T13:36:35Z",
     "lastCommitMessage": "zip-0229, zip-0213: describe the NU6.3 version 6 consensus-rule changes",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/2ac8505fc72942e3fb07aef98cd8024c4601c839",
-    "url": "https://zips.z.cash/zip-0229"
+    "url": "https://zips.z.cash/zip-0229",
+    "path": "zips/zip-0229.md"
    },
    "0258": {
     "num": "0258",
@@ -115431,7 +115443,8 @@
     "lastCommitAt": "2026-07-20T14:23:04Z",
     "lastCommitMessage": "ZIP 204: specify protocol version assignment; ZIP 258: assign NU6.3 versions",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/b93e824b3fecbfdbcbbb5b4205223780a1320a25",
-    "url": "https://zips.z.cash/zip-0258"
+    "url": "https://zips.z.cash/zip-0258",
+    "path": "zips/zip-0258.md"
    },
    "0318": {
     "num": "0318",
@@ -115440,7 +115453,8 @@
     "lastCommitAt": "2026-07-31T11:41:43Z",
     "lastCommitMessage": "Apply suggestions from review (nits and fixing an inaccurate time calculation)",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/60db9f1e6a1e9988da442b7d8436da6b16dd5c26",
-    "url": "https://zips.z.cash/zip-0318"
+    "url": "https://zips.z.cash/zip-0318",
+    "path": "zips/zip-0318.md"
    },
    "0326": {
     "num": "0326",
@@ -115449,7 +115463,8 @@
     "lastCommitAt": "2026-07-09T10:12:54Z",
     "lastCommitMessage": "ZIP 326: apply review suggestions (nuttycom, #1319)",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/02eac4c430503e50bc583140f6b5dd4cc1cab962",
-    "url": "https://zips.z.cash/zip-0326"
+    "url": "https://zips.z.cash/zip-0326",
+    "path": "zips/zip-0326.md"
    },
    "0259": {
     "num": "0259",
@@ -115458,7 +115473,8 @@
     "lastCommitAt": "2026-09-30T20:57:39Z",
     "lastCommitMessage": "Set the NU7 testnet activation height to 4465026",
     "lastCommitUrl": "https://github.com/zcash/zips/commit/b344587acf6d33650bfffbb227e0bc928752721f",
-    "url": "https://zips.z.cash/zip-0259"
+    "url": "https://zips.z.cash/zip-0259",
+    "path": "zips/zip-0259.md"
    }
   },
   "advisories": [
@@ -115771,38 +115787,39 @@
     "updatedAt": "2026-07-06T21:23:42Z",
     "withdrawnAt": null,
     "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46",
-    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's resolved versions at master and the checked channel builds are outside the vulnerable ranges.",
+    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 9 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.25, v1.99.28)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 9 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.25, v1.99.28)). zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
     "verdictDetails": [
      "v1.97.56 (desktop/release, github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.97.56 (desktop/release, github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.97.56 (desktop/release, github/release): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.97.56 (desktop/release, github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.96.61 (android/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.96.61 (android/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.96.61 (android/release): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.96.61 (android/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.98.47 (desktop/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.98.47 (desktop/beta): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.98.47 (desktop/beta): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.98.47 (desktop/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.98.52 (android/beta, ios/beta, github/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.98.52 (android/beta, ios/beta, github/beta): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.98.52 (android/beta, ios/beta, github/beta): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.98.52 (android/beta, ios/beta, github/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.99.20 (desktop/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.20 (desktop/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.20 (desktop/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.99.20 (desktop/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.99.26 (android/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.26 (android/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.26 (android/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
-     "master (master): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "master (master): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "master (master): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.99.26 (android/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "master: halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "master: orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "master: zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.96.62 (ios/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.96.62 (ios/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.96.62 (ios/release): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.96.62 (ios/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.99.25 (ios/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.25 (ios/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.25 (ios/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+     "v1.99.25 (ios/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.99.28 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.28 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.99.28 (github/nightly): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0"
+     "v1.99.28 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "zebrad: not present in Brave's Cargo.lock at v1.97.56 (desktop/release, github/release); v1.96.61 (android/release); v1.98.47 (desktop/beta); v1.98.52 (android/beta, ios/beta, github/beta); v1.99.20 (desktop/nightly); v1.99.26 (android/nightly); master; v1.96.62 (ios/release); v1.99.25 (ios/nightly); v1.99.28 (github/nightly)"
     ],
     "affected": false
    },
@@ -115911,7 +115928,9 @@
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
-    ]
+    ],
+    "latest": " Latest release: v1.6.0.",
+    "metadataReadAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -115924,7 +115943,9 @@
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
-    ]
+    ],
+    "latest": " Last commit: feat(transparent): txid details — display v2 facts with senders, review….",
+    "metadataReadAt": "2026-10-09T10:48:28.257Z"
    },
    {
     "id": "watch-zkdragon",
@@ -115970,7 +115991,7 @@
     "zcashDisabled": true,
     "line": 18,
     "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-    "checkedAt": "2026-10-09T09:06:04.939Z"
+    "checkedAt": "2026-10-09T10:48:28.257Z"
    },
    "studies": [
     {
@@ -116001,19 +116022,117 @@
      "probability": 100,
      "appliesTo": [
       {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
+       "build": "Desktop release 1.97.56 (155.1.97.56)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "release",
+       "version": "1.97.56",
+       "reason": "155.1.97.56 is outside the version range 139.1.81.129 – 152.*"
       },
       {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
+       "build": "Android release 1.96.61 (154.1.96.61)",
+       "applies": false,
+       "platform": "android",
+       "channel": "release",
+       "version": "1.96.61",
+       "reason": "154.1.96.61 is outside the version range 139.1.81.129 – 152.*"
       },
       {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
+       "build": "iOS release 1.96.62 (154.1.96.62)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.96.62",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 154.1.96.62 is outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "Desktop beta 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "beta",
+       "version": "1.98.47",
+       "reason": "155.1.98.52 (Windows, macOS, Linux arm64) and 155.1.98.47 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "Android beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "android",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "155.1.98.52 is outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "iOS beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 155.1.98.52 is outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "Desktop nightly 1.99.20 (155.1.99.20) / 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "nightly",
+       "version": "1.99.20",
+       "reason": "155.1.99.25 (Windows, macOS arm64, Linux) and 155.1.99.20 (macOS x64) are outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "Android nightly 1.99.26 (155.1.99.26)",
+       "applies": false,
+       "platform": "android",
+       "channel": "nightly",
+       "version": "1.99.26",
+       "reason": "155.1.99.26 is outside the version range 139.1.81.129 – 152.*"
+      },
+      {
+       "build": "iOS nightly 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "nightly",
+       "version": "1.99.25",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 155.1.99.25 is outside the version range 139.1.81.129 – 152.*"
       }
      ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5"
+     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5",
+     "experiments": [
+      {
+       "name": "EnabledWithShielding",
+       "weight": 100,
+       "share": 100,
+       "enable": [
+        "BraveWalletZCash"
+       ],
+       "disable": [],
+       "params": {
+        "zcash_shielded_transactions_enabled": "true"
+       }
+      },
+      {
+       "name": "Default",
+       "weight": 0,
+       "share": 0,
+       "enable": [],
+       "disable": [],
+       "params": {}
+      }
+     ],
+     "filter": {
+      "min_version": "139.1.81.129",
+      "max_version": "152.*",
+      "channel": [
+       "RELEASE",
+       "NIGHTLY",
+       "BETA"
+      ],
+      "platform": [
+       "WINDOWS",
+       "MAC",
+       "LINUX",
+       "ANDROID"
+      ]
+     },
+     "readAt": "2026-10-09T10:48:28.257Z"
     },
     {
      "file": "ZCashStudy.json5",
@@ -116041,130 +116160,114 @@
      "probability": 100,
      "appliesTo": [
       {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
+       "build": "Desktop release 1.97.56 (155.1.97.56)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "release",
+       "version": "1.97.56",
+       "reason": "155.1.97.56 is outside the version range any – 139.1.81.128"
       },
       {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
+       "build": "Android release 1.96.61 (154.1.96.61)",
+       "applies": false,
+       "platform": "android",
+       "channel": "release",
+       "version": "1.96.61",
+       "reason": "154.1.96.61 is outside the version range any – 139.1.81.128"
       },
       {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
+       "build": "iOS release 1.96.62 (154.1.96.62)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.96.62",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 154.1.96.62 is outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "Desktop beta 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "beta",
+       "version": "1.98.47",
+       "reason": "155.1.98.52 (Windows, macOS, Linux arm64) and 155.1.98.47 (Linux x64) are outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "Android beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "android",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "155.1.98.52 is outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "iOS beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 155.1.98.52 is outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "Desktop nightly 1.99.20 (155.1.99.20) / 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "nightly",
+       "version": "1.99.20",
+       "reason": "155.1.99.25 (Windows, macOS arm64, Linux) and 155.1.99.20 (macOS x64) are outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "Android nightly 1.99.26 (155.1.99.26)",
+       "applies": false,
+       "platform": "android",
+       "channel": "nightly",
+       "version": "1.99.26",
+       "reason": "155.1.99.26 is outside the version range any – 139.1.81.128"
+      },
+      {
+       "build": "iOS nightly 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "nightly",
+       "version": "1.99.25",
+       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 155.1.99.25 is outside the version range any – 139.1.81.128"
       }
      ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5"
-    },
-    {
-     "file": "iOSWalletWebUIStudy.json5",
-     "name": "iOSWalletWebUIStudy",
-     "features": {
-      "enable": [
-       "BraveWalletWebUIFeature",
-       "BraveWalletCardano"
+     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/ZCashStudy.json5",
+     "experiments": [
+      {
+       "name": "Disabled",
+       "weight": 100,
+       "share": 100,
+       "enable": [],
+       "disable": [
+        "BraveWalletZCash"
+       ],
+       "params": {}
+      },
+      {
+       "name": "Default",
+       "weight": 0,
+       "share": 0,
+       "enable": [],
+       "disable": [],
+       "params": {}
+      }
+     ],
+     "filter": {
+      "max_version": "139.1.81.128",
+      "channel": [
+       "RELEASE",
+       "NIGHTLY",
+       "BETA"
       ],
-      "disable": []
+      "platform": [
+       "WINDOWS",
+       "MAC",
+       "LINUX",
+       "ANDROID"
+      ]
      },
-     "params": {},
-     "minVersion": "146.1.89.116",
-     "maxVersion": "152.*",
-     "channels": [
-      "NIGHTLY",
-      "BETA"
-     ],
-     "platforms": [
-      "IOS"
-     ],
-     "probability": 100,
-     "appliesTo": [
-      {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
-      },
-      {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
-      },
-      {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
-      }
-     ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
-    },
-    {
-     "file": "iOSWalletWebUIStudy.json5",
-     "name": "iOSWalletWebUIStudy_ZcashEnabledWithShielding",
-     "features": {
-      "enable": [
-       "BraveWalletZCash"
-      ],
-      "disable": []
-     },
-     "params": {
-      "zcash_shielded_transactions_enabled": "true"
-     },
-     "minVersion": "146.1.89.116",
-     "maxVersion": "152.*",
-     "channels": [
-      "NIGHTLY",
-      "BETA"
-     ],
-     "platforms": [
-      "IOS"
-     ],
-     "probability": 100,
-     "appliesTo": [
-      {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
-      },
-      {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
-      },
-      {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
-      }
-     ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
-    },
-    {
-     "file": "iOSWalletWebUIStudy.json5",
-     "name": "iOSWalletWebUIStudy",
-     "features": {
-      "enable": [
-       "BraveWalletWebUIFeature",
-       "BraveWalletCardano"
-      ],
-      "disable": []
-     },
-     "params": {},
-     "minVersion": "147.1.89.144",
-     "maxVersion": "152.*",
-     "channels": [
-      "RELEASE"
-     ],
-     "platforms": [
-      "IOS"
-     ],
-     "probability": 100,
-     "appliesTo": [
-      {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
-      },
-      {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
-      },
-      {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
-      }
-     ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+     "readAt": "2026-10-09T10:48:28.257Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -116178,6 +116281,138 @@
      "params": {
       "zcash_shielded_transactions_enabled": "true"
      },
+     "minVersion": "146.1.89.116",
+     "maxVersion": "152.*",
+     "channels": [
+      "NIGHTLY",
+      "BETA"
+     ],
+     "platforms": [
+      "IOS"
+     ],
+     "probability": 100,
+     "appliesTo": [
+      {
+       "build": "Desktop release 1.97.56 (155.1.97.56)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "release",
+       "version": "1.97.56",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 155.1.97.56 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "Android release 1.96.61 (154.1.96.61)",
+       "applies": false,
+       "platform": "android",
+       "channel": "release",
+       "version": "1.96.61",
+       "reason": "platform filter (IOS) excludes Android; channel filter (NIGHTLY, BETA) excludes release; 154.1.96.61 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "iOS release 1.96.62 (154.1.96.62)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.96.62",
+       "reason": "channel filter (NIGHTLY, BETA) excludes release; 154.1.96.62 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "Desktop beta 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "beta",
+       "version": "1.98.47",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 155.1.98.52 (Windows, macOS, Linux arm64) and 155.1.98.47 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "Android beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "android",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "platform filter (IOS) excludes Android; 155.1.98.52 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "iOS beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "155.1.98.52 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "Desktop nightly 1.99.20 (155.1.99.20) / 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "nightly",
+       "version": "1.99.20",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 155.1.99.25 (Windows, macOS arm64, Linux) and 155.1.99.20 (macOS x64) are outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "Android nightly 1.99.26 (155.1.99.26)",
+       "applies": false,
+       "platform": "android",
+       "channel": "nightly",
+       "version": "1.99.26",
+       "reason": "platform filter (IOS) excludes Android; 155.1.99.26 is outside the version range 146.1.89.116 – 152.*"
+      },
+      {
+       "build": "iOS nightly 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "nightly",
+       "version": "1.99.25",
+       "reason": "155.1.99.25 is outside the version range 146.1.89.116 – 152.*"
+      }
+     ],
+     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5",
+     "experiments": [
+      {
+       "name": "EnabledWithShielding",
+       "weight": 100,
+       "share": 100,
+       "enable": [
+        "BraveWalletZCash"
+       ],
+       "disable": [],
+       "params": {
+        "zcash_shielded_transactions_enabled": "true"
+       }
+      },
+      {
+       "name": "Default",
+       "weight": 0,
+       "share": 0,
+       "enable": [],
+       "disable": [],
+       "params": {}
+      }
+     ],
+     "filter": {
+      "min_version": "146.1.89.116",
+      "max_version": "152.*",
+      "channel": [
+       "NIGHTLY",
+       "BETA"
+      ],
+      "platform": [
+       "IOS"
+      ]
+     },
+     "readAt": "2026-10-09T10:48:28.257Z"
+    },
+    {
+     "file": "iOSWalletWebUIStudy.json5",
+     "name": "iOSWalletWebUIStudy_ZcashEnabledWithShielding",
+     "features": {
+      "enable": [
+       "BraveWalletZCash"
+      ],
+      "disable": []
+     },
+     "params": {
+      "zcash_shielded_transactions_enabled": "true"
+     },
      "minVersion": "147.1.89.144",
      "maxVersion": "152.*",
      "channels": [
@@ -116189,22 +116424,117 @@
      "probability": 100,
      "appliesTo": [
       {
-       "build": "release 1.97.56 (155.1.97.56)",
-       "applies": false
+       "build": "Desktop release 1.97.56 (155.1.97.56)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "release",
+       "version": "1.97.56",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 155.1.97.56 is outside the version range 147.1.89.144 – 152.*"
       },
       {
-       "build": "beta 1.98.52 (155.1.98.52)",
-       "applies": false
+       "build": "Android release 1.96.61 (154.1.96.61)",
+       "applies": false,
+       "platform": "android",
+       "channel": "release",
+       "version": "1.96.61",
+       "reason": "platform filter (IOS) excludes Android; 154.1.96.61 is outside the version range 147.1.89.144 – 152.*"
       },
       {
-       "build": "nightly 1.99.28 (156.1.99.28)",
-       "applies": false
+       "build": "iOS release 1.96.62 (154.1.96.62)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.96.62",
+       "reason": "154.1.96.62 is outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "Desktop beta 1.98.47 (155.1.98.47) / 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "beta",
+       "version": "1.98.47",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 155.1.98.52 (Windows, macOS, Linux arm64) and 155.1.98.47 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "Android beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "android",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes beta; 155.1.98.52 is outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "iOS beta 1.98.52 (155.1.98.52)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "beta",
+       "version": "1.98.52",
+       "reason": "channel filter (RELEASE) excludes beta; 155.1.98.52 is outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "Desktop nightly 1.99.20 (155.1.99.20) / 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "desktop",
+       "channel": "nightly",
+       "version": "1.99.20",
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 155.1.99.25 (Windows, macOS arm64, Linux) and 155.1.99.20 (macOS x64) are outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "Android nightly 1.99.26 (155.1.99.26)",
+       "applies": false,
+       "platform": "android",
+       "channel": "nightly",
+       "version": "1.99.26",
+       "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes nightly; 155.1.99.26 is outside the version range 147.1.89.144 – 152.*"
+      },
+      {
+       "build": "iOS nightly 1.99.25 (155.1.99.25)",
+       "applies": false,
+       "platform": "ios",
+       "channel": "nightly",
+       "version": "1.99.25",
+       "reason": "channel filter (RELEASE) excludes nightly; 155.1.99.25 is outside the version range 147.1.89.144 – 152.*"
       }
      ],
-     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5"
+     "url": "https://github.com/brave/brave-variations/blob/5a54118717fec842b9441634125bba7d32dc8163/studies/iOSWalletWebUIStudy.json5",
+     "experiments": [
+      {
+       "name": "EnabledWithShielding",
+       "weight": 100,
+       "share": 100,
+       "enable": [
+        "BraveWalletZCash"
+       ],
+       "disable": [],
+       "params": {
+        "zcash_shielded_transactions_enabled": "true"
+       }
+      },
+      {
+       "name": "Default",
+       "weight": 0,
+       "share": 0,
+       "enable": [],
+       "disable": [],
+       "params": {}
+      }
+     ],
+     "filter": {
+      "min_version": "147.1.89.144",
+      "max_version": "152.*",
+      "channel": [
+       "RELEASE"
+      ],
+      "platform": [
+       "IOS"
+      ]
+     },
+     "readAt": "2026-10-09T10:48:28.257Z"
     }
    ],
-   "studiesCommit": "5a54118717fec842b9441634125bba7d32dc8163"
+   "studiesCommit": "5a54118717fec842b9441634125bba7d32dc8163",
+   "studiesReadAt": "2026-10-09T10:48:28.257Z",
+   "studiesDigest": "cd51d0a611e792ff71484e829d348b0c52d92a5c02dd4f808e03641c5dcbea1a"
   },
   "nextUpgrade": {
    "name": "NU7",
@@ -116219,7 +116549,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-09T09:06:04.939Z"
+   "checkedAt": "2026-10-09T10:48:28.257Z"
   }
  },
  "community": [
@@ -117273,8 +117603,8 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117282,14 +117612,15 @@
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
-   ]
+   ],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117297,81 +117628,88 @@
    "requests": 14,
    "limitations": [
     "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
-   ]
+   ],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 64,
    "requests": 8,
-   "limitations": []
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 7,
-   "requests": 7,
+   "itemCount": 5,
+   "requests": 129,
    "limitations": [
-    "Repository state is shown; the deployed service could differ and its deployment time is not public"
-   ]
+    "Repository state is shown; the deployed service could differ and its deployment time is not public",
+    "1 earlier study was dropped because no cohort sets a Zcash/Ironwood feature or parameter: iOSWalletWebUIStudy"
+   ],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 12,
-   "requests": 11,
-   "limitations": []
+   "requests": 51,
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 353,
    "requests": 0,
-   "limitations": []
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 787,
-   "requests": 65,
-   "limitations": []
+   "requests": 66,
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -117379,72 +117717,78 @@
    "requests": 6,
    "limitations": [
     "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
-   ]
+   ],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 17,
    "requests": 23,
-   "limitations": []
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 190,
-   "requests": 32,
-   "limitations": []
+   "requests": 46,
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 9,
    "requests": 28,
-   "limitations": []
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 3,
    "requests": 10,
-   "limitations": []
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   },
   {
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-10-09T09:06:04.939Z",
-   "lastSuccessAt": "2026-10-09T09:06:04.939Z",
+   "lastAttemptAt": "2026-10-09T10:48:28.257Z",
+   "lastSuccessAt": "2026-10-09T10:48:28.257Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 12,
-   "requests": 11,
-   "limitations": []
+   "requests": 2,
+   "limitations": [],
+   "lastCompleteAt": "2026-10-09T10:48:28.257Z"
   }
  ],
  "coverage": {
@@ -117542,6 +117886,7 @@
    "Brave browser GitHub releases: only the 400 most recent GitHub releases are read each run",
    "Brave Community (Discourse) Zcash reports: Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context",
    "Brave server-side signals (gate3 swap routing, brave-variations studies): Repository state is shown; the deployed service could differ and its deployment time is not public",
+   "Brave server-side signals (gate3 swap routing, brave-variations studies): 1 earlier study was dropped because no cohort sets a Zcash/Ironwood feature or parameter: iOSWalletWebUIStudy",
    "Official docs (Brave Help Center, brave.com): Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
   ],
   "gaps": [

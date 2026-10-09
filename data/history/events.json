@@ -301,7 +301,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-30T23:09:57Z",
   "title": "Closed (not planned): Wallet - Add ZEC for menu list for users to select as default",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51665"
@@ -330,7 +330,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-30T23:09:54Z",
   "title": "Closed (not planned): Allow users to select ZEC as the default base cryptocurrency in Brave Wallet",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#59532"
@@ -580,6 +580,7 @@
   ],
   "evidence": [
    "merged 2026-09-24T15:07:13Z",
+   "repository brave/brave-core",
    "base branch 1.97.x"
   ],
   "id": "1deacd0dca89cdc6",
@@ -700,7 +701,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-23T09:00:39Z",
   "title": "Merged: [ZCash] Enable ironwood by default.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-23 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-23. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39726"
@@ -718,6 +719,7 @@
   ],
   "evidence": [
    "merged 2026-09-23T09:00:39Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "43807f82e2caaee2",
@@ -801,6 +803,7 @@
   ],
   "evidence": [
    "merged 2026-09-22T12:42:35Z",
+   "repository brave/brave-core",
    "base branch 1.96.x"
   ],
   "id": "07d0a62a9ac8d892",
@@ -856,6 +859,7 @@
   ],
   "evidence": [
    "merged 2026-09-22T06:17:40Z",
+   "repository brave/brave-core",
    "base branch 1.97.x"
   ],
   "id": "3cbdc72fb4343704",
@@ -914,7 +918,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-18T20:25:29Z",
   "title": "Closed (completed): [Crash] Browser crash when kept idle while Zcash sync is in progress",
-  "impact": "Closed as completed; linked PR merged 2026-09-18. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-09-18. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#59049"
@@ -936,6 +940,34 @@
   ],
   "id": "fed74c71052d3bba",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "pr-closed-unmerged",
+  "sourceAt": "2026-09-18T16:02:35Z",
+  "title": "PR closed without merging: [ZCash] Fix handling of errors in zcash tasks.",
+  "impact": "This pull request was closed without being merged, so its change did not land through it.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#40008"
+  ],
+  "topic": "security",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#40008",
+    "url": "https://github.com/brave/brave-core/pull/40008"
+   }
+  ],
+  "evidence": [
+   "closed 2026-09-18T16:02:35Z",
+   "merged: no"
+  ],
+  "id": "16a0e591da5f7402",
+  "detectedAt": "2026-10-09T10:48:28.257Z",
   "basis": "backfill"
  },
  {
@@ -1002,7 +1034,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-18T15:31:43Z",
   "title": "Merged: [Wallet] Hide Swap, Bridge, and Deposit for Zcash (Shielded Legacy)",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#39977"
@@ -1020,6 +1052,7 @@
   ],
   "evidence": [
    "merged 2026-09-18T15:31:43Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "a6098f7d5b49acd3",
@@ -1030,7 +1063,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-18T09:40:36Z",
   "title": "Merged: [ZCash] Fix handling of errors in zcash tasks.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#39979"
@@ -1048,6 +1081,7 @@
   ],
   "evidence": [
    "merged 2026-09-18T09:40:36Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "ee7101f0fd7b8683",
@@ -1173,7 +1207,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-16T16:00:18Z",
   "title": "Merged: [ZCash] Fix ironwood fee calculation",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-16 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39877"
@@ -1189,6 +1223,7 @@
   ],
   "evidence": [
    "merged 2026-09-16T16:00:18Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "fb0ad4640c500a75",
@@ -1250,7 +1285,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-15T11:53:59Z",
   "title": "Merged: [ZCash] Reset ironwood migration flag when feature is off.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-15 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-15. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39838"
@@ -1268,6 +1303,7 @@
   ],
   "evidence": [
    "merged 2026-09-15T11:53:59Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "4f7fddefb79062a5",
@@ -1411,7 +1447,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-11T21:49:30Z",
   "title": "Merged: [Wallet]: Reject fractional Zcash birthday blocks",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-11 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-11. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#39811"
@@ -1429,6 +1465,7 @@
   ],
   "evidence": [
    "merged 2026-09-11T21:49:30Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "e9898135c066fdbf",
@@ -1451,8 +1488,8 @@
   "channel": "release",
   "links": [
    {
-    "label": "CHANGELOG_ANDROID.md L66",
-    "url": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66"
+    "label": "CHANGELOG_ANDROID.md L78",
+    "url": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L78"
    },
    {
     "label": "brave-browser#58493",
@@ -1461,7 +1498,7 @@
   ],
   "evidence": [
    "\"Added Zcash Ironwood migration banner. (#58493)\"",
-   "captured at commit 3bad81d3"
+   "captured at commit 3048552c"
   ],
   "id": "ace467d3de4b1b5f",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -1535,7 +1572,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-09T17:13:22Z",
   "title": "Merged: [Wallet]: Reject negative and leading-zero amounts on Send and Swap",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-09 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-09. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#39703"
@@ -1553,6 +1590,7 @@
   ],
   "evidence": [
    "merged 2026-09-09T17:13:22Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "9cff118cd33a56bc",
@@ -1721,6 +1759,7 @@
   ],
   "evidence": [
    "merged 2026-09-08T13:35:46Z",
+   "repository brave/brave-core",
    "base branch 1.95.x"
   ],
   "id": "d9932a9d425ee7e4",
@@ -1943,8 +1982,8 @@
  {
   "kind": "pr-merged",
   "sourceAt": "2026-09-03T14:47:42Z",
-  "title": "Merged: fix(swap): disable Zcash swap/bridge routing",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-03 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "title": "Merged in brave/gate3: fix(swap): disable Zcash swap/bridge routing",
+  "impact": "Merged into brave/gate3 (master branch) on 2026-09-03. This is a Brave server-side repository: the change takes effect only when Brave deploys it, which is not public, so deployment is unverified. It does not depend on a browser build or version.",
   "highlight": null,
   "itemIds": [
    "brave/gate3#335"
@@ -1960,6 +1999,7 @@
   ],
   "evidence": [
    "merged 2026-09-03T14:47:42Z",
+   "repository brave/gate3",
    "base branch master"
   ],
   "id": "b8e76cd34ee18ae0",
@@ -1994,7 +2034,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-03T08:46:43Z",
   "title": "Closed (completed): [ZCash] Add ironwood option to zcash feature in chrome://flags",
-  "impact": "Closed as completed; linked PR merged 2026-09-03. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-09-03. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58602"
@@ -2026,7 +2066,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-03T08:46:41Z",
   "title": "Merged: [ZCash] Add ironwood flag to chrome://flags",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-03 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-03. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39551"
@@ -2044,6 +2084,7 @@
   ],
   "evidence": [
    "merged 2026-09-03T08:46:41Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "96092d876ca598eb",
@@ -2054,7 +2095,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-02T16:46:32Z",
   "title": "Merged: [iOS][Wallet] remove ios webui feature flag",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-02 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-02. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#39547"
@@ -2070,6 +2111,7 @@
   ],
   "evidence": [
    "merged 2026-09-02T16:46:32Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "795907d7fed5b482",
@@ -2080,7 +2122,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-02T13:13:57Z",
   "title": "Closed (completed): [ZCash] Improve messaging for ironwood",
-  "impact": "Closed as completed; linked PR merged 2026-09-02. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-09-02. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58593"
@@ -2112,7 +2154,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-09-02T13:13:55Z",
   "title": "Merged: [ZCash] Improve ironwood texting.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-09-02 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-09-02. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39539"
@@ -2130,6 +2172,7 @@
   ],
   "evidence": [
    "merged 2026-09-02T13:13:55Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "c0ca0428be1a82c6",
@@ -2242,7 +2285,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-28T10:42:58Z",
   "title": "Closed (completed): Cancel pending wallet signing requests when a site's permission is revoked",
-  "impact": "Closed as completed; linked PR merged 2026-08-28. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-28. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "security",
   "itemIds": [
    "brave/brave-browser#57645"
@@ -2275,7 +2318,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-28T10:42:57Z",
   "title": "Merged: [wallet] Proactively reject pending requests when site permission is revoked",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-28 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-28. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "security",
   "itemIds": [
    "brave/brave-core#38854"
@@ -2294,6 +2337,7 @@
   ],
   "evidence": [
    "merged 2026-08-28T10:42:57Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "c7cae061bf380fb0",
@@ -2331,7 +2375,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-28T09:06:57Z",
   "title": "Closed (completed): [ZCash] Add and wire i -> t and o -> i tasks",
-  "impact": "Closed as completed; linked PR merged 2026-08-28. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-28. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58408"
@@ -2363,7 +2407,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-28T09:06:55Z",
   "title": "Merged: [ZCash] Support i->t, o->i ironwood transactions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-28 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-28. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39446"
@@ -2381,6 +2425,7 @@
   ],
   "evidence": [
    "merged 2026-08-28T09:06:55Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "1f796178e8d94a10",
@@ -2391,7 +2436,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-27T23:51:04Z",
   "title": "Closed (completed): Display Alert for Zcash Ironwood Migration",
-  "impact": "Closed as completed. Listed in Desktop Stable 1.95.101 release notes and 1 more.",
+  "impact": "Closed as completed. Listed in Desktop Stable 1.95.101 release notes and 2 more.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58493"
@@ -2425,7 +2470,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-27T23:51:03Z",
   "title": "Merged: [Wallet]: Zcash Ironwood Migration Banner",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-27 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-27. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39448"
@@ -2445,6 +2490,7 @@
   ],
   "evidence": [
    "merged 2026-08-27T23:51:03Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "431dbe9290788691",
@@ -2455,7 +2501,7 @@
   "kind": "advisory",
   "sourceAt": "2026-08-27T18:58:26Z",
   "title": "Security advisory GHSA-932p-ww36-57vg: Public GetAddressUtxos requests can overfetch backend UTXOs and degrade normal wallet requests",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.4). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.4). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetAddressUtxos; Brave Wallet’s Zcash client calls GetAddressUtxos.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -2468,7 +2514,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.5.4"
+   "github.com/zcash/lightwalletd <= 0.5.4",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "46d422fe72bef0d5",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -2531,7 +2578,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-27T12:55:29Z",
   "title": "Closed (completed): [ZCash] Add and wire ironwood tasks - t->i and i->i",
-  "impact": "Closed as completed; linked PR merged 2026-08-27. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-27. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58384"
@@ -2563,7 +2610,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-27T12:55:28Z",
   "title": "Merged: [ZCash] Support transparent to ironwood and ironwood to ironwood tx.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-27 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-27. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39350"
@@ -2581,6 +2628,7 @@
   ],
   "evidence": [
    "merged 2026-08-27T12:55:28Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "de97c9647e49a012",
@@ -2591,7 +2639,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-26T15:05:28Z",
   "title": "Closed (completed): [Ironwood] Add api to reset sync state to the ironwood activation height",
-  "impact": "Closed as completed; linked PR merged 2026-08-26. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-26. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58262"
@@ -2623,7 +2671,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-26T15:05:27Z",
   "title": "Merged: [ZCash] Add method to reset sync state to ironwood activation block",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-26 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-26. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39232"
@@ -2641,6 +2689,7 @@
   ],
   "evidence": [
    "merged 2026-08-26T15:05:27Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "cfc229f0dc4943f4",
@@ -2765,7 +2814,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-24T18:52:37Z",
   "title": "Closed (completed): [ZCash] Add ironwood transaction creation tasks",
-  "impact": "Closed as completed, but no merged PR or release note is linked. Closure alone does not show that a change shipped.",
+  "impact": "Closed as completed; linked PR merged 2026-08-07. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57578"
@@ -2793,7 +2842,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-24T18:52:14Z",
   "title": "Closed (completed): [ZCash] Resolve Ironwood balance",
-  "impact": "Closed as completed, but no merged PR or release note is linked. Closure alone does not show that a change shipped.",
+  "impact": "Closed as completed; linked PR merged 2026-07-29. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57391"
@@ -2872,7 +2921,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T08:54:00Z",
   "title": "Closed (completed): [ZCash] Fix ironwood orchard to transparent unshielding",
-  "impact": "Closed as completed; linked PR merged 2026-08-21. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-21. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58264"
@@ -2904,7 +2953,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-21T08:53:59Z",
   "title": "Merged: [ZCash] Refactor unshielding to use v6 transaction format.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-21 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-21. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39159"
@@ -2922,6 +2971,7 @@
   ],
   "evidence": [
    "merged 2026-08-21T08:53:59Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "d3f5e78f08d3d890",
@@ -2932,7 +2982,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:52:35Z",
   "title": "Closed (not planned): Add Ironwood recipient capability signaling",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58281"
@@ -2960,7 +3010,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:47:55Z",
   "title": "Closed (not planned): fix: require provider capability signaling before Ironwood scanning",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58282"
@@ -3015,7 +3065,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:43:53Z",
   "title": "Closed (not planned): fix: validate ZCash consensus branch identifiers",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58288"
@@ -3043,7 +3093,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:40:37Z",
   "title": "Closed (not planned): fix: validate ZCash note versions against their shielded pools",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58287"
@@ -3071,7 +3121,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:39:40Z",
   "title": "Closed (not planned): fix: scope retained ZCash checkpoints by account and pool",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58286"
@@ -3099,7 +3149,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-21T00:36:31Z",
   "title": "Closed (not planned): fix: handle invalid ZCash spendable balance sums without crashing",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#58285"
@@ -3469,7 +3519,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-19T12:27:54Z",
   "title": "Closed (completed): [ZCash] Add V6 transaction serializer",
-  "impact": "Closed as completed; linked PR merged 2026-08-18. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-18. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58175"
@@ -3548,7 +3598,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-18T12:45:35Z",
   "title": "Closed (not planned): remove unnecessary Brave Wallet flags now that BTC and ZEC have base level support",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51116"
@@ -3574,7 +3624,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-18T09:40:06Z",
   "title": "Merged: [ZCash] Present v6 transaction serializer.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#39115"
@@ -3592,6 +3642,7 @@
   ],
   "evidence": [
    "merged 2026-08-18T09:40:06Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "0e4da15f2bd6af68",
@@ -3602,7 +3653,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-14T17:36:43Z",
   "title": "Merged: [Zcash] [Wallet] add missing restricted checks for transparent addresses",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-14 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-14. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#39021"
@@ -3618,6 +3669,7 @@
   ],
   "evidence": [
    "merged 2026-08-14T17:36:43Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "93ab1b294f872ea7",
@@ -3736,7 +3788,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-10T15:52:35Z",
   "title": "Closed (completed): [ZCash] Add ironwood transaction types",
-  "impact": "Closed as completed; linked PR merged 2026-08-10. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-10. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57861"
@@ -3768,7 +3820,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-10T15:52:34Z",
   "title": "Merged: [ZCash] Add ironwood transaction types.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-10 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38802"
@@ -3786,6 +3838,7 @@
   ],
   "evidence": [
    "merged 2026-08-10T15:52:34Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "8dd37be88b9aed05",
@@ -3850,7 +3903,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-07T12:59:50Z",
   "title": "Closed (completed): [ZCash] Basic ironwood transactions support",
-  "impact": "Closed as completed; linked PR merged 2026-08-07. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-07. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57791"
@@ -3882,7 +3935,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-07T12:59:49Z",
   "title": "Merged: [ZCash] Initial zcash ironwood transactions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-07 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-07. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38670"
@@ -3900,6 +3953,7 @@
   ],
   "evidence": [
    "merged 2026-08-07T12:59:49Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "222a8ab4c72b7388",
@@ -3910,7 +3964,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-07T10:22:11Z",
   "title": "Closed (completed): Memory leak in leak:brave_wallet::OrchardSyncState::CreateSyncState",
-  "impact": "Closed as completed; linked PR merged 2026-08-07. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-07. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#57844"
@@ -3942,7 +3996,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-07T10:22:10Z",
   "title": "Merged: [Wallet] fix mem leaks in tests",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-07 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-07. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#38896"
@@ -3960,6 +4014,7 @@
   ],
   "evidence": [
    "merged 2026-08-07T10:22:10Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "6df9562a0a745f20",
@@ -4057,7 +4112,7 @@
   "kind": "advisory",
   "sourceAt": "2026-08-05T03:51:20Z",
   "title": "Security advisory GHSA-m7j5-wvx3-qj6j: lightwalletd can serve old-fork and new-fork blocks in one live GetBlockRange response during reorg repair",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.2). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.2). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetBlockRange; Brave Wallet’s Zcash client calls GetBlockRange.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4070,7 +4125,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.5.2"
+   "github.com/zcash/lightwalletd <= 0.5.2",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "a50e7d4cbfaa83ed",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4155,7 +4211,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-08-04T06:22:18Z",
   "title": "Closed (completed): [ZCash] Integrate ironwood balance scanning",
-  "impact": "Closed as completed; linked PR merged 2026-08-04. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-08-04. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57713"
@@ -4185,7 +4241,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-08-04T06:22:16Z",
   "title": "Merged: [ZCash] Show discovered ironwood balance.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-08-04 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-08-04. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38659"
@@ -4201,6 +4257,7 @@
   ],
   "evidence": [
    "merged 2026-08-04T06:22:16Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "9de6cac5c5565f20",
@@ -4359,7 +4416,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-31T04:47:45Z",
   "title": "Security advisory GHSA-pwwg-h8q5-hq28: lightwalletd cache can stitch old-fork and new-chain blocks after restart",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4382,7 +4439,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-30T19:30:20Z",
   "title": "Security advisory GHSA-9p9r-mggr-8q9g: lightwalletd GetMempoolTx holds shared mempool mutex across client-controlled streaming sends",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolTx, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4395,7 +4452,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1"
+   "github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "47c4c913510d1631",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4405,7 +4463,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-30T18:59:18Z",
   "title": "Security advisory GHSA-f9pw-q493-7qvh: Deadlock and Uncontrolled Resource Consumption in github.com/zcash/lightwalletd",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd >= 0.4.13, <= 0.5.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4452,7 +4510,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-30T14:51:27Z",
   "title": "Closed (completed): [ZCash] Add ironwood blocks part scanning to scan tasks",
-  "impact": "Closed as completed; linked PR merged 2026-07-30. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-30. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57686"
@@ -4478,7 +4536,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-30T14:51:25Z",
   "title": "Merged: [ZCash] Scan and store Ironwood actions during block sync",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-30 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-30. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38556"
@@ -4494,6 +4552,7 @@
   ],
   "evidence": [
    "merged 2026-07-30T14:51:25Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "85f98312a9b42d90",
@@ -4605,7 +4664,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-29T07:49:55Z",
   "title": "Closed (completed): [ZCash] Add ironwood fields tree parsing to zcash_decoder",
-  "impact": "Closed as completed; linked PR merged 2026-07-29. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-29. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57634"
@@ -4637,7 +4696,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-29T07:49:54Z",
   "title": "Merged: [ZCash] Decode Ironwood actions and tree state in zcash_decoder",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-29 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-29. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38505"
@@ -4655,6 +4714,7 @@
   ],
   "evidence": [
    "merged 2026-07-29T07:49:54Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "a189fbe6dabdabff",
@@ -4767,7 +4827,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-28T19:10:36Z",
   "title": "Security advisory GHSA-9x94-88pq-6v7h: Lightwalletd cancelled block-range streams leak worker goroutines",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4790,7 +4850,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-28T19:02:29Z",
   "title": "Security advisory GHSA-4x4j-5972-376r: lightwalletd GetMempoolTx can crash a targeted node when a mempool transaction disappears",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolTx, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4803,7 +4863,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.4.19"
+   "github.com/zcash/lightwalletd <= 0.4.19",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "d112fa6d91073086",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4813,7 +4874,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-28T18:27:49Z",
   "title": "Security advisory GHSA-4hp3-3494-3f2m: lightwalletd GetMempoolTx large exclude suffix lists amplify CPU and heap under the method mutex",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolTx, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4826,7 +4887,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.5.0"
+   "github.com/zcash/lightwalletd <= 0.5.0",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "f9ceebb2e2daa441",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4836,7 +4898,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-28T18:24:37Z",
   "title": "Security advisory GHSA-6ppp-r2gc-9q6v: lightwalletd SendTransaction oversized raw transactions can OOM a targeted node before backend rejection",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns SendTransaction; Brave Wallet’s Zcash client calls SendTransaction.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4849,7 +4911,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.5.0"
+   "github.com/zcash/lightwalletd <= 0.5.0",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "4a5baf7611502c9a",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4859,7 +4922,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-28T18:14:43Z",
   "title": "Security advisory GHSA-q2c2-hpp9-58hm: lightwalletd GetTreeState oversized block hashes can OOM a targeted node before backend rejection",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.5.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetTreeState; Brave Wallet’s Zcash client calls GetTreeState.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -4872,7 +4935,8 @@
    }
   ],
   "evidence": [
-   "github.com/zcash/lightwalletd <= 0.5.0"
+   "github.com/zcash/lightwalletd <= 0.5.0",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "374da689dae838ad",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -4933,7 +4997,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-27T10:32:07Z",
   "title": "Closed (completed): [ZCash] Extract v5\\v6 parts in ZCashTransaction",
-  "impact": "Closed as completed; linked PR merged 2026-07-27. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-27. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57431"
@@ -4963,7 +5027,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-27T10:32:06Z",
   "title": "Merged: [ZCash] Extract v5 tx part to V5Part.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-27 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-27. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38305"
@@ -4979,6 +5043,7 @@
   ],
   "evidence": [
    "merged 2026-07-27T10:32:06Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "0b6ffce9c3d3c2ac",
@@ -5061,7 +5126,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-26T18:54:49Z",
   "title": "Security advisory GHSA-x4m7-3gpp-xc36: lightwalletd transparent-address gRPC resource-exhaustion DoS",
-  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= v0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= v0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -5253,7 +5318,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-21T15:04:03Z",
   "title": "Closed (completed): [ZCash] Update Orchard to v15 and librustzcash to the latest version",
-  "impact": "Closed as completed; linked PR merged 2026-07-21. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-21. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57124"
@@ -5281,7 +5346,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-21T15:04:01Z",
   "title": "Merged: [ZCash] Bump orchard crate to v0.15 required by ironwood pool.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-21 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-21. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38059"
@@ -5299,6 +5364,7 @@
   ],
   "evidence": [
    "merged 2026-07-21T15:04:01Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "29914fcc3a8abc19",
@@ -5309,7 +5375,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-21T13:46:00Z",
   "title": "Closed (completed): [ZCash] Add zcash token type to the BlockChainToken struct",
-  "impact": "Closed as completed; linked PR merged 2026-07-21. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-21. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57324"
@@ -5341,7 +5407,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-21T13:45:58Z",
   "title": "Merged: [ZCash] Update BlockchainToken by adding zcash token type enum",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-21 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-21. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#38169"
@@ -5359,6 +5425,7 @@
   ],
   "evidence": [
    "merged 2026-07-21T13:45:58Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "dcf3f23b1ad4be30",
@@ -5420,7 +5487,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-20T10:02:03Z",
   "title": "Closed (completed): [ZCash] Add ironwood feature",
-  "impact": "Closed as completed; linked PR merged 2026-07-20. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-20. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#56873"
@@ -5452,7 +5519,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-20T10:02:02Z",
   "title": "Merged: [ZCash] Add ironwood feature flag.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-20 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-20. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#37755"
@@ -5470,6 +5537,7 @@
   ],
   "evidence": [
    "merged 2026-07-20T10:02:02Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "6aef4ed6973fed44",
@@ -5507,7 +5575,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-19T16:51:28Z",
   "title": "Security advisory GHSA-5h96-xw2v-jxgq: Goroutine Leak in GetBlockRange",
-  "impact": "Affects lightwalletd servers (zcash/lightwalletd <= v0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects lightwalletd servers (zcash/lightwalletd <= v0.4.19). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetBlockRange; Brave Wallet’s Zcash client calls GetBlockRange.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -5520,7 +5588,8 @@
    }
   ],
   "evidence": [
-   "zcash/lightwalletd <= v0.4.19"
+   "zcash/lightwalletd <= v0.4.19",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "5784c204700d0e75",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -5554,7 +5623,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-07-17T10:25:24Z",
   "title": "Closed (completed): [ZCash] Add Ironwood pool argument to orchard storage to keep ironwood related data.",
-  "impact": "Closed as completed; linked PR merged 2026-07-17. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-07-17. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#57122"
@@ -5586,7 +5655,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-07-17T10:25:23Z",
   "title": "Merged: [ZCash] Migrate database to support ironwood pool.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-07-17 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-07-17. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-core#37999"
@@ -5604,6 +5673,7 @@
   ],
   "evidence": [
    "merged 2026-07-17T10:25:23Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "6b5c1d6f39270e38",
@@ -5996,8 +6066,8 @@
  {
   "kind": "advisory",
   "sourceAt": "2026-07-06T21:23:41Z",
-  "title": "Security advisory GHSA-ww9q-8r59-xv46 (CVE-2026-54496): Zebra: Missing copy constraint in halo2gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
-  "impact": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's resolved versions at master and the checked channel builds are outside the vulnerable ranges.",
+  "title": "Security advisory GHSA-ww9q-8r59-xv46 (CVE-2026-54496): Zebra: Missing copy constraint in halo2_gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
+  "impact": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 9 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.25, v1.99.28)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 9 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.25, v1.99.28)). zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -6016,7 +6086,7 @@
    "zcash_primitives < 0.28.0",
    "v1.97.56 (desktop/release, github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
    "v1.97.56 (desktop/release, github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-   "v1.97.56 (desktop/release, github/release): zcash_primitives 0.29.0 is outside the vulnerable range < 0.28.0",
+   "v1.97.56 (desktop/release, github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
    "v1.96.61 (android/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0"
   ],
   "id": "0095495ed31de756",
@@ -6045,6 +6115,7 @@
   ],
   "evidence": [
    "merged 2026-07-06T19:13:47Z",
+   "repository brave/brave-core",
    "base branch 1.92.x"
   ],
   "id": "0e229eac2edacc4e",
@@ -6180,8 +6251,8 @@
  {
   "kind": "advisory",
   "sourceAt": "2026-07-03T09:13:34Z",
-  "title": "Security advisory GHSA-j3f2-h3wv-wfr9: sendrawtransaction Forwards Unvalidated Hex to Validator",
-  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "title": "Security advisory GHSA-j3f2-h3wv-wfr9: send_raw_transaction Forwards Unvalidated Hex to Validator",
+  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns send_raw_transaction, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -6194,7 +6265,8 @@
    }
   ],
   "evidence": [
-   "zingolabs/zaino <=0.4.2"
+   "zingolabs/zaino <=0.4.2",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "a9c5c3cb0f41e397",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -6203,8 +6275,8 @@
  {
   "kind": "advisory",
   "sourceAt": "2026-07-03T09:13:25Z",
-  "title": "Security advisory GHSA-h268-r3v6-jqj6: gettreestate Proxies Arbitrary Hashes to Validator Without Validation",
-  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "title": "Security advisory GHSA-h268-r3v6-jqj6: get_treestate Proxies Arbitrary Hashes to Validator Without Validation",
+  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns get_treestate, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -6217,7 +6289,8 @@
    }
   ],
   "evidence": [
-   "zingolabs/zaino <=0.4.2"
+   "zingolabs/zaino <=0.4.2",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
   ],
   "id": "19cb707a0972b8b2",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -6227,7 +6300,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-03T09:13:14Z",
   "title": "Security advisory GHSA-55pv-cqqp-mwj3: Validator Fork Acceptance — Height Equality Used as Sync Truth (No Hash/Work Check)",
-  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects Zaino servers (zingolabs/zaino <=0.4.2). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -6402,7 +6475,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-06-27T15:18:35Z",
   "title": "Merged: [Wallet]: Wired Up Reset Birthday to UI",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-06-27 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-06-27. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-core#37541"
@@ -6420,6 +6493,7 @@
   ],
   "evidence": [
    "merged 2026-06-27T15:18:35Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "8a563ce3cf779443",
@@ -6506,7 +6580,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-06-24T12:47:57Z",
   "title": "Closed (completed): [ZCash] Present a new method to ZCashWalletService to reset sync state + set a new birthday.",
-  "impact": "Closed as completed; linked PR merged 2026-06-24. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-06-24. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-browser#56427"
@@ -6538,7 +6612,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-06-24T12:47:56Z",
   "title": "Merged: [ZCash] Add birthday argument to ResetSyncState method.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-06-24 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-06-24. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-core#37292"
@@ -6556,6 +6630,7 @@
   ],
   "evidence": [
    "merged 2026-06-24T12:47:56Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "47cde32af5cf000f",
@@ -6622,7 +6697,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-06-19T16:17:55Z",
   "title": "Merged: [ZCash] Check expiry height even if transaction is not found.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-06-19 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-06-19. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#37365"
@@ -6640,6 +6715,7 @@
   ],
   "evidence": [
    "merged 2026-06-19T16:17:55Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "df6815c733e10a20",
@@ -6797,6 +6873,7 @@
   ],
   "evidence": [
    "merged 2026-06-15T20:42:27Z",
+   "repository brave/brave-core",
    "base branch 1.91.x"
   ],
   "id": "51a65df45eb11969",
@@ -6825,6 +6902,7 @@
   ],
   "evidence": [
    "merged 2026-06-15T20:41:00Z",
+   "repository brave/brave-core",
    "base branch 1.92.x"
   ],
   "id": "ed93e2fe9665afc0",
@@ -6966,7 +7044,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-06-11T04:31:53Z",
   "title": "Merged: Bump orchard crate to the 0.14 version",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-06-11 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-06-11. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#37116"
@@ -6982,6 +7060,7 @@
   ],
   "evidence": [
    "merged 2026-06-11T04:31:53Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "3a2b6a86fdcb251c",
@@ -6991,8 +7070,8 @@
  {
   "kind": "pr-merged",
   "sourceAt": "2026-06-10T18:59:30Z",
-  "title": "Merged: Update zcash code to work with orchard 0.14",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-06-10 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "title": "Merged into update_orchard_14: Update zcash code to work with orchard 0.14",
+  "impact": "Merged into the brave-core feature branch update_orchard_14 on 2026-06-10, not into master. It reaches builds only after that branch is itself merged into master by another pull request; this merge alone puts it in no build.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#37122"
@@ -7008,6 +7087,7 @@
   ],
   "evidence": [
    "merged 2026-06-10T18:59:30Z",
+   "repository brave/brave-core",
    "base branch update_orchard_14"
   ],
   "id": "4aec3f0e10479c9a",
@@ -7018,7 +7098,7 @@
   "kind": "advisory",
   "sourceAt": "2026-06-09T18:00:35Z",
   "title": "Security advisory GHSA-3whf-vgf2-9w6g: Non-Finalized State Reorg — No Cycle Detection or Depth Limit",
-  "impact": "Affects Zaino servers (zaino-state zaino-state v0.2.0). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public, so exposure cannot be determined from public data.",
+  "impact": "Affects Zaino servers (zaino-state zaino-state v0.2.0). Brave Wallet does not ship Zaino; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -7215,7 +7295,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-05-27T14:09:35Z",
   "title": "Merged: [iOS][Wallet] Enable wallet webui and zcash shielded tx feature flag by default",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-05-27 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-05-27. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#36641"
@@ -7231,6 +7311,7 @@
   ],
   "evidence": [
    "merged 2026-05-27T14:09:35Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "d66ac8dd43838d81",
@@ -7241,7 +7322,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-05-26T14:54:17Z",
   "title": "Closed (completed): [Wallet] Remove wallet p3a mojo",
-  "impact": "Closed as completed; linked PR merged 2026-05-26. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-05-26. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#55756"
@@ -7273,7 +7354,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-05-26T14:54:14Z",
   "title": "Merged: [Wallet] Remove wallet p3a mojo",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-05-26 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-05-26. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#36658"
@@ -7291,6 +7372,7 @@
   ],
   "evidence": [
    "merged 2026-05-26T14:54:14Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f92d99b91cfb3922",
@@ -7475,6 +7557,7 @@
   ],
   "evidence": [
    "merged 2026-05-14T15:27:50Z",
+   "repository brave/brave-core",
    "base branch 1.90.x"
   ],
   "id": "7ce9ef8d3922f1a0",
@@ -7503,6 +7586,7 @@
   ],
   "evidence": [
    "merged 2026-05-14T15:27:28Z",
+   "repository brave/brave-core",
    "base branch 1.91.x"
   ],
   "id": "4a95b8a609862703",
@@ -7577,7 +7661,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-05-13T06:05:05Z",
   "title": "Merged: [Wallet] Support Zcash in more than one profile",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-05-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-05-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#36321"
@@ -7595,6 +7679,7 @@
   ],
   "evidence": [
    "merged 2026-05-13T06:05:05Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "df3b90c1506c3c76",
@@ -7605,7 +7690,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-05-11T17:35:55Z",
   "title": "Closed (completed): [ZCash] Shielded/Unified address are not shown when deposit is loaded via Token details page or side navigation Deposit",
-  "impact": "Closed as a duplicate; follow the canonical issue for status.",
+  "impact": "Closed as a duplicate, but no other canonical issue is recorded for it; see the item for the recorded duplicate state.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#43254"
@@ -7792,7 +7877,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-04-28T05:00:40Z",
   "title": "Closed (completed): Wallet transactions db should not be shared with incognito profile",
-  "impact": "Closed as completed; linked PR merged 2026-04-28. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-04-28. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#54435"
@@ -7824,7 +7909,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-28T05:00:38Z",
   "title": "Merged: [Wallet] Refactor TxStorageDelegateImpl",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-28 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-28. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#35426"
@@ -7842,6 +7927,7 @@
   ],
   "evidence": [
    "merged 2026-04-28T05:00:38Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "2a1fa0fbc95f9f3c",
@@ -8020,6 +8106,7 @@
   ],
   "evidence": [
    "merged 2026-04-17T11:55:46Z",
+   "repository brave/brave-core",
    "base branch 1.90.x"
   ],
   "id": "633442782a4b59e1",
@@ -8048,6 +8135,7 @@
   ],
   "evidence": [
    "merged 2026-04-17T11:52:42Z",
+   "repository brave/brave-core",
    "base branch 1.90.x"
   ],
   "id": "d0c51fde4e8c2c8e",
@@ -8058,7 +8146,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-04-15T00:59:36Z",
   "title": "Closed (completed): [Wallet] Account details are not shown on ZEC transaction confirmation panel",
-  "impact": "Closed as completed; linked PR merged 2026-04-15. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-04-15. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#54476"
@@ -8090,7 +8178,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-15T00:59:34Z",
   "title": "Merged: [iOS][Wallet] Fix .zec/.btc/.ada tx doesn't show to address in pending tx screen",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-15 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-15. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#35494"
@@ -8108,6 +8196,7 @@
   ],
   "evidence": [
    "merged 2026-04-15T00:59:34Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "1d03d9233912c7fd",
@@ -8201,7 +8290,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-04-14T08:20:43Z",
   "title": "Closed (completed): [Wallet] Zcash transaction continues to show loading spinner even after transaction is completed",
-  "impact": "Closed as completed; linked PR merged 2026-04-14. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-04-14. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#53750"
@@ -8233,7 +8322,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-14T08:20:41Z",
   "title": "Merged: [Wallet] Fix bridge spinner and swap \"()\" in transaction activity",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-14 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-14. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#35466"
@@ -8251,6 +8340,7 @@
   ],
   "evidence": [
    "merged 2026-04-14T08:20:41Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "0043762042ba349f",
@@ -8261,7 +8351,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-04-13T16:35:31Z",
   "title": "Closed (completed): [Wallet] Continue using wallet in a new tab doesn't load wallet in a new tab",
-  "impact": "Closed as completed; linked PR merged 2026-04-13. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-04-13. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#54120"
@@ -8293,7 +8383,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-13T16:35:29Z",
   "title": "Merged: [iOS][Wallet] Open wallet in a new tab via pageHandler for iOS",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#35225"
@@ -8311,6 +8401,7 @@
   ],
   "evidence": [
    "merged 2026-04-13T16:35:29Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "d0333eb5d34748f3",
@@ -8321,7 +8412,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-04-13T12:25:23Z",
   "title": "Closed (not planned): [Wallet] Insufficient funds message when trying to send Max value for both Transparent and Shielded ZEC",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#53868"
@@ -8457,7 +8548,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-08T15:08:13Z",
   "title": "Merged: Drop signing fields from Eth TxData",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-08 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-08. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#35012"
@@ -8473,6 +8564,7 @@
   ],
   "evidence": [
    "merged 2026-04-08T15:08:13Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "49358519de7404d1",
@@ -8539,7 +8631,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-04-03T09:35:53Z",
   "title": "Merged: Drop logging from wallet",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-03 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-04-03. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#35145"
@@ -8555,6 +8647,7 @@
   ],
   "evidence": [
    "merged 2026-04-03T09:35:53Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "7281e0d3eb704b19",
@@ -8593,8 +8686,8 @@
  {
   "kind": "pr-merged",
   "sourceAt": "2026-04-02T05:48:25Z",
-  "title": "Merged: Enable wallet webui, zcash shielded tx, cardano support in Nightly and Beta",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-04-02 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "title": "Merged in brave/brave-variations: Enable wallet webui, zcash shielded tx, cardano support in Nightly and Beta",
+  "impact": "Merged into brave/brave-variations (main branch) on 2026-04-02. This is a Brave server-side repository: the change takes effect only when Brave deploys it, which is not public, so deployment is unverified. It does not depend on a browser build or version.",
   "highlight": null,
   "itemIds": [
    "brave/brave-variations#1649"
@@ -8610,6 +8703,7 @@
   ],
   "evidence": [
    "merged 2026-04-02T05:48:25Z",
+   "repository brave/brave-variations",
    "base branch main"
   ],
   "id": "197ed9e03ac3eabf",
@@ -8713,6 +8807,7 @@
   ],
   "evidence": [
    "merged 2026-03-23T17:35:48Z",
+   "repository brave/brave-core",
    "base branch 1.89.x"
   ],
   "id": "7775b62e5af08007",
@@ -8770,6 +8865,7 @@
   ],
   "evidence": [
    "merged 2026-03-23T13:45:21Z",
+   "repository brave/brave-core",
    "base branch 1.89.x"
   ],
   "id": "67304df5ee23e24c",
@@ -8798,6 +8894,7 @@
   ],
   "evidence": [
    "merged 2026-03-23T11:34:18Z",
+   "repository brave/brave-core",
    "base branch 1.89.x"
   ],
   "id": "fac4f154af78e45f",
@@ -8808,7 +8905,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-20T17:04:23Z",
   "title": "Closed (completed): [iOS][Wallet] Fetch and use correct zec balance for checking gas token balance in zec tx",
-  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#53740"
@@ -8840,7 +8937,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-20T17:04:21Z",
   "title": "Merged: [iOS][Wallet] Correctly fetch and check ZEC Tx Gas Token Balance",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-20 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-20. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#34811"
@@ -8858,6 +8955,7 @@
   ],
   "evidence": [
    "merged 2026-03-20T17:04:21Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "2ffd02e49fbc3d78",
@@ -8868,7 +8966,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-20T10:18:24Z",
   "title": "Closed (completed): [ZCash] Zcash testnet is enabled by default during onboarding",
-  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#44776"
@@ -8900,7 +8998,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-20T10:18:23Z",
   "title": "Closed (completed): [ZCash] Zcash Mainnet position is wrong during onboarding",
-  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-20. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#44775"
@@ -8932,7 +9030,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-20T10:18:21Z",
   "title": "Merged: (Wallet) Zcash networks visibility and position during onboarding",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-20 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-20. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#34829"
@@ -8950,6 +9048,7 @@
   ],
   "evidence": [
    "merged 2026-03-20T10:18:21Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "4bcd92048d22dfb8",
@@ -8960,7 +9059,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-18T20:42:18Z",
   "title": "Closed (completed): [iOS][Wallet] Determine Zcash Tx Type in Tx Confirmation Screen",
-  "impact": "Closed as completed; linked PR merged 2026-03-18. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-18. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#53733"
@@ -8992,7 +9091,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-18T20:42:16Z",
   "title": "Merged: [iOS][Wallet] Determine zcash tx type and display correct confirm button title",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#34794"
@@ -9010,6 +9109,7 @@
   ],
   "evidence": [
    "merged 2026-03-18T20:42:16Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "b75fc0d327d846ad",
@@ -9054,7 +9154,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-18T17:19:15Z",
   "title": "Merged: [Wallet]: Add Unshield Funds Button to Asset Menu",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-core#34774"
@@ -9074,6 +9174,7 @@
   ],
   "evidence": [
    "merged 2026-03-18T17:19:15Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "bba54c98a6b83bac",
@@ -9298,7 +9399,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-10T18:04:58Z",
   "title": "Closed (completed): Check against OFAC sanctioned addresses list when adding a new Brave Wallet account",
-  "impact": "Closed as completed; linked PR merged 2026-03-10. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-10. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52043"
@@ -9330,7 +9431,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-10T18:04:56Z",
   "title": "Merged: [Wallet] add ofac checking for account-based coins",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-10 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33537"
@@ -9348,6 +9449,7 @@
   ],
   "evidence": [
    "merged 2026-03-10T18:04:56Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "8b3224dc5ef68754",
@@ -9385,7 +9487,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-05T07:27:55Z",
   "title": "Closed (not planned): [Wallet] Unknown error when trying bridge SZEC-ETH using NEAR Intents",
-  "impact": "Closed as not planned: nothing will ship for this item. Labels such as release-notes/include do not change that.",
+  "impact": "Closed as not planned (won’t fix, invalid, or handled elsewhere): nothing shipped through this issue. Labels such as release-notes/include do not change that.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52893"
@@ -9431,6 +9533,7 @@
   ],
   "evidence": [
    "merged 2026-03-05T06:18:19Z",
+   "repository brave/brave-core",
    "base branch 1.88.x"
   ],
   "id": "b84fbe71806b93ab",
@@ -9501,7 +9604,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-04T06:35:06Z",
   "title": "Merged: [Wallet]: Fix Zcash Block Explorer for Address",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-04 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-04. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#34409"
@@ -9519,6 +9622,7 @@
   ],
   "evidence": [
    "merged 2026-03-04T06:35:06Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "36fae951ffd06b90",
@@ -9529,7 +9633,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-03-04T05:54:59Z",
   "title": "Closed (completed): Refactor ZCash tests",
-  "impact": "Closed as completed; linked PR merged 2026-03-04. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-03-04. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#53026"
@@ -9561,7 +9665,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-03-04T05:54:57Z",
   "title": "Merged: Refactor SyncState for zcash tests",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-03-04 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-03-04. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33971"
@@ -9579,6 +9683,7 @@
   ],
   "evidence": [
    "merged 2026-03-04T05:54:57Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f353284ede903200",
@@ -9789,6 +9894,7 @@
   ],
   "evidence": [
    "merged 2026-02-23T07:07:02Z",
+   "repository brave/brave-core",
    "base branch 1.88.x"
   ],
   "id": "39a1073781d5d80f",
@@ -9850,7 +9956,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-20T08:02:09Z",
   "title": "Closed (completed): [Wallet] Able to generate quote for SZEC-BTC Bridge using NEAR Intents even though it shows token pair not supported",
-  "impact": "Closed as completed; linked PR merged 2026-02-19. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-19. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#52892"
@@ -9878,7 +9984,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-19T16:57:15Z",
   "title": "Closed (completed): [Wallet] Disable Li.Fi and Squid for BTC/ZEC/ADA bridge",
-  "impact": "Closed as completed; linked PR merged 2026-02-19. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-19. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#52986"
@@ -9910,7 +10016,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-19T16:57:13Z",
   "title": "Merged: [Wallet] [Swap] Fix swap provider filtering for BTC/ZEC/ADA",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-19 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-19. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#34061"
@@ -9928,6 +10034,7 @@
   ],
   "evidence": [
    "merged 2026-02-19T16:57:13Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "05d5090e1f10f9a1",
@@ -10008,6 +10115,7 @@
   ],
   "evidence": [
    "merged 2026-02-17T01:28:46Z",
+   "repository brave/brave-core",
    "base branch 1.88.x"
   ],
   "id": "8a64e3678b1b5d88",
@@ -10096,7 +10204,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-13T05:53:07Z",
   "title": "Closed (completed): [Wallet] [Swap] Support shielded ZEC swaps with Near Intents",
-  "impact": "Closed as completed; linked PR merged 2026-02-13. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-13. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#52802"
@@ -10128,7 +10236,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-13T05:53:06Z",
   "title": "Merged: [Wallet] [Swap] Support shielded ZEC swaps with Near Intents",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#33905"
@@ -10146,6 +10254,7 @@
   ],
   "evidence": [
    "merged 2026-02-13T05:53:06Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "d3ab1213f483ec66",
@@ -10183,7 +10292,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-12T16:56:12Z",
   "title": "Merged: [iOS][Wallet] Update zcash feature flag option description",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-12 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-12. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33900"
@@ -10199,6 +10308,7 @@
   ],
   "evidence": [
    "merged 2026-02-12T16:56:12Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "486352dc6422cab1",
@@ -10209,7 +10319,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-12T05:12:04Z",
   "title": "Closed (completed): [iOS][Wallet] Default disable Zcash shielded tx for iOS Wallet WebUI",
-  "impact": "Closed as completed; linked PR merged 2026-02-12. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-12. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52460"
@@ -10241,7 +10351,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-12T05:12:03Z",
   "title": "Merged: [iOS][Wallet] Disable zcash shielded tx by default for iOS",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-12 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-12. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33771"
@@ -10259,6 +10369,7 @@
   ],
   "evidence": [
    "merged 2026-02-12T05:12:03Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "5caf3cf5c66141a4",
@@ -10269,7 +10380,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-11T23:26:29Z",
   "title": "Closed (completed): [ZCash] Implement loading state when loading ZCash transaction activity screen",
-  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#43879"
@@ -10301,7 +10412,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-11T23:26:27Z",
   "title": "Merged: [Wallet]: Fix Transition Between Confirm and Status Panels",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-11 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-11. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#33860"
@@ -10319,6 +10430,7 @@
   ],
   "evidence": [
    "merged 2026-02-11T23:26:27Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "40be76419af12f91",
@@ -10329,7 +10441,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-11T19:49:25Z",
   "title": "Closed (completed): [iOS][Wallet] Disable Zcash shielded tx feature for native wallet",
-  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52457"
@@ -10361,7 +10473,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-11T19:49:23Z",
   "title": "Merged: [iOS][Wallet] Disable zcash shielded tx for native iOS wallet",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-11 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-11. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33763"
@@ -10379,6 +10491,7 @@
   ],
   "evidence": [
    "merged 2026-02-11T19:49:23Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "8e228301bb410a6a",
@@ -10445,7 +10558,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-11T02:48:21Z",
   "title": "Closed (completed): [ASAN] LSAN memory leak in brave_wallet/zcash",
-  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-11. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#52520"
@@ -10477,7 +10590,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-11T02:48:20Z",
   "title": "Merged: Fix zcash test leaks",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-11 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-11. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#33654"
@@ -10495,6 +10608,7 @@
   ],
   "evidence": [
    "merged 2026-02-11T02:48:20Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "25ab4072e8788405",
@@ -10505,7 +10619,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-06T20:37:39Z",
   "title": "Closed (completed): [iOS][Wallet] Compile Zcash library for iOS build",
-  "impact": "Closed as completed; linked PR merged 2026-02-06. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-06. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52456"
@@ -10537,7 +10651,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-06T20:37:37Z",
   "title": "Merged: [iOS][Wallet] Start compiling full Zcash library for iOS build.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-06 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-06. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33625"
@@ -10555,6 +10669,7 @@
   ],
   "evidence": [
    "merged 2026-02-06T20:37:37Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "c9d5e5590019ac8d",
@@ -10584,6 +10699,7 @@
   ],
   "evidence": [
    "merged 2026-02-06T19:24:48Z",
+   "repository brave/brave-core",
    "base branch 1.88.x"
   ],
   "id": "22816d0e8559645f",
@@ -10627,7 +10743,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-05T16:25:53Z",
   "title": "Merged: [Wallet]: Add Bridge Buttons for BTC ZEC and ADA",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-05 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-05. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-core#33673"
@@ -10646,6 +10762,7 @@
   ],
   "evidence": [
    "merged 2026-02-05T16:25:53Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "df51596eb534cc92",
@@ -10684,7 +10801,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-04T16:22:50Z",
   "title": "Merged: [CodeHealth][cr146] `base::Contains` dissallowed when `.contains` suffices",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-04 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-04. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33631"
@@ -10700,6 +10817,7 @@
   ],
   "evidence": [
    "merged 2026-02-04T16:22:50Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f7af7f91cf60cf87",
@@ -10710,7 +10828,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-04T13:04:46Z",
   "title": "Merged: [CodeHealth] Use `base::DictValue`/`base::ListValue` - Part IV",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-04 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-04. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33618"
@@ -10726,6 +10844,7 @@
   ],
   "evidence": [
    "merged 2026-02-04T13:04:46Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "a365ab452b3656ef",
@@ -10790,7 +10909,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-02-03T17:38:29Z",
   "title": "Closed (completed): [iOS][Wallet] Expand ZCash feature flags from boolean to 4 options",
-  "impact": "Closed as completed; linked PR merged 2026-02-03. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-02-03. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#52454"
@@ -10822,7 +10941,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-02-03T17:38:27Z",
   "title": "Merged: [iOS][Wallet] Expand zcash feature flag options",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-02-03 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-02-03. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33583"
@@ -10840,6 +10959,7 @@
   ],
   "evidence": [
    "merged 2026-02-03T17:38:27Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "60866a59a6f4a3fc",
@@ -11036,7 +11156,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-01-19T07:38:25Z",
   "title": "Closed (completed): [SafeSign] Replace SwapInfoDeprecated with SwapInfo across transaction metadata",
-  "impact": "Closed as completed; linked PR merged 2026-01-19. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-01-19. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51978"
@@ -11068,7 +11188,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-01-19T07:38:24Z",
   "title": "Merged: [SafeSign] Replace SwapInfoDeprecated with SwapInfo across transaction metadata",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-01-19 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-01-19. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33213"
@@ -11086,6 +11206,7 @@
   ],
   "evidence": [
    "merged 2026-01-19T07:38:24Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "034ada79fed30cb9",
@@ -11175,7 +11296,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-01-14T15:48:32Z",
   "title": "Closed (completed): Add swap_info parameter to transaction creation flow",
-  "impact": "Closed as completed; linked PR merged 2026-01-14. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2026-01-14. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51949"
@@ -11207,7 +11328,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-01-14T15:48:30Z",
   "title": "Merged: [SafeSign] Add swap_info to transaction creation flow to preserve swap context",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-01-14 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-01-14. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33187"
@@ -11225,6 +11346,7 @@
   ],
   "evidence": [
    "merged 2026-01-14T15:48:30Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "c53d3ec01801dba0",
@@ -11484,7 +11606,7 @@
   "kind": "pr-merged",
   "sourceAt": "2026-01-06T22:44:56Z",
   "title": "Merged: [Wallet]: Fix Shield and Unshield Unnecessary Warnings",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-01-06 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2026-01-06. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#33033"
@@ -11502,6 +11624,7 @@
   ],
   "evidence": [
    "merged 2026-01-06T22:44:56Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "656bbff3017557f0",
@@ -11511,8 +11634,8 @@
  {
   "kind": "pr-merged",
   "sourceAt": "2026-01-06T18:40:24Z",
-  "title": "Merged: feat(swap): add Cardano and Zcash support for Near Intents",
-  "impact": "Merged into brave-core master. Nightly builds made after 2026-01-06 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "title": "Merged in brave/gate3: feat(swap): add Cardano and Zcash support for Near Intents",
+  "impact": "Merged into brave/gate3 (master branch) on 2026-01-06. This is a Brave server-side repository: the change takes effect only when Brave deploys it, which is not public, so deployment is unverified. It does not depend on a browser build or version.",
   "highlight": null,
   "itemIds": [
    "brave/gate3#161"
@@ -11528,6 +11651,7 @@
   ],
   "evidence": [
    "merged 2026-01-06T18:40:24Z",
+   "repository brave/gate3",
    "base branch master"
   ],
   "id": "93270f2ddb9b9052",
@@ -11647,7 +11771,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-24T19:12:55Z",
   "title": "Merged: [ZCash] Customize messages for s->t transactions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-24 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-24. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32640"
@@ -11665,6 +11789,7 @@
   ],
   "evidence": [
    "merged 2025-12-24T19:12:55Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "35bff692c1371662",
@@ -11751,7 +11876,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-16T17:55:40Z",
   "title": "Merged: Consolidate wallet pref files into pref_names.h",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-16 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32825"
@@ -11767,6 +11892,7 @@
   ],
   "evidence": [
    "merged 2025-12-16T17:55:40Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f379c027bf4568ac",
@@ -11777,7 +11903,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-16T14:01:07Z",
   "title": "Merged: [IWYU] Dropping several superfluous std inclusions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-16 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32830"
@@ -11793,6 +11919,7 @@
   ],
   "evidence": [
    "merged 2025-12-16T14:01:07Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "cd22b98c25962460",
@@ -11859,7 +11986,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-15T12:58:49Z",
   "title": "Merged: [ZCash] Finalize s->t transactions support",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-15 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-15. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "feature",
   "itemIds": [
    "brave/brave-core#32580"
@@ -11877,6 +12004,7 @@
   ],
   "evidence": [
    "merged 2025-12-15T12:58:49Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "c687ba7b5347b8d6",
@@ -11914,7 +12042,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-15T07:59:00Z",
   "title": "Merged: [IWYU] Dropping several superfluous std inclusions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-15 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-15. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32803"
@@ -11930,6 +12058,7 @@
   ],
   "evidence": [
    "merged 2025-12-15T07:59:00Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "cb67ace999a8ea3d",
@@ -11940,7 +12069,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-12-12T13:46:41Z",
   "title": "Closed (completed): Replace std::unique_ptr<std::string> with std::optional<std::string> in SimpleURLLoader::DownloadToString* callbacks",
-  "impact": "Closed as completed; linked PR merged 2025-12-12. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-12-12. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51098"
@@ -11973,7 +12102,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-12-12T13:46:40Z",
   "title": "Merged: [CodeHealth] Replace std::unique_ptr<std::string> with std::optional<std::string> in SimpleURLLoader::DownloadToString* callbacks",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-12-12 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-12-12. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32658"
@@ -11992,6 +12121,7 @@
   ],
   "evidence": [
    "merged 2025-12-12T13:46:40Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "326cc06fdde06adb",
@@ -12155,7 +12285,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-28T20:54:27Z",
   "title": "Merged: Add enable_brave_wallet gn var and build flag",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-28 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-28. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32484"
@@ -12171,6 +12301,7 @@
   ],
   "evidence": [
    "merged 2025-11-28T20:54:27Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "5cd1b3d34931c6e5",
@@ -12234,7 +12365,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-26T10:17:56Z",
   "title": "Closed (completed): [ZCash] Attach brave token to brave.software domain",
-  "impact": "Closed as completed; linked PR merged 2025-11-26. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-26. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#51034"
@@ -12266,7 +12397,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-26T10:17:55Z",
   "title": "Merged: [ZCash] Attach brave token to brave.software domain",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-26 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-26. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32507"
@@ -12284,6 +12415,7 @@
   ],
   "evidence": [
    "merged 2025-11-26T10:17:55Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "abdeac51892b5c30",
@@ -12294,7 +12426,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-26T10:05:59Z",
   "title": "Closed (completed): [ZCash] Present zcash_create_orchard_to_transparent_transaction_task",
-  "impact": "Closed as completed; linked PR merged 2025-11-26. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-26. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50841"
@@ -12326,7 +12458,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-26T10:05:58Z",
   "title": "Merged: [ZCash] Add ZCashCreateOrchardToTransparentTransactionTask",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-26 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-26. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32324"
@@ -12344,6 +12476,7 @@
   ],
   "evidence": [
    "merged 2025-11-26T10:05:58Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "a96e7d736a36fee2",
@@ -12378,7 +12511,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-25T15:49:40Z",
   "title": "Merged: Fix ZCashSerializer unittest",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-25 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-25. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32528"
@@ -12394,6 +12527,7 @@
   ],
   "evidence": [
    "merged 2025-11-25T15:49:40Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f0c04950ffa59347",
@@ -12404,7 +12538,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-25T13:07:28Z",
   "title": "Closed (completed): [ZCash] ZCashSerializer improvements for s->t tansactions",
-  "impact": "Closed as completed; linked PR merged 2025-11-25. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-25. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50786"
@@ -12436,7 +12570,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-25T13:07:27Z",
   "title": "Merged: [ZCash] ZCashSerializer improvements to support s->t transactions",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-25 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-25. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32274"
@@ -12454,6 +12588,7 @@
   ],
   "evidence": [
    "merged 2025-11-25T13:07:27Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "173e3d8bbcaa7404",
@@ -12464,7 +12599,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-24T15:32:45Z",
   "title": "Merged: [ZCash] Fix ZCashAddressToScriptPubkey return type",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-24 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-24. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32386"
@@ -12480,6 +12615,7 @@
   ],
   "evidence": [
    "merged 2025-11-24T15:32:45Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "5c43b7baf571e15c",
@@ -12541,7 +12677,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-18T15:14:07Z",
   "title": "Merged: [cr144-cherry-pick] Use `base::HexEncodeLower`",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-18 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32384"
@@ -12557,6 +12693,7 @@
   ],
   "evidence": [
    "merged 2025-11-18T15:14:07Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "2674c07e34a26eaa",
@@ -12567,7 +12704,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-17T16:29:34Z",
   "title": "Closed (completed): [ZCash] Add ZCashTransaction validation checks",
-  "impact": "Closed as completed; linked PR merged 2025-11-17. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-17. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50762"
@@ -12599,7 +12736,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-17T16:29:33Z",
   "title": "Merged: [ZCash] Add transacation validation before sending.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-17 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-17. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32249"
@@ -12617,6 +12754,7 @@
   ],
   "evidence": [
    "merged 2025-11-17T16:29:33Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "7b88d0ba96adc90a",
@@ -12729,7 +12867,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-13T13:00:16Z",
   "title": "Closed (completed): Implement additional unit tests for ZEC Wallet Service - GetTransactionType",
-  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50125"
@@ -12763,7 +12901,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-13T13:00:14Z",
   "title": "Merged: [ZCash] Additional tests for transaction types",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32235"
@@ -12783,6 +12921,7 @@
   ],
   "evidence": [
    "merged 2025-11-13T13:00:14Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "9c6b797a116f44d0",
@@ -12793,7 +12932,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-13T08:35:08Z",
   "title": "Closed (completed): [ZCash] Allow empty outputs for Orchard bundle",
-  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50785"
@@ -12825,7 +12964,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-13T08:35:07Z",
   "title": "Merged: [ZCash] Allow empty Orchard outputs",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32273"
@@ -12843,6 +12982,7 @@
   ],
   "evidence": [
    "merged 2025-11-13T08:35:07Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "28e4cecbbb743399",
@@ -12853,7 +12993,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-13T08:22:14Z",
   "title": "Closed (completed): [ZCash] Refactor tx fee calculation",
-  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50537"
@@ -12885,7 +13025,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-13T08:22:13Z",
   "title": "Merged: [ZCash] Refactor zcash fee calculation",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-13 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32090"
@@ -12903,6 +13043,7 @@
   ],
   "evidence": [
    "merged 2025-11-13T08:22:13Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "3bc7e3f57f18f620",
@@ -12994,7 +13135,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-11-10T19:12:20Z",
   "title": "Closed (completed): [ZCash] Show shielded inputs on the tx details page",
-  "impact": "Closed as completed; linked PR merged 2025-11-10. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-11-10. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-browser#50392"
@@ -13026,7 +13167,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-10T19:12:19Z",
   "title": "Merged: [ZCash] Add orchard input to ZecTxData",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-10 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#32204"
@@ -13044,6 +13185,7 @@
   ],
   "evidence": [
    "merged 2025-11-10T19:12:19Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "8f8c164b2d25e489",
@@ -13054,7 +13196,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-11-05T00:28:20Z",
   "title": "Merged: [IWYU] `base/memory/ref_counted.h`",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-11-05 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-11-05. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#32164"
@@ -13070,6 +13212,7 @@
   ],
   "evidence": [
    "merged 2025-11-05T00:28:20Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "1776dfd365aa6634",
@@ -13158,7 +13301,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-24T09:34:58Z",
   "title": "Merged: Enable rustfmt.",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-24 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-24. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#31974"
@@ -13174,6 +13317,7 @@
   ],
   "evidence": [
    "merged 2025-10-24T09:34:58Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f6b9dd4855b203c4",
@@ -13184,7 +13328,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-23T15:20:08Z",
   "title": "Merged: [wallet][safe-numerics] Improve `BtcLikeSerializerStream` use",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-23 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-23. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#31886"
@@ -13200,6 +13344,7 @@
   ],
   "evidence": [
    "merged 2025-10-23T15:20:08Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "2d39a6cc85c5eada",
@@ -13210,7 +13355,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-10-23T11:01:10Z",
   "title": "Closed (completed): Remove inferable `operator!=`",
-  "impact": "Closed as completed; linked PR merged 2025-10-23. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-10-23. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50319"
@@ -13242,7 +13387,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-23T11:01:09Z",
   "title": "Merged: [CodeHealth] Remove inferable `operator!=`",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-23 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-23. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#31905"
@@ -13260,6 +13405,7 @@
   ],
   "evidence": [
    "merged 2025-10-23T11:01:09Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "515139219f66bc96",
@@ -13302,7 +13448,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-22T20:38:07Z",
   "title": "Merged: [ZCash] Zcash testnet support",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-22 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-22. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#31785"
@@ -13320,6 +13466,7 @@
   ],
   "evidence": [
    "merged 2025-10-22T20:38:07Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "074f247c33736568",
@@ -13408,7 +13555,7 @@
   "kind": "issue-closed",
   "sourceAt": "2025-10-16T08:35:35Z",
   "title": "Closed (completed): [Zcash] Remove reduntant chain_id argument",
-  "impact": "Closed as completed; linked PR merged 2025-10-16. Code is in current Release builds for Desktop, Android.",
+  "impact": "Closed as completed; linked PR merged 2025-10-16. Code is in current Release builds for Desktop, Android, iOS.",
   "highlight": null,
   "itemIds": [
    "brave/brave-browser#50148"
@@ -13440,7 +13587,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-16T08:35:34Z",
   "title": "Merged: [ZCash] Remove redundant chain_id parameters from function calls",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-16 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": null,
   "itemIds": [
    "brave/brave-core#31802"
@@ -13458,6 +13605,7 @@
   ],
   "evidence": [
    "merged 2025-10-16T08:35:34Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "ddd2fb8a9abf8b15",
@@ -14089,7 +14237,7 @@
   "kind": "pr-merged",
   "sourceAt": "2025-10-10T15:36:41Z",
   "title": "Merged: Fix create cardano account option",
-  "impact": "Merged into brave-core master. Nightly builds made after 2025-10-10 include it; Beta and Release get it only after a branch cut or an uplift.",
+  "impact": "Merged into brave-core master on 2025-10-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
   "highlight": "fix",
   "itemIds": [
    "brave/brave-core#31753"
@@ -14107,6 +14255,7 @@
   ],
   "evidence": [
    "merged 2025-10-10T15:36:41Z",
+   "repository brave/brave-core",
    "base branch master"
   ],
   "id": "f6ded67bad95d466",
@@ -14136,6 +14285,7 @@
   ],
   "evidence": [
    "merged 2025-10-09T17:09:03Z",
+   "repository brave/brave-core",
    "base branch 1.83.x"
   ],
   "id": "9cde5a6fe7c1234c",
@@ -14165,6 +14315,7 @@
   ],
   "evidence": [
    "merged 2025-10-09T17:08:06Z",
+   "repository brave/brave-core",
    "base branch 1.84.x"
   ],
   "id": "6085b7d9c4f5237a",
