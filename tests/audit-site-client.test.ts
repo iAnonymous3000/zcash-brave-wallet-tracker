@@ -1120,12 +1120,16 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
   const root = mkdtempSync(join(tmpdir(), 'zbt-site-r3-'));
   const data = join(root, 'data');
   cpSync(join(ROOT, 'data'), data, { recursive: true });
-  // Capability changes recorded under older rules: one says the cell became usable while the site shows it otherwise.
+  // Capability changes recorded under older rules whose new status is not the status the site shows now. Each event's
+  // new status is chosen against the shown cell, so the test holds whatever the committed cells say (round-3 repair:
+  // it no longer needs an Android Release cell that is not "available").
   const shown = presentCapabilities(site);
-  const rows = shown.filter((r) => r.cells.some((c) => c.platform === 'android' && c.channel === 'release' && c.status !== 'available')).slice(0, 3);
-  assert.ok(rows.length > 0);
+  const rows = shown.filter((r) => r.cells.some((c) => c.platform === 'android' && c.channel === 'release')).slice(0, 3);
+  assert.ok(rows.length > 0, 'fixture: capability rows with an Android Release cell (config, not data)');
+  const toOf = (r: (typeof rows)[number]) => (r.cells.find((c) => c.platform === 'android' && c.channel === 'release')!.status === 'available' ? 'absent' : 'available');
+  const fromOf = (r: (typeof rows)[number]) => (toOf(r) === 'available' ? 'absent' : 'available');
   const events = JSON.parse(readFileSync(join(data, 'history', 'events.json'), 'utf8'));
-  const synthetic = rows.map((r, i) => ({ id: `r3scan${i}`, kind: 'capability-changed', sourceAt: null, detectedAt: site.generatedAt, basis: 'observed', title: `${r.name} on Android Release: absent → available`, impact: 'The evidence for this capability changed.', highlight: 'release', itemIds: [], topic: null, platforms: ['android'], channel: 'release', links: [], evidence: ['absent → available'] }));
+  const synthetic = rows.map((r, i) => ({ id: `r3scan${i}`, kind: 'capability-changed', sourceAt: null, detectedAt: site.generatedAt, basis: 'observed', title: `${r.name} on Android Release: ${fromOf(r)} → ${toOf(r)}`, impact: 'The evidence for this capability changed.', highlight: 'release', itemIds: [], topic: null, platforms: ['android'], channel: 'release', links: [], evidence: [`${fromOf(r)} → ${toOf(r)}`] }));
   writeFileSync(join(data, 'history', 'events.json'), JSON.stringify([...synthetic, ...events]));
   // Site data derived before R-STAGE: a merged group whose stored label states absence while its builds are unknown.
   const copy = JSON.parse(readFileSync(join(data, 'derived', 'site.json'), 'utf8')) as SiteData;
@@ -1150,7 +1154,7 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
       const doc = readFileSync(join(out, page), 'utf8');
       for (const r of rows) {
         const cell = r.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
-        const at = doc.indexOf(`${r.name} on Android Release: `);
+        const at = doc.indexOf(`${r.name.replace(/&/g, '&amp;')} on Android Release: `); // names are HTML-escaped
         if (at < 0 && page === 'index.html') continue; // the home feed shows the latest few only
         assert.ok(at >= 0, `${page}: ${r.name} event rendered`);
         const item = doc.slice(at, doc.indexOf('</li>', at));
@@ -1163,4 +1167,37 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
     setBase('/');
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+test('R-SITE-STALE (round-3 repair): a status written before lastCompleteAt was recorded reads "not recorded" in the client, never "none"', async () => {
+  const now = Date.now();
+  const ago = (h: number) => new Date(now - h * 3_600_000).toISOString();
+  const b = await boot({
+    page: 'sources',
+    url: 'https://example.test/tracker/sources/',
+    setup: (doc) => {
+      // The header pill every page has (layout.ts); the per-source ages are updated with it.
+      const pill = doc.createElement('a');
+      pill.className = 'fresh';
+      Object.assign(pill.dataset, { generated: ago(0.5), staleAfter: '360', failing: '0', stale: '0' });
+      doc.body.append(pill);
+      // As sourcesPage renders them: no data-last-complete attribute when the field is absent; "" when it is null.
+      for (const [id, complete] of [['absent', undefined], ['none', '']] as const) {
+        const tr = doc.createElement('tr');
+        tr.className = 'src';
+        tr.id = `row-${id}`;
+        Object.assign(tr.dataset, { lastSuccess: ago(0.5), outcome: 'partial' });
+        const age = doc.createElement('span');
+        age.className = 'src-age';
+        age.dataset.staleSince = '';
+        if (complete !== undefined) age.dataset.lastComplete = complete;
+        tr.append(age);
+        doc.body.append(tr);
+      }
+    },
+  });
+  assert.equal(b.error, null);
+  assert.deepEqual(b.errors, []);
+  assert.equal(b.doc.getElementById('row-absent')!.querySelector('.src-age')!.textContent, 'partial · time of the last complete collection not recorded');
+  assert.equal(b.doc.getElementById('row-none')!.querySelector('.src-age')!.textContent, 'partial · no complete collection recorded');
 });

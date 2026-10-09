@@ -1,8 +1,8 @@
 import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent } from '../../lib/types.ts';
-import { ext, featureHref, html, itemHref, statusBadge, time } from '../components.ts';
+import { ext, featureHref, glyph, html, itemHref, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { eventView, shownCapabilities, type EventView } from '../view.ts';
+import { eventView, serviceSwitchStates, shownCapabilities, type EventView } from '../view.ts';
 
 export const KIND_LABEL: Record<string, string> = {
   'item-tracked': 'New issue',
@@ -49,21 +49,32 @@ export function eventGroup(e: ChangeEvent, d: SiteData) {
   return e.itemIds.map((id) => d.groups.find((g) => g.lead === id || g.members.masterPrs.includes(id) || g.members.uplifts.includes(id) || g.members.duplicates.includes(id))).find(Boolean) ?? null;
 }
 
-/** Marker for an event whose text was produced by older derivation rules and could not be regenerated (R-SITE-OUTDATED). */
-export const OUTDATED_HELP = 'The tracker’s rules changed after this was recorded, and this entry could not be regenerated under the current rules because its item or source was not completely read in a later refresh. Its wording may not match the rest of the site; it is replaced when the entry is next regenerated.';
+/**
+ * Marker for an event whose text was produced by older derivation rules and was not regenerated (R-SITE-OUTDATED).
+ * derive's mergeHistory marks such an event on a rules rebuild in two cases: its item or source was not completely
+ * read in that refresh, or it records something observed at the time that the current rules no longer generate.
+ */
+export const OUTDATED_HELP = 'The tracker’s rules changed after this was recorded, and the current rules did not regenerate this entry: either its item or source was not completely read in a later refresh, or it records something observed at the time that the current rules no longer generate. Its wording may not match the rest of the site; it is replaced if the entry is regenerated later.';
 export function outdatedMarker(e: Pick<ChangeEvent, 'rulesOutdated'>): SafeHtml | '' {
   return e.rulesOutdated ? html`<span class="ev-outdated" title="${OUTDATED_HELP}">Text from an older rule version</span>` : '';
 }
 
-/** "Shown now" note for a capability change whose new status is not what the site shows for that build (see eventView). */
+/**
+ * Note for a capability change whose new state is not what the site shows now (see eventView): the shown cell status
+ * as a badge, the gate3 switch state as shown on the Upstream page, or why the entry could not be compared.
+ */
 export function nowShownNote(v: EventView): SafeHtml | '' {
-  if (!v.nowShown) return '';
-  return html`<p class="ev-now">Shown now: ${statusBadge(v.nowShown.status, v.nowShown.label)} <a href="${v.nowShown.href}">current status and evidence</a></p>`;
+  const n = v.nowShown;
+  if (!n) return '';
+  if (n.kind === 'cell') return html`<p class="ev-now">Shown now: ${statusBadge(n.status, n.label)} <a href="${n.href}">${n.linkText}</a></p>`;
+  if (n.kind === 'switch') return html`<p class="ev-now">Shown now: ${glyph(n.status)}<span>${n.text}</span> <a href="${n.href}">${n.linkText}</a></p>`;
+  return html`<p class="ev-now">Shown now: unknown. ${glyph(n.status)}<span>${n.text}</span> <a href="${n.href}">${n.linkText}</a></p>`;
 }
 
-/** The event's title and "shown now" note against the capability cells as every page presents them. */
+/** The event's title, evidence and "shown now" note against the capability cells and switches as every page presents them. */
 export function presentEvent(e: ChangeEvent, d: SiteData): EventView {
-  return eventView(e, shownCapabilities(d), featureHref);
+  if (e.kind !== 'capability-changed') return eventView(e, [], featureHref);
+  return eventView(e, shownCapabilities(d), featureHref, { switches: serviceSwitchStates(d), switchHref: `${u('upstream/')}#ready-h`, featuresHref: u('features/') });
 }
 
 export function eventCard(e: ChangeEvent, d: SiteData): SafeHtml {
@@ -85,7 +96,7 @@ export function eventCard(e: ChangeEvent, d: SiteData): SafeHtml {
       <div class="ev-foot">
         ${e.links.map((l) => html`${ext(l.url, l.label, 'ref')} `)}
         <details class="ev-evidence"><summary>Evidence</summary>
-          <ul>${e.evidence.map((x) => html`<li>${x}</li>`)}</ul>
+          <ul>${v.evidence.map((x) => html`<li>${x}</li>`)}</ul>
           <p class="muted">Source time: ${e.sourceAt ? time(e.sourceAt, { withTime: true }) : 'none (detected by comparing refreshes)'} · Detected: ${time(e.detectedAt, { withTime: true })} · ${e.basis === 'backfill' ? 'Backfilled from source history' : 'Observed between refreshes'}</p>
         </details>
       </div>

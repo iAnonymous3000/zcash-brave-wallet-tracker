@@ -6,7 +6,7 @@ import { serviceChecks, type SiteData, type SiteGroup } from '../derive/index.ts
 import { STAGE_LABEL } from '../derive/status.ts';
 import { CELL_LABEL, SERVICE_UNKNOWN_TEXT as DERIVED_SERVICE_UNKNOWN } from '../derive/capabilities.ts';
 import type { Channel, EvidenceRecord, Platform, WorkItem } from '../lib/types.ts';
-import { compareVersions } from '../lib/util.ts';
+import { compareSemver, compareVersions } from '../lib/util.ts';
 
 export const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
 export const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
@@ -617,15 +617,16 @@ export function watchAdoption(a: string | null | undefined): { state: 'evidence'
 }
 
 /**
- * Every version of a crate Brave's Zcash crate links at one build, highest first. `possible` marks a version the
- * dependency graph could neither rule in nor out; when nothing is known to be linked, derive puts such versions in
- * `version`/`linked` too, and they stay marked possible.
+ * Every version of a crate Brave's Zcash crate links at one build, highest first by SemVer precedence, as derive
+ * orders them (a pre-release such as 0.24.0-rc.1 ranks below 0.24.0). `possible` marks a version the dependency graph
+ * could neither rule in nor out; when nothing is known to be linked, derive puts such versions in `version`/`linked`
+ * too, and they stay marked possible.
  */
 export function crateVersions(v: { version: string; linked?: string[]; possible?: string[] } | null | undefined): { version: string; possible: boolean }[] {
   if (!v) return [];
   const possible = new Set(v.possible ?? []);
   const all = [...new Set([...(v.linked?.length ? v.linked : [v.version]), ...possible])];
-  return all.sort((a, b) => compareVersions(b, a)).map((version) => ({ version, possible: possible.has(version) }));
+  return all.sort((a, b) => compareSemver(b, a) || compareVersions(b, a)).map((version) => ({ version, possible: possible.has(version) }));
 }
 
 type Study = NonNullable<SiteData['upstream']['services']>['studies'][number];
@@ -684,19 +685,39 @@ export function studyView(st: Pick<Study, 'features' | 'params'> & { experiments
     return { common, mixed: mixedList, cohorts: [], notEnrolled: [], outcome, headline: outcome };
   }
   const enrolled = exps.filter((e) => e.weight > 0);
+  const nameOf = (e: { name: string }) => e.name || '(unnamed cohort)';
+  const forcingOf = (e: { forcingOn?: string[]; forcingOff?: string[] }) => [...(e.forcingOn ?? []).map((f) => `--enable-features=${f}`), ...(e.forcingOff ?? []).map((f) => `--disable-features=${f}`)];
   const cohorts = enrolled
-    .map((e) => ({ name: e.name || '(unnamed cohort)', share: e.share, settings: settingsOf(e), forcing: [...(e.forcingOn ?? []).map((f) => `--enable-features=${f}`), ...(e.forcingOff ?? []).map((f) => `--disable-features=${f}`)] }))
+    .map((e) => ({ name: nameOf(e), share: e.share, settings: settingsOf(e), forcing: forcingOf(e) }))
     .sort((a, b) => (b.share ?? -1) - (a.share ?? -1));
-  const notEnrolled = exps.filter((e) => !(e.weight > 0)).map((e) => e.name || '(unnamed cohort)');
+  // A weight-0 cohort assigns no client by weight, but a client started with its forcing feature is forced into it,
+  // and then gets its settings: both are kept with its name.
+  const notEnrolled = exps.filter((e) => !(e.weight > 0)).map((e) => {
+    const forcing = forcingOf(e);
+    const own = settingsOf(e);
+    return forcing.length ? `${nameOf(e)} (clients started with ${forcing.join(' or ')} are forced into it; ${own.length ? `its settings: ${own.join(', ')}` : 'it sets nothing'})` : nameOf(e);
+  });
+  // `mixed` lists settings that differ between enrolled cohorts and features a cohort both enables and disables. Only
+  // the first are "differ by cohort"; the second are conflicts inside one cohort (a single cohort can have them).
+  const conflicts = enrolled.flatMap((e) => e.enable.filter((f) => e.disable.includes(f)).map((f) => `${nameOf(e)} both enables and disables ${f}`));
+  const conflicted = new Set(enrolled.flatMap((e) => e.enable.filter((f) => e.disable.includes(f))));
+  const featureKey = (e: { enable: string[]; disable: string[] }, f: string) => (e.enable.includes(f) && e.disable.includes(f) ? 'conflict' : e.enable.includes(f) ? 'on' : e.disable.includes(f) ? 'off' : 'default');
+  // A mixed feature that is not a conflict is kept as differing (never stated for the whole study); a parameter can
+  // only be mixed by differing between cohorts.
+  const differing = [...(st.mixed?.features ?? []).filter((f) => new Set(enrolled.map((e) => featureKey(e, f))).size > 1 || !conflicted.has(f)), ...(st.mixed?.params ?? [])];
+  const conflictText = conflicts.length ? `Conflicting settings: ${conflicts.join('; ')}, so which of the two applies to those clients is not determined here.` : '';
   let outcome: string;
   let headline: string;
   if (!enrolled.length) outcome = headline = 'No cohort has a positive weight, so the study assigns no client to a cohort.';
   else if (!mixedList.length) outcome = headline = common.length ? `Every enrolled client (all cohorts alike): ${common.join(', ')}.` : 'No enrolled cohort changes a Zcash setting.';
-  else {
+  else if (!differing.length) {
+    // Only conflicts (for example one enrolled cohort that both enables and disables a feature): nothing differs by cohort.
+    outcome = headline = `${common.length ? `Every enrolled client (all cohorts alike): ${common.join(', ')}. ` : ''}${conflictText}`;
+  } else {
     const parts = cohorts.map((c) => `${c.name} (${sharePct(c.share)}): ${c.settings.length ? c.settings.join(', ') : 'sets nothing (compiled-in defaults)'}`);
-    const also = common.length ? ` Every enrolled client: ${common.join(', ')}.` : '';
-    outcome = `Settings differ by cohort (${mixedList.join(', ')}): ${parts.join('; ')}.${also}`;
-    headline = `Settings differ by cohort (${mixedList.join(', ')}).${also}`;
+    const also = `${common.length ? ` Every enrolled client: ${common.join(', ')}.` : ''}${conflictText ? ` ${conflictText}` : ''}`;
+    outcome = `Settings differ by cohort (${differing.join(', ')}): ${parts.join('; ')}.${also}`;
+    headline = `Settings differ by cohort (${differing.join(', ')}).${also}`;
   }
   return { common, mixed: mixedList, cohorts, notEnrolled, outcome, headline };
 }
@@ -709,29 +730,93 @@ const CELL_STATUSES = new Set(Object.keys(CELL_LABEL));
 const PLATFORM_OF_LABEL = new Map(Object.entries(PLATFORM_LABEL).map(([k, v]) => [v, k as Platform]));
 const CHANNEL_OF_LABEL = new Map(Object.entries(CHANNEL_LABEL).map(([k, v]) => [v, k as Channel]));
 
-export interface EventView {
-  title: string;
-  /** Set when a capability change's new status is not what the site shows for that build now. */
-  nowShown: { status: string; label: string; href: string } | null;
+/**
+ * What the site shows now for the subject of a capability change, when the change's new state is not it:
+ *  - 'cell': the capability cell for that build (`status`/`label` are the cell's status and its label);
+ *  - 'switch': Brave's gate3 swap-routing switch as the cells read it (`status` is the glyph, `text` the state);
+ *  - 'unchecked': the entry could not be compared with anything shown now (`text` says why), so its state is unknown.
+ */
+export interface EventNow {
+  kind: 'cell' | 'switch' | 'unchecked';
+  status: string;
+  label: string;
+  text: string;
+  href: string;
+  linkText: string;
 }
 
+export interface EventView {
+  title: string;
+  /** Set when a capability change's new state is not what the site shows now, or cannot be compared with it. */
+  nowShown: EventNow | null;
+  /** The evidence lines as shown: status ids recorded in a capability change are given with the site's labels. */
+  evidence: string[];
+}
+
+/** Context for eventView: the server-side switch states the cells use (serviceSwitchStates) and where to link. */
+export interface EventViewContext {
+  switches?: Record<string, boolean | null>;
+  switchHref?: string;
+  featuresHref?: string;
+}
+
+/** derive's gate3 switch event (changes.ts, "Server-side switches"): evidence first, the title as a fallback. */
+const GATE3_EVIDENCE = /^SWAP_DISABLED_CHAINS contains ZCASH: (?:true|false|null) → (true|false)$/;
+const GATE3_TITLE = /^Zcash swap\/bridge routing turned (off|back on) in gate3$/;
+const CAP_TITLE = /^(.*) on (Desktop|Android|iOS) (Release|Beta|Nightly): ([a-z-]+) → ([a-z-]+)$/;
+const STATUS_PAIR = /^([a-z-]+) → ([a-z-]+)$/;
+
+/** The id of the server-side switch derive's gate3 events describe (config/capabilities.ts serviceChecks). */
+export const GATE3_SWITCH = 'gate3-zcash-swaps';
+
 /**
- * A change event as the site renders it (R-SITE-EVENTS). A "capability-changed" event recorded as
- * "<capability> on <Platform> <Channel>: <from> → <to>" (derived status ids) is titled with the site's status labels,
- * and when <to> differs from the cell the site shows now (an event recorded under older rules, a later change that
- * produced no event, or a server-side switch that can no longer be read), the shown status is named beside it, so
- * the event never reads as the current state. Other events keep their title.
+ * A change event as the site renders it (R-SITE-EVENTS). Every "capability-changed" event is checked against what the
+ * site shows now, so an event recorded under older rules, or followed by a later change that produced no event (a
+ * flip during a rules-change run, where diff events are suppressed), never reads as the current state:
+ *  - "<capability> on <Platform> <Channel>: <from> → <to>" (derived status ids) is titled with the site's status
+ *    labels, and when <to> is not the status of the cell shown now, that status is named beside it;
+ *  - "Zcash swap/bridge routing turned off / back on in gate3" is compared with the gate3 switch state the cells use
+ *    (`ctx.switches`); when it differs, or is unknown now, the state shown now is named beside it;
+ *  - a capability change that cannot be matched (its capability is no longer found by name or id, or its title has
+ *    another form) says that it could not be compared, rather than passing as current.
+ * Other events keep their title and evidence.
  */
-export function eventView(e: { kind: string; title: string }, rows: { id: string; name: string; cells: { platform: Platform; channel: Channel; status: string }[] }[], href: (id: string) => string): EventView {
-  if (e.kind !== 'capability-changed') return { title: e.title, nowShown: null };
-  const m = e.title.match(/^(.*) on (Desktop|Android|iOS) (Release|Beta|Nightly): ([a-z-]+) → ([a-z-]+)$/);
-  if (!m || !CELL_STATUSES.has(m[4]) || !CELL_STATUSES.has(m[5])) return { title: e.title, nowShown: null };
+export function eventView(e: { kind: string; title: string; evidence?: string[] }, rows: { id: string; name: string; cells: { platform: Platform; channel: Channel; status: string }[] }[], href: (id: string) => string, ctx: EventViewContext = {}): EventView {
+  const evidence = e.evidence ?? [];
+  if (e.kind !== 'capability-changed') return { title: e.title, nowShown: null, evidence };
+  const featuresHref = ctx.featuresHref ?? href('').replace(/\/{2,}$/, '/');
+  const unchecked = (text: string): EventNow => ({ kind: 'unchecked', status: 'not-verified', label: 'Not compared', text, href: featuresHref, linkText: 'current status of every feature' });
+
+  // gate3 swap/bridge routing switch.
+  const g3 = evidence.map((x) => x.match(GATE3_EVIDENCE)).find(Boolean);
+  const g3t = e.title.match(GATE3_TITLE);
+  if (g3 || g3t) {
+    const disabledNow = g3 ? g3[1] === 'true' : g3t![1] === 'off';
+    const current = ctx.switches ? (ctx.switches[GATE3_SWITCH] ?? null) : undefined;
+    if (current === undefined) return { title: e.title, nowShown: unchecked('The current state of the gate3 switch was not given to this page.'), evidence };
+    if (current === disabledNow) return { title: e.title, nowShown: null, evidence };
+    const f = gate3Facts(current);
+    return { title: e.title, nowShown: { kind: 'switch', status: f.glyph, label: current === true ? statusLabel('service-off', 'release') : current === false ? 'Not switched off' : 'Unknown', text: `${f.headline}.`, href: ctx.switchHref ?? featuresHref, linkText: 'gate3 switch and evidence' }, evidence };
+  }
+
+  const m = e.title.match(CAP_TITLE);
+  if (!m || !CELL_STATUSES.has(m[4]) || !CELL_STATUSES.has(m[5])) {
+    return { title: e.title, nowShown: unchecked('This entry’s form is not one the site can compare with the status shown now.'), evidence };
+  }
   const [, name, pl, ch, from, to] = m;
   const platform = PLATFORM_OF_LABEL.get(pl)!;
   const channel = CHANNEL_OF_LABEL.get(ch)!;
   const title = `${name} on ${pl} ${ch}: ${statusLabel(from, channel)} → ${statusLabel(to, channel)}`;
+  // Status ids in the evidence are shown with the same labels as the title; the recorded ids stay beside them.
+  const shownEvidence = evidence.map((x) => {
+    const p = x.match(STATUS_PAIR);
+    return p && CELL_STATUSES.has(p[1]) && CELL_STATUSES.has(p[2]) ? `${statusLabel(p[1], channel)} → ${statusLabel(p[2], channel)} (recorded as ${x})` : x;
+  });
   const row = rows.find((r) => r.name === name) ?? rows.find((r) => r.id === name);
-  const cell = row?.cells.find((c) => c.platform === platform && c.channel === channel);
-  if (!row || !cell || cell.status === to) return { title, nowShown: null };
-  return { title, nowShown: { status: cell.status, label: statusLabel(cell.status, channel), href: href(row.id) } };
+  if (!row) return { title, nowShown: unchecked(`No capability is named “${name}” now (it may have been renamed), so this entry could not be compared with the status shown now.`), evidence: shownEvidence };
+  const cell = row.cells.find((c) => c.platform === platform && c.channel === channel);
+  if (!cell) return { title, nowShown: unchecked(`${name} has no ${pl} ${ch} cell now, so this entry could not be compared with the status shown now.`), evidence: shownEvidence };
+  if (cell.status === to) return { title, nowShown: null, evidence: shownEvidence };
+  const label = statusLabel(cell.status, channel);
+  return { title, nowShown: { kind: 'cell', status: cell.status, label, text: label, href: href(row.id), linkText: 'current status and evidence' }, evidence: shownEvidence };
 }

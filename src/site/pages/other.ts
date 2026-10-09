@@ -1,7 +1,7 @@
 import { FRESHNESS } from '../../../config/tracker.ts';
 import type { SiteData } from '../../derive/index.ts';
 import type { RunRecord, SourceStatus } from '../../lib/types.ts';
-import { keptDataStale } from '../client/logic.ts';
+import { completeUnknownText, keptDataStale } from '../client/logic.ts';
 import { ext, glyph, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
 import { crateVersions, gate3Facts, presentSite, sharePct, studyView, watchAdoption } from '../view.ts';
@@ -90,7 +90,9 @@ function crateCell(v: SiteData['upstream']['crates'][number]['brave'][string]): 
   const versions = crateVersions(v);
   if (!v || !versions.length) return html`—`;
   const path = v.source === 'path' ? html` <span class="tag-path" title="Built from Brave’s librustzcash fork">path</span>` : '';
-  return html`<ul class="cvs">${versions.map((x, i) => html`<li class="cv${x.possible ? ' cv-possible' : ''}">${x.version}${x.possible ? html` <span class="tag-possible" title="The dependency graph could not tell whether Brave’s Zcash crate links this version">possible</span>` : ''}${i === 0 ? path : ''}</li>`)}</ul>`;
+  // `source` describes `version` (the headline version), so the fork tag goes on that entry only, never on another
+  // linked or possible version whose source is not recorded.
+  return html`<ul class="cvs">${versions.map((x) => html`<li class="cv${x.possible ? ' cv-possible' : ''}">${x.version}${x.possible ? html` <span class="tag-possible" title="The dependency graph could not tell whether Brave’s Zcash crate links this version">possible</span>` : ''}${x.version === v.version ? path : ''}</li>`)}</ul>`;
 }
 
 /** A field-trial study: its filters, its Zcash outcome by cohort with shares, and where it applies (R-SITE-STUDIES). */
@@ -98,7 +100,9 @@ function studyItem(st: NonNullable<SiteData['upstream']['services']>['studies'][
   const v = studyView(st);
   const unknown = st.appliesUnknown ?? [];
   const applies = st.appliesTo.map((a) => `${a.build} ${a.applies ? 'yes' : 'no'}`);
-  const listed = v.cohorts.length > 1 || (v.cohorts.length === 1 && v.mixed.length > 0);
+  // The cohort list is shown whenever it adds something: several cohorts, a mixed or conflicting setting, or a forcing
+  // feature (which the one-sentence outcome does not carry).
+  const listed = v.cohorts.length > 1 || (v.cohorts.length === 1 && (v.mixed.length > 0 || v.cohorts[0].forcing.length > 0));
   return html`<li class="study">${ext(st.url, st.name)}: ${listed ? v.headline : v.outcome}
     ${listed ? html`<ul class="cohorts">${v.cohorts.map((c) => html`<li><strong>${c.name}</strong> (${sharePct(c.share)} of the study’s clients): ${c.settings.length ? html`${c.settings.map((x, i) => html`${i ? ', ' : ''}<code>${x}</code>`)}` : 'sets nothing, so the compiled-in defaults apply'}${c.forcing.length ? html` <span class="muted">(clients started with ${c.forcing.join(' or ')} are forced into this cohort)</span>` : ''}</li>`)}</ul>` : ''}
     ${v.notEnrolled.length ? html`<span class="muted study-meta">Cohorts with weight 0 (no clients): ${v.notEnrolled.join(', ')}.</span>` : ''}
@@ -175,13 +179,15 @@ function groupFor(d: SiteData, id: string): string {
 function sourceStatusCell(s: SourceStatus, at: number): SafeHtml {
   const label = s.lastOutcome === 'ok' ? 'OK' : s.lastOutcome === 'partial' ? 'Partial' : s.lastOutcome === 'failed' ? 'Failed' : s.lastOutcome === 'skipped' ? 'Skipped' : 'Never run';
   const stale = keptDataStale(s, at, FRESHNESS.staleAfterMinutes);
-  const complete = s.lastCompleteAt ? html`complete data from ${time(s.lastCompleteAt, { withTime: true })}` : 'no complete collection recorded';
+  const complete = s.lastCompleteAt ? html`complete data from ${time(s.lastCompleteAt, { withTime: true })}` : completeUnknownText(s.lastCompleteAt);
   const age = stale
     ? html`stale: kept data not refreshed since ${time(s.staleSince, { withTime: true })} · ${complete}`
     : s.lastOutcome === 'partial' ? html`partial · ${complete}` : '';
   // The row keeps its own attributes (data-last-success, data-outcome); the other inputs of the age rule are on the
-  // age line itself.
-  return html`<div class="src-cell"><span class="src-state src-${s.lastOutcome ?? 'never'}">${label}</span>${stale ? html` <span class="src-flag">Stale</span>` : ''}<span class="src-age" data-last-complete="${s.lastCompleteAt ?? ''}" data-stale-since="${s.staleSince ?? ''}">${age}</span></div>`;
+  // age line itself. A status written before lastCompleteAt was recorded has no data-last-complete attribute, so the
+  // client keeps that time unknown rather than "none" (see completeUnknownText).
+  const lastComplete = s.lastCompleteAt === undefined ? '' : html` data-last-complete="${s.lastCompleteAt ?? ''}"`;
+  return html`<div class="src-cell"><span class="src-state src-${s.lastOutcome ?? 'never'}">${label}</span>${stale ? html` <span class="src-flag">Stale</span>` : ''}<span class="src-age"${lastComplete} data-stale-since="${s.staleSince ?? ''}">${age}</span></div>`;
 }
 
 export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>, statusSources?: SourceStatus[]): SafeHtml {

@@ -80,7 +80,7 @@ function freshness(): void {
   for (const row of $$('.src')) {
     const age = $('.src-age', row);
     if (!age) continue;
-    const r = sourceAgeLine({ lastOutcome: row.dataset.outcome ?? null, lastSuccessAt: row.dataset.lastSuccess || null, lastCompleteAt: age.dataset.lastComplete || null, staleSince: age.dataset.staleSince || null }, now, staleAfter);
+    const r = sourceAgeLine({ lastOutcome: row.dataset.outcome ?? null, lastSuccessAt: row.dataset.lastSuccess || null, lastCompleteAt: age.dataset.lastComplete === undefined ? undefined : age.dataset.lastComplete || null, staleSince: age.dataset.staleSince || null }, now, staleAfter);
     age.textContent = r.text;
     row.classList.toggle('is-stale', r.stale);
   }

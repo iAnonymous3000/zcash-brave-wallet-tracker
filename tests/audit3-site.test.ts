@@ -142,8 +142,11 @@ test('R-SITE-STUDIES: field-trial studies show each cohort with its share; a set
 async function withContradictedGroup(dir: string): Promise<SiteGroup> {
   const { STAGE_LABEL } = await import('../src/derive/status.ts');
   const site = readJ(dir, 'derived', 'site.json') as SiteData;
-  const g = site.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged')!;
-  assert.ok(g, 'fixture: a merged group with build checks');
+  // Preferably a merged group with build checks; any group is made one otherwise, so a refresh cannot remove the fixture.
+  const g = site.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged') ?? site.groups[0];
+  assert.ok(g, 'fixture: a work group');
+  g.status.implementation = { ...g.status.implementation, state: 'merged' };
+  if (!g.status.builds.length) g.status.builds = site.channels.map((c) => ({ platform: c.platform as 'desktop', channel: c.channel, version: c.version, included: null, via: null, basis: 'test' }));
   g.status.stage = 'merged';
   g.status.stageLabel = STAGE_LABEL.merged;
   g.status.releaseNotes = [];
@@ -427,32 +430,64 @@ async function capabilitiesWithout(checkId: string): Promise<SiteData['capabilit
   return applyUnknownServiceSwitches(rows, CAPABILITIES, sw) as SiteData['capabilities'];
 }
 
+// Synthetic inputs for the real derive code (round-3 repair: the test no longer reads the committed flag snapshots, so a
+// refresh that turns Ironwood on by default cannot change what it expects). Nine current builds; Ironwood is off by
+// default on Android and iOS Release and on everywhere else; the brave://flags options are present; the Orchard →
+// Ironwood task check (required for Migration) has no result at any build; the implementing PRs are in every build.
+const NV_VERSIONS: Record<'desktop' | 'android' | 'ios', Record<'release' | 'beta' | 'nightly', string>> = {
+  desktop: { release: '1.97.56', beta: '1.98.52', nightly: '1.99.25' },
+  android: { release: '1.96.61', beta: '1.98.53', nightly: '1.99.26' },
+  ios: { release: '1.96.62', beta: '1.98.54', nightly: '1.99.27' },
+};
+const NV_FLAG_KEYS: Record<string, string> = { kBraveWalletZCashFeature: 'BraveWalletZCash', kZCashShieldedTransactionsEnabled: 'zcash_shielded_transactions_enabled', kZCashIronwoodEnabled: 'zcash_ironwood_enabled' };
+
+/** Migration and its prerequisites, derived by buildCapabilities from the synthetic inputs above. */
+async function syntheticMigrationRows(): Promise<SiteData['capabilities']> {
+  const { buildCapabilities } = await import('../src/derive/capabilities.ts');
+  const { CAPABILITIES } = await import('../config/capabilities.ts');
+  const current = Object.entries(NV_VERSIONS).flatMap(([platform, cs]) => Object.entries(cs).map(([channel, version]) => ({ platform: platform as 'desktop', channel: channel as 'release', version, tag: `v${version}`, publishedAt: null, basis: 'test', url: 'https://example.invalid' })));
+  const flagsAt = (tag: string, values: Record<string, boolean | Partial<Record<'desktop' | 'android' | 'ios', boolean>>>) => ({
+    tag, channel: 'release', version: tag.slice(1), file: 'components/brave_wallet/common/features.cc', permalink: 'https://example.invalid', retrievedAt: GEN,
+    flags: Object.entries(values).map(([name, v]) => ({ name, kind: name === 'kBraveWalletZCashFeature' ? 'feature' : 'param', feature: name === 'kBraveWalletZCashFeature' ? null : 'kBraveWalletZCashFeature', key: NV_FLAG_KEYS[name], defaults: typeof v === 'object' ? { desktop: true, android: true, ios: true, ...v } : { desktop: v, android: v, ios: v } })),
+  });
+  const flagsByTag = Object.fromEntries(current.map((c) => [c.tag, flagsAt(c.tag, { kBraveWalletZCashFeature: true, kZCashShieldedTransactionsEnabled: true, kZCashIronwoodEnabled: c.channel === 'release' ? { android: false, ios: false } : true })]));
+  const check = (id: string, tag: string) => ({ id, tag, present: true, file: `${id}.cc`, line: 1, url: 'https://example.invalid' });
+  const sourceChecks = Object.fromEntries(current.map((c) => [c.tag, [check('ironwood-option-desktop-android', c.tag), check('ironwood-option-ios', c.tag)]]));
+  const changelog = (['desktop', 'android', 'ios'] as const).map((platform) => ({ platform, version: '1.90.1', section: 'Web3', text: 'Added Zcash shielded support.', issueRefs: ['brave/brave-browser#44432'], line: 1, file: `CHANGELOG_${platform.toUpperCase()}.md`, commitSha: 'x', permalink: 'https://example.invalid', zcashRelated: true }));
+  const built = { builds: current.map((c) => ({ platform: c.platform, channel: c.channel, version: c.version, included: true, via: 'brave/brave-core#1', basis: 'test' })), qa: { required: null, passed: [], failed: [], blocked: false } };
+  const defs = ['accounts', 'shielded', 'ironwood', 'migration'].map((id) => CAPABILITIES.find((x) => x.id === id)!);
+  return buildCapabilities({ defs, current, changelog, flagsByTag: flagsByTag as never, sourceChecks: sourceChecks as never, items: {}, groupStatus: () => built as never, docs: [] }) as SiteData['capabilities'];
+}
+
 test('R3-SITE-NV: a not-verified cell is explained by its reason and app-side reading, never "No evidence either way"', async () => {
   const { statusExplain } = await import('../src/site/view.ts');
   const { featurePage } = await import('../src/site/pages/features.ts');
   const { homePage } = await import('../src/site/pages/home.ts');
   const d = clone();
-  d.capabilities = await capabilitiesWithout('orchard-to-ironwood-task');
+  const synthetic = new Map((await syntheticMigrationRows()).map((r) => [r.id, r]));
+  d.capabilities = d.capabilities.map((r) => synthetic.get(r.id) ?? r);
   const migration = d.capabilities.find((r) => r.id === 'migration')!;
   const nv = migration.cells.filter((c) => c.status === 'not-verified');
-  assert.ok(nv.some((c) => c.platform === 'android' && c.channel === 'release'), 'fixture: the dropped required check makes Migration not verified');
+  assert.equal(nv.length, 9, 'fixture: the missing required check makes every Migration cell not verified');
+  // The app-side reading of each cell follows from the synthetic flags, not from committed data.
+  const expected: Record<string, string> = { 'desktop/release': 'In build, not announced', 'android/release': 'Behind a flag', 'ios/release': 'Behind a flag' };
   for (const c of nv) {
     assert.match(c.summary, /required check could not be completed/, 'fixture: derive states the reason');
     const long = statusExplain(c);
     assert.doesNotMatch(long, /No evidence either way/);
     assert.match(long, /required check could not be completed \(Orchard → Ironwood transaction task\)/);
-    assert.match(long, /Without that check it would read “[^”]+”/, 'the app-side reading is shown');
+    const reading = expected[`${c.platform}/${c.channel}`] ?? (c.channel === 'beta' ? 'In Beta build' : 'In Nightly build');
+    assert.ok(long.endsWith(`Without that check it would read “${reading}”.`), `${c.platform}/${c.channel}: ${long}`);
     assert.match(statusExplain(c, true), /required source check could not be completed/);
   }
-  const androidRelease = nv.find((c) => c.platform === 'android' && c.channel === 'release')!;
-  assert.match(statusExplain(androidRelease), /Without that check it would read “Behind a flag”\.$/);
 
   // Rendered pages: the feature page's cards and the home card say why.
   const pageHtml = featurePage(migration, d).value;
   const why = [...pageHtml.matchAll(/<p class="pc-why">([^<]*)<\/p>/g)].map((m) => m[1]);
-  assert.equal(why.length, 9);
+  assert.equal(why.length, migration.cells.length, 'one explanation per cell');
   assert.ok(why.every((w) => !/No evidence either way/.test(w)), 'feature page');
   assert.ok(why.some((w) => /required check could not be completed/.test(w)));
+  assert.ok(why.some((w) => w.includes('Without that check it would read “Behind a flag”.')));
   const home = homePage(d, [], []).value;
   const card = home.match(/<article class="fcard">(?:(?!<\/article>)[\s\S])*?features\/migration\/[\s\S]*?<\/article>/)![0];
   const androidCard = card.match(/<div class="fcard-v" data-k="android\/release"[^>]*>[\s\S]*?<\/div>/)![0];
@@ -472,6 +507,29 @@ test('R3-SITE-NV: a not-verified cell is explained by its reason and app-side re
   assert.equal(statusExplain(cell('')), 'No evidence either way yet.');
 });
 
+test('R3-SITE-NV: over the committed sources (real derive, task check removed), every not-verified cell is explained by its own reason and held-back reading', async () => {
+  // Round-3 repair: nothing here depends on what the committed data holds. Each expectation is read from the cell
+  // itself (its summary and derive's "Without that check the evidence would read" note), so a refresh that changes a
+  // flag default or a status changes the expectation with it. The fixed wording is pinned by the synthetic test above.
+  const { statusExplain, statusLabel, presentCapabilities } = await import('../src/site/view.ts');
+  const { CELL_LABEL } = await import('../src/derive/capabilities.ts');
+  const d = clone();
+  d.capabilities = await capabilitiesWithout('orchard-to-ironwood-task');
+  for (const row of [...presentCapabilities(d), ...presentCapabilities(committed)]) {
+    for (const c of row.cells) {
+      if (c.status !== 'not-verified' || !c.summary.trim()) continue;
+      const long = statusExplain(c);
+      assert.doesNotMatch(long, /No evidence either way/, `${row.id} ${c.platform}/${c.channel}`);
+      if (c.appStatus || !/required check could not be completed/.test(c.summary) || /server-side switch/.test(c.summary)) continue;
+      const held = c.evidence.map((e) => (e.kind === 'note' ? e.text.match(/Without that check the evidence would read: (.+?) — /) : null)).find(Boolean);
+      if (!held) continue;
+      const id = Object.entries(CELL_LABEL).find(([, l]) => l === held[1])?.[0];
+      assert.ok(id, `derive's held-back label is one the site knows: ${held[1]}`);
+      assert.ok(long.includes(`Without that check it would read “${statusLabel(id!, c.channel)}”.`), `${row.id} ${c.platform}/${c.channel}: ${long}`);
+    }
+  }
+});
+
 // ---------------------------------------------------------------------------
 // R3-SITE-LINKED
 // ---------------------------------------------------------------------------
@@ -479,20 +537,190 @@ test('R3-SITE-NV: a not-verified cell is explained by its reason and app-side re
 test('R3-SITE-LINKED: every linked crate version is shown, highest first, and possibly linked versions are marked', async () => {
   const { upstreamPage } = await import('../src/site/pages/other.ts');
   const d = clone();
-  const crate = d.upstream.crates.find((c) => c.crate === 'orchard') ?? d.upstream.crates[0];
-  const cols = Object.keys(crate.brave);
-  assert.ok(cols.length >= 3, 'fixture: several build columns');
-  crate.brave[cols[0]] = { version: '0.15.0', source: 'crates.io', linked: ['0.13.0', '0.15.0'], possible: ['0.14.0'] };
-  crate.brave[cols[1]] = { version: '0.14.0', source: 'crates.io', linked: ['0.13.0', '0.14.0'], possible: ['0.13.0', '0.14.0'] };
-  crate.brave[cols[2]] = { version: '0.15.0', source: 'path' };
+  // Synthetic crate row and build columns (round-3 repair: no dependence on the committed columns).
+  const base = d.upstream.crates[0] ?? { crate: 'x', repo: 'zcash/x', impact: 'high', why: 'w', upstreamStable: null, upstreamNewest: null, upstreamUpdatedAt: null, adoption: 'a', url: 'https://crates.io/crates/x' };
+  const crate = {
+    ...base,
+    crate: 'audit3crate',
+    brave: {
+      'Release 1': { version: '0.15.0', source: 'crates.io', linked: ['0.13.0', '0.15.0'], possible: ['0.14.0'] },
+      'Release 2': { version: '0.14.0', source: 'crates.io', linked: ['0.13.0', '0.14.0'], possible: ['0.13.0', '0.14.0'] },
+      'Beta': { version: '0.15.0', source: 'path' },
+      'Nightly': { version: '0.13.0', source: 'path', possible: ['0.14.0'] },
+      'master': { version: '0.24.0', source: 'crates.io', linked: ['0.24.0-rc.1', '0.24.0'] },
+    },
+  };
+  d.upstream.crates = [crate];
   const out = upstreamPage(d).value;
   const row = out.split('<tr>').find((r) => r.includes(`>${crate.crate}</a>`))!.split('</tr>')[0];
   const cells = [...row.matchAll(/<td class="mono">([\s\S]*?)<\/td>/g)].map((m) => text(m[1]));
   assert.equal(cells[0], '0.15.0 0.14.0 possible 0.13.0', 'certain versions with a possible one between them, highest first');
   assert.equal(cells[1], '0.14.0 possible 0.13.0 possible', 'when nothing is known to be linked, the headline version is only possible');
   assert.equal(cells[2], '0.15.0 path');
+  // Round-3 repair: "path" describes `version` (whose source was recorded), not the top of the list.
+  assert.equal(cells[3], '0.14.0 possible 0.13.0 path', 'the fork tag stays on the version it describes');
+  // Round-3 repair: SemVer precedence, as derive orders them; a pre-release ranks below its release.
+  assert.equal(cells[4], '0.24.0 0.24.0-rc.1');
 
   const { crateVersions } = await import('../src/site/view.ts');
   assert.deepEqual(crateVersions({ version: '0.10.0', linked: ['0.9.0', '0.10.0'] }), [{ version: '0.10.0', possible: false }, { version: '0.9.0', possible: false }], 'numeric order, not string order');
+  assert.deepEqual(crateVersions({ version: '0.10.0', linked: ['0.10.0-pre.1', '0.10.0'] }).map((x) => x.version), ['0.10.0', '0.10.0-pre.1']);
+  assert.deepEqual(crateVersions({ version: '0.10.0', linked: ['0.10.0', '0.10.0-rc.2', '0.10.0-rc.10', '0.10.0-alpha'] }).map((x) => x.version), ['0.10.0', '0.10.0-rc.10', '0.10.0-rc.2', '0.10.0-alpha']);
   assert.deepEqual(crateVersions(null), []);
+});
+
+// ---------------------------------------------------------------------------
+// Round-3 repair: R-SITE-EVENTS (gate3 switch events, evidence labels, unmatched capabilities), R-SITE-OUTDATED wording,
+// R-SITE-STUDIES (single cohort), R-SITE-STALE (lastCompleteAt not recorded)
+// ---------------------------------------------------------------------------
+
+const gate3Info = (disabled: boolean | null) => ({ commitSha: 'b'.repeat(40), file: 'app/api/swap/constants.py', zcashDisabled: disabled, line: disabled === null ? null : 18, url: `https://github.com/brave/gate3/blob/${'b'.repeat(40)}/app/api/swap/constants.py`, checkedAt: GEN });
+const setGate3 = (site: SiteData, disabled: boolean | null) => {
+  site.upstream.services = { ...(site.upstream.services ?? { studies: [], studiesCommit: null }), gate3: gate3Info(disabled) } as SiteData['upstream']['services'];
+};
+
+/** Capability events exactly as derive generates them from two snapshots, so a change to derive's titles breaks these tests. */
+async function derivedCapabilityEvents(prev: Record<string, unknown>, current: Record<string, unknown>, at: string, capabilityNames: Record<string, string> = {}): Promise<ChangeEvent[]> {
+  const { generateEvents, DERIVE_RULES_VERSION } = await import('../src/derive/changes.ts');
+  const snap = (over: Record<string, unknown>, t: string) => ({ at: t, rulesVersion: DERIVE_RULES_VERSION, builds: {}, flags: {}, masterDeps: {}, forkPin: null, capabilities: {}, docs: {}, goneEvidence: [], ...over });
+  return generateEvents({ now: at, prev: snap(prev, hoursBefore(6)), current: snap(current, at), items: {}, groups: [], groupOfItem: new Map(), changelog: [], releaseDates: new Map(), upstream: null, deps: null, advisories: [], community: [], docs: [], evidence: [], capabilityNames, lineChannel: {}, channels: [] })
+    .filter((e) => e.kind === 'capability-changed')
+    .map(({ key: _key, refreshOnly: _r, ...e }) => ({ ...e, detectedAt: at, basis: 'observed' as const }));
+}
+
+/** The rendered event items of a page (Activity: li.ev, home feed: li.mev), as visible text. */
+const eventItems = (page: string, cls: 'ev' | 'mev') => [...page.matchAll(new RegExp(`<li class="${cls}[ "][\\s\\S]*?<\\/li>`, 'g'))].map((m) => text(m[0]));
+
+test('R-SITE-EVENTS: derive’s gate3 switch events say what is shown now when the switch state differs (verifier probe: "turned back on" while gate3 switches Zcash off)', async () => {
+  const sw = (b: boolean) => ({ services: { gate3ZcashDisabled: b, studies: [] } });
+  const [backOn] = await derivedCapabilityEvents(sw(true), sw(false), GEN);
+  const [turnedOff] = await derivedCapabilityEvents(sw(false), sw(true), hoursBefore(1));
+  assert.ok(backOn && turnedOff, 'fixture: derive generates both switch events');
+  assert.equal(backOn.highlight, 'release', 'fixture: the probe event is a Release highlight');
+  assert.match(backOn.impact, /can work again once deployed/);
+  const { gate3Facts } = await import('../src/site/view.ts');
+  const note = (state: boolean | null) => `Shown now: ${gate3Facts(state).headline}.`;
+
+  // The built site, as in the probe: gate3 switches Zcash off now; the newest Activity entry says it was turned back on.
+  const { out, cleanup } = await buildFrom((dir) => {
+    const site = readJ(dir, 'derived', 'site.json') as SiteData;
+    setGate3(site, true);
+    writeJ(dir, site, 'derived', 'site.json');
+    writeJ(dir, [backOn, turnedOff, ...(readJ(dir, 'history', 'events.json') as ChangeEvent[])], 'history', 'events.json');
+  });
+  try {
+    for (const [page, cls] of [['changes/index.html', 'ev'], ['index.html', 'mev']] as const) {
+      const items = eventItems(readFileSync(join(out, page), 'utf8'), cls);
+      const on = items.find((t) => t.includes(backOn.title));
+      const off = items.find((t) => t.includes(turnedOff.title));
+      assert.ok(on && off, `${page}: both switch events rendered`);
+      assert.ok(on.includes(note(true)), `${page}: "${backOn.title}" contradicts the switch shown now without saying so: ${on}`);
+      assert.doesNotMatch(off, /Shown now/, `${page}: a switch event that matches the state shown now needs no note`);
+    }
+    assert.match(readFileSync(join(out, 'changes/index.html'), 'utf8'), /Shown now: <svg class="g g-service-off"[\s\S]*?<a href="\/upstream\/#ready-h">gate3 switch and evidence<\/a>/);
+  } finally {
+    cleanup();
+  }
+
+  // The switch state unknown now (not found, or no service data at all): neither event passes as the current state.
+  const { changesPage } = await import('../src/site/pages/changes.ts');
+  const { homePage } = await import('../src/site/pages/home.ts');
+  const unknown = clone();
+  setGate3(unknown, null);
+  const noData = clone();
+  noData.upstream.services = null as unknown as SiteData['upstream']['services'];
+  for (const d of [unknown, noData]) {
+    for (const t of [...eventItems(changesPage(d, [backOn, turnedOff]).value, 'ev'), ...eventItems(homePage(d, [backOn, turnedOff], []).value, 'mev')]) {
+      assert.ok(t.includes(note(null)), `unknown switch: ${t}`);
+    }
+  }
+  // Not switched off now: "turned back on" matches; "turned off" says what is shown now, without an "Available" badge.
+  const notOff = clone();
+  setGate3(notOff, false);
+  const items = eventItems(changesPage(notOff, [backOn, turnedOff]).value, 'ev');
+  assert.doesNotMatch(items.find((t) => t.includes(backOn.title))!, /Shown now/);
+  const offItem = items.find((t) => t.includes(turnedOff.title))!;
+  assert.ok(offItem.includes(note(false)), offItem);
+  assert.doesNotMatch(offItem, /Shown now: Available/);
+});
+
+test('R-SITE-EVENTS: a capability change shows its evidence with the site’s labels; one whose capability is no longer found says the current state is unknown', async () => {
+  const { CAPABILITIES } = await import('../config/capabilities.ts');
+  const names = Object.fromEntries(CAPABILITIES.map((c) => [c.id, c.name]));
+  const [ev] = await derivedCapabilityEvents({ capabilities: { migration: { 'android/release': 'opt-in' } } }, { capabilities: { migration: { 'android/release': 'not-verified' } } }, GEN, names);
+  assert.ok(ev, 'fixture: derive generates the capability change');
+  assert.deepEqual(ev.evidence, ['opt-in → not-verified'], 'fixture: derive records status ids');
+  const { eventCard } = await import('../src/site/pages/changes.ts');
+  const d = clone();
+  const card = text(eventCard(ev, d).value);
+  assert.ok(card.includes(`${names.migration} on Android Release: Behind a flag → Not verified`), card);
+  assert.match(card, /Evidence Behind a flag → Not verified \(recorded as opt-in → not-verified\)/, 'evidence uses the same labels as the title');
+
+  // Renamed (or removed) capability: the recorded name matches no row now, so the entry cannot be compared.
+  const renamed = { ...ev, id: 'audit3renamed', title: ev.title.replace(names.migration, 'Pool migration (old name)') };
+  assert.match(text(eventCard(renamed, d).value), /Shown now: unknown\. No capability is named “Pool migration \(old name\)” now \(it may have been renamed\)/);
+  // A capability-changed title of another form is not passed off as current either.
+  const odd = { ...ev, id: 'audit3odd', title: 'Swaps changed', evidence: [] };
+  assert.match(text(eventCard(odd, d).value), /Shown now: unknown\. This entry’s form is not one the site can compare/);
+  // Other kinds are unchanged.
+  const merged: ChangeEvent = { ...ev, id: 'audit3merged', kind: 'pr-merged', title: 'Merged: something', evidence: ['opt-in → not-verified'] };
+  assert.doesNotMatch(text(eventCard(merged, d).value), /Shown now|recorded as/);
+});
+
+test('R-SITE-OUTDATED: the marker’s explanation names both reasons derive marks an event for', async () => {
+  const { OUTDATED_HELP } = await import('../src/site/pages/changes.ts');
+  const { mergeHistory } = await import('../src/derive/changes.ts');
+  // derive marks an observed event the current rules no longer generate even though every input was read.
+  const observed: ChangeEvent = { id: 'audit3obs', kind: 'pr-merged', sourceAt: hoursBefore(30), detectedAt: hoursBefore(30), basis: 'observed', title: 'Merged: x', impact: 'i', highlight: null, itemIds: ['brave/brave-core#1'], topic: null, platforms: [], channel: null, links: [], evidence: [] };
+  const r = mergeHistory([observed], [], GEN, hoursBefore(2), {}, { rebuildBackfill: true, inputsRead: () => true });
+  assert.equal(r.events.find((e) => e.id === 'audit3obs')?.rulesOutdated, true, 'fixture: inputs read, still marked');
+  assert.match(OUTDATED_HELP, /not completely read/);
+  assert.match(OUTDATED_HELP, /observed at the time that the current rules no longer generate/);
+  assert.doesNotMatch(OUTDATED_HELP, /because its item or source was not completely read/, 'that is not the only reason');
+});
+
+test('R-SITE-STUDIES: a single enrolled cohort keeps its forcing features, and enable + disable in one cohort is a conflict, not "differ by cohort"', async () => {
+  const { toStudyInfo } = await import('../src/ingest/sources/services.ts');
+  const { studyView } = await import('../src/site/view.ts');
+  const { upstreamPage } = await import('../src/site/pages/other.ts');
+  const now = '2026-10-08T12:00:00Z';
+  const forced = toStudyInfo({ name: 'ZcashForced', experiment: [{ name: 'Only', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash'], forcing_feature_on: ['BraveWalletZCash'] } }, { name: 'Pinned', probability_weight: 0, feature_association: { disable_feature: ['BraveWalletZCash'], forcing_feature_off: ['BraveWalletZCash'] } }] }, 'ZcashForced.json5', 'c0ffee', [], now);
+  const conflict = toStudyInfo({ name: 'ZcashConflict', experiment: [{ name: 'Only', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash'], disable_feature: ['BraveWalletZCash'] } }] }, 'ZcashConflict.json5', 'c0ffee', [], now);
+  assert.deepEqual(conflict.mixed?.features, ['BraveWalletZCash'], 'fixture: the collector lists the conflict as mixed');
+  const cv = studyView(conflict);
+  assert.doesNotMatch(cv.outcome, /differ by cohort/, 'one cohort cannot differ from another');
+  assert.match(cv.outcome, /^Conflicting settings: Only both enables and disables BraveWalletZCash, so which of the two applies/);
+  // Two cohorts, one in conflict, one enabling: differs by cohort and the conflict is still named.
+  const both = studyView(toStudyInfo({ name: 'Z', experiment: [{ name: 'A', probability_weight: 50, feature_association: { enable_feature: ['BraveWalletZCash'], disable_feature: ['BraveWalletZCash'] } }, { name: 'B', probability_weight: 50, feature_association: { enable_feature: ['BraveWalletZCash'] } }] }, 'Z.json5', 'c0ffee', [], now));
+  assert.match(both.outcome, /^Settings differ by cohort \(BraveWalletZCash\)/);
+  assert.match(both.outcome, /Conflicting settings: A both enables and disables BraveWalletZCash/);
+
+  const d = clone();
+  d.upstream.services = { ...(d.upstream.services ?? { gate3: null, studiesCommit: null }), studies: [forced, conflict] } as SiteData['upstream']['services'];
+  const out = upstreamPage(d).value;
+  const sec = out.slice(out.indexOf('id="st-h"'), out.indexOf('Studies override compiled-in defaults'));
+  const f = text(sec.slice(sec.indexOf('>ZcashForced</a>'), sec.indexOf('>ZcashConflict</a>')));
+  const c = text(sec.slice(sec.indexOf('>ZcashConflict</a>')));
+  assert.match(f, /Only \(100% of the study’s clients\): enables BraveWalletZCash \(clients started with --enable-features=BraveWalletZCash are forced into this cohort\)/, 'a single cohort’s forcing feature is shown');
+  assert.match(f, /Pinned \(clients started with --disable-features=BraveWalletZCash are forced into it; its settings: disables BraveWalletZCash\)/, 'a weight-0 cohort’s forcing feature and settings are shown');
+  assert.doesNotMatch(c, /differ by cohort/);
+  assert.match(c, /Conflicting settings: Only both enables and disables BraveWalletZCash/);
+  assert.match(c, /Only \(100% of the study’s clients\): enables BraveWalletZCash, disables BraveWalletZCash/);
+});
+
+test('R-SITE-STALE: a status written before lastCompleteAt was recorded keeps that time unknown, never "no complete collection"', async () => {
+  const { sourcesPage } = await import('../src/site/pages/other.ts');
+  const { sourceAgeLine } = await import('../src/site/client/logic.ts');
+  const { lastCompleteAt: _absent, ...old } = source({ id: 'brave-deps', name: 'Brave dependency pins', lastOutcome: 'partial' });
+  assert.equal(sourceAgeLine(old, Date.parse(GEN), 360).text, 'partial · time of the last complete collection not recorded');
+  assert.equal(sourceAgeLine({ ...old, lastCompleteAt: null }, Date.parse(GEN), 360).text, 'partial · no complete collection recorded');
+  assert.match(sourceAgeLine({ ...old, staleSince: hoursBefore(9) }, Date.parse(GEN), 360).text, /^stale: kept data not refreshed since 9 h ago · time of the last complete collection not recorded$/);
+  const d = clone();
+  const row = (list: SourceStatus[]) => sourcesPage(d, [], {}, list).value.split('<tr class="src"').find((r) => r.includes('>Brave dependency pins</a>'))!.split('</tr>')[0];
+  const absent = row([old as SourceStatus]);
+  assert.match(text(absent), /partial · time of the last complete collection not recorded/);
+  assert.doesNotMatch(absent, /data-last-complete=/, 'the client sees the field as absent too');
+  const none = row([{ ...old, lastCompleteAt: null } as SourceStatus]);
+  assert.match(text(none), /partial · no complete collection recorded/);
+  assert.match(none, /data-last-complete=""/);
 });

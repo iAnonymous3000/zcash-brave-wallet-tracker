@@ -209,12 +209,21 @@ export function staleCountText(n: number): string {
 }
 
 /**
+ * A source without a last complete collection time: `null` means the refresh recorded that none was ever complete;
+ * an absent field (undefined) means the status was written before that time was recorded (run.ts adds it on its next
+ * run), so whether one was complete is unknown and never reads as "none".
+ */
+export function completeUnknownText(lastCompleteAt: string | null | undefined): string {
+  return lastCompleteAt === undefined ? 'time of the last complete collection not recorded' : 'no complete collection recorded';
+}
+
+/**
  * The age line of one source on the Sources page, at `now` (ms). Stale when its kept data is stale, when it never
  * succeeded, or when its last success is older than the window; a partial source says how old its last complete
  * collection is.
  */
 export function sourceAgeLine(s: SourceFreshness, now: number, windowMinutes: number): { stale: boolean; text: string } {
-  const complete = s.lastCompleteAt ? `complete data from ${agoText(s.lastCompleteAt, now)}` : 'no complete collection recorded';
+  const complete = s.lastCompleteAt ? `complete data from ${agoText(s.lastCompleteAt, now)}` : completeUnknownText(s.lastCompleteAt);
   if (keptDataStale(s, now, windowMinutes)) {
     return { stale: true, text: `stale: kept data not refreshed since ${agoText(s.staleSince, now)} · ${complete}` };
   }
