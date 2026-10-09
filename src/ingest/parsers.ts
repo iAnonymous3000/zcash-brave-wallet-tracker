@@ -236,7 +236,9 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
 // - blockquoteRule: block quotes, read in windows (markdown-it's rule is quadratic in some texts), with the lazy lines
 //   of an enclosing quote kept lazy (markdown-it checks them again with their indentation lost) and no ">" indented
 //   4 columns or more taken for a quote marker;
-// - lazyIndented: a lazy line of a list item indented 4 columns or more past its container starts no block.
+// - lazyIndented: a lazy line of a list item indented 4 columns or more past its container starts no block;
+// - the tokenize wrapper: a text nested more than MAX_NESTING deep is not read (markdown-it skips what is nested
+//   deeper than its maxNesting without a word).
 // Only public markdown-it API is used: Ruler.at/after/before/disable/getRules, the documented StateBlock fields and a
 // wrapper around the block parser's tokenize method (to know the indentation of the containers being read).
 
@@ -283,10 +285,12 @@ interface ParseInfo {
   /** The line a table interrupting a paragraph starts on, until the next block is read there (tableHeaderRule). */
   tableHeader: number;
   /**
-   * Whether this parse reads as GitHub (cmark-gfm) does where micromark differs (readStructure compares the two): a
-   * table header row after a paragraph that is also an HTML block start of kind 7 starts a table (micromark: an HTML
-   * block); a "---" underline below nothing but link reference definitions is paragraph text (micromark: a thematic
-   * break).
+   * Whether this parse reads as GitHub (cmark-gfm) does where CommonMark as micromark reads it differs (readStructure
+   * compares the two): a table header row after a paragraph that is also an HTML block start of kind 7 starts a table
+   * (micromark: an HTML block); a "---" underline below nothing but link reference definitions is paragraph text
+   * (micromark: a thematic break); a whole tag on a lazy line of a list item's or block quote's paragraph ends the
+   * item or quote and starts an HTML block of kind 7 (CommonMark: the paragraph goes on; cmark-gfm checks for that
+   * HTML block start against the container the line is in rather than the paragraph).
    */
   github: boolean;
   /** Whether a line the two differ on was met. */
@@ -1040,7 +1044,8 @@ const markKey = (m: LineMark | null): string => (!m ? '' : m.t === 'heading' ? (
  * - where GitHub (cmark-gfm, CommonMark 0.29) and CommonMark 0.31 as micromark reads it differ, the text is read both
  *   ways and every line where the two readings differ (a level-1/2 heading, or a doubtful line) is doubtful: a block
  *   that starts with a <search> or <source> tag (an HTML block that can interrupt a paragraph only in 0.31, or only
- *   in 0.29), and a table header row after a paragraph that is a whole HTML tag (tableHeaderRule).
+ *   in 0.29), a table header row after a paragraph that is a whole HTML tag (tableHeaderRule), and a whole tag on a
+ *   lazy line of a list item's or quote's paragraph (paragraphRule, readQuote; ParseInfo.github).
  * A text whose structure cannot be read to its end (block quotes and list items nested more than MAX_NESTING deep,
  * block quotes beyond the parse's budget) throws ChangelogStructureError: what was read before is not reported as the
  * whole text. A re-reading with a stray opener escaped that cannot be read stands in as one beyond MAX_REREADS does.
@@ -1155,7 +1160,8 @@ function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github
   }
 
   // The GitHub reading: <search> is an ordinary tag, <source> starts an HTML block that can interrupt a paragraph (as
-  // <div> does), and a whole-tag table header row after a paragraph starts a table.
+  // <div> does), a whole-tag table header row after a paragraph starts a table, and a whole tag on a lazy line starts
+  // an HTML block.
   if (!github) {
     let changed = parse.differs;
     const other = lines.map((l) => {
