@@ -94,14 +94,16 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
   // earlier can be called later); only the definition alone is determinate.
   assert.equal(parseGate3Switch(`[A, SWAP_DISABLED_CHAINS] = [1, (Chain.ZCASH,)]\n`).zcashDisabled, null);
 
-  // Inert reads stay determinate, including the real repository file.
-  const reads: [string, boolean][] = [
+  // Inert reads. Under the strict constants-module allowlist only the real repository layout (GATE3_ON) stays
+  // determinate; the others import no Chain before the switch and use statement shapes outside the allowlist, so
+  // they are now unknown.
+  const reads: [string, boolean | null][] = [
     [GATE3_ON, true],
-    ['SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nDOC = "SWAP_DISABLED_CHAINS = (Chain.ZCASH,) and globals() are only words here"\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = frozenset(SWAP_DISABLED_CHAINS)\n', true],
-    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nSWAP_DISABLED_CHAINS: tuple[Chain, ...]\nNOTE = f"{{SWAP_DISABLED_CHAINS := x}} is only text"\n', false],
-    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\n', true],
+    ['SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n', null], // strict allowlist: unknown
+    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nDOC = "SWAP_DISABLED_CHAINS = (Chain.ZCASH,) and globals() are only words here"\n', null], // strict allowlist: unknown
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = frozenset(SWAP_DISABLED_CHAINS)\n', null], // strict allowlist: unknown
+    ['SWAP_DISABLED_CHAINS = (Chain.ETH,)\nSWAP_DISABLED_CHAINS: tuple[Chain, ...]\nNOTE = f"{{SWAP_DISABLED_CHAINS := x}} is only text"\n', null], // strict allowlist: unknown
+    ['SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\n', null], // strict allowlist: unknown
   ];
   for (const [src, v] of reads) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
   // Repair round: these modules were first read as determinate, but each one has a statement that runs code the file
@@ -205,27 +207,32 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
     assert.ok(r.reason, `${name}: a reason is given`);
   }
 
-  // The real file (app/api/swap/constants.py at the time of writing) and a realistic richer constants module stay
-  // determinate: imports (also parenthesised, aliased, __future__), docstrings, literal constants, an annotation-only
-  // line, an alias of the switch and a constructor copy of it.
+  // The real file (app/api/swap/constants.py at the time of writing) stays determinate. The realistic richer constants
+  // module (imports also parenthesised, aliased, __future__; docstrings, literal constants, an annotation-only line,
+  // an alias of the switch and a constructor copy of it) was determinate under the old reader; the strict allowlist
+  // stops at its `from __future__` line and answers unknown.
   const real = parseGate3Switch(REAL_GATE3_CONSTANTS);
   assert.deepEqual(real, { zcashDisabled: true, line: 18, reason: null });
   const rich = (members: string) =>
     `"""Swap constants."""\nfrom __future__ import annotations\n\nimport enum\nfrom app.api.common.models import (\n    Chain,\n    Provider as P,\n)\n\nDEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\nMAX_RETRIES: int = 3\nTIMEOUT = -1.5\nFEES = {"a": 1, "b": [1, 2], "c": (P, None)}\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({${members}})\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = tuple(SWAP_DISABLED_CHAINS)\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nNOTE = f"literal only {{braces}}"; pass\n`;
-  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.SOL')), { zcashDisabled: false, line: 14, reason: null });
-  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.ZCASH')), { zcashDisabled: true, line: 14, reason: null });
+  // The reader names the first line it does not accept; line 2 is `from __future__ import annotations`.
+  const notAcceptedLine2 = { zcashDisabled: null, line: 2, reason: 'line 2 is not one of the statement shapes this reader accepts; only a plain constants module is read, so the value of SWAP_DISABLED_CHAINS is not determined' };
+  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.SOL')), notAcceptedLine2); // strict allowlist: unknown (was false, line 14)
+  assert.deepEqual(parseGate3Switch(rich('Chain.ETH, Chain.ZCASH')), notAcceptedLine2); // strict allowlist: unknown (was true, line 14)
   // ...and the same module with one more statement that runs code is unknown, whichever value the literal has.
   for (const extra of ['from app.registry import register\nregister(SWAP_DISABLED_CHAINS)', 'if DEBUG: pass', 'Chain = OtherChain', 'frozenset = set', 'SWAP_DISABLED_CHAINS = SWAP_DISABLED_CHAINS - {Chain.ETH}']) {
     for (const members of ['Chain.ETH', 'Chain.ZCASH']) assert.equal(parseGate3Switch(`${rich(members)}${extra}\n`).zcashDisabled, null, extra);
   }
 
-  // The few statement forms beyond NAME = literal that the reader accepts (each cannot run code of this module):
+  // The few statement forms beyond NAME = literal that the old reader accepted (each cannot run code of this module):
   // `__all__`, an `if ...: raise BuiltinError(...)` guard, a one-line `def ...: ...` without a body, operators, and
-  // read-only methods called on the switch itself. Python agrees on both values.
+  // read-only methods called on the switch itself. Python agrees on both values; the strict allowlist accepts none of
+  // these forms and stops at the `__all__` line, so both are now unknown.
   const guarded = (members: string) =>
     `"""Swap constants."""\n__all__ = ["SWAP_DISABLED_CHAINS", "is_disabled"]\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({${members}})\nif Chain.ETH in SWAP_DISABLED_CHAINS: raise ValueError("ETH must stay routable")\ndef is_disabled(chain: Chain, *, disabled: frozenset[Chain] = SWAP_DISABLED_CHAINS) -> bool: ...\nROUTABLE = SWAP_DISABLED_CHAINS.symmetric_difference({Chain.ETH, Chain.SOL})\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\nNOT_ETH = Chain.ETH not in SWAP_DISABLED_CHAINS and Chain.SOL is not None\n`;
-  assert.deepEqual(parseGate3Switch(guarded('Chain.ZCASH')), { zcashDisabled: true, line: 4, reason: null });
-  assert.deepEqual(parseGate3Switch(guarded('Chain.SOL')), { zcashDisabled: false, line: 4, reason: null });
+  // The reader names the first line it does not accept; line 2 is `__all__ = [...]`.
+  assert.deepEqual(parseGate3Switch(guarded('Chain.ZCASH')), notAcceptedLine2); // strict allowlist: unknown (was true, line 4)
+  assert.deepEqual(parseGate3Switch(guarded('Chain.SOL')), notAcceptedLine2); // strict allowlist: unknown (was false, line 4)
   // ...but not when they could run something else. Python's value contains Chain.ZCASH in each of these:
   const narrowed: [string, string][] = [
     ['star import rebinding frozenset', 'from rebind import *\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n'],
@@ -255,7 +262,12 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
   assert.equal(r.data.gate3?.zcashDisabled, null);
   assert.equal(r.data.gate3?.lastDetermined?.zcashDisabled, true);
   assert.equal(r.partial, true);
-  assert.ok(r.limitations?.some((l) => /gate3 at cccccccc: line 2: /.test(l)), 'the limitation names the statement that made the value unknown');
+  // strict allowlist: reason wording. The module has no Chain import, so the first line not accepted is line 1 (the
+  // switch itself); this reason carries no line number, so the line is asserted on the gate3 record and its URL.
+  assert.ok(r.limitations?.some((l) => /^gate3 at cccccccc: SWAP_DISABLED_CHAINS is assigned before Chain is imported; /.test(l)), 'the limitation says why the value is unknown');
+  assert.ok(r.data.gate3?.reason, 'a reason is given');
+  assert.equal(r.data.gate3?.line, 1, 'the line that made the value unknown');
+  assert.match(r.data.gate3?.url ?? '', /#L1$/);
 });
 
 // The statement-splitter unit test that stood here tested the hand-written Python tokenizer, which was replaced by
