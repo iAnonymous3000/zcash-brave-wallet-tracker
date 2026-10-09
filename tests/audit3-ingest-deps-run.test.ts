@@ -358,7 +358,7 @@ const lockWithHeader = (header: string) => [
 ].join('\n');
 
 test('R3-LOCKHDR: valid TOML spellings of the [[package]] header are read: the package is listed and the dependency graph resolves through it', async () => {
-  // '[["package"]]' (a TOML escape in a quoted key) moved here from the unreadable list in the
+  // '[["pack\u0061ge"]]' (a TOML escape in a quoted key) moved here from the unreadable list in the
   // R3-LOCKHDR repair round: keys and strings are now read as TOML, escapes decoded.
   const valid = ['[[ package ]]', '[[package]] # vendored', '[[package]]#x', '\t[[\tpackage\t]]\t', '[["package"]]', "[['package']]", '[[ "package" ]]   # quoted', '  [[package]]', '[["pack\\u0061ge"]]'];
   for (const header of valid) {
@@ -379,7 +379,7 @@ test('R3-LOCKHDR: valid TOML spellings of the [[package]] header are read: the p
 });
 
 test('R3-LOCKHDR: a header form that cannot be read leaves the package list unknown, never a short list; the graph stays uncertain, the snapshot is partial, says why and is re-read', async () => {
-  // '[["pack\qge"]]' (an invalid TOML escape) stands in for '[["package"]]', which is valid
+  // '[["pack\qge"]]' (an invalid TOML escape) stands in for '[["pack\u0061ge"]]', which is valid
   // TOML and is now read (R3-LOCKHDR repair round, see the test above).
   const unreadable = ['[[ package ]', '[[package]] trailing', '[ [package] ]', '[["pack\\qge"]]', '[package]', '[[package.x]]', '[[package]]]', ' [[package]]'];
   for (const header of unreadable) {
@@ -635,11 +635,18 @@ test('R3-LOCKHDR repair: keys and strings are read as TOML (escapes decoded, inv
   // linkedVersions reports as uncertain, never as "not linked".
   const unreadable = [...head, '[[package]]', 'name = "halo2_gadgets\\uD800"', 'version = "0.3.0"'].join('\n');
   assert.match(deps.scanCargoLock(unreadable).problems.join(' '), /line 11: line not understood/);
-  assert.deepEqual(deps.linkedVersions(snapshotsOf(unreadable).data.snapshots['v1.2.3'], 'halo2_gadgets'), { versions: [], certain: false });
+  assert.deepEqual(deps.linkedVersions(deps.resolveZcashDependencies(unreadable, ['orchard', 'halo2_gadgets'], root), 'halo2_gadgets'), { versions: [], certain: false });
+  // R3-LOCKHDR repair 2: such a snapshot (no candidate for a monitored crate the lockfile names) is
+  // no longer written, because readers take a monitored crate without candidates as "not linked"
+  // whatever `certain` says; the read fails and the ref keeps its last snapshot (was: a snapshot
+  // whose linkedVersions was { versions: [], certain: false }).
+  assert.throws(() => snapshotsOf(unreadable), /halo2_gadgets is named in .*Cargo\.lock at master, but no version of it could be read \(line 11: line not understood/);
   // Likewise a table without a name (a misspelt key).
   const nameless = [...head, '[[package]]', 'nmae = "halo2_gadgets"', 'version = "0.3.0"'].join('\n');
   assert.match(deps.scanCargoLock(nameless).problems.join(' '), /line 10: \[\[package\]\] without a name/);
-  assert.deepEqual(deps.linkedVersions(snapshotsOf(nameless).data.snapshots['v1.2.3'], 'halo2_gadgets'), { versions: [], certain: false });
+  assert.deepEqual(deps.linkedVersions(deps.resolveZcashDependencies(nameless, ['orchard', 'halo2_gadgets'], root), 'halo2_gadgets'), { versions: [], certain: false });
+  // R3-LOCKHDR repair 2: not written either (was: a snapshot with { versions: [], certain: false }).
+  assert.throws(() => snapshotsOf(nameless), /halo2_gadgets is named in .*Cargo\.lock at master, but no version of it could be read \(line 10: \[\[package\]\] without a name/);
   // Package fields at the top level (the first [[package]] header missing): a possible package, and reported.
   const headless = ['name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`, ...head.slice(1)].join('\n');
   assert.match(deps.scanCargoLock(headless).problems.join(' '), /line 1: package field outside a \[\[package\]\] table \(header missing\?\)/);
@@ -663,4 +670,140 @@ test('R3-LOCKHDR repair: keys and strings are read as TOML (escapes decoded, inv
   assert.match(deps.scanCargoLock(inline).problems.join(' '), /line 2: packages defined outside \[\[package\]\] tables/);
   assert.deepEqual(snapshotsOf(inline).data.snapshots['v1.2.3'].resolution?.candidates.halo2_gadgets, [{ version: '0.3.0', source: 'crates.io', reachable: null, direct: null, doubtful: true }]);
   assert.equal(verdictFor(inline, 'halo2_gadgets', '< 0.4.0').affected, null);
+});
+
+// ---------------------------------------------------------------------------
+// R3-LOCKHDR repair 2: a monitored crate that Cargo.lock names but whose version cannot be read is
+// never written as absent. Every reader (derive's advisory verdicts and adoption included) takes a
+// monitored crate without candidates as "not linked", so such a read is not used at all.
+// ---------------------------------------------------------------------------
+
+/** The verifier's lock: zcash -> [halo2_gadgets, orchard], orchard 0.15.0 read; halo2_gadgets' table written as `tail`. */
+const namedLock = (tail: string[], zcashDeps = [' "halo2_gadgets",', ' "orchard",']) =>
+  ['version = 4', '', '[[package]]', 'name = "zcash"', 'version = "1.0.0"', 'dependencies = [', ...zcashDeps, ']', '', '[[package]]', 'name = "orchard"', 'version = "0.15.0"', `source = "${CRATES_IO}"`, '', ...tail, ''].join('\n');
+const halo2Table = ['[[package]]', 'name = "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`];
+/** halo2_gadgets tables no reading of which recovers a (name, version) pair. */
+const UNREAD_HALO2: [string, string[]][] = [
+  ['no version', ['[[package]]', 'name = "halo2_gadgets"', `source = "${CRATES_IO}"`]],
+  ['name and version on one line', ['[[package]]', 'name = "halo2_gadgets" version = "0.3.0"', `source = "${CRATES_IO}"`]],
+  ['name: "..."', ['[[package]]', 'name: "halo2_gadgets"', 'version = "0.3.0"', `source = "${CRATES_IO}"`]],
+  ['name: and version:', ['[[package]]', 'name: "halo2_gadgets"', 'version: "0.3.0"', `source = "${CRATES_IO}"`]],
+  ['an inline table line', ['[[package]]', '{ name = "halo2_gadgets", version = "0.3.0" }']],
+  ['name on the header line (the verifier repro)', ['[[package]] name = "halo2_gadgets"', 'version = "0.3.0"']],
+  ['name joined to the header', ['[[package]]name = "halo2_gadgets"', 'version = "0.3.0"']],
+  ['";" after the header', ['[[package]]; name = "halo2_gadgets"; version = "0.3.0"']],
+];
+
+test('R3-LOCKHDR repair 2: a monitored crate Cargo.lock names but no version of which can be read fails the read; no snapshot says it is not linked', () => {
+  // Control: the table read, the verdict says so.
+  assert.equal(verdictFor(namedLock(halo2Table), 'halo2_gadgets', '< 0.4.0').affected, true);
+  for (const [label, tail] of UNREAD_HALO2) {
+    const lock = namedLock(tail);
+    const scan = deps.scanCargoLock(lock);
+    assert.ok(scan.problems.length, `${label}: reported`);
+    assert.equal(scan.doubtful.some((d) => d.name === 'halo2_gadgets'), false, `${label}: no (name, version) pair recovered`);
+    const r = deps.resolveZcashDependencies(lock, ['orchard', 'halo2_gadgets'], root);
+    assert.equal(r.resolution.candidates.halo2_gadgets, undefined, label);
+    assert.deepEqual(deps.linkedVersions(r, 'halo2_gadgets'), { versions: [], certain: false }, `${label}: no version known, never "not linked"`);
+    // The snapshot such a read would give has no halo2_gadgets candidate, which reads as "not
+    // linked" (affected: false, "does not appear in Brave's resolved Zcash dependencies"): it is not written.
+    for (const key of ['master', 'v1.2.3']) {
+      assert.throws(
+        () => deps.buildDepsSnapshot(key, key === 'master' ? 'a'.repeat(40) : key, [], depFiles(lock), null, NOW),
+        { message: new RegExp(`^halo2_gadgets is named in .*Cargo\\.lock at ${key.replace(/\./g, '\\.')}, but no version of it could be read \\(line \\d+: .*\\); whether Brave links it is unknown$`) },
+        `${label} at ${key}`,
+      );
+    }
+  }
+  // The same without any dependency entry naming it: the name is written only in the unread table,
+  // plainly, through TOML escapes, across a line-ending backslash or in another spelling.
+  for (const tail of [
+    ['[[package]] name = "halo2_gadgets"', 'version = "0.3.0"'],
+    ['[[package]]', 'name = "halo2\\u005fgadgets" version = "0.3.0"'],
+    ['[[package]]', 'name = "\\U00000068alo2_gadgets" version = "0.3.0"'],
+    ['[[package]]', 'name = "halo2\\x5fgadgets" version = "0.3.0"'],
+    ['[[package]] name = """halo2_\\', '   gadgets"""', 'version = "0.3.0"'],
+    ['[[package]]', 'name = "HALO2-GADGETS" version = "0.3.0"'],
+  ]) {
+    const lock = namedLock(tail, [' "orchard",']);
+    assert.equal(deps.lockMentions(lock, 'halo2_gadgets'), true, tail.join(' / '));
+    assert.throws(() => snapshotsOf(lock), /halo2_gadgets is named in .*Cargo\.lock at master, but no version of it could be read/, tail.join(' / '));
+  }
+});
+
+test('R3-LOCKHDR repair 2: through the collector, a ref whose Cargo.lock hides a monitored crate keeps its last snapshot (stale, partial), and the advisory verdict is never "not affected"', async () => {
+  const repro = namedLock(['[[package]] name = "halo2_gadgets"', 'version = "0.3.0"']);
+  // No earlier snapshot of any ref: nothing usable was read, so the collection fails (the source keeps its last data, if any).
+  await assert.rejects(collectTag(repro), /no brave-core ref could be read: .*v1\.2\.3: read failed \(Error: halo2_gadgets is named in .*Cargo\.lock at v1\.2\.3, but no version of it could be read \(line 16: table header not understood/);
+
+  // A master snapshot read earlier (halo2_gadgets 0.3.0 linked), no tag snapshot yet.
+  const EARLIER = '2026-10-01T00:00:00Z';
+  const prevMaster = deps.buildDepsSnapshot('master', 'b'.repeat(40), ['master'], depFiles(namedLock(halo2Table)), null, EARLIER).snapshot;
+  const { result } = await collectTag(repro, { snapshots: { master: prevMaster } });
+  assert.deepEqual(result.data.snapshots.master, prevMaster, 'kept unchanged, never replaced by a reading without halo2_gadgets');
+  assert.equal(result.data.snapshots['v1.2.3'], undefined, 'no snapshot of the tag rather than one without halo2_gadgets');
+  assert.equal(result.partial, true);
+  assert.equal(result.staleSince, EARLIER, 'the kept master pins report their age: a lasting failure turns stale (R3-CI-STALE)');
+  for (const key of ['master', 'v1.2.3']) {
+    assert.ok(result.limitations?.some((l) => l.startsWith(`${key}: read failed (Error: halo2_gadgets is named in `) && l.includes('line 16: table header not understood')), `${key}: ${JSON.stringify(result.limitations)}`);
+  }
+  assert.ok(result.limitations?.some((l) => l.startsWith('master: read failed') && l.endsWith(`kept the snapshot read ${EARLIER} (commit ${'b'.repeat(10)})`)));
+  assert.ok(result.limitations?.some((l) => l.startsWith('v1.2.3: read failed') && l.endsWith('no earlier snapshot to keep')));
+  // The verdict rests on what was read: master's last reading (0.3.0, in range), and the release build unread.
+  const inRange = advisoryVerdicts(advisory('halo2_gadgets', '< 0.4.0'), result.data, RELEASE);
+  assert.equal(inRange.affected, true, inRange.summary);
+  const outside = advisoryVerdicts(advisory('halo2_gadgets', '< 0.2.0'), result.data, RELEASE);
+  assert.equal(outside.affected, null, outside.summary);
+  assert.doesNotMatch(outside.summary, /does not appear/);
+});
+
+test('R3-LOCKHDR repair 2: a dependency entry naming a package Cargo.lock does not contain leaves that package unknown, monitored or not, never absent', async () => {
+  // Monitored: zcash depends on halo2_gadgets, which has no table (nothing else is wrong with the file).
+  const monitored = namedLock([]);
+  assert.deepEqual(deps.scanCargoLock(monitored).problems, []);
+  assert.equal(deps.lockPackageNames(monitored), null, 'not a complete record of its packages: no list');
+  const r = deps.resolveZcashDependencies(monitored, ['orchard', 'halo2_gadgets'], root);
+  assert.deepEqual(r.resolution.unresolvedEdges, ['zcash 1.0.0 -> halo2_gadgets']);
+  // Even next to a package list without it, linkedVersions does not call it absent.
+  const listed = { ...r, lockPackages: ['orchard', 'zcash'] };
+  assert.deepEqual(deps.linkedVersions(listed, 'halo2_gadgets'), { versions: [], certain: false });
+  assert.deepEqual(deps.linkedVersions(listed, 'zebrad'), { versions: [], certain: true }, 'a package nothing names stays absent');
+  assert.equal(deps.linkedVersions(listed, 'orchard').certain, true);
+  assert.throws(() => snapshotsOf(monitored), /halo2_gadgets is named in .*Cargo\.lock at master, but no version of it could be read \(dependency entry matching no package: zcash 1\.0\.0 -> halo2_gadgets\)/);
+
+  // Not monitored: zcash depends on zebrad, which has no table. The snapshot is written without a
+  // package list (never one that lacks zebrad), so zebrad stays unknown.
+  const unmonitored = namedLock([], [' "orchard",', ' "zebrad 2.0.0",']);
+  const { snap, result } = await collectTag(unmonitored);
+  assert.equal(snap.lockPackages, undefined);
+  assert.equal(result.partial, true);
+  assert.ok(result.limitations?.some((l) => /^v1\.2\.3: .*Cargo\.lock has dependency entries naming packages it does not contain \(zcash 1\.0\.0 -> zebrad 2\.0\.0\), so it is not a complete record of its packages and the list is not recorded/.test(l)), JSON.stringify(result.limitations));
+  assert.equal(deps.linkedVersions(snap, 'zebrad').certain, false);
+  const v = advisoryVerdicts(advisory('zebrad', '< 3.0.0'), result.data, RELEASE);
+  assert.equal(v.affected, null, v.summary);
+  assert.doesNotMatch(v.summary, /not present in Brave's Cargo\.lock/);
+  // The same for an entry outside the Zcash crate's graph: the list is not a complete record either.
+  const consistent = namedLock(halo2Table);
+  assert.deepEqual(deps.lockPackageNames(consistent), ['halo2_gadgets', 'orchard', 'zcash'], 'a consistent lockfile keeps its list');
+  const elsewhere = `${consistent}\n[[package]]\nname = "chromium"\nversion = "0.1.0"\ndependencies = [\n "zebrad",\n]\n`;
+  assert.equal(deps.lockPackageNames(elsewhere), null);
+  assert.equal(snapshotsOf(elsewhere).data.snapshots['v1.2.3'].lockPackages, undefined);
+});
+
+test('R3-LOCKHDR repair 2: lockMentions finds a name in every TOML spelling and nothing else; a lockfile with problems that never names a monitored crate is still read', () => {
+  for (const text of ['halo2_gadgets', 'name = "Halo2-Gadgets"', '"halo2\\u005Fgadgets"', '"\\U00000068alo2_gadgets"', '"halo2\\x5fgadgets"', '"""halo2_\\\n   \n  gadgets"""', '"halo2_\\\r\n gadgets"', '# halo2_gadgets in a comment', 'my-halo2_gadgets-fork']) {
+    assert.equal(deps.lockMentions(text, 'halo2_gadgets'), true, JSON.stringify(text));
+  }
+  for (const text of ['"halo2\\\\u005fgadgets"', 'halo2 gadgets', 'halo2_gadget', '"halo2\\u005gadgets"', '']) {
+    assert.equal(deps.lockMentions(text, 'halo2_gadgets'), false, JSON.stringify(text));
+  }
+  // A line that cannot be read, while no monitored crate but orchard is named anywhere in any
+  // spelling: no reading of the file holds such a package, so the read is used (and is partial).
+  const lock = namedLock(['[[package]]', 'name = "zebrad" version = "2.0.0"'], [' "orchard",']);
+  assert.ok(deps.scanCargoLock(lock).problems.length);
+  assert.equal(deps.lockMentions(lock, 'halo2_gadgets'), false);
+  const s = snapshotsOf(lock).data.snapshots['v1.2.3'];
+  assert.equal(s.lockPackages, undefined);
+  assert.ok(s.resolution?.lockProblems?.length);
+  assert.equal(s.lock.orchard.version, '0.15.0');
 });

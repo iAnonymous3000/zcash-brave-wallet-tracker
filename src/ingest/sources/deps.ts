@@ -17,10 +17,15 @@
 //
 // `lockPackages` lists the name of every package in the full Cargo.lock (not only the monitored
 // crates), so a consumer can tell that a package an advisory names is not in the lockfile at all.
-// It is omitted when the lockfile could not be parsed completely; its absence means unknown.
+// It is omitted when the lockfile could not be parsed completely, or when a dependency entry names a
+// package the lockfile does not contain; its absence means unknown.
 // Cargo.lock is read as TOML (scanCargoLock); whatever cannot be read is listed in
 // `resolution.lockProblems`, a version found only in a part that could not be read with certainty
 // is a `doubtful` candidate (possibly linked), and linkedVersions() then never answers "certain".
+// A monitored crate without candidates reads as "not linked" to every consumer, so a read in which
+// a monitored crate the lockfile names (in any spelling, see lockMentions) has no version known
+// while its absence is not established (part of the file unread, or a dependency entry naming it
+// matched no package) is not used: the ref keeps its previous snapshot, as for any failed read.
 //
 // Failure handling (see CollectResult in ../framework.ts): a ref whose files cannot be read keeps
 // its previous snapshot; a component file that is missing at a ref, or read but yielding nothing,
@@ -104,6 +109,8 @@ export interface DepResolution {
    * possibly linked (reachable: null) rather than ruled out, versions read from package-like
    * tables that could not be read with certainty are candidates marked `doubtful`, and no set of
    * linked versions is certain (linkedVersions), including the absence of a monitored crate.
+   * A monitored crate that the lockfile names but of which no version could be read never appears
+   * here without candidates: such a read is not stored (buildDepsSnapshot).
    */
   lockProblems?: string[];
 }
@@ -713,20 +720,67 @@ export function parseLockPackages(lock: string): LockPackage[] {
   return scanCargoLock(lock).packages;
 }
 
+/** Cargo package names compare case-insensitively with "-" and "_" alike (crates.io treats them as one name). */
+const nameKey = (n: string) => n.toLowerCase().replace(/-/g, '_');
+
+/** Package name a Cargo.lock dependency entry ("name", "name version", "name version (source)") refers to. */
+const entryName = (spec: string) => spec.trim().split(/\s+/)[0] ?? '';
+
+/**
+ * Dependency entries naming a package the lockfile does not contain (in any spelling): Cargo never
+ * writes one, so the lockfile is not a complete record of its packages.
+ */
+function danglingEntries(scan: LockScan): string[] {
+  const known = new Set(scan.packages.map((p) => nameKey(p.name)));
+  return [...new Set(scan.packages.flatMap((p) => p.dependencies.filter((d) => !known.has(nameKey(entryName(d)))).map((d) => `${p.name} ${p.version} -> ${d.trim()}`)))];
+}
+
 /** Package names of a scanned Cargo.lock, or null unless it was read completely (see lockPackageNames). */
 function packageNamesOf(scan: LockScan): string[] | null {
-  if (!scan.tables || !scanComplete(scan)) return null;
+  if (!scan.tables || !scanComplete(scan) || danglingEntries(scan).length) return null;
   return [...new Set(scan.packages.map((p) => p.name))].sort();
 }
 
 /**
  * Sorted, de-duplicated names of every package in a Cargo.lock, or null when it could not be read
  * completely: a [[package]] header in a form not understood, a package whose name/version is
- * missing or not a plain string, or any other line not understood. A package the parser skipped
- * must never look absent, so a short list is never returned.
+ * missing or not a plain string, or any other line not understood; or when a dependency entry
+ * names a package the lockfile does not contain (it is then not a complete record of its
+ * packages). A package the parser skipped must never look absent, so a short list is never returned.
  */
 export function lockPackageNames(lock: string): string[] | null {
   return packageNamesOf(scanCargoLock(lock));
+}
+
+const TOML_SIMPLE_ESCAPE: Record<string, string> = { b: '\b', t: '\t', n: '\n', f: '\f', r: '\r', e: '\x1b', '"': '"', '\\': '\\' };
+
+/**
+ * Every spelling a TOML reading of `text` could give a string in it, for lockMentions(): the text as
+ * is, with the line-ending backslashes of multi-line basic strings applied (whitespace and newlines
+ * after them trimmed), and with every TOML escape (\uXXXX, \UXXXXXXXX, \xHH, \n, ...) decoded;
+ * names compared in any spelling (lower case, "-" as "_").
+ */
+function mentionText(text: string): string {
+  const joined = text.replace(/\\[ \t]*\r?\n\s*/g, '');
+  const decoded = joined.replace(/\\(?:u([0-9A-Fa-f]{4})|U([0-9A-Fa-f]{8})|x([0-9A-Fa-f]{2})|([\s\S]))/g, (m, u?: string, U?: string, x?: string, c?: string) => {
+    const hex = u ?? U ?? x;
+    if (hex !== undefined) {
+      const cp = parseInt(hex, 16);
+      return cp <= 0x10ffff ? String.fromCodePoint(cp) : m;
+    }
+    return TOML_SIMPLE_ESCAPE[c!] ?? m;
+  });
+  return [text, joined, decoded].map(nameKey).join('\n');
+}
+
+/**
+ * Whether `crate` (in any spelling: case, "-" or "_") is named anywhere in `text`, written plainly
+ * or through TOML escapes or line-ending backslashes (see mentionText). TOML has no other way to
+ * spell a string, so a package name that no reading of any part of a lockfile (read or unread) can
+ * produce is not in it. Deliberately generous: a mention in a comment or inside another name counts.
+ */
+export function lockMentions(text: string, crate: string): boolean {
+  return mentionText(text).includes(nameKey(crate));
 }
 
 export function lockSource(src: string | null): LockSource {
@@ -910,27 +964,29 @@ export function resolveZcashDependencies(
  * this collector does not inspect stays unknown.
  * Nothing is certain when the lockfile was not read completely (`resolution.lockProblems`: the
  * unread part may hold another version, or the only one, of any crate) or when a dependency entry
- * naming the crate matched no single package; an empty `versions` with `certain: false` means
- * "no version known", never "not linked".
+ * naming the crate matched no single package, whether or not the crate is in the package list;
+ * an empty `versions` with `certain: false` means "no version known", never "not linked".
+ * Names compare in any spelling (case, "-" or "_"), as crates.io treats them as one name.
  */
 export function linkedVersions(s: Pick<BraveDepsSnapshot, 'lock' | 'resolution' | 'lockPackages'>, crate: string): { versions: { version: string; source: LockSource; reachable: boolean | null; direct: boolean | null; doubtful?: true }[]; certain: boolean } {
-  // crates.io treats "-" and "_" as the same name, so only a package matching neither spelling is absent.
-  const norm = (n: string) => n.toLowerCase().replace(/-/g, '_');
-  if (Array.isArray(s.lockPackages) && !s.lockPackages.some((p) => norm(p) === norm(crate))) return { versions: [], certain: true };
+  const key = nameKey(crate);
   const res = s.resolution;
+  // Unresolved entries are "<package> <version> -> <entry>[ (n matches)]"; the list keeps the first 50.
+  // An entry naming the crate that matched no package means the lockfile refers to a package it
+  // does not hold: its absence from the package list then proves nothing.
+  const edgeNames = (res?.unresolvedEdges ?? []).map((e) => nameKey(entryName(e.split(' -> ')[1] ?? '')));
+  const doubt = Boolean(res?.lockProblems?.length) || edgeNames.length >= 50 || edgeNames.includes(key);
+  if (Array.isArray(s.lockPackages) && !s.lockPackages.some((p) => nameKey(p) === key)) return { versions: [], certain: !doubt };
   if (!res) {
     // Resolved before candidates were recorded (newest vendored version): which versions Brave links is not known.
-    const l = s.lock[crate];
+    const l = Object.entries(s.lock).find(([n]) => nameKey(n) === key)?.[1];
     return { versions: l ? [{ ...l, reachable: null, direct: null }] : [], certain: false };
   }
-  // Unresolved entries are "<package> <version> -> <entry>[ (n matches)]"; the list keeps the first 50.
-  const edgeNames = (res.unresolvedEdges ?? []).map((e) => norm(e.split(' -> ')[1]?.trim().split(/\s+/)[0] ?? ''));
-  const doubt = Boolean(res.lockProblems?.length) || edgeNames.length >= 50 || edgeNames.includes(norm(crate));
-  const cands = res.candidates[crate];
-  if (!cands) {
+  const cands = Object.entries(res.candidates).filter(([n]) => nameKey(n) === key).flatMap(([, c]) => c);
+  if (!cands.length) {
     // Not vendored at all: certainly not linked, but only crates this collector inspects have
     // candidates, and only a lockfile read completely shows that a crate is not in it.
-    return { versions: [], certain: !doubt && CRATES.some((c) => c.crate === crate) };
+    return { versions: [], certain: !doubt && CRATES.some((c) => nameKey(c.crate) === key) };
   }
   const versions = cands.filter((c) => c.reachable !== false);
   return { versions, certain: !doubt && res.method === 'graph' && versions.every((c) => c.reachable === true) };
@@ -1033,9 +1089,31 @@ export function buildDepsSnapshot(
 
   const cargoPkg = files.cargo !== null ? parseCargoPackage(files.cargo) : null;
   const root = cargoPkg ? { ...cargoPkg, from: 'cargo-toml' as const } : { name: DEFAULT_ZCASH_ROOT, version: null, from: 'default' as const };
-  const { lock, resolution } = resolveZcashDependencies(files.lock, CRATES.map((c) => c.crate), root);
+  const lockText = files.lock;
+  const { lock, resolution } = resolveZcashDependencies(lockText, CRATES.map((c) => c.crate), root);
   // orchard must have been read with certainty: a version only from a table that could not be read is no reading.
   if (!resolution.candidates.orchard?.some((c) => !c.doubtful)) throw new Error(`orchard not found in ${BRAVE_LOCKFILE} at ${key} (parser or layout changed?${resolution.lockProblems?.length ? ` ${resolution.lockProblems.slice(0, 2).join('; ')}` : ''})`);
+  // Every package name in the lockfile, so a package that is not there at all can be told apart
+  // from one that was not inspected. Recorded only when the whole lockfile was read and names no
+  // package it does not contain.
+  const scan = scanCargoLock(lockText);
+  const lockPackages = packageNamesOf(scan);
+  // A monitored crate the lockfile names (anywhere, in any spelling) of which no version could be
+  // read, while its absence is not established (part of the lockfile unread, or a dependency entry
+  // naming it matched no package): a snapshot without it would look as if Brave did not link it
+  // (no candidate is what "not linked" looks like to every reader), so this read is not used. The
+  // ref keeps its last snapshot (or has none), as for any failed read, and is read again next run.
+  let mentions: string | undefined;
+  const unsettled = CRATES.map((c) => c.crate).filter((crate) => {
+    const lv = linkedVersions({ lock, resolution, ...(lockPackages ? { lockPackages } : {}) }, crate);
+    return !lv.versions.length && !lv.certain && (mentions ??= mentionText(lockText)).includes(nameKey(crate));
+  });
+  if (unsettled.length) {
+    const many = unsettled.length > 1;
+    const edges = resolution.unresolvedEdges.filter((e) => unsettled.some((c) => nameKey(entryName(e.split(' -> ')[1] ?? '')) === nameKey(c)));
+    const why = resolution.lockProblems?.length ? resolution.lockProblems.slice(0, 2).join('; ') : `dependency entr${edges.length === 1 ? 'y' : 'ies'} matching no package: ${edges.slice(0, 2).join('; ')}`;
+    throw new Error(`${unsettled.join(', ')} ${many ? 'are' : 'is'} named in ${BRAVE_LOCKFILE} at ${key}, but no version of ${many ? 'them' : 'it'} could be read (${why}); whether Brave links ${many ? 'them' : 'it'} is unknown`);
+  }
   for (const [crate, cands] of Object.entries(resolution.candidates)) {
     const unsure = cands.filter((c) => c.doubtful).map((c) => c.version);
     if (unsure.length) problems.push(`${key}: ${crate} ${unsure.join(', ')} ${unsure.length > 1 ? 'were' : 'was'} found only in a part of ${BRAVE_LOCKFILE} that could not be read with certainty, so ${unsure.length > 1 ? 'they are' : 'it is'} listed as possibly linked`);
@@ -1043,13 +1121,12 @@ export function buildDepsSnapshot(
   if (resolution.method !== 'graph') problems.push(`${key}: crate "${root.name}" not found in ${BRAVE_LOCKFILE}; versions are taken from the lockfile without dependency-graph resolution`);
   else if (resolution.unresolvedEdges.length) problems.push(`${key}: ${resolution.unresolvedEdges.length} Cargo.lock dependency entr${resolution.unresolvedEdges.length === 1 ? 'y' : 'ies'} could not be matched to exactly one package (${resolution.unresolvedEdges.slice(0, 3).join('; ')}${resolution.unresolvedEdges.length > 3 ? '; …' : ''}); which versions those entries link is unknown, and crates not reached otherwise are reported from the lockfile`);
   if (files.cargo !== null && !cargoPkg) problems.push(`${key}: no [package] name in ${BRAVE_ZCASH_CARGO}; assumed "${DEFAULT_ZCASH_ROOT}"`);
-  // Every package name in the lockfile, so a package that is not there at all can be told apart
-  // from one that was not inspected. Recorded only when the whole lockfile was read.
-  const scan = scanCargoLock(files.lock);
-  const lockPackages = packageNamesOf(scan);
-  if (!lockPackages) {
+  const dangling = danglingEntries(scan);
+  if (!lockPackages && (scan.problems.length || !dangling.length)) {
     const why = scan.problems.length ? `${scan.problems.slice(0, 3).join('; ')}${scan.problems.length > 3 ? `; ${scan.problems.length - 3} more` : ''}` : 'no [[package]] table found';
     problems.push(`${key}: not every [[package]] in ${BRAVE_LOCKFILE} could be parsed (${why}), so the list of packages it contains is not recorded (whether a package is absent from it is unknown), and crate versions the dependency graph does not reach may still be linked`);
+  } else if (!lockPackages) {
+    problems.push(`${key}: ${BRAVE_LOCKFILE} has dependency entries naming packages it does not contain (${dangling.slice(0, 3).join('; ')}${dangling.length > 3 ? `; ${dangling.length - 3} more` : ''}), so it is not a complete record of its packages and the list is not recorded (whether a package is absent from it is unknown)`);
   }
 
   const rpcMethods = carry<string[] | undefined>('rpc', (t) => [...new Set([...t.matchAll(/CompactTxStreamer\/(\w+)/g)].map((m) => m[1]))].sort(), (v) => !v?.length, prev?.rpcMethods, undefined);
