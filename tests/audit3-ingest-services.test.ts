@@ -92,21 +92,22 @@ test('R3-ING-08: a statement after ";" on a compound header line belongs to the 
     'def _reexports() -> None: ...; SWAP_DISABLED_CHAINS = {Chain.ETH}',
     '',
   ].join('\n');
-  assert.deepEqual(parseGate3Switch(verifier), { zcashDisabled: null, line: 6, reason: 'SWAP_DISABLED_CHAINS is only assigned inside a block (conditional or nested definition)' });
+  // strict allowlist: reason wording (the first line not accepted is the star import on line 3).
+  assert.deepEqual(parseGate3Switch(verifier), { zcashDisabled: null, line: 3, reason: 'line 3 is not one of the statement shapes this reader accepts; only a plain constants module is read, so the value of SWAP_DISABLED_CHAINS is not determined' });
   assertGate3Unknown(await collectGate3(verifier), 'verifier module');
 
   // Neighbours that stay determinate (CPython agrees on each value): simple statements split at ';', a single
   // trailing ';' after a one-line suite and `match` as a name.
   const reads: [string, boolean | null][] = [
-    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,); X = 1\n`, false],
-    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ZCASH,);\n`, true],
-    [`${IMPORT}def f(): pass;\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n`, false],
-    [`${IMPORT}if Chain.ETH is None: raise ValueError;\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`, true],
-    [`${DEF}match = 1; X = 2\n`, false],
+    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,); X = 1\n`, null], // strict allowlist: unknown
+    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ZCASH,);\n`, null], // strict allowlist: unknown
+    [`${IMPORT}def f(): pass;\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n`, null], // strict allowlist: unknown
+    [`${IMPORT}if Chain.ETH is None: raise ValueError;\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`, null], // strict allowlist: unknown
+    [`${DEF}match = 1; X = 2\n`, null], // strict allowlist: unknown
     // R3-ING-08 (repair): a star import before the canonical definition no longer reads as determinate. The
     // definition does not certainly win: the star-imported object it replaces runs its finaliser after the store.
     [`${IMPORT}from overrides import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n`, null],
-    [`"doc"; ${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`, true],
+    [`"doc"; ${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`, null], // strict allowlist: unknown
   ];
   for (const [src, v] of reads) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
 });
@@ -135,7 +136,10 @@ test('R3-ING-08: after a star import the definition never certainly wins: annota
   for (const src of cases) {
     const r = parseGate3Switch(src);
     assert.equal(r.zcashDisabled, null, src);
-    assert.match(r.reason ?? '', /star import comes before the definition/, src);
+    // strict allowlist: reason wording (the star import on line 2 is the first line not accepted).
+    assert.ok(r.reason, `a reason is given: ${src}`);
+    assert.match(r.reason ?? '', /is not one of the statement shapes this reader accepts/, src);
+    assert.equal(r.line, 2, src);
   }
   assertGate3Unknown(await collectGate3(cases[0]), 'annotated definition after a star import');
 
@@ -146,7 +150,9 @@ test('R3-ING-08: after a star import the definition never certainly wins: annota
   // CPython 3.9, 3.11 and 3.13 all end with Chain.ZCASH in the switch.
   const quiet = `${STAR}X = evil + 1\nY: int = 2\n${SWAP}"""Notes."""\nimport os\n__all__ = ["SWAP_DISABLED_CHAINS"]\nZ = (evil, [1, "a"], {1: "b", 2: (3, -4)}, -1, None)\n`;
   assert.equal(parseGate3Switch(quiet).zcashDisabled, null);
-  assert.match(parseGate3Switch(quiet).reason ?? '', /star import comes before the definition/);
+  // strict allowlist: reason wording (the star import on line 2 is the first line not accepted).
+  assert.match(parseGate3Switch(quiet).reason ?? '', /is not one of the statement shapes this reader accepts/);
+  assert.equal(parseGate3Switch(quiet).line, 2);
 });
 
 test('R3-ING-08 (repair): a star import is never followed by a determinate value, whatever comes after it', async () => {
@@ -157,7 +163,10 @@ test('R3-ING-08 (repair): a star import is never followed by a determinate value
   for (const src of [hyphen, thenDef, `${DEF}from app.api.swap.legacy_constants import *\n`, `${IMPORT}from x import *\nSWAP_DISABLED_CHAINS = (Chain.ZCASH,)\n`]) {
     const r = parseGate3Switch(src);
     assert.equal(r.zcashDisabled, null, src);
-    assert.match(r.reason ?? '', /star import/, src);
+    // strict allowlist: reason wording (the star import line is the first line not accepted).
+    assert.ok(r.reason, `a reason is given: ${src}`);
+    assert.match(r.reason ?? '', /is not one of the statement shapes this reader accepts/, src);
+    assert.equal(r.line, src.split('\n').findIndex((l) => l.includes(' import *')) + 1, src);
   }
   assertGate3Unknown(await collectGate3(hyphen), 'star import with a hyphen in the module path');
   assertGate3Unknown(await collectGate3(thenDef), 'star import, then the canonical definition');
@@ -171,17 +180,27 @@ test('R3-ING-08 (repair): a star import is never followed by a determinate value
     `${IMPORT}${LEGACY}SWAP_DISABLED_CHAINS = (Chain.SOL,)\nDEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n`,
     `${IMPORT}${LEGACY}SWAP_DISABLED_CHAINS = (Chain.SOL,)\nfrom app.api.swap.legacy_constants import DEFAULT_SLIPPAGE_PERCENTAGE\n`,
     `${IMPORT}${LEGACY}SWAP_DISABLED_CHAINS = (Chain.SOL,)\ndef DEFAULT_SLIPPAGE_PERCENTAGE(): pass\n`,
-    `${DEF}X = 1\nX = 2\n`,
     `${IMPORT}X = (Chain.ETH,)\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\nX = 1\n`,
   ];
   for (const src of rebound) {
     const r = parseGate3Switch(src);
     assert.equal(r.zcashDisabled, null, src);
-    assert.match(r.reason ?? '', /is bound again after the definition/, src);
+    // strict allowlist: reason wording (line 2, the explicit import or the tuple-valued X, is the first line not accepted).
+    assert.ok(r.reason, `a reason is given: ${src}`);
+    assert.match(r.reason ?? '', /is not one of the statement shapes this reader accepts/, src);
+    assert.equal(r.line, 2, src);
   }
+  // strict allowlist: determinate, not unknown (the one null -> false change). This input was in `rebound` above and
+  // is unchanged. Rebinding X from the constant 1 to the constant 2 releases no object with a finaliser, so nothing
+  // can rebind the switch after its store: a plain constants module. ast.parse and compile() accept it and
+  // tests/fixtures/gate3_oracle.py answers {"zcashDisabled": false} on CPython 3.9.6, 3.11.15 and 3.13.12.
+  assert.deepEqual(parseGate3Switch(`${DEF}X = 1\nX = 2\n`), { zcashDisabled: false, line: 2, reason: null });
   assertGate3Unknown(await collectGate3(rebound[0]), 'imported name bound again after the definition');
-  for (const src of [`${IMPORT}${LEGACY}DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n`, `${IMPORT}X = 1\nX = 2\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n`]) {
-    assert.equal(parseGate3Switch(src).zcashDisabled, false, src);
+  for (const [src, v] of [
+    [`${IMPORT}${LEGACY}DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n`, null], // strict allowlist: unknown
+    [`${IMPORT}X = 1\nX = 2\nSWAP_DISABLED_CHAINS = (Chain.ETH,)\n`, false],
+  ] as [string, boolean | null][]) {
+    assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
   }
 });
 
@@ -225,16 +244,21 @@ test('R3-ING-08 (repair): characters Python does not treat as whitespace make th
       `${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)${ch}\n`,
     ];
     for (const src of forms) assert.equal(parseGate3Switch(src).zcashDisabled, null, `${label}: ${JSON.stringify(src.slice(-60))}`);
-    // In a comment or a string literal the same character is fine.
-    assert.equal(parseGate3Switch(`${DEF}# a${ch}b\n`).zcashDisabled, false, `${label} in a comment`);
-    assert.equal(parseGate3Switch(`${DEF}X = "a${ch}b"\n`).zcashDisabled, false, `${label} in a string`);
+    // In a comment or a string literal the same character is fine for Python.
+    assert.equal(parseGate3Switch(`${DEF}# a${ch}b\n`).zcashDisabled, null, `${label} in a comment`); // strict allowlist: unknown (non-ASCII anywhere; all 12 characters)
+    assert.equal(parseGate3Switch(`${DEF}X = "a${ch}b"\n`).zcashDisabled, null, `${label} in a string`); // strict allowlist: unknown (non-ASCII anywhere; all 12 characters)
   }
   // The verifier's module: the live file with one blank line holding only a no-break space, Zcash re-enabled.
   const nbsp = REAL_ETH.replace('DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n', 'DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n\u00A0\n');
   assertGate3Unknown(await collectGate3(nbsp), 'no-break space on a blank line');
   // Python's own whitespace stays whitespace: a form feed on a blank line, trailing tabs, CRLF and CR line ends.
-  for (const src of [`${DEF}\f\nX = 1\n`, `${DEF}X = 1\t\n`, `${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)\r\nX = 1\r\n`, `${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)\rX = 1\r`]) {
-    assert.equal(parseGate3Switch(src).zcashDisabled, false, JSON.stringify(src));
+  for (const [src, v] of [
+    [`${DEF}\f\nX = 1\n`, null], // strict allowlist: unknown (a form feed is outside printable ASCII)
+    [`${DEF}X = 1\t\n`, false],
+    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)\r\nX = 1\r\n`, false],
+    [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)\rX = 1\r`, false],
+  ] as [string, boolean | null][]) {
+    assert.equal(parseGate3Switch(src).zcashDisabled, v, JSON.stringify(src));
   }
 });
 
@@ -256,7 +280,7 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
   }
   // Accepted by every CPython: ascii with ASCII-only bytes, a byte order mark alone or with utf-8 / UTF_8.
   for (const src of [`# -*- coding: ascii -*-\n${DEF}`, `# coding: utf8\n${DEF}`, `${BOM}${DEF}`, `${BOM}# coding: utf-8\n${DEF}`, `${BOM}# coding: UTF_8\n${DEF}`]) {
-    assert.equal(parseGate3Switch(src).zcashDisabled, false, JSON.stringify(src.slice(0, 40)));
+    assert.equal(parseGate3Switch(src).zcashDisabled, null, JSON.stringify(src.slice(0, 40))); // strict allowlist: unknown (coding declaration or byte order mark; all 5 inputs)
   }
 
   // Through the collector, from the file's bytes: the verifier's ascii module, and a byte order mark the decoder must
@@ -264,14 +288,25 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
   assertGate3Unknown(await collectGate3(utf8(refused[0])), 'ascii coding with an em dash in a comment');
   const bomAscii = await collectGate3(utf8(`${BOM}# coding: ascii\n${REAL_ETH}`));
   assertGate3Unknown(bomAscii, 'byte order mark with an ascii coding declaration');
-  assert.match(bomAscii.data.gate3?.reason ?? '', /byte order mark/);
-  // The live file, with or without a byte order mark, still reads as Zcash disabled at line 18.
-  for (const body of [REAL_GATE3, `${BOM}${REAL_GATE3}`]) {
+  // strict allowlist: reason wording (the byte order mark is a character outside printable ASCII, on line 1).
+  assert.match(bomAscii.data.gate3?.reason ?? '', /character outside printable ASCII/);
+  assert.equal(bomAscii.data.gate3?.line, 1);
+  // The live file still reads as Zcash disabled at line 18.
+  for (const body of [REAL_GATE3]) {
     const r = await collectGate3(utf8(body));
     assert.equal(r.data.gate3?.zcashDisabled, true);
     assert.equal(r.data.gate3?.line, 18);
     assert.equal(r.data.gate3?.reason, undefined);
     assert.equal(r.limitations?.some((l) => /^gate3 at /.test(l)), false);
+  }
+  // strict allowlist: unknown. The live file with a byte order mark prepended (not the file as served) was read as
+  // disabled at line 18; the mark is outside printable ASCII, so it is unknown at line 1, with a reason and a
+  // limitation, and the last determined value is kept.
+  for (const body of [`${BOM}${REAL_GATE3}`]) {
+    const r = await collectGate3(utf8(body));
+    assertGate3Unknown(r, 'the live file with a byte order mark');
+    assert.equal(r.data.gate3?.line, 1);
+    assert.ok(r.data.gate3?.reason);
   }
 });
 
@@ -309,15 +344,15 @@ test('R3-ING-08 (repair): forms that compile on some Python versions only are un
 
   // Long but flat forms compile on every version and stay determinate: comparison chains, implicit string
   // concatenation, long displays, a long literal set of members, continuations inside a statement or brackets.
-  const flat: [string, boolean][] = [
-    [`${DEF}X = 1${' < 1'.repeat(10000)}\n`, false],
-    [`${DEF}X = ${'"a" '.repeat(10000)}\n`, false],
-    [`${DEF}X = (${'1, '.repeat(10000)})\n`, false],
+  const flat: [string, boolean | null][] = [
+    [`${DEF}X = 1${' < 1'.repeat(10000)}\n`, null], // strict allowlist: unknown
+    [`${DEF}X = ${'"a" '.repeat(10000)}\n`, null], // strict allowlist: unknown
+    [`${DEF}X = (${'1, '.repeat(10000)})\n`, null], // strict allowlist: unknown
     [`${IMPORT}SWAP_DISABLED_CHAINS = (${'Chain.ETH, '.repeat(10000)}Chain.ZCASH)\n`, true],
-    [`${DEF}X = ${'9'.repeat(999)}\n`, false],
-    [`${DEF}X = Chain${'.ETH'.repeat(50)}\n`, false],
-    [`${DEF}X = 1 + \\\n    2\n`, false],
-    [`${DEF}X = (1,\n \\\n 2)\n`, false],
+    [`${DEF}X = ${'9'.repeat(999)}\n`, null], // strict allowlist: unknown
+    [`${DEF}X = Chain${'.ETH'.repeat(50)}\n`, null], // strict allowlist: unknown
+    [`${DEF}X = 1 + \\\n    2\n`, null], // strict allowlist: unknown
+    [`${DEF}X = (1,\n \\\n 2)\n`, null], // strict allowlist: unknown
   ];
   for (const [src, v] of flat) assert.equal(parseGate3Switch(src).zcashDisabled, v, JSON.stringify(src.slice(-80)));
 });
@@ -331,15 +366,15 @@ test('R3-ING-08 (repair): the switch must be a collection: parentheses without a
     assert.ok(r.reason, value);
   }
   assertGate3Unknown(await collectGate3(`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH)\n`), 'a parenthesised member, not a tuple');
-  const collections: [string, boolean][] = [
-    ['((Chain.ZCASH,))', true],
-    ['frozenset(((Chain.ZCASH,)))', true],
-    ['Chain.ZCASH,', true],
+  const collections: [string, boolean | null][] = [
+    ['((Chain.ZCASH,))', null], // strict allowlist: unknown
+    ['frozenset(((Chain.ZCASH,)))', null], // strict allowlist: unknown
+    ['Chain.ZCASH,', null], // strict allowlist: unknown
     ['[Chain.ZCASH]', true],
     ['{Chain.ZCASH}', true],
     ['(Chain.ETH,)', false],
     ['()', false],
-    ['{}', false],
+    ['{}', null], // strict allowlist: unknown
     ['frozenset()', false],
   ];
   for (const [value, v] of collections) assert.equal(parseGate3Switch(`${IMPORT}SWAP_DISABLED_CHAINS = ${value}\n`).zcashDisabled, v, value);
@@ -489,9 +524,9 @@ test('R3-ING-08: modules CPython refuses to compile are unknown, never a determi
     'X: "Chain" = Chain.ETH',
     'if Chain.ETH is None: raise ValueError;',
   ];
-  for (const snippet of valid) assert.equal(parseGate3Switch(`${DEF}${snippet}\n`).zcashDisabled, false, snippet);
+  for (const snippet of valid) assert.equal(parseGate3Switch(`${DEF}${snippet}\n`).zcashDisabled, null, snippet); // strict allowlist: unknown (all 32 snippets)
   for (const prologue of ['"""Swap constants."""\nfrom __future__ import annotations\n', "'doc'; from __future__ import annotations\n", 'from __future__ import (annotations,)\nfrom __future__ import division\n']) {
-    assert.equal(parseGate3Switch(`${prologue}${DEF}`).zcashDisabled, false, prologue);
+    assert.equal(parseGate3Switch(`${prologue}${DEF}`).zcashDisabled, null, prologue); // strict allowlist: unknown (all 3 prologues)
   }
 });
 
