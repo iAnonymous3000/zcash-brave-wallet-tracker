@@ -2,7 +2,7 @@
 // adds relative times, staleness checks computed at view time, selectors and filters.
 // It never inserts fetched text as HTML (no innerHTML). Pure logic lives in ./logic.ts.
 
-import { createIndexLoader, filterForTarget, hashId, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, tokens, type SearchEntry } from './logic.ts';
+import { createIndexLoader, filterForTarget, freshCountsTitle, freshShortText, hashId, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector(sel) as T | null;
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => Array.from(root.querySelectorAll(sel)) as T[];
@@ -47,6 +47,7 @@ function freshness(): void {
   const staleAfter = Number(el.dataset.staleAfter ?? '360');
   const failing = Number(el.dataset.failing ?? '0');
   const a = ago(gen);
+  const now = Date.now();
   if (failing > 0) el.classList.add('has-failing');
   if (!Number.isFinite(a.minutes) || a.minutes > staleAfter) {
     el.classList.add('is-stale');
@@ -57,20 +58,35 @@ function freshness(): void {
       banner.hidden = false;
     }
   }
+  // Sources whose kept data is stale: the same rule as the header rendered at build time (staleSources),
+  // re-checked with this clock, so the pill, the banner and the Sources page agree.
+  const watched = $$('.stale-sources li');
+  if (watched.length || el.dataset.stale !== undefined) {
+    let stale = 0;
+    for (const li of watched) {
+      const on = keptDataStale({ staleSince: li.dataset.staleSince ?? '' }, now, staleAfter);
+      li.hidden = !on;
+      if (on) stale += 1;
+    }
+    if (!watched.length) stale = Number(el.dataset.stale ?? '0') || 0;
+    el.dataset.stale = String(stale);
+    el.classList.toggle('has-stale', stale > 0);
+    const count = $('.fresh-stale', el);
+    if (count) count.textContent = staleCountText(stale);
+    // The visible short counts and the title follow the re-checked count too (same helpers as the build).
+    const short = $('.fresh-short', el);
+    if (short) short.textContent = freshShortText(failing, stale);
+    el.title = freshCountsTitle(failing, stale);
+    const banner = $('.source-stale-banner');
+    if (banner) banner.hidden = stale === 0;
+  }
   // Per-source ages on the Sources page.
   for (const row of $$('.src')) {
-    const last = row.dataset.lastSuccess;
     const age = $('.src-age', row);
     if (!age) continue;
-    if (!last) {
-      age.textContent = 'never succeeded';
-      row.classList.add('is-stale');
-      continue;
-    }
-    const r = ago(last);
-    const stale = r.minutes > staleAfter;
-    age.textContent = stale ? `stale: last success ${r.text}` : `data age ${r.text}`;
-    if (stale) row.classList.add('is-stale');
+    const r = sourceAgeLine({ lastOutcome: row.dataset.outcome ?? null, lastSuccessAt: row.dataset.lastSuccess || null, lastCompleteAt: age.dataset.lastComplete === undefined ? undefined : age.dataset.lastComplete || null, staleSince: age.dataset.staleSince || null }, now, staleAfter);
+    age.textContent = r.text;
+    row.classList.toggle('is-stale', r.stale);
   }
 }
 
@@ -327,7 +343,7 @@ function newSinceLastVisit(): void {
     return; // storage unavailable: show no markers rather than guess
   }
   if (!prev) return; // first visit: nothing is "new" yet
-  if (fresh.classList.contains('is-stale') || fresh.classList.contains('has-failing')) return;
+  if (fresh.classList.contains('is-stale') || fresh.classList.contains('has-failing') || fresh.classList.contains('has-stale')) return;
   const fresh_ = $$('[data-detected]').filter((el) => (el.dataset.detected ?? '') > prev);
   for (const el of fresh_) {
     el.classList.add('is-new');

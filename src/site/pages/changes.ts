@@ -1,7 +1,8 @@
 import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent } from '../../lib/types.ts';
-import { ext, html, itemHref, time } from '../components.ts';
+import { ext, featureHref, glyph, html, itemHref, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
+import { eventView, serviceSwitchStates, shownCapabilities, type EventView } from '../view.ts';
 
 export const KIND_LABEL: Record<string, string> = {
   'item-tracked': 'New issue',
@@ -48,23 +49,62 @@ export function eventGroup(e: ChangeEvent, d: SiteData) {
   return e.itemIds.map((id) => d.groups.find((g) => g.lead === id || g.members.masterPrs.includes(id) || g.members.uplifts.includes(id) || g.members.duplicates.includes(id))).find(Boolean) ?? null;
 }
 
+/**
+ * Marker for an event whose text was produced by older derivation rules and was not regenerated (R-SITE-OUTDATED).
+ * derive's mergeHistory marks such an event on a rules rebuild in two cases: its item or source was not completely
+ * read in that refresh, or it records something observed at the time that the current rules no longer generate.
+ */
+export const OUTDATED_HELP = 'The tracker’s rules changed after this was recorded, and the current rules did not regenerate this entry: either its item or source was not completely read in a later refresh, or it records something observed at the time that the current rules no longer generate. Its wording may not match the rest of the site; it is replaced if the entry is regenerated later.';
+export function outdatedMarker(e: Pick<ChangeEvent, 'rulesOutdated'>): SafeHtml | '' {
+  return e.rulesOutdated ? html`<span class="ev-outdated" title="${OUTDATED_HELP}">Text from an older rule version</span>` : '';
+}
+
+/**
+ * Note for a capability change whose new state is not what the site shows now (see eventView): the shown cell status
+ * as a badge, the gate3 switch state as shown on the Upstream page, or why the entry could not be compared.
+ */
+export function nowShownNote(v: EventView): SafeHtml | '' {
+  const n = v.nowShown;
+  if (!n) return '';
+  if (n.kind === 'cell') return html`<p class="ev-now">Shown now: ${statusBadge(n.status, n.label)} <a href="${n.href}">${n.linkText}</a></p>`;
+  if (n.kind === 'switch') return html`<p class="ev-now">Shown now: ${glyph(n.status)}<span>${n.text}</span> <a href="${n.href}">${n.linkText}</a></p>`;
+  return html`<p class="ev-now">Shown now: unknown. ${glyph(n.status)}<span>${n.text}</span> <a href="${n.href}">${n.linkText}</a></p>`;
+}
+
+/** The event's title, evidence and "shown now" note against the capability cells and switches as every page presents them. */
+export function presentEvent(e: ChangeEvent, d: SiteData): EventView {
+  if (e.kind !== 'capability-changed') return eventView(e, [], featureHref);
+  return eventView(e, shownCapabilities(d), featureHref, { switches: serviceSwitchStates(d), switchHref: `${u('upstream/')}#ready-h`, featuresHref: u('features/') });
+}
+
+/**
+ * What the Activity text filter searches: the title as shown (with the site's status labels), the title as recorded
+ * in data/events.json (raw status ids such as "service-off", when they differ) and the impact line.
+ */
+export function eventFilterText(e: ChangeEvent, v: Pick<EventView, 'title'>): string {
+  return [v.title, ...(e.title !== v.title ? [e.title] : []), e.impact].join(' ').toLowerCase();
+}
+
 export function eventCard(e: ChangeEvent, d: SiteData): SafeHtml {
   const group = eventGroup(e, d);
   const at = e.sourceAt ?? e.detectedAt;
-  return html`<li class="ev hl-${e.highlight ?? 'none'}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${`${e.title} ${e.impact}`.toLowerCase()}">
+  const v = presentEvent(e, d);
+  return html`<li class="ev hl-${e.highlight ?? 'none'}${e.rulesOutdated ? ' is-outdated' : ''}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${eventFilterText(e, v)}">
     <div class="ev-when">${e.sourceAt ? time(e.sourceAt, { withTime: true }) : html`detected ${time(e.detectedAt, { withTime: true })}`}</div>
     <div class="ev-body">
       <div class="ev-meta">
         <span class="ev-kind">${KIND_LABEL[e.kind] ?? e.kind}</span>
         ${e.highlight ? html`<span class="ev-hl">${HIGHLIGHT_LABEL[e.highlight]}</span>` : ''}
+        ${outdatedMarker(e)}
         <span class="new-tag" hidden>New</span>
       </div>
-      <h3 class="ev-title">${group ? html`<a href="${itemHref(group.id)}">${e.title}</a>` : e.links[0] ? ext(e.links[0].url, e.title) : e.title}</h3>
+      <h3 class="ev-title">${group ? html`<a href="${itemHref(group.id)}">${v.title}</a>` : e.links[0] ? ext(e.links[0].url, v.title) : v.title}</h3>
+      ${nowShownNote(v)}
       <p class="ev-impact">${e.impact}</p>
       <div class="ev-foot">
         ${e.links.map((l) => html`${ext(l.url, l.label, 'ref')} `)}
         <details class="ev-evidence"><summary>Evidence</summary>
-          <ul>${e.evidence.map((x) => html`<li>${x}</li>`)}</ul>
+          <ul>${v.evidence.map((x) => html`<li>${x}</li>`)}</ul>
           <p class="muted">Source time: ${e.sourceAt ? time(e.sourceAt, { withTime: true }) : 'none (detected by comparing refreshes)'} · Detected: ${time(e.detectedAt, { withTime: true })} · ${e.basis === 'backfill' ? 'Backfilled from source history' : 'Observed between refreshes'}</p>
         </details>
       </div>
