@@ -1127,13 +1127,19 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
   const events = JSON.parse(readFileSync(join(data, 'history', 'events.json'), 'utf8'));
   const synthetic = rows.map((r, i) => ({ id: `r3scan${i}`, kind: 'capability-changed', sourceAt: null, detectedAt: site.generatedAt, basis: 'observed', title: `${r.name} on Android Release: absent → available`, impact: 'The evidence for this capability changed.', highlight: 'release', itemIds: [], topic: null, platforms: ['android'], channel: 'release', links: [], evidence: ['absent → available'] }));
   writeFileSync(join(data, 'history', 'events.json'), JSON.stringify([...synthetic, ...events]));
+  // Site data derived before R-STAGE: a merged group whose stored label states absence while its builds are unknown.
+  const copy = JSON.parse(readFileSync(join(data, 'derived', 'site.json'), 'utf8')) as SiteData;
+  const g = copy.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged')!;
+  Object.assign(g.status, { stage: 'merged', stageLabel: STAGE_LABEL.merged, releaseNotes: [], builds: g.status.builds.map((x) => ({ ...x, included: null })) });
+  writeFileSync(join(data, 'derived', 'site.json'), JSON.stringify(copy));
   const before = process.env.TRACKER_DATA_DIR;
   process.env.TRACKER_DATA_DIR = data;
   try {
     const out = join(root, 'out');
     await buildSite({ outDir: out, basePath: '/' });
     const walk = (dir: string): string[] => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
-    const absentOk = new Set(site.groups.filter((g) => g.status.stage === 'merged' && g.status.builds.length > 0 && g.status.builds.every((x) => x.included === false)).map((g) => join(out, 'work', slug(g.id), 'index.html')));
+    const absentOk = new Set(copy.groups.filter((x) => x.status.stage === 'merged' && x.status.builds.length > 0 && x.status.builds.every((y) => y.included === false)).map((x) => join(out, 'work', slug(x.id), 'index.html')));
+    assert.match(readFileSync(join(out, 'work', slug(g.id), 'index.html'), 'utf8'), /<meta name="description" content="Merged, build presence unknown\. /);
     for (const p of walk(out).filter((x) => x.endsWith('.html'))) {
       const doc = readFileSync(p, 'utf8'); // <head> included
       assert.doesNotMatch(doc, /currently turned off|turned off server-side|has this turned off/, p);

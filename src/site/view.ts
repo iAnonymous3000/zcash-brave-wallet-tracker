@@ -680,7 +680,7 @@ export function studyView(st: Pick<Study, 'features' | 'params'> & { experiments
   const exps = st.experiments ?? [];
   if (!exps.length) {
     // Older snapshots: how clients are split between cohorts was not recorded, so nothing is claimed for every client.
-    const outcome = `${common.length ? `The study sets ${common.join(', ')}` : 'No Zcash setting is recorded for the study'} (its cohorts and their shares were not recorded).${mixedList.length ? ` Settings that differ by cohort (${mixedList.join(', ')}) cannot be attributed.` : ''}`;
+    const outcome = `${common.length ? `Recorded settings: ${common.join(', ')}` : 'No Zcash setting is recorded for the study'} (its cohorts and their shares were not recorded).${mixedList.length ? ` Settings that differ by cohort (${mixedList.join(', ')}) cannot be attributed.` : ''}`;
     return { common, mixed: mixedList, cohorts: [], notEnrolled: [], outcome, headline: outcome };
   }
   const enrolled = exps.filter((e) => e.weight > 0);

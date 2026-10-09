@@ -134,14 +134,34 @@ test('R-SITE-STUDIES: field-trial studies show each cohort with its share; a set
 // R-SITE-EVENTS
 // ---------------------------------------------------------------------------
 
+/**
+ * A derived site.json written before R-STAGE: a merged group whose stored label states absence ("Merged, not yet in a
+ * checked build") although no build check confirmed it. Made in the data copy, so the test does not depend on what the
+ * committed data happens to hold.
+ */
+async function withContradictedGroup(dir: string): Promise<SiteGroup> {
+  const { STAGE_LABEL } = await import('../src/derive/status.ts');
+  const site = readJ(dir, 'derived', 'site.json') as SiteData;
+  const g = site.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged')!;
+  assert.ok(g, 'fixture: a merged group with build checks');
+  g.status.stage = 'merged';
+  g.status.stageLabel = STAGE_LABEL.merged;
+  g.status.releaseNotes = [];
+  g.status.builds = g.status.builds.map((b) => ({ ...b, included: null }));
+  writeJ(dir, site, 'derived', 'site.json');
+  return g;
+}
+
 test('R-SITE-EVENTS: no built page, <head> (meta description) included, states absence that the build checks do not support', async () => {
   const { slug } = await import('../src/site/components.ts');
-  // Fixture sanity: the committed data has a merged group whose stored label states absence while its builds are unknown.
-  const contradicted = committed.groups.filter((g) => g.status.stage === 'merged' && /not yet in a checked build/.test(g.status.stageLabel) && !g.status.builds.every((b) => b.included === false));
-  assert.ok(contradicted.length > 0, 'fixture: a stored merged label contradicts its build checks');
-  const { out, cleanup } = await buildFrom(() => {});
+  let contradicted: SiteGroup | null = null;
+  let groups: SiteGroup[] = [];
+  const { out, cleanup } = await buildFrom(async (dir) => {
+    contradicted = await withContradictedGroup(dir);
+    groups = (readJ(dir, 'derived', 'site.json') as SiteData).groups;
+  });
   try {
-    const absentOk = new Set(committed.groups.filter((g) => g.status.stage === 'merged' && g.status.builds.length > 0 && g.status.builds.every((b) => b.included === false)).map((g) => join(out, 'work', slug(g.id), 'index.html')));
+    const absentOk = new Set(groups.filter((g) => g.status.stage === 'merged' && g.status.builds.length > 0 && g.status.builds.every((b) => b.included === false)).map((g) => join(out, 'work', slug(g.id), 'index.html')));
     for (const p of walk(out).filter((x) => x.endsWith('.html'))) {
       if (absentOk.has(p)) continue;
       const page = readFileSync(p, 'utf8'); // the whole document, <head> included
@@ -149,11 +169,11 @@ test('R-SITE-EVENTS: no built page, <head> (meta description) included, states a
         assert.match(page.slice(m.index! + 20, m.index! + 120), /only when every checked build was confirmed not to include it/, `${p}: absence wording outside its definition`);
       }
     }
-    for (const g of contradicted) {
-      const head = readFileSync(join(out, 'work', slug(g.id), 'index.html'), 'utf8').match(/<head>[\s\S]*?<\/head>/)![0];
-      const meta = head.match(/<meta name="description" content="([^"]*)">/)![1];
-      assert.match(meta, /^Merged, build presence unknown\. /, `${g.id}: the meta description matches the badge`);
-    }
+    const g = contradicted as unknown as SiteGroup;
+    const detail = readFileSync(join(out, 'work', slug(g.id), 'index.html'), 'utf8');
+    const meta = detail.match(/<head>[\s\S]*?<\/head>/)![0].match(/<meta name="description" content="([^"]*)">/)![1];
+    assert.match(meta, /^Merged, build presence unknown\. /, `${g.id}: the meta description matches the badge`);
+    assert.match(detail.slice(detail.indexOf('<body')), /Merged, build presence unknown/);
   } finally {
     cleanup();
   }
@@ -164,10 +184,14 @@ test('R-SITE-EVENTS: a capability change whose new status is not the status show
   const bridge = committed.capabilities.find((r) => r.id === 'bridge')!;
   const shownBridge = presentCapabilities(committed).find((r) => r.id === 'bridge')!;
   const androidRelease = shownBridge.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
-  assert.equal(androidRelease.status, 'service-off', 'fixture: the committed Bridge cell is off server-side');
+  // The verifier's case is "service-off → available" while the cell is not usable; whatever the committed cell shows,
+  // one event ends in a status other than the shown one and one ends in the shown status.
+  const shownNow = androidRelease.status;
+  const other = ['available', 'service-off'].find((s) => s !== shownNow)!;
+  const from = ['service-off', 'absent'].find((s) => s !== other)!;
   const ev = (id: string, title: string, over: Partial<ChangeEvent> = {}): ChangeEvent => ({ id, kind: 'capability-changed', sourceAt: null, detectedAt: GEN, basis: 'observed', title, impact: 'The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.', highlight: null, itemIds: [], topic: null, platforms: ['android'], channel: 'release', links: [], evidence: [title.split(': ').pop()!], ...over });
-  const stale = ev('audit3cap1', `${bridge.name} on Android Release: service-off → available`);
-  const current = ev('audit3cap2', `${bridge.name} on Android Release: available → service-off`, { detectedAt: hoursBefore(1) });
+  const stale = ev('audit3cap1', `${bridge.name} on Android Release: ${from} → ${other}`);
+  const current = ev('audit3cap2', `${bridge.name} on Android Release: ${other} → ${shownNow}`, { detectedAt: hoursBefore(1) });
   const { out, cleanup } = await buildFrom((dir) => {
     const events = readJ(dir, 'history', 'events.json') as ChangeEvent[];
     writeJ(dir, [stale, current, ...events], 'history', 'events.json');
@@ -197,7 +221,9 @@ test('R-SITE-EVENTS: a capability change whose new status is not the status show
     }
     assert.ok(checked >= 3, `capability changes rendered on both surfaces (${checked})`);
     const feed = readFileSync(join(out, 'changes/index.html'), 'utf8');
-    assert.match(text(feed), /on Android Release: Off server-side → Available Shown now: Off server-side/, 'titles use the site’s status labels');
+    const label = (s: string) => statusLabel(s, 'release');
+    assert.ok(text(feed).includes(`on Android Release: ${label(from)} → ${label(other)} Shown now: ${label(shownNow)}`), 'titles use the site’s status labels and name the shown status');
+    assert.ok(text(feed).includes(`on Android Release: ${label(other)} → ${label(shownNow)} The evidence`), 'a change that matches the shown cell has no note');
   } finally {
     cleanup();
   }
@@ -298,6 +324,52 @@ test('R3-SITE-STALE-HEADER: the freshness pill counts stale sources and a banner
   assert.equal(keptDataStale(soon, Date.parse(GEN), 360), false);
   assert.equal(keptDataStale(soon, Date.parse(GEN) + 2 * 3_600_000, 360), true, 'the client sees it turn stale later');
   assert.equal(keptDataStale({ staleSince: 'not a time' }, Date.parse(GEN), 360), true, 'an unreadable staleSince is not fresh');
+});
+
+test('R3-SITE-STALE-HEADER: the literal trigger end to end: a lasting master outage through runRefresh, status.json and buildSite', async () => {
+  // The round-2 verifier's case: brave-core master unreadable for 14 h while the flags source keeps storing data.
+  const root = mkdtempSync(join(tmpdir(), 'zbt-audit3-e2e-'));
+  const before = process.env.TRACKER_DATA_DIR;
+  process.env.TRACKER_DATA_DIR = join(root, 'data');
+  const { setBase } = await import('../src/site/components.ts');
+  try {
+    const run = await import('../src/ingest/run.ts');
+    const { flags } = await import('../src/ingest/sources/flags.ts');
+    const sha = 'a'.repeat(40);
+    const featuresSrc = readFileSync(join(ROOT, 'tests/fixtures/features.v1.97.56.cc'), 'utf8');
+    let masterOk = true;
+    const fetchImpl = (async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.startsWith('https://api.github.com/repos/brave/brave-core/commits/master')) return masterOk ? new Response(sha) : new Response('{"message":"Server Error"}', { status: 404 });
+      if (url === `https://raw.githubusercontent.com/brave/brave-core/${sha}/components/brave_wallet/common/features.cc`) return new Response(featuresSrc);
+      return new Response('not found', { status: 404 });
+    }) as typeof fetch;
+    const base = { trigger: 'test', token: null, log: () => {}, fetchImpl, sleep: async () => {}, collectors: [flags] };
+    await run.runRefresh({ ...base, now: '2026-10-08T06:00:00Z' });
+    masterOk = false;
+    for (const now of ['2026-10-08T08:00:00Z', '2026-10-08T10:00:00Z', '2026-10-08T12:00:00Z', '2026-10-08T14:00:00Z', '2026-10-08T20:00:00Z']) await run.runRefresh({ ...base, now });
+    const st = readJ(join(root, 'data'), 'status.json').sources['brave-flags'];
+    assert.deepEqual([st.lastOutcome, st.staleSince, st.lastSuccessAt], ['partial', '2026-10-08T06:00:00Z', '2026-10-08T12:00:00Z'], 'fixture: a stale-only outage (never "failed")');
+    const { buildSite } = await import('../src/site/build.ts');
+    await buildSite({ outDir: join(root, 'out'), basePath: '/' });
+    const home = readFileSync(join(root, 'out', 'index.html'), 'utf8');
+    const pill = home.match(/<a class="fresh[^"]*"[^>]*>[\s\S]*?<\/a>/)![0];
+    assert.match(pill, /data-failing="0"/);
+    assert.match(pill, /data-stale="1"/);
+    assert.match(text(pill), /· 1 source stale$/);
+    const banner = home.match(/<div class="wrap source-stale-banner"[^>]*>[\s\S]*?<\/div><\/div>/)![0];
+    assert.doesNotMatch(banner.slice(0, banner.indexOf('>')), /hidden/);
+    assert.match(text(banner), /Zcash feature flags in brave-core[^:]*: kept data not refreshed since 2026-10-08 06:00 UTC/);
+    const sources = readFileSync(join(root, 'out', 'sources', 'index.html'), 'utf8');
+    const row = sources.split('<tr class="src"').slice(1).find((r) => r.includes('Zcash feature flags in brave-core'))!.split('</tr>')[0];
+    assert.match(row, /<span class="src-flag">Stale<\/span>/);
+    assert.match(row, /data-stale-since="2026-10-08T06:00:00Z"/, 'the client re-checks the same time');
+  } finally {
+    if (before === undefined) delete process.env.TRACKER_DATA_DIR;
+    else process.env.TRACKER_DATA_DIR = before;
+    setBase('/');
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 // ---------------------------------------------------------------------------
