@@ -1,0 +1,375 @@
+{
+ "description": "Inputs on which parseGate3Switch (src/ingest/sources/services.ts) breaks the oracle invariant: the oracle (tests/fixtures/gate3_oracle.py) says unknown and the hand reader gives a determinate answer. These are findings that this branch reports but may not fix (services.ts is out of its scope). Matched by exact src, hand verdict, kind and labels; only kinds 1-4 may be listed and oracle must be null, so an opposite value, a determinate answer on a module Python rejects or a missed rebinding can never be listed. When services.ts is fixed the oracle test reports the entry as stale: delete it. Same on Python 3.9, 3.11 and 3.13.",
+ "findings": [
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, (Chain.ETH,))"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, (Chain.ETH,))\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, *OTHER)"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, *OTHER)\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, 1)"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, 1)\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, Chain.ETH.value)"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, Chain.ETH.value)\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, None)"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, None)\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = (Chain.ZCASH, OTHER)"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ZCASH, OTHER)\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = *OTHER, Chain.ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = *OTHER, Chain.ZCASH\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = Chain.ETH in X, Chain.ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = Chain.ETH in X, Chain.ZCASH\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = Chain.ZCASH, *OTHER"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = Chain.ZCASH, *OTHER\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = [Chain.ZCASH, *OTHER]"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = [Chain.ZCASH, *OTHER]\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = [Chain.ZCASH, ...]"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = [Chain.ZCASH, ...]\n"
+  },
+  {
+   "kind": "kind 1: hand reader determinate on a collection with an element that is not a Chain.X read",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = {Chain.ZCASH, *()}"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = {Chain.ZCASH, *()}\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = list(())"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = list(())\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = list([Chain.ETH])"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = list([Chain.ETH])\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = set()"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = set()\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = set([Chain.ZCASH])"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = set([Chain.ZCASH])\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = set({})"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = set({})\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = tuple((Chain.ZCASH,))"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = tuple((Chain.ZCASH,))\n"
+  },
+  {
+   "kind": "kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = tuple({})"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = tuple({})\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): empty frozenset() + $S: \"frozenset[Chain]\""
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = frozenset()\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): empty frozenset() + $S: frozenset[Chain]"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = frozenset()\nSWAP_DISABLED_CHAINS: frozenset[Chain]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): list with ZCASH + $S: \"frozenset[Chain]\""
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = [Chain.SOL, Chain.ZCASH]\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): list with ZCASH + $S: frozenset[Chain]"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = [Chain.SOL, Chain.ZCASH]\nSWAP_DISABLED_CHAINS: frozenset[Chain]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): real gate3 file (annotated frozenset, ZCASH in) + $S: \"frozenset[Chain]\""
+   ],
+   "src": "from app.api.common.models import Chain\n\n# Default slippage percentage for providers that do not support automatic\n# slippage computation\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\n\n# Chains temporarily excluded from swap/bridge routing entirely.\n#\n# Zcash is disabled because Brave Wallet currently sends a shielded-only\n# unified address (u1...) as the swap recipient. Bridge providers honour\n# whatever recipient they are given, so the payout lands in a shielded pool the\n# wallet cannot scan: the funds arrive, but are invisible to the user.\n#\n# Re-enable by removing Chain.ZCASH here, once brave-core ships (and uplifts)\n# the fix that sends a transparent recipient. Pair that with a\n# recipient/refund_to validation guard that rejects shielded addresses, so\n# shielded support doesn't come back accidentally before Ironwood ships.\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): real gate3 file (annotated frozenset, ZCASH in) + $S: frozenset[Chain]"
+   ],
+   "src": "from app.api.common.models import Chain\n\n# Default slippage percentage for providers that do not support automatic\n# slippage computation\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\n\n# Chains temporarily excluded from swap/bridge routing entirely.\n#\n# Zcash is disabled because Brave Wallet currently sends a shielded-only\n# unified address (u1...) as the swap recipient. Bridge providers honour\n# whatever recipient they are given, so the payout lands in a shielded pool the\n# wallet cannot scan: the funds arrive, but are invisible to the user.\n#\n# Re-enable by removing Chain.ZCASH here, once brave-core ships (and uplifts)\n# the fix that sends a transparent recipient. Pair that with a\n# recipient/refund_to validation guard that rejects shielded addresses, so\n# shielded support doesn't come back accidentally before Ironwood ships.\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\nSWAP_DISABLED_CHAINS: frozenset[Chain]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): tuple without ZCASH + $S: \"frozenset[Chain]\""
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH, Chain.SOL)\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (after the definition): tuple without ZCASH + $S: frozenset[Chain]"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = (Chain.ETH, Chain.SOL)\nSWAP_DISABLED_CHAINS: frozenset[Chain]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: \"frozenset[Chain]\" + empty frozenset()"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\nSWAP_DISABLED_CHAINS = frozenset()\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: \"frozenset[Chain]\" + list with ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\nSWAP_DISABLED_CHAINS = [Chain.SOL, Chain.ZCASH]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: \"frozenset[Chain]\" + real gate3 file (annotated frozenset, ZCASH in)"
+   ],
+   "src": "from app.api.common.models import Chain\n\n# Default slippage percentage for providers that do not support automatic\n# slippage computation\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\n\n# Chains temporarily excluded from swap/bridge routing entirely.\n#\n# Zcash is disabled because Brave Wallet currently sends a shielded-only\n# unified address (u1...) as the swap recipient. Bridge providers honour\n# whatever recipient they are given, so the payout lands in a shielded pool the\n# wallet cannot scan: the funds arrive, but are invisible to the user.\n#\n# Re-enable by removing Chain.ZCASH here, once brave-core ships (and uplifts)\n# the fix that sends a transparent recipient. Pair that with a\n# recipient/refund_to validation guard that rejects shielded addresses, so\n# shielded support doesn't come back accidentally before Ironwood ships.\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: \"frozenset[Chain]\" + tuple without ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: \"frozenset[Chain]\"\nSWAP_DISABLED_CHAINS = (Chain.ETH, Chain.SOL)\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: frozenset[Chain] + empty frozenset()"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset()\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: frozenset[Chain] + list with ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = [Chain.SOL, Chain.ZCASH]\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: frozenset[Chain] + real gate3 file (annotated frozenset, ZCASH in)"
+   ],
+   "src": "from app.api.common.models import Chain\n\n# Default slippage percentage for providers that do not support automatic\n# slippage computation\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\n\n# Chains temporarily excluded from swap/bridge routing entirely.\n#\n# Zcash is disabled because Brave Wallet currently sends a shielded-only\n# unified address (u1...) as the swap recipient. Bridge providers honour\n# whatever recipient they are given, so the payout lands in a shielded pool the\n# wallet cannot scan: the funds arrive, but are invisible to the user.\n#\n# Re-enable by removing Chain.ZCASH here, once brave-core ships (and uplifts)\n# the fix that sends a transparent recipient. Pair that with a\n# recipient/refund_to validation guard that rejects shielded addresses, so\n# shielded support doesn't come back accidentally before Ironwood ships.\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ZCASH})\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "rebinding forms (before the definition): $S: frozenset[Chain] + tuple without ZCASH"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = (Chain.ETH, Chain.SOL)\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "test-inputs.json #100"
+   ],
+   "src": "\"\"\"Swap constants.\"\"\"\nfrom __future__ import annotations\n\nimport enum\nfrom app.api.common.models import (\n    Chain,\n    Provider as P,\n)\n\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\nMAX_RETRIES: int = 3\nTIMEOUT = -1.5\nFEES = {\"a\": 1, \"b\": [1, 2], \"c\": (P, None)}\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ETH, Chain.SOL})\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = tuple(SWAP_DISABLED_CHAINS)\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nNOTE = f\"literal only {{braces}}\"; pass\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": true,
+   "oracle": null,
+   "labels": [
+    "test-inputs.json #101"
+   ],
+   "src": "\"\"\"Swap constants.\"\"\"\nfrom __future__ import annotations\n\nimport enum\nfrom app.api.common.models import (\n    Chain,\n    Provider as P,\n)\n\nDEFAULT_SLIPPAGE_PERCENTAGE = \"0.5\"\nMAX_RETRIES: int = 3\nTIMEOUT = -1.5\nFEES = {\"a\": 1, \"b\": [1, 2], \"c\": (P, None)}\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({Chain.ETH, Chain.ZCASH})\nALIAS = SWAP_DISABLED_CHAINS\nCOPY = tuple(SWAP_DISABLED_CHAINS)\nSWAP_DISABLED_CHAINS: frozenset[Chain]\nNOTE = f\"literal only {{braces}}\"; pass\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "test-inputs.json #58"
+   ],
+   "src": "SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n"
+  },
+  {
+   "kind": "kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "test-inputs.json #61"
+   ],
+   "src": "SWAP_DISABLED_CHAINS = (Chain.ETH,)\nSWAP_DISABLED_CHAINS: tuple[Chain, ...]\nNOTE = f\"{{SWAP_DISABLED_CHAINS := x}} is only text\"\n"
+  },
+  {
+   "kind": "kind 4: hand reader determinate on a dict display ({} or frozenset({}) and the like)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "literal shapes of the definition: $S = frozenset({})"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = frozenset({})\n"
+  },
+  {
+   "kind": "kind 4: hand reader determinate on a dict display ({} or frozenset({}) and the like)",
+   "hand": false,
+   "oracle": null,
+   "labels": [
+    "test-inputs.json #353",
+    "literal shapes of the definition: $S = {}"
+   ],
+   "src": "from app.api.common.models import Chain\nSWAP_DISABLED_CHAINS = {}\n"
+  }
+ ]
+}

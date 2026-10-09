@@ -11,8 +11,15 @@
 // every string the other test files pass to parseGate3Switch (tests/fixtures/gate3-corpus/test-inputs.json, recorded
 // by capture-test-inputs.mjs), and the variants generated below.
 //
-// Needs python3 >= 3.9 (GATE3_ORACLE_PYTHON overrides the interpreter). Without it the tests fail when CI is set and
-// are skipped, with the reason shown, otherwise.
+// Known violations: tests/fixtures/gate3-corpus/known-violations.json lists, by exact input, the findings this
+// cross-check made in parseGate3Switch that this branch may not fix (services.ts is out of its scope). Only four kinds
+// may be listed, all "the hand reader is determinate where the oracle's grammar says unknown"; an opposite value, a
+// determinate answer on a module Python rejects, or a missed rebinding can never be listed. Any violation not listed
+// fails, and so does a listed one that no longer occurs exactly as recorded (fixed in services.ts: delete the entry).
+// The list is printed by its own test on every run.
+//
+// Needs python3 >= 3.9 (GATE3_ORACLE_PYTHON overrides the interpreter). Without it the tests fail when CI is set
+// (any value but empty, "0" or "false") and are skipped, with the reason shown, otherwise.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -29,7 +36,13 @@ interface OracleResult {
 const ORACLE = fileURLToPath(new URL('./fixtures/gate3_oracle.py', import.meta.url));
 const CORPUS = new URL('./fixtures/gate3-corpus/', import.meta.url);
 const PYTHON = process.env.GATE3_ORACLE_PYTHON || 'python3';
-const IN_CI = !!process.env.CI;
+/** Whether a CI environment variable value means "running in CI": unset, empty, "0" and "false" (any case) do not. */
+function ciIsSet(value: string | undefined): boolean {
+  if (value === undefined) return false;
+  const v = value.trim().toLowerCase();
+  return v !== '' && v !== '0' && v !== 'false';
+}
+const IN_CI = ciIsSet(process.env.CI);
 const S = 'SWAP_DISABLED_CHAINS';
 
 // ---- python3 ----------------------------------------------------------------------------------------------------
@@ -46,7 +59,7 @@ function probePython(): { ok: true; version: string } | { ok: false; why: string
 
 const PY = probePython();
 const skip: string | false =
-  PY.ok || IN_CI ? false : `SKIPPED - gate3 Python-oracle cross-check not run: ${PY.why}. Install python3 >= 3.9 (or set GATE3_ORACLE_PYTHON); when CI is set this is a failure instead of a skip.`;
+  PY.ok || IN_CI ? false : `SKIPPED - gate3 Python-oracle cross-check not run: ${PY.why}. Install python3 >= 3.9 (or set GATE3_ORACLE_PYTHON); when CI is set (to anything but empty, "0" or "false") this is a failure instead of a skip.`;
 if (skip) console.warn(`[gate3-python-oracle] ${skip}`);
 const requirePython = () => {
   if (!PY.ok) assert.fail(`gate3 Python oracle unavailable${IN_CI ? ' (CI is set, so this fails instead of skipping)' : ''}: ${PY.why}`);
@@ -102,22 +115,48 @@ interface Checked {
   hand: ReturnType<typeof parseGate3Switch>;
 }
 
+/**
+ * Kinds of violation. The first four are findings this branch reports but may not fix (services.ts is out of its
+ * scope), so they may be listed in known-violations.json; the others may never be listed.
+ */
+const KIND = {
+  element: 'kind 1: hand reader determinate on a collection with an element that is not a Chain.X read',
+  call: 'kind 2: hand reader determinate on a set()/tuple()/list() call (only frozenset(...) is in the grammar)',
+  bare: 'kind 3: hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)',
+  dict: 'kind 4: hand reader determinate on a dict display ({} or frozenset({}) and the like)',
+  opposite: 'OPPOSITE VALUE',
+  rejected: 'hand reader determinate on a module this Python rejects',
+  literal: "hand reader determinate on another value outside the oracle's literal grammar",
+  rebound: 'hand reader determinate where the oracle sees the switch rebound or changed',
+} as const;
+type Kind = (typeof KIND)[keyof typeof KIND];
+const LISTABLE: ReadonlySet<Kind> = new Set([KIND.element, KIND.call, KIND.bare, KIND.dict]);
+
 /** Triage of a violation by what the oracle saw, so a failure says at once which kind it is. */
-function violationKind(o: OracleResult): string {
+function violationKind(o: OracleResult): Kind {
   const why = o.reason ?? '';
-  if (o.zcashDisabled !== null) return 'OPPOSITE VALUE';
-  if (/does not parse or compile/.test(why)) return 'hand reader determinate on a module this Python rejects';
-  if (/not a literal/.test(why)) return "hand reader determinate on a value outside the oracle's literal grammar";
+  if (o.zcashDisabled !== null) return KIND.opposite;
+  if (/does not parse or compile/.test(why)) return KIND.rejected;
+  const literal = /is not a literal tuple\/list\/set\/frozenset\(\.\.\.\) of Chain\.X members: (.*)$/s.exec(why)?.[1];
+  if (literal !== undefined) {
+    if (/^a call to \S+\(\) \(only frozenset/.test(literal)) return KIND.call;
+    if (/^a dict display$/.test(literal)) return KIND.dict;
+    if (/^element \d+ \(\w+\) is not a Chain\.X attribute read$/.test(literal)) return KIND.element;
+    return KIND.literal;
+  }
   const extra = [...why.matchAll(/line \d+: ([^,)]+(?:\([^)]*\))?)/g)].map((m) => m[1]).filter((how) => !/^an? (annotated )?assignment$/.test(how));
-  if (extra.length && extra.every((how) => how.startsWith('a bare annotation'))) return 'hand reader determinate beside a bare annotation of the switch (a Store-context target for the oracle)';
-  return 'hand reader determinate where the oracle sees the switch rebound or changed';
+  if (/^SWAP_DISABLED_CHAINS is bound \d+ time/.test(why) && extra.length && extra.every((how) => how.startsWith('a bare annotation'))) return KIND.bare;
+  return KIND.rebound;
 }
 
-function violation(c: Checked): string | null {
+function isViolation(c: Checked): boolean {
   const o = c.oracle.zcashDisabled;
   const h = c.hand.zcashDisabled;
-  if (o === null ? h === null : h === null || h === o) return null;
-  return `[${violationKind(c.oracle)}] ${c.label}\n    input:  ${preview(c.src)}\n    hand:   ${JSON.stringify(h)} (${c.hand.reason ?? 'no reason'})\n    oracle: ${JSON.stringify(o)} (${c.oracle.reason ?? 'no reason'})`;
+  return o === null ? h !== null : h !== null && h !== o;
+}
+
+function describe(c: Checked): string {
+  return `[${violationKind(c.oracle)}] ${c.label}\n    input:  ${preview(c.src)}\n    hand:   ${JSON.stringify(c.hand.zcashDisabled)} (${c.hand.reason ?? 'no reason'})\n    oracle: ${JSON.stringify(c.oracle.zcashDisabled)} (${c.oracle.reason ?? 'no reason'})`;
 }
 
 /**
@@ -128,7 +167,7 @@ function crossCheck(cases: { src: string; label: string }[]) {
   const usable = cases.filter((c) => wellFormed(c.src));
   const results = oracleMany(usable.map((c) => c.src));
   const checked: Checked[] = usable.map((c, i) => ({ ...c, oracle: results[i], hand: parseGate3Switch(c.src) }));
-  const violations = checked.map(violation).filter((v): v is string => v !== null);
+  const violations = checked.filter(isViolation);
   const tally = (pick: (c: Checked) => Verdict) => ({
     true: checked.filter((c) => pick(c) === true).length,
     false: checked.filter((c) => pick(c) === false).length,
@@ -137,17 +176,35 @@ function crossCheck(cases: { src: string; label: string }[]) {
   return { checked, excluded: cases.length - usable.length, violations, oracle: tally((c) => c.oracle.zcashDisabled), hand: tally((c) => c.hand.zcashDisabled) };
 }
 
-function assertNoViolations(what: string, r: ReturnType<typeof crossCheck>) {
+// ---- known violations ---------------------------------------------------------------------------------------------
+
+interface KnownViolation {
+  kind: string;
+  hand: boolean;
+  oracle: null;
+  labels: string[];
+  src: string;
+}
+const KNOWN_FILE = 'tests/fixtures/gate3-corpus/known-violations.json';
+const KNOWN = (JSON.parse(readFileSync(new URL('known-violations.json', CORPUS), 'utf8')) as { findings: KnownViolation[] }).findings;
+const KNOWN_BY_SRC = new Map(KNOWN.map((k) => [k.src, k]));
+
+/** Whether a violation is listed exactly as it occurs: same input, same hand verdict, same kind, and a listable kind. */
+function listedAs(c: Checked): KnownViolation | null {
+  const k = KNOWN_BY_SRC.get(c.src);
+  return k && k.hand === c.hand.zcashDisabled && k.oracle === null && c.oracle.zcashDisabled === null && k.kind === violationKind(c.oracle) && LISTABLE.has(k.kind as Kind) ? k : null;
+}
+
+function assertOnlyKnownViolations(what: string, r: ReturnType<typeof crossCheck>) {
+  const unlisted = r.violations.filter((c) => !listedAs(c));
   const kinds = new Map<string, number>();
-  for (const v of r.violations) {
-    const kind = /^\[([^\]]+)\]/.exec(v)?.[1] ?? '?';
-    kinds.set(kind, (kinds.get(kind) ?? 0) + 1);
-  }
+  for (const c of unlisted) kinds.set(violationKind(c.oracle), (kinds.get(violationKind(c.oracle)) ?? 0) + 1);
   const summary = [...kinds].map(([kind, n]) => `  ${n} x ${kind}`).join('\n');
+  const listed = r.violations.length - unlisted.length;
   assert.equal(
-    r.violations.length,
+    unlisted.length,
     0,
-    `${r.violations.length} of ${r.checked.length} ${what} break the invariant (oracle null => hand null; oracle true/false => hand same or null):\n${summary}\n\n${r.violations.join('\n\n')}\n`,
+    `${unlisted.length} of ${r.checked.length} ${what} break the invariant (oracle null => hand null; oracle true/false => hand same or null) and are not listed, as they occur, in ${KNOWN_FILE}${listed ? ` (${listed} listed ones also occur here)` : ''}:\n${summary}\n\n${unlisted.map(describe).join('\n\n')}\n`,
   );
 }
 
@@ -247,6 +304,50 @@ const REBINDINGS: [string, Effect][] = [
   ['del $S[0]', null],
   ['$S.attr = 1', null],
   ['\uff33WAP_DISABLED_CHAINS = (Chain.ZCASH,)', null], // NFKC: a fullwidth S is the same identifier
+  ['$S: "frozenset[Chain]"', null], // a bare annotation written as a string
+  // Routes to module globals under another name: aliased, imported as another name, or looked up by a string.
+  ["from builtins import setattr as s; s(me, '$S', (Chain.ZCASH,))", null],
+  ["from builtins import exec as run; run('$S = (Chain.ZCASH,)')", null],
+  ['g = globals; g().update($S=(Chain.ZCASH,))', null],
+  ["g = globals; g()['SWAP_' + 'DISABLED_CHAINS'] = (Chain.ZCASH,)", null],
+  ["from sys import modules; modules[__name__].__setattr__('$S', (Chain.ZCASH,))", null],
+  ["type(me).__setattr__(me, '$S', (Chain.ZCASH,))", null],
+  ["getattr(builtins, 'exec')('$S = (Chain.ZCASH,)')", null],
+  ["import builtins as b; b.exec('$S = (Chain.ZCASH,)')", null],
+  ["from builtins import vars as v; v()['$S'] = (Chain.ZCASH,)", null],
+  ["from functools import partial; partial(setattr, me)('$S', (Chain.ZCASH,))", null],
+  ["from operator import methodcaller; methodcaller('update', $S=(Chain.ZCASH,))(d)", null],
+  ["import inspect; inspect.currentframe().f_globals['$S'] = (Chain.ZCASH,)", null],
+  ["f = lambda: 0; f.__globals__['$S'] = (Chain.ZCASH,)", null],
+  ["exec(compile('$S = (Chain.ZCASH,)', '', 'exec'))", null],
+  ['from importlib import import_module; import_module(__name__).__dict__.update($S=(Chain.ZCASH,))', null],
+  ['import app.api.swap.constants as me; me.__class__ = Patched', null],
+  ['import gc; [d for d in gc.get_referrers($S) if type(d) is dict][0].update($S=(Chain.ZCASH,))', null],
+  ["from gc import get_referrers as refs; refs($S)[0]['$S'] = (Chain.ZCASH,)", null],
+  ["from operator import setitem; setitem(d, '$S', (Chain.ZCASH,))", null],
+  ['import ctypes; ctypes.py_object.from_address(id($S) + 24).value = Chain.ZCASH', null],
+  ["import pickle; pickle.loads(b'')", null],
+  // The switch changed in place through an unbound method or an alias (list and set definitions are mutable).
+  ['list.append($S, Chain.ZCASH)', null],
+  ['set.add($S, Chain.ZCASH)', null],
+  ['A = $S; A.append(Chain.ZCASH)', null],
+  ['add = $S.append\nadd(Chain.ZCASH)', null],
+  ['A = [$S]\nA[0].append(Chain.ZCASH)', null],
+  ['for a in [$S]: a.append(Chain.ZCASH)', null],
+  ['A = $S\nA += [Chain.ZCASH]', null],
+  ['A = $S\nA |= {Chain.ZCASH}', null],
+  ['A = $S\nA[:] = [Chain.ZCASH]', null],
+  ['from bisect import insort; insort($S, Chain.ZCASH)', null],
+  ['import operator; operator.iadd($S, [Chain.ZCASH])', null],
+  ['list.__init__($S, [Chain.ZCASH])', null],
+  // Chain rebound: Chain.X may then not be the enum member (a local class whose ETH is the real ZCASH).
+  ['from app.api.common.models import Chain as RealChain\nclass Chain:\n    ETH = RealChain.ZCASH', null],
+  ['Chain = FakeChain', null],
+  ['import other as Chain', null],
+  ['Chain.ETH = Chain.ZCASH', null],
+  ['def f():\n    global Chain\n    Chain = FakeChain\nf()', null],
+  ['for Chain in (FakeChain,): pass', null],
+  ['del Chain', null],
 ];
 
 const NON_BINDINGS: [string, Effect][] = [
@@ -496,6 +597,19 @@ const LITERAL_SHAPES: [string, Verdict | undefined][] = [
   ['$S = [Chain.ZCASH] * 2', null],
   ['$S = (Chain.ZCASH,) if X else ()', null],
   ['$S = {Chain.ZCASH: 1}', null],
+  ['$S = frozenset({})', null],
+  ['$S = frozenset({Chain.ZCASH: 1})', null],
+  ['$S = set({})', null],
+  ['$S = tuple({})', null],
+  ['$S = list(())', null],
+  ['$S = set()', null],
+  ['$S = *OTHER, Chain.ZCASH', null],
+  ['$S = Chain.ZCASH, *OTHER', null],
+  ['$S = {Chain.ZCASH, *()}', null],
+  ['$S = [Chain.ZCASH, ...]', null],
+  ['$S = (Chain.ZCASH, None)', null],
+  ['$S = (Chain.ZCASH, (Chain.ETH,))', null],
+  ['$S = Chain.ETH in X, Chain.ZCASH', null],
   ['$S = (Chain).ZCASH,', true],
   ['$S = frozenset({Chain.ZCASH})\nfrozenset = tuple', null],
   ['$S = frozenset({Chain.ZCASH})\nfrom builtins import tuple as frozenset', null],
@@ -698,7 +812,28 @@ function mutationFuzz(): { src: string; label: string }[] {
 const GENERATED = variants();
 const ALL_GENERATED = [...GENERATED.values()].flat();
 
+/** Every corpus the invariant runs over, by name; checked once (lazily) and shared by the tests below. */
+const CORPORA = new Map<string, { src: string; label: string }[]>([
+  ['real', [{ src: REAL, label: 'real gate3 constants.py' }]],
+  ['test-inputs', TEST_INPUTS.map((src, i) => ({ src, label: `test-inputs.json #${i}` }))],
+  ...[...GENERATED].map(([cat, cases]): [string, { src: string; label: string }[]] => [cat, cases]),
+]);
+const checkedCorpora = new Map<string, ReturnType<typeof crossCheck>>();
+function checkedCorpus(name: string): ReturnType<typeof crossCheck> {
+  let r = checkedCorpora.get(name);
+  if (!r) {
+    r = crossCheck(CORPORA.get(name)!);
+    checkedCorpora.set(name, r);
+  }
+  return r;
+}
+
 // ---- tests --------------------------------------------------------------------------------------------------------
+
+test('gate3 oracle: CI counts as set unless CI is unset, empty, "0" or "false"', () => {
+  for (const v of [undefined, '', ' ', '0', 'false', 'False', 'FALSE', ' false ']) assert.equal(ciIsSet(v), false, JSON.stringify(v));
+  for (const v of ['1', 'true', 'TRUE', 'yes', 'github-actions']) assert.equal(ciIsSet(v), true, JSON.stringify(v));
+});
 
 test('gate3 oracle: python3 >= 3.9 is available', { skip }, () => {
   requirePython();
@@ -727,6 +862,24 @@ test('gate3 oracle: self-checks on fixed inputs (each unknown category, and dete
     [`${IMPORT}${S} = (Chain.ETH, OTHER)\n`, null],
     [`${IMPORT}${S} = frozenset(load())\n`, null],
     [`${IMPORT}${S} = (Chain.ETH,)\ndef f():\n    ${S} = (Chain.ZCASH,)\n`, false],
+    // Routes under other names, and changes in place through an alias (real Python ends with Zcash disabled).
+    [`${IMPORT}${S} = (Chain.ETH,)\nfrom builtins import setattr as s; s(me, '${S}', (Chain.ZCASH,))\n`, null],
+    [`${IMPORT}${S} = (Chain.ETH,)\ng = globals; g()['SWAP_' + 'DISABLED_CHAINS'] = (Chain.ZCASH,)\n`, null],
+    [`${IMPORT}${S} = (Chain.ETH,)\ntype(me).__setattr__(me, '${S}', (Chain.ZCASH,))\n`, null],
+    [`${IMPORT}${S} = [Chain.ETH]\nlist.append(${S}, Chain.ZCASH)\n`, null],
+    [`${IMPORT}${S} = [Chain.ETH]\nA = ${S}; A.append(Chain.ZCASH)\n`, null],
+    [`from app.api.common.models import Chain as RealChain\nclass Chain:\n    ETH = RealChain.ZCASH\n${S} = (Chain.ETH,)\n`, null],
+    [`${IMPORT}${S} = [Chain.ETH]\nadd = ${S}.append\nadd(Chain.ZCASH)\n`, null],
+    // Controls: an unused reflective import, a string that only spells a route, an alias that is never changed, a
+    // mutating method stored but never called, Chain bound once by a plain assignment, a bare annotation of Chain
+    // (it binds nothing), and Chain as a plain function (Chain.X raises; it cannot be another member).
+    [`${IMPORT}import inspect\n${S} = (Chain.ETH,)\n`, false],
+    [`${IMPORT}${S} = (Chain.ETH,)\nX = 'exec'\n`, false],
+    [`${IMPORT}${S} = [Chain.ETH]\nA = ${S}\n`, false],
+    [`${IMPORT}${S} = [Chain.ETH]\nX = ${S}.append\n`, false],
+    [`import app.api.common.models as models\nChain = models.Chain\n${S} = (Chain.ZCASH,)\n`, true],
+    [`${IMPORT}Chain: type\n${S} = (Chain.ZCASH,)\n`, true],
+    [`def Chain(): pass\n${S} = (Chain.ZCASH,)\n`, true],
   ];
   const got = oracleMany(fixed.map(([src]) => src));
   for (const [i, [src, want]] of fixed.entries()) assert.equal(got[i].zcashDisabled, want, `${preview(src)}: ${got[i].reason}`);
@@ -742,20 +895,20 @@ test('gate3 oracle: the single-module stdin interface agrees with --batch', { sk
 test('gate3 oracle: the real gate3 constants.py (173a2408) reads as Zcash disabled in both readers', { skip }, () => {
   requirePython();
   assert.ok(REAL.includes(`\n${REAL_DEF}\n`), 'the corpus copy still holds the recorded definition');
-  const r = crossCheck([{ src: REAL, label: 'real gate3 constants.py' }]);
+  const r = checkedCorpus('real');
   assert.equal(r.checked[0].oracle.zcashDisabled, true, `oracle: ${r.checked[0].oracle.reason}`);
   assert.equal(r.checked[0].hand.zcashDisabled, true, `hand: ${r.checked[0].hand.reason}`);
-  assertNoViolations('inputs', r);
+  assert.equal(r.violations.length, 0, 'the real file is never a listed violation');
 });
 
 test('gate3 oracle: every parseGate3Switch input from the other test files keeps the invariant', { skip }, () => {
   requirePython();
   assert.ok(TEST_INPUTS.length >= 400, `test-inputs.json holds ${TEST_INPUTS.length} inputs; regenerate it with capture-test-inputs.mjs`);
   assert.ok(TEST_INPUTS.includes(`A = ${S} = ()\n`), 'a literal input of audit-ingest-services.test.ts is in the capture');
-  const r = crossCheck(TEST_INPUTS.map((src, i) => ({ src, label: `test-inputs.json #${i}` })));
+  const r = checkedCorpus('test-inputs');
   assert.equal(r.excluded, 0, 'every captured input is well-formed text');
   assert.ok(r.oracle.true >= 20 && r.oracle.false >= 20 && r.oracle.null >= 100, `oracle verdicts are not trivial: ${JSON.stringify(r.oracle)}`);
-  assertNoViolations('inputs from the existing tests', r);
+  assertOnlyKnownViolations('inputs from the existing tests', r);
 });
 
 test('gate3 oracle: generated variants are numerous and the oracle answers them as designed', { skip }, () => {
@@ -773,6 +926,44 @@ test('gate3 oracle: generated variants are numerous and the oracle answers them 
 for (const [cat, cases] of GENERATED) {
   test(`gate3 oracle: generated variants keep the invariant - ${cat} (${cases.length})`, { skip }, () => {
     requirePython();
-    assertNoViolations(`variants (${cat})`, crossCheck(cases));
+    assertOnlyKnownViolations(`variants (${cat})`, checkedCorpus(cat));
   });
 }
+
+test(`gate3 oracle: known violations - ${KNOWN.length} findings in parseGate3Switch, each still occurring exactly as listed`, { skip }, (t) => {
+  requirePython();
+  // The list may only hold the four findings this branch cannot fix, never an opposite value or a rejected module.
+  for (const k of KNOWN) {
+    assert.equal(k.oracle, null, `a listed violation must have oracle null (an opposite value is never listable): ${preview(k.src)}`);
+    assert.ok(typeof k.hand === 'boolean', `a listed violation has a determinate hand verdict: ${preview(k.src)}`);
+    assert.ok(LISTABLE.has(k.kind as Kind), `not a listable kind: ${k.kind} (${preview(k.src)})`);
+  }
+  assert.equal(KNOWN_BY_SRC.size, KNOWN.length, `${KNOWN_FILE} lists an input twice`);
+  // Where each listed input occurs as a violation now, across every corpus.
+  const seen = new Map<string, { checked: Checked; labels: string[] }>();
+  for (const name of CORPORA.keys()) {
+    for (const c of checkedCorpus(name).violations) {
+      if (!KNOWN_BY_SRC.has(c.src)) continue;
+      const entry = seen.get(c.src) ?? { checked: c, labels: [] };
+      entry.labels.push(c.label);
+      seen.set(c.src, entry);
+    }
+  }
+  const stale: string[] = [];
+  for (const k of KNOWN) {
+    const now = seen.get(k.src);
+    const where = `\n    input:  ${preview(k.src)}\n    listed: ${k.kind}; hand ${k.hand}; ${JSON.stringify(k.labels)}`;
+    if (!now) stale.push(`no longer a violation in any corpus (fixed in services.ts, or the input left the corpus): delete it from ${KNOWN_FILE}${where}`);
+    else if (!listedAs(now.checked)) stale.push(`occurs differently now (${describe(now.checked)}): update or delete the entry${where}`);
+    else if (JSON.stringify([...now.labels].sort()) !== JSON.stringify([...k.labels].sort())) stale.push(`occurs under other labels now (${JSON.stringify(now.labels)}): update the entry's labels${where}`);
+  }
+  assert.equal(stale.length, 0, `${stale.length} of ${KNOWN.length} listed violations are stale:\n\n${stale.join('\n\n')}\n`);
+  // Shown on every run, so the findings stay visible while the suite passes.
+  const byKind = new Map<string, KnownViolation[]>();
+  for (const k of KNOWN) byKind.set(k.kind, [...(byKind.get(k.kind) ?? []), k]);
+  t.diagnostic(`${KNOWN.length} known violations of the invariant, listed in ${KNOWN_FILE} (findings in parseGate3Switch, src/ingest/sources/services.ts, not fixed on this branch):`);
+  for (const [kind, ks] of byKind) {
+    t.diagnostic(`  ${ks.length} x ${kind}`);
+    for (const k of ks) t.diagnostic(`    hand ${k.hand}, oracle null: ${preview(k.src)}`);
+  }
+});
