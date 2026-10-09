@@ -67,6 +67,9 @@ async function gate3Value(src: string) {
 }
 
 test('ING-08: gate3 tuple spanning more than six lines keeps Chain.ZCASH disabled', async () => {
+  // The title predates the strict constants-module allowlist. The multi-line tuple below has no Chain import, so the
+  // reader stops at line 1 and now answers unknown; it no longer reaches the multi-line value. The determinate case in
+  // this test is the real repository layout further down (true, line 5).
   const g = await gate3Value('SWAP_DISABLED_CHAINS = (\n    Chain.ETH,\n    Chain.SOL,\n    Chain.BTC,\n    Chain.ADA,\n    Chain.DOT,\n    Chain.ZCASH,\n)\n');
   assert.equal(g.zcashDisabled, null); // strict allowlist: unknown (no Chain import before the switch; line 1 is the line not accepted)
   assert.equal(g.line, 1);
@@ -78,6 +81,8 @@ test('ING-08: gate3 tuple spanning more than six lines keeps Chain.ZCASH disable
 });
 
 test('ING-08: comments and strings never select the gate3 block; unsupported expressions are unknown, not false', async () => {
+  // Under the strict allowlist the commented module is unknown (no Chain import), but the line it names is still the
+  // real declaration on line 3, not the comment on line 1 or the docstring on line 2.
   const commented = await gate3Value('# SWAP_DISABLED_CHAINS = (Chain.ZCASH,)  old value\n"""SWAP_DISABLED_CHAINS = (Chain.ZCASH,)"""\nSWAP_DISABLED_CHAINS = (\n    Chain.ETH,  # Chain.ZCASH was here\n)\n');
   assert.equal(commented.zcashDisabled, null, 'only the real declaration counts'); // strict allowlist: unknown (no Chain import before the switch on line 3)
   assert.equal(commented.line, 3);
@@ -613,6 +618,8 @@ test('ING-08: any other binding of the switch (one-line compound, import, dynami
     'A = SWAP_DISABLED_CHAINS = ()\n',
   ];
   for (const src of unknown) assert.equal(parseGate3Switch(src).zcashDisabled, null, src);
+  // The title's "reads stay determinate" predates the strict constants-module allowlist. None of the reads below
+  // imports Chain before the switch (and each also has a line outside the accepted shapes), so each is now unknown.
   const determinate: [string, boolean | null][] = [
     // R3-ING-08: a star import never leaves the value determinate. The star-imported SWAP_DISABLED_CHAINS object is
     // released when the definition replaces it, and its finaliser can rebind the switch after the store.

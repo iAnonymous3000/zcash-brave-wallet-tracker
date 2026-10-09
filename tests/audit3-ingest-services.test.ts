@@ -96,8 +96,9 @@ test('R3-ING-08: a statement after ";" on a compound header line belongs to the 
   assert.deepEqual(parseGate3Switch(verifier), { zcashDisabled: null, line: 3, reason: 'line 3 is not one of the statement shapes this reader accepts; only a plain constants module is read, so the value of SWAP_DISABLED_CHAINS is not determined' });
   assertGate3Unknown(await collectGate3(verifier), 'verifier module');
 
-  // Neighbours that stay determinate (CPython agrees on each value): simple statements split at ';', a single
-  // trailing ';' after a one-line suite and `match` as a name.
+  // Neighbours CPython reads to a definite value (all versions agree on each): simple statements split at ';', a
+  // single trailing ';' after a one-line suite and `match` as a name. The old reader was determinate on them; the
+  // strict allowlist accepts no ';', compound statement or lower-case name, so each is now unknown.
   const reads: [string, boolean | null][] = [
     [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,); X = 1\n`, null], // strict allowlist: unknown
     [`${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ZCASH,);\n`, null], // strict allowlist: unknown
@@ -174,7 +175,8 @@ test('R3-ING-08 (repair): a star import is never followed by a determinate value
   // The same release happens when a name imported explicitly is bound again after the definition: CPython 3.9, 3.11
   // and 3.13 end with Chain.ZCASH when the imported object's finaliser rebinds the switch. Any name bound again after
   // the definition (an import, an assignment, a def) is therefore unknown; before the definition it is harmless (the
-  // finaliser runs before the store, and the definition wins).
+  // finaliser runs before the store, and the definition wins). Under the strict allowlist the explicit import is
+  // itself not accepted, and a constant rebound to another constant is accepted (see the one determinate case below).
   const LEGACY = 'from app.api.swap.legacy_constants import DEFAULT_SLIPPAGE_PERCENTAGE\n';
   const rebound = [
     `${IMPORT}${LEGACY}SWAP_DISABLED_CHAINS = (Chain.SOL,)\nDEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n`,
@@ -192,8 +194,9 @@ test('R3-ING-08 (repair): a star import is never followed by a determinate value
   }
   // strict allowlist: determinate, not unknown (the one null -> false change). This input was in `rebound` above and
   // is unchanged. Rebinding X from the constant 1 to the constant 2 releases no object with a finaliser, so nothing
-  // can rebind the switch after its store: a plain constants module. ast.parse and compile() accept it and
-  // tests/fixtures/gate3_oracle.py answers {"zcashDisabled": false} on CPython 3.9.6, 3.11.15 and 3.13.12.
+  // can rebind the switch after its store: a plain constants module. `ast.parse(open(f).read())`, compile() of the
+  // bytes and tests/fixtures/gate3_oracle.py ({"zcashDisabled": false}) agree on CPython 3.9.6, 3.11.15, 3.12.13 and
+  // 3.13.12 (3.10 was not available to check).
   assert.deepEqual(parseGate3Switch(`${DEF}X = 1\nX = 2\n`), { zcashDisabled: false, line: 2, reason: null });
   assertGate3Unknown(await collectGate3(rebound[0]), 'imported name bound again after the definition');
   for (const [src, v] of [
@@ -244,14 +247,16 @@ test('R3-ING-08 (repair): characters Python does not treat as whitespace make th
       `${IMPORT}SWAP_DISABLED_CHAINS = (Chain.ETH,)${ch}\n`,
     ];
     for (const src of forms) assert.equal(parseGate3Switch(src).zcashDisabled, null, `${label}: ${JSON.stringify(src.slice(-60))}`);
-    // In a comment or a string literal the same character is fine for Python.
+    // In a comment or a string literal the same character is fine for Python; the strict allowlist rejects it anywhere.
     assert.equal(parseGate3Switch(`${DEF}# a${ch}b\n`).zcashDisabled, null, `${label} in a comment`); // strict allowlist: unknown (non-ASCII anywhere; all 12 characters)
     assert.equal(parseGate3Switch(`${DEF}X = "a${ch}b"\n`).zcashDisabled, null, `${label} in a string`); // strict allowlist: unknown (non-ASCII anywhere; all 12 characters)
   }
   // The verifier's module: the live file with one blank line holding only a no-break space, Zcash re-enabled.
   const nbsp = REAL_ETH.replace('DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n', 'DEFAULT_SLIPPAGE_PERCENTAGE = "0.5"\n\u00A0\n');
   assertGate3Unknown(await collectGate3(nbsp), 'no-break space on a blank line');
-  // Python's own whitespace stays whitespace: a form feed on a blank line, trailing tabs, CRLF and CR line ends.
+  // Python's own whitespace stays whitespace: a form feed on a blank line, trailing tabs, CRLF and CR line ends. The
+  // strict allowlist still reads the last three; it accepts only printable ASCII, tab and line breaks, so the form
+  // feed is now unknown.
   for (const [src, v] of [
     [`${DEF}\f\nX = 1\n`, null], // strict allowlist: unknown (a form feed is outside printable ASCII)
     [`${DEF}X = 1\t\n`, false],
@@ -278,7 +283,9 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
     assert.equal(r.zcashDisabled, null, JSON.stringify(src.slice(0, 60)));
     assert.ok(r.reason, JSON.stringify(src.slice(0, 60)));
   }
-  // Accepted by every CPython: ascii with ASCII-only bytes, a byte order mark alone or with utf-8 / UTF_8.
+  // Accepted by every CPython: ascii with ASCII-only bytes, a byte order mark alone or with utf-8 / UTF_8. The strict
+  // allowlist rejects any coding declaration and any character outside printable ASCII (the mark included), so it
+  // answers unknown for each of them.
   for (const src of [`# -*- coding: ascii -*-\n${DEF}`, `# coding: utf8\n${DEF}`, `${BOM}${DEF}`, `${BOM}# coding: utf-8\n${DEF}`, `${BOM}# coding: UTF_8\n${DEF}`]) {
     assert.equal(parseGate3Switch(src).zcashDisabled, null, JSON.stringify(src.slice(0, 40))); // strict allowlist: unknown (coding declaration or byte order mark; all 5 inputs)
   }
@@ -299,9 +306,17 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
     assert.equal(r.data.gate3?.reason, undefined);
     assert.equal(r.limitations?.some((l) => /^gate3 at /.test(l)), false);
   }
-  // strict allowlist: unknown. The live file with a byte order mark prepended (not the file as served) was read as
-  // disabled at line 18; the mark is outside printable ASCII, so it is unknown at line 1, with a reason and a
-  // limitation, and the last determined value is kept.
+  // strict allowlist: unknown. OPEN DECISION, not settled by this test file: this input is classed here as a synthetic
+  // variant, not real data. The file as served has no byte order mark (tests/fixtures/gate3-corpus/real-constants-
+  // 173a2408.py starts with "from"); the mark is prepended by this test. The old reader read it as disabled at line
+  // 18. Python decodes a leading mark as utf-8-sig when it compiles the bytes, and tests/fixtures/gate3_oracle.py
+  // reads this input as true on CPython 3.9.6, 3.11.15, 3.12.13 and 3.13.12, so the strict reader is more cautious
+  // than Python here, never opposite. (The text-mode check `ast.parse(open(f).read())` keeps the mark and rejects the
+  // file on all four, but an import reads bytes.) The mark is outside printable ASCII, so the strict reader answers
+  // unknown at line 1, with a reason and a limitation, and the last determined value is kept. If this input should
+  // count as real data, the fix belongs in parseGate3Switch (src/ingest/sources/services.ts): accept one leading
+  // U+FEFF when lines 1 and 2 hold no coding declaration (the refused forms above, with a mark and ascii or utf8, or
+  // two marks, stay unknown), and expect true at line 18 here.
   for (const body of [`${BOM}${REAL_GATE3}`]) {
     const r = await collectGate3(utf8(body));
     assertGate3Unknown(r, 'the live file with a byte order mark');
@@ -342,8 +357,10 @@ test('R3-ING-08 (repair): forms that compile on some Python versions only are un
   assertGate3Unknown(await collectGate3(versionDependent[0]), 'decimal literal over 4300 digits');
   assertGate3Unknown(await collectGate3(versionDependent[3]), 'continuation before the definition');
 
-  // Long but flat forms compile on every version and stay determinate: comparison chains, implicit string
-  // concatenation, long displays, a long literal set of members, continuations inside a statement or brackets.
+  // Long but flat forms compile on every version and CPython's value is definite: comparison chains, implicit string
+  // concatenation, long displays, a long literal set of members, continuations inside a statement or brackets. The
+  // strict allowlist stays determinate only on the long literal set of members; the other forms are not plain
+  // constants, so they are now unknown.
   const flat: [string, boolean | null][] = [
     [`${DEF}X = 1${' < 1'.repeat(10000)}\n`, null], // strict allowlist: unknown
     [`${DEF}X = ${'"a" '.repeat(10000)}\n`, null], // strict allowlist: unknown
@@ -489,7 +506,8 @@ test('R3-ING-08: modules CPython refuses to compile are unknown, never a determi
   assertGate3Unknown(r, 'not UTF-8');
   assert.match(r.data.gate3?.reason ?? '', /not valid UTF-8/);
 
-  // Valid neighbours keep their determinate value (CPython compiles each and leaves Zcash out of the switch).
+  // Valid neighbours: CPython compiles each and leaves Zcash out of the switch. The old reader kept their determinate
+  // value; the strict allowlist accepts none of these statement shapes (or prologues), so each is now unknown.
   const valid = [
     'X = 1;',
     'def f(a, /, b=1, *c, d, **e): pass',

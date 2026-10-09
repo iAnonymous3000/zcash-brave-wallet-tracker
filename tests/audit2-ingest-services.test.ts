@@ -94,7 +94,9 @@ test('R-ING-08: rebinding forms (target lists, starred, attribute, keyword, type
   // earlier can be called later); only the definition alone is determinate.
   assert.equal(parseGate3Switch(`[A, SWAP_DISABLED_CHAINS] = [1, (Chain.ZCASH,)]\n`).zcashDisabled, null);
 
-  // Inert reads stay determinate, including the real repository file.
+  // Inert reads. Under the strict constants-module allowlist only the real repository layout (GATE3_ON) stays
+  // determinate; the others import no Chain before the switch and use statement shapes outside the allowlist, so
+  // they are now unknown.
   const reads: [string, boolean | null][] = [
     [GATE3_ON, true],
     ['SWAP_DISABLED_CHAINS: frozenset[Chain]\nSWAP_DISABLED_CHAINS = frozenset({Chain.ETH})\n', null], // strict allowlist: unknown
@@ -205,9 +207,10 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
     assert.ok(r.reason, `${name}: a reason is given`);
   }
 
-  // The real file (app/api/swap/constants.py at the time of writing) and a realistic richer constants module stay
-  // determinate: imports (also parenthesised, aliased, __future__), docstrings, literal constants, an annotation-only
-  // line, an alias of the switch and a constructor copy of it.
+  // The real file (app/api/swap/constants.py at the time of writing) stays determinate. The realistic richer constants
+  // module (imports also parenthesised, aliased, __future__; docstrings, literal constants, an annotation-only line,
+  // an alias of the switch and a constructor copy of it) was determinate under the old reader; the strict allowlist
+  // stops at its `from __future__` line and answers unknown.
   const real = parseGate3Switch(REAL_GATE3_CONSTANTS);
   assert.deepEqual(real, { zcashDisabled: true, line: 18, reason: null });
   const rich = (members: string) =>
@@ -221,9 +224,10 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
     for (const members of ['Chain.ETH', 'Chain.ZCASH']) assert.equal(parseGate3Switch(`${rich(members)}${extra}\n`).zcashDisabled, null, extra);
   }
 
-  // The few statement forms beyond NAME = literal that the reader accepts (each cannot run code of this module):
+  // The few statement forms beyond NAME = literal that the old reader accepted (each cannot run code of this module):
   // `__all__`, an `if ...: raise BuiltinError(...)` guard, a one-line `def ...: ...` without a body, operators, and
-  // read-only methods called on the switch itself. Python agrees on both values.
+  // read-only methods called on the switch itself. Python agrees on both values; the strict allowlist accepts none of
+  // these forms and stops at the `__all__` line, so both are now unknown.
   const guarded = (members: string) =>
     `"""Swap constants."""\n__all__ = ["SWAP_DISABLED_CHAINS", "is_disabled"]\nfrom app.api.common.models import Chain\nSWAP_DISABLED_CHAINS: frozenset[Chain] = frozenset({${members}})\nif Chain.ETH in SWAP_DISABLED_CHAINS: raise ValueError("ETH must stay routable")\ndef is_disabled(chain: Chain, *, disabled: frozenset[Chain] = SWAP_DISABLED_CHAINS) -> bool: ...\nROUTABLE = SWAP_DISABLED_CHAINS.symmetric_difference({Chain.ETH, Chain.SOL})\nOTHER = frozenset(SWAP_DISABLED_CHAINS) | {Chain.ETH}\nNOT_ETH = Chain.ETH not in SWAP_DISABLED_CHAINS and Chain.SOL is not None\n`;
   // The reader names the first line it does not accept; line 2 is `__all__ = [...]`.
