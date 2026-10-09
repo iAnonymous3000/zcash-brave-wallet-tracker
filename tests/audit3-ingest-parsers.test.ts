@@ -6,6 +6,11 @@
 // put it under. Where the structure is in doubt (a stray opener hides headings from CommonMark, or CommonMark keeps a
 // heading its author wrote inside an HTML block) the bullets it decides are credited to no release, and a release
 // heading CommonMark does not see is not listed.
+//
+// Repair round: the round-3 parser read markdown-it's own structure, which departs from CommonMark and GFM for GFM
+// tables and link reference definitions (it credited bullets and listed releases GitHub does not show; the base did
+// not), and its block quote rule was still quadratic. The repair-round tests fail on that parser (and, as each test
+// as a whole, on the base).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -113,6 +118,57 @@ test('R3-ING-23: real changelogs with a stray opener keep every entry above it a
   assert.deepEqual(changelogVersions(injected), ['1.97.56']);
 });
 
+test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the structure is GitHub\'s or unknown, never a release GitHub does not show', () => {
+  // GFM tables as GitHub reads them. A header row needs no "|" ("Notes" over "| - |" is a one-column table), and a line
+  // that starts any other block, an HTML one included, ends the table; that HTML block runs to the blank line and
+  // hides the heading in it. The round-3 parser (markdown-it's table rule) listed 1.99.0 there, as the latest release.
+  const latest = md('# Changelog', '', 'Notes', '| - |', '<a name="next">', tag('1.99.0'), '- Zcash x.', '', '## 1.98.0', '- Zcash y.');
+  assert.deepEqual(changelogVersions(latest), ['1.98.0']);
+  assert.deepEqual(got(latest), ['1.98.0:Zcash y.']);
+  // A delimiter row needs a "|" or a ":": "---" under a line of text is a setext underline (GitHub: <h2>| Unreleased |</h2>).
+  for (const header of ['| Unreleased |', 'Unreleased |']) {
+    assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', header, '---', '- Zcash future.')), ['1.2.3:Zcash a.'], header);
+  }
+  // Link reference definitions are paragraph content (CommonMark): an underline below text that is no definition makes
+  // it a heading ("[Unreleased]:" has no destination), and the lines after a definition continue the paragraph ("2)
+  // Next" cannot interrupt it to start a list, "    Next" is no code block), so the underline below them makes a heading.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '[Unreleased]:', '=============', '', '- Zcash future.')), ['1.2.3:Zcash a.']);
+  assert.deepEqual(got(md('## 1.2.7', '- Zcash a.', '', '[x]: /url "t"', '2) Next', '===', '- Zcash future.')), ['1.2.7:Zcash a.']);
+  assert.deepEqual(got(md('## 1.2.7', '- Zcash a.', '', '[x]: /url', '    Next', '===', '- Zcash future.')), ['1.2.7:Zcash a.']);
+  // An underline below nothing but definitions is none: "-" is paragraph text, so "- 1.2.4" is the heading, no release.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '[x]: /url', '-', '1.2.4', '---', '- Zcash old.')), ['1.2.3:Zcash a.']);
+  // A table that interrupts a paragraph takes its header row, even one that would start a list elsewhere ("2) …",
+  // "2."): GitHub shows a table, then an HTML block (<br>) holding "## 1.2.4", which is therefore no release.
+  for (const header of ['2) Upcoming', '2.']) {
+    const text = md('## 1.2.3', '- Zcash a.', '', 'Notes', header, ':---', '<br>', '## 1.2.4', '- Zcash future.');
+    assert.deepEqual(got(text), ['1.2.3:Zcash a.'], header);
+    assert.deepEqual(changelogVersions(text), ['1.2.3'], header);
+  }
+  // A header row that is a whole HTML tag: GitHub shows a table and then the heading "## 1.2.4", micromark an HTML
+  // block that hides it. The two disagree, so 1.2.4 is not known to be a release.
+  const tagHeader = md('## 1.2.3', '- Zcash a.', '', 'Notes', '<span>', '|-', '## 1.2.4', '- Zcash future.');
+  assert.deepEqual(got(tagHeader), ['1.2.3:Zcash a.']);
+  assert.deepEqual(changelogVersions(tagHeader), ['1.2.3']);
+  // A lazy line of a block quote can be a table header ("> Note" + "b | c" + "> -|-" is a quote holding a paragraph
+  // and a table), and a table takes no lazy line: "Unreleased" + "===" after it is a heading outside the quote.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '> Note', 'b | c', '> -|-', 'Unreleased', '===', '- Zcash future.')), ['1.2.3:Zcash a.']);
+  // A lazy line of a nested quote keeps its indentation: "    ```" there continues the paragraph (it does not end both
+  // quotes as a fence would), so "1.2.4" + "---" is paragraph text and a thematic break, not a release heading.
+  const lazy = md('## 1.2.3', '- Zcash a.', '', '> > Note', '    ```', '1.2.4', '---', '- Zcash old.');
+  assert.deepEqual(got(lazy), ['1.2.3:Zcash a.', '1.2.3:Zcash old.']);
+  assert.deepEqual(changelogVersions(lazy), ['1.2.3']);
+  // A lone CR ends a line (CommonMark, GitHub): the "## Unreleased" after it is a heading that ends the 1.2.3 block.
+  const cr = '## 1.2.3\n- Zcash a.\r## Unreleased\n- Zcash future.';
+  assert.ok(!got(cr).some((e) => e.endsWith('Zcash future.')), JSON.stringify(got(cr)));
+  assert.deepEqual(changelogVersions(cr), ['1.2.3']);
+  // <search> starts an HTML block that can interrupt a paragraph in CommonMark 0.31 (markdown-it, micromark) but not in
+  // GitHub's 0.29, and <source> the other way round: the headings after them are in doubt.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', 'Text', '<search>', '## Unreleased', '- Zcash future.')), ['1.2.3:Zcash a.']);
+  const source = md('## 1.2.3', '- Zcash a.', '', 'Text', '<source>', tag('1.2.4'), '- Zcash future.');
+  assert.deepEqual(got(source), ['1.2.3:Zcash a.']);
+  assert.deepEqual(changelogVersions(source), ['1.2.3']);
+});
+
 // ---------------------------------------------------------------------------
 // R3-PERF
 // ---------------------------------------------------------------------------
@@ -176,6 +232,22 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
     ['nested quotes ended by lazy lines', fill('> >~~~\n> <\n')],
     ['nested quotes with headings ended by lazy lines', fill('> > # h\n> x\n')],
     ['the same behind an unterminated comment', `<!--\n## 1.2.3\n${fill('> >~~~\n> <\n')}`],
+    // Repair round: quotes whose content runs 8 lines or more before the lazy line that ends it (the round-3 parser
+    // read only those within an 8-line window in linear time: 7.8 s for the first, 3.4 s for the second).
+    ['quotes whose content runs 10 lines before a lazy line', fill(`> ~~~\n${'> a\n'.repeat(9)}<\n`)],
+    ['nested quotes whose content runs 10 lines before a lazy line', fill(`> >~~~\n${'> > a\n'.repeat(9)}> <\n`)],
+    ['quote paragraphs of 9 lines ended by a fence and a lazy line', fill(`${'> a\n'.repeat(9)}> ~~~\nx\n`)],
+    // Quotes that take lazy lines: a paragraph continued to the end, one continued then ended by a fence, lazy lines
+    // at each of three levels, a quote nested 31 deep, and lazy table headers.
+    ['a quote paragraph with lazy lines to the end', `> a\n${fill('b\n')}`],
+    ['quote paragraphs with a lazy line, then a fence', fill('> a\nb\n> ~~~\n> x\n<\n')],
+    ['three nested quotes with lazy lines at each level', `> > > a\n${fill('> > b\n', KB256 / 3)}${fill('> c\n', KB256 / 3)}${fill('d\n', KB256 / 3)}`],
+    ['a quote nested 31 deep with lazy lines', `${'>'.repeat(31)} x\n${fill('y\n')}`],
+    ['lazy table headers in a quote', fill('> a\nb | c\n> -|-\n> \n')],
+    // Tables and link reference definitions (both read by this file's own rules).
+    ['table rows', `| a | b |\n|---|---|\n${fill('| c | d |\n')}`],
+    ['header and delimiter rows', fill('a\n-|-\n')],
+    ['link reference definitions under underlines', fill('[a]: /u\n-\n')],
   ];
   // Yardstick: a 256 KB changelog of ordinary lines (entries under release headings, one long paragraph).
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
@@ -184,6 +256,13 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
     const took = ms(parse(text), limit);
     assert.ok(took < limit, `${name}: ${Math.round(took)} ms (limit ${Math.round(limit)} ms)`);
   }
+  // A parse spends at most a fixed multiple of the text's lines on block quotes; past that (only quotes nested this
+  // deep with this many lazy lines get there) the structure is read no further. What comes before is kept, and
+  // nothing is credited to a release CommonMark does not put it under.
+  const deep = md('## 1.2.3', '- Zcash a.', '', `${'>'.repeat(31)} x`, fill('y\n'), '## 1.2.2', '- Zcash b.');
+  const entries = got(deep);
+  assert.ok(entries.includes('1.2.3:Zcash a.'), JSON.stringify(entries));
+  assert.ok(entries.every((e) => ['1.2.3:Zcash a.', '1.2.2:Zcash b.'].includes(e)), JSON.stringify(entries));
 });
 
 test('R3-PERF: plainExcerpt is linear on 256 KB issue bodies and its output is unchanged', () => {

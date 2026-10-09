@@ -254,7 +254,8 @@ test('ING-23: release and unreleased headings inside a code fence change neither
   assert.deepEqual(changelogVersions(md.replace(/\n/g, '\r\n')), ['1.2.3', '1.2.2']);
 });
 
-test('ING-23: an unclosed fence or comment is plain text and cannot hide later release headings', () => {
+// Title reworded for R3-ING-23 (the assertions below were changed for it in round 3; this title still said the opposite).
+test('ING-23: after an unclosed fence or comment, later release headings are unknown: nothing is credited to them', () => {
   const md = ['## 1.2.3', '- a', '```', '- b', '## Unreleased', '- future', '## 1.2.2', '- c'].join('\n');
   // R3-ING-23 (block structure CommonMark-correct or explicitly unknown): CommonMark runs the unclosed fence or
   // comment to the end of the text, so "## Unreleased" and "## 1.2.2" are not headings there, while a stray opener

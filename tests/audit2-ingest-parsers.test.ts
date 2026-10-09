@@ -130,7 +130,7 @@ test('R-ING-23: lines inside an HTML block (<details> until a blank line) are no
 test('R-ING-23: other HTML block kinds follow their CommonMark end conditions', () => {
   // Kind 1 (<pre>, <script>, <style>, <textarea>) runs to its closing tag, across blank lines.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '', '# not a heading', '', '</pre>', '- Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
-  // ... and when it never closes it is plain text, so later headings still count (as for an unclosed fence).
+  // ... and when it never closes it runs to the end of the text (as an unclosed fence does).
   // R3-ING-23 (CommonMark-correct or explicitly unknown): CommonMark runs the unclosed <pre> to the end, hiding
   // both headings, so from "## Unreleased" on the attribution is unknown and "Zcash c." is credited to no release.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '## Unreleased', '- Zcash future.', '## 1.2.2', '- Zcash c.')), ['1.2.3:Zcash a.']);
