@@ -115,7 +115,9 @@ test('R-SITE-STUDIES: field-trial studies show each cohort with its share; a set
   // 50/50: each cohort's own setting with its share; the weight-0 cohort is not enrolled.
   assert.match(a, /On \(50% of the study’s clients\): enables BraveWalletZCash/);
   assert.match(a, /Off \(50% of the study’s clients\): disables BraveWalletZCash/);
-  assert.match(a, /weight 0 \(no clients\): Holdback/);
+  // R-SITE-STUDIES (repair 2): "(no clients)" contradicted the forced clients listed with a weight-0 cohort; the line
+  // now says no client is assigned by weight (see the repair-2 test below).
+  assert.match(a, /weight 0 \(no clients assigned by weight\): Holdback/);
 
   const { studyView } = await import('../src/site/view.ts');
   const v = studyView(rollout);
@@ -723,4 +725,137 @@ test('R-SITE-STALE: a status written before lastCompleteAt was recorded keeps th
   const none = row([{ ...old, lastCompleteAt: null } as SourceStatus]);
   assert.match(text(none), /partial · no complete collection recorded/);
   assert.match(none, /data-last-complete=""/);
+});
+
+// ---------------------------------------------------------------------------
+// Repair round 2: the review's remaining notes on these items.
+// ---------------------------------------------------------------------------
+
+test('R3-SITE-STALE-HEADER (repair 2): the pill’s counts survive truncation: short counts outside the truncated time, full wording for screen readers and in the title', async () => {
+  const { page } = await import('../src/site/layout.ts');
+  const { html } = await import('../src/site/html.ts');
+  const meta = { title: 'T', description: 'D', path: '', active: 'home' as const };
+  const fresh = { generatedAt: GEN, lastRunOutcome: 'partial', lastRunAt: GEN, sources: [staleFlags, { ...partialDeps, staleSince: hoursBefore(8) }, failedDocs, okReleases], mode: 'live' as const };
+  const pill = page(meta, fresh, html``).match(/<a class="fresh[^"]*"[^>]*>[\s\S]*?<\/a>/)![0];
+  // Visible: the time (truncated first) and the counts in short form, which are not inside the truncated element.
+  const when = pill.match(/<span class="fresh-when">([\s\S]*?)<\/span>/);
+  assert.ok(when, 'the update time has its own element');
+  assert.doesNotMatch(when[1], /failing|stale/, 'no count is inside the element that is truncated');
+  assert.match(pill, /<span class="fresh-short" aria-hidden="true"> · 1 failing · 2 stale<\/span>/);
+  // Full wording: for screen readers (visually hidden) and as the pill's title.
+  assert.match(pill, /<span class="fresh-fail vh"> · 1 source failing<\/span>/);
+  assert.match(pill, /<span class="fresh-stale vh"> · 2 sources stale<\/span>/);
+  assert.match(pill, /title="1 source failing · 2 sources stale"/);
+  // The stylesheet truncates the time before the counts, and only the time and the short counts take room.
+  const css = readFileSync(join(ROOT, 'src/site/styles.css'), 'utf8');
+  const rule = (sel: string) => css.match(new RegExp(`^${sel.replace(/[.]/g, '\\.')} \\{([^}]*)\\}`, 'm'))?.[1] ?? '';
+  assert.match(rule('.fresh-when'), /text-overflow: ellipsis/);
+  assert.doesNotMatch(rule('.fresh-text'), /text-overflow/, 'the container of the counts is not ellipsized as a whole');
+  const shrink = (sel: string) => Number(rule(sel).match(/flex: 0 (\d+) auto/)?.[1]);
+  assert.ok(shrink('.fresh-when') >= 100 * shrink('.fresh-short'), `the time gives way first (${shrink('.fresh-when')} vs ${shrink('.fresh-short')})`);
+  assert.match(css, /^\.vh, \.sprite \{ position: absolute !important;/m, 'the full wording is visually hidden, not displayed twice');
+  // Nothing to report: no short counts, no title, the time alone.
+  const ok = page(meta, { ...fresh, sources: [okReleases] }, html``).match(/<a class="fresh[^"]*"[^>]*>[\s\S]*?<\/a>/)![0];
+  assert.match(ok, /<span class="fresh-short" aria-hidden="true"><\/span>/);
+  assert.match(ok, /title=""/);
+  assert.doesNotMatch(ok, /fresh-fail/);
+  // One set of helpers for the build and the client.
+  const { freshShortText, freshCountsTitle, failingCountText, staleCountText } = await import('../src/site/client/logic.ts');
+  assert.equal(freshShortText(0, 0), '');
+  assert.equal(freshShortText(0, 1), ' · 1 stale');
+  assert.equal(freshShortText(3, 0), ' · 3 failing');
+  assert.equal(freshCountsTitle(0, 1), '1 source stale');
+  assert.equal(freshCountsTitle(2, 0), '2 sources failing');
+  assert.equal(freshCountsTitle(0, 0), '');
+  assert.equal(failingCountText(1), ' · 1 source failing');
+  assert.equal(staleCountText(2), ' · 2 sources stale');
+});
+
+test('R3-SITE-STALE-HEADER (repair 2): staleness is judged at the latest refresh run too, so an older site.json kept after a failed derive does not hide a stale source', async () => {
+  const { page } = await import('../src/site/layout.ts');
+  const { html } = await import('../src/site/html.ts');
+  const { sourcesPage } = await import('../src/site/pages/other.ts');
+  const { statusJudgedAt } = await import('../src/site/client/logic.ts');
+  // site.json from a run 10 h ago (derive failed since); status.json from the latest run, when the flags source's kept
+  // data had not been refreshed for 8 h, longer than the 6-hour window.
+  const keptAt = hoursBefore(10);
+  const flags = { ...staleFlags, lastSuccessAt: GEN, staleSince: hoursBefore(8), lastCompleteAt: hoursBefore(8) };
+  const meta = { title: 'T', description: 'D', path: '', active: 'home' as const };
+  const doc = page(meta, { generatedAt: keptAt, lastRunOutcome: 'partial', lastRunAt: GEN, sources: [flags, okReleases], mode: 'live' }, html``);
+  assert.match(doc, /<a class="fresh has-stale"[^>]*data-stale="1"/, 'counted although its staleSince is after the kept site.json');
+  const banner = doc.match(/<div class="wrap source-stale-banner"[^>]*>[\s\S]*?<\/div><\/div>/)![0];
+  assert.doesNotMatch(banner.slice(0, banner.indexOf('>')), /hidden/, 'the banner is shown without the client script');
+  assert.match(banner, new RegExp(`<li data-stale-since="${flags.staleSince}"\\s*>`), 'and its item too');
+  const d = clone();
+  d.generatedAt = keptAt;
+  const row = sourcesPage(d, [], {}, [flags, okReleases], GEN).value.split('<tr class="src"').find((r) => r.includes(`>${flags.name}</a>`))!.split('</tr>')[0];
+  assert.match(row, /<span class="src-flag">Stale<\/span>/, 'the Sources page agrees with the header');
+  // Without a later run the generation time is used, as before.
+  assert.match(page(meta, { generatedAt: keptAt, lastRunOutcome: null, lastRunAt: null, sources: [flags], mode: 'live' }, html``), /data-stale="0"/);
+  assert.equal(statusJudgedAt(keptAt, GEN), Date.parse(GEN));
+  assert.equal(statusJudgedAt(GEN, keptAt), Date.parse(GEN), 'the later of the two');
+  assert.equal(statusJudgedAt(GEN, null), Date.parse(GEN));
+  assert.equal(statusJudgedAt('not a time', GEN), Date.parse(GEN));
+  assert.ok(Number.isNaN(statusJudgedAt('', null)), 'unknown stays unknown');
+
+  // The literal case through buildSite: derive failed, so site.json is older than status.json.
+  const { out, cleanup } = await buildFrom((dir) => {
+    const site = readJ(dir, 'derived', 'site.json');
+    site.generatedAt = keptAt;
+    writeJ(dir, site, 'derived', 'site.json');
+    const status = readJ(dir, 'status.json');
+    status.lastRun = { ...(status.lastRun ?? {}), finishedAt: GEN, outcome: 'partial', derive: { outcome: 'failed', error: 'test: derive failed' } };
+    status.sources['brave-flags'] = { ...status.sources['brave-flags'], lastOutcome: 'partial', lastSuccessAt: GEN, lastPartialAt: GEN, staleSince: flags.staleSince, lastCompleteAt: flags.lastCompleteAt };
+    writeJ(dir, status, 'status.json');
+  });
+  try {
+    const home = readFileSync(join(out, 'index.html'), 'utf8');
+    assert.match(home, /<a class="fresh[^"]*has-stale"[^>]*data-stale="1"/);
+    const b = home.match(/<div class="wrap source-stale-banner"[^>]*>[\s\S]*?<\/div><\/div>/)![0];
+    assert.doesNotMatch(b.slice(0, b.indexOf('>')), /hidden/);
+    assert.match(b, new RegExp(`<li data-stale-since="${flags.staleSince}"\\s*>`));
+    const src = readFileSync(join(out, 'sources', 'index.html'), 'utf8');
+    const r = src.split('<tr class="src"').slice(1).find((x) => x.includes(`data-stale-since="${flags.staleSince}"`))!;
+    assert.match(r.split('</tr>')[0], /<span class="src-flag">Stale<\/span>/);
+  } finally {
+    cleanup();
+  }
+});
+
+test('R-SITE-STUDIES (repair 2): a weight-0 cohort is “no clients assigned by weight”, never “no clients” beside the clients forced into it', async () => {
+  const { toStudyInfo } = await import('../src/ingest/sources/services.ts');
+  const { studyView } = await import('../src/site/view.ts');
+  const { upstreamPage } = await import('../src/site/pages/other.ts');
+  const now = '2026-10-08T12:00:00Z';
+  const forced = toStudyInfo({ name: 'ZcashForced', experiment: [{ name: 'Only', probability_weight: 100, feature_association: { enable_feature: ['BraveWalletZCash'] } }, { name: 'Pinned', probability_weight: 0, feature_association: { disable_feature: ['BraveWalletZCash'], forcing_feature_off: ['BraveWalletZCash'] } }] }, 'ZcashForced.json5', 'c0ffee', [], now);
+  const d = clone();
+  d.upstream.services = { ...(d.upstream.services ?? { gate3: null, studiesCommit: null }), studies: [forced] } as SiteData['upstream']['services'];
+  const out = upstreamPage(d).value;
+  const sec = text(out.slice(out.indexOf('id="st-h"'), out.indexOf('Studies override compiled-in defaults')));
+  assert.match(sec, /Cohorts with weight 0 \(no clients assigned by weight\): Pinned \(clients started with --disable-features=BraveWalletZCash are forced into it/);
+  assert.doesNotMatch(sec, /\(no clients\)/);
+  // Every cohort at weight 0: the outcome says the same, and names the forcing exception.
+  const none = studyView(toStudyInfo({ name: 'Z', experiment: [{ name: 'A', probability_weight: 0, feature_association: { enable_feature: ['BraveWalletZCash'], forcing_feature_on: ['BraveWalletZCash'] } }] }, 'Z.json5', 'c0ffee', [], now));
+  assert.match(none.outcome, /assigns no client to a cohort by weight \(only a client started with a cohort’s forcing feature is put in one\)/);
+  assert.deepEqual(none.notEnrolled, ['A (clients started with --enable-features=BraveWalletZCash are forced into it; its settings: enables BraveWalletZCash)']);
+});
+
+test('R-SITE-EVENTS (repair 2): the Activity text filter matches a capability change by the shown title and by the title recorded in events.json', async () => {
+  const { CAPABILITIES } = await import('../config/capabilities.ts');
+  const names = Object.fromEntries(CAPABILITIES.map((c) => [c.id, c.name]));
+  const [ev] = await derivedCapabilityEvents({ capabilities: { migration: { 'android/release': 'opt-in' } } }, { capabilities: { migration: { 'android/release': 'not-verified' } } }, GEN, names);
+  assert.ok(ev?.title.endsWith('opt-in → not-verified'), 'fixture: derive records status ids in the title');
+  const { eventCard, eventFilterText, presentEvent } = await import('../src/site/pages/changes.ts');
+  const d = clone();
+  const attr = (h: string) => h.match(/ data-text="([^"]*)"/)![1].replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  const hay = attr(eventCard(ev, d).value);
+  assert.ok(hay.includes('behind a flag → not verified'), `the shown title: ${hay}`);
+  assert.ok(hay.includes('opt-in → not-verified'), `the recorded title (raw status ids): ${hay}`);
+  assert.ok(hay.includes(ev.impact.toLowerCase()), 'and the impact line');
+  // The client's filter: every token must be in the haystack.
+  const { tokens } = await import('../src/site/client/logic.ts');
+  for (const q of ['not-verified', 'opt-in', 'behind a flag', 'not verified']) assert.ok(tokens(q).every((t) => hay.includes(t)), `"${q}" matches`);
+  // Same title shown as recorded: not repeated.
+  const merged: ChangeEvent = { ...ev, id: 'audit3merged2', kind: 'pr-merged', title: 'Merged: Something', evidence: [] };
+  assert.equal(eventFilterText(merged, presentEvent(merged, d)), `merged: something ${merged.impact.toLowerCase()}`);
 });

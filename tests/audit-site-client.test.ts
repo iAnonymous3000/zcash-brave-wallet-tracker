@@ -1204,3 +1204,43 @@ test('R-SITE-STALE (round-3 repair): a status written before lastCompleteAt was 
   assert.equal(b.doc.getElementById('row-absent')!.querySelector('.src-age')!.textContent, 'partial · time of the last complete collection not recorded');
   assert.equal(b.doc.getElementById('row-none')!.querySelector('.src-age')!.textContent, 'partial · no complete collection recorded');
 });
+
+test('R3-SITE-STALE-HEADER (repair 2): the client updates the pill’s short visible counts and its title with the re-checked stale count', async () => {
+  const now = Date.now();
+  const ago = (h: number) => new Date(now - h * 3_600_000).toISOString();
+  const b = await boot({
+    page: 'home',
+    url: 'https://example.test/tracker/',
+    setup: (doc) => {
+      // The pill as layout.ts renders it at build time: one failing source, no stale one yet.
+      const pill = doc.createElement('a');
+      pill.className = 'fresh has-failing';
+      Object.assign(pill.dataset, { generated: ago(0.5), staleAfter: '360', failing: '1', stale: '0' });
+      (pill as unknown as { title: string }).title = '1 source failing';
+      const short = doc.createElement('span');
+      short.className = 'fresh-short';
+      short.textContent = ' · 1 failing';
+      const count = doc.createElement('span');
+      count.className = 'fresh-stale vh';
+      pill.append(short, count);
+      // A source whose kept data turned stale after the build.
+      const banner = doc.createElement('div');
+      banner.className = 'wrap source-stale-banner';
+      banner.hidden = true;
+      const ul = doc.createElement('ul');
+      ul.className = 'stale-sources';
+      const li = doc.createElement('li');
+      li.dataset.staleSince = ago(7);
+      li.hidden = true;
+      ul.append(li);
+      banner.append(ul);
+      doc.body.append(pill, banner);
+    },
+  });
+  assert.equal(b.error, null);
+  assert.deepEqual(b.errors, []);
+  const pill = b.doc.querySelector('.fresh')!;
+  assert.equal(b.doc.querySelector('.fresh-short')!.textContent, ' · 1 failing · 1 stale', 'the visible short counts follow the client’s count');
+  assert.equal(b.doc.querySelector('.fresh-stale')!.textContent, ' · 1 source stale', 'the full wording too');
+  assert.equal((pill as unknown as { title: string }).title, '1 source failing · 1 source stale');
+});

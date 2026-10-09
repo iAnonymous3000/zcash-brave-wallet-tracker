@@ -77,11 +77,19 @@ export function presentEvent(e: ChangeEvent, d: SiteData): EventView {
   return eventView(e, shownCapabilities(d), featureHref, { switches: serviceSwitchStates(d), switchHref: `${u('upstream/')}#ready-h`, featuresHref: u('features/') });
 }
 
+/**
+ * What the Activity text filter searches: the title as shown (with the site's status labels), the title as recorded
+ * in data/events.json (raw status ids such as "service-off", when they differ) and the impact line.
+ */
+export function eventFilterText(e: ChangeEvent, v: Pick<EventView, 'title'>): string {
+  return [v.title, ...(e.title !== v.title ? [e.title] : []), e.impact].join(' ').toLowerCase();
+}
+
 export function eventCard(e: ChangeEvent, d: SiteData): SafeHtml {
   const group = eventGroup(e, d);
   const at = e.sourceAt ?? e.detectedAt;
   const v = presentEvent(e, d);
-  return html`<li class="ev hl-${e.highlight ?? 'none'}${e.rulesOutdated ? ' is-outdated' : ''}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${`${v.title} ${e.impact}`.toLowerCase()}">
+  return html`<li class="ev hl-${e.highlight ?? 'none'}${e.rulesOutdated ? ' is-outdated' : ''}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${eventFilterText(e, v)}">
     <div class="ev-when">${e.sourceAt ? time(e.sourceAt, { withTime: true }) : html`detected ${time(e.detectedAt, { withTime: true })}`}</div>
     <div class="ev-body">
       <div class="ev-meta">

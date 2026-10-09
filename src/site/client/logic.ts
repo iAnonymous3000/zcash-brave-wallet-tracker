@@ -203,9 +203,39 @@ export function staleSources<T extends SourceFreshness>(sources: T[], now: numbe
   return sources.filter((s) => s.lastOutcome !== 'failed' && keptDataStale(s, now, windowMinutes));
 }
 
+/**
+ * The time (ms) at which the build judges source staleness: the later of the shown data's generation time and the
+ * finish of the latest refresh run. status.json records each source as of that run, so a site.json kept from an
+ * earlier run (derivation failed) must not make a source that was already stale at the run read as not yet stale.
+ * NaN when neither time can be read (keptDataStale then treats recorded kept data as stale, never as fresh).
+ */
+export function statusJudgedAt(generatedAt: string | null | undefined, lastRunAt?: string | null): number {
+  const times = [Date.parse(generatedAt ?? ''), Date.parse(lastRunAt ?? '')].filter((t) => Number.isFinite(t));
+  return times.length ? Math.max(...times) : Number.NaN;
+}
+
 /** " · 1 source stale" (empty for none): the header pill's count, in the build and in the client. */
 export function staleCountText(n: number): string {
   return n > 0 ? ` · ${n} source${n > 1 ? 's' : ''} stale` : '';
+}
+
+/** " · 1 source failing" (empty for none): the header pill's failing count, worded like staleCountText. */
+export function failingCountText(n: number): string {
+  return n > 0 ? ` · ${n} source${n > 1 ? 's' : ''} failing` : '';
+}
+
+/**
+ * " · 1 failing · 2 stale" (empty for none): the counts as the pill shows them. The pill has little room (beside the
+ * section links it is about 140 px wide), so the visible counts are short and come before the update time in priority
+ * (the time is truncated first); the full wording stays in the pill for screen readers and in its title.
+ */
+export function freshShortText(failing: number, stale: number): string {
+  return `${failing > 0 ? ` · ${failing} failing` : ''}${stale > 0 ? ` · ${stale} stale` : ''}`;
+}
+
+/** The pill's title: the counts in full, e.g. "1 source failing · 2 sources stale" (empty for none). */
+export function freshCountsTitle(failing: number, stale: number): string {
+  return `${failingCountText(failing)}${staleCountText(stale)}`.replace(/^ · /, '');
 }
 
 /**

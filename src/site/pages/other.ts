@@ -1,7 +1,7 @@
 import { FRESHNESS } from '../../../config/tracker.ts';
 import type { SiteData } from '../../derive/index.ts';
 import type { RunRecord, SourceStatus } from '../../lib/types.ts';
-import { completeUnknownText, keptDataStale } from '../client/logic.ts';
+import { completeUnknownText, keptDataStale, statusJudgedAt } from '../client/logic.ts';
 import { ext, glyph, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
 import { crateVersions, gate3Facts, presentSite, sharePct, studyView, watchAdoption } from '../view.ts';
@@ -105,7 +105,7 @@ function studyItem(st: NonNullable<SiteData['upstream']['services']>['studies'][
   const listed = v.cohorts.length > 1 || (v.cohorts.length === 1 && (v.mixed.length > 0 || v.cohorts[0].forcing.length > 0));
   return html`<li class="study">${ext(st.url, st.name)}: ${listed ? v.headline : v.outcome}
     ${listed ? html`<ul class="cohorts">${v.cohorts.map((c) => html`<li><strong>${c.name}</strong> (${sharePct(c.share)} of the study’s clients): ${c.settings.length ? html`${c.settings.map((x, i) => html`${i ? ', ' : ''}<code>${x}</code>`)}` : 'sets nothing, so the compiled-in defaults apply'}${c.forcing.length ? html` <span class="muted">(clients started with ${c.forcing.join(' or ')} are forced into this cohort)</span>` : ''}</li>`)}</ul>` : ''}
-    ${v.notEnrolled.length ? html`<span class="muted study-meta">Cohorts with weight 0 (no clients): ${v.notEnrolled.join(', ')}.</span>` : ''}
+    ${v.notEnrolled.length ? html`<span class="muted study-meta">Cohorts with weight 0 (no clients assigned by weight): ${v.notEnrolled.join(', ')}.</span>` : ''}
     <span class="muted study-meta">versions ${st.minVersion ?? 'any'} – ${st.maxVersion ?? 'any'}; ${st.platforms.join(', ') || 'all platforms'}; ${st.channels.join(', ') || 'all channels'}. Applies to current builds: ${applies.join('; ') || (unknown.length ? 'none determined' : 'unknown')}${unknown.length ? html`; unknown for ${unknown.map((a, i) => html`${i ? '; ' : ''}${a.build} (${a.reason})`)}` : ''}.${st.conditions?.length ? html` Also limited by client conditions that public data cannot decide: ${st.conditions.join('; ')}.` : ''}</span></li>`;
 }
 
@@ -190,12 +190,13 @@ function sourceStatusCell(s: SourceStatus, at: number): SafeHtml {
   return html`<div class="src-cell"><span class="src-state src-${s.lastOutcome ?? 'never'}">${label}</span>${stale ? html` <span class="src-flag">Stale</span>` : ''}<span class="src-age"${lastComplete} data-stale-since="${s.staleSince ?? ''}">${age}</span></div>`;
 }
 
-export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>, statusSources?: SourceStatus[]): SafeHtml {
+export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>, statusSources?: SourceStatus[], lastRunAt?: string | null): SafeHtml {
   const d = presentSite(data);
   const c = d.coverage.counts;
   // status.json is the latest record of each source (the header reads it too); the derived copy is the fallback.
   const sources = statusSources?.length ? [...statusSources].sort((a, b) => a.name.localeCompare(b.name)) : d.sources;
-  const at = Date.parse(d.generatedAt);
+  // Judged at the same time as the header's stale count (see headerStaleSources), so the two always agree.
+  const at = statusJudgedAt(d.generatedAt, lastRunAt);
   return html`
 <div class="page-head">
   <h1>Sources &amp; freshness</h1>

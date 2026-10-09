@@ -68,7 +68,7 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   write('changes/index.html', page({ title: 'Changes', description: 'Chronological feed of meaningful Zcash changes in Brave Wallet with source links.', path: 'changes/', active: 'changes' }, fresh, changesPage(site, events)));
   write('upstream/index.html', page({ title: 'Upstream', description: 'Zcash crates, protocol specs, servers and advisories that Brave Wallet depends on, and whether Brave has adopted them.', path: 'upstream/', active: 'upstream' }, fresh, upstreamPage(site)));
   write('reports/index.html', page({ title: 'Community reports', description: 'Zcash-related reports from the Brave Community forum, labeled as reported behavior.', path: 'reports/', active: 'reports' }, fresh, reportsPage(site)));
-  write('sources/index.html', page({ title: 'Sources & freshness', description: 'Monitored sources, last successful checks, failures, coverage and known gaps.', path: 'sources/', active: 'sources' }, fresh, sourcesPage(site, runs, status.rateLimit ?? {}, Object.values(status.sources))));
+  write('sources/index.html', page({ title: 'Sources & freshness', description: 'Monitored sources, last successful checks, failures, coverage and known gaps.', path: 'sources/', active: 'sources' }, fresh, sourcesPage(site, runs, status.rateLimit ?? {}, Object.values(status.sources), status.lastRun?.finishedAt ?? null)));
   write('404.html', page({ title: 'Page not found', description: 'Page not found.', path: '404.html', active: null }, fresh, notFoundPage()));
 
   // Assets.

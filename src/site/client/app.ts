@@ -2,7 +2,7 @@
 // adds relative times, staleness checks computed at view time, selectors and filters.
 // It never inserts fetched text as HTML (no innerHTML). Pure logic lives in ./logic.ts.
 
-import { createIndexLoader, filterForTarget, hashId, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
+import { createIndexLoader, filterForTarget, freshCountsTitle, freshShortText, hashId, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector(sel) as T | null;
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => Array.from(root.querySelectorAll(sel)) as T[];
@@ -73,6 +73,10 @@ function freshness(): void {
     el.classList.toggle('has-stale', stale > 0);
     const count = $('.fresh-stale', el);
     if (count) count.textContent = staleCountText(stale);
+    // The visible short counts and the title follow the re-checked count too (same helpers as the build).
+    const short = $('.fresh-short', el);
+    if (short) short.textContent = freshShortText(failing, stale);
+    el.title = freshCountsTitle(failing, stale);
     const banner = $('.source-stale-banner');
     if (banner) banner.hidden = stale === 0;
   }

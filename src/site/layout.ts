@@ -2,7 +2,7 @@ import { FRESHNESS, SITE } from '../../config/tracker.ts';
 import type { SourceStatus } from '../lib/types.ts';
 import { html, raw, type SafeHtml } from './html.ts';
 import { GLYPH_SPRITE, time, u } from './components.ts';
-import { staleCountText, staleSources } from './client/logic.ts';
+import { failingCountText, freshCountsTitle, freshShortText, staleCountText, staleSources, statusJudgedAt } from './client/logic.ts';
 
 export interface PageMeta {
   title: string;
@@ -77,9 +77,9 @@ ${raw(GLYPH_SPRITE)}
     <nav class="nav-wide" aria-label="Sections">${navList(meta)}</nav>
     <div class="top-actions">
       <a class="search-btn" href="${u('work/')}" data-search-open aria-label="Search features, work, releases and reports">${raw(SEARCH_ICON)}<span class="search-btn-text">Search</span><kbd>/</kbd></a>
-      <a class="fresh${failing.length ? ' has-failing' : ''}${stale.length ? ' has-stale' : ''}" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}" data-stale="${stale.length}">
+      <a class="fresh${failing.length ? ' has-failing' : ''}${stale.length ? ' has-stale' : ''}" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}" data-stale="${stale.length}" title="${freshCountsTitle(failing.length, stale.length)}">
         <span class="fresh-dot" aria-hidden="true"></span>
-        <span class="fresh-text">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}${failing.length ? html` · ${failing.length} source${failing.length > 1 ? 's' : ''} failing` : ''}<span class="fresh-stale">${staleCountText(stale.length)}</span></span>
+        <span class="fresh-text"><span class="fresh-when">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}</span><span class="fresh-short" aria-hidden="true">${freshShortText(failing.length, stale.length)}</span>${failing.length ? html`<span class="fresh-fail vh">${failingCountText(failing.length)}</span>` : ''}<span class="fresh-stale vh">${staleCountText(stale.length)}</span></span>
       </a>
       <details class="menu">
         <summary aria-label="Menu">${raw(MENU_ICON)}<span>Menu</span></summary>
@@ -126,11 +126,12 @@ ${body}
 
 /**
  * Sources the header reports as stale: their kept data has not been refreshed for longer than the staleness window
- * (`staleSince`), judged at the time the shown data was generated. Same rule as the client (see staleSources), which
- * re-checks with the viewer's clock. Failed sources are counted as failing instead.
+ * (`staleSince`), judged at the later of the shown data's generation and the latest refresh run (see statusJudgedAt:
+ * status.json is as of that run, also when derivation failed and an older site.json was kept). Same rule as the
+ * client (see staleSources), which re-checks with the viewer's clock. Failed sources are counted as failing instead.
  */
-export function headerStaleSources(fresh: Pick<Freshness, 'generatedAt' | 'sources'>): SourceStatus[] {
-  return staleSources(fresh.sources, Date.parse(fresh.generatedAt), FRESHNESS.staleAfterMinutes);
+export function headerStaleSources(fresh: Pick<Freshness, 'generatedAt' | 'sources'> & Partial<Pick<Freshness, 'lastRunAt'>>): SourceStatus[] {
+  return staleSources(fresh.sources, statusJudgedAt(fresh.generatedAt, fresh.lastRunAt), FRESHNESS.staleAfterMinutes);
 }
 
 /**

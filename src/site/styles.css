@@ -98,7 +98,13 @@ kbd { font-size: 11.5px; line-height: 1; color: var(--muted); background: var(--
 .search-btn:hover, .menu > summary:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.22); }
 .fresh { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px 0 10px; border: 1px solid var(--border-2); border-radius: 999px; font-size: 13px; color: var(--text-2); text-decoration: none; white-space: nowrap; min-width: 0; }
 .fresh:hover { color: var(--text); }
-.fresh-text { overflow: hidden; text-overflow: ellipsis; }
+.fresh-text { display: flex; min-width: 0; overflow: hidden; }
+/* Short of room (beside the section links the pill is about 140 px wide), the update time is truncated first: the
+   failing and stale counts, shown in short form, are what the pill must show. The full wording is in the title and,
+   for screen readers, in the visually hidden .fresh-fail / .fresh-stale. */
+.fresh-when { flex: 0 1000 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.fresh-short { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: pre; }
+.fresh-short:empty { display: none; }
 .fresh-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(94, 224, 156, 0.16); flex: none; }
 .fresh.has-failing .fresh-dot { background: var(--warn); box-shadow: 0 0 0 3px rgba(242, 184, 96, 0.18); }
 .fresh.is-stale .fresh-dot { background: var(--danger); box-shadow: 0 0 0 3px rgba(255, 139, 123, 0.2); }

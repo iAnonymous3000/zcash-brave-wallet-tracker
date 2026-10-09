@@ -648,7 +648,7 @@ export interface StudyView {
   mixed: string[];
   /** Enrolled cohorts (weight > 0), largest share first, each with its own settings. Empty without cohort data. */
   cohorts: StudyCohortView[];
-  /** Cohorts with weight 0 (no client is assigned to them). */
+  /** Cohorts with weight 0: no client is assigned to them by weight (a forcing feature can still put a client in one). */
   notEnrolled: string[];
   /** The study as a whole in one sentence, cohorts and shares included. */
   outcome: string;
@@ -708,7 +708,7 @@ export function studyView(st: Pick<Study, 'features' | 'params'> & { experiments
   const conflictText = conflicts.length ? `Conflicting settings: ${conflicts.join('; ')}, so which of the two applies to those clients is not determined here.` : '';
   let outcome: string;
   let headline: string;
-  if (!enrolled.length) outcome = headline = 'No cohort has a positive weight, so the study assigns no client to a cohort.';
+  if (!enrolled.length) outcome = headline = 'No cohort has a positive weight, so the study assigns no client to a cohort by weight (only a client started with a cohort’s forcing feature is put in one).';
   else if (!mixedList.length) outcome = headline = common.length ? `Every enrolled client (all cohorts alike): ${common.join(', ')}.` : 'No enrolled cohort changes a Zcash setting.';
   else if (!differing.length) {
     // Only conflicts (for example one enrolled cohort that both enables and disables a feature): nothing differs by cohort.
