@@ -1180,19 +1180,25 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
 }
 
 /** The last text read and its structure: callers read each changelog with both parseChangelog and changelogVersions. */
-let lastRead: { text: string; structure: Structure } | null = null;
-
 /**
- * The structure of a text, with a mark per "\n"-separated line (the lines bullets are read from). A lone CR also ends
- * a line in CommonMark (and on GitHub), so the structure is read over those lines; a "\n" line that holds several of
- * them gets the mark of the last one with a heading or doubt mark (its own bullet text holds a CR and is not read).
+ * A text's structure over its CommonMark lines. A lone CR ends a line in CommonMark (and on GitHub) as "\n" and CRLF
+ * do, so a "\n"-separated line (the lines bullets are read from and line numbers count) can hold several of them,
+ * each with its own mark: two release headings on one "\n" line are two releases.
  */
-function structureOf(text: string): Structure {
+interface TextStructure extends Structure {
+  /** The CommonMark lines (without line endings); `marks` has one entry per line. */
+  lines: string[];
+  /** The "\n" line each CommonMark line is on (null: the same lines). */
+  owner: number[] | null;
+}
+let lastRead: { text: string; structure: TextStructure } | null = null;
+
+function structureOf(text: string): TextStructure {
   if (lastRead?.text !== text) {
     const nl = text.split('\n').map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l));
-    let structure: Structure;
+    let structure: TextStructure;
     if (!nl.some((l) => l.includes('\r'))) {
-      structure = readStructure(nl);
+      structure = { ...readStructure(nl), lines: nl, owner: null };
     } else {
       const lines: string[] = [];
       const owner: number[] = [];
@@ -1202,15 +1208,7 @@ function structureOf(text: string): Structure {
           owner.push(i);
         }
       });
-      const read = readStructure(lines);
-      const marks: (LineMark | null)[] = new Array(nl.length).fill(null);
-      for (let j = 0; j < lines.length; j++) {
-        const m = read.marks[j];
-        const held = marks[owner[j]];
-        if (!m || held?.t === 'stop' || (m.t === 'heading-text' && held)) continue;
-        marks[owner[j]] = m;
-      }
-      structure = { ...read, marks };
+      structure = { ...readStructure(lines), lines, owner };
     }
     lastRead = { text, structure };
   }
@@ -1250,11 +1248,16 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   const now = epochMs(opts.now);
   let version: string | null = null;
   let section: string | null = null;
-  const { marks, refs, refsComplete } = structureOf(text);
+  const { marks, owner, refs, refsComplete } = structureOf(text);
+  // The CommonMark line being read: the marks of every one on "\n" line i apply, in order, before the line's bullet.
+  let j = 0;
   for (let i = 0; i < lines.length; i++) {
-    const mark = marks[i];
-    if (mark) {
-      if (mark.t === 'stop') break;
+    let marked = false;
+    for (; j < marks.length && (owner ? owner[j] : j) === i; j++) {
+      const mark = marks[j];
+      if (!mark) continue;
+      marked = true;
+      if (mark.t === 'stop') return out;
       if (mark.t === 'heading') {
         if (mark.level <= 2) {
           version = mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now, refsComplete) : null;
@@ -1266,9 +1269,8 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
         version = null;
         section = null;
       }
-      continue;
     }
-    if (!version) continue;
+    if (marked || !version) continue;
     const md = bulletText(lines[i]);
     if (!md) continue;
     const issueRefs = extractRefs(md).filter((r) => r.startsWith(`${repo}#`));
@@ -1303,9 +1305,9 @@ const VERSION_IN_TEXT = /(?<!\d)\d+\.\d+\.\d+/;
  */
 export function changelogVersions(text: string, opts: { now?: string | number | Date } = {}): string[] {
   const now = epochMs(opts.now);
-  const { marks, refs, refsComplete } = structureOf(text);
+  // Every CommonMark line in order (a "\n" line split by lone CRs holds several, each perhaps a release heading).
+  const { marks, lines, refs, refsComplete } = structureOf(text);
   const out: string[] = [];
-  const lines = text.split('\n');
   // Whether the run of non-blank lines up to the current one holds a version number.
   let versionInRun = false;
   for (let i = 0; i < marks.length; i++) {

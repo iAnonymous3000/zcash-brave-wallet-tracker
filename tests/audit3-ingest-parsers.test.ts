@@ -201,6 +201,27 @@ test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the s
   assert.deepEqual(changelogVersions(source), ['1.2.3']);
 });
 
+test('R3-ING-23 repair 2: every line a lone CR ends is read, so two release headings on one "\\n" line are two releases', () => {
+  // GitHub, micromark and markdown-it read "## 1.2.3" and "## 1.2.2" here as two release headings. The first repair
+  // kept one mark per "\n" line (the last heading on it), so it listed 1.2.2 alone, as the latest release; the base
+  // listed none.
+  const two = '## 1.2.3\r## 1.2.2\n- Zcash a.';
+  assert.deepEqual(changelogVersions(two), ['1.2.3', '1.2.2']);
+  assert.deepEqual(got(two), ['1.2.2:Zcash a.']);
+  const mixed = '# Changelog\r\r## 1.2.3\r- Zcash a.\r\r## 1.2.2\r- Zcash b.\n\n## 1.2.1\n- Zcash c.';
+  assert.deepEqual(changelogVersions(mixed), ['1.2.3', '1.2.2', '1.2.1']);
+  // The bullets on the first "\n" line are not read as entries (their text would hold a CR), as before.
+  assert.deepEqual(got(mixed), ['1.2.1:Zcash c.']);
+  assert.deepEqual(changelogVersions('## 1.2.3\r- Zcash a.\r\r## 1.2.2\r- Zcash b.'), ['1.2.3', '1.2.2']);
+  // A section heading after the release heading on the same "\n" line names the section of the entries below.
+  assert.deepEqual(
+    parseChangelog('## 1.2.3\r### Wallet\n- Zcash a.', opts).map((e) => `${e.version}/${e.section}:${e.text}`),
+    ['1.2.3/Wallet:Zcash a.'],
+  );
+  // CRLF line endings read as "\n" ones.
+  assert.deepEqual(changelogVersions('## 1.2.3\r\n## 1.2.2\r\n- Zcash a.'), ['1.2.3', '1.2.2']);
+});
+
 // ---------------------------------------------------------------------------
 // R3-PERF
 // ---------------------------------------------------------------------------
