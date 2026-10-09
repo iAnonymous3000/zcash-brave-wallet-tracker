@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-deps",
  "schema": 1,
- "retrievedAt": "2026-10-09T02:11:03.725Z",
+ "retrievedAt": "2026-10-09T09:06:04.939Z",
  "data": {
   "snapshots": {
    "v1.97.56": {
@@ -728,7 +728,7 @@
    },
    "master": {
     "ref": "master",
-    "commitSha": "b6d748120cb17e1a7ccb22c0bc13565511828b02",
+    "commitSha": "73a0c03b514ae5837b36cadb5c9294be5c66c8a0",
     "channels": [
      "master"
     ],
@@ -822,11 +822,11 @@
      "GetTreeState",
      "SendTransaction"
     ],
-    "retrievedAt": "2026-10-09T02:11:03.725Z",
+    "retrievedAt": "2026-10-09T09:06:04.939Z",
     "links": {
-     "lockfile": "https://github.com/brave/brave-core/blob/b6d748120cb17e1a7ccb22c0bc13565511828b02/third_party/rust/chromium_crates_io/Cargo.lock",
-     "deps": "https://github.com/brave/brave-core/blob/b6d748120cb17e1a7ccb22c0bc13565511828b02/DEPS",
-     "cargo": "https://github.com/brave/brave-core/blob/b6d748120cb17e1a7ccb22c0bc13565511828b02/components/brave_wallet/browser/zcash/rust/Cargo.toml"
+     "lockfile": "https://github.com/brave/brave-core/blob/73a0c03b514ae5837b36cadb5c9294be5c66c8a0/third_party/rust/chromium_crates_io/Cargo.lock",
+     "deps": "https://github.com/brave/brave-core/blob/73a0c03b514ae5837b36cadb5c9294be5c66c8a0/DEPS",
+     "cargo": "https://github.com/brave/brave-core/blob/73a0c03b514ae5837b36cadb5c9294be5c66c8a0/components/brave_wallet/browser/zcash/rust/Cargo.toml"
     }
    },
    "v1.96.62": {
@@ -1038,9 +1038,7 @@
    "v1.99.27": {
     "ref": "v1.99.27",
     "commitSha": null,
-    "channels": [
-     "github/nightly"
-    ],
+    "channels": [],
     "lock": {
      "orchard": {
       "version": "0.15.0",
@@ -1136,6 +1134,109 @@
      "lockfile": "https://github.com/brave/brave-core/blob/v1.99.27/third_party/rust/chromium_crates_io/Cargo.lock",
      "deps": "https://github.com/brave/brave-core/blob/v1.99.27/DEPS",
      "cargo": "https://github.com/brave/brave-core/blob/v1.99.27/components/brave_wallet/browser/zcash/rust/Cargo.toml"
+    }
+   },
+   "v1.99.28": {
+    "ref": "v1.99.28",
+    "commitSha": null,
+    "channels": [
+     "github/nightly"
+    ],
+    "lock": {
+     "orchard": {
+      "version": "0.15.0",
+      "source": "crates.io"
+     },
+     "zcash_primitives": {
+      "version": "0.29.0",
+      "source": "path"
+     },
+     "zcash_protocol": {
+      "version": "0.10.0",
+      "source": "path"
+     },
+     "zcash_client_backend": {
+      "version": "0.24.0-rc.1",
+      "source": "path"
+     },
+     "zcash_encoding": {
+      "version": "0.4.0",
+      "source": "path"
+     },
+     "zcash_note_encryption": {
+      "version": "0.4.1",
+      "source": "crates.io"
+     },
+     "shardtree": {
+      "version": "0.7.0",
+      "source": "crates.io"
+     },
+     "incrementalmerkletree": {
+      "version": "0.8.2",
+      "source": "crates.io"
+     },
+     "zip32": {
+      "version": "0.2.1",
+      "source": "crates.io"
+     },
+     "halo2_proofs": {
+      "version": "0.3.2",
+      "source": "crates.io"
+     },
+     "halo2_gadgets": {
+      "version": "0.5.0",
+      "source": "crates.io"
+     },
+     "pasta_curves": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "reddsa": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "sinsemilla": {
+      "version": "0.1.0",
+      "source": "crates.io"
+     }
+    },
+    "requirements": {
+     "brave_wallet": "1",
+     "cxx": "1",
+     "orchard": "0.15",
+     "rand": "0.8",
+     "zcash_primitives": "0.29",
+     "zcash_note_encryption": "0.4.1",
+     "zcash_client_backend": "0.24.0-rc.1",
+     "shardtree": "0.7.0"
+    },
+    "forkPin": {
+     "repo": "brave/librustzcash",
+     "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
+     "comment": "brave_ironwood_support"
+    },
+    "endpoints": [
+     "https://3xpl.com/zcash/transaction",
+     "https://blockexplorer.one/zcash/testnet/tx",
+     "https://testnet.zec.rocks/",
+     "https://zcash.wallet.brave.com/"
+    ],
+    "rpcMethods": [
+     "GetAddressUtxos",
+     "GetBlockRange",
+     "GetLatestBlock",
+     "GetLatestTreeState",
+     "GetLightdInfo",
+     "GetTaddressTxids",
+     "GetTransaction",
+     "GetTreeState",
+     "SendTransaction"
+    ],
+    "retrievedAt": "2026-10-09T09:06:04.939Z",
+    "links": {
+     "lockfile": "https://github.com/brave/brave-core/blob/v1.99.28/third_party/rust/chromium_crates_io/Cargo.lock",
+     "deps": "https://github.com/brave/brave-core/blob/v1.99.28/DEPS",
+     "cargo": "https://github.com/brave/brave-core/blob/v1.99.28/components/brave_wallet/browser/zcash/rust/Cargo.toml"
     }
    }
   }

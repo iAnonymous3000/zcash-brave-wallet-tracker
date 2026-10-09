@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-09T02:11:03.725Z",
+ "retrievedAt": "2026-10-09T09:06:04.939Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3627,9 +3627,9 @@
     ]
    },
    {
-    "tag": "v1.99.27",
-    "version": "1.99.27",
-    "publishedAt": "2026-10-08T17:22:46Z",
+    "tag": "v1.99.28",
+    "version": "1.99.28",
+    "publishedAt": "2026-10-09T06:01:31Z",
     "usedBy": [
      "github/nightly"
     ]
