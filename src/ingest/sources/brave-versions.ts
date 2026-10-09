@@ -37,6 +37,40 @@ export interface IosNotes {
   build: string | null;
   updatedAt: string | null;
   body: string;
+  /**
+   * The issue author's GitHub `author_association` when the note was read (OWNER, MEMBER or COLLABORATOR; notes
+   * from anyone else are not stored). Absent only on notes stored before provenance was recorded.
+   */
+  authorAssociation?: string | null;
+}
+
+/** GitHub author associations of people who own or can write to brave/brave-browser; only their release-notes issues are used. */
+export const TRUSTED_AUTHOR_ASSOCIATIONS: ReadonlySet<string> = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
+/** Whether an issue's `author_association` is a trusted one. A missing or unexpected value is untrusted. */
+export function trustedAssociation(association: unknown): association is string {
+  return typeof association === 'string' && TRUSTED_AUTHOR_ASSOCIATIONS.has(association);
+}
+
+/**
+ * Whether a stored note may stand in for one this run could not re-read: its recorded author association is trusted,
+ * or it was stored before provenance was recorded (no `authorAssociation`; such notes are re-checked, and replaced or
+ * dropped, by the next complete search). A note with a recorded untrusted association is never kept.
+ */
+export function keepableNote(n: IosNotes): boolean {
+  return n.authorAssociation === undefined || trustedAssociation(n.authorAssociation);
+}
+
+const MAX_IGNORED_LISTED = 25;
+
+/** Limitation naming the release-notes issues ignored because their author is not a Brave owner, member or collaborator. */
+function ignoredIssuesNote(ignored: { number: number; association: string }[]): string {
+  const listed = ignored.slice(0, MAX_IGNORED_LISTED);
+  const byAssociation = new Map<string, number[]>();
+  for (const x of listed) byAssociation.set(x.association, [...(byAssociation.get(x.association) ?? []), x.number]);
+  const groups = [...byAssociation].map(([a, ns]) => `${a}: ${ns.map((n) => `#${n}`).join(', ')}`).join('; ');
+  const more = ignored.length > listed.length ? `; and ${ignored.length - listed.length} more` : '';
+  return `ignored ${ignored.length} iOS release-notes issue(s) whose author is not a brave/brave-browser owner, member or collaborator (author_association ${groups}${more}); their build mappings and notes were not used`;
 }
 
 export interface BraveVersionsData {
@@ -240,39 +274,61 @@ export const braveVersions: Collector<BraveVersionsData> = {
       );
     }
 
-    // App Store marketing version -> build, from Brave's public iOS release-notes issues.
+    // App Store marketing version -> build, from Brave's public iOS release-notes issues. Anyone can open an issue with
+    // that title, so only issues opened by a brave/brave-browser owner, member or collaborator (GitHub's
+    // author_association) are stored and used; any other issue never maps a build or contributes release notes.
     let iosNotes: IosNotes[] = [];
     let iosNotesReadAt: string | null = prev?.iosNotesReadAt ?? (prev?.iosNotes ? prevReadAt : null);
+    const prevNotes: IosNotes[] = Array.isArray(prev?.iosNotes) ? prev!.iosNotes : [];
+    /** Earlier notes that may stand in for issues this run could not re-read, and the count dropped for an untrusted author. */
+    const carryNotes = (reread: Set<number>) => {
+      const unread = prevNotes.filter((x) => x && !reread.has(x.number));
+      const kept = unread.filter(keepableNote);
+      const dropped = unread.length - kept.length;
+      return { kept, droppedNote: dropped ? `; ${dropped} earlier note(s) from authors that are not brave/brave-browser owners, members or collaborators dropped` : '' };
+    };
     try {
       const out = await ctx.gh.searchIssues('repo:brave/brave-browser "Release Notes for iOS Release" in:title is:issue');
-      for (const h of out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown })[]) {
+      const hits = out.hits as (typeof out.hits[number] & { body?: string; pull_request?: unknown; author_association?: unknown })[];
+      const ignored: { number: number; association: string }[] = [];
+      for (const h of hits) {
         if (h.pull_request) continue;
         const { marketing, build } = parseIosNotesIssue(h.title, h.body ?? '');
         if (!marketing) continue;
-        iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000) });
+        if (!trustedAssociation(h.author_association)) {
+          const a = h.author_association;
+          ignored.push({ number: h.number, association: typeof a === 'string' && /^[A-Z_]{1,40}$/.test(a) ? a : 'not reported' });
+          continue;
+        }
+        iosNotes.push({ number: h.number, url: h.html_url, title: h.title, marketing, build, updatedAt: h.updated_at ?? null, body: (h.body ?? '').slice(0, 40000), authorAssociation: h.author_association });
       }
+      // Ignoring an issue by its author is a determinate answer (the issue was read), not a coverage gap.
+      if (ignored.length) limitations.push(ignoredIssuesNote(ignored));
       if (out.incomplete) {
-        // An incomplete search does not show that earlier notes are gone: keep the ones it did not return.
-        const seen = new Set(iosNotes.map((x) => x.number));
-        const kept = (prev?.iosNotes ?? []).filter((x) => !seen.has(x.number));
+        // An incomplete search does not show that earlier notes are gone: keep the ones it did not return. An issue it
+        // did return (trusted or not) is never replaced by its earlier copy.
+        const { kept, droppedNote } = carryNotes(new Set(hits.map((h) => h.number)));
         iosNotes.push(...kept);
         partial = true;
-        limitations.push(`iOS release-notes issue search was incomplete; ${kept.length} earlier note(s) kept`);
+        limitations.push(`iOS release-notes issue search was incomplete; ${kept.length} earlier note(s) kept${droppedNote}`);
       } else iosNotesReadAt = ctx.now;
     } catch (err) {
-      iosNotes = prev?.iosNotes ?? [];
+      const { kept, droppedNote } = carryNotes(new Set());
+      iosNotes = kept;
       partial = true;
-      limitations.push(`iOS release-notes issue lookup failed: ${errText(err)} (${iosNotes.length ? `keeping ${iosNotes.length} note(s) read ${iosNotesReadAt ? `at ${iosNotesReadAt}` : 'in an earlier run'}` : 'iOS App Store build not resolved this run'})`);
+      limitations.push(`iOS release-notes issue lookup failed: ${errText(err)} (${iosNotes.length ? `keeping ${iosNotes.length} note(s) read ${iosNotesReadAt ? `at ${iosNotesReadAt}` : 'in an earlier run'}` : 'iOS App Store build not resolved this run'}${droppedNote})`);
     }
     const iosRel = current.find((c) => c.platform === 'ios' && c.channel === 'release');
     if (iosRel && !iosRel.tag) {
       const rel = ctx.get<ReleasesData>('brave-releases')?.data;
-      const n = iosNotes.filter((x) => x.marketing === iosRel.version && x.build).sort((a, b) => b.number - a.number)[0];
+      // Only trusted notes reach this point; the check is repeated so an untrusted note can never map the build.
+      const n = iosNotes.filter((x) => x.marketing === iosRel.version && x.build && keepableNote(x)).sort((a, b) => b.number - a.number)[0];
       const hasIosRelease = Boolean(n?.build && rel?.releases?.some((r) => r.version === n.build && r.assetPlatforms.includes('ios')));
       if (n?.build && !hasIosRelease) limitations.push(`iOS release-notes issue #${n.number} names build ${n.build}, but no GitHub release with iOS assets exists for it; not used`);
       if (n?.build && hasIosRelease) {
         const pointerNote = iosRel.carriedPointers ? ` (App Store pointer not readable this run; value last read ${readTimes(Object.values(iosRel.carriedPointers))})` : '';
-        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}; GitHub release v${n.build} carries the iOS build${pointerNote}`;
+        const author = n.authorAssociation ? `, opened by a brave/brave-browser ${n.authorAssociation.toLowerCase()}` : '';
+        iosRel.basis = `App Store version ${iosRel.version} (release-ios-app-store) = build ${n.build} per Brave’s draft iOS release-notes issue #${n.number}${author}; GitHub release v${n.build} carries the iOS build${pointerNote}`;
         iosRel.detail = { ...(iosRel.detail ?? {}), 'ios-release-notes-issue': n.url };
         iosRel.version = n.build;
         iosRel.tag = `v${n.build}`;
