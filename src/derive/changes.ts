@@ -42,8 +42,11 @@ export const HISTORY_DAYS = 365;
  * name that is not a Cargo package name, leaves the verdict unknown; fork (path) version labels are called nominal;
  * per-build wording separates "outside the ranges" from "does not appear"; a malformed or inconsistent package list,
  * or a lock entry the build's own dependency graph does not link, is never used to clear a build.
+ * v15: advisory packages are told apart by ecosystem as well as name, so a package of another ecosystem (npm, Go, …)
+ * that shares a Rust crate's name stays unchecked (unknown) in either order, the Rust crate is still checked, and a
+ * vulnerable range that may be the other package's is never compared with Brave's crate.
  */
-export const DERIVE_RULES_VERSION = 14;
+export const DERIVE_RULES_VERSION = 15;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -436,6 +439,12 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
  * is unknown (R3-ADV-NAMES). Derive is never less cautious than rangeExposure(): a build is clear only where
  * rangeExposure() says exposed:false (or linkedVersions() says certainly not linked) and the full list is recorded.
  *
+ * Packages are told apart by ecosystem and name (R4-ADV-ECO): only Rust packages ("rust:", "crates.io:", or no
+ * ecosystem) are compared with Cargo.lock, and a package of any other ecosystem stays unchecked, whatever Rust crate
+ * shares its name and in whichever order the advisory lists them. Ranges name a package but no ecosystem: one that
+ * can be another ecosystem's package's is never compared with Brave's crate, and a Rust package that shares its name
+ * is checked only against ranges known to be its own (the collector's one-range-per-package order), else unknown.
+ *
  * Versions that do not come from crates.io (path packages such as Brave's librustzcash fork, or git sources) are
  * nominal labels: details say so at each such version, and the summary says so for the versions the verdict relies
  * on (R3-ADV-FORK). The verdict itself is computed from the versions as recorded.
@@ -467,7 +476,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   const pkgs = a.packages.join(', ');
   if (a.packages.some((p) => /lightwalletd|zaino/i.test(p))) return serverAdvisoryVerdict(a, deps, details);
 
-  // Packages by crateKey(). Text uses the monitored crate's own name, else the advisory's first spelling.
+  // Rust crate names by crateKey(). Text uses the monitored crate's own name, else the advisory's first Rust spelling.
   const monitored = new Map(CRATES.map((c) => [crateKey(c.crate), c.crate]));
   const shown = new Map<string, string>();
   const keyOf = (name: string) => {
@@ -475,24 +484,54 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     if (!shown.has(k)) shown.set(k, monitored.get(k) ?? name);
     return k;
   };
-  // Packages named by the advisory ("rust:orchard"), plus any package named only in a range.
-  const named = new Map<string, string>();
-  for (const p of a.packages) {
+  // The advisory's packages ("rust:orchard", "npm:orchard"): ecosystem (case-insensitive) and name.
+  const parsed = a.packages.map((p) => {
     const i = p.indexOf(':');
-    const k = keyOf(i === -1 ? p : p.slice(i + 1));
-    if (!named.has(k)) named.set(k, i === -1 ? '' : p.slice(0, i).toLowerCase());
+    const eco = i === -1 ? '' : p.slice(0, i).trim().toLowerCase();
+    return { eco, name: i === -1 ? p : p.slice(i + 1), rust: isRustEcosystem(eco) };
+  });
+  /**
+   * Packages by ecosystem and name (R4-ADV-ECO): a Rust package under "rust|" + crateKey() (so "rust:" and
+   * "crates.io:" spellings of one crate are one package), a package of any other ecosystem under its own ecosystem and
+   * spelling. A package of another ecosystem is never merged into a Rust crate of the same name, nor the reverse:
+   * only Rust packages are compared with Brave's Cargo.lock, and every other one stays unchecked.
+   */
+  const named = new Map<string, { rust: boolean; k: string; label: string }>();
+  for (const p of parsed) {
+    const id = p.rust ? `rust|${keyOf(p.name)}` : `${p.eco}|${p.name}`;
+    if (!named.has(id)) named.set(id, { rust: p.rust, k: p.rust ? crateKey(p.name) : '', label: `${p.eco}:${p.name}` });
   }
-  // Vulnerable ranges by package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]). A range belongs to the longest
+  // Vulnerable ranges by Rust package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]). A range belongs to the longest
   // advisory package name it starts with (so a name with a space is not cut short), else to its first word.
-  const advNames = a.packages.map((p) => (p.indexOf(':') === -1 ? p : p.slice(p.indexOf(':') + 1)));
-  const ranges = new Map<string, string[]>();
-  for (const r of a.vulnerableRanges) {
+  const advNames = parsed.map((p) => p.name);
+  const split = a.vulnerableRanges.map((r) => {
     const own = advNames.filter((n) => n && (r === n || r.startsWith(`${n} `))).sort((x, y) => y.length - x.length)[0];
     const i = own !== undefined ? own.length : r.indexOf(' ');
-    const k = keyOf(i === -1 ? r.trim() : r.slice(0, i));
-    ranges.set(k, [...(ranges.get(k) ?? []), i === -1 || i >= r.length ? '' : r.slice(i + 1).trim()]);
+    return { name: i === -1 ? r.trim() : r.slice(0, i), range: i === -1 || i >= r.length ? '' : r.slice(i + 1).trim() };
+  });
+  // A range names a package but no ecosystem. The collector writes one range per affected-package entry, in the order
+  // of the package list it deduplicates from the same entries, so equal lengths (nothing deduplicated) with every range
+  // naming its own package mean range i is package i's. Otherwise a range whose name is also a package of another
+  // ecosystem may be that package's: it is never compared with Brave's crate (R4-ADV-ECO), and a Rust package sharing
+  // the name has no range it can be checked against.
+  const paired = parsed.length === split.length && split.every((r, i) => crateKey(r.name) === crateKey(parsed[i].name));
+  const rustNames = new Set(parsed.filter((p) => p.rust).map((p) => crateKey(p.name)));
+  const foreignNames = new Set(parsed.filter((p) => !p.rust).map((p) => crateKey(p.name)));
+  const ranges = new Map<string, string[]>();
+  /** Rust packages with ranges under their name that may belong to a package of another ecosystem (skipped). */
+  const unattributed = new Set<string>();
+  for (const [i, r] of split.entries()) {
+    const k = crateKey(r.name);
+    if (paired ? !parsed[i].rust : foreignNames.has(k)) {
+      if (!paired && rustNames.has(k)) unattributed.add(k);
+      continue;
+    }
+    ranges.set(keyOf(r.name), [...(ranges.get(k) ?? []), r.range]);
   }
-  for (const k of ranges.keys()) if (!named.has(k)) named.set(k, '');
+  /** The packages of other ecosystems whose ranges could not be told apart from Rust package `k`'s (none if told apart). */
+  const sharedWith = (k: string) => (unattributed.has(k) ? [...new Set(parsed.filter((p) => !p.rust && crateKey(p.name) === k).map((p) => `${p.eco}:${p.name}`))] : []);
+  // Plus any package named only in a range (a Rust package: ranges of another ecosystem's packages were skipped).
+  for (const k of ranges.keys()) if (!named.has(`rust|${k}`)) named.set(`rust|${k}`, { rust: true, k, label: k });
   if (!named.size) return { summary: `The advisory names no affected package, so whether Brave is exposed is unknown.`, details, affected: null };
 
   const strict = channels !== undefined;
@@ -543,10 +582,10 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
 
   // Rust packages to check; other ecosystems, and names no Cargo package can have, cannot be judged from Cargo.lock.
   const rustPkgs: string[] = [];
-  for (const [k, eco] of named) {
-    if (eco && eco !== 'rust') unknown.set(`eco|${k}`, `${eco}:${shown.get(k)} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
-    else if (!isCargoName(k)) unknown.set(`name|${k}`, `the advisory's package name ${JSON.stringify(shown.get(k))} is not a Cargo package name (it may not have been recorded), so it cannot be compared with Brave's Cargo.lock`);
-    else rustPkgs.push(k);
+  for (const [id, p] of named) {
+    if (!p.rust) unknown.set(`eco|${id}`, `${p.label} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
+    else if (!isCargoName(p.k)) unknown.set(`name|${p.k}`, `the advisory's package name ${JSON.stringify(shown.get(p.k))} is not a Cargo package name (it may not have been recorded), so it cannot be compared with Brave's Cargo.lock`);
+    else rustPkgs.push(p.k);
   }
   /**
    * What each inspected build shows for each package: a linked version in range ('in'), every linked version under
@@ -664,8 +703,11 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
       // Only a recorded resolution says which versions are linked; a snapshot without one says nothing either way.
       const possibly = (c: { reachable: boolean | null }) => (s.resolution && c.reachable !== true ? ' (possibly linked)' : '');
       if (!rs.length) {
-        for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${tag(c)}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
-        unknown.set(`range|${k}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
+        // No range of its own: none given, or (R4-ADV-ECO) only ranges that may be another ecosystem's package's.
+        const others = sharedWith(k);
+        const why = others.length ? `the advisory's vulnerable ranges for ${pkg} name no ecosystem, so they cannot be told apart from those of ${others.join(', ')}` : '';
+        for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${tag(c)}${possibly(c)} could not be checked: ${why || 'the advisory gives no parseable vulnerable range'}`);
+        unknown.set(`range|${k}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but ${why || 'the advisory gives no parseable vulnerable range for it'}`);
         setState(k, s0, 'unknown');
         continue;
       }
@@ -824,6 +866,14 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
 /** Another spelling Cargo.lock could give the same package (for wording): "zcash_primitives" -> "zcash-primitives". */
 function otherSpelling(name: string): string {
   return name.includes('_') ? name.replace(/_/g, '-') : name.includes('-') ? name.replace(/-/g, '_') : `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+}
+
+/**
+ * An advisory package ecosystem whose packages are Rust crates: "rust" (GitHub's name), "crates.io" (OSV's), or none
+ * given (a bare package name, or one named only in a range, as before). Every other ecosystem stays unchecked.
+ */
+function isRustEcosystem(eco: string): boolean {
+  return eco === '' || eco === 'rust' || eco === 'crates.io';
 }
 
 /** A name a Cargo package can have (compared by crateKey()); "undefined"/"null" are unrecorded names, not packages. */
