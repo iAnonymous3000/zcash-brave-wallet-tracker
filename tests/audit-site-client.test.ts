@@ -1017,13 +1017,16 @@ test('UI-C5 (repair): a merged fix with unknown build presence reads unknown on 
 });
 
 test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no unsupported absence label', async () => {
-  const { readdirSync, statSync } = await import('node:fs');
+  const { readdirSync, statSync, cpSync } = await import('node:fs');
   const { buildSite } = await import('../src/site/build.ts');
   const { slug, setBase } = await import('../src/site/components.ts');
   const out = mkdtempSync(join(tmpdir(), 'zbt-site-'));
-  // buildSite reads its data from TRACKER_DATA_DIR (default data/): point it at the frozen copy (read only).
+  // buildSite reads its data from TRACKER_DATA_DIR (default data/): point it at a temporary copy of the frozen data, so
+  // the frozen copy stays unchanged whatever buildSite does with its data directory.
+  const data = mkdtempSync(join(tmpdir(), 'zbt-site-data-'));
+  cpSync(FROZEN, data, { recursive: true });
   const dataDirBefore = process.env.TRACKER_DATA_DIR;
-  process.env.TRACKER_DATA_DIR = FROZEN;
+  process.env.TRACKER_DATA_DIR = data;
   try {
     await buildSite({ outDir: out, basePath: '/' });
     const walk = (dir: string): string[] => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
@@ -1047,6 +1050,7 @@ test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no
     else process.env.TRACKER_DATA_DIR = dataDirBefore;
     setBase('/');
     rmSync(out, { recursive: true, force: true });
+    rmSync(data, { recursive: true, force: true });
   }
 });
 
