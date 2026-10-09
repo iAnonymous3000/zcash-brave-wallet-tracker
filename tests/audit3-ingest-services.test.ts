@@ -195,8 +195,8 @@ test('R3-ING-08 (repair): a star import is never followed by a determinate value
   // strict allowlist: determinate, not unknown (the one null -> false change). This input was in `rebound` above and
   // is unchanged. Rebinding X from the constant 1 to the constant 2 releases no object with a finaliser, so nothing
   // can rebind the switch after its store: a plain constants module. `ast.parse(open(f).read())`, compile() of the
-  // bytes and tests/fixtures/gate3_oracle.py ({"zcashDisabled": false}) agree on CPython 3.9.6, 3.11.15, 3.12.13 and
-  // 3.13.12 (3.10 was not available to check).
+  // bytes and tests/fixtures/gate3_oracle.py ({"zcashDisabled": false}) agree on CPython 3.9.6, 3.11.15, 3.12.14 and
+  // 3.13.12. 3.10 has not been checked (no 3.10 interpreter was available), so the 3.9-3.13 claim lacks that one.
   assert.deepEqual(parseGate3Switch(`${DEF}X = 1\nX = 2\n`), { zcashDisabled: false, line: 2, reason: null });
   assertGate3Unknown(await collectGate3(rebound[0]), 'imported name bound again after the definition');
   for (const [src, v] of [
@@ -306,17 +306,23 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
     assert.equal(r.data.gate3?.reason, undefined);
     assert.equal(r.limitations?.some((l) => /^gate3 at /.test(l)), false);
   }
-  // strict allowlist: unknown. OPEN DECISION, not settled by this test file: this input is classed here as a synthetic
-  // variant, not real data. The file as served has no byte order mark (tests/fixtures/gate3-corpus/real-constants-
-  // 173a2408.py starts with "from"); the mark is prepended by this test. The old reader read it as disabled at line
-  // 18. Python decodes a leading mark as utf-8-sig when it compiles the bytes, and tests/fixtures/gate3_oracle.py
-  // reads this input as true on CPython 3.9.6, 3.11.15, 3.12.13 and 3.13.12, so the strict reader is more cautious
-  // than Python here, never opposite. (The text-mode check `ast.parse(open(f).read())` keeps the mark and rejects the
-  // file on all four, but an import reads bytes.) The mark is outside printable ASCII, so the strict reader answers
-  // unknown at line 1, with a reason and a limitation, and the last determined value is kept. If this input should
-  // count as real data, the fix belongs in parseGate3Switch (src/ingest/sources/services.ts): accept one leading
-  // U+FEFF when lines 1 and 2 hold no coding declaration (the refused forms above, with a mark and ascii or utf8, or
-  // two marks, stay unknown), and expect true at line 18 here.
+  // strict allowlist: unknown. Classified as a synthetic variant, not real data (the rule that real-data collect()
+  // runs stay true does not cover it):
+  //   - the file as served has no byte order mark: tests/fixtures/gate3-corpus/real-constants-173a2408.py starts with
+  //     "from" and REAL_GATE3 is the same text; the mark is prepended by this test, so these bytes were never served;
+  //   - the real-data case is the collect() run on the unmodified REAL_GATE3 just above, which still asserts true at
+  //     line 18 with no reason and no gate3 limitation;
+  //   - a mark that did appear upstream fails safe: collect() decodes with ignoreBOM: true, so the reader sees U+FEFF,
+  //     answers unknown at line 1 with a reason, keeps the last determined value and marks the run partial (asserted
+  //     below). It never flips the answer.
+  // The old reader read this input as disabled at line 18. Python decodes a leading mark as utf-8-sig when it compiles
+  // the bytes, and tests/fixtures/gate3_oracle.py reads this input as true on CPython 3.9.6, 3.11.15, 3.12.14 and
+  // 3.13.12, so the strict reader is more cautious than Python here, never opposite. (The text-mode check
+  // `ast.parse(open(f).read())` keeps the mark and rejects the file on all four, but an import reads bytes.) The mark is
+  // outside printable ASCII, so the strict reader answers unknown at line 1. To read this input as true instead, change
+  // parseGate3Switch (src/ingest/sources/services.ts), not this test: accept one leading U+FEFF when lines 1 and 2 hold
+  // no coding declaration (the refused forms above, with a mark and ascii or utf8, or two marks, stay unknown), then
+  // expect true at line 18 here and revisit the `${BOM}${DEF}` and bomAscii expectations.
   for (const body of [`${BOM}${REAL_GATE3}`]) {
     const r = await collectGate3(utf8(body));
     assertGate3Unknown(r, 'the live file with a byte order mark');
