@@ -446,7 +446,9 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
 test('R3-PERF repair 2: a 256 KB line of any one common character or short unit, wherever it stands, is read in linear time', () => {
   // A sweep for expressions like the one the first repair added (an x.y.z search that rescanned a digit run from
   // each of its digits): every unit below, repeated over one 256 KB line, in each position a changelog line can have.
-  // A line of ">" or "- " nests deeper than the parser reads: that read fails (ChangelogStructureError), in time too.
+  // A line of ">" or "- " nests deeper than the parser reads: that read may fail (ChangelogStructureError), in time
+  // too. Every other line is read in full.
+  const nests = new Set(['>', '- ']);
   const units = ['1', '1.', '1.2', '.1', '9 ', '#', '-', '- ', '>', '<', '<!--', '[', '](', '`', ' ', '\t', '|', ':', '*', '(', '=', '\\'];
   const positions: [string, (line: string) => string][] = [
     ['before the first release', (l) => `${l}\n## 1.2.3\n- a`],
@@ -461,7 +463,7 @@ test('R3-PERF repair 2: a 256 KB line of any one common character or short unit,
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
   for (const unit of units) {
     for (const [where, place] of positions) {
-      const took = ms(parse(place(fill(unit)), true), limit);
+      const took = ms(parse(place(fill(unit)), nests.has(unit)), limit);
       assert.ok(took < limit, `${JSON.stringify(unit)} ${where}: ${Math.round(took)} ms (limit ${Math.round(limit)} ms)`);
     }
   }

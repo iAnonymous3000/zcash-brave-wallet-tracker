@@ -255,16 +255,17 @@ const MAX_REREADS = 1;
 /**
  * The work all readings of one text may do (readStructure reads a text up to four times: as CommonMark and as GitHub
  * does, each again with a stray opener escaped), per character of the text plus a fixed allowance, in units of about
- * 0.07 µs: a block quote line mark (blockquoteRule: every open quote marks each of its lines, and a lazy line is
- * marked by every quote it continues, perhaps over a second reading of the quote), a line read (WORK_PER_LINE) and a
- * block token made, kept or discarded with a reading of a quote (WORK_PER_TOKEN). One reading of a text does at most
- * about 12 per character (list items nested on every other character), Brave's changelogs well under 0.2 (all their
- * readings use under 1% of the budget); quotes nested 10 deep with runs of thousands of lazy lines at each level
- * about 11, nested 31 deep with a lazy line on every other character about 50. So the densest text is read once, not
- * four times: the budget keeps all the readings of a 256 KB text to about a third of a second (markdown-it's own
- * work per block token is most of it); past it the read fails (ChangelogStructureError).
+ * 0.1 µs: a block quote line mark (blockquoteRule: every open quote marks each of its lines, and a lazy line is marked
+ * by every quote it continues, perhaps over a second reading of the quote), a line read (WORK_PER_LINE) and a block
+ * token made, kept or discarded with a reading of a quote (WORK_PER_TOKEN). Without lazy lines one reading does at
+ * most about 14 per character (a quote marker on every character: two tokens and about two marks each; list items
+ * nested on every other character about 12), so the densest such text is read in full once, not four times. Brave's
+ * changelog files take about 0.25 per reading (under 2% of the budget). Lazy lines make quotes cost more: nested 10
+ * deep with runs of thousands of lazy lines at each level about 11, nested 31 deep with a lazy line on every other
+ * character about 50. The budget keeps all the readings of a 256 KB text well under a second (markdown-it's own work
+ * per block token is most of it); past it the read fails (ChangelogStructureError).
  */
-const WORK_PER_CHAR = 13;
+const WORK_PER_CHAR = 16;
 const WORK_BASE = 200_000;
 const WORK_PER_LINE = 2;
 const WORK_PER_TOKEN = 6;
