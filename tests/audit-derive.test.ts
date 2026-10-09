@@ -88,17 +88,20 @@ test('D1: crates the tracker does not read from the lockfile are not confirmed a
   assert.equal(rust.affected, null, 'non-Rust packages cannot be checked against Cargo.lock');
 });
 
-test('D1: known-safe pins stay unaffected, any vulnerable checked pin stays affected, genuine absence is worded explicitly', () => {
+test('D1: known-safe pins are reported as outside, a vulnerable checked pin is reported, absence is worded explicitly only where established', () => {
   const safe = { snapshots: { master: snap('master', ['master'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }), 'v1.97.56': snap('v1.97.56', ['desktop/release'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }) } };
   // Known pins: every linked version is recorded (graph resolution) and outside the ranges.
   const ok = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'] }, graphedAll(safe));
-  assert.equal(ok.affected, false);
+  // R3-ADV-NAMES: these snapshots record no full Cargo.lock package list, so another spelling of orchard or
+  // halo2_gadgets that Brave's Zcash crate links cannot be ruled out: the pins are outside, the verdict unknown
+  // (tests/audit3-derive.test.ts pins "not affected" for the same pins with the list recorded).
+  assert.equal(ok.affected, null);
   assert.match(ok.summary, /outside the vulnerable ranges/);
   // R-ADV: snapshots that record only the newest version in Cargo.lock do not show which versions are linked.
   const legacy = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'] }, safe);
   assert.equal(legacy.affected, null);
   assert.match(legacy.summary, ONE_RECORDED);
-  // Vulnerable at a channel build, unknown elsewhere: affected wins.
+  // Vulnerable at a channel build, unknown elsewhere: the vulnerable pin is reported.
   const mixed = { snapshots: { master: snap('master', ['master'], { ...LOCK, orchard: { version: '0.15.0', source: 'crates.io' } }), 'v1.96.61': snap('v1.96.61', ['android/release'], LOCK) } };
   const hit = advisoryVerdicts({ ...ADV, packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets ^0.4'] }, mixed);
   // R3-ADV-NOGRAPH: these snapshots record no resolution, so the in-range orchard 0.13.0 is not known to be linked
@@ -108,9 +111,12 @@ test('D1: known-safe pins stay unaffected, any vulnerable checked pin stays affe
   // A tracked crate that is genuinely not in the inspected lockfiles (master and the current channel build).
   const absentDeps: DepsData = { snapshots: { master: snap('master', ['master'], LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], LOCK) } };
   const absent = advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: [] }, absentDeps, [cv('desktop', 'release', '1.97.56', 'v1.97.56')]);
-  assert.equal(absent.affected, false);
+  // R3-ADV-NAMES: these snapshots predate recorded resolutions and the full Cargo.lock package list, so a missing
+  // sinsemilla entry does not establish absence (deps.ts linkedVersions() says certain: false): unknown, worded as
+  // not recorded (tests/audit3-derive.test.ts pins the explicit absence wording with the list recorded).
+  assert.equal(absent.affected, null);
   assert.match(absent.summary, /sinsemilla/);
-  assert.match(absent.summary, /not (?:in|present|resolved)|does not resolve|do(?:es)? not appear/i);
+  assert.match(absent.summary, /no sinsemilla version was recorded at .*so whether Brave links sinsemilla there is unknown/);
   // Server advisories are never mapped to users.
   assert.equal(advisoryVerdicts({ ...ADV, packages: ['go:github.com/zcash/lightwalletd'], vulnerableRanges: ['github.com/zcash/lightwalletd <= 0.5.4'] }, null).affected, null);
 });
@@ -567,7 +573,7 @@ test('D1 (repair): with the current build list, master-only evidence is never "n
     assert.doesNotMatch(gone.summary, /at the checked builds\./, label);
     assert.match(gone.summary, /incomplete/, label);
   }
-  // A vulnerable pin at master is still reported: any checked pin inside a range wins.
+  // A vulnerable pin at master is still reported (as unknown: see R3-ADV-NOGRAPH below).
   const vuln = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], LOCK) } }, []);
   // R3-ADV-NOGRAPH: master here records no resolution, so its in-range pin leaves the verdict unknown (deps.ts
   // rangeExposure() answers null); the pin is still reported in the summary.
@@ -579,7 +585,9 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
   const deps: DepsData = graphedAll({ snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } });
   const two = [cv('desktop', 'release', '1.97.56', 'v1.97.56'), cv('desktop', 'beta', '1.98.52', 'v1.98.52')];
   const ok = advisoryVerdicts(ADV, deps, two);
-  assert.equal(ok.affected, false);
+  // R3-ADV-NAMES: no full Cargo.lock package list is recorded here, so the pins cannot clear the builds (another
+  // spelling of orchard is not ruled out); tests/audit3-derive.test.ts pins "not affected" with the list recorded.
+  assert.equal(ok.affected, null);
   assert.match(ok.summary, /at every checked build \(master and 2 channel builds \(v1\.97\.56, v1\.98\.52\)\)/);
   // R-ADV: the same pins in snapshots that record only the newest version in Cargo.lock cannot clear the builds.
   const legacy = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', ['desktop/release'], SAFE_LOCK), 'v1.98.52': snap('v1.98.52', ['desktop/beta'], SAFE_LOCK) } }, two);
@@ -596,7 +604,8 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
   // A snapshot at a current tag counts even when the collector no longer lists a channel for it.
   const unassigned: DepsData = graphedAll({ snapshots: { master: snap('master', ['master'], SAFE_LOCK), 'v1.97.56': snap('v1.97.56', [], SAFE_LOCK) } });
   const v = advisoryVerdicts(ADV, unassigned, [two[0]]);
-  assert.equal(v.affected, false);
+  // R3-ADV-NAMES: without the full Cargo.lock package list the tag is read (and compared) but cannot clear the build.
+  assert.equal(v.affected, null);
   assert.ok(v.details.some((d) => d.startsWith('v1.97.56 (desktop/release): orchard 0.15.0 is outside')), v.details.join(' | '));
   // R3-ADV-NOGRAPH: the unassigned tag's snapshot records no resolution, so its vulnerable pin is found (named in the
   // summary) but leaves the verdict unknown rather than affected.
@@ -607,11 +616,13 @@ test('D1 (repair): every current build needs an inspected lockfile before "not a
 
 test('D1 (repair): the bare two-argument call names master as the only checked build', () => {
   // Without a build list (no production caller omits it), master-only evidence whose every linked version is known
-  // and outside the ranges can be "not affected" (tests/capabilities-changes.test.ts pins that for a graph-resolved
-  // master); the wording must still not claim channel builds were checked.
+  // and outside the ranges can be "not affected" when the full Cargo.lock package list is recorded
+  // (tests/audit3-derive.test.ts pins that); the wording must still not claim channel builds were checked.
   const v = advisoryVerdicts(ADV, { snapshots: { master: graphed(snap('master', ['master'], SAFE_LOCK)) } });
   assert.doesNotMatch(v.summary, /checked channel builds/);
-  assert.match(v.summary, /Only master was checked/);
+  // R3-ADV-NAMES: this master records no full package list, so the verdict is unknown and the "Only master was
+  // checked" note of a clear verdict does not apply; the checked build is still named as master alone.
+  assert.match(v.summary, /at every checked build \(master\), but the assessment is incomplete/);
   // R-ADV: without a build list, a snapshot that records only the newest version still cannot clear master.
   const legacy = advisoryVerdicts(ADV, { snapshots: { master: snap('master', ['master'], SAFE_LOCK) } });
   assert.equal(legacy.affected, null);
