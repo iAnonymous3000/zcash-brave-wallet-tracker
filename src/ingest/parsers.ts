@@ -253,20 +253,29 @@ const MAX_NESTING = 100;
  */
 const MAX_REREADS = 1;
 /**
- * Block quote lines the readings of one text may mark (blockquoteRule), per character of the text, plus a fixed
- * allowance. Every open quote marks each of its lines, and a lazy line (one without the ">" markers, continuing a
- * paragraph) is marked by every quote it continues, each perhaps over a second reading: a quote nested 10 deep with
- * runs of thousands of lazy lines at each level marks about 10 lines per character, one nested 31 deep with a lazy line
- * on every other character about 50. Each mark costs well under 0.1 µs, so the budget keeps a 256 KB text's readings
- * to a few hundred milliseconds (all of them: the budget is shared). Past it the read fails (ChangelogStructureError):
- * only block quotes nested deep with long runs of short lazy lines get there.
+ * The work all readings of one text may do (readStructure reads a text up to four times: as CommonMark and as GitHub
+ * does, each again with a stray opener escaped), per character of the text plus a fixed allowance, in units of about
+ * 0.07 µs: a block quote line mark (blockquoteRule: every open quote marks each of its lines, and a lazy line is
+ * marked by every quote it continues, perhaps over a second reading of the quote), a line read (WORK_PER_LINE) and a
+ * block token made, kept or discarded with a reading of a quote (WORK_PER_TOKEN). One reading of a text does at most
+ * about 12 per character (list items nested on every other character), Brave's changelogs well under 0.2 (all their
+ * readings use under 1% of the budget); quotes nested 10 deep with runs of thousands of lazy lines at each level
+ * about 11, nested 31 deep with a lazy line on every other character about 50. So the densest text is read once, not
+ * four times: the budget keeps all the readings of a 256 KB text to about a third of a second (markdown-it's own
+ * work per block token is most of it); past it the read fails (ChangelogStructureError).
  */
-const QUOTE_WORK_PER_CHAR = 16;
-const QUOTE_WORK_BASE = 100_000;
-/** The block quote lines the readings of one text have marked, and how many they may mark. */
-interface QuoteBudget {
+const WORK_PER_CHAR = 13;
+const WORK_BASE = 200_000;
+const WORK_PER_LINE = 2;
+const WORK_PER_TOKEN = 6;
+/** The work the readings of one text have done (whole readings, and quote marks of the one in progress), and the most they may do. */
+interface WorkBudget {
   used: number;
   limit: number;
+}
+/** Throws when the readings of a text, with `tokens` made so far in the reading in progress, are over budget. */
+function checkWork(budget: WorkBudget, tokens: number, line: number): void {
+  if (budget.used + WORK_PER_TOKEN * tokens > budget.limit) throw new ChangelogStructureError('a structure too dense to read in time (block quotes or list items nested deep with long runs of lines)', line);
 }
 
 /** What one parse keeps in its env (markdown-it hands env to every rule). */
@@ -295,16 +304,16 @@ interface ParseInfo {
   github: boolean;
   /** Whether a line the two differ on was met. */
   differs: boolean;
-  /** Block quote lines marked so far by every reading of the text, and how many they may mark. */
-  budget: QuoteBudget;
+  /** The work done so far by every reading of the text, and the most they may do. */
+  budget: WorkBudget;
 }
 const PARSE = Symbol('parse');
 const parseInfo = (state: StateBlock) => state.env[PARSE] as ParseInfo;
 /**
  * Thrown by parseChangelog and changelogVersions when a text's block structure cannot be read to its end: block quotes
- * and list items nested more than MAX_NESTING deep, or block quotes whose lazy lines would cost more than the parse's
- * budget. The read fails as a whole (the changelog collector then keeps its last good data) rather than leave the
- * rest of the text unread and report what was read as the whole changelog.
+ * and list items nested more than MAX_NESTING deep, or a structure whose readings would cost more than their budget
+ * (WORK_PER_CHAR). The read fails as a whole (the changelog collector then keeps its last good data) rather than
+ * leave the rest of the text unread and report what was read as the whole changelog.
  */
 export class ChangelogStructureError extends Error {
   constructor(what: string, line: number) {
@@ -587,6 +596,7 @@ function leadingDefinitions(state: StateBlock, from: number, to: number): { defi
  */
 function paragraphRule(state: StateBlock, startLine: number, endLine: number): boolean {
   const parse = parseInfo(state);
+  checkWork(parse.budget, state.tokens.length, startLine);
   const terminators = state.md.block.ruler.getRules('paragraph');
   const oldParentType = state.parentType;
   state.parentType = 'paragraph';
@@ -825,7 +835,7 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
     state.sCount[nextLine] = lazyTableHeader(state, nextLine, endLine) ? LAZY_HEADER : -1;
   }
   parse.budget.used += nextLine - startLine + 1;
-  if (parse.budget.used > parse.budget.limit) throw new ChangelogStructureError('block quotes with lazy lines nested too deep to read in time', startLine);
+  checkWork(parse.budget, state.tokens.length, startLine);
 
   const oldIndent = state.blkIndent;
   state.blkIndent = 0;
@@ -878,6 +888,8 @@ function blockquoteRule(state: StateBlock, startLine: number, endLine: number, s
     const reading = readQuote(state, startLine, endLine, limit);
     if (reading.final) return true;
     // A paragraph takes the lazy line at the end: discard this reading (and the definitions it recorded), read more.
+    // The tokens it made count as work done.
+    parse.budget.used += WORK_PER_TOKEN * (state.tokens.length - tokens);
     state.tokens.length = tokens;
     for (const d of parse.definitions.splice(definitions)) delete state.env.references?.[d.label];
     limit = 2 * reading.end - startLine + 1;
@@ -904,6 +916,7 @@ const tokenizeBlocks = markdown.block.tokenize.bind(markdown.block);
 markdown.block.tokenize = (state: StateBlock, startLine: number, endLine: number) => {
   const parse = parseInfo(state);
   if (parse.depth > MAX_NESTING) throw new ChangelogStructureError(`block quotes and list items nested more than ${MAX_NESTING} deep`, startLine);
+  checkWork(parse.budget, state.tokens.length, startLine);
   parse.indents.push(state.blkIndent);
   parse.depth++;
   try {
@@ -1047,11 +1060,11 @@ const markKey = (m: LineMark | null): string => (!m ? '' : m.t === 'heading' ? (
  *   in 0.29), a table header row after a paragraph that is a whole HTML tag (tableHeaderRule), and a whole tag on a
  *   lazy line of a list item's or quote's paragraph (paragraphRule, readQuote; ParseInfo.github).
  * A text whose structure cannot be read to its end (block quotes and list items nested more than MAX_NESTING deep,
- * block quotes beyond the parse's budget) throws ChangelogStructureError: what was read before is not reported as the
- * whole text. A re-reading with a stray opener escaped that cannot be read stands in as one beyond MAX_REREADS does.
+ * readings beyond their budget, WORK_PER_CHAR) throws ChangelogStructureError, in any of its readings: what was read
+ * before is not reported as the whole text.
  * `lines` are CommonMark's lines (no line ending in them).
  */
-function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github = false): Structure {
+function readStructure(lines: string[], budget: WorkBudget, rereads = 0, github = false): Structure {
   const marks: (LineMark | null)[] = new Array(lines.length).fill(null);
   const src = lines.join('\n');
   const parse: ParseInfo = {
@@ -1065,7 +1078,11 @@ function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github
     budget,
   };
   const env: Env = { [PARSE]: parse };
+  budget.used += WORK_PER_LINE * lines.length;
+  checkWork(budget, 0, 0);
   const tokens: Token[] = markdown.parse(src, env);
+  budget.used += WORK_PER_TOKEN * tokens.length;
+  checkWork(budget, 0, 0);
   const refs = new Map<string, LinkDef>();
   for (const [label, r] of Object.entries(env.references ?? {})) refs.set(label, { dest: r.href, title: r.title === '' ? null : r.title });
 
@@ -1081,9 +1098,8 @@ function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github
    * the text, mark as doubtful every line from the opener on where the text, read again with the opener escaped as
    * plain text, has a level-1/2 heading or a doubtful line of its own. Such a block hides everything after it, so a
    * text has at most one; MAX_REREADS bounds the chain of re-readings (each opener escaped can expose another),
-   * after which lines that could be headings (couldHead) stand in for the reading; so they do for a re-reading that
-   * cannot be read to its end (ChangelogStructureError). Without any such line the two readings agree and nothing is
-   * read again.
+   * after which lines that could be headings (couldHead) stand in for the reading. Without any such line the two
+   * readings agree and nothing is read again.
    */
   const unclosed = (opener: number, marker: string, end: number) => {
     if (end <= lastText) return;
@@ -1091,19 +1107,13 @@ function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github
     while (first < lines.length && !couldHead(first)) first++;
     if (first === lines.length) return;
     const at = lines[opener].indexOf(marker);
-    const headingShapedDoubtful = () => {
+    if (rereads >= MAX_REREADS || at < 0) {
       for (let j = first; j < lines.length; j++) if (couldHead(j)) marks[j] = { t: 'doubt' };
-    };
-    if (rereads >= MAX_REREADS || at < 0) return headingShapedDoubtful();
+      return;
+    }
     const plain = lines.slice();
     plain[opener] = `${plain[opener].slice(0, at)}\\${plain[opener].slice(at)}`;
-    let other: (LineMark | null)[];
-    try {
-      other = readStructure(plain, budget, rereads + 1, github).marks;
-    } catch (e) {
-      if (!(e instanceof ChangelogStructureError)) throw e;
-      return headingShapedDoubtful();
-    }
+    const other = readStructure(plain, budget, rereads + 1, github).marks;
     for (let j = opener; j < lines.length; j++) {
       const m = other[j];
       if (m && (m.t !== 'heading' || m.level <= 2)) marks[j] = { t: 'doubt' };
@@ -1197,7 +1207,7 @@ let lastRead: { text: string; structure: TextStructure } | null = null;
 function structureOf(text: string): TextStructure {
   if (lastRead?.text !== text) {
     const nl = text.split('\n').map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l));
-    const budget: QuoteBudget = { used: 0, limit: QUOTE_WORK_BASE + QUOTE_WORK_PER_CHAR * text.length };
+    const budget: WorkBudget = { used: 0, limit: WORK_BASE + WORK_PER_CHAR * text.length };
     let structure: TextStructure;
     if (!nl.some((l) => l.includes('\r'))) {
       structure = { ...readStructure(nl, budget), lines: nl, owner: null };

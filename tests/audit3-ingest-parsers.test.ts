@@ -305,7 +305,7 @@ test('R3-ING-23 repair 2: a changelog read in part is never reported as read in 
   for (const [name, block] of [
     ['101 nested quotes', `${'>'.repeat(101)} a`],
     ['101 nested list items', `${'- '.repeat(101)}a`],
-    ['a quote 31 deep with 100000 lazy lines', `${'>'.repeat(31)} a\n${'y\n'.repeat(100_000)}`],
+    ['a quote 100 deep with 100000 lazy lines', `${'>'.repeat(100)} a\n${'y\n'.repeat(100_000)}`],
   ]) {
     const t = insert(block);
     assert.throws(() => parseChangelog(t, o), ChangelogStructureError, name);
@@ -418,6 +418,14 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
     ['a line of digits and no release', `${fill('1')}\n- a`],
     ['an iOS release-notes title of digits', `Release ${fill('9')}\n\n## 1.2.3\n- a`],
     ['digit runs between dots before the first release', `${fill('1.11111111')}\n## 1.2.3\n- a`],
+    // Repair round 2: texts read four times (as CommonMark and as GitHub reads them, each again with the stray fence
+    // at the end escaped), with dense structure throughout. All the readings of a text share one budget; past it the
+    // read fails.
+    ['dense nested lists read four times', `Text\n<search>\n\n${fill(`${'- '.repeat(100)}a\n`)}\n~~~\n## 1.2.3\n- a`, true],
+    ['bullets read four times', `Text\n<search>\n\n${fill('- a\n')}\n~~~\n## 1.2.3\n- a`, true],
+    ['paragraphs read four times', `- x\n<img src=x>\n\n${fill('a\n\n')}\n~~~\n## 1.2.3\n- a`, true],
+    ['nested ordered lists read four times', `Text\n<search>\n\n${fill(`${'1. '.repeat(66)}a\n`)}\n~~~\n## 1.2.3\n- a`, true],
+    ['quoted lists with lazy lines read four times', `Text\n<search>\n\n${fill('> - - - - a\nb\n')}\n~~~\n## 1.2.3\n- a`, true],
   ];
   // Yardstick: a 256 KB changelog of ordinary lines (entries under release headings, one long paragraph).
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
