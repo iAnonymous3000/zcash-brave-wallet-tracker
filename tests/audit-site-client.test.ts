@@ -1133,8 +1133,11 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
   writeFileSync(join(data, 'history', 'events.json'), JSON.stringify([...synthetic, ...events]));
   // Site data derived before R-STAGE: a merged group whose stored label states absence while its builds are unknown.
   const copy = JSON.parse(readFileSync(join(data, 'derived', 'site.json'), 'utf8')) as SiteData;
-  const g = copy.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged')!;
-  Object.assign(g.status, { stage: 'merged', stageLabel: STAGE_LABEL.merged, releaseNotes: [], builds: g.status.builds.map((x) => ({ ...x, included: null })) });
+  // Preferably a merged group with build checks; otherwise any group is made one (round-3 repair: a refresh cannot
+  // remove the fixture).
+  const g = copy.groups.find((x) => x.status.implementation.state === 'merged' && x.status.builds.length > 0 && x.status.stage !== 'merged') ?? copy.groups[0];
+  const builds = g.status.builds.length ? g.status.builds : copy.channels.map((c) => ({ platform: c.platform as 'desktop', channel: c.channel, version: c.version, included: null, via: null, basis: 'test' }));
+  Object.assign(g.status, { stage: 'merged', stageLabel: STAGE_LABEL.merged, releaseNotes: [], implementation: { ...g.status.implementation, state: 'merged' }, builds: builds.map((x) => ({ ...x, included: null })) });
   writeFileSync(join(data, 'derived', 'site.json'), JSON.stringify(copy));
   const before = process.env.TRACKER_DATA_DIR;
   process.env.TRACKER_DATA_DIR = data;
