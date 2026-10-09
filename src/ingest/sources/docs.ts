@@ -113,12 +113,38 @@ async function zendeskList(ctx: Ctx, firstUrl: string, key: string, maxPages: nu
 }
 
 /**
- * Whether a Zendesk article record carries readable content. The listing, search and article endpoints all return
- * `body` (HTML). A record without a string body, or whose body has no text ("", "<p></p>", whitespace), is not an
- * article that was reworded: a published Help Center article is never empty, so this is an API shape change or a
- * failed render, and the article's Zcash wording is unknown. It is never captured as a page and never archived.
+ * HTML named character references for whitespace and invisible characters (spaces, zero-width characters, the soft
+ * hyphen, direction marks, invisible operators). decodeEntities leaves these as literal text, so they would read as
+ * words. `&nbsp` and `&shy` are also decoded without the semicolon, as browsers do.
  */
-const hasBody = (a: any) => typeof a?.body === 'string' && htmlToText(a.body).trim() !== '';
+const INVISIBLE_ENTITY =
+  /&(?:(?:Tab|NewLine|nbsp|NonBreakingSpace|shy|ensp|emsp|emsp13|emsp14|numsp|puncsp|thinsp|ThinSpace|hairsp|VeryThinSpace|MediumSpace|ThickSpace|ZeroWidthSpace|NegativeVeryThinSpace|NegativeThinSpace|NegativeMediumSpace|NegativeThickSpace|zwnj|zwj|lrm|rlm|NoBreak|af|ApplyFunction|it|InvisibleTimes|ic|InvisibleComma);|(?:nbsp|shy)(?![A-Za-z0-9]))/g;
+/** Numeric character references, with or without the closing semicolon (browsers decode both). */
+const NUMERIC_REF = /&#(?:[xX]([0-9a-fA-F]+)|(\d+));?/g;
+/** Characters that render as nothing: default-ignorable code points (zero-width, format, filler) and the blank braille pattern. */
+const IGNORABLE = /[\p{Default_Ignorable_Code_Point}\u2800]/gu;
+/** What makes text readable: a letter, digit, punctuation mark or symbol that is not ignorable. */
+const READABLE = /[\p{L}\p{N}\p{P}\p{S}]/u;
+
+/**
+ * Whether a Zendesk article record carries readable content. The listing, search and article endpoints all return
+ * `body` (HTML). A record without a string body, or whose body has no visible text ("", "<p></p>", whitespace, or only
+ * invisible characters such as &ensp;, &ZeroWidthSpace;, U+200B, U+00AD or U+FEFF), is not an article that was
+ * reworded: a published Help Center article is never empty, so this is an API shape change or a failed render, and
+ * the article's Zcash wording is unknown. It is never captured as a page and never archived. (Only this test strips
+ * invisible characters; page text and content hashes are computed as before, so captured pages do not change.)
+ */
+function hasBody(a: any): boolean {
+  if (typeof a?.body !== 'string') return false;
+  const html = a.body.replace(INVISIBLE_ENTITY, ' ').replace(NUMERIC_REF, (ref: string, hex: string | undefined, dec: string | undefined) => {
+    const cp = hex !== undefined ? parseInt(hex, 16) : Number(dec);
+    // Invalid code points render as U+FFFD, which is no text either.
+    if (!Number.isFinite(cp) || cp <= 0 || cp > 0x10ffff || (cp >= 0xd800 && cp <= 0xdfff)) return ' ';
+    const ch = String.fromCodePoint(cp);
+    return READABLE.test(ch.replace(IGNORABLE, '')) ? ref : ' ';
+  });
+  return READABLE.test(htmlToText(html).replace(IGNORABLE, ''));
+}
 
 function supportPage(a: any, now: string): { page: DocPage; mentionsZcash: boolean } {
   const text = htmlToText(a.body ?? '');
@@ -171,17 +197,26 @@ export const docs: Collector<DocsData> = {
       partial = true;
       limitations.push(`Help Center search for "zcash" incomplete (${search.problem}); articles not returned are kept from earlier runs unless confirmed removed`);
     }
-    const articles = new Map<string, any>();
+    // One record per article id from the listing and the search. Being published is a fact about the article, not
+    // about the copy that is kept: when any source in this run shows it as published it is treated as published, and
+    // its content comes from a published copy only (a readable draft copy never stands in for a body-less published
+    // one). Between copies in the same state, a readable copy is never replaced by a body-less one.
+    const articles = new Map<string, { a: any; published: boolean }>();
     for (const a of [...list.items, ...search.items]) {
       if (!a || a.id === undefined) continue;
-      const had = articles.get(String(a.id));
-      if (had && hasBody(had) && !hasBody(a)) continue; // never replace a readable copy with a body-less one
-      articles.set(String(a.id), a);
+      const id = String(a.id);
+      const published = !a.draft;
+      const had = articles.get(id);
+      if (had) {
+        if (had.published && !published) continue; // a draft copy never replaces a published one
+        if (had.published === published && hasBody(had.a) && !hasBody(a)) continue;
+      }
+      articles.set(id, { a, published });
     }
     const bodyless: string[] = [];
     const prevIds = new Set(prevPages.map((p) => p.id));
-    for (const a of articles.values()) {
-      if (a.draft) continue;
+    for (const { a, published } of articles.values()) {
+      if (!published) continue;
       if (!hasBody(a)) {
         // A missing body hides whether the article mentions Zcash at all; an empty one matters when the article was
         // captured before or its title names Zcash (an unrelated empty Wallet article cannot be a Zcash page).
@@ -193,7 +228,7 @@ export const docs: Collector<DocsData> = {
     }
     if (bodyless.length) {
       partial = true;
-      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (missing or empty; API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
+      limitations.push(`${bodyless.length} Help Center article(s) were listed without a body (missing or empty, or invisible characters only; API shape changed?); their Zcash wording could not be read, earlier captured copies are kept and none is treated as reworded: ${bodyless.slice(0, 4).join(', ')}`);
     }
 
     // Earlier Help Center pages not captured this run: removed, reworded, or merely not listed?
@@ -203,9 +238,11 @@ export const docs: Collector<DocsData> = {
     for (const old of prevPages.filter((p) => p.source === 'support')) {
       if (pages.some((p) => p.id === old.id)) continue;
       const articleId = old.id.replace(/^zendesk-/, '');
-      const listed = articles.get(articleId);
-      // This run's listing or search shows the article as published (with or without a readable body).
-      const listedPublished = !!listed && !listed.draft;
+      const entry = articles.get(articleId);
+      // This run's listing or search shows the article as published (with or without a readable body); `listed` is
+      // then a published copy.
+      const listedPublished = !!entry?.published;
+      const listed = entry?.a;
       if (listedPublished && hasBody(listed)) {
         archive(old, 'no-longer-mentions-zcash'); // read this run: still published, no Zcash wording
         ended += 1;
@@ -233,7 +270,7 @@ export const docs: Collector<DocsData> = {
             ended += 1;
             continue;
           }
-          if (!hasBody(article)) throw new Error('article response has no body or an empty one (API shape changed?)');
+          if (!hasBody(article)) throw new Error('article response has no body, an empty one or one without visible text (API shape changed?)');
           const { page, mentionsZcash } = supportPage(article, ctx.now);
           if (mentionsZcash) pages.push(page); // still a Zcash article, just outside the listing/search
           else {
