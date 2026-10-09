@@ -502,17 +502,22 @@ test('R-ADV: a vulnerable lower version linked next to a safe higher one is "aff
     const high = advisoryVerdicts({ ...ADV, vulnerableRanges: ['orchard >= 0.15.0, < 0.15.1'] }, deps, ONE_BUILD);
     assert.equal(high.affected, true, `orchard 0.15.0 range with lock=${lockPick}`);
     const neither = advisoryVerdicts({ ...ADV, vulnerableRanges: ['orchard >= 0.16.0'] }, deps, ONE_BUILD);
-    assert.equal(neither.affected, false, 'every linked version known and outside');
+    // R3-ADV-NAMES: every linked orchard version is known and outside, but without the full Cargo.lock package list
+    // another spelling of orchard is not ruled out: unknown (audit3-derive pins false with the list recorded).
+    assert.equal(neither.affected, null, 'every linked version known and outside, no package list');
     assert.match(neither.summary, /outside the vulnerable ranges at every checked build/);
   }
-  // A vulnerable version recorded by a snapshot written before resolutions were recorded (the committed data) still
-  // counts (see the next tests for what such a snapshot cannot show), and a graph-resolved single version reads as
-  // `lock` did.
+  // A vulnerable version recorded by a snapshot written before resolutions were recorded (the committed data) is
+  // still reported (see the next tests for what such a snapshot cannot show), and a graph-resolved single version
+  // reads as `lock` did.
+  // R3-ADV-NOGRAPH: it counts as unknown, not affected: without a resolution it is not known to be linked (deps.ts
+  // rangeExposure() answers null), so the verdict follows rangeExposure().
   const legacy: DepsData = { snapshots: { master: { ref: 'master', commitSha: 'x', channels: ['master'], lock: { orchard: { version: '0.13.0', source: 'crates.io' } }, requirements: {}, forkPin: null, endpoints: [], retrievedAt: NOW, links: { lockfile: '', deps: '', cargo: '' } } } };
-  assert.equal(advisoryVerdicts(ADV, legacy).affected, true);
+  assert.equal(advisoryVerdicts(ADV, legacy).affected, null);
   const single = depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] }));
   const v = advisoryVerdicts(ADV, single, ONE_BUILD);
-  assert.equal(v.affected, false);
+  // R3-ADV-NAMES: no full Cargo.lock package list here, so the single linked version cannot clear the builds.
+  assert.equal(v.affected, null);
   assert.deepEqual(v.details, ['master: orchard 0.15.0 is outside the vulnerable range < 0.14.0', 'v1.97.56 (desktop/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0']);
 });
 
@@ -532,12 +537,17 @@ test('R-ADV: a snapshot that records only the newest version in Cargo.lock canno
   assert.doesNotMatch(mixed.summary, /at master;/, 'the graph-resolved master is not listed as incomplete');
   // Without a build list the same applies.
   assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }))).affected, null);
-  // Controls: a recorded version inside the range still counts; a monitored crate absent from the recorded lock is
-  // absent from Cargo.lock; graph-resolved snapshots with the same version clear the build.
-  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.13.0' })), ONE_BUILD).affected, true);
-  assert.equal(advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD).affected, false);
+  // Controls: a recorded version inside the range is still reported; a monitored crate missing from the recorded lock
+  // is not established as absent; graph-resolved snapshots with the same version are compared build by build.
+  // R3-ADV-NOGRAPH: the in-range recorded version counts as unknown (not established as linked: deps.ts
+  // rangeExposure() answers null for a snapshot without a resolution), not as affected.
+  assert.equal(advisoryVerdicts(ADV, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.13.0' })), ONE_BUILD).affected, null);
+  // R3-ADV-NAMES: a legacy snapshot without a sinsemilla entry does not show that sinsemilla is absent (deps.ts
+  // linkedVersions() says certain: false, rangeExposure() null), so it is unknown, not "not affected".
+  assert.equal(advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, depsOf(legacySnap('master', ['master'], { orchard: '0.15.0' }), legacySnap('v1.97.56', ['desktop/release'], { orchard: '0.15.0' })), ONE_BUILD).affected, null);
   const graph = advisoryVerdicts(ADV, depsOf(rsnap('master', ['master'], { orchard: [cand('0.15.0', true, true)] }), rsnap('v1.97.56', ['desktop/release'], { orchard: [cand('0.15.0', true, true)] })), ONE_BUILD);
-  assert.equal(graph.affected, false);
+  // R3-ADV-NAMES: graph-resolved, but no full Cargo.lock package list: another spelling is not ruled out.
+  assert.equal(graph.affected, null);
 });
 
 test('R-ADV: crate names match case-insensitively with "-" and "_" alike, in the advisory, its ranges and the Cargo.lock package list (merge regression)', () => {
@@ -668,8 +678,11 @@ test('R-ADV: a package Brave does not monitor (zebrad) is absent only when every
   assert.match(old.summary, /zebrad is not among the crates this tracker reads from Brave's Cargo\.lock/);
   // A monitored crate the graph shows is not linked counts as absent from the resolved Zcash dependencies.
   const unlinked = advisoryVerdicts({ ...ADV, packages: ['rust:sinsemilla'], vulnerableRanges: ['sinsemilla < 1.0.0'] }, depsOf(rsnap('master', ['master'], { ...safe, sinsemilla: [cand('0.1.0', false)] }), rsnap('v1.97.56', ['desktop/release'], { ...safe, sinsemilla: [cand('0.1.0', false)] })), ONE_BUILD);
-  assert.equal(unlinked.affected, false);
-  assert.match(unlinked.summary, /sinsemilla does not appear in Brave's resolved Zcash dependencies/);
+  // R3-ADV-NAMES: only where the full Cargo.lock package list is recorded (these snapshots have none, so a
+  // differently spelled sinsemilla that is linked is not ruled out): unknown, and not worded as absent here
+  // (tests/audit3-derive.test.ts pins false and the absence wording with the list recorded).
+  assert.equal(unlinked.affected, null);
+  assert.match(unlinked.summary, /no sinsemilla version linked from Brave's Zcash crate was recorded at master and 1 channel build \(v1\.97\.56\)/);
 });
 
 test('R-ADV: adoption text, the crates table and master dependency pins use the highest linked version', () => {

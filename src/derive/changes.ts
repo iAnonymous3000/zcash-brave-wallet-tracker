@@ -36,8 +36,14 @@ export const HISTORY_DAYS = 365;
  * dependency version (and the full Cargo.lock package list, names compared as crates.io does), where a snapshot that
  * records one version per crate cannot clear a build; adoption text and master dependency pins use the highest linked
  * version and never state a possibly linked one as resolved; rebuild drops require every generating input read.
+ * v14: advisory verdicts take every build's exposure from rangeExposure(), so a snapshot without a recorded
+ * resolution never makes an advisory "affected"; a spelling of a crate the collector did not resolve, a build without
+ * its full Cargo.lock package list (another spelling not ruled out; never "does not appear" there), or a package
+ * name that is not a Cargo package name, leaves the verdict unknown; fork (path) version labels are called nominal;
+ * per-build wording separates "outside the ranges" from "does not appear"; a malformed or inconsistent package list,
+ * or a lock entry the build's own dependency graph does not link, is never used to clear a build.
  */
-export const DERIVE_RULES_VERSION = 13;
+export const DERIVE_RULES_VERSION = 14;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -409,25 +415,46 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
 /**
  * Compare an advisory's vulnerable ranges with Brave's resolved versions at master and channel tags.
  *
- * Every version Brave's Zcash crate may link counts, not only `lock` (which holds one of them): for snapshots with
- * a recorded dependency-graph resolution, linkedVersions()/rangeExposure() from deps.ts decide per build — a
- * version known to be linked inside a range → affected; a possibly linked (ambiguous) version inside a range, or
- * a linked set that could not be established, → unknown; a build is clear only when every linked version is known
- * and outside. Snapshots read before candidates were recorded hold one version per crate in `lock` (the newest in
- * Cargo.lock): inside a range it counts as affected, but outside every range it cannot clear the build, because
- * another vendored version may be linked (unknown).
+ * Every version Brave's Zcash crate may link counts, not only `lock` (which holds one of them), and exposure at each
+ * build is what deps.ts rangeExposure() (over linkedVersions()) answers, for every snapshot: a version known to be
+ * linked inside a range → affected; a possibly linked (ambiguous) version inside a range, or a linked set that could
+ * not be established, → unknown; a build is clear only when every linked version is known and outside. Snapshots
+ * read before candidates were recorded (no `resolution`) hold one version per crate in `lock` (the newest in
+ * Cargo.lock), and which versions Brave's Zcash crate links is not established there: inside a range that version
+ * leaves the build unknown, because it may not be the one Brave links (R3-ADV-NOGRAPH), and outside every range it
+ * cannot clear the build, because another vendored version may be linked.
  *
- * Crate names are compared by crateKey() (case-insensitive, "-" and "_" alike, as crates.io does), so an advisory
- * naming "zcash-primitives" is checked against Brave's zcash_primitives, and a Cargo.lock package "Inflector"
- * counts as present for an advisory naming "inflector".
+ * Crate names are compared by crateKey(), exactly as linkedVersions() compares them (case-insensitive, "-" and "_"
+ * alike, as crates.io does), so an advisory naming "zcash-primitives" is checked against Brave's zcash_primitives,
+ * and a Cargo.lock package "Inflector" counts as present for an advisory naming "inflector". The collector records
+ * versions under the tracker's own spelling only (exact Cargo.lock names), so only a build's full Cargo.lock package
+ * list (lockPackages, when consistent) shows that no other spelling of the package is there. A build with that list
+ * where it names the package under a spelling no version was recorded for is unknown; a build without that list
+ * cannot clear the package at all, outside or not linked alike, because a differently spelled copy that Brave's
+ * Zcash crate links (a renamed fork package, say) would be invisible in its record; and a name that is not a Cargo
+ * package name (e.g. "undefined" from a record without a package) cannot be compared with Cargo.lock at all, so it
+ * is unknown (R3-ADV-NAMES). Derive is never less cautious than rangeExposure(): a build is clear only where
+ * rangeExposure() says exposed:false (or linkedVersions() says certainly not linked) and the full list is recorded.
  *
- * Precedence: any checked pin inside a vulnerable range → affected (true). Otherwise anything that could not be
- * checked → unknown (null): no dependency data, a build whose lockfile read is empty, a present crate whose range
- * is missing or unparseable, a build whose linked versions are not all known, a crate this tracker does not
- * resolve that is (or may be) in Cargo.lock, or a non-Rust package. Only when every package was checked is the
- * verdict "not affected" (false). A crate this tracker resolves counts as absent when none of the inspected
- * lockfiles links it from the Zcash crate; any other crate counts as absent only when every inspected snapshot
- * records its full Cargo.lock package list (lockPackages) and none contains it.
+ * Versions that do not come from crates.io (path packages such as Brave's librustzcash fork, or git sources) are
+ * nominal labels: details say so at each such version, and the summary says so for the versions the verdict relies
+ * on (R3-ADV-FORK). The verdict itself is computed from the versions as recorded.
+ *
+ * Precedence: any build where a version known to be linked is inside a vulnerable range → affected (true). Otherwise
+ * anything that could not be checked → unknown (null): no dependency data, a build whose lockfile read is empty, a
+ * present crate whose range is missing or unparseable, a build whose linked versions are not all known (every
+ * snapshot without a resolution included), a spelling of the crate the collector did not resolve, a crate this
+ * tracker does not resolve that is (or may be) in Cargo.lock, a package name that is not a Cargo package name, or a
+ * non-Rust package, a build without its full Cargo.lock package list (none recorded, or one that is malformed or
+ * inconsistent with the build's own record), or a build whose recorded lock lists a version its own dependency graph
+ * does not show as linked (an inconsistent record). Only when every package was checked is the
+ * verdict "not affected" (false). A crate counts as absent at a build only when that build records its full
+ * Cargo.lock package list and either no spelling of the crate is in it or (for a crate this tracker resolves) the
+ * dependency graph shows that Brave's Zcash crate links none of its versions.
+ *
+ * The summary names, per package, the builds where its versions were compared and found outside the ranges and the
+ * builds where it does not appear; "outside … at every checked build" only when the package was compared at every
+ * inspected build (R3-ADV-WORDING). Reasons that apply to several builds are given once per package, naming them.
  *
  * `channels` (the current platform/channel builds) makes the check strict about coverage, and every production
  * caller passes it (an empty list included): "not affected" then also needs at least one inspected Release, Beta
@@ -455,12 +482,15 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     const k = keyOf(i === -1 ? p : p.slice(i + 1));
     if (!named.has(k)) named.set(k, i === -1 ? '' : p.slice(0, i).toLowerCase());
   }
-  // Vulnerable ranges by package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]).
+  // Vulnerable ranges by package ("orchard < 0.14.0" -> orchard: ["< 0.14.0"]). A range belongs to the longest
+  // advisory package name it starts with (so a name with a space is not cut short), else to its first word.
+  const advNames = a.packages.map((p) => (p.indexOf(':') === -1 ? p : p.slice(p.indexOf(':') + 1)));
   const ranges = new Map<string, string[]>();
   for (const r of a.vulnerableRanges) {
-    const i = r.indexOf(' ');
+    const own = advNames.filter((n) => n && (r === n || r.startsWith(`${n} `))).sort((x, y) => y.length - x.length)[0];
+    const i = own !== undefined ? own.length : r.indexOf(' ');
     const k = keyOf(i === -1 ? r.trim() : r.slice(0, i));
-    ranges.set(k, [...(ranges.get(k) ?? []), i === -1 ? '' : r.slice(i + 1).trim()]);
+    ranges.set(k, [...(ranges.get(k) ?? []), i === -1 || i >= r.length ? '' : r.slice(i + 1).trim()]);
   }
   for (const k of ranges.keys()) if (!named.has(k)) named.set(k, '');
   if (!named.size) return { summary: `The advisory names no affected package, so whether Brave is exposed is unknown.`, details, affected: null };
@@ -482,9 +512,16 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return parts.join(' and ');
   };
   const fullList = fullLockPackages;
-  /** The name under which this snapshot records the crate with key `k` (its own spelling), else the shown name. */
-  const nameIn = (s: Snap, k: string): string =>
-    Object.keys(s.resolution?.candidates ?? {}).find((n) => crateKey(n) === k) ?? Object.keys(s.lock).find((n) => crateKey(n) === k) ?? monitored.get(k) ?? shown.get(k)!;
+  /**
+   * Builds without a usable full package list, as one predicate ("Brave's full Cargo.lock package list …"): a list
+   * that was not recorded, and one that was recorded but is not used (malformed or inconsistent; see details), are
+   * named separately.
+   */
+  const listGap = (at: Snap[]) => {
+    const none = at.filter((s) => s.lockPackages == null);
+    const bad = at.filter((s) => s.lockPackages != null);
+    return [none.length ? `was not recorded at ${where(none)}` : '', bad.length ? `${none.length ? 'and the one ' : ''}recorded at ${where(bad)} is not usable (see details)` : ''].filter(Boolean).join(', ');
+  };
   const unknown = new Map<string, string>(); // reason key -> text
   for (const s of builds) if (!hasLock(s)) unknown.set(`lock|${s.ref}`, `Brave's lockfile could not be read at ${label(s)}`);
   if (strict) {
@@ -504,20 +541,56 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     }
   }
 
-  // Rust packages to check; other ecosystems cannot be judged from Cargo.lock.
+  // Rust packages to check; other ecosystems, and names no Cargo package can have, cannot be judged from Cargo.lock.
   const rustPkgs: string[] = [];
   for (const [k, eco] of named) {
     if (eco && eco !== 'rust') unknown.set(`eco|${k}`, `${eco}:${shown.get(k)} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
+    else if (!isCargoName(k)) unknown.set(`name|${k}`, `the advisory's package name ${JSON.stringify(shown.get(k))} is not a Cargo package name (it may not have been recorded), so it cannot be compared with Brave's Cargo.lock`);
     else rustPkgs.push(k);
   }
-  const seen = new Set<string>();
-  /** Shown package name -> inspected builds where its versions were compared, and where all were outside. */
-  const seenAt = new Map<string, Snap[]>();
-  const outsideAt = new Map<string, Snap[]>();
-  const mark = (m: Map<string, Snap[]>, pkg: string, s: Snap) => m.set(pkg, [...(m.get(pkg) ?? []), s]);
+  /**
+   * What each inspected build shows for each package: a linked version in range ('in'), every linked version under
+   * the recorded spelling known and outside, or (no resolution) the one recorded version outside ('outside'; without
+   * the full package list, or without a resolution, it leaves the verdict unknown, with a reason given below),
+   * certainly not linked from the Zcash crate where the full package list is recorded ('absent'), anything else
+   * ('unknown'); and for a package this tracker does not resolve: in the full Cargo.lock package list ('in-lock'),
+   * not in it ('not-in-lock'), or no list recorded ('unread').
+   */
+  type State = 'in' | 'outside' | 'absent' | 'unknown' | 'in-lock' | 'not-in-lock' | 'unread';
+  const stateAt = new Map<string, Map<Snap, State>>();
+  const setState = (k: string, s: Snap, st: State) => {
+    if (!stateAt.has(k)) stateAt.set(k, new Map());
+    stateAt.get(k)!.set(s, st);
+  };
+  const buildsIn = (k: string, st: State) => inspected.filter((s) => stateAt.get(k)?.get(s) === st);
+  const add = <T>(m: Map<string, T[]>, k: string, v: T) => m.set(k, [...(m.get(k) ?? []), v]);
   const hitAt: string[] = [];
   /** Package key -> builds read before every linked version was recorded, where its one recorded version is outside. */
-  const oneRecorded = new Map<string, string[]>();
+  const oneRecorded = new Map<string, Snap[]>();
+  /** Package key -> builds read before linked versions were recorded that hold no version of it. */
+  const noRecord = new Map<string, Snap[]>();
+  /**
+   * Package key -> builds without a full Cargo.lock package list where every linked version under the recorded
+   * spelling is outside the ranges ('outside') or none is linked ('notLinked'): another spelling is not ruled out.
+   */
+  const noListOutside = new Map<string, Snap[]>();
+  const noListNotLinked = new Map<string, Snap[]>();
+  /** Package key -> Cargo.lock spellings no version was recorded under, and the builds whose package list has them. */
+  const unresolvedAt = new Map<string, { names: Set<string>; builds: Snap[] }>();
+  /** Package key -> builds whose recorded lock lists a version of it that their own dependency graph does not link. */
+  const offGraphAt = new Map<string, Snap[]>();
+  /**
+   * Nominal (non-crates.io) versions: "pkg version" -> its label and the builds where it was compared (every
+   * comparison) or linked inside a range (hits); `plain` holds "pkg version" compared as a crates.io version somewhere.
+   */
+  const nominalHits = new Map<string, { label: string; builds: Snap[] }>();
+  const nominalCompared = new Map<string, { label: string; builds: Snap[] }>();
+  const plain = new Set<string>();
+  const nominalAt = (m: Map<string, { label: string; builds: Snap[] }>, key: string, l: string, s: Snap) => {
+    const e = m.get(key) ?? { label: l, builds: [] };
+    if (!e.builds.includes(s)) e.builds.push(s);
+    m.set(key, e);
+  };
   /** Package is in range at this version: any range hit wins, then any range that cannot be compared. */
   const inRanges = (rs: string[]) => (v: string): boolean | null => {
     if (!rs.length) return null;
@@ -526,130 +599,261 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   };
   // Details are listed build by build (packages within a build) so the first lines show one build's full picture.
   for (const s0 of inspected) {
-    // The full package list is used only when it is consistent with the snapshot's own lock (see fullList).
+    // The full package list is used only when it is consistent with the snapshot's own lock and resolution (see
+    // fullList); without it no package can be cleared at this build (R3-ADV-NAMES).
     const s: Snap = { ...s0, lockPackages: fullList(s0) };
-    if (s0.lockPackages && !s.lockPackages) details.push(`${label(s0)}: the recorded Cargo.lock package list lacks crates its own lock lists, so it is not used`);
-    for (const k of rustPkgs) {
-      const pkg = shown.get(k)!;
-      const crate = nameIn(s, k);
-      const rs = ranges.get(k) ?? [];
-      if (s.resolution) {
-        // Graph-resolved snapshot: every version Brave's Zcash crate may link counts (deps.ts linkedVersions()).
-        if (!s.resolution.candidates[crate] && !monitored.has(k)) continue; // not resolved by the collector: see below
-        const { versions } = linkedVersions(s, crate);
-        if (!versions.length) continue; // known not to be linked here
-        seen.add(k);
-        mark(seenAt, pkg, s0);
-        const possibly = (c: { reachable: boolean | null }) => (c.reachable === true ? '' : ' (possibly linked)');
-        if (!rs.length) {
-          for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
-          unknown.set(`range|${k}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
-          continue;
-        }
-        for (const c of versions) {
-          for (const range of rs) {
-            const hit = satisfiesRange(c.version, range);
-            if (hit === null) {
-              details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
-              unknown.set(`range|${k}`, `${pkg} ${c.version} could not be compared with its vulnerable range "${range}"`);
-              continue;
-            }
-            details.push(`${label(s)}: ${pkg} ${c.version}${possibly(c)} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
-          }
-        }
-        const ex = rangeExposure(s, crate, inRanges(rs));
-        if (ex.exposed === true) {
-          if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
-        } else if (ex.exposed === false) mark(outsideAt, pkg, s0);
-        else if (ex.inRange.length) unknown.set(`linked|${k}|${s.ref}`, `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}, but it is not established that Brave's Zcash crate links ${ex.inRange.length > 1 ? 'them' : 'it'}`);
-        else if (!ex.unknown.length) unknown.set(`linked|${k}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
-        continue;
-      }
-      // Snapshot read before candidates were recorded: `lock` holds the newest version in Cargo.lock, which counts
-      // when it is inside a range; outside every range it does not clear the build (another version may be linked).
-      const v = s.lock[crate]?.version;
-      if (!v) continue;
-      seen.add(k);
-      mark(seenAt, pkg, s0);
-      if (!rs.length) {
-        details.push(`${label(s)}: ${pkg} ${v} could not be checked: the advisory gives no parseable vulnerable range`);
-        unknown.set(`range|${k}`, `${pkg} ${v} is resolved, but the advisory gives no parseable vulnerable range for it`);
-        continue;
-      }
-      // A pin is affected if it is in any of the package's ranges, outside only if it is outside all of them.
-      let hitAny = false;
-      let unparsed = false;
-      for (const range of rs) {
-        const hit = satisfiesRange(v, range);
-        if (hit === null) {
-          unparsed = true;
-          details.push(`${label(s)}: ${pkg} ${v} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
-          unknown.set(`range|${k}`, `${pkg} ${v} could not be compared with its vulnerable range "${range}"`);
-          continue;
-        }
-        if (hit) hitAny = true;
-        details.push(`${label(s)}: ${pkg} ${v} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
-      }
-      if (hitAny) {
-        if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
-      } else if (!unparsed) {
-        mark(outsideAt, pkg, s0);
-        oneRecorded.set(k, [...(oneRecorded.get(k) ?? []), label(s)]);
+    const listed = Array.isArray(s.lockPackages);
+    if (s0.lockPackages != null && !listed) {
+      if (!isNameList(s0.lockPackages)) details.push(`${label(s0)}: the recorded Cargo.lock package list is not a list of package names, so it is not used`);
+      else {
+        const inLock = listLacks(s0).some((n) => n in s0.lock);
+        details.push(`${label(s0)}: the recorded Cargo.lock package list lacks crates its own ${inLock ? 'lock lists' : 'resolution found in Cargo.lock'}, so it is not used`);
       }
     }
+    for (const k of rustPkgs) {
+      const pkg = shown.get(k)!;
+      const rs = ranges.get(k) ?? [];
+      // The spellings this snapshot recorded versions under (resolution candidates, else lock).
+      const recorded = [...new Set([...Object.keys(s.resolution?.candidates ?? {}), ...Object.keys(s.lock)])].filter((n) => crateKey(n) === k);
+      if (!recorded.length && !monitored.has(k)) {
+        // A package this tracker does not resolve: only the full list of Cargo.lock packages (lockPackages) can show
+        // that it is not there at all; a snapshot without that list leaves it unknown (summarised below).
+        setState(k, s0, s.lockPackages?.some((p) => crateKey(p) === k) ? 'in-lock' : listed ? 'not-in-lock' : 'unread');
+        continue;
+      }
+      const crate = recorded[0] ?? monitored.get(k)!;
+      // The collector records versions under one spelling (the tracker's); any other spelling of the package that the
+      // full package list names was not resolved, so a version linked under it is unread (R3-ADV-NAMES).
+      const unresolved = [...(s.lockPackages ?? []).filter((p) => crateKey(p) === k && !recorded.includes(p)), ...recorded.slice(1)];
+      if (unresolved.length) {
+        const u = unresolvedAt.get(k) ?? { names: new Set<string>(), builds: [] };
+        for (const n of unresolved) u.names.add(n);
+        u.builds.push(s0);
+        unresolvedAt.set(k, u);
+        details.push(`${label(s)}: Cargo.lock lists ${unresolved.join(', ')}, but no ${pkg} versions were resolved under ${unresolved.length > 1 ? 'those names' : 'that name'}`);
+      }
+      // The collector's lock holds a version its own graph does not rule out (a candidate with that version that is
+      // not unreachable); a lock entry without one is an inconsistent record, which can never clear the build. It only
+      // makes the build unknown: a version known to be linked inside a range still makes it affected.
+      const offGraph = s.resolution ? recorded.filter((n) => s.lock[n] && !(s.resolution!.candidates[n] ?? []).some((c) => c.version === s.lock[n].version && c.reachable !== false)) : [];
+      if (offGraph.length) add(offGraphAt, k, s0);
+      for (const n of offGraph) {
+        details.push(`${label(s)}: the recorded lock lists ${n} ${s.lock[n].version}, but the recorded dependency graph does not show Brave's Zcash crate linking that version, so this record is inconsistent`);
+      }
+      const doubt = unresolved.length > 0 || offGraph.length > 0;
+      const { versions, certain } = linkedVersions(s, crate);
+      if (!versions.length) {
+        if (doubt) setState(k, s0, 'unknown');
+        else if (certain && listed) setState(k, s0, 'absent'); // no spelling of it in Cargo.lock, or the graph links none
+        else {
+          // Not established as absent (R3-ADV-NAMES): without the full package list the crate may be in Cargo.lock
+          // under another spelling, which the collector would not have resolved; a record that predates resolutions
+          // does not say which versions are linked at all (linkedVersions: certain false).
+          setState(k, s0, 'unknown');
+          if (!s.resolution) add(noRecord, k, s0);
+          else if (!listed) add(noListNotLinked, k, s0);
+          else unknown.set(`linked|${k}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established`);
+          details.push(`${label(s)}: no ${pkg} version linked from Brave's Zcash crate was recorded, but ${!s.resolution ? 'that dependency data predates recording linked versions and the full Cargo.lock package list' : !listed ? "Brave's full Cargo.lock package list was not recorded" : 'the linked versions could not be established'}, so it is not established that ${pkg} is absent`);
+        }
+        continue;
+      }
+      const tag = (c: { source: LockSource }) => {
+        const n = nominalLabel(k, c.source);
+        return n ? ` (${n})` : '';
+      };
+      // Only a recorded resolution says which versions are linked; a snapshot without one says nothing either way.
+      const possibly = (c: { reachable: boolean | null }) => (s.resolution && c.reachable !== true ? ' (possibly linked)' : '');
+      if (!rs.length) {
+        for (const c of versions) details.push(`${label(s)}: ${pkg} ${c.version}${tag(c)}${possibly(c)} could not be checked: the advisory gives no parseable vulnerable range`);
+        unknown.set(`range|${k}`, `${pkg} ${versions.map((c) => c.version).join(', ')} ${versions.length > 1 ? 'are' : 'is'} resolved, but the advisory gives no parseable vulnerable range for it`);
+        setState(k, s0, 'unknown');
+        continue;
+      }
+      for (const c of versions) {
+        for (const range of rs) {
+          const hit = satisfiesRange(c.version, range);
+          if (hit === null) {
+            details.push(`${label(s)}: ${pkg} ${c.version}${tag(c)}${possibly(c)} could not be compared with the vulnerable range "${range}" (unsupported range syntax)`);
+            unknown.set(`range|${k}`, `${pkg} ${c.version} could not be compared with its vulnerable range "${range}"`);
+            continue;
+          }
+          details.push(`${label(s)}: ${pkg} ${c.version}${tag(c)}${possibly(c)} ${hit ? 'is in' : 'is outside'} the vulnerable range ${range}`);
+          const n = nominalLabel(k, c.source);
+          if (n) nominalAt(nominalCompared, `${pkg} ${c.version}`, n, s0);
+          else plain.add(`${pkg} ${c.version}`);
+        }
+      }
+      // Exposure at this build is rangeExposure()'s answer, whether or not the snapshot records a resolution.
+      const inRange = inRanges(rs);
+      const ex = rangeExposure(s, crate, inRange);
+      const them = (n: number) => (n > 1 ? 'them' : 'it');
+      if (ex.exposed === true) {
+        if (!hitAt.includes(s.ref)) hitAt.push(s.ref);
+        setState(k, s0, 'in');
+        for (const c of versions) {
+          const n = nominalLabel(k, c.source);
+          if (n && c.reachable === true && inRange(c.version) === true) nominalAt(nominalHits, `${pkg} ${c.version}`, n, s0);
+        }
+      } else if (doubt) setState(k, s0, 'unknown');
+      else if (ex.exposed === false) {
+        setState(k, s0, 'outside');
+        // Every version linked under the recorded spelling is outside; only the full list rules out another spelling.
+        if (!listed) add(noListOutside, k, s0);
+      } else if (ex.inRange.length) {
+        const are = `${pkg} ${ex.inRange.join(', ')} ${ex.inRange.length > 1 ? 'are' : 'is'} in the vulnerable range at ${label(s)}`;
+        unknown.set(
+          `linked|${k}|${s.ref}`,
+          s.resolution
+            ? `${are}, but it is not established that Brave's Zcash crate links ${them(ex.inRange.length)}`
+            : `${are}, but that dependency data predates recording which ${pkg} versions Brave's Zcash crate links (it holds only the newest ${pkg} in Cargo.lock), so whether Brave links ${them(ex.inRange.length)} is unknown`,
+        );
+        setState(k, s0, 'unknown');
+      } else if (ex.unknown.length) setState(k, s0, 'unknown'); // a range that cannot be compared (reason set above)
+      else if (!s.resolution) {
+        // The one recorded version is outside every range, but another vendored version may be linked.
+        setState(k, s0, 'outside');
+        add(oneRecorded, k, s0);
+      } else {
+        unknown.set(`linked|${k}|${s.ref}`, `which ${pkg} versions Brave's Zcash crate links at ${label(s)} could not be established (${versions.map((c) => c.version).join(', ')} possible)`);
+        setState(k, s0, 'unknown');
+      }
+    }
+  }
+  // Reasons that hold at several builds are given once per package, naming the builds.
+  for (const [k, { names: ns, builds: at }] of unresolvedAt) {
+    const pkg = shown.get(k)!;
+    const list = [...ns];
+    unknown.set(`spelling|${k}`, `${list.join(', ')} ${list.length > 1 ? 'are' : 'is'} listed in Brave's Cargo.lock at ${where(at)}, but this tracker resolved no ${pkg} versions under ${list.length > 1 ? 'those names' : 'that name'}, so whether Brave's Zcash crate links an affected ${pkg} version there is unknown`);
+  }
+  for (const [k, at] of offGraphAt) {
+    const pkg = shown.get(k)!;
+    unknown.set(`offgraph|${k}`, `Brave's dependency record at ${where(at)} lists ${pkg} at a version its own dependency graph does not show Brave's Zcash crate linking, so that record is inconsistent and which ${pkg} versions Brave links there is unknown`);
+  }
+  for (const [k, none] of noListNotLinked) {
+    unknown.set(`nolinked|${k}`, `no ${shown.get(k)} version linked from Brave's Zcash crate was recorded at ${where(none)}, which does not show that it is absent there`);
+  }
+  const noListPkgs = rustPkgs.filter((k) => noListOutside.has(k) || noListNotLinked.has(k)).map((k) => shown.get(k)!);
+  /** The builds the 'nolist' reason names (empty when there is none). */
+  const noListAt = noListPkgs.length ? inspected.filter((s) => [...noListOutside.values(), ...noListNotLinked.values()].some((l) => l.includes(s))) : [];
+  if (noListPkgs.length) {
+    const at = noListAt;
+    const or = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}` : xs[0]);
+    // One example spelling per package, in the same order (R3-ADV-NAMES repair 2).
+    const examples = or(noListPkgs.map((p) => `"${otherSpelling(p)}"`));
+    unknown.set('nolist', `Brave's full Cargo.lock package list ${listGap(at)}, so another spelling of ${or(noListPkgs)} there (such as ${examples}), which this tracker would not have resolved and Brave's Zcash crate may link, cannot be ruled out`);
+  }
+  for (const [k, at] of noRecord) {
+    const pkg = shown.get(k)!;
+    unknown.set(`norecord|${k}`, `no ${pkg} version was recorded at ${at.map(label).join('; ')}, but that dependency data predates recording which versions Brave's Zcash crate links and every package in Cargo.lock, so whether Brave links ${pkg} there is unknown`);
   }
   for (const [k, at] of oneRecorded) {
     const pkg = shown.get(k)!;
-    unknown.set(`one|${k}`, `at ${at.join('; ')} only one ${pkg} version was recorded (the newest in Cargo.lock; that dependency data predates recording every linked version), so whether Brave's Zcash crate also links another ${pkg} version inside the vulnerable range is unknown`);
-    details.push(`${pkg}: only the newest version in Cargo.lock was recorded at ${at.join('; ')}; other linked versions are unknown`);
+    const labels = at.map(label).join('; ');
+    unknown.set(`one|${k}`, `at ${labels} only one ${pkg} version was recorded (the newest in Cargo.lock; that dependency data predates recording every linked version), so whether Brave's Zcash crate also links another ${pkg} version inside the vulnerable range is unknown`);
+    details.push(`${pkg}: only the newest version in Cargo.lock was recorded at ${labels}; other linked versions are unknown`);
   }
-  const absent: string[] = [];
   const notInLock: string[] = [];
-  for (const k of rustPkgs) {
-    if (seen.has(k) || !inspected.length) continue;
-    const pkg = shown.get(k)!;
-    if (monitored.has(k)) {
-      absent.push(pkg);
-      details.push(`${pkg}: not in Brave's resolved dependencies at ${inspected.map(label).join('; ')}`);
-      continue;
+  /** Package key -> builds whose full package list shows it absent, for a package unread at other builds. */
+  const notInLockAt = new Map<string, Snap[]>();
+  if (inspected.length) {
+    for (const k of rustPkgs) {
+      if (monitored.has(k)) continue;
+      const pkg = shown.get(k)!;
+      const presentAt = buildsIn(k, 'in-lock');
+      const unread = buildsIn(k, 'unread');
+      if (presentAt.length) {
+        unknown.set(`unread|${k}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
+        details.push(`${pkg}: present in Brave's Cargo.lock at ${presentAt.map(label).join('; ')}; its version is not resolved by this tracker`);
+      } else if (unread.length) {
+        // Only the full package list can show such a package is absent: the builds without a usable list are named,
+        // and a build whose list shows it absent stays a separate, checked fact (R3-ADV-NAMES repair 2).
+        const not = `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`;
+        // The same builds as the 'nolist' reason: said there, once, rather than naming them all again.
+        const same = noListAt.length === unread.length && unread.every((s) => noListAt.includes(s));
+        if (same) unknown.set('nolist', `${unknown.get('nolist')}; ${not}, and without that list whether ${pkg} is in Brave's Cargo.lock there is unknown`);
+        else unknown.set(`unread|${k}`, `${not}, and Brave's full Cargo.lock package list ${listGap(unread)}, so whether ${pkg} is in Brave's Cargo.lock there is unknown`);
+        details.push(`${pkg}: not checked at ${unread.map(label).join('; ')} (not among the crates this tracker reads from Brave's Cargo.lock, and no usable full Cargo.lock package list)`);
+        const absentAt = buildsIn(k, 'not-in-lock');
+        if (absentAt.length) {
+          notInLockAt.set(k, absentAt);
+          details.push(`${pkg}: not present in Brave's Cargo.lock at ${absentAt.map(label).join('; ')}`);
+        }
+      } else if (buildsIn(k, 'not-in-lock').length === inspected.length) {
+        notInLock.push(pkg);
+        details.push(`${pkg}: not present in Brave's Cargo.lock at ${inspected.map(label).join('; ')}`);
+      }
     }
-    // A package this tracker does not resolve: only the full list of Cargo.lock packages (lockPackages) can show
-    // that it is not there at all. A snapshot without that list leaves it unknown.
-    const lists = inspected.map(fullList);
-    const presentAt = inspected.filter((_, i) => lists[i]?.some((p) => crateKey(p) === k));
-    if (presentAt.length) {
-      unknown.set(`unread|${k}`, `${pkg} is in Brave's Cargo.lock (${presentAt.map(label).join('; ')}), but this tracker does not resolve which of its versions Brave links`);
-      details.push(`${pkg}: present in Brave's Cargo.lock at ${presentAt.map(label).join('; ')}; its version is not resolved by this tracker`);
-    } else if (lists.every((l) => Array.isArray(l))) {
-      notInLock.push(pkg);
-      details.push(`${pkg}: not present in Brave's Cargo.lock at ${inspected.map(label).join('; ')}`);
-    } else {
-      unknown.set(`unread|${k}`, `${pkg} is not among the crates this tracker reads from Brave's Cargo.lock`);
-      details.push(`${pkg}: not checked (not among the crates this tracker reads from Brave's Cargo.lock)`);
+    for (const k of rustPkgs) {
+      if (monitored.has(k) && buildsIn(k, 'absent').length) details.push(`${shown.get(k)}: not in Brave's resolved dependencies at ${buildsIn(k, 'absent').map(label).join('; ')}`);
     }
   }
   const unknownText = [...unknown.values()];
+  // A version that is a nominal label at some builds and a crates.io version at others is qualified with its builds.
+  const qualify = (m: Map<string, { label: string; builds: Snap[] }>) => new Map([...m].map(([v, e]) => [plain.has(v) ? `${v} at ${where(e.builds)}` : v, e.label]));
   if (hitAt.length) {
-    return { summary: `Affects ${pkgs}. At least one checked Brave build resolves a version inside the vulnerable range (${hitAt.join(', ')}) — see details.${unknownText.length ? ` Not everything could be checked: ${unknownText.join('; ')}.` : ''}`, details, affected: true };
+    return { summary: `Affects ${pkgs}. At least one checked Brave build resolves a version inside the vulnerable range (${hitAt.join(', ')}) — see details.${unknownText.length ? ` Not everything could be checked: ${unknownText.join('; ')}.` : ''}${nominalNote(qualify(nominalHits))}`, details, affected: true };
   }
   if (!inspected.length) {
     return { summary: `Affects ${pkgs}. Brave's resolved dependency versions are not available${unknownText.some((t) => t.startsWith("Brave's lockfile")) ? ' (lockfile reads failed)' : ''}, so whether Brave is exposed is unknown.`, details, affected: null };
   }
   const at = where(inspected);
-  // "At every checked build" only for packages whose versions were outside wherever they were compared.
-  const outsideAll = [...outsideAt].filter(([p, list]) => list.length === seenAt.get(p)?.length).map(([p]) => p);
-  const outsideSome = [...outsideAt].filter(([p]) => !outsideAll.includes(p));
+  const every = (k: string, st: State) => buildsIn(k, st).length === inspected.length;
+  const names = (ks: string[]) => ks.map((k) => shown.get(k)!);
+  // "At every checked build" only for packages compared, and outside, at every inspected build (R3-ADV-WORDING).
+  const outsideAll = rustPkgs.filter((k) => every(k, 'outside'));
+  const absentAll = rustPkgs.filter((k) => every(k, 'absent'));
+  const notThere = (k: string) => `${shown.get(k)} does not appear in Brave's resolved Zcash dependencies at ${where(buildsIn(k, 'absent'))}`;
   const checked = [
-    outsideAll.length ? `Brave's pins of ${outsideAll.join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
-    ...outsideSome.map(([p, list]) => `Brave's pins of ${p} are outside the vulnerable ranges at ${where(list)}`),
-    absent.length ? `${absent.join(', ')} ${absent.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
+    outsideAll.length ? `Brave's pins of ${names(outsideAll).join(', ')} are outside the vulnerable ranges at every checked build (${at})` : '',
+    ...rustPkgs
+      .filter((k) => buildsIn(k, 'outside').length && !outsideAll.includes(k))
+      .map((k) => `Brave's pins of ${shown.get(k)} are outside the vulnerable ranges at ${where(buildsIn(k, 'outside'))}${buildsIn(k, 'absent').length ? `; ${notThere(k)}` : ''}`),
+    absentAll.length ? `${names(absentAll).join(', ')} ${absentAll.length > 1 ? 'do' : 'does'} not appear in Brave's resolved Zcash dependencies at any checked build (${at})` : '',
+    ...rustPkgs.filter((k) => buildsIn(k, 'absent').length && !absentAll.includes(k) && !buildsIn(k, 'outside').length).map(notThere),
     notInLock.length ? `${notInLock.join(', ')} ${notInLock.length > 1 ? 'are' : 'is'} not present in Brave's Cargo.lock at any checked build (${at})` : '',
+    ...[...notInLockAt].map(([k, b]) => `${shown.get(k)} is not present in Brave's Cargo.lock at ${where(b)}`),
   ].filter(Boolean);
+  const note = nominalNote(qualify(nominalCompared));
   if (unknownText.length) {
-    return { summary: `Affects ${pkgs}. ${checked.length ? `${checked.join('; ')}, but the` : 'The'} assessment is incomplete: ${unknownText.join('; ')}. Whether Brave is exposed is unknown.`, details, affected: null };
+    return { summary: `Affects ${pkgs}. ${checked.length ? `${checked.join('; ')}, but the` : 'The'} assessment is incomplete: ${unknownText.join('; ')}. Whether Brave is exposed is unknown.${note}`, details, affected: null };
   }
   const masterOnly = !inspected.some((s) => s.ref !== 'master');
-  return { summary: `Affects ${pkgs}. ${checked.join('; ')}.${masterOnly ? ' Only master was checked; no Release, Beta or Nightly build was compared.' : ''}`, details, affected: false };
+  return { summary: `Affects ${pkgs}. ${checked.join('; ')}.${masterOnly ? ' Only master was checked; no Release, Beta or Nightly build was compared.' : ''}${note}`, details, affected: false };
+}
+
+/** Another spelling Cargo.lock could give the same package (for wording): "zcash_primitives" -> "zcash-primitives". */
+function otherSpelling(name: string): string {
+  return name.includes('_') ? name.replace(/_/g, '-') : name.includes('-') ? name.replace(/-/g, '_') : `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+}
+
+/** A name a Cargo package can have (compared by crateKey()); "undefined"/"null" are unrecorded names, not packages. */
+function isCargoName(key: string): boolean {
+  return /^[a-z0-9_]+$/.test(key) && key !== 'undefined' && key !== 'null';
+}
+
+/**
+ * How a version that is not a crates.io release is described: a path package of a crate Brave builds from its
+ * librustzcash fork carries the fork's version label, which need not match upstream code with that number.
+ */
+function nominalLabel(key: string, source: LockSource | undefined): string | null {
+  // A record without a source says nothing about where the version comes from: no label is claimed.
+  if (!source || source === 'crates.io') return null;
+  if (source === 'path') return CRATES.some((c) => crateKey(c.crate) === key && c.repo === 'zcash/librustzcash') ? "version label in Brave's librustzcash fork" : "version label of a path package in Brave's tree";
+  return 'version label from a non-crates.io source';
+}
+
+/** Summary sentence(s) saying which compared versions are nominal labels ("" when none). */
+function nominalNote(entries: Map<string, string>): string {
+  const byLabel = new Map<string, string[]>();
+  for (const [v, l] of entries) byLabel.set(l, [...(byLabel.get(l) ?? []), v]);
+  return [...byLabel]
+    .map(([l, vs]) => {
+      const many = vs.length > 1;
+      const list = many ? `${vs.slice(0, -1).join(', ')} and ${vs[vs.length - 1]}` : vs[0];
+      const what = many ? l.replace(/^version label/, 'version labels').replace(/ a path package /, ' path packages ').replace(/ a non-crates\.io source$/, ' non-crates.io sources') : `a ${l}`;
+      return ` ${list} ${many ? 'are' : 'is'} ${what}, so comparing ${many ? 'them' : 'it'} with the vulnerable ranges is nominal: the code need not match the upstream release${many ? 's' : ''} with ${many ? 'those numbers' : 'that number'}.`;
+    })
+    .join('');
 }
 
 /** Cargo package names compare case-insensitively with "-" and "_" alike (crates.io treats them as one name). */
@@ -664,13 +868,29 @@ export function crateKey(name: string): string {
 export type DepsSnapshotWithPackages = DepsData['snapshots'][string] & { lockPackages?: string[] };
 
 /**
- * A snapshot's full Cargo.lock package list, when it is consistent: it must name every crate the snapshot's own
- * `lock` lists (a list that lacks them is not complete, so it cannot show that a package is absent). Every derive
- * reader of `lockPackages` goes through this.
+ * A snapshot's full Cargo.lock package list, when it is consistent: it must be a list of names (see isNameList), and
+ * it must name every crate the snapshot's own `lock` lists and every crate its resolution found in Cargo.lock
+ * (resolution candidates); a list that lacks them is not complete, so it cannot show that a package, or another
+ * spelling of one, is absent. Every derive reader of `lockPackages` goes through this, so deps.ts linkedVersions()
+ * only ever sees a list of names.
  */
-export function fullLockPackages(s: Pick<DepsSnapshotWithPackages, 'lock' | 'lockPackages'>): string[] | undefined {
-  const list = s.lockPackages;
-  return Array.isArray(list) && Object.keys(s.lock).every((n) => list.some((p) => crateKey(p) === crateKey(n))) ? list : undefined;
+export function fullLockPackages(s: Pick<DepsSnapshotWithPackages, 'lock' | 'lockPackages'> & Partial<Pick<DepsSnapshotWithPackages, 'resolution'>>): string[] | undefined {
+  return isNameList(s.lockPackages) && !listLacks(s).length ? s.lockPackages : undefined;
+}
+
+/**
+ * A recorded package list is usable only as an array of names. Anything else (a string, an object, an array holding
+ * a non-string) is malformed: it is not a list of Cargo.lock packages, so it shows nothing (and is never iterated).
+ */
+function isNameList(list: unknown): list is string[] {
+  return Array.isArray(list) && list.every((p) => typeof p === 'string');
+}
+
+/** Crates the snapshot's own record (lock, resolution candidates) shows in Cargo.lock that its package list lacks. */
+function listLacks(s: Pick<DepsSnapshotWithPackages, 'lock' | 'lockPackages'> & Partial<Pick<DepsSnapshotWithPackages, 'resolution'>>): string[] {
+  const list = isNameList(s.lockPackages) ? s.lockPackages : [];
+  const own = [...new Set([...Object.keys(s.lock), ...Object.entries(s.resolution?.candidates ?? {}).filter(([, cs]) => cs.length).map(([n]) => n)])];
+  return own.filter((n) => !list.some((p) => crateKey(p) === crateKey(n)));
 }
 
 /** What braveResolves() reports for one crate in one snapshot. */
