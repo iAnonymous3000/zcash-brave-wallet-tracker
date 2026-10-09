@@ -230,7 +230,11 @@ test('ING-23: a "# comment" inside a code fence does not end the release block',
   // Same with CRLF line endings (GitHub issue bodies), tilde fences, and a fence indented under a list item.
   assert.deepEqual(verOf(md.replace(/\n/g, '\r\n')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
   assert.deepEqual(verOf(md.replace('```sh', '~~~~').replace(/^```$/m, '~~~~')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
-  assert.deepEqual(verOf(md.replace('```sh', '  ```').replace(/^```$/m, '  ```')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  // R3-ING-23 (fences opened in a list item are not kept open past a column-0 heading): here the column-0
+  // "# comment" ends the item and its fence, so CommonMark (and GitHub) read it as a level-1 heading, which ends the
+  // release block; the "  ```" after it then opens a fence that never closes and hides "## 1.2.2", so "b" and "c" are
+  // unattributed rather than credited to a release.
+  assert.deepEqual(verOf(md.replace('```sh', '  ```').replace(/^```$/m, '  ```')), ['1.2.3:a']);
   // A shorter or different-character line does not close the fence; a longer matching one does.
   const nested = ['## 1.2.3', '- a', '````', '```', '# not a heading', '~~~', '`````', '- b'].join('\n');
   assert.deepEqual(verOf(nested), ['1.2.3:a', '1.2.3:b']);
@@ -250,11 +254,16 @@ test('ING-23: release and unreleased headings inside a code fence change neither
   assert.deepEqual(changelogVersions(md.replace(/\n/g, '\r\n')), ['1.2.3', '1.2.2']);
 });
 
-test('ING-23: an unclosed fence or comment is plain text and cannot hide later release headings', () => {
+// Title reworded for R3-ING-23 (the assertions below were changed for it in round 3; this title still said the opposite).
+test('ING-23: after an unclosed fence or comment, later release headings are unknown: nothing is credited to them', () => {
   const md = ['## 1.2.3', '- a', '```', '- b', '## Unreleased', '- future', '## 1.2.2', '- c'].join('\n');
-  assert.deepEqual(verOf(md), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
-  assert.deepEqual(changelogVersions(md), ['1.2.3', '1.2.2']);
-  assert.deepEqual(verOf(md.replace('```', '<!-- unterminated')), ['1.2.3:a', '1.2.3:b', '1.2.2:c']);
+  // R3-ING-23 (block structure CommonMark-correct or explicitly unknown): CommonMark runs the unclosed fence or
+  // comment to the end of the text, so "## Unreleased" and "## 1.2.2" are not headings there, while a stray opener
+  // would make them real. From the first such line the attribution is unknown: "future" and "c" are credited to no
+  // release, and 1.2.2 is not listed. "b", before any of them, is under 1.2.3 in either reading.
+  assert.deepEqual(verOf(md), ['1.2.3:a', '1.2.3:b']);
+  assert.deepEqual(changelogVersions(md), ['1.2.3']);
+  assert.deepEqual(verOf(md.replace('```', '<!-- unterminated')), ['1.2.3:a', '1.2.3:b']);
   // One-line inline code and one-line comments are not block openers.
   assert.deepEqual(verOf(['## 1.2.3', '- a', '```x```', '<!-- note -->', '# Archive', '- gone', '## 1.2.2', '- c'].join('\n')), ['1.2.3:a', '1.2.2:c']);
 });
