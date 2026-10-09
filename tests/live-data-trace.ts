@@ -79,12 +79,17 @@ function install(log: string): void {
     return null;
   };
   const where = () => (new Error().stack ?? '').split('\n').slice(1).map((l) => l.trim()).filter((l) => !l.includes(self)).slice(0, 4).join(' | ');
-  const check = (op: string, p: unknown, write: boolean): void => {
+  // A recursive operation on a directory also reaches what lies below it (cp of the repository root copies data/).
+  const contains = (dirs: string[], p: string) => dirs.some((d) => d.startsWith(p + sep));
+  const check = (op: string, p: unknown, write: boolean, recursive = false): void => {
     const path = toPath(p);
     if (!path) return;
-    if (inside(dataDirs, path)) record({ kind: 'data', op, path, at: where() });
-    if (write && inside(frozenDirs, path)) record({ kind: 'frozen-write', op, path, at: where() });
+    if (inside(dataDirs, path) || (recursive && contains(dataDirs, path))) record({ kind: 'data', op, path, at: where() });
+    if (write && (inside(frozenDirs, path) || (recursive && contains(frozenDirs, path)))) record({ kind: 'frozen-write', op, path, at: where() });
   };
+  const RECURSIVE = /^(cp|rm|readdir|opendir|watch)(Sync)?$/;
+  const isRecursive = (name: string, a: unknown[]) =>
+    /^cp(Sync)?$/.test(name) || (RECURSIVE.test(name) && a.slice(1).some((o) => !!o && typeof o === 'object' && (o as { recursive?: unknown }).recursive === true));
 
   // fs and fs/promises: every lower-case function. The first argument is the path for all of them that take one (the
   // fd-based ones get a number, which is ignored); copy, rename and link functions also name a destination.
@@ -97,11 +102,12 @@ function install(log: string): void {
     const fn = orig as (...a: unknown[]) => unknown;
     const wrapped = function (this: unknown, ...a: unknown[]) {
       const base = name.replace(/Sync$/, '');
+      const recursive = isRecursive(name, a);
       if (TWO_PATHS.test(name)) {
-        check(label, a[0], base === 'rename');
-        check(label, a[1], true);
+        check(label, a[0], base === 'rename', recursive);
+        check(label, a[1], true, recursive);
       } else {
-        check(label, a[0], WRITES.test(name) || (base === 'open' && openWrites(a[1])));
+        check(label, a[0], WRITES.test(name) || (base === 'open' && openWrites(a[1])), recursive);
       }
       return fn.apply(this, a);
     };

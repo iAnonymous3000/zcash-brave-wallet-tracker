@@ -9,7 +9,9 @@
 //    with a preload that records every path node opens (fs, fs/promises, import/require, child-process cwd), in the test
 //    processes and in every node process they start (through npm, bash or an env that leaves NODE_OPTIONS out). It
 //    fails on any access inside data/ (the copy's or this repository's) and on any write inside the frozen copy.
-// Neither sees a read made by a program that is not node (bash `cat data/…`, the esbuild binary).
+// Neither sees a read made by a program that is not node (bash `cat data/…`, the esbuild binary). This file is not in
+// the runtime run (it would run itself) and names data/ through liveDataDir(), which the scan reports anywhere else: it
+// is checked by review.
 
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -55,7 +57,7 @@ test('the scan finds the src entry points and npm scripts that read data/', () =
 const snippet = (...lines: string[]) => lines.join('\n');
 const HEADER = snippet(
   "import { test } from 'node:test';",
-  "import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';",
+  "import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';",
   "import { readFile } from 'node:fs/promises';",
   "import { execSync, spawnSync } from 'node:child_process';",
   "import { tmpdir } from 'node:os';",
@@ -89,6 +91,8 @@ const READS: [string, Finding['rule'], string][] = [
   ['spawnSync imported under another name', 'indirect', "import { spawnSync as run } from 'node:child_process';\ntest('t', () => { run('npm', ['run', 'build'], { cwd: ROOT }); });"],
   ['node --run of an npm script that reads data/', 'indirect', "test('t', () => { spawnSync(process.execPath, ['--run', 'build'], { cwd: ROOT }); });"],
   ['a CLI handed to a helper with an empty TRACKER_DATA_DIR', 'indirect', "function sim(stub: string, extra: Record<string, string>) { return spawnSync('bash', ['-c', stub], { env: { PATH: process.env.PATH, ...extra } }); }\ntest('t', () => { const cli = new URL('../src/ingest/run.ts', import.meta.url).pathname; sim(`exec node \"${cli}\"`, { TRACKER_DATA_DIR: '' }); });"],
+  ['a recursive listing of the repository root', 'path', "readdirSync(ROOT, { recursive: true });"],
+  ['liveDataDir() outside the guard', 'path', "import { liveDataDir } from './live-data-scan.ts';\nreadFileSync(join(liveDataDir(ROOT), 'status.json'), 'utf8');"],
   ['buildSite handed to other code as a callback', 'indirect', "test('t', async () => { const { buildSite } = await import('../src/site/build.ts'); await Promise.resolve({ outDir: OUT }).then(buildSite); });"],
 ];
 
@@ -108,6 +112,7 @@ const BYPASSES: [string, Finding['rule'] | null, Expect, string][] = [
   ['fs/promises', 'path', { kind: 'data', op: 'promises.readFile' }, "await readFile(join(ROOT, 'data', 'status.json'), 'utf8').catch(() => {});"],
   ['dynamic import of a JSON file in data/', 'path', { kind: 'data', op: 'import' }, "await import('../data/status.json', { with: { type: 'json' } }).catch(() => {});"],
   ['an absolute path into this repository', 'path', { kind: 'data', inRepo: true }, `existsSync(${JSON.stringify(join(LIVE, 'status.json'))});`],
+  ['a recursive copy of a directory that contains data/', 'path', { kind: 'data', op: 'cpSync' }, "cpSync(ROOT, join(OUT, 'repo'), { recursive: true, filter: (s: string) => !s.endsWith('node_modules') });"],
   ['a write into the frozen copy', null, { kind: 'frozen-write' }, "writeFileSync(join(ROOT, 'tests/fixtures/frozen/probe-write.txt'), 'x');"],
   // Last: it writes data/ in the copy (no collector runs, nothing goes to the network).
   ['npm run refresh through exec, with an env that leaves NODE_OPTIONS out', 'indirect', { kind: 'data', by: 'src/ingest/run.ts' }, "try { execSync('npm run refresh -- --only=none', { cwd: ROOT, env: { PATH: process.env.PATH, HOME: process.env.HOME }, stdio: 'ignore' }); } catch {}"],
@@ -126,6 +131,7 @@ const SAFE: [string, string][] = [
   ['a CLI handed to a helper together with a TRACKER_DATA_DIR for the child', "function sim(stub: string, extra: Record<string, string>) { return spawnSync('bash', ['-c', stub], { env: { PATH: process.env.PATH, ...extra } }); }\ntest('t', () => { const root = mkdtempSync(join(tmpdir(), 'x-')); const cli = new URL('../src/ingest/run.ts', import.meta.url).pathname; sim(`exec node \"${cli}\"`, { TRACKER_DATA_DIR: join(root, 'data') }); });"],
   ['npm run build with TRACKER_DATA_DIR in its env', "test('t', () => { spawnSync('npm', ['run', 'build'], { cwd: ROOT, env: { ...process.env, TRACKER_DATA_DIR: join(ROOT, 'tests/fixtures/frozen'), TRACKER_OUT_DIR: OUT } }); });"],
   ['other npm scripts', "test('t', () => { spawnSync('npm', ['run', 'typecheck'], { cwd: ROOT }); execSync('npm test', { cwd: ROOT }); });"],
+  ['a recursive copy of the frozen copy, and a listing of the root that does not recurse', "cpSync(join(ROOT, 'tests/fixtures/frozen'), mkdtempSync(join(tmpdir(), 'x-')), { recursive: true });\nreaddirSync(ROOT);"],
   ['other repository files', "readFileSync(new URL('../.github/workflows/refresh.yml', import.meta.url), 'utf8');\nreadFileSync(join(ROOT, 'tests/fixtures/features.v1.97.56.cc'), 'utf8');"],
 ];
 
@@ -182,8 +188,8 @@ after(() => {
   if (copy) rmSync(copy, { recursive: true, force: true });
 });
 
-/** Runs node in the copy with the trace preloaded; returns what the trace recorded. */
-function traced(args: string[]): { records: TraceRecord[]; output: string } {
+/** Runs node in the copy with the trace preloaded; returns what the trace recorded and whether the run finished. */
+function traced(args: string[]): { records: TraceRecord[]; output: string; finished: boolean } {
   const logDir = mkdtempSync(join(tmpdir(), 'zbt-trace-'));
   const log = join(logDir, 'trace.jsonl');
   writeFileSync(log, '');
@@ -200,7 +206,9 @@ function traced(args: string[]): { records: TraceRecord[]; output: string } {
   try {
     const r = spawnSync(process.execPath, args, { cwd: copy, env, encoding: 'utf8', timeout: 10 * 60_000, maxBuffer: 256 * 1024 * 1024 });
     const records = readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l) as TraceRecord);
-    return { records, output: `exit ${r.status}${r.signal ? ` (${r.signal})` : ''}${r.error ? ` ${r.error.message}` : ''}\n${r.stdout ?? ''}${r.stderr ?? ''}` };
+    // Finished: it ran to its end (not killed, not timed out, started at all). Its exit status is not judged here.
+    const finished = r.error === undefined && r.signal === null;
+    return { records, finished, output: `exit ${r.status}${r.signal ? ` (${r.signal})` : ''}${r.error ? ` ${r.error.message}` : ''}\n${r.stdout ?? ''}${r.stderr ?? ''}` };
   } finally {
     rmSync(logDir, { recursive: true, force: true });
   }
@@ -217,7 +225,9 @@ test('runtime: the other test files, run in a copy of the repository without dat
   const files = walk(join(copy, 'tests')).filter((f) => basename(f) !== SELF).sort();
   assert.ok(files.length > 0);
   const concurrency = Math.max(1, Math.floor(availableParallelism() / 2));
-  const { records, output } = traced(['--test', '--test-reporter=dot', `--test-concurrency=${concurrency}`, ...files]);
+  const { records, output, finished } = traced(['--test', '--test-reporter=dot', `--test-concurrency=${concurrency}`, ...files]);
+  // A run cut short leaves a partial trace, which could read as clean.
+  assert.ok(finished, `the traced run did not finish:\n${output.slice(-4000)}`);
   const loaded = new Set(records.filter((r) => r.kind === 'load').map((r) => r.script));
   assert.deepEqual(files.filter((f) => !loaded.has(f)).map((f) => relative(copy, f)), [], `the trace was not active in these test files:\n${output.slice(-4000)}`);
   const hits = records.filter((r) => r.kind !== 'load');
@@ -229,7 +239,8 @@ test('runtime: the trace records each way around the static scan found in review
   for (const [i, [label, , expect, body]] of BYPASSES.entries()) {
     const probe = join(copy, 'probe', `p${i}.ts`);
     writeFileSync(probe, `${HEADER}\n${body}\n`);
-    const { records, output } = traced([probe]);
+    const { records, output, finished } = traced([probe]);
+    assert.ok(finished, `${label}: the probe did not finish\n${output.slice(-2000)}`);
     const hit = records.find((r) =>
       r.kind === expect.kind &&
       (!expect.by || (r.script ?? '').endsWith(expect.by)) &&

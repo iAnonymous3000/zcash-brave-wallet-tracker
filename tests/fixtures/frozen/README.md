@@ -36,10 +36,13 @@ copy of the whole directory as input to `buildSite`).
 - **Runtime trace** (`tests/live-data-trace.ts`). Every other test file is run again in a temporary copy of the
   repository without `data/`. A preload records every path node opens, in the test processes and in every node process
   they start, including through npm, bash, or an `env` that leaves out `NODE_OPTIONS`. The guard fails on any access
-  inside `data/` (the copy's or this repository's) and on any write inside this directory.
+  inside `data/` (the copy's or this repository's), including a recursive copy, listing or removal of a directory that
+  holds it, and on any write inside this directory.
 
 Neither check sees a read by a program that is not node, such as `bash -c 'cat data/…'` or the esbuild binary. The
 runtime run judges only the trace, not whether the tests pass there, so such a read is not caught by either check.
+`tests/no-live-data.test.ts` itself is not in the runtime run (it would run itself) and names `data/` through
+`liveDataDir()`, which the scan reports in any other file; that one file is checked by review.
 
 Do not replace these files with newer data to make a test pass. A test that has to follow new data should build its
 own input in a temporary `TRACKER_DATA_DIR`.

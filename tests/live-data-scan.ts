@@ -18,7 +18,7 @@
 // opens; the scan adds the file and line. The frozen copy in tests/fixtures/frozen/ is what tests should read.
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import ts from 'typescript';
 
 export interface Finding {
@@ -411,7 +411,7 @@ export function dataReaders(root: string): DataReaders {
 // Scan of one test file
 // ---------------------------------------------------------------------------
 
-/** The data/ directory of a repository root (for the guard to name what it watches; tests must not read it). */
+/** The data/ directory of a repository root, for the guard to name what it watches. A call anywhere else is reported. */
 export function liveDataDir(root: string): string {
   return resolve(root, 'data');
 }
@@ -432,7 +432,7 @@ export function scanSource(file: string, text: string, root: string, readers: Da
   const sf = parseFile(file, text);
   const ev = new PathEval(sf, root);
   const imports = importsOf(sf);
-  const data = liveDataDir(root);
+  const data = resolve(root, 'data');
   const inData = (p: string) => p === data || p.startsWith(data + sep);
   const findings: Finding[] = [];
   const reported = new Set<string>();
@@ -668,7 +668,13 @@ export function scanSource(file: string, text: string, root: string, readers: Da
       if (FS_CALLS.has(name) && first) {
         const v = ev.evaluate(first);
         if (v && v.kind === 'str' && inData(resolve(root, v.value))) return report(n, 'path', 'reads a cwd-relative path inside data/');
+        // A recursive copy, listing or removal of a directory that holds data/ (e.g. cpSync(ROOT, tmp)) reaches it too.
+        const recursive = /^cp(Sync)?$/.test(name) || n.arguments.slice(1).some((a) => objectOf(a)?.properties.some((p) => propName(p) === 'recursive' && ts.isPropertyAssignment(p) && p.initializer.kind === ts.SyntaxKind.TrueKeyword));
+        const dir = v && !v.partial ? (v.kind === 'path' ? resolve(v.value) : resolve(root, v.value)) : null;
+        if (recursive && dir && data.startsWith(dir + sep)) return report(n, 'path', 'works recursively on a directory that contains data/');
       }
+      // liveDataDir() names data/ for the guard (tests/no-live-data.test.ts, checked by review); anywhere else it is a read.
+      if (name === 'liveDataDir' && basename(file) !== 'no-live-data.test.ts') report(n, 'path', 'names data/ through liveDataDir()');
       if (SPAWN_CALLS.has(name)) checkSpawn(n);
       if (readers.functions.has(name) && !callProtected(n)) report(n, 'indirect', `calls ${name}() (reads through dataPath/dataDir) without setting TRACKER_DATA_DIR first`);
       // A reader function handed to other code (a helper, a mock, Promise.then) runs there: the same rule applies here.
