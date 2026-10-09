@@ -350,6 +350,11 @@ function switchElements(value: string): string[] | null {
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const unknown = (line: number | null, why: string) => ({ zcashDisabled: null, line, reason: `${why}; only a plain constants module is read, so the value of ${SWAP_VAR} is not determined` });
+  // One leading UTF-8 byte order mark is read by Python too (as utf-8-sig) unless a coding declaration follows it.
+  if (src.startsWith('\uFEFF')) {
+    src = src.slice(1);
+    if (src.replace(/\r\n?/g, '\n').split('\n', 2).some((l) => /^[ \t]*#.*coding[:=]/.test(l))) return unknown(1, 'the file starts with a byte order mark and declares a source encoding');
+  }
   if (/[^\t\n\r\x20-\x7e]/.test(src)) {
     const at = src.search(/[^\t\n\r\x20-\x7e]/);
     return unknown(src.slice(0, at).split('\n').length, 'the file contains a character outside printable ASCII');

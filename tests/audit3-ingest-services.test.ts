@@ -286,17 +286,21 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
   // Accepted by every CPython: ascii with ASCII-only bytes, a byte order mark alone or with utf-8 / UTF_8. The strict
   // allowlist rejects any coding declaration and any character outside printable ASCII (the mark included), so it
   // answers unknown for each of them.
-  for (const src of [`# -*- coding: ascii -*-\n${DEF}`, `# coding: utf8\n${DEF}`, `${BOM}${DEF}`, `${BOM}# coding: utf-8\n${DEF}`, `${BOM}# coding: UTF_8\n${DEF}`]) {
-    assert.equal(parseGate3Switch(src).zcashDisabled, null, JSON.stringify(src.slice(0, 40))); // strict allowlist: unknown (coding declaration or byte order mark; all 5 inputs)
+  for (const src of [`# -*- coding: ascii -*-\n${DEF}`, `# coding: utf8\n${DEF}`, `${BOM}# coding: utf-8\n${DEF}`, `${BOM}# coding: UTF_8\n${DEF}`]) {
+    assert.equal(parseGate3Switch(src).zcashDisabled, null, JSON.stringify(src.slice(0, 40))); // strict allowlist: unknown (any coding declaration; 4 inputs)
   }
+  // A single leading byte order mark with no coding declaration is read exactly like the file without it (Python reads
+  // the bytes as utf-8-sig).
+  assert.deepEqual(parseGate3Switch(`${BOM}${DEF}`), parseGate3Switch(DEF));
+  assert.notEqual(parseGate3Switch(DEF).zcashDisabled, null);
 
   // Through the collector, from the file's bytes: the verifier's ascii module, and a byte order mark the decoder must
   // keep for the parser to see.
   assertGate3Unknown(await collectGate3(utf8(refused[0])), 'ascii coding with an em dash in a comment');
   const bomAscii = await collectGate3(utf8(`${BOM}# coding: ascii\n${REAL_ETH}`));
   assertGate3Unknown(bomAscii, 'byte order mark with an ascii coding declaration');
-  // strict allowlist: reason wording (the byte order mark is a character outside printable ASCII, on line 1).
-  assert.match(bomAscii.data.gate3?.reason ?? '', /character outside printable ASCII/);
+  // strict allowlist: reason wording (a byte order mark followed by a coding declaration, on line 1).
+  assert.match(bomAscii.data.gate3?.reason ?? '', /byte order mark and declares a source encoding/);
   assert.equal(bomAscii.data.gate3?.line, 1);
   // The live file still reads as Zcash disabled at line 18.
   for (const body of [REAL_GATE3]) {
@@ -306,28 +310,13 @@ test('R3-ING-08 (repair): coding declarations Python rejects for these bytes, wi
     assert.equal(r.data.gate3?.reason, undefined);
     assert.equal(r.limitations?.some((l) => /^gate3 at /.test(l)), false);
   }
-  // strict allowlist: unknown. Classified as a synthetic variant, not real data (the rule that real-data collect()
-  // runs stay true does not cover it):
-  //   - the file as served has no byte order mark: tests/fixtures/gate3-corpus/real-constants-173a2408.py starts with
-  //     "from" and REAL_GATE3 is the same text; the mark is prepended by this test, so these bytes were never served;
-  //   - the real-data case is the collect() run on the unmodified REAL_GATE3 just above, which still asserts true at
-  //     line 18 with no reason and no gate3 limitation;
-  //   - a mark that did appear upstream fails safe: collect() decodes with ignoreBOM: true, so the reader sees U+FEFF,
-  //     answers unknown at line 1 with a reason, keeps the last determined value and marks the run partial (asserted
-  //     below). It never flips the answer.
-  // The old reader read this input as disabled at line 18. Python decodes a leading mark as utf-8-sig when it compiles
-  // the bytes, and tests/fixtures/gate3_oracle.py reads this input as true on CPython 3.9.6, 3.11.15, 3.12.14 and
-  // 3.13.12, so the strict reader is more cautious than Python here, never opposite. (The text-mode check
-  // `ast.parse(open(f).read())` keeps the mark and rejects the file on all four, but an import reads bytes.) The mark is
-  // outside printable ASCII, so the strict reader answers unknown at line 1. To read this input as true instead, change
-  // parseGate3Switch (src/ingest/sources/services.ts), not this test: accept one leading U+FEFF when lines 1 and 2 hold
-  // no coding declaration (the refused forms above, with a mark and ascii or utf8, or two marks, stay unknown), then
-  // expect true at line 18 here and revisit the `${BOM}${DEF}` and bomAscii expectations.
+  // The live file with one leading byte order mark (how Python reads it: utf-8-sig) still reads as Zcash disabled at
+  // line 18; the mark is accepted only when no coding declaration follows it (the refused forms above stay unknown).
   for (const body of [`${BOM}${REAL_GATE3}`]) {
     const r = await collectGate3(utf8(body));
-    assertGate3Unknown(r, 'the live file with a byte order mark');
-    assert.equal(r.data.gate3?.line, 1);
-    assert.ok(r.data.gate3?.reason);
+    assert.equal(r.data.gate3?.zcashDisabled, true);
+    assert.equal(r.data.gate3?.line, 18);
+    assert.equal(r.limitations?.some((l) => /^gate3 at /.test(l)), false);
   }
 });
 
