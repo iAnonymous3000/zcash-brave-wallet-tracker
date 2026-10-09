@@ -103,7 +103,7 @@ kbd { font-size: 11.5px; line-height: 1; color: var(--muted); background: var(--
    failing and stale counts, shown in short form, are what the pill must show. The full wording is in the title and,
    for screen readers, in the visually hidden .fresh-fail / .fresh-stale. */
 .fresh-when { flex: 0 1000 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.fresh-short { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: pre; }
+.fresh-short { flex: 0 0 auto; white-space: pre; } /* never shrink: the failing/stale counts must stay readable; the time part gives way first */
 .fresh-short:empty { display: none; }
 .fresh-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(94, 224, 156, 0.16); flex: none; }
 .fresh.has-failing .fresh-dot { background: var(--warn); box-shadow: 0 0 0 3px rgba(242, 184, 96, 0.18); }
