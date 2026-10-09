@@ -68,20 +68,58 @@ export const changelogs: Collector<ChangelogsData> = {
       }
     }
     // iOS release notes that are published in Brave's release-notes issue before reaching CHANGELOG_iOS.md.
+    // Anyone can open an issue with that title, so each body is read on its own: one that cannot be read
+    // is skipped and named, and what earlier runs read from it is kept as it was (neither refreshed nor
+    // marked gone), instead of failing the whole source.
     const iosTop = latestStable.find((l) => l.platform === 'ios')?.version ?? '0';
+    const limitations: string[] = [];
+    /** Pending-note files not read this run: their earlier entries, files row and evidence are kept unchanged. */
+    const unread = new Set<string>();
     for (const n of ctx.get<BraveVersionsData>('brave-versions')?.data.iosNotes ?? []) {
       if (!n.build || compareVersions(n.build, iosTop) <= 0) continue;
-      const parsed = parseChangelog(n.body, { platform: 'ios', file: `pending iOS release notes (draft issue #${n.number})`, commitSha: 'issue' }).map((e) => ({ ...e, permalink: n.url }));
+      const file = pendingIosNotesFile(n.number);
+      let parsed: ChangelogEntry[];
+      try {
+        parsed = parseChangelog(n.body, { platform: 'ios', file, commitSha: 'issue' }).map((e) => ({ ...e, permalink: n.url }));
+      } catch (err) {
+        unread.add(file);
+        const keptEntries = (prev?.entries ?? []).filter((e) => e.file === file);
+        const keptRow = prev?.files?.find((r) => r.file === file);
+        entries.push(...keptEntries);
+        if (keptRow) files.push(keptRow);
+        const kept = keptRow ? `keeping what an earlier run read from it (${keptEntries.length} captured line(s))` : 'nothing was read from it in an earlier run';
+        limitations.push(`iOS release-notes issue #${n.number} (${n.url}) could not be read and was skipped this run: ${errText(err)}; ${kept}`);
+        continue;
+      }
       for (const e of parsed) {
         presentUpstream.add(evidenceId(e));
         if (e.zcashRelated || e.issueRefs.some((r) => tracked.has(r))) entries.push(e);
       }
-      files.push({ file: `pending iOS release notes (draft issue #${n.number})`, platform: 'ios', commitSha: 'issue', commitDate: n.updatedAt, latestVersion: n.build, versions: 1, entries: parsed.length });
+      files.push({ file, platform: 'ios', commitSha: 'issue', commitDate: n.updatedAt, latestVersion: n.build, versions: 1, entries: parsed.length });
     }
-    const evidence = mergeEvidence(prev?.evidence ?? [], entries, ctx.now, presentUpstream);
-    return { data: { files, entries, latestStable, evidence }, itemCount: entries.length };
+    // Evidence of an unread note is set aside and kept as it was: not seen this run, and not known to be gone.
+    const prevEvidence = prev?.evidence ?? [];
+    const isKept = (r: EvidenceRecord) => r.kind === 'changelog' && unread.has(r.source);
+    const keptEvidence = prevEvidence.filter(isKept);
+    const merged = mergeEvidence(prevEvidence.filter((r) => !isKept(r)), entries.filter((e) => !unread.has(e.file)), ctx.now, presentUpstream);
+    const evidence = [...merged, ...keptEvidence.map((r) => ({ ...r }))].sort(byFirstSeen);
+    const data = { files, entries, latestStable, evidence };
+    if (!unread.size) return { data, itemCount: entries.length };
+    // staleSince is left unset on purpose: kept pending-note lines can come from an outsider's issue (benign when
+    // first read, then edited to be unreadable, with a build that stays above iosTop), and marking the source
+    // stale for them would turn every run into a failure again. The run is partial and says what was skipped.
+    return { data, itemCount: entries.length, partial: true, limitations };
   },
 };
+
+/** Name under which lines of a pending iOS release-notes issue are recorded (entries, files and evidence). */
+export function pendingIosNotesFile(issue: number): string {
+  return `pending iOS release notes (draft issue #${issue})`;
+}
+
+const errText = (err: unknown) => (err instanceof Error ? err.message : String(err)).slice(0, 200);
+
+const byFirstSeen = (a: EvidenceRecord, b: EvidenceRecord) => a.firstSeenAt.localeCompare(b.firstSeenAt) || a.id.localeCompare(b.id);
 
 export function evidenceId(e: { file: string; version: string; text: string }): string {
   return sha256(`${e.file}|${e.version}|${e.text}`).slice(0, 20);
@@ -111,5 +149,5 @@ export function mergeEvidence(prev: EvidenceRecord[], entries: ChangelogEntry[],
       if (presentUpstream?.has(r.id)) r.lastSeenAt = now;
     } else if (!r.goneSince) r.goneSince = now;
   }
-  return [...byId.values()].sort((a, b) => a.firstSeenAt.localeCompare(b.firstSeenAt) || a.id.localeCompare(b.id));
+  return [...byId.values()].sort(byFirstSeen);
 }
