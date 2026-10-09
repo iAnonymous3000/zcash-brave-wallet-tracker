@@ -117,7 +117,9 @@ test('R-ING-23: lines inside an HTML block (<details> until a blank line) are no
   // Without the blank line CommonMark keeps "## 1.2.2" in the HTML block as literal text. It comes after the
   // <div> has closed, so it is read as the heading its author wrote (see the repair-round test on this), and
   // its bullets are not left under 1.2.3.
-  assert.deepEqual(changelogVersions(md('## 1.2.3', '<div>', '## 9.9.9', '</div>', '## 1.2.2')), ['1.2.3', '1.2.2']);
+  // R3-ING-23 (CommonMark-correct or explicitly unknown): a heading CommonMark does not see is not listed as a
+  // release; the line only ends the release block (its bullets are unattributed, not left under 1.2.3).
+  assert.deepEqual(changelogVersions(md('## 1.2.3', '<div>', '## 9.9.9', '</div>', '## 1.2.2')), ['1.2.3']);
   // CRLF line endings (GitHub issue bodies).
   assert.deepEqual(sections(text.replace(/\n/g, '\r\n')), ['1.2.3/null:Zcash a.', '1.2.3/null:Zcash b.', '1.2.3/null:Zcash c.', '1.2.2/null:Zcash d.']);
   // After the blank line Markdown resumes: a heading there is a real heading, even before </details>.
@@ -129,7 +131,9 @@ test('R-ING-23: other HTML block kinds follow their CommonMark end conditions', 
   // Kind 1 (<pre>, <script>, <style>, <textarea>) runs to its closing tag, across blank lines.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '', '# not a heading', '', '</pre>', '- Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
   // ... and when it never closes it is plain text, so later headings still count (as for an unclosed fence).
-  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '## Unreleased', '- Zcash future.', '## 1.2.2', '- Zcash c.')), ['1.2.3:Zcash a.', '1.2.2:Zcash c.']);
+  // R3-ING-23 (CommonMark-correct or explicitly unknown): CommonMark runs the unclosed <pre> to the end, hiding
+  // both headings, so from "## Unreleased" on the attribution is unknown and "Zcash c." is credited to no release.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '## Unreleased', '- Zcash future.', '## 1.2.2', '- Zcash c.')), ['1.2.3:Zcash a.']);
   // Kind 7 (any other lone tag) starts a block after a blank line...
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '<custom-note>', '# not a heading', '</custom-note>', '- Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
   // ... but cannot interrupt a paragraph, so a heading after it in a paragraph still counts.
@@ -340,8 +344,12 @@ test('R-ING-23: real desktop changelog with a pre-release or indented unreleased
 test('R-ING-23 repair (a): a top-level ``` or <!-- indented 4+ columns is indented code, not a fence or comment opener', () => {
   for (const [opener, closer] of [['    ```', '```'], ['    ~~~', '~~~'], ['    <!--', 'end -->'], ['\t```', '```']]) {
     const text = md('## 1.2.3', '', 'Shipped.', '', opener, '', '## Unreleased', '', '- Zcash future.', '', closer, '', '## 1.2.2', '', '- Zcash old.');
-    assert.deepEqual(got(text), ['1.2.2:Zcash old.'], opener);
-    assert.deepEqual(changelogVersions(text), ['1.2.3', '1.2.2'], opener);
+    // R3-ING-23 (CommonMark-correct or explicitly unknown): with no fence open, a lone "```"/"~~~" closer opens a
+    // fence that never closes and hides "## 1.2.2" from CommonMark (micromark and markdown-it agree), so from there
+    // the attribution is unknown: "Zcash old." is credited to no release and 1.2.2 is not listed. "end -->" is text.
+    const hidden = closer !== 'end -->';
+    assert.deepEqual(got(text), hidden ? [] : ['1.2.2:Zcash old.'], opener);
+    assert.deepEqual(changelogVersions(text), hidden ? ['1.2.3'] : ['1.2.3', '1.2.2'], opener);
     // As a paragraph continuation line it is paragraph text, which opens nothing either.
     const cont = md('## 1.2.3', 'Shipped.', opener, '## Unreleased', '- Zcash future.', closer, 'x', closer, '## 1.2.2', '- Zcash old.');
     assert.deepEqual(got(cont), ['1.2.2:Zcash old.'], `${opener} (continuation)`);
@@ -365,8 +373,12 @@ test('R-ING-23 repair (b): a fence opened in a list item ends with the item, so 
 test('R-ING-23 repair (c): fence and comment markers inside an HTML block are HTML, so they pair with nothing', () => {
   for (const [opener, closer] of [['```', '```'], ['~~~', '~~~'], ['<!-- start', 'end -->']]) {
     const text = md('## 1.2.3', '- Zcash a.', '', '<details>', opener, '</details>', '', '## Unreleased', '', '- Zcash future.', '', closer, '', '## 1.2.2', '- Zcash old.');
-    assert.deepEqual(got(text), ['1.2.3:Zcash a.', '1.2.2:Zcash old.'], opener);
-    assert.deepEqual(changelogVersions(text), ['1.2.3', '1.2.2'], opener);
+    // R3-ING-23 (CommonMark-correct or explicitly unknown): the lone "```"/"~~~" closer pairs with nothing, so it
+    // opens a fence that never closes and hides "## 1.2.2" from CommonMark (micromark and markdown-it agree); from
+    // there the attribution is unknown, so "Zcash old." is credited to no release and 1.2.2 is not listed.
+    const hidden = closer !== 'end -->';
+    assert.deepEqual(got(text), hidden ? ['1.2.3:Zcash a.'] : ['1.2.3:Zcash a.', '1.2.2:Zcash old.'], opener);
+    assert.deepEqual(changelogVersions(text), hidden ? ['1.2.3'] : ['1.2.3', '1.2.2'], opener);
   }
 });
 
@@ -409,8 +421,10 @@ test("R-ING-23 repair: an ATX heading right after an HTML block's elements have 
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '<div>Note</div>', '## Unreleased', '- Zcash future.')), ['1.2.3:Zcash a.']);
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '<details>', '<summary>x</summary>', 'More', '</details>', '## Unreleased', '- Zcash future.', '', '- Zcash future 2.')), ['1.2.3:Zcash a.']);
   const rel = md('## 1.2.3', '<div>', '## 9.9.9', '</div>', '## 1.2.2', '- Zcash old.');
-  assert.deepEqual(changelogVersions(rel), ['1.2.3', '1.2.2']);
-  assert.deepEqual(got(rel), ['1.2.2:Zcash old.']);
+  // R3-ING-23 (CommonMark-correct or explicitly unknown): CommonMark does not see this "## 1.2.2" (it is HTML block
+  // text), so it is not listed as a release; it only ends the 1.2.3 block, and "Zcash old." is credited to no release.
+  assert.deepEqual(changelogVersions(rel), ['1.2.3']);
+  assert.deepEqual(got(rel), []);
   // While an element is open (including one opened after the first closed) nothing in the block is a heading.
   assert.deepEqual(got(md('## 1.2.3', '</details>', '<div>', '## Unreleased', '- Zcash b.')), ['1.2.3:Zcash b.']);
   // Only headings are read there: a fence after the element stays HTML and cannot hide the heading after the block.

@@ -2,6 +2,8 @@
 // is unit-testable against captured fixtures. (The changelog parsers compare
 // release dates with opts.now, which defaults to the current time.)
 
+import MarkdownIt from 'markdown-it';
+import type { Env, StateBlock } from 'markdown-it';
 import type { Channel, ChangelogEntry, FlagValue, Platform } from '../lib/types.ts';
 import { extractRefs, plainExcerpt } from '../lib/util.ts';
 
@@ -46,18 +48,12 @@ export function assetPlatforms(assetNames: string[]): string[] {
 
 export const ZCASH_TEXT = /\b(z\s?cash|zec|ironwood|orchard|lightwalletd|zaino|unified address(es)?|sapling|shielded|unshield\w*|deshield\w*)\b/i;
 
-// Which heading a bullet sits under is decided by a CommonMark block scanner (scanMarkdown, below). Bullet lines
-// themselves are still read with a plain pattern wherever they are (evidence ids stay stable); only headings move
-// the version and the section.
-
-/** A heading as CommonMark reads it: ATX ("## x"), setext ("x" over "---"/"===") or an HTML block opened by <h1>…<h6>. */
-interface MdHeading {
-  level: number;
-  /** Heading content: ATX closing "#"s removed, setext lines joined, HTML tags stripped; trimmed. */
-  text: string;
-  /** Inside a list item or a block quote. */
-  nested: boolean;
-}
+// Which heading a bullet sits under is decided by the block structure CommonMark (with GFM tables, as GitHub renders
+// these files) gives the text. markdown-it, a mature CommonMark implementation, builds that structure; this code
+// only walks its block tokens (readStructure, below). Where the structure itself is in doubt the release block ends
+// there, so the bullets it would decide are unattributed rather than credited to a release. Bullet lines themselves
+// are still read with a plain pattern wherever they are (evidence ids stay stable); only headings and doubtful lines
+// move the version and the section.
 
 /** A link reference definition ("[label]: destination 'title'"), or an inline link's destination and title. */
 interface LinkDef {
@@ -142,7 +138,8 @@ function releaseLinkOk(link: LinkDef, version: string): boolean {
   } catch {
     // keep the destination as written
   }
-  if (PRE_RELEASE_WORD.test(dest) || /\d+\.\d+\.\d+[-+~_][0-9A-Za-z]/.test(dest)) return false;
+  // (?<!\d): a qualified version is found from the start of its digit run, so long digit runs cost linear time.
+  if (PRE_RELEASE_WORD.test(dest) || /(?<!\d)\d+\.\d+\.\d+[-+~_][0-9A-Za-z]/.test(dest)) return false;
   const tag = dest.match(/\/tags?\/([^/?#]+)/i);
   return !tag || tag[1] === version || tag[1] === `v${version}`;
 }
@@ -188,9 +185,6 @@ function inlineLinkTail(s: string): (LinkDef & { end: number }) | null {
   return { dest, title, end: i + 1 };
 }
 
-/** CommonMark link label matching: case-insensitive, inner whitespace collapsed. */
-const normalizeLabel = (label: string) => label.trim().replace(/[ \t\r\n]+/g, ' ').toLowerCase().toUpperCase();
-
 /**
  * The released version a top-level level-2 heading's text names, or null when the heading is not known to be a
  * release. Accepted: "1.2.3", "v1.2.3", "[1.2.3]", "[1.2.3](url)" (Brave's form), "[1.2.3][ref]", each optionally
@@ -218,7 +212,7 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
       const ref = rest.match(/^\[([^\]]*)\]/);
       // A label such as "[beta]" says what it links to even when nothing defines it (then it is visible text).
       if (ref && PRE_RELEASE_WORD.test(ref[1])) return null;
-      link = refs.get(normalizeLabel(ref?.[1] || m[0].slice(1)));
+      link = refs.get(markdown.utils.normalizeReference(ref?.[1] || m[0].slice(1)));
       if (ref) rest = rest.slice(ref[0].length);
     }
     if (link && !releaseLinkOk(link, version)) return null;
@@ -228,237 +222,252 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
   return releaseNotesOnly(rest, now) ? version : null;
 }
 
-// --- CommonMark block structure ---------------------------------------------------------------------------------
+// --- Block structure ----------------------------------------------------------------------------------------------
 
-/** Columns of leading whitespace (tabs advance to the next multiple of 4) and the text after it. */
-function splitIndent(s: string): { indent: number; rest: string } {
-  let col = 0;
-  let k = 0;
-  for (; k < s.length; k++) {
-    if (s[k] === ' ') col++;
-    else if (s[k] === '\t') col += 4 - (col % 4);
-    else break;
-  }
-  return { indent: col, rest: s.slice(k) };
-}
-
-/** One line as block parsing consumes it, with CommonMark's column arithmetic (tab stops every 4 columns). */
-class MdLine {
-  offset = 0;
-  column = 0;
-  nextNonspace = 0;
-  nextNonspaceColumn = 0;
-  indent = 0;
-  blank = false;
-  readonly s: string;
-  constructor(s: string) {
-    this.s = s;
-  }
-  /** The whitespace run last scanned: [runStart, nextNonspace). Columns are absolute, so its end column does not
-   * depend on where in the run a scan starts; deeply nested containers then cost O(1) each, not O(indentation). */
-  private runStart = -1;
-  findNextNonspace(): void {
-    if (this.runStart < 0 || this.offset < this.runStart || this.offset > this.nextNonspace) {
-      let i = this.offset;
-      let cols = this.column;
-      for (; i < this.s.length; i++) {
-        if (this.s[i] === ' ') cols++;
-        else if (this.s[i] === '\t') cols += 4 - (cols % 4);
-        else break;
-      }
-      this.runStart = this.offset;
-      this.nextNonspace = i;
-      this.nextNonspaceColumn = cols;
-    }
-    this.blank = this.nextNonspace >= this.s.length;
-    this.indent = this.nextNonspaceColumn - this.column;
-  }
-  get indented(): boolean {
-    return this.indent >= 4;
-  }
-  /** The text from the next non-space character on (after findNextNonspace). */
-  get rest(): string {
-    return this.s.slice(this.nextNonspace);
-  }
-  /** Advance by `count` characters, or by `count` columns (a tab may then be consumed in part). */
-  advanceOffset(count: number, columns: boolean): void {
-    while (count > 0 && this.offset < this.s.length) {
-      if (this.s[this.offset] === '\t') {
-        const toTab = 4 - (this.column % 4);
-        if (columns) {
-          const step = Math.min(toTab, count);
-          this.column += step;
-          if (step === toTab) this.offset++;
-          count -= step;
-        } else {
-          this.column += toTab;
-          this.offset++;
-          count--;
-        }
-      } else {
-        this.offset++;
-        this.column++;
-        count--;
-      }
-    }
-  }
-  advanceNextNonspace(): void {
-    this.offset = this.nextNonspace;
-    this.column = this.nextNonspaceColumn;
-  }
-  /** After a block quote marker: skip ">" and one optional following space. */
-  skipQuoteMarker(): void {
-    this.advanceNextNonspace();
-    this.advanceOffset(1, false);
-    if (this.s[this.offset] === ' ' || this.s[this.offset] === '\t') this.advanceOffset(1, true);
-  }
-}
-
-type MdBlock =
-  | { t: 'doc' | 'quote'; id: number }
-  /** contentIndent: columns past the parent's content where the item's content starts; contentCol: absolute column. */
-  | { t: 'item'; id: number; contentIndent: number; contentCol: number; hasChild: boolean }
-  | { t: 'para'; lines: string[] }
-  | { t: 'fence'; ch: string; len: number }
-  /** depth: HTML elements open so far in a kind 6/7 block (never below 0). */
-  | { t: 'html'; kind: number; start: number; nested: boolean; heading: number; lines: string[]; depth: number }
-  | { t: 'icode' }
-  | { t: 'table' };
-type MdContainer = Extract<MdBlock, { id: number }>;
-/** Block quotes and list items open at once beyond which the scan stops (Brave's changelogs nest at most 2 deep). */
+/** Block quotes and list items open at once beyond which the structure is not read (Brave's changelogs nest at most 2). */
 const MAX_NESTING = 100;
-const isContainer = (b: MdBlock): b is MdContainer => b.t === 'doc' || b.t === 'quote' || b.t === 'item';
-
-const ATX_HEADING = /^(#{1,6})(?:[ \t]+|$)/;
-/** An ATX heading's text: what follows the opening "#"s, without a closing "#" sequence. */
-const atxText = (line: string, markerEnd: number) => line.slice(markerEnd).replace(/^[ \t]*#+[ \t]*$/, '').replace(/[ \t]+#+[ \t]*$/, '').trim();
-const CODE_FENCE = /^`{3,}(?!.*`)|^~{3,}/;
-const CLOSING_FENCE = /^(?:(`{3,})|(~{3,}))[ \t]*$/;
-const SETEXT_UNDERLINE = /^(?:=+|-+)[ \t]*$/;
-const THEMATIC_BREAK = /^(?:(?:-[ \t]*){3,}|(?:\*[ \t]*){3,}|(?:_[ \t]*){3,})$/;
-const LIST_MARKER = /^(?:[*+-]|(\d{1,9})[.)])/;
-/** A GFM table delimiter row ("| --- | :-: |"); the header row above it must have as many cells. */
-const TABLE_DELIMITER = /^\|?[ \t]*:?-+:?[ \t]*(?:\|[ \t]*:?-+:?[ \t]*)*\|?[ \t]*$/;
-
-const HTML_BLOCK_TAGS =
-  'address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul';
-const RAW_TAG = '(?:script|pre|style|textarea)(?![A-Za-z0-9-])';
 /**
- * CommonMark HTML block start conditions 1-7 (7: a lone complete tag, which cannot interrupt a paragraph). An
- * opening <pre>, <script>, <style> or <textarea> is only ever kind 1 (when it never closes it is plain text, not
- * kind 7); their closing tags are kind 7, as in the reference implementations.
+ * Re-readings of a text whose fence or raw HTML block never closes (readStructure). One covers a stray opener; if
+ * that re-reading exposes another, heading-shaped lines stand in for a further one.
  */
-const HTML_OPEN: RegExp[] = [
-  /^<(?:script|pre|style|textarea)(?:[ \t>]|$)/i,
-  /^<!--/,
-  /^<\?/,
-  /^<![A-Za-z]/,
-  /^<!\[CDATA\[/,
-  new RegExp(`^</?(?:${HTML_BLOCK_TAGS})(?:[ \\t>]|/>|$)`, 'i'),
-  new RegExp(
-    `^(?:<(?!${RAW_TAG})[A-Za-z][A-Za-z0-9-]*(?:[ \\t]+[A-Za-z_:][\\w.:-]*(?:[ \\t]*=[ \\t]*(?:[^ \\t"'=<>\`]+|'[^']*'|"[^"]*"))?)*[ \\t]*/?>|</[A-Za-z][A-Za-z0-9-]*[ \\t]*>)[ \\t]*$`,
-    'i',
-  ),
+const MAX_REREADS = 1;
+
+/** In a parse's env: the labels of the link reference definitions recorded, in order, so a discarded reading can drop its own. */
+const REFERENCES_ADDED = Symbol('references added');
+/**
+ * In a parse's env: one past the last line a link reference definition looked at. It reads on to the text's last
+ * line (lineMax), not just to the end of the range it was called for, and its block-start check of a line looks at the
+ * next line too (a table's delimiter row).
+ */
+const REFERENCE_LOOKED = Symbol('reference looked');
+
+/**
+ * markdown-it's link reference definition rule (src/rules_block/reference.ts in markdown-it 15.0.2) with the same
+ * result and without its quadratic cost. The original appends each continuation line to the string it scans
+ * (`str += line`) and V8 re-flattens the whole string at the next read, so a label or title that runs over many lines
+ * (an unterminated title, say) costs O(lines × length): about 4 s for 256 KB. Here the lines read so far stay in one
+ * flat string that is rebuilt only when it must grow, doubling the lines it holds; every read stays below the end
+ * (`max`) the original would have reached, and the line it resumes at (`nextLine`) is the same.
+ */
+function linearReference(state: StateBlock, startLine: number, _endLine: number, silent: boolean): boolean {
+  let pos = state.bMarks[startLine] + state.tShift[startLine];
+  if (state.sCount[startLine] - state.blkIndent >= 4) return false;
+  if (state.src.charCodeAt(pos) !== 0x5b /* [ */) return false;
+  const { isSpace, normalizeReference } = state.md.utils;
+  const { parseLinkDestination, parseLinkTitle } = state.md.helpers;
+
+  /** The next line of the definition (with its "\n"), or null at a blank line or where another block starts. */
+  const getNextLine = (line: number): string | null => {
+    const endLine = state.lineMax;
+    state.env[REFERENCE_LOOKED] = Math.max((state.env[REFERENCE_LOOKED] as number | undefined) ?? 0, line + 2);
+    if (line >= endLine || state.isEmpty(line)) return null;
+    // Indented as code after a paragraph line, or a quote's lazy line: a continuation whatever it holds.
+    if (state.sCount[line] - state.blkIndent <= 3 && state.sCount[line] >= 0) {
+      const terminators = state.md.block.ruler.getRules('reference');
+      const parentType = state.parentType;
+      state.parentType = 'reference';
+      const terminate = terminators.some((rule) => rule(state, line, endLine, true));
+      state.parentType = parentType;
+      if (terminate) return null;
+    }
+    return state.src.slice(state.bMarks[line] + state.tShift[line], state.eMarks[line] + 1);
+  };
+
+  // Lines read (the original's, then some read ahead), their end offsets in `flat`, and how many the original has.
+  const lines = [state.src.slice(pos, state.eMarks[startLine] + 1)];
+  const ends = [lines[0].length];
+  let flat = lines[0];
+  let ahead = startLine + 1;
+  let noMore = false;
+  let read = 1;
+  let max = flat.length;
+  let nextLine = startLine + 1;
+  /** The original's "append the next line": false when there is none. */
+  const fetch = (): boolean => {
+    if (read === lines.length) {
+      if (noMore) return false;
+      for (let want = lines.length; want > 0; want--) {
+        const line = getNextLine(ahead);
+        if (line === null) {
+          noMore = true;
+          break;
+        }
+        lines.push(line);
+        ends.push(ends[ends.length - 1] + line.length);
+        ahead++;
+      }
+      if (read === lines.length) return false;
+      flat = lines.join('');
+    }
+    max = ends[read++];
+    nextLine++;
+    return true;
+  };
+
+  let labelEnd = -1;
+  for (pos = 1; pos < max; pos++) {
+    const ch = flat.charCodeAt(pos);
+    if (ch === 0x5b /* [ */) return false;
+    if (ch === 0x5d /* ] */) {
+      labelEnd = pos;
+      break;
+    }
+    if (ch === 0x0a) fetch();
+    else if (ch === 0x5c /* \ */) {
+      pos++;
+      if (pos < max && flat.charCodeAt(pos) === 0x0a) fetch();
+    }
+  }
+  if (labelEnd < 0 || labelEnd + 1 >= max || flat.charCodeAt(labelEnd + 1) !== 0x3a /* : */) return false;
+
+  for (pos = labelEnd + 2; pos < max; pos++) {
+    const ch = flat.charCodeAt(pos);
+    if (ch === 0x0a) fetch();
+    else if (!isSpace(ch)) break;
+  }
+  const destRes = parseLinkDestination(flat, pos, max);
+  if (!destRes.ok) return false;
+  const href = state.md.normalizeLink(destRes.str);
+  if (!state.md.validateLink(href)) return false;
+  pos = destRes.pos;
+  const destEndPos = pos;
+  const destEndLineNo = nextLine;
+
+  const start = pos;
+  for (; pos < max; pos++) {
+    const ch = flat.charCodeAt(pos);
+    if (ch === 0x0a) fetch();
+    else if (!isSpace(ch)) break;
+  }
+  let titleRes = parseLinkTitle(flat, pos, max);
+  while (titleRes.can_continue) {
+    const before = max;
+    if (!fetch()) break;
+    pos = before;
+    titleRes = parseLinkTitle(flat, pos, max, titleRes);
+  }
+  let title: string;
+  if (pos < max && start !== pos && titleRes.ok) {
+    title = titleRes.str;
+    pos = titleRes.pos;
+  } else {
+    title = '';
+    pos = destEndPos;
+    nextLine = destEndLineNo;
+  }
+  while (pos < max && isSpace(flat.charCodeAt(pos))) pos++;
+  if (pos < max && flat.charCodeAt(pos) !== 0x0a && title) {
+    // Garbage after the title: the definition ends at its destination, if that ends its line.
+    title = '';
+    pos = destEndPos;
+    nextLine = destEndLineNo;
+    while (pos < max && isSpace(flat.charCodeAt(pos))) pos++;
+  }
+  if (pos < max && flat.charCodeAt(pos) !== 0x0a) return false;
+  const label = normalizeReference(flat.slice(1, labelEnd));
+  if (!label) return false;
+  if (silent) return true;
+  state.env.references ??= {};
+  if (state.env.references[label] === undefined) {
+    state.env.references[label] = { title, href };
+    (state.env[REFERENCES_ADDED] as string[] | undefined)?.push(label);
+  }
+  const token = state.push('reference_definition', '', 0);
+  token.map = [startLine, nextLine];
+  token.hidden = true;
+  token.meta = Object.assign(Object.create(null) as Record<string, unknown>, { label });
+  state.line = nextLine;
+  return true;
+}
+
+/**
+ * CommonMark block parsing with GFM tables. Only block tokens are needed (headings with their raw text, list items,
+ * quotes, code, HTML blocks), so inline parsing is switched off. markdown-it counts two levels per list (the list
+ * and its item) and silently skips content nested deeper than maxNesting, so the limit sits above what MAX_NESTING
+ * lets through: readStructure stops at MAX_NESTING itself, before anything can be skipped.
+ */
+const markdown = new MarkdownIt('commonmark', { maxNesting: 2 * MAX_NESTING + 10 }).enable('table');
+markdown.core.ruler.disable(['inline', 'text_join']);
+markdown.block.ruler.at('reference', linearReference);
+
+/** Lines a block quote is first read over (windowedBlockquote). */
+const QUOTE_WINDOW = 8;
+const quoteRule = markdown.block.ruler.__rules__[markdown.block.ruler.__find__('blockquote')];
+const blockquote = quoteRule.fn;
+
+/**
+ * markdown-it's block quote rule, without its quadratic cost. The original first marks every line the quote could
+ * run over (its ">" lines and the lazy lines between them) up to its end, then reads the quote's content over them;
+ * when that content stops early (at a lazy line no paragraph can take, e.g. after a fence in a nested quote), the
+ * next quote starting just below marks the same lines again: "> >~~~" / "> <" repeated takes seconds at 32 KB.
+ * Here a quote is first read over its first QUOTE_WINDOW lines. If its content stops before the window ends, and no
+ * link reference definition in it looked at a line past the window (the only rule that reads beyond the range it is
+ * given), the lines past it played no part and the result is the original's. Otherwise that reading is discarded
+ * (its tokens and the link definitions it recorded) and the quote is read over all its lines, as the original does.
+ */
+function windowedBlockquote(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
+  if (silent || endLine - startLine <= QUOTE_WINDOW) return blockquote(state, startLine, endLine, silent);
+  const end = startLine + QUOTE_WINDOW;
+  const tokens = state.tokens.length;
+  const added = state.env[REFERENCES_ADDED] as string[] | undefined;
+  const recorded = added?.length ?? 0;
+  const looked = (state.env[REFERENCE_LOOKED] as number | undefined) ?? 0;
+  state.env[REFERENCE_LOOKED] = 0;
+  const found = blockquote(state, startLine, end, false);
+  const lookedInside = state.env[REFERENCE_LOOKED] as number;
+  state.env[REFERENCE_LOOKED] = Math.max(looked, lookedInside);
+  if (!found) return false;
+  if (state.line < end && lookedInside <= end) return true;
+  state.tokens.length = tokens;
+  if (added && state.env.references) for (const label of added.splice(recorded)) delete state.env.references[label];
+  return blockquote(state, startLine, endLine, false);
+}
+markdown.block.ruler.at('blockquote', windowedBlockquote, { alt: quoteRule.alt.slice() });
+
+/** What a line does to the release block it is in. */
+type LineMark =
+  /** A heading as CommonMark reads it: ATX, setext (marked on its first line) or an HTML block opened by <h1>…<h6>. */
+  | { t: 'heading'; level: number; text: string; nested: boolean }
+  /** A later line of a multi-line (setext) heading: heading text, not an entry. */
+  | { t: 'heading-text' }
+  /** A heading-shaped line whose reading is in doubt (see readStructure): the release block ends here. */
+  | { t: 'doubt' }
+  /** Nested deeper than MAX_NESTING: nothing from this line on is read. */
+  | { t: 'stop' };
+
+/**
+ * CommonMark HTML block kinds 1-5 (<script>/<pre>/<style>/<textarea>, <!--, <?, <!X, <![CDATA[), which end at a
+ * marker rather than at a blank line, with that marker, as markdown-it detects them.
+ */
+const RAW_HTML_BLOCKS: [open: RegExp, close: RegExp][] = [
+  [/^<(?:script|pre|style|textarea)(?=[\s>]|$)/i, /<\/(?:script|pre|style|textarea)>/i],
+  [/^<!--/, /-->/],
+  [/^<\?/, /\?>/],
+  [/^<![A-Za-z]/, />/],
+  [/^<!\[CDATA\[/, /\]\]>/],
 ];
-/** End conditions of HTML blocks 1-5: the block ends on the line holding its marker. */
-const HTML_CLOSE: RegExp[] = [/<\/(?:script|pre|style|textarea)>/i, /-->/, /\?>/, />/, /\]\]>/];
 const VOID_TAG = '(?:area|base|basefont|br|col|embed|frame|hr|img|input|link|meta|param|source|track|wbr)(?![A-Za-z0-9-])';
 const OPEN_TAG = new RegExp(`<(?!${VOID_TAG})[A-Za-z][A-Za-z0-9-]*(?=[\\s/>]|$)`, 'gi');
 const SELF_CLOSED_TAG = new RegExp(`<(?!${VOID_TAG})[A-Za-z][A-Za-z0-9-]*(?:\\s[^<>]*)?/>`, 'gi');
 const CLOSE_TAG = /<\/[A-Za-z][A-Za-z0-9-]*\s*>/g;
+/** An <h1> or <h2> start tag. */
+const HTML_H1_H2 = /<h[12](?=[\s/>]|$)/i;
 /** HTML elements a line opens minus those it closes (void and self-closed elements open nothing). */
 const tagBalance = (text: string) => (text.match(OPEN_TAG)?.length ?? 0) - (text.match(SELF_CLOSED_TAG)?.length ?? 0) - (text.match(CLOSE_TAG)?.length ?? 0);
 
-/** The cells of a GFM table row (outer pipes optional, "\|" escaped). */
-function tableCells(row: string): number {
-  let s = row.trim();
-  if (s.startsWith('|')) s = s.slice(1);
-  if (s.endsWith('|') && !s.endsWith('\\|')) s = s.slice(0, -1);
-  let cells = 1;
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === '\\') i++;
-    else if (s[i] === '|') cells++;
+/** `s.replace(/<[^>]*>/g, rep)` without rescanning: once no ">" follows a "<", none follows any later "<" either. */
+function replaceTags(s: string, rep: string): string {
+  let out = '';
+  let i = 0;
+  for (;;) {
+    const lt = s.indexOf('<', i);
+    if (lt < 0) break;
+    const gt = s.indexOf('>', lt + 1);
+    if (gt < 0) break;
+    out += s.slice(i, lt) + rep;
+    i = gt + 1;
   }
-  return cells;
-}
-
-/** A link reference definition at the start of `s` (CommonMark's grammar): its parts and where it ends. */
-function linkRefDef(s: string): { label: string; def: LinkDef; end: number } | null {
-  if (s[0] !== '[') return null;
-  let j = 1;
-  for (; j < s.length && j <= 1000 && s[j] !== ']'; j++) {
-    if (s[j] === '[') return null;
-    if (s[j] === '\\') j++;
-  }
-  if (s[j] !== ']' || j > 1000 || s[j + 1] !== ':') return null;
-  const label = s.slice(1, j);
-  if (!/\S/.test(label)) return null;
-  let i = j + 2;
-  const spnl = () => {
-    while (s[i] === ' ' || s[i] === '\t') i++;
-    if (s[i] === '\n') i++;
-    while (s[i] === ' ' || s[i] === '\t') i++;
-  };
-  spnl();
-  let dest: string;
-  if (s[i] === '<') {
-    const m = s.slice(i).match(/^<((?:[^<>\n\\]|\\.)*)>/);
-    if (!m) return null;
-    dest = m[1];
-    i += m[0].length;
-  } else {
-    const start = i;
-    let depth = 0;
-    for (; i < s.length; i++) {
-      const c = s[i];
-      if (c === '\\' && /[!-/:-@[-`{-~]/.test(s[i + 1] ?? '')) i++;
-      else if (c === '(') depth++;
-      else if (c === ')') {
-        if (depth === 0) break;
-        depth--;
-      } else if (c <= ' ') break;
-    }
-    if (i === start || depth !== 0) return null;
-    dest = s.slice(start, i);
-  }
-  const beforeTitle = i;
-  spnl();
-  let title: string | null = null;
-  if (i > beforeTitle && (s[i] === '"' || s[i] === "'" || s[i] === '(')) {
-    const close = s[i] === '(' ? ')' : s[i];
-    let k = i + 1;
-    for (; k < s.length && s[k] !== close; k++) if (s[k] === '\\') k++;
-    if (k < s.length) {
-      title = s.slice(i + 1, k);
-      i = k + 1;
-    }
-  }
-  if (title === null) i = beforeTitle;
-  // Only spaces may follow on the line; a title with more text after it is dropped and the definition ends at the
-  // destination, if that ends its line.
-  const lineEnd = (from: number) => {
-    let p = from;
-    while (s[p] === ' ' || s[p] === '\t') p++;
-    return p >= s.length || s[p] === '\n' ? p : -1;
-  };
-  let end = lineEnd(i);
-  if (end < 0 && title !== null) {
-    title = null;
-    end = lineEnd(beforeTitle);
-  }
-  if (end < 0) return null;
-  return { label, def: { dest, title }, end: end < s.length ? end + 1 : end };
-}
-
-/** Removes the link reference definitions a paragraph starts with, recording them; returns what is left. */
-function stripLinkRefDefs(text: string, refs: Map<string, LinkDef>): string {
-  let s = text;
-  for (let d = linkRefDef(s); d; d = linkRefDef(s)) {
-    const key = normalizeLabel(d.label);
-    if (!refs.has(key)) refs.set(key, d.def);
-    s = s.slice(d.end);
-  }
-  return s;
+  return out + s.slice(i);
 }
 
 /** The text of an HTML block opened by <hN>: the element's content without tags. */
@@ -466,423 +475,176 @@ function htmlHeadingText(block: string, level: number): string {
   let inner = block.replace(/^[ \t]*<h[1-6](?=[\s/>]|$)[^>]*>/i, '');
   const close = inner.search(new RegExp(`</h${level}[ \\t]*>`, 'i'));
   if (close >= 0) inner = inner.slice(0, close);
-  return inner.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return replaceTags(inner, ' ').replace(/\s+/g, ' ').trim();
 }
 
-/** What a line (after its container prefixes) could close: fence lengths by kind, HTML end markers as bits 0-4. */
-interface LineCloser {
-  tick: number;
-  tilde: number;
-  html: number;
+/** A list marker followed by a space or tab, at lastIndex. */
+const LIST_MARKER_AT = /(?:[-+*]|\d{1,9}[.)])(?=[ \t])/y;
+
+/** Where a line's content starts after spaces, tabs and block quote markers, and (withLists) list markers too. */
+function contentStart(line: string, withLists: boolean): number {
+  let i = 0;
+  for (;;) {
+    while (line[i] === ' ' || line[i] === '\t') i++;
+    if (line[i] === '>') {
+      i++;
+      continue;
+    }
+    if (!withLists) return i;
+    LIST_MARKER_AT.lastIndex = i;
+    const m = LIST_MARKER_AT.exec(line);
+    if (!m) return i;
+    i += m[0].length;
+  }
 }
 
-function lineCloser(cur: MdLine): LineCloser {
-  const text = cur.s.slice(cur.offset);
-  let html = 0;
-  for (let k = 0; k < 5; k++) if (HTML_CLOSE[k].test(text)) html |= 1 << k;
-  cur.findNextNonspace();
-  const m = cur.indent <= 3 ? cur.rest.match(CLOSING_FENCE) : null;
-  return { tick: m?.[1]?.length ?? 0, tilde: m?.[2]?.length ?? 0, html };
-}
-
-/** A block whose opener only counts if it closes: a fence (by character and length) or a raw HTML block (kind 1-5). */
-type RawOpener = { ch: string; len: number } | { kind: number };
-const closesOn = (o: RawOpener, c: LineCloser) => ('ch' in o ? (o.ch === '`' ? c.tick : c.tilde) >= o.len : (c.html & (1 << (o.kind - 1))) !== 0);
+/** A line that cannot be the text a setext underline turns into a heading: a heading, a fence or a rule. */
+const NOT_HEADING_TEXT = /^(?:#{1,6}(?:[ \t]|$)|`{3,}|~{3,}|(?:(?:-[ \t]*){3,}|(?:\*[ \t]*){3,}|(?:_[ \t]*){3,})$)/;
 
 /**
- * For one container that stays open to the end of the text: the lines (after its prefixes) that could close a
- * fence or a raw HTML block, with suffix summaries (the longest closing fence of each kind and the HTML end markers
- * from each of them on). A later opener in that container learns whether it ever closes in O(log n), without
- * scanning the rest of the text again.
+ * Whether a line would end a release block if the structure around it were read differently: an ATX "#"/"##"
+ * heading or an <h1>/<h2> line, also behind block quote or list markers (a nested heading ends the block too), or a
+ * setext underline ("---", "===") below a line of text (`prev`). Deliberately broad within those shapes: it only
+ * ever turns an unclear attribution into an unknown one.
  */
-class CloserIndex {
-  private readonly at: Int32Array;
-  private readonly tick: Int32Array;
-  private readonly tilde: Int32Array;
-  private readonly html: Int32Array;
-  constructor(facts: { line: number; c: LineCloser }[]) {
-    const k = facts.length;
-    this.at = Int32Array.from(facts, (f) => f.line);
-    this.tick = new Int32Array(k + 1);
-    this.tilde = new Int32Array(k + 1);
-    this.html = new Int32Array(k + 1);
-    for (let p = k - 1; p >= 0; p--) {
-      const { c } = facts[p];
-      this.tick[p] = Math.max(c.tick, this.tick[p + 1]);
-      this.tilde[p] = Math.max(c.tilde, this.tilde[p + 1]);
-      this.html[p] = c.html | this.html[p + 1];
-    }
-  }
-  /** Whether a line after line i closes the opener. */
-  closesAfter(i: number, o: RawOpener): boolean {
-    let lo = 0;
-    let hi = this.at.length;
-    while (lo < hi) {
-      const mid = (lo + hi) >> 1;
-      if (this.at[mid] <= i) lo = mid + 1;
-      else hi = mid;
-    }
-    return closesOn(o, { tick: this.tick[lo], tilde: this.tilde[lo], html: this.html[lo] });
-  }
+function headingShaped(line: string, prev: string | null): boolean {
+  const rest = line.slice(contentStart(line, true));
+  if (/^#{1,2}(?:[ \t]|$)/.test(rest) || /^<h[12](?=[\s/>]|$)/i.test(rest)) return true;
+  if (prev === null || !/^(?:=+|-+)[ \t]*$/.test(line.slice(contentStart(line, false)))) return false;
+  const text = prev.slice(contentStart(prev, false));
+  if (!text.trim()) return false;
+  // Below "- item" only an underline indented into the item underlines its text ("- item" + "---" is a rule).
+  if (/^(?:[-+*]|\d{1,9}[.)])(?:[ \t]|$)/.test(text)) return /^[ \t]/.test(line);
+  return !NOT_HEADING_TEXT.test(text);
 }
 
-/** Continue the containers stack[1..upTo] on a line (CommonMark's continuation rules for quotes and list items). */
-function continuesContainers(cur: MdLine, stack: MdBlock[], upTo: number): boolean {
-  for (let k = 1; k <= upTo; k++) {
-    const b = stack[k];
-    cur.findNextNonspace();
-    if (b.t === 'quote') {
-      if (cur.indented || cur.s[cur.nextNonspace] !== '>') return false;
-      cur.skipQuoteMarker();
-    } else if (b.t === 'item') {
-      if (cur.blank) cur.advanceNextNonspace();
-      else if (cur.indent >= b.contentIndent) cur.advanceOffset(b.contentIndent, true);
-      else return false;
-    }
-  }
-  return true;
-}
-
-/** A line a list item's unindented code could hold: not blank and starting no list item, quote, fence, HTML block, rule or level-2+ heading. */
-function codeLikeLine(s: string): boolean {
-  const { indent, rest } = splitIndent(s);
-  if (!rest) return false;
-  return indent >= 4 || !/^(?:[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|>|#{2,6}(?:[ \t]|$)|`{3,}|~{3,}|<|(?:-[ \t]*){3,}$|(?:\*[ \t]*){3,}$|(?:_[ \t]*){3,}$|-+[ \t]*$)/.test(rest);
-}
+/** The number of lines in a block token's content (each line keeps its "\n", the last one may lack it). */
+const contentLines = (content: string) => (content === '' ? 0 : content.split('\n').length - (content.endsWith('\n') ? 1 : 0));
 
 /**
- * The headings of a Markdown text as CommonMark (with GFM tables) reads them, line by line (null for every other
- * line), and its link reference definitions. Only what decides which heading a bullet sits under is modelled:
- * block quotes and list items (with lazy continuation lines), ATX and setext headings, fenced and indented code,
- * HTML blocks, thematic breaks, paragraphs, link reference definitions and tables. Nothing inside code or an HTML
- * block is a heading; a heading inside a list item or quote is marked nested. Departures from CommonMark, each
- * so that one stray line cannot move bullets under the wrong release:
- * - a fence or raw HTML block (<pre>, <!--, <?, <!X, <![CDATA[) that never closes is not opened: its opener is
- *   plain text, so it cannot hide every later heading. Whether one closes is answered from a per-container index
- *   (CloserIndex), so the scan stays linear in the text;
- * - in an HTML block of kind 6/7 (<details>, <div>, a lone tag), which runs to a blank line, an ATX heading line
- *   after every element the block opened has closed is a heading: "</div>" directly followed by "## Unreleased" is
- *   read as the author meant, not as literal text that would leave the unreleased bullets under the release above.
- *   Inside an open element (e.g. a "## Unreleased" within <details>…</details>) nothing is a heading;
- * - a fence opened in a list item whose following lines were left unindented, up to a correctly indented closing
- *   fence, keeps those lines when every one of them is code-like ("# comment", plain text: see codeLikeLine). A
- *   list item, quote, fence, HTML block, rule or level-2+ heading among them means the item really ended there,
- *   and CommonMark's reading stands;
- * - beyond MAX_NESTING open quotes/list items the scan stops, and that line ends the release block (a level-1
- *   heading with no text), so nothing after it is credited to a release. This keeps every line's work bounded.
+ * What each line of a Markdown text does to release blocks, read from markdown-it's block tokens, and the text's link
+ * reference definitions. A heading inside a list item or block quote is marked nested. Beyond CommonMark, only lines
+ * whose reading is in doubt are marked, each as a release block end (the bullets it would decide are unattributed;
+ * it never starts a release):
+ * - a fence or raw HTML block (kinds 1-5: <pre>, <!--, <?, <!X, <![CDATA[) that never closes and so runs to the
+ *   end of the text hides, in CommonMark, every heading after its opener; if the opener was a stray line, they are
+ *   real. The text is read again with that opener as plain text, and every line from the opener on where the two
+ *   readings differ (a level-1/2 heading, or a doubtful line, in the second) is doubtful; lines before the first of
+ *   them are under the same release in both readings and keep it. (A block that its list item or quote ends before
+ *   the end of the text is CommonMark's ordinary reading, code to the end of the container, and is read as such);
+ * - an HTML block of kind 6/7 (<details>, <div>, a lone tag) runs to a blank line. A Markdown heading line in it
+ *   after every element the block opened has closed ("</div>" directly followed by "## Unreleased") is literal text
+ *   to CommonMark but a heading to its author: doubtful. Inside an open element (a "## Unreleased" within
+ *   <details>…</details>) it is the element's content, as CommonMark reads it. An <h1>/<h2> element anywhere in the
+ *   block other than at its start (where it makes the block a heading) is shown as a heading although CommonMark
+ *   sees none: doubtful;
+ * - beyond MAX_NESTING open quotes/list items nothing more is read (the line is marked 'stop'), so nothing after it
+ *   is credited to a release.
  */
-function scanMarkdown(lines: string[]): { headings: (MdHeading | null)[]; refs: Map<string, LinkDef> } {
-  const ln = lines.map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l));
-  const n = ln.length;
-  const headings: (MdHeading | null)[] = new Array(n).fill(null);
+function readStructure(lines: string[], rereads = 0): { marks: (LineMark | null)[]; refs: Map<string, LinkDef> } {
+  const marks: (LineMark | null)[] = new Array(lines.length).fill(null);
+  // One input line per line of `lines`: CRLF is one line ending; a lone CR (which CommonMark would also read as a
+  // line ending) stays inside its line, as in the line-based bullet reading.
+  const src = lines.map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l).replace(/\r/g, '\uFFFD')).join('\n');
+  const env: Env = { [REFERENCES_ADDED]: [] };
+  const tokens = markdown.parse(src, env);
   const refs = new Map<string, LinkDef>();
-  const stack: MdBlock[] = [{ t: 'doc', id: 0 }];
-  let nextId = 1;
-  const indexes = new Map<number, CloserIndex>();
-  // The first non-blank line at or after each line, so scans skip runs of blank lines in one step.
-  const nonBlankFrom = new Int32Array(n + 1).fill(n);
-  for (let j = n - 1; j >= 0; j--) nonBlankFrom[j] = /^[ \t]*$/.test(ln[j]) ? nonBlankFrom[j + 1] : j;
+  for (const [label, r] of Object.entries(env.references ?? {})) refs.set(label, { dest: r.href, title: r.title === '' ? null : r.title });
 
-  const finalize = (b: MdBlock) => {
-    if (b.t === 'para') stripLinkRefDefs(b.lines.join('\n'), refs);
-    else if (b.t === 'html' && b.heading) headings[b.start] = { level: b.heading, text: htmlHeadingText(b.lines.join('\n'), b.heading), nested: b.nested };
-  };
-  /** Close the open leaf (if any) so a new block can be added to the innermost container. */
-  const closeLeaf = () => {
-    while (!isContainer(stack[stack.length - 1])) finalize(stack.pop()!);
-    const parent = stack[stack.length - 1];
-    if (parent.t === 'item') parent.hasChild = true;
-  };
-  const isNested = () => stack.some((b) => b.t === 'quote' || b.t === 'item');
+  // The last line with any text: a block that never closes and reaches past it runs to the end of the text.
+  let lastText = lines.length - 1;
+  while (lastText >= 0 && !/\S/.test(lines[lastText])) lastText--;
+
+  /** Whether line j could be (part of) a level-1/2 heading in some reading of the text. */
+  const couldHead = (j: number) => headingShaped(lines[j], j > 0 ? lines[j - 1] : null) || HTML_H1_H2.test(lines[j]);
 
   /**
-   * Whether a fence or raw HTML block opened at line i inside stack[parentIdx] ends before the end of the text: at
-   * a line that closes it, or where its container ends. Each scan stops at the first such line, so scans of blocks
-   * that close cover disjoint lines; a container that stays open to the end gets a CloserIndex instead, so later
-   * openers in it are answered without scanning again.
+   * A block opened on line `opener` (by the first `marker` character there) never closed. If it runs to the end of
+   * the text, mark as doubtful every line from the opener on where the text, read again with the opener escaped as
+   * plain text, has a level-1/2 heading or a doubtful line of its own. Such a block hides everything after it, so a
+   * text has at most one; MAX_REREADS bounds the chain of re-readings (each opener escaped can expose another),
+   * after which lines that could be headings (couldHead) stand in for the reading. Without any such line the two
+   * readings agree and nothing is read again.
    */
-  const blockEnds = (i: number, parentIdx: number, o: RawOpener): boolean => {
-    const parent = stack[parentIdx] as MdContainer;
-    const known = indexes.get(parent.id);
-    if (known) return known.closesAfter(i, o);
-    const quoted = stack.some((b, k) => k <= parentIdx && b.t === 'quote');
-    const facts: { line: number; c: LineCloser }[] = [];
-    for (let j = i + 1; j < n; j++) {
-      if (nonBlankFrom[j] !== j) {
-        if (quoted) return true; // a blank line ends a block quote; list items go on
-        j = nonBlankFrom[j];
-        if (j >= n) break;
-      }
-      const cur = new MdLine(ln[j]);
-      if (!continuesContainers(cur, stack, parentIdx)) return true;
-      const c = lineCloser(cur);
-      if (closesOn(o, c)) return true;
-      if (c.tick || c.tilde || c.html) facts.push({ line: j, c });
+  const unclosed = (opener: number, marker: string, end: number) => {
+    if (end <= lastText) return;
+    let first = opener;
+    while (first < lines.length && !couldHead(first)) first++;
+    if (first === lines.length) return;
+    const at = lines[opener].indexOf(marker);
+    if (rereads >= MAX_REREADS || at < 0) {
+      for (let j = first; j < lines.length; j++) if (couldHead(j)) marks[j] = { t: 'doubt' };
+      return;
     }
-    indexes.set(parent.id, new CloserIndex(facts));
-    return false;
+    const plain = lines.slice();
+    plain[opener] = `${plain[opener].slice(0, at)}\\${plain[opener].slice(at)}`;
+    const other = readStructure(plain, rereads + 1).marks;
+    for (let j = opener; j < lines.length; j++) {
+      const m = other[j];
+      if (m && (m.t !== 'heading' || m.level <= 2)) marks[j] = { t: 'doubt' };
+    }
   };
 
-  /** A list item's fence cut by an unindented line: the line of its correctly indented closing fence if every line before that is code-like. */
-  const unindentedFenceEnd = (i: number, fence: { ch: string; len: number }, item: { contentCol: number }): number => {
-    for (let j = i; j < n; j++) {
-      if (j > i) {
-        const { indent, rest } = splitIndent(ln[j]);
-        const m = indent >= item.contentCol && indent <= item.contentCol + 3 ? rest.match(CLOSING_FENCE) : null;
-        const close = m?.[1] ?? m?.[2];
-        if (close && close[0] === fence.ch && close.length >= fence.len) return j;
-      }
-      if (!codeLikeLine(ln[j])) return -1;
-    }
-    return -1;
-  };
-
-  let unindentedUntil = -1;
-  for (let i = 0; i < n; i++) {
-    if (unindentedUntil >= 0) {
-      if (i === unindentedUntil) {
-        stack.pop(); // the list item's fence closes here
-        unindentedUntil = -1;
-      }
-      continue;
-    }
-    const cur = new MdLine(ln[i]);
-
-    // 1. Continue the open blocks.
-    let matched = 1;
-    let fenceClosed = false;
-    for (let k = 1; k < stack.length; k++) {
-      const b = stack[k];
-      cur.findNextNonspace();
-      let ok = true;
-      if (b.t === 'quote') {
-        if (!cur.indented && cur.s[cur.nextNonspace] === '>') cur.skipQuoteMarker();
-        else ok = false;
-      } else if (b.t === 'item') {
-        if (cur.blank) {
-          if (b.hasChild) cur.advanceNextNonspace();
-          else ok = false; // an item can begin with at most one blank line
-        } else if (cur.indent >= b.contentIndent) cur.advanceOffset(b.contentIndent, true);
-        else ok = false;
-      } else if (b.t === 'fence') {
-        const m = cur.indent <= 3 ? cur.rest.match(CLOSING_FENCE) : null;
-        const close = m?.[1] ?? m?.[2];
-        if (close && close[0] === b.ch && close.length >= b.len) {
-          stack.length = k;
-          fenceClosed = true;
-          break;
+  let nesting = 0;
+  for (let k = 0; k < tokens.length; k++) {
+    const t = tokens[k];
+    const map = t.map;
+    switch (t.type) {
+      case 'list_item_open':
+      case 'blockquote_open':
+        if (nesting >= MAX_NESTING && map) {
+          marks[map[0]] = { t: 'stop' };
+          return { marks, refs };
         }
-      } else if (b.t === 'html') {
-        ok = !(cur.blank && b.kind >= 6);
-      } else if (b.t === 'icode') {
-        if (cur.indent >= 4) cur.advanceOffset(4, true);
-        else if (cur.blank) cur.advanceNextNonspace();
-        else ok = false;
-      } else {
-        ok = !cur.blank; // paragraph, table
-      }
-      if (!ok) break;
-      matched = k + 1;
-    }
-    if (fenceClosed) continue;
-    const oldTip = stack[stack.length - 1];
-    let allClosed = matched === stack.length;
-    if (!allClosed && oldTip.t === 'fence' && stack.every((b, k) => k === 0 || k === stack.length - 1 || b.t === 'item')) {
-      const end = unindentedFenceEnd(i, oldTip, stack[stack.length - 2] as { contentCol: number });
-      if (end > 0) {
-        unindentedUntil = end;
-        continue;
-      }
-    }
-    const closeUnmatched = () => {
-      if (allClosed) return;
-      while (stack.length > matched) finalize(stack.pop()!);
-      allClosed = true;
-    };
-
-    // 2. New block starts, as CommonMark tries them.
-    let containerIdx = matched - 1;
-    let lineDone = false;
-    let tooDeep = false;
-    const top = stack[containerIdx];
-    let inLeaf = top.t === 'fence' || top.t === 'html' || top.t === 'icode';
-    while (!inLeaf) {
-      cur.findNextNonspace();
-      const container = stack[containerIdx];
-      const parentIdx = isContainer(container) ? containerIdx : containerIdx - 1;
-      const rest = cur.rest;
-      if (!cur.indented) {
-        if (rest[0] === '>') {
-          if (stack.length > MAX_NESTING) {
-            tooDeep = true;
-            break;
-          }
-          cur.skipQuoteMarker();
-          closeUnmatched();
-          closeLeaf();
-          stack.push({ t: 'quote', id: nextId++ });
-          containerIdx = stack.length - 1;
-          continue;
-        }
-        const atx = rest.match(ATX_HEADING);
-        if (atx) {
-          closeUnmatched();
-          closeLeaf();
-          headings[i] = { level: atx[1].length, text: atxText(rest, atx[0].length), nested: isNested() };
-          lineDone = true;
-          break;
-        }
-        const fence = rest.match(CODE_FENCE);
-        if (fence) {
-          const ch = fence[0][0];
-          const len = fence[0].length;
-          if (blockEnds(i, parentIdx, { ch, len })) {
-            closeUnmatched();
-            closeLeaf();
-            stack.push({ t: 'fence', ch, len });
-            lineDone = true;
-            break;
-          }
-          // Never closed: the opener is plain text.
-        }
-        if (rest[0] === '<') {
-          const maybeLazy = !allClosed && !cur.blank && stack[stack.length - 1].t === 'para';
-          let kind = 0;
-          for (let k = 1; k <= 7 && !kind; k++) {
-            if (!HTML_OPEN[k - 1].test(rest)) continue;
-            if (k === 7 && (container.t === 'para' || maybeLazy)) continue;
-            if (k <= 5) {
-              const endsOnOpener = HTML_CLOSE[k - 1].test(cur.s.slice(cur.offset));
-              if (!endsOnOpener && !blockEnds(i, parentIdx, { kind: k })) continue; // never closed: plain text
-            }
-            kind = k;
-          }
-          if (kind) {
-            closeUnmatched();
-            closeLeaf();
-            const h = kind === 6 ? rest.match(/^<h([1-6])(?=[ \t>/]|$)/i) : null;
-            stack.push({ t: 'html', kind, start: i, nested: isNested(), heading: h ? Number(h[1]) : 0, lines: [], depth: -1 });
-            containerIdx = stack.length - 1;
-            inLeaf = true;
-            break;
-          }
-        }
-        if (container.t === 'para' && SETEXT_UNDERLINE.test(rest)) {
-          closeUnmatched();
-          const content = stripLinkRefDefs(container.lines.join('\n'), refs);
-          if (/\S/.test(content)) {
-            stack.pop();
-            const text = content.split('\n').map((l) => l.trim()).join(' ').trim();
-            headings[i] = { level: rest[0] === '=' ? 1 : 2, text, nested: isNested() };
-            lineDone = true;
-            break;
-          }
-          // Only link reference definitions: no heading ("---" is then a thematic break, "===" paragraph text).
-          container.lines = content ? content.split('\n') : [];
-        }
-        if (THEMATIC_BREAK.test(rest)) {
-          closeUnmatched();
-          closeLeaf();
-          lineDone = true;
-          break;
-        }
-        const marker = rest.match(LIST_MARKER);
-        const afterMarker = marker ? rest.slice(marker[0].length) : '';
-        if (
-          marker &&
-          (marker[1] === undefined || container.t !== 'para' || Number(marker[1]) === 1) &&
-          (afterMarker === '' || afterMarker[0] === ' ' || afterMarker[0] === '\t') &&
-          !(container.t === 'para' && !/\S/.test(afterMarker))
-        ) {
-          if (stack.length > MAX_NESTING) {
-            tooDeep = true;
-            break;
-          }
-          // List item: content starts 1-4 columns after the marker (5+ means indented code inside the item).
-          const markerOffset = cur.indent;
-          const markerCol = cur.nextNonspaceColumn;
-          cur.advanceNextNonspace();
-          cur.advanceOffset(marker[0].length, true);
-          const spacesStartCol = cur.column;
-          const spacesStartOffset = cur.offset;
-          do cur.advanceOffset(1, true);
-          while (cur.column - spacesStartCol < 5 && (cur.s[cur.offset] === ' ' || cur.s[cur.offset] === '\t'));
-          const spaces = cur.column - spacesStartCol;
-          let padding = marker[0].length + spaces;
-          if (spaces >= 5 || spaces < 1 || cur.offset >= cur.s.length) {
-            padding = marker[0].length + 1;
-            cur.column = spacesStartCol;
-            cur.offset = spacesStartOffset;
-            if (cur.s[cur.offset] === ' ' || cur.s[cur.offset] === '\t') cur.advanceOffset(1, true);
-          }
-          closeUnmatched();
-          closeLeaf();
-          stack.push({ t: 'item', id: nextId++, contentIndent: markerOffset + padding, contentCol: markerCol + padding, hasChild: false });
-          containerIdx = stack.length - 1;
-          continue;
-        }
-        if (container.t === 'para' && container.lines.length > 0 && TABLE_DELIMITER.test(rest) && tableCells(container.lines[container.lines.length - 1]) === tableCells(rest)) {
-          // GFM table: the paragraph's last line is its header row; what came before stays a paragraph.
-          closeUnmatched();
-          container.lines.pop();
-          stack.pop();
-          if (container.lines.length) finalize(container);
-          closeLeaf();
-          stack.push({ t: 'table' });
-          lineDone = true;
-          break;
-        }
-      } else if (stack[stack.length - 1].t !== 'para' && !cur.blank) {
-        cur.advanceOffset(4, true);
-        closeUnmatched();
-        closeLeaf();
-        stack.push({ t: 'icode' });
-        lineDone = true;
+        nesting++;
+        break;
+      case 'list_item_close':
+      case 'blockquote_close':
+        nesting--;
+        break;
+      case 'heading_open': {
+        if (!map) break;
+        const text = (tokens[k + 1]?.content ?? '').split('\n').map((l) => l.trim()).join(' ').trim();
+        marks[map[0]] = { t: 'heading', level: Number(t.tag.slice(1)), text, nested: nesting > 0 };
+        for (let j = map[0] + 1; j < map[1]; j++) marks[j] = { t: 'heading-text' };
         break;
       }
-      cur.advanceNextNonspace();
-      break;
-    }
-    if (tooDeep) {
-      // Nested deeper than any real changelog: the structure from here on is not read, and this line ends the
-      // release block, so nothing after it is credited to a release.
-      headings[i] = { level: 1, text: '', nested: false };
-      break;
-    }
-    if (lineDone) continue;
-
-    // 3. The rest of the line is text: a lazy paragraph continuation, the content of the open leaf, or a paragraph.
-    const tip = stack[stack.length - 1];
-    if (!allClosed && !cur.blank && tip.t === 'para') {
-      tip.lines.push(cur.s.slice(cur.offset));
-      continue;
-    }
-    closeUnmatched();
-    const leaf = stack[stack.length - 1];
-    const text = cur.s.slice(cur.offset);
-    if (leaf.t === 'para') {
-      leaf.lines.push(text);
-    } else if (leaf.t === 'html') {
-      if (leaf.heading) leaf.lines.push(text);
-      if (leaf.kind <= 5) {
-        if (HTML_CLOSE[leaf.kind - 1].test(text)) finalize(stack.pop()!);
-      } else {
-        // Once every element the block opened has closed, an ATX heading line still inside it (no blank line
-        // yet, so CommonMark keeps it as raw HTML) is read as the heading its author wrote. Nothing else in the
-        // block changes, so this can only end a release block or start one, never hide a later heading.
-        cur.findNextNonspace();
-        const atx = leaf.depth === 0 && cur.indent <= 3 ? cur.rest.match(ATX_HEADING) : null;
-        if (atx) headings[i] = { level: atx[1].length, text: atxText(cur.rest, atx[0].length), nested: leaf.nested };
-        leaf.depth = Math.max(0, leaf.depth) + tagBalance(text);
-        if (leaf.depth < 0) leaf.depth = 0;
+      case 'fence':
+        // Closed: the content is every line between the opener and the closing fence. Unclosed: it runs to the
+        // last line of the block.
+        if (map && contentLines(t.content) === map[1] - map[0] - 1) unclosed(map[0], t.markup[0], map[1]);
+        break;
+      case 'html_block': {
+        if (!map) break;
+        const opener = t.content.trimStart();
+        const raw = RAW_HTML_BLOCKS.find(([open]) => open.test(opener));
+        if (raw) {
+          if (!raw[1].test(t.content)) unclosed(map[0], '<', map[1]);
+          break;
+        }
+        const h = opener.match(/^<h([1-6])(?=[\s/>]|$)/i);
+        const ls = t.content.split('\n');
+        if (h) marks[map[0]] = { t: 'heading', level: Number(h[1]), text: htmlHeadingText(t.content, Number(h[1])), nested: nesting > 0 };
+        else if (HTML_H1_H2.test(ls[0])) marks[map[0]] = { t: 'doubt' };
+        // Elements left open by the lines so far: a Markdown heading line is doubtful only once all of them have closed.
+        const n = contentLines(t.content);
+        let open = Math.max(0, tagBalance(ls[0]));
+        for (let j = 1; j < n; j++) {
+          if (HTML_H1_H2.test(ls[j]) || (open === 0 && headingShaped(ls[j], null))) marks[map[0] + j] = { t: 'doubt' };
+          open = Math.max(0, open + tagBalance(ls[j]));
+        }
+        break;
       }
-    } else if (isContainer(leaf) && !cur.blank) {
-      closeLeaf();
-      stack.push({ t: 'para', lines: [text] });
     }
   }
-  while (stack.length > 1) finalize(stack.pop()!);
-  return { headings, refs };
+  return { marks, refs };
+}
+
+/** The last text read and its structure: callers read each changelog with both parseChangelog and changelogVersions. */
+let lastRead: { text: string; structure: ReturnType<typeof readStructure> } | null = null;
+function structureOf(text: string): ReturnType<typeof readStructure> {
+  if (lastRead?.text !== text) lastRead = { text, structure: readStructure(text.split('\n')) };
+  return lastRead.structure;
 }
 
 /** `now` as epoch milliseconds (an ISO string, a Date or a number); the current time when absent. */
@@ -892,10 +654,24 @@ function epochMs(now: string | number | Date | undefined): number {
 }
 
 /**
+ * The text of a bullet-shaped line ("- text", "* text", any indentation): exactly what main's
+ * /^\s*[-*]\s+(.*\S)\s*$/ captures (so texts and evidence ids stay the same), found in linear time; that pattern
+ * backtracks quadratically on a marker followed by a long run of spaces.
+ */
+function bulletText(line: string): string | null {
+  const m = /^\s*[-*]\s/.exec(line);
+  if (!m) return null;
+  // trim() removes exactly what \s matches; "." matches no line terminator, so none may sit inside the text.
+  const text = line.slice(m[0].length).trim();
+  return text && !/[\r\u2028\u2029]/.test(text) ? text : null;
+}
+
+/**
  * Changelog entries (bullet lines) with the release they are listed under. Only a top-level level-2 heading that
- * names a shipped release (releaseHeadingVersion) opens a release block; every other level-1/2 heading, and any
- * level-1/2 heading nested in a list item or quote, ends it, so bullets there have no version and are skipped.
- * `now` (default: the current time) decides whether a dated release heading is already in the past.
+ * names a shipped release (releaseHeadingVersion) opens a release block; every other level-1/2 heading, any
+ * level-1/2 heading nested in a list item or quote, and every doubtful line (readStructure) ends it, so bullets
+ * there have no version and are skipped. `now` (default: the current time) decides whether a dated release heading
+ * is already in the past.
  */
 export function parseChangelog(text: string, opts: { platform: Platform; file: string; commitSha: string; repo?: string; now?: string | number | Date }): ChangelogEntry[] {
   const repo = opts.repo ?? 'brave/brave-browser';
@@ -904,37 +680,40 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   const now = epochMs(opts.now);
   let version: string | null = null;
   let section: string | null = null;
-  // Only headings change the version or section; inside a code fence, HTML block or comment nothing is a
-  // heading. Bullet-shaped lines are read exactly as before wherever they are (evidence ids stay stable).
-  const { headings, refs } = scanMarkdown(lines);
+  const { marks, refs } = structureOf(text);
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const h = headings[i];
-    if (h) {
-      if (h.level <= 2) {
-        version = h.level === 2 && !h.nested ? releaseHeadingVersion(h.text, refs, now) : null;
+    const mark = marks[i];
+    if (mark) {
+      if (mark.t === 'stop') break;
+      if (mark.t === 'heading') {
+        if (mark.level <= 2) {
+          version = mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now) : null;
+          section = null;
+        } else if (mark.level === 3 && !mark.nested) {
+          section = mark.text || null;
+        }
+      } else if (mark.t === 'doubt') {
+        version = null;
         section = null;
-      } else if (h.level === 3 && !h.nested) {
-        section = h.text || null;
       }
       continue;
     }
-    const bullet = line.match(/^\s*[-*]\s+(.*\S)\s*$/);
-    if (!bullet || !version) continue;
-    const md = bullet[1];
+    if (!version) continue;
+    const md = bulletText(lines[i]);
+    if (!md) continue;
     const issueRefs = extractRefs(md).filter((r) => r.startsWith(`${repo}#`));
-    const text = plainExcerpt(md, 600);
+    const excerpt = plainExcerpt(md, 600);
     out.push({
       platform: opts.platform,
       version,
       section,
-      text,
+      text: excerpt,
       issueRefs,
       line: i + 1,
       file: opts.file,
       commitSha: opts.commitSha,
       permalink: `https://github.com/${repo}/blob/${opts.commitSha}/${opts.file}#L${i + 1}`,
-      zcashRelated: ZCASH_TEXT.test(text),
+      zcashRelated: ZCASH_TEXT.test(excerpt),
     });
   }
   return out;
@@ -943,10 +722,11 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
 /** Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). */
 export function changelogVersions(text: string, opts: { now?: string | number | Date } = {}): string[] {
   const now = epochMs(opts.now);
-  const { headings, refs } = scanMarkdown(text.split('\n'));
+  const { marks, refs } = structureOf(text);
   const out: string[] = [];
-  for (const h of headings) {
-    const v = h && h.level === 2 && !h.nested ? releaseHeadingVersion(h.text, refs, now) : null;
+  for (const mark of marks) {
+    if (mark?.t === 'stop') break;
+    const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now) : null;
     if (v) out.push(v);
   }
   return out;
