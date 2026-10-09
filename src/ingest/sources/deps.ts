@@ -18,7 +18,10 @@
 // `lockPackages` lists the name of every package in the full Cargo.lock (not only the monitored
 // crates), so a consumer can tell that a package an advisory names is not in the lockfile at all.
 // It is omitted when the lockfile could not be parsed completely, or when a dependency entry names a
-// package the lockfile does not contain; its absence means unknown.
+// package the lockfile does not contain; its absence means unknown. Parsed completely includes every
+// top-level table and key: anything but the format version (1–4), [[package]] tables, [metadata] and
+// [[patch.unused]] (a pre-2017 [root] package, a table or key Cargo never writes) may hold a package
+// the [[package]] tables do not list, so it leaves the list unknown, never short.
 // Cargo.lock is read as TOML (scanCargoLock); whatever cannot be read is listed in
 // `resolution.lockProblems`, a version found only in a part that could not be read with certainty
 // is a `doubtful` candidate (possibly linked), and linkedVersions() then never answers "certain".
@@ -175,8 +178,10 @@ export interface LockPackage {
 /**
  * A package-like table of Cargo.lock that could not be read with certainty: the table under a
  * header in a form not understood, a [[package]] whose name, version or source is given twice or
- * is not a TOML string, a plain [package] table, package fields or `package = [...]` at the top
- * level, or any [[package]] after a multi-line string that is never closed. Its name and version
+ * is not a TOML string, a plain [package] table, the [root] package of a pre-2017 lockfile, any
+ * other table Cargo does not write in a Cargo.lock ([foo], [[root]], [patch], ...), package fields,
+ * `package = [...]`, inline tables or dotted `x.name`/`x.version` keys at the top level, or any
+ * [[package]] after a multi-line string that is never closed. Its name and version
  * (the strings given, or a best-effort reading of a value that is not a TOML string; every
  * combination when one is given twice) show the package may exist, but it is never treated as
  * certain: it is listed only as a possibly linked candidate and never takes part in the graph.
@@ -202,8 +207,11 @@ export interface LockScan {
    * key or table defined twice), a name/version/source that is not a string or is given twice, a
    * dependency entry that is not a string, a package without a name or version, package fields
    * outside [[package]] tables, a table nested in a package, a multi-line string (Cargo never
-   * writes one). Empty when every line was understood; otherwise a package may be missing from
-   * `packages`, or read without some of its dependency entries.
+   * writes one), and every top-level table or key other than the format version (an integer 1–4),
+   * [[package]] tables, a [metadata] table of strings and [[patch.unused]] entries: a [root] table
+   * (a package Cargo reads that is not a [[package]] table), any other table, array table or key,
+   * whatever it holds. Empty when every line was understood; otherwise a package may be missing
+   * from `packages`, or read without some of its dependency entries.
    */
   problems: string[];
   /** Package-like tables that could not be read with certainty (see DoubtfulPackage); empty when `problems` is. */
@@ -440,6 +448,17 @@ class KeyPaths {
   }
 }
 
+/**
+ * Whether a TOML scalar (as written) is a Cargo.lock format version this reader knows: an integer
+ * 1–4 in any TOML spelling (Cargo writes `version = 3` or `version = 4`; formats 1 and 2 have none).
+ */
+function knownFormatVersion(raw: string): boolean {
+  const s = raw.replace(/_/g, '');
+  const radix = /^0x[0-9A-Fa-f]+$/.test(s) ? 16 : /^0o[0-7]+$/.test(s) ? 8 : /^0b[01]+$/.test(s) ? 2 : /^\+?\d+$/.test(s) ? 10 : 0;
+  const n = radix ? parseInt(radix === 10 ? s : s.slice(2), radix) : NaN;
+  return n >= 1 && n <= 4;
+}
+
 /** Whether a value is or contains a multi-line string. */
 const hasMultiline = (v: TomlValue): boolean =>
   v.t === 'string' ? v.multiline : v.t === 'array' ? v.items.some(hasMultiline) : v.t === 'table' ? v.entries.some(([, e]) => hasMultiline(e)) : false;
@@ -452,6 +471,10 @@ const hasMultiline = (v: TomlValue): boolean =>
  * inside a string or an array is never taken for a header or a key. TOML that does not parse is
  * a problem, never skipped silently, and package-like tables that could not be read with
  * certainty are listed in `doubtful`, so a package behind them cannot simply go missing.
+ * Only what Cargo writes at the top level is understood: the format version, [[package]] tables,
+ * [metadata] (checksums of old lockfiles) and [[patch.unused]] (patches no package uses). Anything
+ * else is a problem, however valid its TOML: a pre-2017 [root] table is a package Cargo reads that
+ * is not a [[package]] table, and a table or key the reader does not know may be one too.
  */
 export function scanCargoLock(lock: string): LockScan {
   const src = lock.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
@@ -490,7 +513,9 @@ export function scanCargoLock(lock: string): LockScan {
   const problems: string[] = [];
   const doubtful: DoubtfulPackage[] = [];
   let tables = 0;
-  let section: 'root' | 'package' | 'other' = 'root';
+  // 'root': the top level; 'package': a package-like table (`cur`); 'metadata' and 'unused': the
+  // [metadata] and [[patch.unused]] tables; 'other': a table already reported, its keys ignored.
+  let section: 'root' | 'package' | 'metadata' | 'unused' | 'other' = 'root';
   /** Once a multi-line string runs to the end of the text, nothing after its start is certainly outside it. */
   let insideOpenString = false;
   // TOML defines each key once: keys of the current table, keys assigned at the top level and in
@@ -505,9 +530,20 @@ export function scanCargoLock(lock: string): LockScan {
   const open = (line: number, isDoubtful: boolean): Cur => ({ line, doubtful: isDoubtful, bad: false, seen: { name: [], version: [], source: [] }, sourceUnread: false });
   /** Package fields written outside any table (a [[package]] header missing): possibly a package. */
   const rootFields = open(0, true);
+  /** Top-level dotted keys `x.name`, `x.version`, `x.source`, by `x`: possibly a package (`root.name = ...` is a [root] table). */
+  const dottedTables = new Map<string, Cur>();
   const addDoubtful = (names: string[], versions: string[], sources: string[], sourceUnread: boolean, line: number) => {
     const source = sourceUnread || sources.length > 1 ? undefined : (sources[0] ?? null);
     for (const name of new Set(names)) for (const version of new Set(versions)) doubtful.push({ name, version, source, line });
+  };
+  /** Inline tables written as a top-level value (`package = [{ name = "...", ... }]`, `root = { ... }`): possibly packages. */
+  const inlinePackages = (v: TomlValue | null) => {
+    for (const t of v?.t === 'array' ? v.items : v ? [v] : []) {
+      if (t.t !== 'table') continue;
+      const get = (f: string) => t.entries.filter(([kp]) => kp.length === 1 && kp[0] === f).map(([, e]) => e);
+      const str = (f: string) => get(f).flatMap((e) => (e.t === 'string' ? [e.value] : []));
+      addDoubtful(str('name'), str('version'), str('source'), get('source').some((e) => e.t !== 'string'), lineOf(t.from));
+    }
   };
   const flush = () => {
     if (cur && !cur.doubtful && !cur.bad) {
@@ -602,11 +638,26 @@ export function scanCargoLock(lock: string): LockScan {
           cur = open(n, true);
           section = 'package';
         } else section = 'other';
-      } else section = 'other'; // [metadata], [[patch.unused]], ...: not packages
+      } else if (!h.array && h.key.length === 1 && h.key[0] === 'metadata') section = 'metadata';
+      else if (h.array && h.key.length === 2 && h.key[0] === 'patch' && h.key[1] === 'unused') section = 'unused';
+      else {
+        // A pre-2017 Cargo.lock lists its root package in a [root] table, which Cargo still reads:
+        // a package of the lockfile that is not a [[package]] table. Any other table Cargo does not
+        // write ([[root]], [foo], [patch], [patch.unused], [metadata.x], ...) is not understood
+        // either. Whatever they hold, the [[package]] tables are then not known to be every package;
+        // if they look like a package, they are kept as doubtful.
+        const isRoot = !h.array && h.key.length === 1 && h.key[0] === 'root';
+        problems.push(`line ${n}: ${isRoot ? '[root] table (the root package of a pre-2017 Cargo.lock, not among the [[package]] tables)' : 'table Cargo does not write in a Cargo.lock'}: ${clip(lineText(n))}`);
+        cur = open(n, true);
+        section = 'package';
+      }
       continue;
     }
 
     // key = value
+    /** Whether nothing about this statement has been reported yet (one report per statement suffices). */
+    const reported = problems.length;
+    const fresh = () => problems.length === reported;
     let k: { parts: string[]; end: number };
     let at: number;
     try {
@@ -666,19 +717,37 @@ export function scanCargoLock(lock: string): LockScan {
       if (k.parts[0] === 'package') {
         problems.push(`line ${n}: packages defined outside [[package]] tables: ${clip(lineText(n))}`);
         // package = [{ name = "...", version = "..." }, ...]: possibly packages.
-        for (const t of v?.t === 'array' ? v.items : v ? [v] : []) {
-          if (t.t !== 'table') continue;
-          const get = (f: string) => t.entries.filter(([kp]) => kp.length === 1 && kp[0] === f).map(([, e]) => e);
-          const str = (f: string) => get(f).flatMap((e) => (e.t === 'string' ? [e.value] : []));
-          addDoubtful(str('name'), str('version'), str('source'), get('source').some((e) => e.t !== 'string'), lineOf(t.from));
-        }
+        inlinePackages(v);
       } else if (name === 'name' || name === 'source' || name === 'dependencies' || name === 'checksum' || (name === 'version' && v?.t !== 'scalar')) {
         // The top level of a Cargo.lock holds only the format version (an integer): package fields
         // there mean a [[package]] header is missing.
         problems.push(`line ${n}: package field outside a [[package]] table (header missing?): ${clip(lineText(n))}`);
         if (!rootFields.line) rootFields.line = n;
         if (name === 'name' || name === 'version' || name === 'source') field(rootFields, name, v, trailing, n, src.slice(at, nextLine(at)));
+      } else if (name === 'version') {
+        // The format version: this reader knows formats 1 to 4; another one may list packages differently.
+        if (!knownFormatVersion(src.slice(v!.from, v!.to)) && fresh()) problems.push(`line ${n}: Cargo.lock format version not understood (this reader knows versions 1 to 4): ${clip(lineText(n))}`);
+      } else {
+        // Any other top-level key is not something Cargo writes: `root = { name = "...", ... }` or
+        // `root.name = "..."` is a [root] table, and an unknown key may describe a package too.
+        if (fresh()) problems.push(`line ${n}: top-level key Cargo does not write in a Cargo.lock: ${clip(lineText(n))}`);
+        inlinePackages(v);
       }
+      // A top-level `x.name`, `x.version` or `x.source` is a field of a table `x`: possibly a package.
+      const last = k.parts[k.parts.length - 1];
+      if (k.parts.length === 2 && (last === 'name' || last === 'version' || last === 'source')) {
+        const c = dottedTables.get(k.parts[0]) ?? open(n, true);
+        dottedTables.set(k.parts[0], c);
+        field(c, last, v, trailing, n, src.slice(at, nextLine(at)));
+      }
+      continue;
+    }
+    if (section === 'metadata' || section === 'unused') {
+      // [metadata] maps strings to strings (the checksums of old lockfiles); a [[patch.unused]] entry
+      // describes a patch no package uses (never a package of the lockfile) with string fields and
+      // a string array of dependencies. Anything else there is not what Cargo writes.
+      const understood = k.parts.length === 1 && v !== null && (v.t === 'string' || (section === 'unused' && v.t === 'array' && v.items.every((i) => i.t === 'string')));
+      if (!understood && fresh()) problems.push(`line ${n}: ${section === 'metadata' ? '[metadata]' : '[[patch.unused]]'} entry not understood: ${clip(lineText(n))}`);
       continue;
     }
     if (section !== 'package' || !cur) continue;
@@ -709,6 +778,7 @@ export function scanCargoLock(lock: string): LockScan {
   }
   flush();
   if (rootFields.line) addDoubtful(rootFields.seen.name, rootFields.seen.version, rootFields.seen.source, rootFields.sourceUnread, rootFields.line);
+  for (const c of dottedTables.values()) addDoubtful(c.seen.name, c.seen.version, c.seen.source, c.sourceUnread, c.line);
   return { packages, tables, problems, doubtful: problems.length ? doubtful : [] };
 }
 
@@ -744,8 +814,10 @@ function packageNamesOf(scan: LockScan): string[] | null {
 /**
  * Sorted, de-duplicated names of every package in a Cargo.lock, or null when it could not be read
  * completely: a [[package]] header in a form not understood, a package whose name/version is
- * missing or not a plain string, or any other line not understood. A package the parser skipped
- * must never look absent, so a short list is never returned. (A snapshot also leaves the list out
+ * missing or not a plain string, a [root] table (an old lockfile's root package, which is not a
+ * [[package]] table) or any other top-level table or key besides the format version, [metadata]
+ * and [[patch.unused]], or any other line not understood. A package the parser skipped must never
+ * look absent, so a short list is never returned. (A snapshot also leaves the list out
  * when a dependency entry names a package the lockfile does not contain: see buildDepsSnapshot.)
  */
 export function lockPackageNames(lock: string): string[] | null {
