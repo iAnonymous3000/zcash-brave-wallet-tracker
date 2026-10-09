@@ -45,8 +45,11 @@ export const HISTORY_DAYS = 365;
  * v15: advisory packages are told apart by ecosystem as well as name, so a package of another ecosystem (npm, Go, …)
  * that shares a Rust crate's name stays unchecked (unknown) in either order, the Rust crate is still checked, and a
  * vulnerable range that may be the other package's is never compared with Brave's crate.
+ * v16: adoption keeps legacy dependency reachability unknown and distinguishes an unread lockfile from absence;
+ * mixed server/client advisories retain confirmed client exposure; feature-branch carriers must postdate the fix;
+ * prerelease note corroboration respects each build, and prerequisite uncertainty preserves definite absence.
  */
-export const DERIVE_RULES_VERSION = 15;
+export const DERIVE_RULES_VERSION = 16;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -276,6 +279,7 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
     // The highest version Brave's Zcash crate links (several can be linked at once; see braveResolves). A version
     // the dependency graph only shows as possibly linked is never stated as resolved (see adoptedAtLeast).
     const resolved = braveResolves(masterSnap, r.project);
+    const absent = braveDependencyAbsence(masterSnap, r.project);
     const brave = resolved?.version ?? null;
     const sureOthers = resolved?.certain ? resolved.linked.filter((v) => v !== brave) : [];
     const maybe = resolved?.certain ? resolved.possible : [];
@@ -285,7 +289,7 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
     const impact =
       r.source === 'crates.io'
         ? !resolved
-          ? `${r.project} ${r.version} was published upstream. Brave's lockfile does not include ${r.project}.`
+          ? `${r.project} ${r.version} was published upstream. ${absent === 'not-in-lockfile' ? `Brave's lockfile does not include ${r.project}.` : absent === 'not-linked' ? `Brave's lockfile includes ${r.project}, but its Zcash crate does not link it.` : `Brave's dependency evidence does not establish whether its Zcash crate links ${r.project}, so adoption is unknown.`}`
           : !resolved.certain
             ? `${r.project} ${r.version} was published upstream. Brave master's Cargo.lock has ${r.project} ${resolved.linked.join(', ')}, but which of them Brave's Zcash crate links is not established, so ${adopted === false ? 'none of them is at or above it: it has not adopted this release' : 'whether it has adopted this release is unknown'}.`
             : adopted === true
@@ -294,7 +298,7 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
                 ? `${r.project} ${r.version} was published upstream. Brave master resolves ${brave}${fork}${also}, so whether it has adopted this release is unknown.`
                 : `${r.project} ${r.version} was published upstream. Brave master still resolves ${brave}${fork}${also}, so it has not adopted this release.`
         : `${r.project} ${r.version} was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.`;
-    const braveEvidence = !resolved ? 'not in Brave lockfile' : resolved.certain ? `Brave master: ${brave}${maybe.length ? ` (possibly also ${maybe.join(', ')})` : ''}` : `Brave master: possibly ${resolved.linked.join(', ')} (not established)`;
+    const braveEvidence = !resolved ? absent === 'not-in-lockfile' ? 'not in Brave lockfile' : absent === 'not-linked' ? 'in Brave lockfile, not linked by its Zcash crate' : 'Brave dependency reachability unknown' : resolved.certain ? `Brave master: ${brave}${maybe.length ? ` (possibly also ${maybe.join(', ')})` : ''}` : `Brave master: possibly ${resolved.linked.join(', ')} (not established)`;
     out.push(ev({ key: `${r.id}`, kind: 'upstream-release', sourceAt: r.publishedAt, title: `Upstream: ${r.project} ${r.version}`, impact, highlight: null, itemIds: [], topic: 'deps', platforms: [], channel: null, links: [{ label: r.source === 'crates.io' ? 'crates.io' : 'Release', url: r.url }], evidence: [`published ${r.publishedAt}`, braveEvidence] }));
   }
 
@@ -474,7 +478,16 @@ function closedImpact(reason: string, it: WorkItem, st: GroupStatus | null, inp:
 export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: ChannelVersion[]): { summary: string; details: string[]; affected: boolean | null } {
   const details: string[] = [];
   const pkgs = a.packages.join(', ');
-  if (a.packages.some((p) => /lightwalletd|zaino/i.test(p))) return serverAdvisoryVerdict(a, deps, details);
+  const serverPackages = a.packages.filter((p) => /lightwalletd|zaino/i.test(p));
+  if (serverPackages.length && serverPackages.length === a.packages.length) return serverAdvisoryVerdict(a, deps, details);
+  // A server's unknown deployment does not erase a checked client package in the same advisory. Keep the
+  // original package/range order below (it disambiguates ecosystems), and assess server exposure separately.
+  let serverVerdict: ReturnType<typeof serverAdvisoryVerdict> | null = null;
+  if (serverPackages.length) {
+    const names = serverPackages.map((p) => p.slice(p.indexOf(':') + 1));
+    serverVerdict = serverAdvisoryVerdict({ ...a, packages: serverPackages, vulnerableRanges: a.vulnerableRanges.filter((r) => names.some((n) => r === n || r.startsWith(`${n} `))) }, deps, []);
+    details.push(serverVerdict.summary, ...serverVerdict.details);
+  }
 
   // Rust crate names by crateKey(). Text uses the monitored crate's own name, else the advisory's first Rust spelling.
   const monitored = new Map(CRATES.map((c) => [crateKey(c.crate), c.crate]));
@@ -562,6 +575,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
     return [none.length ? `was not recorded at ${where(none)}` : '', bad.length ? `${none.length ? 'and the one ' : ''}recorded at ${where(bad)} is not usable (see details)` : ''].filter(Boolean).join(', ');
   };
   const unknown = new Map<string, string>(); // reason key -> text
+  if (serverVerdict) unknown.set('server', serverVerdict.summary);
   for (const s of builds) if (!hasLock(s)) unknown.set(`lock|${s.ref}`, `Brave's lockfile could not be read at ${label(s)}`);
   if (strict) {
     // Coverage: every current build must have been read, and master alone is no shipped build.
@@ -583,6 +597,7 @@ export function advisoryVerdicts(a: Advisory, deps: DepsData | null, channels?: 
   // Rust packages to check; other ecosystems, and names no Cargo package can have, cannot be judged from Cargo.lock.
   const rustPkgs: string[] = [];
   for (const [id, p] of named) {
+    if (serverVerdict && /lightwalletd|zaino/i.test(p.label)) continue; // assessed above: the deployed proxy is not public
     if (!p.rust) unknown.set(`eco|${id}`, `${p.label} is not a Rust crate, so Brave's Cargo.lock cannot show whether Brave uses it`);
     else if (!isCargoName(p.k)) unknown.set(`name|${p.k}`, `the advisory's package name ${JSON.stringify(shown.get(p.k))} is not a Cargo package name (it may not have been recorded), so it cannot be compared with Brave's Cargo.lock`);
     else rustPkgs.push(p.k);
@@ -960,14 +975,11 @@ export interface BraveResolved {
  * The version of `crate` Brave reports as resolving in this snapshot, for adoption text: the highest version known
  * to be linked from Brave's Zcash crate (else the highest one not ruled out, with `certain: false`), with every such
  * version. Snapshots read before candidates were recorded report their `lock` entry (the newest version in
- * Cargo.lock). Exposure checks must not use this (see advisoryVerdicts). null when the crate is not linked.
+ * Cargo.lock), as possibly linked. Exposure checks must not use this (see advisoryVerdicts). null means no version
+ * can be reported; only braveDependencyAbsence() establishes absence from complete dependency evidence.
  */
 export function braveResolves(s0: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> | null | undefined, crate: string): BraveResolved | null {
   if (!s0) return null;
-  if (!s0.resolution) {
-    const l = s0.lock[crate];
-    return l ? { version: l.version, source: l.source, linked: [l.version], possible: [], certain: true } : null;
-  }
   // deps.ts linkedVersions() reads `lockPackages`; an inconsistent list is not passed on (see fullLockPackages).
   const s: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> = { ...s0, lockPackages: fullLockPackages(s0) };
   const { versions } = linkedVersions(s, crate);
@@ -978,6 +990,22 @@ export function braveResolves(s0: Pick<DepsSnapshotWithPackages, 'lock' | 'resol
   if (!pool.length) return null;
   const top = pool[pool.length - 1];
   return { version: top.version, source: top.source, linked: pool.map((c) => c.version), possible: maybe.map((c) => c.version), certain: sure.length > 0 };
+}
+
+/** A complete, consistent read can establish absence; missing or partial dependency evidence cannot. */
+export function braveDependencyAbsence(s0: Pick<DepsSnapshotWithPackages, 'lock' | 'resolution' | 'lockPackages'> | null | undefined, crate: string): 'not-in-lockfile' | 'not-linked' | null {
+  if (!s0) return null;
+  const lockPackages = fullLockPackages(s0);
+  if (!lockPackages) return null;
+  const { versions, certain } = linkedVersions({ ...s0, lockPackages }, crate);
+  if (!certain || versions.length) return null;
+  const key = crateKey(crate);
+  const names = lockPackages.filter((p) => crateKey(p) === key);
+  if (!names.length) return 'not-in-lockfile';
+  // A listed package whose versions were never recorded is unread, not proved unreachable. Every spelling must
+  // have graph candidates ruled out, and the lock must not contradict that graph by claiming a linked version.
+  if (Object.keys(s0.lock).some((n) => crateKey(n) === key)) return null;
+  return names.every((n) => s0.resolution?.candidates[n]?.length && s0.resolution.candidates[n].every((c) => c.reachable === false)) ? 'not-linked' : null;
 }
 
 /**

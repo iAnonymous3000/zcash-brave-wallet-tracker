@@ -58,10 +58,11 @@ export interface IndexLoader<T> {
 
 /**
  * Loads the search index once it is needed. Only a successful, well-formed result is cached: a
- * network error, an HTTP error (thrown by `fetchIndex`), unparsable JSON or a non-list leaves the
- * loader in "failed", and the next load() fetches again. Concurrent callers share one request.
+ * network error, an HTTP error (thrown by `fetchIndex`), unparsable JSON, a non-list or an entry
+ * rejected by `isEntry` leaves the loader in "failed", and the next load() fetches again.
+ * Concurrent callers share one request.
  */
-export function createIndexLoader<T>(fetchIndex: () => Promise<unknown>): IndexLoader<T> {
+export function createIndexLoader<T>(fetchIndex: () => Promise<unknown>, isEntry?: (value: unknown) => value is T): IndexLoader<T> {
   let state: LoadState = 'idle';
   let entries: T[] | null = null;
   let inflight: Promise<LoadState> | null = null;
@@ -69,6 +70,7 @@ export function createIndexLoader<T>(fetchIndex: () => Promise<unknown>): IndexL
     try {
       const data = await fetchIndex();
       if (!Array.isArray(data)) throw new Error('search index is not a list');
+      if (isEntry && !data.every(isEntry)) throw new Error('search index contains an invalid entry');
       entries = data as T[];
       state = 'ready';
     } catch {
@@ -107,6 +109,13 @@ export interface SearchEntry {
   s: string;
   u: string;
   x: string;
+}
+
+/** JSON entries must have every text field the search renderer and matcher read. */
+export function isSearchEntry(value: unknown): value is SearchEntry {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
+  const entry = value as Record<string, unknown>;
+  return ['k', 't', 's', 'u', 'x'].every((key) => typeof entry[key] === 'string');
 }
 
 const KIND_ORDER: Record<string, number> = { Feature: 0, Page: 1, Work: 2, 'Release note': 3, Community: 4 };

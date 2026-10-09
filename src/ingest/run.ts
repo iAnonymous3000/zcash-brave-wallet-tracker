@@ -76,12 +76,35 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
   const gh = new GitHub(http);
 
   const statusPath = dataPath('status.json');
-  const statusFile = readJson<{ sources: Record<string, SourceStatus>; derive?: DeriveStatus }>(statusPath, { sources: {} });
+  const statusFile = readJson<{ sources: Record<string, SourceStatus>; derive?: DeriveStatus; lastRun?: RunRecord | null }>(statusPath, { sources: {} });
+  if (!isRecord(statusFile) || !isRecord(statusFile.sources)) throw new Error(`Invalid source status in ${statusPath}: expected a sources object`);
+  for (const [id, st] of Object.entries(statusFile.sources)) {
+    if (!isSourceStatus(st) || st.id !== id) throw new Error(`Invalid source status in ${statusPath}: malformed record for ${id}`);
+  }
+  if (statusFile.derive !== undefined && !isDeriveStatus(statusFile.derive)) throw new Error(`Invalid source status in ${statusPath}: malformed derive metadata`);
+  if (statusFile.lastRun != null && !isRunRecord(statusFile.lastRun)) throw new Error(`Invalid source status in ${statusPath}: malformed lastRun metadata`);
+  // Read bookkeeping before storing any new source or derived data. A corrupt history must
+  // stay available for repair, rather than being discovered after a success was published.
+  const runsPath = dataPath('history', 'runs.json');
+  const runs = readJson<RunRecord[]>(runsPath, []);
+  if (!Array.isArray(runs)) throw new Error(`Invalid run history in ${runsPath}: expected an array`);
+  for (const [index, record] of runs.entries()) {
+    if (!isRunRecord(record)) throw new Error(`Invalid run history in ${runsPath}: malformed record at index ${index}`);
+  }
+  const collectors = opts.collectors ?? COLLECTORS;
+  const schemas = new Map([...COLLECTORS, ...collectors].map((c) => [c.id, c.schema]));
+  const incompatible = new Set<string>();
   const fresh = new Map<string, SourceEnvelope<unknown>>();
-  const loadPrev = (id: string, schema?: number): SourceEnvelope<unknown> | null => {
+  const loadPrev = (id: string, schema = schemas.get(id)): SourceEnvelope<unknown> | null => {
     const env = readJson<SourceEnvelope<unknown> | null>(dataPath('sources', `${id}.json`), null);
     if (!env) return null;
-    if (schema !== undefined && env.schema !== schema) return null;
+    if (schema !== undefined && env.schema !== schema) {
+      if (!incompatible.has(id)) {
+        log(`! ${id}: cached schema ${env.schema} is incompatible with schema ${schema}; keeping the file but not using its data`);
+        incompatible.add(id);
+      }
+      return null;
+    }
     return env;
   };
   const ctx: Ctx = {
@@ -95,7 +118,6 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
     },
   };
 
-  const collectors = opts.collectors ?? COLLECTORS;
   const outcomes: Record<string, SourceOutcome> = {};
   const notes: string[] = [];
   if (fault) notes.push(`fault injection active: ${fault}`);
@@ -143,15 +165,18 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       const keptSince = partial ? validTime(result.staleSince) : null;
       const stale = keptSince !== null && Date.parse(now) - Date.parse(keptSince) > FRESHNESS.staleAfterMinutes * 60_000;
       const outcome: SourceOutcome = partial ? 'partial' : 'ok';
-      if (outcome === 'ok') st.lastCompleteAt = now;
-      else st.lastPartialAt = now;
+      const completeAt = outcome === 'ok' ? now : st.lastCompleteAt ?? null;
       if (stale) {
-        st.staleSince = keptSince!;
-        limitations.unshift(staleNote(result.staleWhat ?? null, keptSince!, now, st.lastCompleteAt ?? null));
-      } else delete st.staleSince;
-      const env: SourceEnvelope<unknown> = { sourceId: c.id, schema: c.schema, retrievedAt: now, data, ...(partial ? { partial: true } : {}), completeAt: st.lastCompleteAt ?? null };
+        limitations.unshift(staleNote(result.staleWhat ?? null, keptSince!, now, completeAt));
+      }
+      const env: SourceEnvelope<unknown> = { sourceId: c.id, schema: c.schema, retrievedAt: now, data, ...(partial ? { partial: true } : {}), completeAt };
       writeJson(dataPath('sources', `${c.id}.json`), env);
       fresh.set(c.id, env);
+      // These times describe stored data. Do not advance or clear them if the atomic write fails.
+      if (outcome === 'ok') st.lastCompleteAt = now;
+      else st.lastPartialAt = now;
+      if (stale) st.staleSince = keptSince!;
+      else delete st.staleSince;
       st.lastOutcome = outcome;
       st.itemCount = result.itemCount ?? null;
       st.limitations = limitations;
@@ -240,8 +265,6 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
     ...(staleIds.length ? { stale } : {}),
   };
   writeJson(statusPath, { updatedAt: record.finishedAt, lastRun: record, rateLimit: http.meter.rateLimit, sources: statusFile.sources, derive: deriveStatus });
-  const runsPath = dataPath('history', 'runs.json');
-  const runs = readJson<RunRecord[]>(runsPath, []);
   runs.unshift(record);
   writeJson(runsPath, runs.slice(0, 300));
   log(`run ${record.id}: ${record.outcome}, ${record.requests} requests, ${events} new events (data dir ${dataDir()})`);
@@ -291,6 +314,40 @@ const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'obj
 const sample = (keys: string[]) => `${keys.slice(0, 5).join(', ')}${keys.length > 5 ? ', …' : ''}`;
 const validTime = (t: string | null | undefined): string | null => (typeof t === 'string' && Number.isFinite(Date.parse(t)) ? t : null);
 
+// Persisted bookkeeping is read by the renderer and mutated by later runs. Check its known
+// structure before collection, while allowing optional fields absent from older tracker runs.
+const isCount = (v: unknown): v is number => typeof v === 'number' && Number.isSafeInteger(v) && v >= 0;
+const isNullableText = (v: unknown): v is string | null => v === null || typeof v === 'string';
+const isTime = (v: unknown): v is string => typeof v === 'string' && validTime(v) !== null;
+const isNullableTime = (v: unknown): v is string | null => v === null || isTime(v);
+const isTextList = (v: unknown): v is string[] => Array.isArray(v) && v.every((s) => typeof s === 'string');
+const isSourceOutcome = (v: unknown): v is SourceOutcome => v === 'ok' || v === 'partial' || v === 'failed' || v === 'skipped';
+
+function isDeriveStatus(v: unknown): v is DeriveStatus {
+  return isRecord(v) && isNullableTime(v.lastAttemptAt) && isNullableTime(v.lastSuccessAt)
+    && isNullableText(v.lastError) && isCount(v.consecutiveFailures);
+}
+
+function isSourceStatus(v: unknown): v is SourceStatus {
+  return isRecord(v) && typeof v.id === 'string' && typeof v.name === 'string' && typeof v.url === 'string'
+    && isNullableTime(v.lastAttemptAt) && isNullableTime(v.lastSuccessAt)
+    && (v.lastOutcome === null || isSourceOutcome(v.lastOutcome)) && isNullableText(v.lastError)
+    && isCount(v.consecutiveFailures) && (v.itemCount === null || isCount(v.itemCount))
+    && (v.requests === null || isCount(v.requests)) && isTextList(v.limitations)
+    && (v.lastCompleteAt === undefined || isNullableTime(v.lastCompleteAt))
+    && (v.lastPartialAt === undefined || isNullableTime(v.lastPartialAt))
+    && (v.staleSince === undefined || isTime(v.staleSince));
+}
+
+function isRunRecord(v: unknown): v is RunRecord {
+  return isRecord(v) && typeof v.id === 'string' && isTime(v.startedAt) && isTime(v.finishedAt)
+    && typeof v.trigger === 'string' && (v.outcome === 'success' || v.outcome === 'partial' || v.outcome === 'failed')
+    && isRecord(v.sources) && Object.values(v.sources).every(isSourceOutcome)
+    && isCount(v.requests) && isCount(v.events) && isTextList(v.notes)
+    && (v.derive === undefined || (isRecord(v.derive) && (v.derive.outcome === 'ok' || v.derive.outcome === 'failed') && isNullableText(v.derive.error)))
+    && (v.stale === undefined || (isRecord(v.stale) && Object.values(v.stale).every(isTime)));
+}
+
 /** Hours between two ISO times, rounded for display ("8 h", "2.5 h"). */
 function hoursBetween(from: string, to: string): string {
   const h = (Date.parse(to) - Date.parse(from)) / 3_600_000;
@@ -323,7 +380,10 @@ export function carryForward(prev: unknown, next: unknown, removed: readonly str
     const nv = out[field];
     if (nv === undefined) {
       if (carry.has(field)) {
-        out[field] = pv;
+        // A missing map can still name deliberate removals. Carry only its remaining records.
+        out[field] = isRecord(pv)
+          ? Object.fromEntries(Object.entries(pv).filter(([k]) => !skip.has(`${field}.${k}`)))
+          : pv;
         keys.push(field);
       } else dropped.push(field);
       continue;

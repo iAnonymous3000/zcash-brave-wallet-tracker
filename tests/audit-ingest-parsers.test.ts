@@ -260,10 +260,11 @@ test('ING-23: after an unclosed fence or comment, later release headings are unk
   // R3-ING-23 (block structure CommonMark-correct or explicitly unknown): CommonMark runs the unclosed fence or
   // comment to the end of the text, so "## Unreleased" and "## 1.2.2" are not headings there, while a stray opener
   // would make them real. From the first such line the attribution is unknown: "future" and "c" are credited to no
-  // release, and 1.2.2 is not listed. "b", before any of them, is under 1.2.3 in either reading.
-  assert.deepEqual(verOf(md), ['1.2.3:a', '1.2.3:b']);
+  // release, and 1.2.2 is not listed. "b" is literal code (or comment text), so it is not release-note evidence
+  // even though heading recovery agrees which release precedes it.
+  assert.deepEqual(verOf(md), ['1.2.3:a']);
   assert.deepEqual(changelogVersions(md), ['1.2.3']);
-  assert.deepEqual(verOf(md.replace('```', '<!-- unterminated')), ['1.2.3:a', '1.2.3:b']);
+  assert.deepEqual(verOf(md.replace('```', '<!-- unterminated')), ['1.2.3:a']);
   // One-line inline code and one-line comments are not block openers.
   assert.deepEqual(verOf(['## 1.2.3', '- a', '```x```', '<!-- note -->', '# Archive', '- gone', '## 1.2.2', '- c'].join('\n')), ['1.2.3:a', '1.2.2:c']);
 });

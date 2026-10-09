@@ -7,7 +7,9 @@ import { build as esbuild } from 'esbuild';
 import { SITE } from '../../config/tracker.ts';
 import type { SiteData } from '../derive/index.ts';
 import { dataPath, readJson, ROOT } from '../lib/store.ts';
-import type { ChangeEvent, EvidenceRecord, RunRecord, SourceStatus, WorkItem } from '../lib/types.ts';
+import type { ChangeEvent, RunRecord, SourceEnvelope, SourceStatus, WorkItem } from '../lib/types.ts';
+import type { ChangelogsData } from '../ingest/sources/changelogs.ts';
+import type { GithubItemsData } from '../ingest/sources/github-items.ts';
 import { featureHref, itemHref, setBase, slug, u } from './components.ts';
 import { page, type Freshness } from './layout.ts';
 import { homePage } from './pages/home.ts';
@@ -28,9 +30,16 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   const events = readJson<ChangeEvent[]>(dataPath('history', 'events.json'), []);
   const status = readJson<{ lastRun?: RunRecord; rateLimit?: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>; sources: Record<string, SourceStatus> }>(dataPath('status.json'), { sources: {} });
   const runs = readJson<RunRecord[]>(dataPath('history', 'runs.json'), []);
-  const full = readJson<{ data: { items: Record<string, WorkItem> } } | null>(dataPath('sources', 'github-items.json'), null)?.data.items ?? {};
-  const changelogs = readJson<{ data: { evidence: EvidenceRecord[]; files: { file: string; platform: string; commitSha: string; commitDate?: string | null }[] } } | null>(dataPath('sources', 'brave-changelogs.json'), null)?.data;
-  const notes = groupReleaseNotes(changelogs?.evidence ?? []);
+  // A failed derivation keeps site.json while collectors may already have replaced source
+  // envelopes. Render every content fact from the same successful derivation, including
+  // member timelines and standalone release notes, rather than mixing those generations.
+  const inputs = site.renderInputs ?? legacyRenderInputs(site);
+  const full: Record<string, WorkItem> = Object.fromEntries(Object.entries(site.items).map(([id, item]) => {
+    const { timelineCount: _count, ...rest } = item;
+    return [id, { ...rest, timeline: inputs.timelines[id] ?? [] }];
+  }));
+  const changelogs = inputs.changelogs;
+  const notes = groupReleaseNotes(changelogs.evidence);
 
   if (process.env.GITHUB_ACTIONS === 'true' && site.mode !== 'live') throw new Error('Refusing to publish fixture data from CI');
 
@@ -56,7 +65,7 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   for (const row of site.capabilities) {
     write(`features/${row.id}/index.html`, page({ title: row.name, description: `${row.description} Status on every platform and channel, release notes, help articles, open issues and evidence.`, path: `features/${row.id}/`, active: 'features' }, fresh, featurePage(row, site)));
   }
-  write('releases/index.html', page({ title: 'Releases', description: 'Zcash-related lines in Brave release notes by platform and version, and the current version of each channel.', path: 'releases/', active: 'releases' }, fresh, releasesPage(site, notes, changelogs?.files ?? [])));
+  write('releases/index.html', page({ title: 'Releases', description: 'Zcash-related lines in Brave release notes by platform and version, and the current version of each channel.', path: 'releases/', active: 'releases' }, fresh, releasesPage(site, notes, changelogs.files)));
   write('work/index.html', page({ title: 'Tracked work', description: 'Searchable list of Zcash issues and pull requests in Brave, grouped with their fixes, uplifts and duplicates.', path: 'work/', active: 'work' }, fresh, workPage(site)));
   const seen = new Set<string>();
   for (const g of site.groups) {
@@ -105,6 +114,24 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   writeFileSync(join(outDir, '.nojekyll'), '');
   writeFileSync(join(outDir, 'robots.txt'), 'User-agent: *\nAllow: /\n');
   return { pages, outDir };
+}
+
+/** Migration for sites derived before renderInputs was stored atomically in site.json. */
+function legacyRenderInputs(site: SiteData): NonNullable<SiteData['renderInputs']> {
+  const github = readJson<SourceEnvelope<GithubItemsData> | null>(dataPath('sources', 'github-items.json'), null);
+  const changelogs = readJson<SourceEnvelope<ChangelogsData> | null>(dataPath('sources', 'brave-changelogs.json'), null);
+  for (const env of [github, changelogs]) {
+    if (!env) continue;
+    const readAt = typeof env.retrievedAt === 'string' ? Date.parse(env.retrievedAt) : NaN;
+    const derivedAt = Date.parse(site.generatedAt);
+    if (!Number.isFinite(readAt) || !Number.isFinite(derivedAt) || readAt > derivedAt) {
+      throw new Error(`Cannot build legacy derived data with incompatible source ${env.sourceId}; a successful derivation is required.`);
+    }
+  }
+  return {
+    timelines: Object.fromEntries(Object.entries(github?.data.items ?? {}).map(([id, item]) => [id, item.timeline])),
+    changelogs: { evidence: changelogs?.data.evidence ?? [], files: changelogs?.data.files ?? [] },
+  };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

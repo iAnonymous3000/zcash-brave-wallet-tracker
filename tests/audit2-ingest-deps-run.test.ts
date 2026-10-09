@@ -662,23 +662,37 @@ function simulate(root: string, nodeStub: string, extraEnv: Record<string, strin
   return { refresh: { status: r.status, out: `${r.stdout}${r.stderr}` }, outputs, report: { status: rep.status, out: `${rep.stdout}${rep.stderr}` } };
 }
 
-test('R-WF: a refresh that crashes after writing a "success" run record is reported with its exit code, not as "outcome success"', () => {
+test('R-WF: corrupt run history fails before recording success; a later process crash is still reported with its exit code', () => {
   const root = mkdtempSync(join(tmpdir(), 'zbt-wf-'));
   try {
-    // Real repro: the CLI writes status.json (outcome success, nothing collected), then crashes reading a corrupt runs.json.
+    // Corrupt history is preflighted, so this real CLI failure records no fictitious success.
     mkdirSync(join(root, 'data', 'history'), { recursive: true });
     writeFileSync(join(root, 'data', 'history', 'runs.json'), '{');
     const cli = new URL('../src/ingest/run.ts', import.meta.url).pathname;
     const sim = simulate(root, `exec "${process.execPath}" "${cli}" --only=none`, { TRACKER_DATA_DIR: join(root, 'data'), GITHUB_TOKEN: '', GH_TOKEN: '' });
-    const status = JSON.parse(readFileSync(join(root, 'data', 'status.json'), 'utf8'));
-    assert.equal(status.lastRun.outcome, 'success', 'precondition: the record written before the crash says success');
+    assert.equal(existsSync(join(root, 'data', 'status.json')), false, 'no record was written before history validation');
+    assert.equal(readFileSync(join(root, 'data', 'history', 'runs.json'), 'utf8'), '{', 'corrupt evidence is retained');
     assert.equal(sim.refresh.status, 1, `the step fails with the process exit code:\n${sim.refresh.out}`);
     assert.equal(sim.outputs.exit_code, '1', 'the exit code is a step output');
     assert.ok(Number.isFinite(Date.parse(sim.outputs.started ?? '')), 'the start time is a step output');
     assert.equal(sim.report.status, 1);
-    assert.match(sim.report.out, new RegExp(`::error::Refresh failed \\(the refresh process exited with code 1 after recording run ${status.lastRun.id} started ${status.lastRun.startedAt} with outcome success; it crashed or was interrupted after writing that record, so the record does not show how the run ended\\)\\.`));
+    assert.match(sim.report.out, /::error::Refresh failed \(no run record was written\)\./);
     assert.match(sim.report.out, /The refresh process exited with code 1\.$/m);
     assert.doesNotMatch(sim.report.out, /sources not ok: none/, 'no misleading "outcome success" reason');
+
+    // Keep the workflow control for a process failure after a success record was stored.
+    // Such a failure must use the process exit code even when the record itself says success.
+    const stub = [
+      'now=$(date -u +%Y-%m-%dT%H:%M:%S.500Z)',
+      'cat > data/status.json <<EOF',
+      '{"lastRun":{"id":"crashafter","startedAt":"$now","outcome":"success","sources":{},"derive":{"outcome":"ok","error":null}},"sources":{}}',
+      'EOF',
+      'exit 1',
+    ].join('\n');
+    const after = simulate(root, stub);
+    assert.equal(after.refresh.status, 1);
+    assert.equal(after.report.status, 1);
+    assert.match(after.report.out, /after recording run crashafter started \S+ with outcome success; it crashed or was interrupted after writing that record/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

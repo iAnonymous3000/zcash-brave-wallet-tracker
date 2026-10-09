@@ -53,8 +53,8 @@ export const ZCASH_TEXT = /\b(z\s?cash|zec|ironwood|orchard|lightwalletd|zaino|u
 // rules where it departs from CommonMark or GFM replaced (Block structure, below); this code only walks its block
 // tokens (readStructure). Where the structure itself is in doubt the release block ends there, so the bullets it
 // would decide are unattributed rather than credited to a release. Bullet lines themselves are still read with a
-// plain pattern wherever they are (evidence ids stay stable); only headings and doubtful lines move the version and
-// the section.
+// plain pattern outside code and raw HTML blocks (ordinary evidence ids stay stable); headings and doubtful lines
+// move the version and the section.
 
 /** A link reference definition ("[label]: destination 'title'"), or an inline link's destination and title. */
 interface LinkDef {
@@ -1036,6 +1036,8 @@ const contentLines = (content: string) => (content === '' ? 0 : content.split('\
 interface Structure {
   marks: (LineMark | null)[];
   refs: Map<string, LinkDef>;
+  /** Lines rendered as code or raw HTML, whose bullet-shaped text is not a release-note list entry. */
+  literalLines: boolean[];
 }
 
 /** What a mark means for releases, for comparing two readings: level-1/2 headings and doubt. */
@@ -1070,6 +1072,7 @@ const markKey = (m: LineMark | null): string => (!m ? '' : m.t === 'heading' ? (
  */
 function readStructure(lines: string[], budget: WorkBudget, rereads = 0, github = false): Structure {
   const marks: (LineMark | null)[] = new Array(lines.length).fill(null);
+  const literalLines: boolean[] = new Array(lines.length).fill(false);
   const src = lines.join('\n');
   const parse: ParseInfo = {
     definitions: [],
@@ -1128,6 +1131,9 @@ function readStructure(lines: string[], budget: WorkBudget, rereads = 0, github 
   for (let k = 0; k < tokens.length; k++) {
     const t = tokens[k];
     const map = t.map;
+    if (map && (t.type === 'fence' || t.type === 'code_block' || t.type === 'html_block')) {
+      for (let j = map[0]; j < map[1]; j++) literalLines[j] = true;
+    }
     switch (t.type) {
       case 'list_item_open':
       case 'blockquote_open':
@@ -1187,11 +1193,14 @@ function readStructure(lines: string[], budget: WorkBudget, rereads = 0, github 
       return `${l.slice(0, at)}<${m[1]}${m[2].toLowerCase() === 'search' ? 'xearch' : 'div   '}${l.slice(at + m[0].length)}`;
     });
     if (changed) {
-      const otherMarks = readStructure(other, budget, rereads, true).marks;
-      for (let j = 0; j < lines.length; j++) if (markKey(marks[j]) !== markKey(otherMarks[j])) marks[j] = { t: 'doubt' };
+      const otherStructure = readStructure(other, budget, rereads, true);
+      for (let j = 0; j < lines.length; j++) {
+        if (markKey(marks[j]) !== markKey(otherStructure.marks[j])) marks[j] = { t: 'doubt' };
+        literalLines[j] ||= otherStructure.literalLines[j];
+      }
     }
   }
-  return { marks, refs };
+  return { marks, refs, literalLines };
 }
 
 /**
@@ -1264,12 +1273,14 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   const now = epochMs(opts.now);
   let version: string | null = null;
   let section: string | null = null;
-  const { marks, owner, refs } = structureOf(text);
+  const { marks, owner, refs, literalLines } = structureOf(text);
   // The CommonMark line being read: the marks of every one on "\n" line i apply, in order, before the line's bullet.
   let j = 0;
   for (let i = 0; i < lines.length; i++) {
     let marked = false;
+    let literal = false;
     for (; j < marks.length && (owner ? owner[j] : j) === i; j++) {
+      literal ||= literalLines[j];
       const mark = marks[j];
       if (!mark) continue;
       marked = true;
@@ -1285,7 +1296,7 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
         section = null;
       }
     }
-    if (marked || !version) continue;
+    if (marked || literal || !version) continue;
     const md = bulletText(lines[i]);
     if (!md) continue;
     const issueRefs = extractRefs(md).filter((r) => r.startsWith(`${repo}#`));
@@ -1457,12 +1468,19 @@ export const UNKNOWN_LINE_MARKER = '/*__UNKNOWN__*/';
  * even under an unknown parent, and a definitely-taken branch excludes every later #elif/#else
  * even when their own conditions are unknown.
  */
-function preprocessLines(src: string, platform: Platform): { text: string; active: true | null }[] {
-  const out: { text: string; active: true | null }[] = [];
+function preprocessLines(src: string, platform: Platform): { text: string; syntax: string; active: true | null }[] {
+  // C++ removes comments before interpreting preprocessing directives. A directive-shaped line inside a
+  // comment or raw string therefore cannot change the activity of a real declaration that follows it.
+  const lexed = cppLexicalViews(src);
+  const sourceLines = lexed.code.split('\n');
+  const syntaxLines = lexed.syntax.split('\n');
+  const out: { text: string; syntax: string; active: true | null }[] = [];
   const stack: { parent: Tri; active: Tri; taken: Tri }[] = [];
   const region = (): Tri => (stack.length ? stack[stack.length - 1].active : true);
-  for (const line of src.split('\n')) {
-    const t = line.trim();
+  for (let i = 0; i < sourceLines.length; i++) {
+    const line = sourceLines[i];
+    const syntax = syntaxLines[i];
+    const t = syntax.trim();
     let m: RegExpMatchArray | null;
     if ((m = t.match(/^#\s*if(n?def)\b\s*(.*)$/))) {
       // #ifdef X / #ifndef X: whether X is defined is not knowable here.
@@ -1496,7 +1514,7 @@ function preprocessLines(src: string, platform: Platform): { text: string; activ
       continue;
     }
     const a = region();
-    if (a !== false) out.push({ text: line, active: a });
+    if (a !== false) out.push({ text: line, syntax, active: a });
   }
   return out;
 }
@@ -1513,36 +1531,68 @@ export function preprocess(src: string, platform: Platform): string {
 }
 
 /**
- * Replace C/C++ comments with spaces of the same length (newlines kept), so character offsets
- * still map to source lines. String and character literals are skipped, so "https://..." survives.
+ * Two aligned C++ views: comments blanked in `code`, comments and literals blanked in `syntax`.
+ * Newlines and offsets are preserved. Runtime-name strings remain available in `code`, while
+ * directives and declaration starts must occur in `syntax`, outside any comment or literal.
  */
-function blankComments(src: string): string {
-  const s = src.split('');
+function cppLexicalViews(src: string): { code: string; syntax: string } {
+  const code = src.split('');
+  const syntax = src.split('');
+  const blank = (from: number, to: number, comment: boolean) => {
+    for (let j = from; j < to; j++) {
+      if (src[j] === '\n' || src[j] === '\r') continue;
+      syntax[j] = ' ';
+      if (comment) code[j] = ' ';
+    }
+  };
   let i = 0;
-  while (i < s.length) {
-    const c = s[i];
-    if (c === '"' || c === "'") {
-      i++;
-      while (i < s.length && s[i] !== c && s[i] !== '\n') i += s[i] === '\\' ? 2 : 1;
-      i++;
-    } else if (c === '/' && s[i + 1] === '/') {
-      while (i < s.length && s[i] !== '\n') s[i++] = ' ';
-    } else if (c === '/' && s[i + 1] === '*') {
-      s[i++] = ' ';
-      s[i++] = ' ';
-      while (i < s.length && !(s[i] === '*' && s[i + 1] === '/')) {
-        if (s[i] !== '\n') s[i] = ' ';
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '/' && src[i + 1] === '/') {
+      const start = i;
+      while (i < src.length) {
+        if (src[i] === '\n' && src[i - 1] !== '\\' && !(src[i - 1] === '\r' && src[i - 2] === '\\')) break;
         i++;
       }
-      if (i < s.length) {
-        s[i++] = ' ';
-        s[i++] = ' ';
+      blank(start, i, true);
+    } else if (c === '/' && src[i + 1] === '*') {
+      const end = src.indexOf('*/', i + 2);
+      const stop = end < 0 ? src.length : end + 2;
+      blank(i, stop, true);
+      i = stop;
+    } else if (c === 'R' && src[i + 1] === '"') {
+      // A raw string uses a delimiter of at most 16 non-space characters, excluding () and backslash.
+      const opener = /^R"([^\s()\\]{0,16})\(/.exec(src.slice(i, i + 20));
+      if (!opener) { i++; continue; }
+      const endMarker = `)${opener[1]}"`;
+      const end = src.indexOf(endMarker, i + opener[0].length);
+      const stop = end < 0 ? src.length : end + endMarker.length;
+      blank(i, stop, false);
+      i = stop;
+    } else if (/[0-9]/.test(c) && !/[A-Za-z0-9_]/.test(src[i - 1] ?? '')) {
+      // Apostrophes inside preprocessing-number tokens are digit separators, not character literals.
+      // Preserve the token intact: evalCondition deliberately leaves unsupported numeric syntax unknown.
+      i++;
+      while (i < src.length) {
+        if (/[A-Za-z0-9_.]/.test(src[i])) i++;
+        else if (src[i] === "'" && /[A-Za-z0-9_]/.test(src[i + 1] ?? '')) i++;
+        else if ((src[i] === '+' || src[i] === '-') && /[eEpP]/.test(src[i - 1])) i++;
+        else break;
       }
+    } else if (c === '"' || c === "'") {
+      const start = i;
+      i++;
+      while (i < src.length && src[i] !== c && src[i] !== '\n') {
+        if (src[i] === '\\' && src[i + 1] === '\r' && src[i + 2] === '\n') i += 3;
+        else i += src[i] === '\\' ? 2 : 1;
+      }
+      if (src[i] === c) i++;
+      blank(start, Math.min(i, src.length), false);
     } else {
       i++;
     }
   }
-  return s.join('');
+  return { code: code.join(''), syntax: syntax.join('') };
 }
 
 /**
@@ -1560,11 +1610,13 @@ export function parseFeatureFlags(src: string, nameFilter: RegExp = /./): FlagVa
     const lines = preprocessLines(src, p);
     const starts: number[] = [];
     let raw = '';
+    let syntax = '';
     for (const l of lines) {
       starts.push(raw.length);
       raw += l.text + '\n';
+      syntax += l.syntax + '\n';
     }
-    const code = blankComments(raw);
+    const code = raw;
     /** True when any line overlapping [from, to) has unknown activity. */
     const touchesUnknown = (from: number, to: number): boolean => {
       for (let i = 0; i < lines.length; i++) {
@@ -1585,16 +1637,19 @@ export function parseFeatureFlags(src: string, nameFilter: RegExp = /./): FlagVa
     };
     // BASE_FEATURE(kName, "RuntimeName", base::FEATURE_ENABLED_BY_DEFAULT)
     for (const m of code.matchAll(/BASE_FEATURE\(\s*(k\w+)\s*,\s*(?:"([^"]+)"\s*,)?([^;]*?)\)\s*;/g)) {
-      const [, sym, key, rest] = m;
+      if (syntax[m.index] !== 'B') continue;
+      const [, sym, key] = m;
       if (!nameFilter.test(sym) && !nameFilter.test(key ?? '')) continue;
       const unknown = touchesUnknown(m.index, m.index + m[0].length);
-      const enabled = /FEATURE_ENABLED_BY_DEFAULT/.test(rest);
-      const disabled = /FEATURE_DISABLED_BY_DEFAULT/.test(rest);
+      const activeSyntax = syntax.slice(m.index, m.index + m[0].length);
+      const enabled = /FEATURE_ENABLED_BY_DEFAULT/.test(activeSyntax);
+      const disabled = /FEATURE_DISABLED_BY_DEFAULT/.test(activeSyntax);
       const v: boolean | null = unknown || enabled === disabled ? null : enabled;
       record(sym, () => ({ name: sym, kind: 'feature', feature: null, key: key ?? sym.replace(/^k/, ''), defaults: { desktop: null, android: null, ios: null } }), v);
     }
     // const base::FeatureParam<bool> kParam{&kFeature, "param_name", true};
     for (const m of code.matchAll(/FeatureParam<bool>\s+(k\w+)\s*=?\s*(?:\{|\()\s*&\s*(k\w+)\s*,\s*"([^"]+)"\s*,\s*([^}\)]*?)\s*(?:\}|\))\s*;/g)) {
+      if (syntax[m.index] !== 'F') continue;
       const [, sym, feature, key, val] = m;
       if (!nameFilter.test(sym) && !nameFilter.test(key) && !nameFilter.test(feature)) continue;
       const unknown = touchesUnknown(m.index, m.index + m[0].length);

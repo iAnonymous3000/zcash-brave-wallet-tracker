@@ -2,7 +2,7 @@
 // adds relative times, staleness checks computed at view time, selectors and filters.
 // It never inserts fetched text as HTML (no innerHTML). Pure logic lives in ./logic.ts.
 
-import { createIndexLoader, filterForTarget, freshCountsTitle, freshShortText, hashId, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
+import { createIndexLoader, filterForTarget, freshCountsTitle, freshShortText, hashId, isSearchEntry, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector(sel) as T | null;
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => Array.from(root.querySelectorAll(sel)) as T[];
@@ -177,13 +177,17 @@ function search(): void {
   const dlg = $<HTMLDialogElement>('#search-dlg');
   const q = $<HTMLInputElement>('#sd-q');
   const list = $<HTMLUListElement>('#sd-results');
+  const status = $('#sd-status');
   if (!dlg || !q || !list || typeof dlg.showModal !== 'function') return;
   let active = -1;
   const loader = createIndexLoader<SearchEntry>(async () => {
     const res = await fetch(`${document.body.dataset.base ?? '/'}assets/search.json`);
     if (!res.ok) throw new Error(`search index: HTTP ${res.status}`);
     return res.json();
-  });
+  }, isSearchEntry);
+
+  // Keep native links and focus in the query field, while making virtual keyboard selection audible.
+  const announce = (text: string) => { if (status) status.textContent = text; };
 
   const note = (text: string, cls = '') => {
     const li = document.createElement('li');
@@ -195,6 +199,7 @@ function search(): void {
   const render = () => {
     list.replaceChildren();
     active = -1;
+    announce('');
     if (loader.state === 'failed') {
       // Never shown as "nothing matches": the index itself is missing.
       const li = note('Search is unavailable: the search index could not be loaded. ', 'sd-error');
@@ -204,16 +209,19 @@ function search(): void {
       retry.textContent = 'Try again';
       retry.addEventListener('click', () => void refresh());
       li.append(retry);
+      announce('Search is unavailable. Use Try again or press Enter to retry.');
       return;
     }
     if (!tokens(q.value).length) return;
     if (loader.state !== 'ready' || !loader.entries) {
       note('Loading the search index…');
+      announce('Loading the search index.');
       return;
     }
     const hits = rankSearch(loader.entries, q.value);
     if (!hits.length) {
       note(`Nothing matches “${q.value.trim()}”. Try an issue number or a shorter word.`);
+      announce(`No results for “${q.value.trim()}”.`);
       return;
     }
     for (const e of hits) {
@@ -222,6 +230,7 @@ function search(): void {
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = safe;
+      a.setAttribute('aria-label', `${e.k}: ${e.t}${e.s ? `. ${e.s}` : ''}`);
       if (/^https:/.test(safe)) {
         a.target = '_blank';
         a.rel = 'noopener noreferrer nofollow';
@@ -240,6 +249,8 @@ function search(): void {
       li.append(a);
       list.append(li);
     }
+    const count = $$<HTMLAnchorElement>('a', list).length;
+    announce(`${count} result${count === 1 ? '' : 's'} for “${q.value.trim()}”. Use the Up and Down arrow keys to choose a result and Enter to open it.`);
   };
   /** Load (or retry) the index, showing the state before and after. */
   const refresh = async () => {
@@ -266,6 +277,7 @@ function search(): void {
     active = nextIndex(active, delta, links.length);
     if (active < 0) return;
     links.forEach((l, i) => l.classList.toggle('is-active', i === active));
+    announce(`${active + 1} of ${links.length}. ${links[active].getAttribute('aria-label') ?? links[active].textContent}. Press Enter to open.`);
     links[active].scrollIntoView({ block: 'nearest' });
   };
   const open = async () => {
@@ -277,6 +289,7 @@ function search(): void {
   for (const el of $$('[data-search-open]')) el.addEventListener('click', (e) => { e.preventDefault(); void open(); });
   for (const el of $$('[data-search-close]')) el.addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { if (!dlg.open) announce(''); });
   q.addEventListener('input', render);
   q.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }

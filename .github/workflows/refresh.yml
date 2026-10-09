@@ -1,8 +1,8 @@
 name: refresh
 
 # Unattended refresh: collect public sources with the built-in GITHUB_TOKEN (public data only,
-# no personal token), commit the collected state to this repository (auditable history), then
-# build and deploy the static site to GitHub Pages in the same run.
+# no personal token), validate the collected state and built site, commit it to this repository
+# (auditable history), then deploy the static site to GitHub Pages in the same run.
 
 on:
   schedule:
@@ -61,8 +61,15 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit "$code"
 
+      - name: Build site
+        run: node src/site/build.ts
+
+      - name: Scan build output for secrets
+        run: node scripts/scan-secrets.ts dist data
+
       - name: Commit refreshed data
         run: |
+          verified_source=$(git rev-parse HEAD)
           git config user.name "zcash-tracker-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
@@ -76,6 +83,16 @@ jobs:
               if [ "$attempt" -lt 3 ]; then
                 echo "push rejected; rebasing (attempt $attempt)"
                 git pull --rebase --autostash
+                # A refresh may incorporate concurrent data, but the code, config and dependency
+                # tree must remain the one tested above. A new source revision needs a new run.
+                if ! git diff --quiet "$verified_source" HEAD -- . ':(exclude)data'; then
+                  echo "::error::Source changed during the push retry; refusing to publish unverified changes. Run refresh again on the new revision."
+                  exit 1
+                fi
+                # Rebase can change data even when the source tree is unchanged. Validate that
+                # exact state before the next push and use its rebuilt artifact for deployment.
+                node src/site/build.ts
+                node scripts/scan-secrets.ts dist data
               fi
             done
             # Never report success for data that did not reach the repository: the deploy below
@@ -85,12 +102,6 @@ jobs:
               exit 1
             fi
           fi
-
-      - name: Build site
-        run: node src/site/build.ts
-
-      - name: Scan build output for secrets
-        run: node scripts/scan-secrets.ts dist data
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

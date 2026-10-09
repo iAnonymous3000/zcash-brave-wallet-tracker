@@ -101,9 +101,10 @@ ${watched.length ? html`<div class="wrap source-stale-banner" role="status" ${st
   <a href="${u('sources/')}">Check source status</a>.
 </div></div>` : ''}
 <dialog class="search-dlg" id="search-dlg" aria-label="Search the tracker">
-  <div class="sd-head">${raw(SEARCH_ICON)}<input id="sd-q" type="text" inputmode="search" placeholder="Search features, issues, PRs, release notes, reports" autocomplete="off" spellcheck="false" aria-label="Search" aria-controls="sd-results"><button type="button" class="sd-close" data-search-close>Esc</button></div>
+  <div class="sd-head">${raw(SEARCH_ICON)}<input id="sd-q" type="text" inputmode="search" placeholder="Search features, issues, PRs, release notes, reports" autocomplete="off" spellcheck="false" aria-label="Search" aria-controls="sd-results" aria-describedby="sd-hint"><button type="button" class="sd-close" data-search-close>Esc</button></div>
   <ul id="sd-results" class="sd-results"></ul>
-  <p class="sd-hint">Type to search. Use ↑ ↓ and Enter to open a result.</p>
+  <p id="sd-status" class="vh" role="status" aria-live="polite" aria-atomic="true"></p>
+  <p class="sd-hint" id="sd-hint">Type to search. Use ↑ ↓ and Enter to open a result.</p>
 </dialog>
 <main id="main" class="wrap">
 ${body}

@@ -315,15 +315,15 @@ const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', '
 export function parseHttpDate(value: string, nowMs: number = Date.now()): number | null {
   const v = value.trim();
   let day: number, mon: string, year: number, hh: number, mm: number, ss: number;
-  let m = /^[a-z]{3}, (\d{2}) ([a-z]{3}) (\d{4}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v);
+  let m = /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), (\d{2}) ([a-z]{3}) (\d{4}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v);
   if (m) {
     [day, mon, year, hh, mm, ss] = [Number(m[1]), m[2], Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6])];
-  } else if ((m = /^[a-z]{6,9}, (\d{2})-([a-z]{3})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v))) {
+  } else if ((m = /^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (\d{2})-([a-z]{3})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) GMT$/i.exec(v))) {
     [day, mon, hh, mm, ss] = [Number(m[1]), m[2], Number(m[4]), Number(m[5]), Number(m[6])];
     const nowYear = new Date(nowMs).getUTCFullYear();
     year = Math.floor(nowYear / 100) * 100 + Number(m[3]);
     if (year > nowYear + 50) year -= 100;
-  } else if ((m = /^[a-z]{3} ([a-z]{3}) ([ \d]\d) (\d{2}):(\d{2}):(\d{2}) (\d{4})$/i.exec(v))) {
+  } else if ((m = /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) ([a-z]{3}) ([ \d]\d) (\d{2}):(\d{2}):(\d{2}) (\d{4})$/i.exec(v))) {
     [mon, day, hh, mm, ss, year] = [m[1], Number(m[2].trim()), Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6])];
   } else {
     return null;

@@ -12,7 +12,7 @@ export function nowIso(): string {
   return new Date().toISOString();
 }
 
-/** Compare dotted numeric versions ("1.97.56" vs "1.98.1"). Non-numeric parts compare as strings. */
+/** Compare dotted numeric versions ("1.97.56" vs "1.98.1"). Only the sign is meaningful. */
 export function compareVersions(a: string, b: string): number {
   const pa = a.replace(/^v/, '').split(/[.+-]/);
   const pb = b.replace(/^v/, '').split(/[.+-]/);
@@ -20,6 +20,11 @@ export function compareVersions(a: string, b: string): number {
   for (let i = 0; i < n; i++) {
     const x = pa[i] ?? '0';
     const y = pb[i] ?? '0';
+    if (/^\d+$/.test(x) && /^\d+$/.test(y)) {
+      const c = compareNumericIdentifier(x, y);
+      if (c !== 0) return c;
+      continue;
+    }
     const nx = Number(x);
     const ny = Number(y);
     if (Number.isFinite(nx) && Number.isFinite(ny)) {
@@ -76,14 +81,18 @@ function compareIdentifier(x: string, y: string): number {
   const nx = /^\d+$/.test(x);
   const ny = /^\d+$/.test(y);
   if (nx && ny) {
-    // Arbitrary-length numeric identifiers: compare without precision loss.
-    const bx = BigInt(x);
-    const by = BigInt(y);
-    return bx === by ? 0 : bx < by ? -1 : 1;
+    return compareNumericIdentifier(x, y);
   }
   if (nx) return -1;
   if (ny) return 1;
   return x === y ? 0 : x < y ? -1 : 1;
+}
+
+/** Decimal integers, including arbitrarily long SemVer core/prerelease components, without rounding. */
+function compareNumericIdentifier(x: string, y: string): number {
+  const a = x.replace(/^0+(?=\d)/, '');
+  const b = y.replace(/^0+(?=\d)/, '');
+  return a.length !== b.length ? (a.length < b.length ? -1 : 1) : a === b ? 0 : a < b ? -1 : 1;
 }
 
 // The scanners below replace exactly what the commented regular expression would, left to right, in linear time.

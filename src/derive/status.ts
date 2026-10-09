@@ -253,10 +253,15 @@ export function mergedStageLabel(builds: Pick<BuildCell, 'included'>[]): string 
   return absent ? MERGED_LABEL.partlyUnknown : MERGED_LABEL.unknown;
 }
 
-/** For PRs merged into a feature branch: the merged PR whose head is that branch (it carried the change on). */
+/** For feature-branch PRs: the first later merge of that branch into master or a release branch. */
 export function carrierOf(pr: WorkItem, items: Record<string, WorkItem>): WorkItem | null {
   if (!pr.baseRef || pr.baseRef === 'master' || /^\d+\.\d+\.x$/.test(pr.baseRef)) return null;
-  return Object.values(items).find((x) => x.kind === 'pr' && x.repo === pr.repo && x.state === 'merged' && x.headRef === pr.baseRef && x.id !== pr.id) ?? null;
+  const mergedAt = Date.parse(pr.mergedAt ?? '');
+  if (!Number.isFinite(mergedAt)) return null;
+  return Object.values(items)
+    .filter((x) => x.kind === 'pr' && x.repo === pr.repo && x.state === 'merged' && x.headRef === pr.baseRef && x.id !== pr.id
+      && (x.baseRef === 'master' || /^\d+\.\d+\.x$/.test(x.baseRef ?? '')) && Date.parse(x.mergedAt ?? '') > mergedAt)
+    .sort((a, b) => Date.parse(a.mergedAt!) - Date.parse(b.mergedAt!) || a.id.localeCompare(b.id))[0] ?? null;
 }
 
 export { isUpliftPr };

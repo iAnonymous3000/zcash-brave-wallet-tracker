@@ -47,10 +47,10 @@ test('R3-ING-23: a release heading hidden by an unterminated comment, fence or r
     assert.deepEqual(changelogVersions(text), ['1.2.3'], opener);
   }
   assert.deepEqual(got(md('# Changelog', '<![CDATA[', '## 1.2.2 ##', '- Zcash b.')), []);
-  // Lines before the first one the two readings disagree on stay under the release in both, and keep it; so do lines
-  // that neither reading makes a heading (a lazy line and a thematic break after the stray fence).
-  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '```', '- Zcash b.', '## Unreleased', '- Zcash future.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
-  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '```', 'Unreleased', '---', '- Zcash c.')), ['1.2.3:Zcash a.', '1.2.3:Zcash c.']);
+  // Heading recovery can preserve the release above a stray fence, but its literal code is not shipped prose.
+  // The previous expectations mistakenly credited bullet-shaped code as release evidence.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '```', '- Zcash b.', '## Unreleased', '- Zcash future.')), ['1.2.3:Zcash a.']);
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '```', 'Unreleased', '---', '- Zcash c.')), ['1.2.3:Zcash a.']);
   // A fence its list item ends is CommonMark's ordinary reading: code to the end of the item, nothing in doubt.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a:', '  ```sh', '  # build', '- Zcash b.')), ['1.2.3:Zcash a:', '1.2.3:Zcash b.']);
 });

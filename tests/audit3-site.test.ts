@@ -12,7 +12,7 @@ import { cpSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, stat
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import type { SiteData, SiteGroup } from '../src/derive/index.ts';
-import type { ChangeEvent, SourceStatus } from '../src/lib/types.ts';
+import type { ChangeEvent, SourceStatus, WorkItem } from '../src/lib/types.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
 // Frozen copy of the committed data (tests/fixtures/frozen/README.md), so a refresh of data/ cannot change these tests.
@@ -803,6 +803,14 @@ test('R3-SITE-STALE-HEADER (repair 2): staleness is judged at the latest refresh
   // The literal case through buildSite: derive failed, so site.json is older than status.json.
   const { out, cleanup } = await buildFrom((dir) => {
     const site = readJ(dir, 'derived', 'site.json');
+    // Model a retained successful generation with its own render evidence. Backdating a legacy
+    // site while leaving later raw envelopes would now correctly fail the generation guard.
+    const github = readJ(dir, 'sources', 'github-items.json').data;
+    const changelogs = readJ(dir, 'sources', 'brave-changelogs.json').data;
+    site.renderInputs = {
+      timelines: Object.fromEntries((Object.values(github.items) as WorkItem[]).map((item) => [item.id, item.timeline])),
+      changelogs: { evidence: changelogs.evidence, files: changelogs.files },
+    };
     site.generatedAt = keptAt;
     writeJ(dir, site, 'derived', 'site.json');
     const status = readJ(dir, 'status.json');

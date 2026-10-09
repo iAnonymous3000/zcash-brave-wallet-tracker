@@ -261,6 +261,15 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         let summary: string;
         const v = cv?.version ?? null;
         const where = `${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]}${v ? ` ${v}` : ''}`;
+        // A Stable announcement can corroborate a prerelease only at or after that announcement's build,
+        // and cannot outweigh an explicit ancestry result excluding its implementing work. Direct inclusion
+        // and a capability defined by its own flag remain independent evidence below.
+        const noteCorroboratesBuild = Boolean(firstNote && cv?.tag && compareVersions(cv.version, firstNote.version) >= 0 && built !== false);
+        const noteBuildGap = firstNote && cv && compareVersions(cv.version, firstNote.version) < 0
+          ? `${PLATFORM_NAME[platform]} Stable release notes list it (${firstNote.version}), newer than this ${CHANNEL_NAME[channel]} ${cv.version}`
+          : firstNote && built === false
+            ? `${PLATFORM_NAME[platform]} Stable release notes list it (${firstNote.version}), but the implementing PRs were not included in this build`
+            : null;
         if (serviceOff) {
           // A server-side switch applies to every client, whatever build it runs. Only the public code was checked.
           status = 'service-off';
@@ -284,12 +293,12 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         } else if (flagState === 'missing') {
           status = 'absent';
           summary = `Flag not present in ${where}.`;
-        } else if (flagState === 'on' && (firstNote || built === true || !(def.implementedBy?.length))) {
+        } else if (flagState === 'on' && (noteCorroboratesBuild || built === true || !(def.implementedBy?.length))) {
           // A generic flag alone is enough only when no required row-specific check is left unknown (see below).
           status = channel === 'release' && firstNote ? 'available' : 'in-build';
-          summary = firstNote
+          summary = noteCorroboratesBuild
             ? `${channel === 'release' ? '' : 'Stable shipped it; '}flag on at ${cv?.tag ?? 'build'}.`
-            : `Flag on and code present at ${cv?.tag ?? 'build'}; ${noteGap ?? `no ${PLATFORM_NAME[platform]} release note`}.`;
+            : `Flag on and code present at ${cv?.tag ?? 'build'}; ${noteBuildGap ?? noteGap ?? `no ${PLATFORM_NAME[platform]} release note`}.`;
         } else if (!def.flags?.length && cv?.tag && channel !== 'release' && (firstNote ? built !== false && compareVersions(cv.version, firstNote.version) >= 0 : built === true)) {
           status = 'in-build';
           summary = firstNote ? `Shipped in ${PLATFORM_NAME[platform]} Stable; implementing code present at ${cv?.tag ?? 'build'}.` : `Implementing code present at ${cv?.tag ?? 'build'}; ${noteGap ?? 'no release note'}.`;
@@ -301,6 +310,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           if (!cv) summary = `No current ${PLATFORM_NAME[platform]} ${CHANNEL_NAME[channel]} version known.`;
           else if (channel === 'release' && pendingNote) summary = `${PLATFORM_NAME[platform]} ${pendingNote.version} release notes list it, but the store version ${cv.version} does not say which ${cv.version} build is live, so availability is not verified.`;
           else if (channel === 'release' && newerNote) summary = `${PLATFORM_NAME[platform]} release notes list it first in ${newerNote.version}, newer than the current ${cv.version}, so it is not verified for this version.`;
+          else if (noteBuildGap) summary = `${noteBuildGap}, so presence is not verified for ${where}.`;
           else if (!cv.tag) summary = `${noNote(true)}, and ${platform === 'ios' && channel === 'release' ? `the ${cv.version} store build number is not published` : `no brave-core tag is known for ${cv.version}`}, so its code and flags cannot be checked.`;
           else summary = noteGap ? `${noteGap}; no other ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.` : `No ${PLATFORM_NAME[platform]}-specific evidence at ${cv.tag}.`;
         }
@@ -392,6 +402,8 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           cell.summary = `Since ${PLATFORM_NAME[cell.platform]} ${rc.since}, when “${req.name}” became available (an earlier ${cell.since} release note predates it).`;
           cell.since = rc.since;
         }
+        // Uncertainty about a prerequisite cannot erase a definite negative fact at this build.
+        if (cell.status === 'absent' && rc.status === 'not-verified') continue;
         if (RANK[rc.status] < RANK[cell.status] && rc.status !== 'not-planned') {
           cell.evidence.push({ kind: 'note', text: `Capped by prerequisite “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here. Uncapped: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null });
           cell.status = rc.status;

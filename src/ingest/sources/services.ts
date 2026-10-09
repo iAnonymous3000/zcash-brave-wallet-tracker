@@ -78,6 +78,8 @@ export interface StudyInfo {
   filter?: Record<string, unknown>;
   /** When this study's file was last read successfully. */
   readAt?: string | null;
+  /** When the parsed bytes were last confirmed current, by a read or an unchanged verified listing. */
+  verifiedAt?: string | null;
 }
 
 export interface Gate3Info {
@@ -107,11 +109,11 @@ export interface ServicesData {
 
 const GATE3_FILE = 'app/api/swap/constants.py';
 /** Bump when relevance or parsing rules change, so an unchanged listing is still re-read. */
-export const STUDY_RULES = 4;
+export const STUDY_RULES = 5;
 /** Upper bound on raw study files fetched per run (the repository has ~125; an unchanged listing is not re-read). */
 export const MAX_STUDY_FETCHES = 220;
 /**
- * Zcash terms. File level: the file must mention one somewhere. Study level: a feature name (enable/disable/forcing),
+ * Zcash terms. Study level: a decoded feature name (enable/disable/forcing),
  * parameter name or parameter value must contain one (BraveWalletZCash, zcash_shielded_transactions_enabled,
  * zcash_ironwood_enabled, ...). Every Zcash feature and parameter Brave defines contains "zcash" or "ironwood";
  * other Brave Wallet features (BraveWalletWebUIFeature, BraveWalletCardano, ...) do not make a study relevant.
@@ -299,13 +301,12 @@ const SWAP_VAR = 'SWAP_DISABLED_CHAINS';
  *     value is (Chain.X, ...), [Chain.X, ...], {Chain.X, ...}, frozenset({...}) / frozenset([...]) / frozenset((...))
  *     / frozenset(), () or []. Every element must be a plain Chain.MEMBER; a parenthesised single element without a
  *     trailing comma is not a tuple and is not accepted; {} is a dict and is not accepted.
- * Annotations may contain only names, dots, commas, spaces and square brackets (no calls), so evaluating them at
- * import time cannot run code.
+ * Annotations are restricted to known built-in types and the imported Chain; arbitrary names and subscriptions
+ * are not interpreted, since their evaluation may fail or execute custom methods.
  */
-const DOTTED = String.raw`[A-Za-z_]\w{0,40}(?:\.[A-Za-z_]\w{0,40}){0,3}`;
-/** `name`, `a.b`, or one level of subscription such as `frozenset[Chain]` / `tuple[Chain, ...]`; no calls, no nesting. */
-const ANNOTATION = String.raw`${DOTTED}(?:\[(?:${DOTTED}|\.\.\.)(?:, ?(?:${DOTTED}|\.\.\.)){0,3}\])?`;
-const CONSTANT_LINE = new RegExp(String.raw`^([A-Z][A-Z0-9_]*)[ \t]*(?::[ \t]*${ANNOTATION})?[ \t]*=[ \t]*(?:"[^"\\\n]*"|'[^'\\\n]*'|-?(?:0|[1-9]\d{0,17})(?:\.\d{1,17})?|True|False|None)[ \t]*(?:#.*)?$`);
+/** Built-in types and the imported Chain, with the collection annotations used by the constants module. */
+const ANNOTATION = String.raw`(?:int|float|bool|str|bytes|None|Chain|(?:frozenset|set|list|tuple)(?:\[Chain(?:, ?\.\.\.)?\])?)`;
+const CONSTANT_LINE = new RegExp(String.raw`^([A-Z][A-Z0-9_]*)[ \t]*(?::[ \t]*(${ANNOTATION}))?[ \t]*=[ \t]*(?:"[^"\\\n]*"|'[^'\\\n]*'|-?(?:0|[1-9]\d{0,17})(?:\.\d{1,17})?|True|False|None)[ \t]*(?:#.*)?$`);
 const SWITCH_HEAD = new RegExp(String.raw`^${SWAP_VAR}[ \t]*(?::[ \t]*${ANNOTATION})?[ \t]*=([\s\S]*)$`);
 const CHAIN_IMPORT = /^from[ \t]+app\.api\.common\.models[ \t]+import[ \t]+Chain[ \t]*(?:#.*)?$/;
 const MEMBER = /^Chain\.([A-Z][A-Z0-9_]*)$/;
@@ -389,6 +390,7 @@ export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; 
     }
     const c = CONSTANT_LINE.exec(line);
     if (c) {
+      if (c[2]?.includes('Chain') && !chainImported) return unknown(n, `line ${n} uses Chain in an annotation before it is imported`);
       if (c[1] === SWAP_VAR) return unknown(n, `line ${n} binds ${SWAP_VAR} to something other than a collection of Chain members`);
       continue;
     }
@@ -694,6 +696,45 @@ function refreshApplicability(st: StudyInfo, builds: StudyBuild[], now: string):
 
 const strList = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined).map(String) : typeof v === 'string' ? [v] : []);
 
+const record = (v: unknown): v is Record<string, unknown> => v !== null && typeof v === 'object' && !Array.isArray(v);
+const stringList = (v: unknown): boolean => typeof v === 'string' || (Array.isArray(v) && v.every((x) => typeof x === 'string'));
+
+/** Validate fields this reader uses before interpreting missing or malformed settings as an empty study. */
+function studyShapeProblem(st: unknown): string | null {
+  if (!record(st)) return 'study is not an object';
+  if (typeof st.name !== 'string' || !st.name.trim()) return 'study name is not a non-empty string';
+  if (!Array.isArray(st.experiment)) return `${st.name}: experiment is not a list`;
+  for (const [i, e] of st.experiment.entries()) {
+    const at = `${st.name}: experiment ${i + 1}`;
+    if (!record(e)) return `${at} is not an object`;
+    if (typeof e.name !== 'string' || !e.name.trim()) return `${at} name is not a non-empty string`;
+    if (typeof e.probability_weight !== 'number' || !Number.isSafeInteger(e.probability_weight) || e.probability_weight < 0) return `${at} probability_weight is not a non-negative integer`;
+    if (e.feature_association !== undefined) {
+      if (!record(e.feature_association)) return `${at} feature_association is not an object`;
+      for (const key of ['enable_feature', 'disable_feature', 'forcing_feature_on', 'forcing_feature_off']) {
+        const v = e.feature_association[key];
+        if (v !== undefined && !stringList(v)) return `${at} ${key} is not a string or a list of strings`;
+      }
+    }
+    if (e.param !== undefined) {
+      if (!Array.isArray(e.param)) return `${at} param is not a list`;
+      for (const p of e.param) if (!record(p) || typeof p.name !== 'string' || typeof p.value !== 'string') return `${at} parameter name/value is not a string`;
+    }
+  }
+  if (st.filter !== undefined && st.filter !== null) {
+    if (!record(st.filter)) return `${st.name}: filter is not an object`;
+    for (const key of ['platform', 'channel']) {
+      const v = st.filter[key];
+      if (v !== undefined && v !== null && !stringList(v)) return `${st.name}: filter ${key} is not a string or a list of strings`;
+    }
+    for (const key of ['min_version', 'max_version']) {
+      const v = st.filter[key];
+      if (v !== undefined && v !== null && (typeof v !== 'string' || !/^(?:\d+|\*)(?:\.(?:\d+|\*)){0,3}$/.test(v))) return `${st.name}: filter ${key} is not a version range`;
+    }
+  }
+  return null;
+}
+
 /**
  * Whether a parsed study touches Zcash: some experiment enables, disables or forces a Zcash/Ironwood feature, or
  * sets a parameter whose name or value names Zcash/Ironwood. Other wallet features do not count.
@@ -723,6 +764,8 @@ export function studyInfoTouchesZcash(st: StudyInfo): boolean {
 
 /** Turn one parsed study into StudyInfo, keeping each cohort separately. */
 export function toStudyInfo(st: any, file: string, commit: string, builds: StudyBuild[], now: string): StudyInfo {
+  const problem = studyShapeProblem(st);
+  if (problem) throw new Error(`unsupported study shape: ${problem}`);
   const exps: any[] = Array.isArray(st.experiment) ? st.experiment : [];
   const total = exps.reduce((s, e) => s + (Number(e?.probability_weight) || 0), 0);
   const experiments: StudyExperiment[] = exps.map((e) => {
@@ -785,6 +828,7 @@ export function toStudyInfo(st: any, file: string, commit: string, builds: Study
     ...(conditions.length ? { conditions } : {}),
     filter,
     readAt: now,
+    verifiedAt: now,
   };
 }
 
@@ -813,6 +857,10 @@ export const services: Collector<ServicesData> = {
   async collect(ctx, prev) {
     const limitations: string[] = ['Repository state is shown; the deployed service could differ and its deployment time is not public'];
     let partial = false;
+    const carried: { since: string; what: string }[] = [];
+    const markCarried = (what: string, since: string | null | undefined) => {
+      if (since && Number.isFinite(Date.parse(since))) carried.push({ since, what });
+    };
     // Read time of the previous data, for legacy records that do not carry their own.
     const ownPrev = ctx.get<ServicesData>('brave-services');
     const prevReadAt = ownPrev?.sourceId === 'brave-services' ? ownPrev.retrievedAt : null;
@@ -859,10 +907,13 @@ export const services: Collector<ServicesData> = {
       };
       if (parsed.zcashDisabled === null) {
         partial = true;
+        if (lastDetermined) markCarried('gate3 swap routing', lastDetermined.checkedAt);
         limitations.push(`gate3 at ${gsha.slice(0, 8)}: ${parsed.reason}; Zcash routing state is unknown${lastDetermined ? ` (last determined ${lastDetermined.zcashDisabled ? 'disabled' : 'not disabled'} at ${lastDetermined.commitSha.slice(0, 8)}, ${lastDetermined.checkedAt})` : ''}`);
       }
     } catch (err) {
       partial = true;
+      if (gate3) markCarried('gate3 repository reading', gate3.checkedAt ?? prevReadAt);
+      if (gate3?.lastDetermined) markCarried('gate3 swap routing', gate3.lastDetermined.checkedAt);
       limitations.push(`brave/gate3 could not be re-read (${errText(err)}); ${gate3 ? `keeping the value read at ${gate3.checkedAt}` : 'no earlier value'}`);
     }
 
@@ -873,12 +924,17 @@ export const services: Collector<ServicesData> = {
     // Earlier data can hold studies selected by older, broader rules (e.g. any Brave Wallet feature); those never
     // touched Zcash and are not carried, even while brave-variations cannot be re-read.
     const prevAll = Array.isArray(prev?.studies) ? prev!.studies : [];
-    const prevStudies = prevAll.filter(studyInfoTouchesZcash).map((s) => ({ ...s, readAt: s.readAt ?? prevReadAt }));
+    const prevStudies = prevAll.filter(studyInfoTouchesZcash).map((s) => {
+      const readAt = s.readAt ?? prev?.studiesReadAt ?? prevReadAt;
+      // Legacy records were confirmed by a complete verified listing unless their file was still pending.
+      const listingVerified = prev?.studiesDigest && !prev.studyPending?.includes(s.file) ? prev.studiesReadAt : null;
+      return { ...s, readAt, verifiedAt: s.verifiedAt ?? listingVerified ?? readAt };
+    });
     const notZcash = uniqStr(prevAll.filter((s) => !studyInfoTouchesZcash(s)).map((s) => s.name));
     if (notZcash.length) limitations.push(`${notZcash.length} earlier stud${notZcash.length === 1 ? 'y was' : 'ies were'} dropped because no cohort sets a Zcash/Ironwood feature or parameter: ${notZcash.slice(0, 4).join(', ')}`);
     const prevByFile = new Map<string, StudyInfo[]>();
     for (const s of prevStudies) prevByFile.set(s.file, [...(prevByFile.get(s.file) ?? []), s]);
-    const carry = (file: string) => (prevByFile.get(file) ?? []).map((s) => refreshApplicability(s, builds, ctx.now));
+    const carry = (file: string, verified = false) => (prevByFile.get(file) ?? []).map((s) => ({ ...refreshApplicability(s, builds, ctx.now), ...(verified ? { verifiedAt: ctx.now } : {}) }));
 
     let studies: StudyInfo[] = prevStudies.map((s) => refreshApplicability(s, builds, ctx.now));
     let studiesCommit = prev?.studiesCommit ?? null;
@@ -922,7 +978,7 @@ export const services: Collector<ServicesData> = {
       for (const f of files) {
         const name = f.name;
         if (unchanged && !prevPending.has(name)) {
-          next.push(...carry(name));
+          next.push(...carry(name, true));
           continue;
         }
         // Keep the file's earlier studies and retry it next run.
@@ -930,6 +986,7 @@ export const services: Collector<ServicesData> = {
           if (problem) failed.push(`${name} (${problem})`);
           pending.push(name);
           next.push(...carry(name));
+          for (const s of prevByFile.get(name) ?? []) markCarried(`studies in ${name}`, s.verifiedAt ?? s.readAt);
         };
         if (fetched >= MAX_STUDY_FETCHES) {
           deferred.push(name);
@@ -961,17 +1018,24 @@ export const services: Collector<ServicesData> = {
           parseError = errText(err);
         }
         if (!parsed) {
-          // Verified file content that never mentions Zcash/Ironwood cannot hold a Zcash study, parseable or not.
-          if (f.sha && !RELEVANT_TEXT.test(text)) unparsedIrrelevant.push(name);
+          // Only a verified file with no prior Zcash studies and no escapes can be ruled out from raw wording.
+          if (f.sha && !prevByFile.has(name) && !RELEVANT_TEXT.test(text) && !text.includes('\\')) unparsedIrrelevant.push(name);
           else keep(`could not parse: ${parseError}`);
           continue;
         }
-        if (!RELEVANT_TEXT.test(text)) continue; // a valid study file that never mentions Zcash/Ironwood
+        const shapeProblem = parsed.map(studyShapeProblem).find((p) => p !== null);
+        if (shapeProblem) {
+          keep(`unsupported study shape: ${shapeProblem}`);
+          continue;
+        }
         next.push(...parsed.filter(isRelevantStudy).map((st) => toStudyInfo(st, name, vsha, builds, ctx.now)));
       }
       if (truncatedListing) {
         const listed = new Set(files.map((f) => f.name));
-        for (const [file] of prevByFile) if (!listed.has(file)) next.push(...carry(file));
+        for (const [file, old] of prevByFile) if (!listed.has(file)) {
+          next.push(...carry(file));
+          for (const s of old) markCarried(`studies in ${file}`, s.verifiedAt ?? s.readAt);
+        }
       }
       if (failed.length) {
         partial = true;
@@ -989,6 +1053,8 @@ export const services: Collector<ServicesData> = {
       studyPending = pending;
     } catch (err) {
       partial = true;
+      markCarried('brave-variations studies listing', studiesReadAt ?? prevReadAt);
+      for (const s of prevStudies) if (studyPending.includes(s.file)) markCarried(`studies in ${s.file}`, s.verifiedAt ?? s.readAt);
       limitations.push(`brave/brave-variations could not be re-read (${errText(err)}); ${prevStudies.length ? `keeping ${prevStudies.length} stud${prevStudies.length === 1 ? 'y' : 'ies'} read at ${studiesReadAt ?? 'an earlier run'}` : 'no earlier studies to show'}`);
     }
 
@@ -1003,6 +1069,8 @@ export const services: Collector<ServicesData> = {
       ...(studiesDigest ? { studiesDigest } : {}),
       ...(studyPending.length ? { studyPending } : {}),
     };
-    return { data, limitations, partial, itemCount: studies.length + (gate3 ? 1 : 0) };
+    const oldest = carried.sort((a, b) => Date.parse(a.since) - Date.parse(b.since))[0];
+    const carriedWhat = uniqStr(carried.map((c) => c.what));
+    return { data, limitations, partial, itemCount: studies.length + (gate3 ? 1 : 0), ...(oldest ? { staleSince: oldest.since, staleWhat: carriedWhat.slice(0, 4).join(', ') + (carriedWhat.length > 4 ? ` and ${carriedWhat.length - 4} more study files` : '') } : {}) };
   },
 };

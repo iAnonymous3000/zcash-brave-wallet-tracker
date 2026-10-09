@@ -112,7 +112,8 @@ test('R-ING-23: an HTML <h1>/<h2> block ends the release block; <h3> sets the se
 
 test('R-ING-23: lines inside an HTML block (<details> until a blank line) are not headings', () => {
   const text = md('## 1.2.3', '', '- Zcash a.', '<details>', '<summary>More</summary>', '# Not a heading', '## Unreleased', '### Fake section', '- Zcash b.', '</details>', '', '- Zcash c.', '', '## 1.2.2', '- Zcash d.');
-  assert.deepEqual(sections(text), ['1.2.3/null:Zcash a.', '1.2.3/null:Zcash b.', '1.2.3/null:Zcash c.', '1.2.2/null:Zcash d.']);
+  // The HTML block's bullet-shaped text is literal HTML content, not a Markdown release-note list entry.
+  assert.deepEqual(sections(text), ['1.2.3/null:Zcash a.', '1.2.3/null:Zcash c.', '1.2.2/null:Zcash d.']);
   assert.deepEqual(changelogVersions(md('## 1.2.3', '<div>', '## 9.9.9', '</div>', '', '## 1.2.2')), ['1.2.3', '1.2.2']);
   // Without the blank line CommonMark keeps "## 1.2.2" in the HTML block as literal text. It comes after the
   // <div> has closed, so it is read as the heading its author wrote (see the repair-round test on this), and
@@ -121,7 +122,7 @@ test('R-ING-23: lines inside an HTML block (<details> until a blank line) are no
   // release; the line only ends the release block (its bullets are unattributed, not left under 1.2.3).
   assert.deepEqual(changelogVersions(md('## 1.2.3', '<div>', '## 9.9.9', '</div>', '## 1.2.2')), ['1.2.3']);
   // CRLF line endings (GitHub issue bodies).
-  assert.deepEqual(sections(text.replace(/\n/g, '\r\n')), ['1.2.3/null:Zcash a.', '1.2.3/null:Zcash b.', '1.2.3/null:Zcash c.', '1.2.2/null:Zcash d.']);
+  assert.deepEqual(sections(text.replace(/\n/g, '\r\n')), ['1.2.3/null:Zcash a.', '1.2.3/null:Zcash c.', '1.2.2/null:Zcash d.']);
   // After the blank line Markdown resumes: a heading there is a real heading, even before </details>.
   const resumed = md('## 1.2.3', '- Zcash a.', '', '<details>', '<summary>x</summary>', '', '## Unreleased', '', '- Zcash future.', '', '</details>');
   assert.deepEqual(got(resumed), ['1.2.3:Zcash a.']);
@@ -135,7 +136,8 @@ test('R-ING-23: other HTML block kinds follow their CommonMark end conditions', 
   // both headings, so from "## Unreleased" on the attribution is unknown and "Zcash c." is credited to no release.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<pre>', '## Unreleased', '- Zcash future.', '## 1.2.2', '- Zcash c.')), ['1.2.3:Zcash a.']);
   // Kind 7 (any other lone tag) starts a block after a blank line...
-  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '<custom-note>', '# not a heading', '</custom-note>', '- Zcash b.')), ['1.2.3:Zcash a.', '1.2.3:Zcash b.']);
+  // Its closing tag does not end the HTML block; the blank line does. Literal "- Zcash b." is not evidence.
+  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '<custom-note>', '# not a heading', '</custom-note>', '- Zcash b.')), ['1.2.3:Zcash a.']);
   // ... but cannot interrupt a paragraph, so a heading after it in a paragraph still counts.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', 'Text', '<custom-note>', '# Archive', '- Zcash b.')), ['1.2.3:Zcash a.']);
   // Kinds 3-5 and one-line comments.
@@ -426,7 +428,7 @@ test("R-ING-23 repair: an ATX heading right after an HTML block's elements have 
   assert.deepEqual(changelogVersions(rel), ['1.2.3']);
   assert.deepEqual(got(rel), []);
   // While an element is open (including one opened after the first closed) nothing in the block is a heading.
-  assert.deepEqual(got(md('## 1.2.3', '</details>', '<div>', '## Unreleased', '- Zcash b.')), ['1.2.3:Zcash b.']);
+  assert.deepEqual(got(md('## 1.2.3', '</details>', '<div>', '## Unreleased', '- Zcash b.')), [], 'literal HTML contents are not release evidence');
   // Only headings are read there: a fence after the element stays HTML and cannot hide the heading after the block.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '<div>x</div>', '```', '', '## Unreleased', '- Zcash future.', '```')), ['1.2.3:Zcash a.']);
 });

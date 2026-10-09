@@ -8,22 +8,22 @@ import { SEARCHES, CODE_PATHS, ZCASH_LABELS, SITE } from '../../config/tracker.t
 import { dataPath, readJson, writeJson } from '../lib/store.ts';
 import type { ChangeEvent, Channel, ChannelVersion, CommunityTopic, DocPage, Platform, SourceEnvelope, SourceStatus, WorkItem } from '../lib/types.ts';
 import { compareVersions, uniq } from '../lib/util.ts';
-import type { GithubItemsData } from '../ingest/sources/github-items.ts';
-import type { ReleasesData } from '../ingest/sources/releases.ts';
-import type { BraveVersionsData } from '../ingest/sources/brave-versions.ts';
-import type { ChangelogsData } from '../ingest/sources/changelogs.ts';
-import type { InclusionData } from '../ingest/sources/build-inclusion.ts';
-import type { FlagsData } from '../ingest/sources/flags.ts';
-import type { DepsData } from '../ingest/sources/deps.ts';
-import type { AdvisoriesData, UpstreamData } from '../ingest/sources/upstream.ts';
-import type { CommunityData } from '../ingest/sources/community.ts';
-import type { DocsData } from '../ingest/sources/docs.ts';
-import type { WatchData } from '../ingest/sources/watch.ts';
-import type { ServicesData } from '../ingest/sources/services.ts';
+import { githubItems, type GithubItemsData } from '../ingest/sources/github-items.ts';
+import { releases as releasesCollector, type ReleasesData } from '../ingest/sources/releases.ts';
+import { braveVersions, type BraveVersionsData } from '../ingest/sources/brave-versions.ts';
+import { changelogs as changelogsCollector, type ChangelogsData } from '../ingest/sources/changelogs.ts';
+import { buildInclusion, type InclusionData } from '../ingest/sources/build-inclusion.ts';
+import { flags as flagsCollector, type FlagsData } from '../ingest/sources/flags.ts';
+import { braveDeps, type DepsData } from '../ingest/sources/deps.ts';
+import { advisories as advisoriesCollector, upstream as upstreamCollector, type AdvisoriesData, type UpstreamData } from '../ingest/sources/upstream.ts';
+import { community as communityCollector, type CommunityData } from '../ingest/sources/community.ts';
+import { docs as docsCollector, type DocsData } from '../ingest/sources/docs.ts';
+import { watch as watchCollector, type WatchData } from '../ingest/sources/watch.ts';
+import { services as servicesCollector, type ServicesData } from '../ingest/sources/services.ts';
 import { buildGroups, buildRelations, isEpic, isUpliftPr, type WorkGroup } from './relations.ts';
 import { computeGroupStatus, MERGED_LABEL, STAGE_HELP, STAGE_LABEL, type GroupStatus, type Stage } from './status.ts';
 import { applyUnknownServiceSwitches, buildCapabilities, CELL_HELP, CELL_LABEL, type CapabilityRow, type ServiceCheck } from './capabilities.ts';
-import { adoptedAtLeast, advisoryVerdicts, braveResolves, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
+import { adoptedAtLeast, advisoryVerdicts, braveDependencyAbsence, braveResolves, DERIVE_RULES_VERSION, eventInputsRead, generateEvents, mergeHistory, shortRef, type GroupView, type Snapshot } from './changes.ts';
 
 export const DERIVED_SCHEMA = 1;
 
@@ -49,6 +49,8 @@ export interface SiteData {
   lineChannel: Record<string, string>;
   groups: SiteGroup[];
   items: Record<string, Omit<WorkItem, 'timeline'> & { timelineCount: number }>;
+  /** Render evidence from the same derivation, so a later raw-source refresh cannot mix generations. */
+  renderInputs?: { timelines: Record<string, WorkItem['timeline']>; changelogs: Pick<ChangelogsData, 'evidence' | 'files'> };
   capabilities: CapabilityRow[];
   topics: { id: string; name: string; description: string; count: number; open: number }[];
   stages: { id: Stage; label: string; help: string; count: number }[];
@@ -95,6 +97,7 @@ export interface DeriveInput {
 
 const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
 const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
+const SOURCE_SCHEMAS = new Map([githubItems, releasesCollector, braveVersions, changelogsCollector, buildInclusion, flagsCollector, braveDeps, upstreamCollector, advisoriesCollector, communityCollector, docsCollector, watchCollector, servicesCollector].map((c) => [c.id, c.schema]));
 
 export function classifyTopic(titles: string[], labels: string[]): { id: string; name: string } {
   const lead = titles[0] ?? '';
@@ -143,7 +146,19 @@ export function currentVersions(versions: BraveVersionsData | null, releases: Re
 
 export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[]; site: SiteData } {
   const notes: string[] = [];
-  const env = <T>(id: string) => inp.get<T>(id)?.data ?? null;
+  const schemaWarnings = new Map<string, string>();
+  const envelope = <T>(id: string): SourceEnvelope<T> | null => {
+    const e = inp.get<T>(id);
+    const expected = SOURCE_SCHEMAS.get(id);
+    if (e && expected !== undefined && e.schema !== expected) {
+      const warning = `${id}: stored schema ${e.schema} is incompatible with current schema ${expected}; this source is unavailable to derivation until it is collected successfully`;
+      if (!schemaWarnings.has(id)) notes.push(warning);
+      schemaWarnings.set(id, warning);
+      return null;
+    }
+    return e;
+  };
+  const env = <T>(id: string) => envelope<T>(id)?.data ?? null;
   const gi = env<GithubItemsData>('github-items');
   const items = gi?.items ?? {};
   const releases = env<ReleasesData>('brave-releases');
@@ -255,7 +270,10 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
             ? `behind latest stable (${info.maxStable})`
             : `unknown: Brave master’s Cargo.lock has ${[...new Set([...(rm.certain ? rm.linked : []), ...rm.possible])].join(', ')}, and whether its Zcash crate links a version at or above ${info.maxStable} is not established`;
       if (rm.source === 'path') adoption += ' · built from Brave’s librustzcash fork';
-    } else if (!bm) adoption = 'not in Brave lockfile';
+    } else if (!bm) {
+      const absent = braveDependencyAbsence(masterSnap, c.crate);
+      adoption = absent === 'not-in-lockfile' ? 'not in Brave lockfile' : absent === 'not-linked' ? 'not linked by Brave’s Zcash crate' : 'unknown: Brave’s dependency evidence does not establish whether its Zcash crate links this package';
+    }
     return { crate: c.crate, repo: c.repo, impact: c.impact, why: c.why, brave, upstreamStable: info?.maxStable ?? null, upstreamNewest: info?.newest ?? null, upstreamUpdatedAt: info?.updatedAt ?? null, adoption, url: `https://crates.io/crates/${c.crate}` };
   });
   const advisoryViews = (advisories?.advisories ?? []).map((a) => {
@@ -269,7 +287,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
 
   // Sources & coverage.
   const sources = Object.values(inp.status).sort((a, b) => a.name.localeCompare(b.name));
-  const limitations = uniq(sources.flatMap((s) => s.limitations.map((l) => `${s.name}: ${l}`)));
+  const limitations = uniq([...sources.flatMap((s) => s.limitations.map((l) => `${s.name}: ${l}`)), ...schemaWarnings.values()]);
   const allItems = Object.values(items);
   const counts: Record<string, number> = {
     trackedItems: allItems.length,
@@ -322,7 +340,10 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
     builds: Object.fromEntries(siteGroups.map((g) => [g.id, Object.fromEntries(g.status.builds.map((b) => [`${b.platform}/${b.channel}`, b.included]))])),
     flags: flagView,
     // Highest linked version per crate, so a change in what `lock` holds when several are linked is not a bump.
-    masterDeps: Object.fromEntries(Object.entries(masterSnap?.lock ?? {}).map(([k, v]) => [k, braveResolves(masterSnap, k)?.version ?? v.version])),
+    masterDeps: Object.fromEntries(Object.keys(masterSnap?.lock ?? {}).flatMap((k) => {
+      const r = braveResolves(masterSnap, k);
+      return r ? [[k, r.version]] : [];
+    })),
     forkPin: masterSnap?.forkPin?.sha ?? null,
     capabilities: Object.fromEntries(capabilities.map((r) => [r.id, Object.fromEntries(r.cells.map((c) => [`${c.platform}/${c.channel}`, c.status]))])),
     docs: Object.fromEntries((docs?.pages ?? []).map((d) => [d.id, d.contentHash])),
@@ -361,7 +382,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
   // and is not partial, and the last attempt neither failed (the kept envelope is from an earlier run) nor was
   // partial, nor left kept data stale. On a rebuild, events whose inputs were not completely read are kept.
   const sourceRead = (id: string) => {
-    const e = inp.get(id);
+    const e = envelope(id);
     const st = inp.status[id] as (SourceStatus & { staleSince?: string | null }) | undefined;
     return Boolean(e) && !e!.partial && st?.lastOutcome !== 'partial' && st?.lastOutcome !== 'failed' && !st?.staleSince;
   };
@@ -388,6 +409,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
       const { timeline, ...rest } = i;
       return [i.id, { ...rest, timelineCount: timeline.length }];
     })),
+    renderInputs: { timelines: Object.fromEntries(allItems.map((i) => [i.id, i.timeline])), changelogs: { evidence: changelogs?.evidence ?? [], files: changelogs?.files ?? [] } },
     capabilities,
     topics: topicsSummary,
     // The merged stage as a whole does not assert absence; each group carries its own label (see mergedStageLabel).

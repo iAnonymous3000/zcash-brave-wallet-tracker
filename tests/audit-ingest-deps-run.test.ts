@@ -753,7 +753,8 @@ function runCommitStep(git: { diffQuiet: boolean; pushSucceedsOnAttempt: number 
     const stub = `#!/bin/bash
 case "$1" in
   config|add|commit) exit 0 ;;
-  diff) exit ${git.diffQuiet ? 0 : 1} ;;
+  rev-parse) echo verified-revision; exit 0 ;;
+  diff) if [ "$2" = "--cached" ]; then exit ${git.diffQuiet ? 0 : 1}; fi; exit 0 ;;
   push) n=$(( $(cat "${counter}") + 1 )); echo $n > "${counter}"; echo "SIMULATED_PUSH attempt $n"; ${git.pushSucceedsOnAttempt === null ? 'exit 1' : `[ $n -ge ${git.pushSucceedsOnAttempt} ] && exit 0 || exit 1`} ;;
   pull) echo SIMULATED_PULL; exit 0 ;;
 esac
@@ -761,6 +762,8 @@ exit 2
 `;
     writeFileSync(join(dir, 'git'), stub);
     chmodSync(join(dir, 'git'), 0o755);
+    writeFileSync(join(dir, 'node'), '#!/bin/bash\nexit 0\n');
+    chmodSync(join(dir, 'node'), 0o755);
     // GitHub Actions runs `run:` blocks with bash -e (and -o pipefail for shell: bash).
     const res = spawnSync('bash', ['--noprofile', '--norc', '-eo', 'pipefail', '-c', commitStepScript()], { env: { PATH: `${dir}:${process.env.PATH}`, GITHUB_EVENT_NAME: 'audit', GITHUB_RUN_ID: '0' }, encoding: 'utf8' });
     return { status: res.status, out: `${res.stdout}${res.stderr}`, pushes: Number(readFileSync(counter, 'utf8')) };
