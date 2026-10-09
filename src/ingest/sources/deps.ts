@@ -728,7 +728,7 @@ const entryName = (spec: string) => spec.trim().split(/\s+/)[0] ?? '';
 
 /**
  * Dependency entries naming a package the lockfile does not contain (in any spelling): Cargo never
- * writes one, so the lockfile is not a complete record of its packages.
+ * writes one, so the lockfile is then not a complete record of the packages it uses.
  */
 function danglingEntries(scan: LockScan): string[] {
   const known = new Set(scan.packages.map((p) => nameKey(p.name)));
@@ -737,16 +737,16 @@ function danglingEntries(scan: LockScan): string[] {
 
 /** Package names of a scanned Cargo.lock, or null unless it was read completely (see lockPackageNames). */
 function packageNamesOf(scan: LockScan): string[] | null {
-  if (!scan.tables || !scanComplete(scan) || danglingEntries(scan).length) return null;
+  if (!scan.tables || !scanComplete(scan)) return null;
   return [...new Set(scan.packages.map((p) => p.name))].sort();
 }
 
 /**
  * Sorted, de-duplicated names of every package in a Cargo.lock, or null when it could not be read
  * completely: a [[package]] header in a form not understood, a package whose name/version is
- * missing or not a plain string, or any other line not understood; or when a dependency entry
- * names a package the lockfile does not contain (it is then not a complete record of its
- * packages). A package the parser skipped must never look absent, so a short list is never returned.
+ * missing or not a plain string, or any other line not understood. A package the parser skipped
+ * must never look absent, so a short list is never returned. (A snapshot also leaves the list out
+ * when a dependency entry names a package the lockfile does not contain: see buildDepsSnapshot.)
  */
 export function lockPackageNames(lock: string): string[] | null {
   return packageNamesOf(scanCargoLock(lock));
@@ -1094,10 +1094,12 @@ export function buildDepsSnapshot(
   // orchard must have been read with certainty: a version only from a table that could not be read is no reading.
   if (!resolution.candidates.orchard?.some((c) => !c.doubtful)) throw new Error(`orchard not found in ${BRAVE_LOCKFILE} at ${key} (parser or layout changed?${resolution.lockProblems?.length ? ` ${resolution.lockProblems.slice(0, 2).join('; ')}` : ''})`);
   // Every package name in the lockfile, so a package that is not there at all can be told apart
-  // from one that was not inspected. Recorded only when the whole lockfile was read and names no
-  // package it does not contain.
+  // from one that was not inspected. Recorded only when the whole lockfile was read, and when no
+  // dependency entry names a package it does not contain: the list would then lack a package the
+  // lockfile itself says is used, and "not in the list" would no longer mean "not in Cargo.lock".
   const scan = scanCargoLock(lockText);
-  const lockPackages = packageNamesOf(scan);
+  const dangling = danglingEntries(scan);
+  const lockPackages = dangling.length ? null : packageNamesOf(scan);
   // A monitored crate the lockfile names (anywhere, in any spelling) of which no version could be
   // read, while its absence is not established (part of the lockfile unread, or a dependency entry
   // naming it matched no package): a snapshot without it would look as if Brave did not link it
@@ -1121,7 +1123,6 @@ export function buildDepsSnapshot(
   if (resolution.method !== 'graph') problems.push(`${key}: crate "${root.name}" not found in ${BRAVE_LOCKFILE}; versions are taken from the lockfile without dependency-graph resolution`);
   else if (resolution.unresolvedEdges.length) problems.push(`${key}: ${resolution.unresolvedEdges.length} Cargo.lock dependency entr${resolution.unresolvedEdges.length === 1 ? 'y' : 'ies'} could not be matched to exactly one package (${resolution.unresolvedEdges.slice(0, 3).join('; ')}${resolution.unresolvedEdges.length > 3 ? '; …' : ''}); which versions those entries link is unknown, and crates not reached otherwise are reported from the lockfile`);
   if (files.cargo !== null && !cargoPkg) problems.push(`${key}: no [package] name in ${BRAVE_ZCASH_CARGO}; assumed "${DEFAULT_ZCASH_ROOT}"`);
-  const dangling = danglingEntries(scan);
   if (!lockPackages && (scan.problems.length || !dangling.length)) {
     const why = scan.problems.length ? `${scan.problems.slice(0, 3).join('; ')}${scan.problems.length > 3 ? `; ${scan.problems.length - 3} more` : ''}` : 'no [[package]] table found';
     problems.push(`${key}: not every [[package]] in ${BRAVE_LOCKFILE} could be parsed (${why}), so the list of packages it contains is not recorded (whether a package is absent from it is unknown), and crate versions the dependency graph does not reach may still be linked`);

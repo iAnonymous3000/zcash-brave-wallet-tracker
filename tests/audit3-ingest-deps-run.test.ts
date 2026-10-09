@@ -760,8 +760,8 @@ test('R3-LOCKHDR repair 2: through the collector, a ref whose Cargo.lock hides a
 test('R3-LOCKHDR repair 2: a dependency entry naming a package Cargo.lock does not contain leaves that package unknown, monitored or not, never absent', async () => {
   // Monitored: zcash depends on halo2_gadgets, which has no table (nothing else is wrong with the file).
   const monitored = namedLock([]);
-  assert.deepEqual(deps.scanCargoLock(monitored).problems, []);
-  assert.equal(deps.lockPackageNames(monitored), null, 'not a complete record of its packages: no list');
+  assert.deepEqual(deps.scanCargoLock(monitored).problems, [], 'valid TOML, read completely');
+  assert.deepEqual(deps.lockPackageNames(monitored), ['orchard', 'zcash'], 'the parse is complete; the snapshot is what leaves the list out (below)');
   const r = deps.resolveZcashDependencies(monitored, ['orchard', 'halo2_gadgets'], root);
   assert.deepEqual(r.resolution.unresolvedEdges, ['zcash 1.0.0 -> halo2_gadgets']);
   // Even next to a package list without it, linkedVersions does not call it absent.
@@ -784,10 +784,11 @@ test('R3-LOCKHDR repair 2: a dependency entry naming a package Cargo.lock does n
   assert.doesNotMatch(v.summary, /not present in Brave's Cargo\.lock/);
   // The same for an entry outside the Zcash crate's graph: the list is not a complete record either.
   const consistent = namedLock(halo2Table);
-  assert.deepEqual(deps.lockPackageNames(consistent), ['halo2_gadgets', 'orchard', 'zcash'], 'a consistent lockfile keeps its list');
+  assert.deepEqual(snapshotsOf(consistent).data.snapshots['v1.2.3'].lockPackages, ['halo2_gadgets', 'orchard', 'zcash'], 'a consistent lockfile keeps its list');
   const elsewhere = `${consistent}\n[[package]]\nname = "chromium"\nversion = "0.1.0"\ndependencies = [\n "zebrad",\n]\n`;
-  assert.equal(deps.lockPackageNames(elsewhere), null);
+  assert.deepEqual(deps.scanCargoLock(elsewhere).problems, []);
   assert.equal(snapshotsOf(elsewhere).data.snapshots['v1.2.3'].lockPackages, undefined);
+  assert.ok(snapshotsOf(elsewhere).tag.problems.some((p) => /dependency entries naming packages it does not contain \(chromium 0\.1\.0 -> zebrad\)/.test(p)));
 });
 
 test('R3-LOCKHDR repair 2: lockMentions finds a name in every TOML spelling and nothing else; a lockfile with problems that never names a monitored crate is still read', () => {
