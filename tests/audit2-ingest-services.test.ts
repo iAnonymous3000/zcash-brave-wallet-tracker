@@ -241,7 +241,9 @@ test('R-ING-08 (repair): namespace access by any route, hidden statements, star 
     assert.equal(parseGate3Switch(`${guarded('Chain.SOL')}${extra}\n`).zcashDisabled, null, extra);
   }
   assert.equal(parseGate3Switch('from x import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\nif True: raise ValueError\n').zcashDisabled, null, 'a star import may rebind the exception class');
-  assert.equal(parseGate3Switch('from x import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n').zcashDisabled, false, 'a star import before a constructor-free definition cannot change it');
+  // R3-ING-08: it can. The star-imported SWAP_DISABLED_CHAINS object is released when the definition replaces it, and
+  // its finaliser rebinds the switch after the store (CPython 3.9, 3.11 and 3.13 end with Chain.ZCASH in it).
+  assert.equal(parseGate3Switch('from x import *\nSWAP_DISABLED_CHAINS = (Chain.SOL,)\n').zcashDisabled, null, 'a star import before a constructor-free definition can still change it');
 
   // Through the collector: the value is null, the source partial and the last determined value kept.
   const prev: ServicesData = {
