@@ -1,0 +1,226 @@
+{
+ "updatedAt": "2026-10-08T18:35:17.134Z",
+ "lastRun": {
+  "id": "a54542fa05e0",
+  "startedAt": "2026-10-08T18:31:50.651Z",
+  "finishedAt": "2026-10-08T18:35:17.134Z",
+  "trigger": "workflow_dispatch",
+  "outcome": "success",
+  "sources": {
+   "brave-releases": "ok",
+   "brave-versions": "ok",
+   "github-items": "ok",
+   "brave-changelogs": "ok",
+   "build-inclusion": "ok",
+   "brave-flags": "ok",
+   "brave-deps": "ok",
+   "upstream": "ok",
+   "advisories": "ok",
+   "watch": "ok",
+   "brave-services": "ok",
+   "community": "ok",
+   "docs": "ok"
+  },
+  "requests": 220,
+  "events": 0,
+  "notes": [
+   "435 work groups, 787 items, 0 new events"
+  ]
+ },
+ "rateLimit": {
+  "core": {
+   "remaining": 4958,
+   "limit": 5000,
+   "resetAt": "2026-10-08T19:31:50.000Z"
+  },
+  "search": {
+   "remaining": 24,
+   "limit": 30,
+   "resetAt": "2026-10-08T18:35:44.000Z"
+  },
+  "graphql": {
+   "remaining": 4927,
+   "limit": 5000,
+   "resetAt": "2026-10-08T19:33:00.000Z"
+  }
+ },
+ "sources": {
+  "brave-releases": {
+   "id": "brave-releases",
+   "name": "Brave browser GitHub releases",
+   "url": "https://github.com/brave/brave-browser/releases",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 401,
+   "requests": 4,
+   "limitations": [
+    "only the 400 most recent GitHub releases are read each run"
+   ]
+  },
+  "brave-versions": {
+   "id": "brave-versions",
+   "name": "versions.brave.com current version pointers",
+   "url": "https://versions.brave.com/",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 9,
+   "requests": 28,
+   "limitations": []
+  },
+  "github-items": {
+   "id": "github-items",
+   "name": "GitHub issues & pull requests (brave-browser, brave-core)",
+   "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 787,
+   "requests": 65,
+   "limitations": []
+  },
+  "brave-changelogs": {
+   "id": "brave-changelogs",
+   "name": "Brave platform changelogs (Desktop, Android, iOS)",
+   "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 64,
+   "requests": 8,
+   "limitations": []
+  },
+  "build-inclusion": {
+   "id": "build-inclusion",
+   "name": "Build inclusion (brave-core tag ancestry)",
+   "url": "https://github.com/brave/brave-core/tags",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 353,
+   "requests": 0,
+   "limitations": []
+  },
+  "brave-flags": {
+   "id": "brave-flags",
+   "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
+   "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 11,
+   "requests": 11,
+   "limitations": []
+  },
+  "brave-deps": {
+   "id": "brave-deps",
+   "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
+   "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 11,
+   "requests": 11,
+   "limitations": []
+  },
+  "upstream": {
+   "id": "upstream",
+   "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
+   "url": "https://crates.io/crates/orchard",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 190,
+   "requests": 33,
+   "limitations": []
+  },
+  "advisories": {
+   "id": "advisories",
+   "name": "Security advisories (GitHub Advisory Database, RustSec)",
+   "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 17,
+   "requests": 23,
+   "limitations": []
+  },
+  "watch": {
+   "id": "watch",
+   "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
+   "url": "https://github.com/zakura-core",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 3,
+   "requests": 10,
+   "limitations": []
+  },
+  "community": {
+   "id": "community",
+   "name": "Brave Community (Discourse) Zcash reports",
+   "url": "https://community.brave.app/c/wallet/131",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 36,
+   "requests": 14,
+   "limitations": [
+    "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
+   ]
+  },
+  "docs": {
+   "id": "docs",
+   "name": "Official docs (Brave Help Center, brave.com)",
+   "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 8,
+   "requests": 6,
+   "limitations": [
+    "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
+   ]
+  },
+  "brave-services": {
+   "id": "brave-services",
+   "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
+   "url": "https://github.com/brave/gate3",
+   "lastAttemptAt": "2026-10-08T18:31:50.651Z",
+   "lastSuccessAt": "2026-10-08T18:31:50.651Z",
+   "lastOutcome": "ok",
+   "lastError": null,
+   "consecutiveFailures": 0,
+   "itemCount": 7,
+   "requests": 7,
+   "limitations": [
+    "Repository state is shown; the deployed service could differ and its deployment time is not public"
+   ]
+  }
+ }
+}

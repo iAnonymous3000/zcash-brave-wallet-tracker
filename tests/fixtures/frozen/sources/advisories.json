@@ -1,0 +1,39 @@
+{
+ "sourceId": "advisories",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T18:31:50.651Z",
+ "data": {
+  "advisories": [
+   {
+    "id": "GHSA-ww9q-8r59-xv46",
+    "aliases": [
+     "CVE-2026-54496"
+    ],
+    "summary": "Zebra: Missing copy constraint in halo2_gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
+    "severity": "critical",
+    "packages": [
+     "rust:zebrad",
+     "rust:halo2_gadgets",
+     "rust:orchard",
+     "rust:zcash_primitives"
+    ],
+    "vulnerableRanges": [
+     "zebrad <= 4.5.1",
+     "halo2_gadgets < 0.5.0",
+     "orchard < 0.14.0",
+     "zcash_primitives < 0.28.0"
+    ],
+    "patched": [
+     "zebrad 5.0.0",
+     "halo2_gadgets 0.5.0",
+     "orchard 0.14.0",
+     "zcash_primitives 0.28.0"
+    ],
+    "publishedAt": "2026-07-06T21:23:41Z",
+    "updatedAt": "2026-07-06T21:23:42Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46"
+   }
+  ]
+ }
+}

@@ -15,7 +15,9 @@ import type { SiteData, SiteGroup } from '../src/derive/index.ts';
 import type { ChangeEvent, SourceStatus } from '../src/lib/types.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
-const committed = JSON.parse(readFileSync(join(ROOT, 'data/derived/site.json'), 'utf8')) as SiteData;
+// Frozen copy of the committed data (tests/fixtures/frozen/README.md), so a refresh of data/ cannot change these tests.
+const FROZEN = join(ROOT, 'tests/fixtures/frozen');
+const committed = JSON.parse(readFileSync(join(FROZEN, 'derived/site.json'), 'utf8')) as SiteData;
 const clone = (): SiteData => structuredClone(committed);
 /** Visible text of a markup fragment, one space between words and none before punctuation. */
 const text = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ').replace(/ ([,.:;)])/g, '$1').trim();
@@ -30,7 +32,7 @@ function source(over: Partial<SourceStatus> & { id: string; name: string }): Sou
 async function buildFrom(mutate: (dir: string) => void | Promise<void>): Promise<{ out: string; cleanup: () => void }> {
   const root = mkdtempSync(join(tmpdir(), 'zbt-audit3-'));
   const data = join(root, 'data');
-  cpSync(join(ROOT, 'data'), data, { recursive: true });
+  cpSync(FROZEN, data, { recursive: true });
   await mutate(data);
   const before = process.env.TRACKER_DATA_DIR;
   process.env.TRACKER_DATA_DIR = data;
@@ -415,7 +417,7 @@ test('R-SERVE: a directory redirect is always path-absolute, never protocol-rela
 // R3-SITE-NV
 // ---------------------------------------------------------------------------
 
-const sourceData = (id: string) => JSON.parse(readFileSync(join(ROOT, 'data/sources', `${id}.json`), 'utf8')).data;
+const sourceData = (id: string) => JSON.parse(readFileSync(join(FROZEN, 'sources', `${id}.json`), 'utf8')).data;
 
 /** Capabilities derived by the real derive code from the committed sources, with one required check result removed. */
 async function capabilitiesWithout(checkId: string): Promise<SiteData['capabilities']> {

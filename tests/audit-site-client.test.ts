@@ -18,7 +18,9 @@ import { STAGE_LABEL } from '../src/derive/status.ts';
 import { wi } from './helpers.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
-const site = JSON.parse(readFileSync(join(ROOT, 'data/derived/site.json'), 'utf8')) as SiteData;
+// Frozen copy of the committed data (tests/fixtures/frozen/README.md), so a refresh of data/ cannot change these tests.
+const FROZEN = join(ROOT, 'tests/fixtures/frozen');
+const site = JSON.parse(readFileSync(join(FROZEN, 'derived/site.json'), 'utf8')) as SiteData;
 
 // ---------------------------------------------------------------------------
 // Fake DOM: just enough of the platform for app.ts, with real event bubbling and
@@ -814,7 +816,7 @@ test('UI-C4: "Off server-side" cells describe Brave’s public server-side code,
 // source envelopes; only the gate3 switch is varied.
 // ---------------------------------------------------------------------------
 
-const sourceData = (id: string) => JSON.parse(readFileSync(join(ROOT, 'data/sources', `${id}.json`), 'utf8')).data;
+const sourceData = (id: string) => JSON.parse(readFileSync(join(FROZEN, 'sources', `${id}.json`), 'utf8')).data;
 const USABLE_STATUSES = ['available', 'in-build', 'opt-in'];
 type Services = SiteData['upstream']['services'];
 
@@ -1015,10 +1017,16 @@ test('UI-C5 (repair): a merged fix with unknown build presence reads unknown on 
 });
 
 test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no unsupported absence label', async () => {
-  const { readdirSync, statSync } = await import('node:fs');
+  const { readdirSync, statSync, cpSync } = await import('node:fs');
   const { buildSite } = await import('../src/site/build.ts');
   const { slug, setBase } = await import('../src/site/components.ts');
   const out = mkdtempSync(join(tmpdir(), 'zbt-site-'));
+  // buildSite reads its data from TRACKER_DATA_DIR (default data/): point it at a temporary copy of the frozen data, so
+  // the frozen copy stays unchanged whatever buildSite does with its data directory.
+  const data = mkdtempSync(join(tmpdir(), 'zbt-site-data-'));
+  cpSync(FROZEN, data, { recursive: true });
+  const dataDirBefore = process.env.TRACKER_DATA_DIR;
+  process.env.TRACKER_DATA_DIR = data;
   try {
     await buildSite({ outDir: out, basePath: '/' });
     const walk = (dir: string): string[] => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
@@ -1038,8 +1046,11 @@ test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no
     }
     assert.doesNotMatch(readFileSync(join(out, 'assets', 'search.json'), 'utf8'), /not yet in a checked build|currently turned off/);
   } finally {
+    if (dataDirBefore === undefined) delete process.env.TRACKER_DATA_DIR;
+    else process.env.TRACKER_DATA_DIR = dataDirBefore;
     setBase('/');
     rmSync(out, { recursive: true, force: true });
+    rmSync(data, { recursive: true, force: true });
   }
 });
 
@@ -1119,7 +1130,7 @@ test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and ca
   const { presentCapabilities, statusLabel } = await import('../src/site/view.ts');
   const root = mkdtempSync(join(tmpdir(), 'zbt-site-r3-'));
   const data = join(root, 'data');
-  cpSync(join(ROOT, 'data'), data, { recursive: true });
+  cpSync(FROZEN, data, { recursive: true });
   // Capability changes recorded under older rules whose new status is not the status the site shows now. Each event's
   // new status is chosen against the shown cell, so the test holds whatever the committed cells say (round-3 repair:
   // it no longer needs an Android Release cell that is not "available").

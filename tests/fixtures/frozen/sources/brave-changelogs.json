@@ -1,0 +1,1744 @@
+{
+ "sourceId": "brave-changelogs",
+ "schema": 1,
+ "retrievedAt": "2026-10-08T18:31:50.651Z",
+ "data": {
+  "entries": [
+   {
+    "platform": "desktop",
+    "version": "1.97.56",
+    "section": "Web3",
+    "text": "Enabled Zcash Ironwood support by default. (#56872)",
+    "issueRefs": [
+     "brave/brave-browser#56872"
+    ],
+    "line": 7,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.97.56",
+    "section": "Web3",
+    "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
+    "issueRefs": [
+     "brave/brave-browser#58757"
+    ],
+    "line": 8,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.97.56",
+    "section": "Web3",
+    "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
+    "issueRefs": [
+     "brave/brave-browser#58755"
+    ],
+    "line": 9,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.95.101",
+    "section": "Web3",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "issueRefs": [
+     "brave/brave-browser#58493"
+    ],
+    "line": 79,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.94.117",
+    "section": "Web3",
+    "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
+    "issueRefs": [
+     "brave/brave-browser#55611"
+    ],
+    "line": 125,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.92.138",
+    "section": null,
+    "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
+    "issueRefs": [
+     "brave/brave-browser#56490"
+    ],
+    "line": 250,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.91.175",
+    "section": null,
+    "text": "Updated Zcash library to 0.14. (#56404)",
+    "issueRefs": [
+     "brave/brave-browser#56404"
+    ],
+    "line": 302,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.90.124",
+    "section": null,
+    "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
+    "issueRefs": [
+     "brave/brave-browser#44991",
+     "brave/brave-browser#55374"
+    ],
+    "line": 357,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.89.132",
+    "section": "Web3",
+    "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
+    "issueRefs": [
+     "brave/brave-browser#53718"
+    ],
+    "line": 430,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.88.127",
+    "section": "Web3",
+    "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
+    "issueRefs": [
+     "brave/brave-browser#51720"
+    ],
+    "line": 492,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.88.127",
+    "section": "Web3",
+    "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
+    "issueRefs": [
+     "brave/brave-browser#52555"
+    ],
+    "line": 494,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.88.127",
+    "section": "Web3",
+    "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
+    "issueRefs": [
+     "brave/brave-browser#51936"
+    ],
+    "line": 495,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.88.127",
+    "section": "Web3",
+    "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
+    "issueRefs": [
+     "brave/brave-browser#52229"
+    ],
+    "line": 498,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.88.127",
+    "section": "Web3",
+    "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
+    "issueRefs": [
+     "brave/brave-browser#51964"
+    ],
+    "line": 501,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.87.186",
+    "section": "Web3",
+    "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
+    "issueRefs": [
+     "brave/brave-browser#45875"
+    ],
+    "line": 556,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.87.186",
+    "section": "Web3",
+    "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
+    "issueRefs": [
+     "brave/brave-browser#51762"
+    ],
+    "line": 569,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.86.148",
+    "section": null,
+    "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
+    "issueRefs": [
+     "brave/brave-browser#52303"
+    ],
+    "line": 607,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.86.139",
+    "section": "Web3",
+    "text": "Added support for Zcash Testnet. (#50116)",
+    "issueRefs": [
+     "brave/brave-browser#50116"
+    ],
+    "line": 634,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.85.118",
+    "section": null,
+    "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
+    "issueRefs": [
+     "brave/brave-browser#51540"
+    ],
+    "line": 672,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.85.111",
+    "section": "Web3",
+    "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
+    "issueRefs": [
+     "brave/brave-browser#50001"
+    ],
+    "line": 696,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.84.132",
+    "section": "Web3",
+    "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
+    "issueRefs": [
+     "brave/brave-browser#49235"
+    ],
+    "line": 747,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.84.132",
+    "section": "Web3",
+    "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
+    "issueRefs": [
+     "brave/brave-browser#49621"
+    ],
+    "line": 751,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.83.118",
+    "section": "Web3",
+    "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
+    "issueRefs": [
+     "brave/brave-browser#49978"
+    ],
+    "line": 798,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.81.131",
+    "section": "Web3",
+    "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
+    "issueRefs": [
+     "brave/brave-browser#46596"
+    ],
+    "line": 972,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.81.131",
+    "section": "Web3",
+    "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
+    "issueRefs": [
+     "brave/brave-browser#46598"
+    ],
+    "line": 973,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.81.131",
+    "section": "Web3",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "issueRefs": [
+     "brave/brave-browser#46266"
+    ],
+    "line": 974,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.80.113",
+    "section": "Web3",
+    "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
+    "issueRefs": [
+     "brave/brave-browser#45748"
+    ],
+    "line": 1040,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.79.118",
+    "section": "Web3",
+    "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
+    "issueRefs": [
+     "brave/brave-browser#44782"
+    ],
+    "line": 1102,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.79.118",
+    "section": "Web3",
+    "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
+    "issueRefs": [
+     "brave/brave-browser#45185"
+    ],
+    "line": 1103,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.79.118",
+    "section": "Web3",
+    "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
+    "issueRefs": [
+     "brave/brave-browser#46306"
+    ],
+    "line": 1106,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.78.94",
+    "section": "Web3",
+    "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
+    "issueRefs": [
+     "brave/brave-browser#41315"
+    ],
+    "line": 1145,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.77.95",
+    "section": "Web3",
+    "text": "Added Zcash shielded support. (#44432)",
+    "issueRefs": [
+     "brave/brave-browser#44432"
+    ],
+    "line": 1198,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.76.73",
+    "section": "Web3",
+    "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
+    "issueRefs": [
+     "brave/brave-browser#42851"
+    ],
+    "line": 1259,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.76.73",
+    "section": "Web3",
+    "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
+    "issueRefs": [
+     "brave/brave-browser#43278"
+    ],
+    "line": 1261,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.75.175",
+    "section": "Web3",
+    "text": "Added Zcash \"Deposit\" modal. (#42221)",
+    "issueRefs": [
+     "brave/brave-browser#42221"
+    ],
+    "line": 1307,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.75.175",
+    "section": "Web3",
+    "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
+    "issueRefs": [
+     "brave/brave-browser#42285"
+    ],
+    "line": 1308,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.75.175",
+    "section": "Web3",
+    "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
+    "issueRefs": [
+     "brave/brave-browser#42078"
+    ],
+    "line": 1311,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.75.175",
+    "section": "Web3",
+    "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
+    "issueRefs": [
+     "brave/brave-browser#41986"
+    ],
+    "line": 1312,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.74.48",
+    "section": "Web3",
+    "text": "Added support for BTC Ledger hardware accounts. (#38447)",
+    "issueRefs": [
+     "brave/brave-browser#38447"
+    ],
+    "line": 1379,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.74.48",
+    "section": "Web3",
+    "text": "Implemented ZCash Shielded account modal. (#41780)",
+    "issueRefs": [
+     "brave/brave-browser#41780"
+    ],
+    "line": 1384,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.73.105",
+    "section": null,
+    "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
+    "issueRefs": [
+     "brave/brave-browser#42951"
+    ],
+    "line": 1406,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.69.160",
+    "section": "Web3",
+    "text": "Fixed ZCash balance resolution issue. (#40635)",
+    "issueRefs": [
+     "brave/brave-browser#40635"
+    ],
+    "line": 1606,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.69.153",
+    "section": "Web3",
+    "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
+    "issueRefs": [
+     "brave/brave-browser#39655"
+    ],
+    "line": 1624,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.69.153",
+    "section": "Web3",
+    "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
+    "issueRefs": [
+     "brave/brave-browser#38931"
+    ],
+    "line": 1626,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.69.153",
+    "section": "Web3",
+    "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
+    "issueRefs": [
+     "brave/brave-browser#35827"
+    ],
+    "line": 1638,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.69.153",
+    "section": "Web3",
+    "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
+    "issueRefs": [
+     "brave/brave-browser#38970"
+    ],
+    "line": 1646,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.68.128",
+    "section": "Web3",
+    "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
+    "issueRefs": [
+     "brave/brave-browser#38446"
+    ],
+    "line": 1717,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
+    "zcashRelated": false
+   },
+   {
+    "platform": "desktop",
+    "version": "1.67.115",
+    "section": "Web3",
+    "text": "Updated ZCash endpoint URL. (#38782)",
+    "issueRefs": [
+     "brave/brave-browser#38782"
+    ],
+    "line": 1782,
+    "file": "CHANGELOG_DESKTOP.md",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.64.109",
+    "section": "Web3",
+    "text": "Enabled Zcash support by default. (#36613)",
+    "issueRefs": [
+     "brave/brave-browser#36613"
+    ],
+    "line": 169,
+    "file": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "commitSha": "4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.63.165",
+    "section": "Web3",
+    "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
+    "issueRefs": [
+     "brave/brave-browser#35849"
+    ],
+    "line": 248,
+    "file": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "commitSha": "4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
+    "zcashRelated": true
+   },
+   {
+    "platform": "desktop",
+    "version": "1.62.153",
+    "section": "Web3",
+    "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
+    "issueRefs": [
+     "brave/brave-browser#33992"
+    ],
+    "line": 367,
+    "file": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "commitSha": "4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
+    "zcashRelated": false
+   },
+   {
+    "platform": "android",
+    "version": "1.95.101",
+    "section": "Web3",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "issueRefs": [
+     "brave/brave-browser#58493"
+    ],
+    "line": 78,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L78",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.89.135",
+    "section": "Web3",
+    "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
+    "issueRefs": [
+     "brave/brave-browser#53718"
+    ],
+    "line": 420,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L420",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.88.128",
+    "section": "Web3",
+    "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
+    "issueRefs": [
+     "brave/brave-browser#52555"
+    ],
+    "line": 472,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L472",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.83.119",
+    "section": null,
+    "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
+    "issueRefs": [
+     "brave/brave-browser#49978"
+    ],
+    "line": 681,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L681",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.81.135",
+    "section": "Web3",
+    "text": "Enabled Zcash by default. (#48171)",
+    "issueRefs": [
+     "brave/brave-browser#48171"
+    ],
+    "line": 782,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L782",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.81.131",
+    "section": "Web3",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "issueRefs": [
+     "brave/brave-browser#46266"
+    ],
+    "line": 802,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L802",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.81.131",
+    "section": "Web3",
+    "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
+    "issueRefs": [
+     "brave/brave-browser#46598"
+    ],
+    "line": 804,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L804",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.79.118",
+    "section": "Web3",
+    "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
+    "issueRefs": [
+     "brave/brave-browser#46306"
+    ],
+    "line": 897,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L897",
+    "zcashRelated": true
+   },
+   {
+    "platform": "android",
+    "version": "1.68.128",
+    "section": "Web3",
+    "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
+    "issueRefs": [
+     "brave/brave-browser#38446"
+    ],
+    "line": 1293,
+    "file": "CHANGELOG_ANDROID.md",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "permalink": "https://github.com/brave/brave-browser/blob/3048552c9bd7e56fb4c2f0a49d1a19cae9e55584/CHANGELOG_ANDROID.md#L1293",
+    "zcashRelated": false
+   },
+   {
+    "platform": "ios",
+    "version": "1.89.144",
+    "section": "Web3",
+    "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
+    "issueRefs": [
+     "brave/brave-browser#53718"
+    ],
+    "line": 139,
+    "file": "CHANGELOG_iOS.md",
+    "commitSha": "e7c75b7be38cf68d67b41226396bcd840476dae2",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
+    "zcashRelated": true
+   },
+   {
+    "platform": "ios",
+    "version": "1.81.134",
+    "section": "Web3",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "issueRefs": [
+     "brave/brave-browser#46266"
+    ],
+    "line": 304,
+    "file": "CHANGELOG_iOS.md",
+    "commitSha": "e7c75b7be38cf68d67b41226396bcd840476dae2",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
+    "zcashRelated": true
+   },
+   {
+    "platform": "ios",
+    "version": "1.81.134",
+    "section": "Web3",
+    "text": "Enabled ZCash feature flag by default. (#48171)",
+    "issueRefs": [
+     "brave/brave-browser#48171"
+    ],
+    "line": 305,
+    "file": "CHANGELOG_iOS.md",
+    "commitSha": "e7c75b7be38cf68d67b41226396bcd840476dae2",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
+    "zcashRelated": true
+   },
+   {
+    "platform": "ios",
+    "version": "1.95.104",
+    "section": "Web3",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "issueRefs": [
+     "brave/brave-browser#58493"
+    ],
+    "line": 5,
+    "file": "pending iOS release notes (draft issue #59793)",
+    "commitSha": "issue",
+    "permalink": "https://github.com/brave/brave-browser/issues/59793",
+    "zcashRelated": true
+   }
+  ],
+  "evidence": [
+   {
+    "id": "080602dddbbfe629cd8c",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.84.132",
+    "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "09bf2e6a94cdd3bc17d7",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.81.135",
+    "text": "Enabled Zcash by default. (#48171)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L770",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "0c3a4a832d77a444aec7",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.88.127",
+    "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "0f82a11a7095b7ae2d0b",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.85.118",
+    "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "11d5a555098bda772e08",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.79.118",
+    "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L885",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "19b41fa810fcf745db44",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.76.73",
+    "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "1a139bdb9774e0be6e8d",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.79.118",
+    "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "1b72b5a0eba6917416e5",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.85.111",
+    "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "1bc93e0395e6635b2075",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.67.115",
+    "text": "Updated ZCash endpoint URL. (#38782)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "2ace147f8db788fba20c",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.84.132",
+    "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "2e63aaf6b953ad64f352",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.86.139",
+    "text": "Added support for Zcash Testnet. (#50116)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "307b23d3f3e3e4364635",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.68.128",
+    "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "327917a0ca6d610b9d8b",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.97.56",
+    "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "385d33ea91497a020346",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.89.132",
+    "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "38f634c76070d2b38881",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.75.175",
+    "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "48c8a42106915904ca62",
+    "kind": "changelog",
+    "source": "CHANGELOG_iOS.md",
+    "platform": "ios",
+    "version": "1.81.134",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "51ef8cca16592db44aec",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.89.135",
+    "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L408",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "52a454c9ebc597472976",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.74.48",
+    "text": "Added support for BTC Ledger hardware accounts. (#38447)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "569e2a90c67e3a7c6c5e",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.69.153",
+    "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "6477994ae51ce7364453",
+    "kind": "changelog",
+    "source": "CHANGELOG_iOS.md",
+    "platform": "ios",
+    "version": "1.81.134",
+    "text": "Enabled ZCash feature flag by default. (#48171)",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "6696a3dacacb43cf2058",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.81.131",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L790",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "6853824bf36ce1ba263f",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.81.131",
+    "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "6901e1ce5e7509404efa",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.83.119",
+    "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L669",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "6b9d5c0b7747b2ae98d4",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.88.128",
+    "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L460",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "70ecd4ca4f62a2f6a23f",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.81.131",
+    "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "71d53530d83e61e1ab4a",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.76.73",
+    "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "71e6e26a30d6e27d1451",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.95.101",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "7609f41d0ea56011a680",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.88.127",
+    "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "7f16251e491d3a947e59",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.74.48",
+    "text": "Implemented ZCash Shielded account modal. (#41780)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "7fc08f8bbb3fe5ef362e",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.83.118",
+    "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "841f55d5982a96a9a764",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.91.175",
+    "text": "Updated Zcash library to 0.14. (#56404)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "868a762819a9423d102d",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.95.101",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "88af6ed266bbcf55a69b",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.75.175",
+    "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "88c90a07150f95e74676",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.97.56",
+    "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "8c39f215ea201ab381d7",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.77.95",
+    "text": "Added Zcash shielded support. (#44432)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "94566ef04b0590d6936d",
+    "kind": "changelog",
+    "source": "CHANGELOG_iOS.md",
+    "platform": "ios",
+    "version": "1.89.144",
+    "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
+    "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "957fe90fd3c0676a08a2",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.75.175",
+    "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "9b6c109aa869847307e0",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.80.113",
+    "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "a16258fe3689a7e5f696",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "platform": "desktop",
+    "version": "1.62.153",
+    "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "a606532bdc520d9e6aa9",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.81.131",
+    "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L792",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "b0dfa9889d22ce3a00f5",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.92.138",
+    "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "b714d0d3dcca87762d9f",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.69.160",
+    "text": "Fixed ZCash balance resolution issue. (#40635)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "b839810e46f5e16ec68f",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.88.127",
+    "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "bc605d220e87026fa4f1",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "platform": "desktop",
+    "version": "1.64.109",
+    "text": "Enabled Zcash support by default. (#36613)",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "bcd6b7e4363f0d1f263e",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.87.186",
+    "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "d16bd6951057fd3fb0b4",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.88.127",
+    "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "d25b9d5a5c47e6733ad6",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.97.56",
+    "text": "Enabled Zcash Ironwood support by default. (#56872)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "d481ff6723632c2b717e",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.87.186",
+    "text": "Added support for Zcash deshielding (Shielded - Transparent) transactions. (#45875)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T14:35:45.102Z",
+    "goneSince": "2026-10-08T14:46:50.765Z"
+   },
+   {
+    "id": "d73b85200b11672a6203",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.81.131",
+    "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "d9d50d33ef13af82d7df",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "platform": "desktop",
+    "version": "1.63.165",
+    "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
+    "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "db0cc38792ee886333a0",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.79.118",
+    "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "dbd5adc58a40208222d8",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.69.153",
+    "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "df4cbe2b7433f82a3f5b",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.75.175",
+    "text": "Added Zcash \"Deposit\" modal. (#42221)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "e0c225fe402ad6ccf249",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.94.117",
+    "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "e761496bcaad44cc8181",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.69.153",
+    "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "e9a5a37a9383e95e2cf4",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.73.105",
+    "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "ed5141d1bed2ed4439ae",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.90.124",
+    "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "efb148d83e22ef945d52",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.88.127",
+    "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "f215578275b443fd1957",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.78.94",
+    "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "f534d2f1acae0f6e2c82",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.69.153",
+    "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "f83ceea8221426474ca9",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.79.118",
+    "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "f8b92f08000f4231e6a2",
+    "kind": "changelog",
+    "source": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "version": "1.68.128",
+    "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
+    "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L1281",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "fff1c798f5e29beed4ef",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.86.148",
+    "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
+    "firstSeenAt": "2026-10-08T14:35:45.102Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "86bfac10cd402d3815cb",
+    "kind": "changelog",
+    "source": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "version": "1.87.186",
+    "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
+    "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
+    "firstSeenAt": "2026-10-08T14:46:50.765Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   },
+   {
+    "id": "7407a70cf80d4f16c8ea",
+    "kind": "changelog",
+    "source": "pending iOS release notes (draft issue #59793)",
+    "platform": "ios",
+    "version": "1.95.104",
+    "text": "Added Zcash Ironwood migration banner. (#58493)",
+    "permalink": "https://github.com/brave/brave-browser/issues/59793",
+    "firstSeenAt": "2026-10-08T17:03:02.983Z",
+    "lastSeenAt": "2026-10-08T18:31:50.651Z",
+    "goneSince": null
+   }
+  ],
+  "files": [
+   {
+    "file": "CHANGELOG_DESKTOP.md",
+    "platform": "desktop",
+    "commitSha": "23d9de6dbaa115d4d77d400dd56277da48895fca",
+    "commitDate": "2026-10-07T16:18:52Z",
+    "latestVersion": "1.97.56",
+    "versions": 134,
+    "entries": 1122
+   },
+   {
+    "file": "CHANGELOG_DESKTOP_ARCHIVE.md",
+    "platform": "desktop",
+    "commitSha": "4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5",
+    "commitDate": "2025-06-23T17:40:53Z",
+    "latestVersion": "1.66.118",
+    "versions": 283,
+    "entries": 2957
+   },
+   {
+    "file": "CHANGELOG_ANDROID.md",
+    "platform": "android",
+    "commitSha": "3048552c9bd7e56fb4c2f0a49d1a19cae9e55584",
+    "commitDate": "2026-10-08T16:55:07Z",
+    "latestVersion": "1.97.56",
+    "versions": 326,
+    "entries": 1802
+   },
+   {
+    "file": "CHANGELOG_iOS.md",
+    "platform": "ios",
+    "commitSha": "e7c75b7be38cf68d67b41226396bcd840476dae2",
+    "commitDate": "2026-10-06T17:29:37Z",
+    "latestVersion": "1.94.122",
+    "versions": 42,
+    "entries": 548
+   },
+   {
+    "file": "pending iOS release notes (draft issue #59793)",
+    "platform": "ios",
+    "commitSha": "issue",
+    "commitDate": "2026-10-08T17:02:47Z",
+    "latestVersion": "1.95.104",
+    "versions": 1,
+    "entries": 12
+   },
+   {
+    "file": "pending iOS release notes (draft issue #59758)",
+    "platform": "ios",
+    "commitSha": "issue",
+    "commitDate": "2026-10-07T15:47:36Z",
+    "latestVersion": "1.96.62",
+    "versions": 1,
+    "entries": 10
+   }
+  ]
+ }
+}
