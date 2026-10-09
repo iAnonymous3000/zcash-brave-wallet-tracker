@@ -26,7 +26,10 @@ export function previewHandler(dirIn: string, base: string): (req: IncomingMessa
       let url: URL;
       let rel: string;
       try {
-        url = new URL(req.url ?? '/', 'http://localhost');
+        // The request target is a path ("origin-form"): parsed relative to a base URL, "//work" would be read as a
+        // host named "work", so the path is appended to the origin instead.
+        const target = req.url ?? '/';
+        url = new URL(target.startsWith('/') ? `http://localhost${target}` : target, 'http://localhost');
         rel = url.pathname.startsWith(base) ? decodeURIComponent(url.pathname.slice(base.length)) : '';
       } catch {
         return send(res, 400, 'bad request', { 'Content-Type': 'text/plain' });
@@ -39,7 +42,7 @@ export function previewHandler(dirIn: string, base: string): (req: IncomingMessa
       if (file !== dir && !file.startsWith(dir + sep)) return send(res, 403);
       if (existsSync(file) && statSync(file).isDirectory()) {
         // Mimic GitHub Pages: a directory without a trailing slash redirects to it.
-        if (!url.pathname.endsWith('/')) return send(res, 301, '', { Location: `${url.pathname}/${url.search}` });
+        if (!url.pathname.endsWith('/')) return send(res, 301, '', { Location: directoryLocation(url) });
         file = join(file, 'index.html');
       }
       if (!existsSync(file) || !statSync(file).isFile()) {
@@ -52,6 +55,15 @@ export function previewHandler(dirIn: string, base: string): (req: IncomingMessa
       return send(res, 500, 'internal error', { 'Content-Type': 'text/plain' });
     }
   };
+}
+
+/**
+ * The trailing-slash redirect target for a directory request: a path-absolute URL built from the parsed (still
+ * percent-encoded) path with runs of slashes collapsed, so it can never start with "//" and be read as a
+ * protocol-relative URL to another host ("/.//work" parses to "//work"; WHATWG also turns "\" into "/").
+ */
+export function directoryLocation(url: URL): string {
+  return `/${url.pathname.replace(/\/{2,}/g, '/').replace(/^\//, '')}/${url.search}`;
 }
 
 export function createPreviewServer(dir: string, base: string): Server {

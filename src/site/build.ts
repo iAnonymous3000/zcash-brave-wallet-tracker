@@ -13,7 +13,7 @@ import { page, type Freshness } from './layout.ts';
 import { homePage } from './pages/home.ts';
 import { featurePage, featuresPage } from './pages/features.ts';
 import { releasesPage } from './pages/releases.ts';
-import { groupReleaseNotes, searchIndex } from './view.ts';
+import { groupReleaseNotes, searchIndex, stageView } from './view.ts';
 import { changesPage } from './pages/changes.ts';
 import { detailPage, workPage } from './pages/work.ts';
 import { notFoundPage, reportsPage, sourcesPage, upstreamPage } from './pages/other.ts';
@@ -63,12 +63,12 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
     const s = slug(g.id);
     if (seen.has(s)) throw new Error(`slug collision: ${s}`);
     seen.add(s);
-    write(`work/${s}/index.html`, page({ title: g.title, description: `${g.status.stageLabel}. Status, linked pull requests, uplifts, build presence and release notes for ${g.lead}.`, path: `work/${s}/`, active: 'work' }, fresh, detailPage(g, site, full, events, site.community)));
+    write(`work/${s}/index.html`, page({ title: g.title, description: `${stageView(g).label}. Status, linked pull requests, uplifts, build presence and release notes for ${g.lead}.`, path: `work/${s}/`, active: 'work' }, fresh, detailPage(g, site, full, events, site.community)));
   }
   write('changes/index.html', page({ title: 'Changes', description: 'Chronological feed of meaningful Zcash changes in Brave Wallet with source links.', path: 'changes/', active: 'changes' }, fresh, changesPage(site, events)));
   write('upstream/index.html', page({ title: 'Upstream', description: 'Zcash crates, protocol specs, servers and advisories that Brave Wallet depends on, and whether Brave has adopted them.', path: 'upstream/', active: 'upstream' }, fresh, upstreamPage(site)));
   write('reports/index.html', page({ title: 'Community reports', description: 'Zcash-related reports from the Brave Community forum, labeled as reported behavior.', path: 'reports/', active: 'reports' }, fresh, reportsPage(site)));
-  write('sources/index.html', page({ title: 'Sources & freshness', description: 'Monitored sources, last successful checks, failures, coverage and known gaps.', path: 'sources/', active: 'sources' }, fresh, sourcesPage(site, runs, status.rateLimit ?? {})));
+  write('sources/index.html', page({ title: 'Sources & freshness', description: 'Monitored sources, last successful checks, failures, coverage and known gaps.', path: 'sources/', active: 'sources' }, fresh, sourcesPage(site, runs, status.rateLimit ?? {}, Object.values(status.sources))));
   write('404.html', page({ title: 'Page not found', description: 'Page not found.', path: '404.html', active: null }, fresh, notFoundPage()));
 
   // Assets.

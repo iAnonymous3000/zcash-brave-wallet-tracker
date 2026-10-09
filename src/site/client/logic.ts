@@ -154,3 +154,73 @@ export function filterForTarget(current: string, targetPlatform: string | null |
   if (!targetPlatform || !current || current === targetPlatform) return current;
   return targetPlatform;
 }
+
+// ---------------------------------------------------------------------------
+// Source freshness. One set of rules for the page header (rendered at build time with now =
+// generatedAt) and the client (now = the viewer's clock), so the two never disagree.
+// ---------------------------------------------------------------------------
+
+/** A monitored source as the freshness checks read it (status.json / site.json `sources`). */
+export interface SourceFreshness {
+  id?: string;
+  name?: string;
+  lastOutcome?: string | null;
+  lastSuccessAt?: string | null;
+  lastCompleteAt?: string | null;
+  lastPartialAt?: string | null;
+  staleSince?: string | null;
+}
+
+/** Plain relative age of an ISO time at `now` (ms), e.g. "9 h ago"; "unknown" when either time is invalid. */
+export function agoText(iso: string | null | undefined, now: number): string {
+  const minutes = Math.round((now - Date.parse(iso ?? '')) / 60000);
+  if (!Number.isFinite(minutes)) return 'unknown';
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes} min ago`;
+  const h = Math.round(minutes / 60);
+  if (h < 48) return `${h} h ago`;
+  return `${Math.round(h / 24)} days ago`;
+}
+
+/**
+ * True when the source's kept data is stale at `now` (ms): the refresh recorded `staleSince` (a partial run kept
+ * values it should have refreshed) and that time is more than `windowMinutes` before `now`. A `staleSince` that
+ * cannot be parsed still counts: the refresh only records it for stale data, and its age being unknown does not make
+ * the data fresh. Whatever the latest outcome (a failed run leaves `staleSince` in place).
+ */
+export function keptDataStale(s: SourceFreshness, now: number, windowMinutes: number): boolean {
+  if (!s.staleSince) return false;
+  const since = Date.parse(s.staleSince);
+  if (!Number.isFinite(since) || !Number.isFinite(now)) return true;
+  return now - since > windowMinutes * 60_000;
+}
+
+/**
+ * Sources the header counts as "stale": kept data stale (see keptDataStale) on a source whose latest attempt did not
+ * fail. Failed sources are counted as failing instead, so one source is never in both counts.
+ */
+export function staleSources<T extends SourceFreshness>(sources: T[], now: number, windowMinutes: number): T[] {
+  return sources.filter((s) => s.lastOutcome !== 'failed' && keptDataStale(s, now, windowMinutes));
+}
+
+/** " · 1 source stale" (empty for none): the header pill's count, in the build and in the client. */
+export function staleCountText(n: number): string {
+  return n > 0 ? ` · ${n} source${n > 1 ? 's' : ''} stale` : '';
+}
+
+/**
+ * The age line of one source on the Sources page, at `now` (ms). Stale when its kept data is stale, when it never
+ * succeeded, or when its last success is older than the window; a partial source says how old its last complete
+ * collection is.
+ */
+export function sourceAgeLine(s: SourceFreshness, now: number, windowMinutes: number): { stale: boolean; text: string } {
+  const complete = s.lastCompleteAt ? `complete data from ${agoText(s.lastCompleteAt, now)}` : 'no complete collection recorded';
+  if (keptDataStale(s, now, windowMinutes)) {
+    return { stale: true, text: `stale: kept data not refreshed since ${agoText(s.staleSince, now)} · ${complete}` };
+  }
+  if (!s.lastSuccessAt) return { stale: true, text: 'never succeeded' };
+  const success = Date.parse(s.lastSuccessAt);
+  if (!Number.isFinite(success) || now - success > windowMinutes * 60_000) return { stale: true, text: `stale: last success ${agoText(s.lastSuccessAt, now)}` };
+  if (s.lastOutcome === 'partial') return { stale: false, text: `partial · ${complete}` };
+  return { stale: false, text: `data age ${agoText(s.lastSuccessAt, now)}` };
+}

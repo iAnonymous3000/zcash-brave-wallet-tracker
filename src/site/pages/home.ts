@@ -3,7 +3,7 @@ import type { ChangeEvent, Channel, Platform } from '../../lib/types.ts';
 import { ext, featureHref, glyph, html, itemHref, raw, shortRef, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
 import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, presentSite, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
-import { KIND_LABEL, eventGroup, eventScope } from './changes.ts';
+import { KIND_LABEL, eventGroup, eventScope, nowShownNote, outdatedMarker, presentEvent } from './changes.ts';
 import { groupStageBadge } from './work.ts';
 
 const DEFAULT = 'desktop/release';
@@ -161,9 +161,10 @@ export function homePage(data: SiteData, events: ChangeEvent[], notes: ReleaseVe
   <div class="panel-head"><h2 id="act-h">Latest activity in Brave</h2><span class="new-count" hidden></span><a class="head-link" href="${u('changes/')}">All activity</a></div>
   ${recent.length ? html`<ol class="mini-feed">${recent.map((e) => {
     const g = eventGroup(e, d);
-    return html`<li class="mev" data-detected="${e.detectedAt}">
+    const v = presentEvent(e, d);
+    return html`<li class="mev${e.rulesOutdated ? ' is-outdated' : ''}" data-detected="${e.detectedAt}">
       <span class="mev-when">${time(e.sourceAt ?? e.detectedAt)}</span>
-      <div class="mev-body"><span class="mev-kind">${KIND_LABEL[e.kind] ?? e.kind}<span class="new-tag" hidden>New</span></span>${g ? html`<a href="${itemHref(g.id)}">${e.title}</a>` : e.links[0] ? ext(e.links[0].url, e.title) : e.title}</div>
+      <div class="mev-body"><span class="mev-kind">${KIND_LABEL[e.kind] ?? e.kind}<span class="new-tag" hidden>New</span></span>${g ? html`<a href="${itemHref(g.id)}">${v.title}</a>` : e.links[0] ? ext(e.links[0].url, v.title) : v.title}${outdatedMarker(e)}${nowShownNote(v)}</div>
       ${g ? html`<span class="mev-stage">${groupStageBadge(g)}</span>` : ''}
     </li>`;
   })}</ol>` : html`<p class="panel-empty">No Brave activity in the retained history.</p>`}

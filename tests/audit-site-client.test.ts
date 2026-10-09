@@ -1042,3 +1042,119 @@ test('UI-C4/UI-C5 (repair): the built site carries no runtime-state claim and no
     rmSync(out, { recursive: true, force: true });
   }
 });
+
+// ---------------------------------------------------------------------------
+// Round 3 (R-SITE-STALE, R3-SITE-STALE-HEADER, R-SITE-EVENTS): the client agrees with the build, and the built-site
+// scan covers <head> and capability-change event titles.
+// ---------------------------------------------------------------------------
+
+test('R3-SITE-STALE-HEADER / R-SITE-STALE: the client re-checks stale sources with the build’s rule, so pill, banner and Sources rows agree', async () => {
+  const now = Date.now();
+  const ago = (h: number) => new Date(now - h * 3_600_000).toISOString();
+  const b = await boot({
+    page: 'sources',
+    url: 'https://example.test/tracker/sources/',
+    setup: (doc) => {
+      // The header as layout.ts renders it when one source's kept data turned stale only after the build.
+      const pill = doc.createElement('a');
+      pill.className = 'fresh';
+      Object.assign(pill.dataset, { generated: ago(0.5), staleAfter: '360', failing: '0', stale: '0' });
+      const count = doc.createElement('span');
+      count.className = 'fresh-stale';
+      pill.append(count);
+      const banner = doc.createElement('div');
+      banner.className = 'wrap source-stale-banner';
+      banner.hidden = true;
+      const ul = doc.createElement('ul');
+      ul.className = 'stale-sources';
+      for (const [id, h] of [['flags', 7], ['deps', 1]] as const) {
+        const li = doc.createElement('li');
+        li.id = `stale-${id}`;
+        li.dataset.staleSince = ago(h);
+        li.hidden = true;
+        ul.append(li);
+      }
+      banner.append(ul);
+      // A Sources row whose last success is recent while its kept data is stale (the verifier's trap).
+      const tr = doc.createElement('tr');
+      tr.className = 'src';
+      tr.id = 'row-flags';
+      Object.assign(tr.dataset, { lastSuccess: ago(1), outcome: 'partial' });
+      const age = doc.createElement('span');
+      age.className = 'src-age';
+      Object.assign(age.dataset, { staleSince: ago(9), lastComplete: ago(9) });
+      tr.append(age);
+      const tr2 = doc.createElement('tr');
+      tr2.className = 'src';
+      tr2.id = 'row-deps';
+      Object.assign(tr2.dataset, { lastSuccess: ago(0.5), outcome: 'partial' });
+      const age2 = doc.createElement('span');
+      age2.className = 'src-age';
+      Object.assign(age2.dataset, { staleSince: '', lastComplete: ago(4) });
+      tr2.append(age2);
+      doc.body.append(pill, banner, tr, tr2);
+    },
+  });
+  assert.equal(b.error, null);
+  assert.deepEqual(b.errors, []);
+  const pill = b.doc.querySelector('.fresh')!;
+  assert.equal(pill.dataset.stale, '1');
+  assert.ok(pill.classList.contains('has-stale'), 'the pill is marked');
+  assert.equal(b.doc.querySelector('.fresh-stale')!.textContent, ' · 1 source stale');
+  assert.equal(b.doc.querySelector('.source-stale-banner')!.hidden, false, 'the banner is shown');
+  assert.equal(b.doc.getElementById('stale-flags')!.hidden, false);
+  assert.equal(b.doc.getElementById('stale-deps')!.hidden, true, 'kept data within the window is not stale');
+  const row = b.doc.getElementById('row-flags')!;
+  assert.ok(row.classList.contains('is-stale'), 'the Sources row agrees with the header');
+  assert.equal(row.querySelector('.src-age')!.textContent, 'stale: kept data not refreshed since 9 h ago · complete data from 9 h ago');
+  const deps = b.doc.getElementById('row-deps')!;
+  assert.ok(!deps.classList.contains('is-stale'));
+  assert.equal(deps.querySelector('.src-age')!.textContent, 'partial · complete data from 4 h ago');
+});
+
+test('R-SITE-EVENTS: the built-site scan covers <head> (meta description) and capability-change event titles', async () => {
+  const { readdirSync, statSync, cpSync } = await import('node:fs');
+  const { buildSite } = await import('../src/site/build.ts');
+  const { slug, setBase } = await import('../src/site/components.ts');
+  const { presentCapabilities, statusLabel } = await import('../src/site/view.ts');
+  const root = mkdtempSync(join(tmpdir(), 'zbt-site-r3-'));
+  const data = join(root, 'data');
+  cpSync(join(ROOT, 'data'), data, { recursive: true });
+  // Capability changes recorded under older rules: one says the cell became usable while the site shows it otherwise.
+  const shown = presentCapabilities(site);
+  const rows = shown.filter((r) => r.cells.some((c) => c.platform === 'android' && c.channel === 'release' && c.status !== 'available')).slice(0, 3);
+  assert.ok(rows.length > 0);
+  const events = JSON.parse(readFileSync(join(data, 'history', 'events.json'), 'utf8'));
+  const synthetic = rows.map((r, i) => ({ id: `r3scan${i}`, kind: 'capability-changed', sourceAt: null, detectedAt: site.generatedAt, basis: 'observed', title: `${r.name} on Android Release: absent → available`, impact: 'The evidence for this capability changed.', highlight: 'release', itemIds: [], topic: null, platforms: ['android'], channel: 'release', links: [], evidence: ['absent → available'] }));
+  writeFileSync(join(data, 'history', 'events.json'), JSON.stringify([...synthetic, ...events]));
+  const before = process.env.TRACKER_DATA_DIR;
+  process.env.TRACKER_DATA_DIR = data;
+  try {
+    const out = join(root, 'out');
+    await buildSite({ outDir: out, basePath: '/' });
+    const walk = (dir: string): string[] => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
+    const absentOk = new Set(site.groups.filter((g) => g.status.stage === 'merged' && g.status.builds.length > 0 && g.status.builds.every((x) => x.included === false)).map((g) => join(out, 'work', slug(g.id), 'index.html')));
+    for (const p of walk(out).filter((x) => x.endsWith('.html'))) {
+      const doc = readFileSync(p, 'utf8'); // <head> included
+      assert.doesNotMatch(doc, /currently turned off|turned off server-side|has this turned off/, p);
+      if (absentOk.has(p)) continue;
+      for (const m of doc.matchAll(/not yet in a checked build/g)) assert.match(doc.slice(m.index! + 20, m.index! + 120), /only when every checked build was confirmed not to include it/, `${p}: absence wording outside its definition`);
+    }
+    for (const page of ['changes/index.html', 'index.html']) {
+      const doc = readFileSync(join(out, page), 'utf8');
+      for (const r of rows) {
+        const cell = r.cells.find((c) => c.platform === 'android' && c.channel === 'release')!;
+        const at = doc.indexOf(`${r.name} on Android Release: `);
+        if (at < 0 && page === 'index.html') continue; // the home feed shows the latest few only
+        assert.ok(at >= 0, `${page}: ${r.name} event rendered`);
+        const item = doc.slice(at, doc.indexOf('</li>', at));
+        assert.match(item, new RegExp(`Shown now: <span class="badge s-${cell.status}"[^>]*>[\\s\\S]*?<span>${statusLabel(cell.status, 'release')}</span>`), `${page}: ${r.name}`);
+      }
+    }
+  } finally {
+    if (before === undefined) delete process.env.TRACKER_DATA_DIR;
+    else process.env.TRACKER_DATA_DIR = before;
+    setBase('/');
+    rmSync(root, { recursive: true, force: true });
+  }
+});

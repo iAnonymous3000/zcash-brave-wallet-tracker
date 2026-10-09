@@ -1,8 +1,10 @@
+import { FRESHNESS } from '../../../config/tracker.ts';
 import type { SiteData } from '../../derive/index.ts';
-import type { RunRecord } from '../../lib/types.ts';
-import { ext, html, itemHref, shortRef, time, u } from '../components.ts';
+import type { RunRecord, SourceStatus } from '../../lib/types.ts';
+import { keptDataStale } from '../client/logic.ts';
+import { ext, glyph, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { gate3Facts, presentSite } from '../view.ts';
+import { crateVersions, gate3Facts, presentSite, sharePct, studyView, watchAdoption } from '../view.ts';
 import { gate3Clause } from './home.ts';
 
 // ---------------------------------------------------------------------------
@@ -24,13 +26,13 @@ ${readinessSection(d)}
 
 <section class="block" aria-labelledby="deps-h">
   <h2 id="deps-h">Rust crates: Brave’s resolved versions vs upstream</h2>
-  <p class="muted">Brave’s versions come from <code>third_party/rust/chromium_crates_io/Cargo.lock</code> at each channel build’s brave-core tag and at master. “Path” means the crate is built from Brave’s own fork of librustzcash rather than crates.io, so version labels inside the fork are nominal.</p>
+  <p class="muted">Brave’s versions come from <code>third_party/rust/chromium_crates_io/Cargo.lock</code> at each channel build’s brave-core tag and at master. When Brave’s Zcash crate links several versions of a crate, each is listed, highest first; “possible” marks a version the dependency graph could neither confirm nor rule out. “Path” means the crate is built from Brave’s own fork of librustzcash rather than crates.io, so version labels inside the fork are nominal.</p>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Dependency versions, scrollable">
   <table class="deps"><thead><tr><th scope="col">Crate</th><th scope="col">Impact</th>${braveCols.map((c) => html`<th scope="col">Brave ${c}</th>`)}<th scope="col">Upstream stable</th><th scope="col">Upstream newest</th><th scope="col">Adoption</th></tr></thead>
   <tbody>${up.crates.map((c) => html`<tr>
     <th scope="row">${ext(c.url, c.crate)}<span class="sub">${c.why}</span></th>
     <td><span class="impact impact-${c.impact}">${c.impact}</span></td>
-    ${braveCols.map((k) => html`<td class="mono">${c.brave[k] ? html`${c.brave[k]!.version}${c.brave[k]!.source === 'path' ? html` <span class="tag-path" title="Built from Brave’s librustzcash fork">path</span>` : ''}` : '—'}</td>`)}
+    ${braveCols.map((k) => html`<td class="mono">${crateCell(c.brave[k])}</td>`)}
     <td class="mono">${c.upstreamStable ?? '?'}</td><td class="mono">${c.upstreamNewest ?? '?'}</td><td>${c.adoption}</td>
   </tr>`)}</tbody></table>
   </div>
@@ -70,14 +72,37 @@ ${readinessSection(d)}
 <section class="block" aria-labelledby="watch-h">
   <h2 id="watch-h">Watch topics</h2>
   <p class="muted">Research and proposals that could matter to Brave Wallet later. They are tracked as upstream work unless Brave’s own source shows adoption. Performance figures belong to their publishers and were not measured in Brave Wallet.</p>
-  <ul class="watch">${up.watch.map((w) => html`<li class="watch-item">
+  <ul class="watch">${up.watch.map((w) => {
+    const a = watchAdoption(w.braveAdoption);
+    return html`<li class="watch-item" data-adoption="${a.state}">
     <h3>${ext(w.url, w.title)}</h3>
     <p>${w.summary}</p>
     <p class="muted">${w.attribution}${w.updatedAt ? html` Last activity ${time(w.updatedAt)}.` : ''}</p>
-    <p><strong>Brave adoption:</strong> ${w.braveAdoption === 'evidence' ? 'evidence found' : 'none found'} — ${w.braveEvidence.join(' ')}</p>
-  </li>`)}</ul>
+    <p class="watch-adoption">${glyph(a.glyph)}<strong>Brave adoption:</strong> ${a.label} — ${w.braveEvidence.join(' ')}</p>
+  </li>`;
+  })}</ul>
 </section>
 `;
+}
+
+/** Every version linked at one build, highest first, possible ones marked (R3-SITE-LINKED). */
+function crateCell(v: SiteData['upstream']['crates'][number]['brave'][string]): SafeHtml {
+  const versions = crateVersions(v);
+  if (!v || !versions.length) return html`—`;
+  const path = v.source === 'path' ? html` <span class="tag-path" title="Built from Brave’s librustzcash fork">path</span>` : '';
+  return html`<ul class="cvs">${versions.map((x, i) => html`<li class="cv${x.possible ? ' cv-possible' : ''}">${x.version}${x.possible ? html` <span class="tag-possible" title="The dependency graph could not tell whether Brave’s Zcash crate links this version">possible</span>` : ''}${i === 0 ? path : ''}</li>`)}</ul>`;
+}
+
+/** A field-trial study: its filters, its Zcash outcome by cohort with shares, and where it applies (R-SITE-STUDIES). */
+function studyItem(st: NonNullable<SiteData['upstream']['services']>['studies'][number]): SafeHtml {
+  const v = studyView(st);
+  const unknown = st.appliesUnknown ?? [];
+  const applies = st.appliesTo.map((a) => `${a.build} ${a.applies ? 'yes' : 'no'}`);
+  const listed = v.cohorts.length > 1 || (v.cohorts.length === 1 && v.mixed.length > 0);
+  return html`<li class="study">${ext(st.url, st.name)}: ${listed ? v.headline : v.outcome}
+    ${listed ? html`<ul class="cohorts">${v.cohorts.map((c) => html`<li><strong>${c.name}</strong> (${sharePct(c.share)} of the study’s clients): ${c.settings.length ? html`${c.settings.map((x, i) => html`${i ? ', ' : ''}<code>${x}</code>`)}` : 'sets nothing, so the compiled-in defaults apply'}${c.forcing.length ? html` <span class="muted">(clients started with ${c.forcing.join(' or ')} are forced into this cohort)</span>` : ''}</li>`)}</ul>` : ''}
+    ${v.notEnrolled.length ? html`<span class="muted study-meta">Cohorts with weight 0 (no clients): ${v.notEnrolled.join(', ')}.</span>` : ''}
+    <span class="muted study-meta">versions ${st.minVersion ?? 'any'} – ${st.maxVersion ?? 'any'}; ${st.platforms.join(', ') || 'all platforms'}; ${st.channels.join(', ') || 'all channels'}. Applies to current builds: ${applies.join('; ') || (unknown.length ? 'none determined' : 'unknown')}${unknown.length ? html`; unknown for ${unknown.map((a, i) => html`${i ? '; ' : ''}${a.build} (${a.reason})`)}` : ''}.${st.conditions?.length ? html` Also limited by client conditions that public data cannot decide: ${st.conditions.join('; ')}.` : ''}</span></li>`;
 }
 
 function readinessSection(d: SiteData): SafeHtml {
@@ -98,7 +123,7 @@ function readinessSection(d: SiteData): SafeHtml {
       <p class="muted">This is the public repository of Brave’s swap backend. The deployed service could differ; deployment timing is not public. It applies to every platform and browser version.</p>
     </section>` : ''}
     ${sv ? html`<section class="facet" aria-labelledby="st-h"><h3 id="st-h">Field-trial studies touching Zcash (brave-variations)</h3>
-      ${sv.studies.length ? html`<ul class="plain">${sv.studies.map((st) => html`<li>${ext(st.url, st.name)}: ${st.features.enable.length ? html`enables <code>${st.features.enable.join(', ')}</code>` : ''}${st.features.disable.length ? html` disables <code>${st.features.disable.join(', ')}</code>` : ''}${Object.keys(st.params).length ? html` with ${Object.entries(st.params).map(([k, v]) => html`<code>${k}=${v}</code> `)}` : ''}<br><span class="muted">versions ${st.minVersion ?? 'any'} – ${st.maxVersion ?? 'any'}; ${st.platforms.join(', ') || 'all platforms'}; ${st.channels.join(', ') || 'all channels'}. Applies to current builds: ${st.appliesTo.map((a) => `${a.build} ${a.applies ? 'yes' : 'no'}`).join('; ') || 'unknown'}</span></li>`)}</ul>` : html`<p class="muted">No study currently sets Zcash features or parameters.</p>`}
+      ${sv.studies.length ? html`<ul class="plain studies">${sv.studies.map((st) => studyItem(st))}</ul>` : html`<p class="muted">No study currently sets Zcash features or parameters.</p>`}
       <p class="muted">Studies override compiled-in defaults at runtime when their filters match a build. ${sv.studiesCommit ? html`Read at ${ext(`https://github.com/brave/brave-variations/tree/${sv.studiesCommit}/studies`, sv.studiesCommit.slice(0, 8))}.` : ''}</p>
     </section>` : ''}
   </div>
@@ -142,9 +167,29 @@ function groupFor(d: SiteData, id: string): string {
 // Sources, freshness, coverage, meanings
 // ---------------------------------------------------------------------------
 
-export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>): SafeHtml {
+/**
+ * One source's status cell, readable without the client script: the outcome, a "stale" flag when its kept data has not
+ * been refreshed for longer than the staleness window (same rule as the header), and the age line (absolute times
+ * here; the client replaces it with relative ages from the same rule, see sourceAgeLine).
+ */
+function sourceStatusCell(s: SourceStatus, at: number): SafeHtml {
+  const label = s.lastOutcome === 'ok' ? 'OK' : s.lastOutcome === 'partial' ? 'Partial' : s.lastOutcome === 'failed' ? 'Failed' : s.lastOutcome === 'skipped' ? 'Skipped' : 'Never run';
+  const stale = keptDataStale(s, at, FRESHNESS.staleAfterMinutes);
+  const complete = s.lastCompleteAt ? html`complete data from ${time(s.lastCompleteAt, { withTime: true })}` : 'no complete collection recorded';
+  const age = stale
+    ? html`stale: kept data not refreshed since ${time(s.staleSince, { withTime: true })} · ${complete}`
+    : s.lastOutcome === 'partial' ? html`partial · ${complete}` : '';
+  // The row keeps its own attributes (data-last-success, data-outcome); the other inputs of the age rule are on the
+  // age line itself.
+  return html`<div class="src-cell"><span class="src-state src-${s.lastOutcome ?? 'never'}">${label}</span>${stale ? html` <span class="src-flag">Stale</span>` : ''}<span class="src-age" data-last-complete="${s.lastCompleteAt ?? ''}" data-stale-since="${s.staleSince ?? ''}">${age}</span></div>`;
+}
+
+export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>, statusSources?: SourceStatus[]): SafeHtml {
   const d = presentSite(data);
   const c = d.coverage.counts;
+  // status.json is the latest record of each source (the header reads it too); the derived copy is the fallback.
+  const sources = statusSources?.length ? [...statusSources].sort((a, b) => a.name.localeCompare(b.name)) : d.sources;
+  const at = Date.parse(d.generatedAt);
   return html`
 <div class="page-head">
   <h1>Sources &amp; freshness</h1>
@@ -155,16 +200,16 @@ export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<stri
   <h2 id="src-h">Monitored sources</h2>
   <div class="table-scroll" tabindex="0" role="region" aria-label="Sources, scrollable">
   <table class="sources stack"><thead><tr><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Last success</th><th scope="col">Last attempt</th><th scope="col">Items</th><th scope="col">Notes</th></tr></thead><tbody>
-  ${d.sources.map((s) => html`<tr class="src" data-last-success="${s.lastSuccessAt ?? ''}" data-outcome="${s.lastOutcome ?? 'never'}">
+  ${sources.map((s) => html`<tr class="src" data-last-success="${s.lastSuccessAt ?? ''}" data-outcome="${s.lastOutcome ?? 'never'}">
     <th scope="row">${ext(s.url, s.name)}</th>
-    <td data-label="Status"><span class="src-state src-${s.lastOutcome ?? 'never'}">${s.lastOutcome === 'ok' ? 'OK' : s.lastOutcome === 'partial' ? 'Partial' : s.lastOutcome === 'failed' ? 'Failed' : s.lastOutcome === 'skipped' ? 'Skipped' : 'Never run'}</span><span class="src-age"></span></td>
-    <td data-label="Last success">${time(s.lastSuccessAt, { rel: true, withTime: true })}</td>
+    <td data-label="Status">${sourceStatusCell(s, at)}</td>
+    <td data-label="Last success">${s.lastCompleteAt && s.lastCompleteAt !== s.lastSuccessAt ? html`<div class="src-cell">${time(s.lastSuccessAt, { rel: true, withTime: true })}<span class="sub">last complete ${time(s.lastCompleteAt, { rel: true, withTime: true })}</span></div>` : time(s.lastSuccessAt, { rel: true, withTime: true })}</td>
     <td data-label="Last attempt">${time(s.lastAttemptAt, { rel: true, withTime: true })}</td>
     <td data-label="Items" class="mono">${s.itemCount ?? '—'}</td>
     <td data-label="Notes">${s.lastError ? html`<p class="err">${s.lastError}${s.consecutiveFailures > 1 ? ` (${s.consecutiveFailures} consecutive failures)` : ''}</p>` : ''}${s.limitations.length ? html`<details><summary>${s.limitations.length} limitation${s.limitations.length > 1 ? 's' : ''}</summary><ul>${s.limitations.map((l) => html`<li>${l}</li>`)}</ul></details>` : ''}</td>
   </tr>`)}
   </tbody></table></div>
-  <p class="muted">A source counts as stale when its last success is more than ${Math.round(Number(d.site.refreshEveryMinutes) * 3 / 60)} hours old (refreshes run about every ${d.site.refreshEveryMinutes / 60} hours). Ages above are computed in your browser from the stored timestamps.</p>
+  <p class="muted">A source counts as stale when its last success is more than ${FRESHNESS.staleAfterMinutes / 60} hours old, or when a refresh had to keep data it should have updated for longer than that (“Stale”; the rest of its data was read). “Partial” means some reads failed and their last good values were kept; the age of its last complete collection is shown. Refreshes run about every ${d.site.refreshEveryMinutes / 60} hours. Ages above are computed in your browser from the stored timestamps.</p>
 </section>
 
 <section class="block" aria-labelledby="runs-h">

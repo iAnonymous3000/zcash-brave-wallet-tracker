@@ -476,6 +476,22 @@ details > summary:hover { color: var(--text); }
 .src-failed { color: var(--danger); }
 .src-age { display: block; font-size: 12.5px; color: var(--muted); }
 .src.is-stale .src-age { color: var(--danger); font-weight: 500; }
+.src-flag { display: inline-block; margin-left: 6px; padding: 0 6px; border: 1px solid currentColor; border-radius: 5px; font-size: 12px; font-weight: 500; line-height: 1.5; color: var(--danger); }
+.sources td .sub { display: block; font-size: 12.5px; color: var(--muted); }
+.fresh.has-stale .fresh-dot { background: var(--warn); box-shadow: 0 0 0 3px rgba(242, 184, 96, 0.18); }
+.stale-sources { margin: 6px 0; padding-left: 18px; }
+.stale-sources li { margin: 2px 0; overflow-wrap: anywhere; }
+.cvs { list-style: none; margin: 0; padding: 0; }
+.cvs li { white-space: nowrap; }
+.cv-possible { color: var(--text-2); }
+.tag-possible { font-size: 12px; padding: 0 5px; border: 1px dashed var(--warn); border-radius: 5px; color: var(--warn); font-family: var(--f-sans); }
+.watch-adoption .g { margin-right: 6px; }
+.studies > li { overflow-wrap: anywhere; margin: 0 0 10px; }
+.study-meta { display: block; margin-top: 2px; }
+.cohorts { margin: 4px 0; padding-left: 18px; font-size: 13.5px; }
+.cohorts li { margin: 2px 0; }
+.ev-outdated { display: inline-block; margin-left: 8px; padding: 0 6px; border: 1px dashed var(--border-2); border-radius: 5px; color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.5; }
+.ev-now { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; color: var(--text-2); margin: 4px 0; }
 .err { color: var(--danger); font-size: 13px; margin: 0 0 4px; overflow-wrap: anywhere; }
 .runs { min-width: 720px; }
 .stats { padding-left: 1.1em; }

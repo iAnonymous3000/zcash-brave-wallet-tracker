@@ -1,7 +1,8 @@
 import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent } from '../../lib/types.ts';
-import { ext, html, itemHref, time } from '../components.ts';
+import { ext, featureHref, html, itemHref, statusBadge, time } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
+import { eventView, shownCapabilities, type EventView } from '../view.ts';
 
 export const KIND_LABEL: Record<string, string> = {
   'item-tracked': 'New issue',
@@ -48,18 +49,38 @@ export function eventGroup(e: ChangeEvent, d: SiteData) {
   return e.itemIds.map((id) => d.groups.find((g) => g.lead === id || g.members.masterPrs.includes(id) || g.members.uplifts.includes(id) || g.members.duplicates.includes(id))).find(Boolean) ?? null;
 }
 
+/** Marker for an event whose text was produced by older derivation rules and could not be regenerated (R-SITE-OUTDATED). */
+export const OUTDATED_HELP = 'The tracker’s rules changed after this was recorded, and this entry could not be regenerated under the current rules because its item or source was not completely read in a later refresh. Its wording may not match the rest of the site; it is replaced when the entry is next regenerated.';
+export function outdatedMarker(e: Pick<ChangeEvent, 'rulesOutdated'>): SafeHtml | '' {
+  return e.rulesOutdated ? html`<span class="ev-outdated" title="${OUTDATED_HELP}">Text from an older rule version</span>` : '';
+}
+
+/** "Shown now" note for a capability change whose new status is not what the site shows for that build (see eventView). */
+export function nowShownNote(v: EventView): SafeHtml | '' {
+  if (!v.nowShown) return '';
+  return html`<p class="ev-now">Shown now: ${statusBadge(v.nowShown.status, v.nowShown.label)} <a href="${v.nowShown.href}">current status and evidence</a></p>`;
+}
+
+/** The event's title and "shown now" note against the capability cells as every page presents them. */
+export function presentEvent(e: ChangeEvent, d: SiteData): EventView {
+  return eventView(e, shownCapabilities(d), featureHref);
+}
+
 export function eventCard(e: ChangeEvent, d: SiteData): SafeHtml {
   const group = eventGroup(e, d);
   const at = e.sourceAt ?? e.detectedAt;
-  return html`<li class="ev hl-${e.highlight ?? 'none'}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${`${e.title} ${e.impact}`.toLowerCase()}">
+  const v = presentEvent(e, d);
+  return html`<li class="ev hl-${e.highlight ?? 'none'}${e.rulesOutdated ? ' is-outdated' : ''}" data-kind="${e.kind}" data-highlight="${e.highlight ?? ''}" data-scope="${eventScope(e)}" data-topic="${e.topic ?? ''}" data-basis="${e.basis}" data-detected="${e.detectedAt}" data-text="${`${v.title} ${e.impact}`.toLowerCase()}">
     <div class="ev-when">${e.sourceAt ? time(e.sourceAt, { withTime: true }) : html`detected ${time(e.detectedAt, { withTime: true })}`}</div>
     <div class="ev-body">
       <div class="ev-meta">
         <span class="ev-kind">${KIND_LABEL[e.kind] ?? e.kind}</span>
         ${e.highlight ? html`<span class="ev-hl">${HIGHLIGHT_LABEL[e.highlight]}</span>` : ''}
+        ${outdatedMarker(e)}
         <span class="new-tag" hidden>New</span>
       </div>
-      <h3 class="ev-title">${group ? html`<a href="${itemHref(group.id)}">${e.title}</a>` : e.links[0] ? ext(e.links[0].url, e.title) : e.title}</h3>
+      <h3 class="ev-title">${group ? html`<a href="${itemHref(group.id)}">${v.title}</a>` : e.links[0] ? ext(e.links[0].url, v.title) : v.title}</h3>
+      ${nowShownNote(v)}
       <p class="ev-impact">${e.impact}</p>
       <div class="ev-foot">
         ${e.links.map((l) => html`${ext(l.url, l.label, 'ref')} `)}
