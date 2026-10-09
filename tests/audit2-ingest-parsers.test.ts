@@ -8,7 +8,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import type { ChangelogEntry, Platform } from '../src/lib/types.ts';
-import { ZCASH_TEXT, changelogVersions, parseChangelog } from '../src/ingest/parsers.ts';
+import { ChangelogStructureError, ZCASH_TEXT, changelogVersions, parseChangelog } from '../src/ingest/parsers.ts';
 import { extractRefs, plainExcerpt } from '../src/lib/util.ts';
 
 const opts = { platform: 'desktop' as const, file: 'C.md', commitSha: 'a' };
@@ -492,8 +492,11 @@ test('R-ING-23 repair: an unclosed fence inside a list item is plain text too, s
 });
 
 test('R-ING-23 repair: structure nested deeper than any real changelog ends the release block there', () => {
-  assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', `${'> '.repeat(150)}x`, '- Zcash b.', '## 1.2.2', '- Zcash c.')), ['1.2.3:Zcash a.']);
-  assert.deepEqual(changelogVersions(md('## 1.2.3', `${'- '.repeat(150)}x`, '## 1.2.2')), ['1.2.3']);
+  // R3-ING-23 (repair round 2: a partial read never reads as a complete one): a text nested deeper than the parser
+  // reads is not read at all (ChangelogStructureError; the changelog collector then fails and keeps its last good
+  // data), rather than read up to there and reported as the whole changelog (1.2.2 and "Zcash c." dropped).
+  assert.throws(() => got(md('## 1.2.3', '- Zcash a.', `${'> '.repeat(150)}x`, '- Zcash b.', '## 1.2.2', '- Zcash c.')), ChangelogStructureError);
+  assert.throws(() => changelogVersions(md('## 1.2.3', `${'- '.repeat(150)}x`, '## 1.2.2')), ChangelogStructureError);
 });
 
 test('R-ING-23 repair: unclosed HTML and fence openers are read in linear time (no rescans to the end)', () => {
@@ -516,7 +519,9 @@ test('R-ING-23 repair: unclosed HTML and fence openers are read in linear time (
   // Deep nesting followed by many blank lines.
   const deep = `${'- '.repeat(16000)}x\n${'\n'.repeat(32000)}## 1.2.3\n- Zcash x.`;
   const t = performance.now();
-  parseChangelog(deep, opts);
+  // R3-ING-23 (repair round 2: a partial read never reads as a complete one): nested deeper than the parser reads, so
+  // the read fails, quickly, instead of stopping part-way.
+  assert.throws(() => parseChangelog(deep, opts), ChangelogStructureError);
   assert.ok(performance.now() - t < 3000);
 });
 

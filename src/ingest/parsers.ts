@@ -192,10 +192,9 @@ function inlineLinkTail(s: string): (LinkDef & { end: number }) | null {
  * followed by release notes (releaseNotesOnly). Everything else is not a released version: a qualifier on the
  * version itself ("v1.3.0-beta", "[1.3.0-rc.1]", "1.3.0+build", "1.3.0.1"), other trailing text ("1.3.0 - TBD",
  * "[1.3.0] - Unreleased", "1.3.0 (beta)"), a future date, or a link (inline or by reference definition) that has a
- * title or points at a pre-release (releaseLinkOk). When the text was not read to its end (`refsComplete` false), a
- * reference link whose definition was not read is not known to be consistent with a release either.
+ * title or points at a pre-release (releaseLinkOk).
  */
-function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: number, refsComplete = true): string | null {
+function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: number): string | null {
   const m = text.match(/^(\[)?v?(\d+\.\d+\.\d+)/);
   if (!m) return null;
   const version = m[2];
@@ -215,7 +214,6 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
       // A label such as "[beta]" says what it links to even when nothing defines it (then it is visible text).
       if (ref && PRE_RELEASE_WORD.test(ref[1])) return null;
       link = refs.get(markdown.utils.normalizeReference(ref?.[1] || m[0].slice(1)));
-      if (!link && !refsComplete) return null;
       if (ref) rest = rest.slice(ref[0].length);
     }
     if (link && !releaseLinkOk(link, version)) return null;
@@ -243,41 +241,45 @@ function releaseHeadingVersion(text: string, refs: Map<string, LinkDef>, now: nu
 // wrapper around the block parser's tokenize method (to know the indentation of the containers being read).
 
 /**
- * Block quotes and list items open at once beyond which the structure is not read (Brave's changelogs nest at most
- * 2). Block quotes nested deeper are not even parsed (blockquoteRule): every lazy line costs a pass per open quote.
+ * Block quotes and list items open at once beyond which a text is not read (Brave's changelogs nest at most 2): the
+ * read fails (ChangelogStructureError) rather than leave the rest of the text unread.
  */
-const MAX_NESTING = 32;
+const MAX_NESTING = 100;
 /**
  * Re-readings of a text whose fence or raw HTML block never closes (readStructure). One covers a stray opener; if
  * that re-reading exposes another, heading-shaped lines stand in for a further one.
  */
 const MAX_REREADS = 1;
 /**
- * Block quote lines a parse may mark (blockquoteRule), per line of the text, plus a fixed allowance. Every open quote
- * marks each of its lines, and a lazy line (one without the ">" markers, continuing a paragraph) is marked by every
- * quote it continues, each perhaps over a second reading: a quote nested 8 deep with long runs of lazy lines marks
- * about 30 times its lines, 16 deep up to about 100 times. Past the budget the structure is read no further than the
- * top-level block being read (readStructure): only quotes nested that deep with that many lazy lines get there, and
- * the time a parse takes stays linear in the text's size.
+ * Block quote lines the readings of one text may mark (blockquoteRule), per character of the text, plus a fixed
+ * allowance. Every open quote marks each of its lines, and a lazy line (one without the ">" markers, continuing a
+ * paragraph) is marked by every quote it continues, each perhaps over a second reading: a quote nested 10 deep with
+ * runs of thousands of lazy lines at each level marks about 10 lines per character, one nested 31 deep with a lazy line
+ * on every other character about 50. Each mark costs well under 0.1 µs, so the budget keeps a 256 KB text's readings
+ * to a few hundred milliseconds (all of them: the budget is shared). Past it the read fails (ChangelogStructureError):
+ * only block quotes nested deep with long runs of short lazy lines get there.
  */
-const QUOTE_WORK_PER_LINE = 32;
+const QUOTE_WORK_PER_CHAR = 16;
 const QUOTE_WORK_BASE = 100_000;
+/** The block quote lines the readings of one text have marked, and how many they may mark. */
+interface QuoteBudget {
+  used: number;
+  limit: number;
+}
 
 /** What one parse keeps in its env (markdown-it hands env to every rule). */
 interface ParseInfo {
-  /** The parse's block state (one object for the whole parse): the tokens read when a parse stops early. */
-  state: StateBlock | null;
   /** The link reference definitions recorded, in order, with the line each starts on. */
   definitions: { label: string; line: number }[];
   /** Per block quote (by first line and nesting level): up to which line its last reading took in lazy lines (blockquoteRule). */
   lazyHints: Map<number, number>;
-  /** Block quotes open at the point of the parse. */
-  quoteDepth: number;
   /**
    * The content indentation (blkIndent) of every container being read, outermost first (markdown.block.tokenize),
    * with QUOTE_BASE where a block quote's content starts (its lines are re-based there).
    */
   indents: number[];
+  /** The containers (block quotes and list items) being read: the depth of the tokenize call in progress. */
+  depth: number;
   /** The line a table interrupting a paragraph starts on, until the next block is read there (tableHeaderRule). */
   tableHeader: number;
   /**
@@ -289,14 +291,23 @@ interface ParseInfo {
   github: boolean;
   /** Whether a line the two differ on was met. */
   differs: boolean;
-  /** Block quote lines marked so far, and how many the parse may mark. */
-  quoteWork: number;
-  quoteBudget: number;
+  /** Block quote lines marked so far by every reading of the text, and how many they may mark. */
+  budget: QuoteBudget;
 }
 const PARSE = Symbol('parse');
 const parseInfo = (state: StateBlock) => state.env[PARSE] as ParseInfo;
-/** Thrown when reading block quotes would take more than the parse's budget (readStructure then stops there). */
-class QuoteBudgetExceeded extends Error {}
+/**
+ * Thrown by parseChangelog and changelogVersions when a text's block structure cannot be read to its end: block quotes
+ * and list items nested more than MAX_NESTING deep, or block quotes whose lazy lines would cost more than the parse's
+ * budget. The read fails as a whole (the changelog collector then keeps its last good data) rather than leave the
+ * rest of the text unread and report what was read as the whole changelog.
+ */
+export class ChangelogStructureError extends Error {
+  constructor(what: string, line: number) {
+    super(`changelog structure not read: ${what} (from line ${line + 1})`);
+    this.name = 'ChangelogStructureError';
+  }
+}
 /**
  * The indentation (sCount) blockquoteRule gives a lazy line that could be a GFM table header (lazyTableHeader). Like
  * markdown-it's -1 for a lazy line, it is negative, so every markdown-it rule reads the line as lazy; paragraphRule
@@ -787,8 +798,8 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
     oldSCount.push(state.sCount[nextLine]);
     state.sCount[nextLine] = lazyTableHeader(state, nextLine, endLine) ? LAZY_HEADER : -1;
   }
-  parse.quoteWork += nextLine - startLine + 1;
-  if (parse.quoteWork > parse.quoteBudget) throw new QuoteBudgetExceeded();
+  parse.budget.used += nextLine - startLine + 1;
+  if (parse.budget.used > parse.budget.limit) throw new ChangelogStructureError('block quotes with lazy lines nested too deep to read in time', startLine);
 
   const oldIndent = state.blkIndent;
   state.blkIndent = 0;
@@ -797,11 +808,9 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
   const lines: [number, number] = [startLine, 0];
   open.map = lines;
   const first = state.tokens.length;
-  parse.quoteDepth++;
   parse.indents.push(QUOTE_BASE);
   state.md.block.tokenize(state, startLine, nextLine);
   parse.indents.pop();
-  parse.quoteDepth--;
   const final = !cut || state.line < nextLine || !openParagraphAt(state.tokens, first, state.tokens.length, nextLine);
   state.push('blockquote_close', 'blockquote', -1).markup = '>';
   state.lineMax = oldLineMax;
@@ -827,20 +836,13 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
  * lines (and a quote read again inside an outer quote starts from its last limit), until the content stops before the
  * end of what was read, or reaches it at a line no paragraph takes. Every reading is the original one over fewer
  * lines, and the last one has the original's result; the lines read add up to at most about twice the quote's.
- * Quotes nested deeper than MAX_NESTING are not read (readStructure stops at them).
+ * A text with quotes nested deeper than MAX_NESTING is not read (the tokenize wrapper below).
  */
 function blockquoteRule(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
   if (state.sCount[startLine] - state.blkIndent >= 4) return false;
   if (state.src.charCodeAt(state.bMarks[startLine] + state.tShift[startLine]) !== 0x3e) return false;
   if (silent) return true;
   const parse = parseInfo(state);
-  parse.state ??= state;
-  if (parse.quoteDepth >= MAX_NESTING) {
-    state.push('blockquote_open', 'blockquote', 1).map = [startLine, endLine];
-    state.push('blockquote_close', 'blockquote', -1);
-    state.line = endLine;
-    return true;
-  }
   const tokens = state.tokens.length;
   const definitions = parse.definitions.length;
   // Quotes nested in one another can start on the same line; the token nesting level tells them apart.
@@ -861,7 +863,7 @@ function blockquoteRule(state: StateBlock, startLine: number, endLine: number, s
  * CommonMark block parsing with GFM tables. Only block tokens are needed (headings with their raw text, list items,
  * quotes, code, HTML blocks), so inline parsing is switched off. markdown-it counts two levels per list (the list
  * and its item) and silently skips content nested deeper than maxNesting, so the limit sits above what MAX_NESTING
- * lets through: readStructure stops at MAX_NESTING itself, before anything can be skipped.
+ * lets through: the tokenize wrapper below fails the read at MAX_NESTING itself, before anything can be skipped.
  */
 const markdown = new MarkdownIt('commonmark', { maxNesting: 2 * MAX_NESTING + 10 });
 markdown.core.ruler.disable(['inline', 'text_join']);
@@ -870,15 +872,19 @@ markdown.block.ruler.after('heading', 'gfm_table', tableRule, { alt: ['paragraph
 markdown.block.ruler.before('code', 'gfm_table_header', tableHeaderRule);
 markdown.block.ruler.at('paragraph', paragraphRule);
 markdown.block.ruler.disable(['reference', 'lheading']);
-// Every container's content is read by tokenize: keep the stack of their indentations (lazyIndented).
+// Every container's content is read by tokenize: keep the stack of their indentations (lazyIndented), and fail the
+// read beyond MAX_NESTING containers (the document's own content is read at depth 0).
 const tokenizeBlocks = markdown.block.tokenize.bind(markdown.block);
 markdown.block.tokenize = (state: StateBlock, startLine: number, endLine: number) => {
-  const indents = parseInfo(state).indents;
-  indents.push(state.blkIndent);
+  const parse = parseInfo(state);
+  if (parse.depth > MAX_NESTING) throw new ChangelogStructureError(`block quotes and list items nested more than ${MAX_NESTING} deep`, startLine);
+  parse.indents.push(state.blkIndent);
+  parse.depth++;
   try {
     tokenizeBlocks(state, startLine, endLine);
   } finally {
-    indents.pop();
+    parse.depth--;
+    parse.indents.pop();
   }
 };
 
@@ -889,9 +895,7 @@ type LineMark =
   /** A later line of a multi-line (setext) heading: heading text, not an entry. */
   | { t: 'heading-text' }
   /** A heading-shaped line whose reading is in doubt (see readStructure): the release block ends here. */
-  | { t: 'doubt' }
-  /** Nothing from this line on is read: nested deeper than MAX_NESTING, or past what a parse could afford. */
-  | { t: 'stop' };
+  | { t: 'doubt' };
 
 /**
  * CommonMark HTML block kinds 1-5 (<script>/<pre>/<style>/<textarea>, <!--, <?, <!X, <![CDATA[), which end at a
@@ -989,11 +993,9 @@ const contentLines = (content: string) => (content === '' ? 0 : content.split('\
 interface Structure {
   marks: (LineMark | null)[];
   refs: Map<string, LinkDef>;
-  /** False when the text was not read to its end (a 'stop' mark): definitions further on are unknown. */
-  refsComplete: boolean;
 }
 
-/** What a mark means for releases, for comparing two readings: level-1/2 headings, doubt and stop. */
+/** What a mark means for releases, for comparing two readings: level-1/2 headings and doubt. */
 const markKey = (m: LineMark | null): string => (!m ? '' : m.t === 'heading' ? (m.level <= 2 ? `${m.level}${m.nested ? '>' : ''}${m.text}` : '') : m.t === 'heading-text' ? '' : m.t);
 
 /**
@@ -1016,47 +1018,27 @@ const markKey = (m: LineMark | null): string => (!m ? '' : m.t === 'heading' ? (
  * - where GitHub (cmark-gfm, CommonMark 0.29) and CommonMark 0.31 as micromark reads it differ, the text is read both
  *   ways and every line where the two readings differ (a level-1/2 heading, or a doubtful line) is doubtful: a block
  *   that starts with a <search> or <source> tag (an HTML block that can interrupt a paragraph only in 0.31, or only
- *   in 0.29), and a table header row after a paragraph that is a whole HTML tag (tableHeaderRule);
- * - beyond MAX_NESTING open quotes/list items nothing more is read (the line is marked 'stop'), so nothing after it
- *   is credited to a release; likewise from the top-level block where reading block quotes would cost more than the
- *   parse's budget (a contrived nesting of quotes and lazy lines).
+ *   in 0.29), and a table header row after a paragraph that is a whole HTML tag (tableHeaderRule).
+ * A text whose structure cannot be read to its end (block quotes and list items nested more than MAX_NESTING deep,
+ * block quotes beyond the parse's budget) throws ChangelogStructureError: what was read before is not reported as the
+ * whole text. A re-reading with a stray opener escaped that cannot be read stands in as one beyond MAX_REREADS does.
  * `lines` are CommonMark's lines (no line ending in them).
  */
-function readStructure(lines: string[], rereads = 0, github = false): Structure {
+function readStructure(lines: string[], budget: QuoteBudget, rereads = 0, github = false): Structure {
   const marks: (LineMark | null)[] = new Array(lines.length).fill(null);
   const src = lines.join('\n');
   const parse: ParseInfo = {
-    state: null,
     definitions: [],
     lazyHints: new Map(),
-    quoteDepth: 0,
     indents: [],
+    depth: 0,
     tableHeader: -1,
     github,
     differs: false,
-    quoteWork: 0,
-    quoteBudget: QUOTE_WORK_BASE + QUOTE_WORK_PER_LINE * lines.length,
+    budget,
   };
   const env: Env = { [PARSE]: parse };
-  let tokens: Token[];
-  /** The line reading stopped at (the parse's budget), or -1. */
-  let stopAt = -1;
-  try {
-    tokens = markdown.parse(src, env);
-  } catch (e) {
-    if (!(e instanceof QuoteBudgetExceeded) || !parse.state) throw e;
-    // Every top-level block before the one being read is complete: keep those, read nothing from that one on.
-    const all = parse.state.tokens;
-    let depth = 0;
-    let outer = -1;
-    for (let k = 0; k < all.length; k++) {
-      if (all[k].nesting === 1 && depth++ === 0) outer = k;
-      else if (all[k].nesting === -1) depth--;
-    }
-    tokens = depth > 0 ? all.slice(0, outer) : all.slice();
-    stopAt = depth > 0 ? (all[outer].map?.[0] ?? parse.state.line) : parse.state.line;
-    for (const d of parse.definitions) if (d.line >= stopAt) delete env.references?.[d.label];
-  }
+  const tokens: Token[] = markdown.parse(src, env);
   const refs = new Map<string, LinkDef>();
   for (const [label, r] of Object.entries(env.references ?? {})) refs.set(label, { dest: r.href, title: r.title === '' ? null : r.title });
 
@@ -1072,22 +1054,29 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
    * the text, mark as doubtful every line from the opener on where the text, read again with the opener escaped as
    * plain text, has a level-1/2 heading or a doubtful line of its own. Such a block hides everything after it, so a
    * text has at most one; MAX_REREADS bounds the chain of re-readings (each opener escaped can expose another),
-   * after which lines that could be headings (couldHead) stand in for the reading. Without any such line the two
-   * readings agree and nothing is read again.
+   * after which lines that could be headings (couldHead) stand in for the reading; so they do for a re-reading that
+   * cannot be read to its end (ChangelogStructureError). Without any such line the two readings agree and nothing is
+   * read again.
    */
   const unclosed = (opener: number, marker: string, end: number) => {
-    if (end <= lastText || stopAt >= 0) return;
+    if (end <= lastText) return;
     let first = opener;
     while (first < lines.length && !couldHead(first)) first++;
     if (first === lines.length) return;
     const at = lines[opener].indexOf(marker);
-    if (rereads >= MAX_REREADS || at < 0) {
+    const headingShapedDoubtful = () => {
       for (let j = first; j < lines.length; j++) if (couldHead(j)) marks[j] = { t: 'doubt' };
-      return;
-    }
+    };
+    if (rereads >= MAX_REREADS || at < 0) return headingShapedDoubtful();
     const plain = lines.slice();
     plain[opener] = `${plain[opener].slice(0, at)}\\${plain[opener].slice(at)}`;
-    const other = readStructure(plain, rereads + 1, github).marks;
+    let other: (LineMark | null)[];
+    try {
+      other = readStructure(plain, budget, rereads + 1, github).marks;
+    } catch (e) {
+      if (!(e instanceof ChangelogStructureError)) throw e;
+      return headingShapedDoubtful();
+    }
     for (let j = opener; j < lines.length; j++) {
       const m = other[j];
       if (m && (m.t !== 'heading' || m.level <= 2)) marks[j] = { t: 'doubt' };
@@ -1101,10 +1090,6 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
     switch (t.type) {
       case 'list_item_open':
       case 'blockquote_open':
-        if (nesting >= MAX_NESTING && map) {
-          marks[map[0]] = { t: 'stop' };
-          return { marks, refs, refsComplete: false };
-        }
         nesting++;
         break;
       case 'list_item_close':
@@ -1146,10 +1131,6 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
       }
     }
   }
-  if (stopAt >= 0) {
-    marks[stopAt] = { t: 'stop' };
-    marks.fill(null, stopAt + 1);
-  }
 
   // The GitHub reading: <search> is an ordinary tag, <source> starts an HTML block that can interrupt a paragraph (as
   // <div> does), and a whole-tag table header row after a paragraph starts a table.
@@ -1164,22 +1145,13 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
       return `${l.slice(0, at)}<${m[1]}${m[2].toLowerCase() === 'search' ? 'xearch' : 'div   '}${l.slice(at + m[0].length)}`;
     });
     if (changed) {
-      const otherMarks = readStructure(other, rereads, true).marks;
-      for (let j = 0; j < lines.length; j++) {
-        if (marks[j]?.t === 'stop') break;
-        if (otherMarks[j]?.t === 'stop') {
-          marks[j] = { t: 'stop' };
-          marks.fill(null, j + 1);
-          break;
-        }
-        if (markKey(marks[j]) !== markKey(otherMarks[j])) marks[j] = { t: 'doubt' };
-      }
+      const otherMarks = readStructure(other, budget, rereads, true).marks;
+      for (let j = 0; j < lines.length; j++) if (markKey(marks[j]) !== markKey(otherMarks[j])) marks[j] = { t: 'doubt' };
     }
   }
-  return { marks, refs, refsComplete: stopAt < 0 && !marks.some((m) => m?.t === 'stop') };
+  return { marks, refs };
 }
 
-/** The last text read and its structure: callers read each changelog with both parseChangelog and changelogVersions. */
 /**
  * A text's structure over its CommonMark lines. A lone CR ends a line in CommonMark (and on GitHub) as "\n" and CRLF
  * do, so a "\n"-separated line (the lines bullets are read from and line numbers count) can hold several of them,
@@ -1191,14 +1163,16 @@ interface TextStructure extends Structure {
   /** The "\n" line each CommonMark line is on (null: the same lines). */
   owner: number[] | null;
 }
+/** The last text read and its structure: callers read each changelog with both parseChangelog and changelogVersions. */
 let lastRead: { text: string; structure: TextStructure } | null = null;
 
 function structureOf(text: string): TextStructure {
   if (lastRead?.text !== text) {
     const nl = text.split('\n').map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l));
+    const budget: QuoteBudget = { used: 0, limit: QUOTE_WORK_BASE + QUOTE_WORK_PER_CHAR * text.length };
     let structure: TextStructure;
     if (!nl.some((l) => l.includes('\r'))) {
-      structure = { ...readStructure(nl), lines: nl, owner: null };
+      structure = { ...readStructure(nl, budget), lines: nl, owner: null };
     } else {
       const lines: string[] = [];
       const owner: number[] = [];
@@ -1208,7 +1182,7 @@ function structureOf(text: string): TextStructure {
           owner.push(i);
         }
       });
-      structure = { ...readStructure(lines), lines, owner };
+      structure = { ...readStructure(lines, budget), lines, owner };
     }
     lastRead = { text, structure };
   }
@@ -1239,7 +1213,7 @@ function bulletText(line: string): string | null {
  * names a shipped release (releaseHeadingVersion) opens a release block; every other level-1/2 heading, any
  * level-1/2 heading nested in a list item or quote, and every doubtful line (readStructure) ends it, so bullets
  * there have no version and are skipped. `now` (default: the current time) decides whether a dated release heading
- * is already in the past.
+ * is already in the past. Throws ChangelogStructureError when the text's structure cannot be read to its end.
  */
 export function parseChangelog(text: string, opts: { platform: Platform; file: string; commitSha: string; repo?: string; now?: string | number | Date }): ChangelogEntry[] {
   const repo = opts.repo ?? 'brave/brave-browser';
@@ -1248,7 +1222,7 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
   const now = epochMs(opts.now);
   let version: string | null = null;
   let section: string | null = null;
-  const { marks, owner, refs, refsComplete } = structureOf(text);
+  const { marks, owner, refs } = structureOf(text);
   // The CommonMark line being read: the marks of every one on "\n" line i apply, in order, before the line's bullet.
   let j = 0;
   for (let i = 0; i < lines.length; i++) {
@@ -1257,10 +1231,9 @@ export function parseChangelog(text: string, opts: { platform: Platform; file: s
       const mark = marks[j];
       if (!mark) continue;
       marked = true;
-      if (mark.t === 'stop') return out;
       if (mark.t === 'heading') {
         if (mark.level <= 2) {
-          version = mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now, refsComplete) : null;
+          version = mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now) : null;
           section = null;
         } else if (mark.level === 3 && !mark.nested) {
           section = mark.text || null;
@@ -1301,23 +1274,22 @@ const VERSION_IN_TEXT = /(?<!\d)\d+\.\d+\.\d+/;
  * Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). The
  * first one is read as the latest release, so when a doubtful line that could name a version (one with an x.y.z in it
  * or in the lines of text just above it, for a setext underline) comes before it, the latest release is not known
- * and the list is empty.
+ * and the list is empty. Throws ChangelogStructureError when the text's structure cannot be read to its end.
  */
 export function changelogVersions(text: string, opts: { now?: string | number | Date } = {}): string[] {
   const now = epochMs(opts.now);
   // Every CommonMark line in order (a "\n" line split by lone CRs holds several, each perhaps a release heading).
-  const { marks, lines, refs, refsComplete } = structureOf(text);
+  const { marks, lines, refs } = structureOf(text);
   const out: string[] = [];
   // Whether the run of non-blank lines up to the current one holds a version number.
   let versionInRun = false;
   for (let i = 0; i < marks.length; i++) {
     const mark = marks[i];
-    if (mark?.t === 'stop') break;
     if (out.length === 0) {
       versionInRun = /\S/.test(lines[i]) && (versionInRun || VERSION_IN_TEXT.test(lines[i]));
       if (mark?.t === 'doubt' && versionInRun) return [];
     }
-    const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now, refsComplete) : null;
+    const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now) : null;
     if (v) out.push(v);
   }
   return out;

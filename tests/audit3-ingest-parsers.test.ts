@@ -14,7 +14,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { changelogVersions, parseChangelog } from '../src/ingest/parsers.ts';
+import { ChangelogStructureError, changelogVersions, parseChangelog } from '../src/ingest/parsers.ts';
+import { changelogs } from '../src/ingest/sources/changelogs.ts';
 import { plainExcerpt } from '../src/lib/util.ts';
 
 const opts = { platform: 'desktop' as const, file: 'C.md', commitSha: 'a' };
@@ -222,6 +223,69 @@ test('R3-ING-23 repair 2: every line a lone CR ends is read, so two release head
   assert.deepEqual(changelogVersions('## 1.2.3\r\n## 1.2.2\r\n- Zcash a.'), ['1.2.3', '1.2.2']);
 });
 
+test('R3-ING-23 repair 2: a changelog read in part is never reported as read in full; nested structure is read to its end or the read fails', async () => {
+  // Brave's desktop changelog (fixture) with one line inserted after its first release section. The first repair
+  // stopped reading at 33 nested quotes or list items, or once quotes with long runs of lazy lines had cost a fixed
+  // budget (a 10-deep quote with 2000 lazy lines per level), and returned the 13 entries and the one release above
+  // it as the whole changelog (1122 entries and 134 releases in the file); the collector published that.
+  const text = readFileSync(new URL('./fixtures/real-changelogs/CHANGELOG_DESKTOP.md', import.meta.url), 'utf8');
+  const o = { platform: 'desktop' as const, file: 'CHANGELOG_DESKTOP.md', commitSha: 'fixture' };
+  const lines = text.split('\n');
+  const at = lines.findIndex((l, i) => i > 3 && /^## \[/.test(l));
+  const insert = (block: string) => [...lines.slice(0, at), '', block, '', ...lines.slice(at)].join('\n');
+  const inserted = new Set<number>();
+  const same = (t: string) => {
+    // Entries outside the inserted block (a bullet-shaped inserted line is an entry of the release above it).
+    const added = t.split('\n').length - lines.length;
+    for (let k = 0; k < added; k++) inserted.add(at + k + 1);
+    return parseChangelog(t, o).filter((e) => !inserted.has(e.line)).map((e) => `${e.version}|${e.section}|${e.text}`);
+  };
+  const full = parseChangelog(text, o).map((e) => `${e.version}|${e.section}|${e.text}`);
+  const versions = changelogVersions(text);
+  assert.equal(full.length, 1122);
+  assert.equal(versions.length, 134);
+  const lazyQuote = (levels: number, lazy: number) => {
+    let q = '';
+    for (let d = levels; d >= 1; d--) q += `${'> '.repeat(d)}p\n${'lazy\n'.repeat(lazy)}`;
+    return q;
+  };
+  for (const [name, block] of [
+    ['33 nested quotes', `${'>'.repeat(33)} a`],
+    ['33 nested list items', `${'- '.repeat(33)}a`],
+    ['100 nested quotes', `${'>'.repeat(100)} a`],
+    ['100 nested list items and quotes', `${'- > '.repeat(50)}a`],
+    ['a quote 10 deep with 2000 lazy lines per level', lazyQuote(10, 2000)],
+  ]) {
+    const t = insert(block);
+    inserted.clear();
+    assert.deepEqual(same(t), full, name);
+    assert.deepEqual(changelogVersions(t), versions, name);
+  }
+  // Deeper than the parser reads, or quotes whose lazy lines would cost more than the budget: the read fails as a
+  // whole, never stopping part-way.
+  for (const [name, block] of [
+    ['101 nested quotes', `${'>'.repeat(101)} a`],
+    ['101 nested list items', `${'- '.repeat(101)}a`],
+    ['a quote 31 deep with 100000 lazy lines', `${'>'.repeat(31)} a\n${'y\n'.repeat(100_000)}`],
+  ]) {
+    const t = insert(block);
+    assert.throws(() => parseChangelog(t, o), ChangelogStructureError, name);
+    assert.throws(() => changelogVersions(t), ChangelogStructureError, name);
+  }
+  // The failure reaches the changelog collector's caller: the collection throws (the orchestrator then keeps the last
+  // good data and records the source as failed) instead of publishing the part read.
+  const deep = insert(`${'>'.repeat(101)} a`);
+  const ctx = {
+    now: '2026-10-08T00:00:00Z',
+    trigger: 'test',
+    log: () => {},
+    get: () => null,
+    gh: { rest: async () => ({ data: [{ sha: 'f'.repeat(40), commit: { committer: { date: '2026-10-08T00:00:00Z' } } }] }) },
+    http: { text: async () => ({ text: deep }) },
+  } as unknown as Parameters<typeof changelogs.collect>[0];
+  await assert.rejects(changelogs.collect(ctx, null), ChangelogStructureError);
+});
+
 // ---------------------------------------------------------------------------
 // R3-PERF
 // ---------------------------------------------------------------------------
@@ -238,12 +302,17 @@ function ms(run: (attempt: number) => void, limit: number): number {
 }
 /**
  * Read a text's entries and versions, as the changelog collector does. Each attempt appends its own number of blank
- * lines, so no attempt reuses the structure the parser keeps for the last text it read.
+ * lines, so no attempt reuses the structure the parser keeps for the last text it read. With `mayFail`, a read that
+ * fails because the text cannot be read in full (ChangelogStructureError) is a valid outcome; its time still counts.
  */
-const parse = (text: string) => (attempt: number) => {
+const parse = (text: string, mayFail = false) => (attempt: number) => {
   const t = text + '\n'.repeat(attempt + 1);
-  parseChangelog(t, { platform: 'ios', file: 'notes', commitSha: 'issue' });
-  changelogVersions(t);
+  try {
+    parseChangelog(t, { platform: 'ios', file: 'notes', commitSha: 'issue' });
+    changelogVersions(t);
+  } catch (e) {
+    if (!mayFail || !(e instanceof ChangelogStructureError)) throw e;
+  }
 };
 const KB256 = 256 * 1024;
 const fill = (unit: string, bytes = KB256) => unit.repeat(Math.ceil(bytes / unit.length));
@@ -260,7 +329,7 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
   // Inputs that made the round-2 parser rescan to the end of the text for every candidate start (seconds to
   // minutes at this size): an unclosed "<!--" (and "[x](", "![", "<", "[") repeated in one bullet, a bullet marker
   // followed by spaces, a heading line with a long run of spaces, a line of backticks followed by text.
-  const cases: [string, string][] = [
+  const cases: [string, string, mayFail?: boolean][] = [
     ['"<!--" repeated in a bullet', `## 1.2.3\n- ${fill('<!--x')}\n`],
     ['"[x](" repeated in a bullet', `## 1.2.3\n- ${fill('[x](')}\n`],
     ['"![" repeated in a bullet', `## 1.2.3\n- ${fill('![')}\n`],
@@ -295,7 +364,8 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
     ['a quote paragraph with lazy lines to the end', `> a\n${fill('b\n')}`],
     ['quote paragraphs with a lazy line, then a fence', fill('> a\nb\n> ~~~\n> x\n<\n')],
     ['three nested quotes with lazy lines at each level', `> > > a\n${fill('> > b\n', KB256 / 3)}${fill('> c\n', KB256 / 3)}${fill('d\n', KB256 / 3)}`],
-    ['a quote nested 31 deep with lazy lines', `${'>'.repeat(31)} x\n${fill('y\n')}`],
+    // Repair round 2: past the parse's budget for block quotes the read fails (see below).
+    ['a quote nested 31 deep with lazy lines', `${'>'.repeat(31)} x\n${fill('y\n')}`, true],
     ['lazy table headers in a quote', fill('> a\nb | c\n> -|-\n> \n')],
     // Tables and link reference definitions (both read by this file's own rules).
     ['table rows', `| a | b |\n|---|---|\n${fill('| c | d |\n')}`],
@@ -312,23 +382,24 @@ test('R3-PERF: changelog parsing stays linear on 256 KB adversarial input (each 
   ];
   // Yardstick: a 256 KB changelog of ordinary lines (entries under release headings, one long paragraph).
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
-  for (const [name, text] of cases) {
+  for (const [name, text, mayFail] of cases) {
     assert.ok(text.length >= KB256, name);
-    const took = ms(parse(text), limit);
+    const took = ms(parse(text, mayFail), limit);
     assert.ok(took < limit, `${name}: ${Math.round(took)} ms (limit ${Math.round(limit)} ms)`);
   }
-  // A parse spends at most a fixed multiple of the text's lines on block quotes; past that (only quotes nested this
-  // deep with this many lazy lines get there) the structure is read no further. What comes before is kept, and
-  // nothing is credited to a release CommonMark does not put it under.
+  // R3-ING-23 (repair round 2: a partial read never reads as a complete one): the readings of a text spend at most a
+  // fixed multiple of its size on block quotes; past that (only quotes nested deep with long runs of short lazy lines
+  // get there) the read fails, quickly, rather than stop there and report what came before as the whole changelog
+  // (the first repair returned "Zcash a." alone and listed 1.2.3 alone).
   const deep = md('## 1.2.3', '- Zcash a.', '', `${'>'.repeat(31)} x`, fill('y\n'), '## 1.2.2', '- Zcash b.');
-  const entries = got(deep);
-  assert.ok(entries.includes('1.2.3:Zcash a.'), JSON.stringify(entries));
-  assert.ok(entries.every((e) => ['1.2.3:Zcash a.', '1.2.2:Zcash b.'].includes(e)), JSON.stringify(entries));
+  assert.throws(() => got(deep), ChangelogStructureError);
+  assert.throws(() => changelogVersions(deep), ChangelogStructureError);
 });
 
 test('R3-PERF repair 2: a 256 KB line of any one common character or short unit, wherever it stands, is read in linear time', () => {
   // A sweep for expressions like the one the first repair added (an x.y.z search that rescanned a digit run from
   // each of its digits): every unit below, repeated over one 256 KB line, in each position a changelog line can have.
+  // A line of ">" or "- " nests deeper than the parser reads: that read fails (ChangelogStructureError), in time too.
   const units = ['1', '1.', '1.2', '.1', '9 ', '#', '-', '- ', '>', '<', '<!--', '[', '](', '`', ' ', '\t', '|', ':', '*', '(', '=', '\\'];
   const positions: [string, (line: string) => string][] = [
     ['before the first release', (l) => `${l}\n## 1.2.3\n- a`],
@@ -343,7 +414,7 @@ test('R3-PERF repair 2: a 256 KB line of any one common character or short unit,
   const limit = limitFor(parse(`${fill('## 1.2.3\n\n### Web3\n\n - Fixed a Zcash send issue. ([#1](https://github.com/brave/brave-browser/issues/1))\n', KB256 / 2)}${fill('text\n', KB256 / 2)}`));
   for (const unit of units) {
     for (const [where, place] of positions) {
-      const took = ms(parse(place(fill(unit))), limit);
+      const took = ms(parse(place(fill(unit)), true), limit);
       assert.ok(took < limit, `${JSON.stringify(unit)} ${where}: ${Math.round(took)} ms (limit ${Math.round(limit)} ms)`);
     }
   }
