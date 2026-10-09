@@ -137,6 +137,11 @@ test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the s
   assert.deepEqual(got(md('## 1.2.7', '- Zcash a.', '', '[x]: /url', '    Next', '===', '- Zcash future.')), ['1.2.7:Zcash a.']);
   // An underline below nothing but definitions is none: "-" is paragraph text, so "- 1.2.4" is the heading, no release.
   assert.deepEqual(got(md('## 1.2.3', '- Zcash a.', '', '[x]: /url', '-', '1.2.4', '---', '- Zcash old.')), ['1.2.3:Zcash a.']);
+  // "---" there is a thematic break to micromark (then "1.2.4" + "---" is a release heading) but paragraph text to
+  // GitHub (cmark-gfm: the heading "--- 1.2.4", no release): 1.2.4 is not known to be a release.
+  const dashes = md('## 1.2.3', '- Zcash a.', '', '[x]: /url', '---', '1.2.4', '---', '- Zcash old.');
+  assert.deepEqual(got(dashes), ['1.2.3:Zcash a.']);
+  assert.deepEqual(changelogVersions(dashes), ['1.2.3']);
   // A table that interrupts a paragraph takes its header row, even one that would start a list elsewhere ("2) …",
   // "2."): GitHub shows a table, then an HTML block (<br>) holding "## 1.2.4", which is therefore no release.
   for (const header of ['2) Upcoming', '2.']) {
@@ -157,6 +162,13 @@ test('R3-ING-23 repair: where markdown-it departs from CommonMark and GFM, the s
   const lazy = md('## 1.2.3', '- Zcash a.', '', '> > Note', '    ```', '1.2.4', '---', '- Zcash old.');
   assert.deepEqual(got(lazy), ['1.2.3:Zcash a.', '1.2.3:Zcash old.']);
   assert.deepEqual(changelogVersions(lazy), ['1.2.3']);
+  // A line indented 4 columns or more past the container it belongs to starts no block (CommonMark): "    2." after
+  // a nested list item, "    >" after a quote line, are paragraph text. markdown-it measured the first against the
+  // innermost item and took the second for a quote marker, so "[1.2.4]" / "1.2.4" + an underline became releases.
+  for (const text of [md('## 1.2.3', '1.   - Zcash a.', '    2.', '[1.2.4]', '-', '- Zcash b.'), md('## 1.2.3', '> Note', '    > ', '1.2.4', '---', '- Zcash b.')]) {
+    assert.deepEqual(got(text), ['1.2.3:Zcash b.'], text);
+    assert.deepEqual(changelogVersions(text), ['1.2.3'], text);
+  }
   // A lone CR ends a line (CommonMark, GitHub): the "## Unreleased" after it is a heading that ends the 1.2.3 block.
   const cr = '## 1.2.3\n- Zcash a.\r## Unreleased\n- Zcash future.';
   assert.ok(!got(cr).some((e) => e.endsWith('Zcash future.')), JSON.stringify(got(cr)));

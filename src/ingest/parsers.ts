@@ -270,15 +270,22 @@ interface ParseInfo {
   lazyHints: Map<number, number>;
   /** Block quotes open at the point of the parse. */
   quoteDepth: number;
+  /**
+   * The content indentation (blkIndent) of every container being read, outermost first (markdown.block.tokenize),
+   * with QUOTE_BASE where a block quote's content starts (its lines are re-based there).
+   */
+  indents: number[];
   /** The line a table interrupting a paragraph starts on, until the next block is read there (tableHeaderRule). */
   tableHeader: number;
   /**
-   * Whether this parse reads as GitHub (cmark-gfm) does where micromark differs: a table header row after a paragraph
-   * that is also an HTML block start of kind 7 starts a table (micromark: an HTML block). readStructure compares.
+   * Whether this parse reads as GitHub (cmark-gfm) does where micromark differs (readStructure compares the two): a
+   * table header row after a paragraph that is also an HTML block start of kind 7 starts a table (micromark: an HTML
+   * block); a "---" underline below nothing but link reference definitions is paragraph text (micromark: a thematic
+   * break).
    */
   github: boolean;
-  /** Whether such a header row was met. */
-  kind7Header: boolean;
+  /** Whether a line the two differ on was met. */
+  differs: boolean;
   /** Block quote lines marked so far, and how many the parse may mark. */
   quoteWork: number;
   quoteBudget: number;
@@ -293,6 +300,30 @@ class QuoteBudgetExceeded extends Error {}
  * also checks whether it starts a table.
  */
 const LAZY_HEADER = -2;
+/** In ParseInfo.indents: a block quote's content starts here. */
+const QUOTE_BASE = -1;
+
+/**
+ * Whether `line`, less indented than the list item being read (a lazy line of it), is indented 4 columns or more
+ * past the container it does belong to: the innermost enclosing list item whose content it reaches, or else the
+ * quote or document. CommonMark starts no block on such a line ("list items may not be indented more than three
+ * spaces"), so it can only continue a paragraph. markdown-it measures its indentation against the innermost item
+ * instead: "1.   - a" + "    2." ends both lists at "2." (and reads it as indented code), where CommonMark continues
+ * the paragraph "a 2.".
+ */
+function lazyIndented(state: StateBlock, line: number): boolean {
+  const indent = state.sCount[line];
+  if (indent < 0 || indent >= state.blkIndent) return false;
+  const indents = parseInfo(state).indents;
+  let base = 0;
+  for (let k = indents.length - 1; k >= 0 && indents[k] !== QUOTE_BASE; k--) {
+    if (indents[k] <= indent) {
+      base = indents[k];
+      break;
+    }
+  }
+  return indent - base >= 4;
+}
 
 /** A line from its first non-space character to its end (without the line ending). */
 const lineText = (state: StateBlock, line: number) => state.src.slice(state.bMarks[line] + state.tShift[line], state.eMarks[line]);
@@ -433,7 +464,7 @@ function tableHeaderRule(state: StateBlock, startLine: number, endLine: number, 
   if (silent || parse.tableHeader !== startLine) return false;
   parse.tableHeader = -1;
   if (state.src.charCodeAt(state.bMarks[startLine] + state.tShift[startLine]) === 0x3c && HTML_BLOCK_7.test(lineText(state, startLine))) {
-    parse.kind7Header = true;
+    parse.differs = true;
     if (!parse.github) return false;
   }
   return tableRule(state, startLine, endLine, false);
@@ -523,8 +554,9 @@ function leadingDefinitions(state: StateBlock, from: number, to: number): { defi
  * in markdown-it; a setext underline below them makes it a heading. Link reference definitions at its start are taken
  * out of it once it is complete (or at its underline): they never end it early, so the lines after them continue the
  * paragraph ("[x]: /url" + "2) Next" + "===" is a heading "2) Next"). An underline below nothing but definitions is no
- * underline: a thematic break ends the paragraph, anything else continues it, as in micromark ("[x]: /url" + "==="
- * + "text" is the paragraph "=== text").
+ * underline: the line continues the paragraph ("[x]: /url" + "===" + "text" is the paragraph "=== text"), except that
+ * micromark reads "---" there as a thematic break where GitHub (cmark-gfm) continues the paragraph with it (GitHub
+ * reading: ParseInfo.github).
  */
 function paragraphRule(state: StateBlock, startLine: number, endLine: number): boolean {
   const parse = parseInfo(state);
@@ -565,11 +597,16 @@ function paragraphRule(state: StateBlock, startLine: number, endLine: number): b
           break;
         }
         notOnlyDefinitions = true;
+        const pos = state.bMarks[line] + state.tShift[line];
+        if (marker === 0x2d && state.skipChars(pos, 0x2d) - pos >= 3) {
+          parse.differs = true;
+          if (parse.github) continue;
+        }
         if (interrupted(line)) break;
         continue;
       }
     }
-    if (state.sCount[line] < 0) continue;
+    if (state.sCount[line] < 0 || lazyIndented(state, line)) continue;
     if (interrupted(line)) break;
   }
   state.parentType = oldParentType;
@@ -590,10 +627,12 @@ function paragraphRule(state: StateBlock, startLine: number, endLine: number): b
     }
   }
   if (underline) {
+    // The heading's lines include the definitions before its text (as micromark marks them): they show nothing, so
+    // a "- [x]: /url" line there is no entry.
     const tag = underline === 0x3d ? 'h1' : 'h2';
     const open = state.push('heading_open', tag, 1);
     open.markup = String.fromCharCode(underline);
-    open.map = [first, line + 1];
+    open.map = [startLine, line + 1];
     const inline = state.push('inline', '', 0);
     inline.content = state.getLines(first, line, state.blkIndent, false).trim();
     inline.map = [first, line];
@@ -679,7 +718,9 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
     let pos = state.bMarks[nextLine] + state.tShift[nextLine];
     const max = state.eMarks[nextLine];
     if (pos >= max) break;
-    if (state.src.charCodeAt(pos++) === 0x3e && !isOutdented) {
+    // A ">" indented 4 columns or more is no quote marker (CommonMark; markdown-it takes it as one after the first
+    // line): such a line can only be a lazy one.
+    if (state.src.charCodeAt(pos++) === 0x3e && !isOutdented && state.sCount[nextLine] - state.blkIndent < 4) {
       let initial = state.sCount[nextLine] + 1;
       let spaceAfterMarker = false;
       let adjustTab = false;
@@ -717,7 +758,7 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
     if (lastLineEmpty) break;
     // A lazy line of an enclosing quote is lazy here too: that quote already found it starts no block. (markdown-it
     // checks it again with its indentation lost, so "    ```" there ends this quote as a fence would.)
-    if (state.sCount[nextLine] >= 0 && terminatorRules.some((rule) => rule(state, nextLine, endLine, true))) {
+    if (state.sCount[nextLine] >= 0 && !lazyIndented(state, nextLine) && terminatorRules.some((rule) => rule(state, nextLine, endLine, true))) {
       state.lineMax = nextLine;
       if (state.blkIndent !== 0) {
         oldBMarks.push(state.bMarks[nextLine]);
@@ -751,7 +792,9 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
   open.map = lines;
   const first = state.tokens.length;
   parse.quoteDepth++;
+  parse.indents.push(QUOTE_BASE);
   state.md.block.tokenize(state, startLine, nextLine);
+  parse.indents.pop();
   parse.quoteDepth--;
   const final = !cut || state.line < nextLine || !openParagraphAt(state.tokens, first, state.tokens.length, nextLine);
   state.push('blockquote_close', 'blockquote', -1).markup = '>';
@@ -821,6 +864,17 @@ markdown.block.ruler.after('heading', 'gfm_table', tableRule, { alt: ['paragraph
 markdown.block.ruler.before('code', 'gfm_table_header', tableHeaderRule);
 markdown.block.ruler.at('paragraph', paragraphRule);
 markdown.block.ruler.disable(['reference', 'lheading']);
+// Every container's content is read by tokenize: keep the stack of their indentations (lazyIndented).
+const tokenizeBlocks = markdown.block.tokenize.bind(markdown.block);
+markdown.block.tokenize = (state: StateBlock, startLine: number, endLine: number) => {
+  const indents = parseInfo(state).indents;
+  indents.push(state.blkIndent);
+  try {
+    tokenizeBlocks(state, startLine, endLine);
+  } finally {
+    indents.pop();
+  }
+};
 
 /** What a line does to the release block it is in. */
 type LineMark =
@@ -970,9 +1024,10 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
     definitions: [],
     lazyHints: new Map(),
     quoteDepth: 0,
+    indents: [],
     tableHeader: -1,
     github,
-    kind7Header: false,
+    differs: false,
     quoteWork: 0,
     quoteBudget: QUOTE_WORK_BASE + QUOTE_WORK_PER_LINE * lines.length,
   };
@@ -1093,7 +1148,7 @@ function readStructure(lines: string[], rereads = 0, github = false): Structure 
   // The GitHub reading: <search> is an ordinary tag, <source> starts an HTML block that can interrupt a paragraph (as
   // <div> does), and a whole-tag table header row after a paragraph starts a table.
   if (!github) {
-    let changed = parse.kind7Header;
+    let changed = parse.differs;
     const other = lines.map((l) => {
       const at = contentStart(l, true);
       SPEC_VERSION_TAG.lastIndex = at;
