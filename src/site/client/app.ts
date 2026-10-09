@@ -1,6 +1,8 @@
 // Client-side enhancements. Every page is fully server-rendered; this script only
 // adds relative times, staleness checks computed at view time, selectors and filters.
-// It never inserts fetched text as HTML (no innerHTML).
+// It never inserts fetched text as HTML (no innerHTML). Pure logic lives in ./logic.ts.
+
+import { createIndexLoader, filterForTarget, freshCountsTitle, freshShortText, hashId, keptDataStale, nextIndex, rankSearch, runIsolated, safeHref, samePageFragment, sourceAgeLine, staleCountText, tokens, type SearchEntry } from './logic.ts';
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector(sel) as T | null;
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => Array.from(root.querySelectorAll(sel)) as T[];
@@ -45,6 +47,7 @@ function freshness(): void {
   const staleAfter = Number(el.dataset.staleAfter ?? '360');
   const failing = Number(el.dataset.failing ?? '0');
   const a = ago(gen);
+  const now = Date.now();
   if (failing > 0) el.classList.add('has-failing');
   if (!Number.isFinite(a.minutes) || a.minutes > staleAfter) {
     el.classList.add('is-stale');
@@ -55,20 +58,35 @@ function freshness(): void {
       banner.hidden = false;
     }
   }
+  // Sources whose kept data is stale: the same rule as the header rendered at build time (staleSources),
+  // re-checked with this clock, so the pill, the banner and the Sources page agree.
+  const watched = $$('.stale-sources li');
+  if (watched.length || el.dataset.stale !== undefined) {
+    let stale = 0;
+    for (const li of watched) {
+      const on = keptDataStale({ staleSince: li.dataset.staleSince ?? '' }, now, staleAfter);
+      li.hidden = !on;
+      if (on) stale += 1;
+    }
+    if (!watched.length) stale = Number(el.dataset.stale ?? '0') || 0;
+    el.dataset.stale = String(stale);
+    el.classList.toggle('has-stale', stale > 0);
+    const count = $('.fresh-stale', el);
+    if (count) count.textContent = staleCountText(stale);
+    // The visible short counts and the title follow the re-checked count too (same helpers as the build).
+    const short = $('.fresh-short', el);
+    if (short) short.textContent = freshShortText(failing, stale);
+    el.title = freshCountsTitle(failing, stale);
+    const banner = $('.source-stale-banner');
+    if (banner) banner.hidden = stale === 0;
+  }
   // Per-source ages on the Sources page.
   for (const row of $$('.src')) {
-    const last = row.dataset.lastSuccess;
     const age = $('.src-age', row);
     if (!age) continue;
-    if (!last) {
-      age.textContent = 'never succeeded';
-      row.classList.add('is-stale');
-      continue;
-    }
-    const r = ago(last);
-    const stale = r.minutes > staleAfter;
-    age.textContent = stale ? `stale: last success ${r.text}` : `data age ${r.text}`;
-    if (stale) row.classList.add('is-stale');
+    const r = sourceAgeLine({ lastOutcome: row.dataset.outcome ?? null, lastSuccessAt: row.dataset.lastSuccess || null, lastCompleteAt: age.dataset.lastComplete === undefined ? undefined : age.dataset.lastComplete || null, staleSince: age.dataset.staleSince || null }, now, staleAfter);
+    age.textContent = r.text;
+    row.classList.toggle('is-stale', r.stale);
   }
 }
 
@@ -107,12 +125,16 @@ function capabilitySelector(): void {
   apply(false);
 }
 
-/** Releases page: platform filter. */
+/** Releases page: platform filter. Set by releaseFilter(); reveals a release the filter hides. */
+let revealRelease: ((el: HTMLElement) => boolean) | null = null;
+
 function releaseFilter(): void {
   const btns = $$<HTMLButtonElement>('.rfilter');
   if (!btns.length) return;
   const empty = $('#rel-empty');
+  let current = btns.find((b) => b.getAttribute('aria-pressed') === 'true')?.dataset.platform ?? '';
   const set = (p: string) => {
+    current = p;
     for (const b of btns) b.setAttribute('aria-pressed', String((b.dataset.platform ?? '') === p));
     let shown = 0;
     for (const v of $$('.rel-v')) {
@@ -122,15 +144,34 @@ function releaseFilter(): void {
     if (empty) empty.hidden = shown > 0;
   };
   for (const b of btns) b.addEventListener('click', () => set(b.dataset.platform ?? ''));
+  revealRelease = (el) => {
+    const rel = el.closest<HTMLElement>('.rel-v');
+    if (!rel) return false;
+    const next = filterForTarget(current, rel.dataset.platform);
+    if (next === current) return false;
+    set(next);
+    return true;
+  };
+}
+
+/**
+ * Make the element a fragment names visible: switch a Releases filter that hides it and open a
+ * <details>. Returns the element and whether anything had to change.
+ */
+function revealTarget(id: string | null): { el: HTMLElement; changed: boolean } | null {
+  const el = id ? document.getElementById(id) : null;
+  if (!el) return null;
+  let changed = revealRelease?.(el) ?? false;
+  if (el instanceof HTMLDetailsElement && !el.open) {
+    el.open = true;
+    changed = true;
+  }
+  return { el, changed };
 }
 
 // ---------------------------------------------------------------------------
 // Site search (index built at build time, same origin; results rendered as text)
 // ---------------------------------------------------------------------------
-
-interface SearchEntry { k: string; t: string; s: string; u: string; x: string }
-let INDEX: SearchEntry[] | null = null;
-const KIND_ORDER: Record<string, number> = { Feature: 0, Page: 1, Work: 2, 'Release note': 3, Community: 4 };
 
 function search(): void {
   const dlg = $<HTMLDialogElement>('#search-dlg');
@@ -138,36 +179,45 @@ function search(): void {
   const list = $<HTMLUListElement>('#sd-results');
   if (!dlg || !q || !list || typeof dlg.showModal !== 'function') return;
   let active = -1;
+  const loader = createIndexLoader<SearchEntry>(async () => {
+    const res = await fetch(`${document.body.dataset.base ?? '/'}assets/search.json`);
+    if (!res.ok) throw new Error(`search index: HTTP ${res.status}`);
+    return res.json();
+  });
 
-  const load = async () => {
-    if (INDEX) return;
-    try {
-      const res = await fetch(`${document.body.dataset.base ?? '/'}assets/search.json`);
-      INDEX = res.ok ? ((await res.json()) as SearchEntry[]) : [];
-    } catch {
-      INDEX = [];
-    }
+  const note = (text: string, cls = '') => {
+    const li = document.createElement('li');
+    li.className = cls ? `sd-none ${cls}` : 'sd-none';
+    li.textContent = text;
+    list.append(li);
+    return li;
   };
   const render = () => {
-    const terms = tokens(q.value);
     list.replaceChildren();
     active = -1;
-    if (!INDEX) return;
-    if (!terms.length) return;
-    const hits = INDEX.filter((e) => terms.every((t) => e.x.includes(t)))
-      .map((e) => ({ e, score: (KIND_ORDER[e.k] ?? 9) * 10 + (terms.every((t) => e.t.toLowerCase().includes(t)) ? 0 : 5) }))
-      .sort((a, b) => a.score - b.score)
-      .slice(0, 40);
-    if (!hits.length) {
-      const li = document.createElement('li');
-      li.className = 'sd-none';
-      li.textContent = `Nothing matches “${q.value.trim()}”. Try an issue number or a shorter word.`;
-      list.append(li);
+    if (loader.state === 'failed') {
+      // Never shown as "nothing matches": the index itself is missing.
+      const li = note('Search is unavailable: the search index could not be loaded. ', 'sd-error');
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'sd-retry';
+      retry.textContent = 'Try again';
+      retry.addEventListener('click', () => void refresh());
+      li.append(retry);
       return;
     }
-    for (const { e } of hits) {
-      // Only same-site paths and https links are ever used as targets.
-      const safe = e.u.startsWith('/') && !e.u.startsWith('//') ? e.u : /^https:\/\/[^\s"'<>]+$/i.test(e.u) ? e.u : null;
+    if (!tokens(q.value).length) return;
+    if (loader.state !== 'ready' || !loader.entries) {
+      note('Loading the search index…');
+      return;
+    }
+    const hits = rankSearch(loader.entries, q.value);
+    if (!hits.length) {
+      note(`Nothing matches “${q.value.trim()}”. Try an issue number or a shorter word.`);
+      return;
+    }
+    for (const e of hits) {
+      const safe = safeHref(e.u);
       if (!safe) continue;
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -176,6 +226,7 @@ function search(): void {
         a.target = '_blank';
         a.rel = 'noopener noreferrer nofollow';
       }
+      a.addEventListener('click', (ev) => activate(a, ev));
       const k = document.createElement('span');
       k.className = 'sd-k';
       k.textContent = e.k;
@@ -190,10 +241,30 @@ function search(): void {
       list.append(li);
     }
   };
+  /** Load (or retry) the index, showing the state before and after. */
+  const refresh = async () => {
+    const pending = loader.load();
+    render();
+    await pending;
+    render();
+  };
+  /**
+   * A result was chosen. Close the dialog so the destination is not left under it. For a target
+   * on this page, make it visible now (e.g. switch a Releases filter that hides it), before the
+   * browser's own fragment navigation scrolls to it; that also covers choosing the fragment the
+   * page is already on, which fires no hashchange.
+   */
+  const activate = (a: HTMLAnchorElement, ev: MouseEvent) => {
+    if (ev.defaultPrevented || (ev.button ?? 0) !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    if (a.target === '_blank') return; // opens in another tab; keep the search open here
+    const id = samePageFragment(a.href, location.href);
+    if (dlg.open) dlg.close();
+    if (id !== null) revealTarget(id);
+  };
   const move = (delta: number) => {
     const links = $$<HTMLAnchorElement>('a', list);
-    if (!links.length) return;
-    active = (active + delta + links.length) % links.length;
+    active = nextIndex(active, delta, links.length);
+    if (active < 0) return;
     links.forEach((l, i) => l.classList.toggle('is-active', i === active));
     links[active].scrollIntoView({ block: 'nearest' });
   };
@@ -201,8 +272,7 @@ function search(): void {
     if (!dlg.open) dlg.showModal();
     q.focus();
     q.select();
-    await load();
-    render();
+    await refresh();
   };
   for (const el of $$('[data-search-open]')) el.addEventListener('click', (e) => { e.preventDefault(); void open(); });
   for (const el of $$('[data-search-close]')) el.addEventListener('click', () => dlg.close());
@@ -212,6 +282,7 @@ function search(): void {
     if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
     else if (e.key === 'Enter') {
+      if (loader.state === 'failed') { e.preventDefault(); void refresh(); return; }
       const links = $$<HTMLAnchorElement>('a', list);
       const target = links[active] ?? links[0];
       if (target) { e.preventDefault(); target.click(); }
@@ -231,21 +302,25 @@ function menu(): void {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && m.open) { m.open = false; (m.querySelector('summary') as HTMLElement | null)?.focus(); } });
 }
 
-/** Open a <details> section when the URL points at it (e.g. #cap-ironwood). */
-function openHashTarget(): void {
+/**
+ * Follow the URL fragment on load and on every later change: open a <details> it names and
+ * reveal a release that the platform filter hides. A malformed fragment (e.g. "#%ZZ") is looked
+ * up as written and never throws.
+ */
+function hashTargets(): void {
   // Old overview links (#cap-<feature>) now live on the feature pages.
   const legacy = location.hash.match(/^#cap-([a-z0-9-]+)$/);
   if (legacy && document.body.dataset.page === 'home') {
     location.replace(`${document.body.dataset.base ?? '/'}features/${legacy[1]}/`);
     return;
   }
-  const open = () => {
-    const id = decodeURIComponent(location.hash.slice(1));
-    const el = id ? document.getElementById(id) : null;
-    if (el instanceof HTMLDetailsElement) el.open = true;
+  const sync = () => {
+    const r = revealTarget(hashId(location.hash));
+    // The browser cannot scroll to a target that was hidden when the fragment changed.
+    if (r?.changed) r.el.scrollIntoView();
   };
-  window.addEventListener('hashchange', open);
-  open();
+  window.addEventListener('hashchange', sync);
+  sync();
 }
 
 // ---------------------------------------------------------------------------
@@ -268,7 +343,7 @@ function newSinceLastVisit(): void {
     return; // storage unavailable: show no markers rather than guess
   }
   if (!prev) return; // first visit: nothing is "new" yet
-  if (fresh.classList.contains('is-stale') || fresh.classList.contains('has-failing')) return;
+  if (fresh.classList.contains('is-stale') || fresh.classList.contains('has-failing') || fresh.classList.contains('has-stale')) return;
   const fresh_ = $$('[data-detected]').filter((el) => (el.dataset.detected ?? '') > prev);
   for (const el of fresh_) {
     el.classList.add('is-new');
@@ -297,10 +372,6 @@ interface FilterSpec {
   controls: { id: string; param: string; match: (el: HTMLElement, value: string) => boolean }[];
   radios?: { name: string; param: string; match: (el: HTMLElement, value: string) => boolean };
   sort?: { id: string; param: string };
-}
-
-function tokens(q: string): string[] {
-  return q.toLowerCase().replace(/#/g, ' ').split(/\s+/).filter(Boolean);
 }
 
 function setupFilter(spec: FilterSpec): void {
@@ -440,17 +511,23 @@ function keyboard(): void {
   });
 }
 
+/** Each step is independent: one that throws (unexpected markup, blocked storage, odd URLs) cannot stop the rest. */
 function init(): void {
-  relTimes();
-  freshness();
-  capabilitySelector();
-  releaseFilter();
-  openHashTarget();
-  filters();
-  newSinceLastVisit();
-  search();
-  menu();
-  keyboard();
+  runIsolated(
+    [
+      ['relative times', relTimes],
+      ['freshness', freshness],
+      ['capability selector', capabilitySelector],
+      ['release filter', releaseFilter],
+      ['fragment targets', hashTargets],
+      ['list filters', filters],
+      ['new since last visit', newSinceLastVisit],
+      ['search', search],
+      ['menu', menu],
+      ['keyboard', keyboard],
+    ],
+    (name, err) => console.error(`tracker: ${name} setup failed`, err),
+  );
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

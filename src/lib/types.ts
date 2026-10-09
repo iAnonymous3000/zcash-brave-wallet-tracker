@@ -75,6 +75,20 @@ export interface WorkItem {
   parent: string | null;
   timeline: TimelineEntry[];
   timelineTruncated: boolean;
+  /** Present (true) only when GitHub had more sub-issues than could be read; `subIssues` is then a known-incomplete subset. */
+  subIssuesTruncated?: boolean;
+  /** Present (true) only when GitHub had more closing references than could be read; `closingRefs` is then a known-incomplete subset. */
+  closingRefsTruncated?: boolean;
+  /** Present (true) only when not every label could be read. */
+  labelsTruncated?: boolean;
+  /** Present (true) only when not every assignee could be read. */
+  assigneesTruncated?: boolean;
+  /**
+   * Present only when GitHub returned an error for some fields of this item in the latest run
+   * (e.g. a GraphQL field error on `subIssues`). Those fields hold the last good copy when one
+   * existed, otherwise an empty/unknown value; they must not be read as a complete, fresh answer.
+   */
+  incompleteFields?: string[];
   /** How the item was discovered (e.g. "label:feature/web3/wallet/zcash", "search:ironwood", "path:components/...", "linked:brave/brave-browser#56872"). */
   discovery: string[];
   /** direct = Zcash term in title/labels or touches Zcash code; mention = Zcash only in the description (with wallet context);
@@ -144,6 +158,14 @@ export interface ChannelVersion {
   /** When only a marketing version is known (iOS App Store): the newest matching release tag, used for clearly-labelled inference. */
   inferredTag?: string | null;
   inferredBasis?: string | null;
+  /** Pointers that could not be read in the latest run and whose value is carried from an earlier successful read
+   *  (pointer name -> time of that read; null when the earlier read time was not recorded). */
+  carriedPointers?: Record<string, string | null>;
+  /** Pointers that could not be read in the latest run and have no earlier value (coverage is incomplete). */
+  unavailablePointers?: string[];
+  /** Carried pointers that answered "not published" (HTTP 403/404) in the latest run; on desktop their earlier
+   *  values do not lower `version` while another desktop OS pointer was read. */
+  notPublishedPointers?: string[];
 }
 
 export interface AncestryResult {
@@ -235,6 +257,10 @@ export interface WatchItem {
   attribution: string;
   braveAdoption: 'none-found' | 'evidence' | 'unknown';
   braveEvidence: string[];
+  /** Latest release/commit label read from the topic's repository (e.g. " Latest release: v1.6.0."); also part of `summary`. */
+  latest?: string | null;
+  /** When `updatedAt`/`latest` were last read successfully (they are kept from that read when the repository is unavailable). */
+  metadataReadAt?: string | null;
 }
 
 export interface CommunityTopic {
@@ -280,7 +306,28 @@ export interface SourceStatus {
   name: string;
   url: string;
   lastAttemptAt: string | null;
+  /**
+   * Last run that stored data for this source with outcome ok or partial. A partial run that kept
+   * values unrefreshed for longer than the staleness window is recorded stale (see `staleSince`)
+   * and does not advance it (see CollectResult.staleSince).
+   */
   lastSuccessAt: string | null;
+  /**
+   * Last run in which every read of this source succeeded (outcome ok). Data carried forward by
+   * later partial runs is at least this fresh. Absent in status written before this field existed.
+   */
+  lastCompleteAt?: string | null;
+  /** Last run that stored a partial collection (some reads failed; last good values kept), whatever its outcome. */
+  lastPartialAt?: string | null;
+  /**
+   * Present while the source is stale: the latest run was partial and kept values that should have
+   * been refreshed (CollectResult.staleSince) for longer than the staleness window
+   * (FRESHNESS.staleAfterMinutes). ISO time since which that kept data has not been refreshed;
+   * the first limitation (and `lastError`) names what it is, and `lastSuccessAt` is not advanced
+   * meanwhile. Absent after a complete run or a partial run within the window; left unchanged by
+   * a failed run (which stores nothing).
+   */
+  staleSince?: string;
   lastOutcome: SourceOutcome | null;
   lastError: string | null;
   consecutiveFailures: number;
@@ -299,6 +346,20 @@ export interface RunRecord {
   requests: number;
   events: number;
   notes: string[];
+  /**
+   * Derivation of site data and change history from the stored envelopes. When it fails the run
+   * outcome is 'failed' and the previously derived files (with their own generatedAt) are kept.
+   */
+  derive?: { outcome: 'ok' | 'failed'; error: string | null };
+  /**
+   * Sources attempted in this run whose shown data, at the end of it, had not been refreshed for
+   * longer than the staleness window (FRESHNESS.staleAfterMinutes): source id -> the time since
+   * which it has not been refreshed (`SourceStatus.staleSince`, or the last success of a source
+   * that failed). Absent when there is none. The outcome is unaffected (a stale source is
+   * partial or failed as recorded in `sources`), but the refresh exits non-zero so a lasting
+   * outage is not silent (src/ingest/run.ts refreshExitCode).
+   */
+  stale?: Record<string, string>;
 }
 
 // ---------------------------------------------------------------------------
@@ -311,6 +372,10 @@ export interface SourceEnvelope<T> {
   /** Retrieval time of the data currently stored (i.e. the last successful collection). */
   retrievedAt: string | null;
   data: T;
+  /** True when the stored data came from a partial collection (some records carried forward from earlier runs). */
+  partial?: boolean;
+  /** Time of the last complete collection; everything in `data` is at least this fresh. Null when none has completed yet. */
+  completeAt?: string | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -359,4 +424,10 @@ export interface ChangeEvent {
   channel: Channel | null;
   links: { label: string; url: string }[];
   evidence: string[];  // short quoted facts (plain text), e.g. "state: open → closed (completed)"
+  /**
+   * Set when the derivation rules changed and this event could not be regenerated under the new rules in that run
+   * (e.g. its item was missing from a partial read): its text predates the current rules. The next run that
+   * regenerates it replaces the text and clears this flag. Absent otherwise.
+   */
+  rulesOutdated?: boolean;
 }

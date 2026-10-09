@@ -44,13 +44,22 @@ jobs:
       - name: Typecheck and test
         run: npm run check
 
+      # The start time and the process exit code are step outputs, so the failure report below can
+      # tell a recorded failure (exit 1) or stale sources (exit 2) from a crash before or after the
+      # run record was written. continue-on-error: the data is committed and the site built and
+      # deployed whatever the exit code; the report at the end then fails the job.
       - name: Refresh sources
         id: refresh
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TRACKER_TRIGGER: ${{ github.event_name }}
-        run: node src/ingest/run.ts
+        run: |
+          echo "started=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          code=0
+          node src/ingest/run.ts || code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit "$code"
 
       - name: Commit refreshed data
         run: |
@@ -61,11 +70,20 @@ jobs:
             echo "no data changes"
           else
             git commit -q -m "data: refresh ($GITHUB_EVENT_NAME, run $GITHUB_RUN_ID)"
+            pushed=false
             for attempt in 1 2 3; do
-              if git push; then break; fi
-              echo "push rejected; rebasing (attempt $attempt)"
-              git pull --rebase --autostash
+              if git push; then pushed=true; break; fi
+              if [ "$attempt" -lt 3 ]; then
+                echo "push rejected; rebasing (attempt $attempt)"
+                git pull --rebase --autostash
+              fi
             done
+            # Never report success for data that did not reach the repository: the deploy below
+            # would otherwise publish state that the auditable history does not contain.
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not push refreshed data after 3 attempts; nothing was published."
+              exit 1
+            fi
           fi
 
       - name: Build site
@@ -94,8 +112,73 @@ jobs:
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
-      - name: Report total refresh failure
-        if: steps.refresh.outcome == 'failure'
+      # The refresh step exits non-zero when every source failed or when derivation failed (exit 1),
+      # when a source has been stale for longer than the staleness window (exit 2: everything read
+      # was stored and derived, and the run record lists the stale sources in `stale`), and also when
+      # the process crashed (src/ingest/run.ts refreshExitCode). Its run record was committed above;
+      # when the steps after it succeeded, the site was redeployed: after a failure from the last
+      # successfully derived data, which keeps its own generation time and shows a "Latest refresh
+      # failed" banner; with stale sources from this run's data, whose Sources page shows those
+      # sources' stale notes. This step runs last, after the deploy, and even when a later step
+      # failed too (e.g. Build site on a corrupt history file), so the job always ends with the
+      # reason, and a lasting outage of one source keeps turning CI red on every run. The reason
+      # comes from the actual exit code and start time of the refresh step, not only from
+      # status.json: a crash after the run record was written (record says success) or before it
+      # (record is from an earlier refresh) is reported as such.
+      - name: Report refresh failure
+        if: always() && steps.refresh.outcome == 'failure'
+        env:
+          REFRESH_EXIT_CODE: ${{ steps.refresh.outputs.exit_code }}
+          REFRESH_STARTED: ${{ steps.refresh.outputs.started }}
+          PAGES_DEPLOYED: ${{ steps.deployment.outcome == 'success' || steps.deployment_retry.outcome == 'success' }}
         run: |
-          echo "::error::Every source failed in this run. The site was redeployed with the previous data and marks it as stale."
+          node -e '
+            const fs = require("node:fs");
+            let run = null;
+            try { run = JSON.parse(fs.readFileSync("data/status.json", "utf8")).lastRun ?? null; } catch {}
+            const code = /^[0-9]+$/.test(process.env.REFRESH_EXIT_CODE || "") ? Number(process.env.REFRESH_EXIT_CODE) : null;
+            const started = Date.parse(process.env.REFRESH_STARTED || "");
+            const exited = code === null ? "failed" : `exited with code ${code}`;
+            const exitNote = code === null ? "" : ` The refresh process exited with code ${code}.`;
+            // A record that started before this refresh step belongs to an earlier refresh.
+            const earlier = Boolean(run) && Number.isFinite(started) && !(Date.parse(run.startedAt) >= started);
+            const derived = run && run.derive && run.derive.outcome === "failed";
+            const recorded = run && (derived || run.outcome === "failed");
+            // Sources this refresh left stale for longer than the staleness window (exit code 2,
+            // EXIT_STALE in src/ingest/run.ts): id -> time since which it has not been refreshed.
+            const STALE_EXIT = 2;
+            const stale = run && !earlier && run.stale && typeof run.stale === "object" && !Array.isArray(run.stale) ? Object.entries(run.stale) : [];
+            const hoursBefore = (since) => {
+              const h = (Date.parse(run.startedAt) - Date.parse(since)) / 3600000;
+              return Number.isFinite(h) ? `, ${h >= 10 ? Math.round(h) : Math.round(h * 10) / 10} h before that run` : "";
+            };
+            const staleList = stale.map(([id, since]) => `${id} (${(run.sources && run.sources[id]) || "outcome unknown"}) not refreshed since ${since}${hoursBefore(since)}`).join("; ");
+            const staleNote = stale.length ? ` Stale for longer than the staleness window: ${staleList}.` : "";
+            const deployed = process.env.PAGES_DEPLOYED;
+            let head = "Refresh failed", reason, site;
+            if (!run) {
+              reason = "no run record was written";
+              site = "";
+            } else if (earlier) {
+              reason = `the refresh process ${exited} before writing a run record; the latest record (run ${run.id} started ${run.startedAt}, outcome ${run.outcome}) is from an earlier refresh`;
+              site = " The site was built from whatever data this refresh stored before it stopped; no run record describes it.";
+            } else if (!recorded && stale.length && code === STALE_EXIT) {
+              head = "Refresh left stale sources";
+              reason = `run ${run.id} started ${run.startedAt} (outcome ${run.outcome}) left ${stale.length} source${stale.length > 1 ? "s" : ""} stale for longer than the staleness window: ${staleList}`;
+              site = deployed === "true" ? " Everything this run read was committed, and the site was rebuilt and deployed from it before this report; those sources show their last good data, marked stale on the Sources page."
+                : deployed === "false" ? " Everything this run read was stored, but the site was not deployed by this run (see the deploy steps above)."
+                : " Everything this run read was stored before the refresh process exited.";
+            } else if (!recorded) {
+              reason = Number.isFinite(started)
+                ? `the refresh process ${exited} after recording run ${run.id} started ${run.startedAt} with outcome ${run.outcome}; it crashed or was interrupted after writing that record, so the record does not show how the run ended`
+                : `the refresh process ${exited}, but the latest run record (run ${run.id} started ${run.startedAt}) says outcome ${run.outcome}; the process crashed or was interrupted after writing that record or before writing its own`;
+              site = " The site was built from the data and derived files written before the crash; see the Refresh sources log for the error." + staleNote;
+            } else {
+              reason = `last recorded run ${run.id} started ${run.startedAt}: ` + (derived ? `derivation failed: ${run.derive.error}`
+                : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
+              site = (derived ? " The published site keeps the previously derived data and its original generation time."
+                : " The site was derived from the last stored source data and carries a failed-refresh banner.") + staleNote;
+            }
+            console.log(`::error::${head} (${reason.replace(/[\r\n]+/g, " ")}).${site}${exitNote}`);
+          '
           exit 1

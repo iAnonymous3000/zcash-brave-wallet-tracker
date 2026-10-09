@@ -1,0 +1,265 @@
+// Pure, DOM-free helpers for the client script. app.ts imports them (esbuild bundles both into
+// assets/app.js) and tests/audit-site-client.test.ts exercises them directly in Node.
+
+/**
+ * The element id a URL fragment names, or null when there is none. A fragment that is not valid
+ * percent-encoding (e.g. "#%ZZ") is returned as written instead of throwing, as browsers do.
+ */
+export function hashId(hash: string): string | null {
+  const raw = hash.startsWith('#') ? hash.slice(1) : hash;
+  if (!raw) return null;
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
+/**
+ * Run independent setup steps so that one failing step cannot stop the others.
+ * Returns the names of the steps that threw.
+ */
+export function runIsolated(steps: [string, () => void][], onError: (name: string, err: unknown) => void): string[] {
+  const failed: string[] = [];
+  for (const [name, step] of steps) {
+    try {
+      step();
+    } catch (err) {
+      failed.push(name);
+      try {
+        onError(name, err);
+      } catch {
+        /* reporting must never stop initialization either */
+      }
+    }
+  }
+  return failed;
+}
+
+/**
+ * Keyboard selection in a result list of `length` entries. With nothing selected (active -1),
+ * ArrowDown (+1) selects the first entry and ArrowUp (-1) the last; otherwise selection wraps.
+ * Returns -1 when the list is empty.
+ */
+export function nextIndex(active: number, delta: number, length: number): number {
+  if (length <= 0) return -1;
+  if (active < 0 || active >= length) return delta < 0 ? length - 1 : 0;
+  return (((active + delta) % length) + length) % length;
+}
+
+export type LoadState = 'idle' | 'loading' | 'ready' | 'failed';
+
+export interface IndexLoader<T> {
+  readonly state: LoadState;
+  readonly entries: T[] | null;
+  /** Start (or join) a load. A successful load is kept; a failed one is not, so calling again retries. */
+  load(): Promise<LoadState>;
+}
+
+/**
+ * Loads the search index once it is needed. Only a successful, well-formed result is cached: a
+ * network error, an HTTP error (thrown by `fetchIndex`), unparsable JSON or a non-list leaves the
+ * loader in "failed", and the next load() fetches again. Concurrent callers share one request.
+ */
+export function createIndexLoader<T>(fetchIndex: () => Promise<unknown>): IndexLoader<T> {
+  let state: LoadState = 'idle';
+  let entries: T[] | null = null;
+  let inflight: Promise<LoadState> | null = null;
+  const run = async (): Promise<LoadState> => {
+    try {
+      const data = await fetchIndex();
+      if (!Array.isArray(data)) throw new Error('search index is not a list');
+      entries = data as T[];
+      state = 'ready';
+    } catch {
+      state = 'failed';
+    }
+    return state;
+  };
+  return {
+    get state() {
+      return state;
+    },
+    get entries() {
+      return entries;
+    },
+    load() {
+      if (state === 'ready') return Promise.resolve(state);
+      if (inflight) return inflight;
+      state = 'loading';
+      // .finally() always runs after this assignment, even if fetchIndex fails synchronously.
+      inflight = run().finally(() => {
+        inflight = null;
+      });
+      return inflight;
+    },
+  };
+}
+
+/** Lowercase search terms; "#" is ignored so "#58957" matches "58957". */
+export function tokens(q: string): string[] {
+  return q.toLowerCase().replace(/#/g, ' ').split(/\s+/).filter(Boolean);
+}
+
+export interface SearchEntry {
+  k: string;
+  t: string;
+  s: string;
+  u: string;
+  x: string;
+}
+
+const KIND_ORDER: Record<string, number> = { Feature: 0, Page: 1, Work: 2, 'Release note': 3, Community: 4 };
+
+/** Entries matching every term, features and pages first, title matches before body matches. */
+export function rankSearch<T extends SearchEntry>(entries: T[], query: string, limit = 40): T[] {
+  const terms = tokens(query);
+  if (!terms.length) return [];
+  return entries
+    .filter((e) => terms.every((t) => e.x.includes(t)))
+    .map((e, i) => ({ e, i, score: (KIND_ORDER[e.k] ?? 9) * 10 + (terms.every((t) => e.t.toLowerCase().includes(t)) ? 0 : 5) }))
+    .sort((a, b) => a.score - b.score || a.i - b.i)
+    .slice(0, limit)
+    .map((x) => x.e);
+}
+
+/** Only same-site paths and https links are ever used as search result targets. */
+export function safeHref(u: string): string | null {
+  if (u.startsWith('/') && !u.startsWith('//')) return u;
+  return /^https:\/\/[^\s"'<>]+$/i.test(u) ? u : null;
+}
+
+/**
+ * The fragment id when `href` points into the document at `current` (same origin, path and
+ * query, so following it does not load a new page), else null.
+ */
+export function samePageFragment(href: string, current: string): string | null {
+  let target: URL;
+  let here: URL;
+  try {
+    here = new URL(current);
+    target = new URL(href, here);
+  } catch {
+    return null;
+  }
+  if (target.origin !== here.origin || target.pathname !== here.pathname || target.search !== here.search) return null;
+  return hashId(target.hash);
+}
+
+/**
+ * The Releases platform filter to use so that a navigation target stays visible: unchanged when
+ * the current filter already shows it ("" = all platforms), otherwise the target's own platform.
+ */
+export function filterForTarget(current: string, targetPlatform: string | null | undefined): string {
+  if (!targetPlatform || !current || current === targetPlatform) return current;
+  return targetPlatform;
+}
+
+// ---------------------------------------------------------------------------
+// Source freshness. One set of rules for the page header (rendered at build time with now =
+// generatedAt) and the client (now = the viewer's clock), so the two never disagree.
+// ---------------------------------------------------------------------------
+
+/** A monitored source as the freshness checks read it (status.json / site.json `sources`). */
+export interface SourceFreshness {
+  id?: string;
+  name?: string;
+  lastOutcome?: string | null;
+  lastSuccessAt?: string | null;
+  lastCompleteAt?: string | null;
+  lastPartialAt?: string | null;
+  staleSince?: string | null;
+}
+
+/** Plain relative age of an ISO time at `now` (ms), e.g. "9 h ago"; "unknown" when either time is invalid. */
+export function agoText(iso: string | null | undefined, now: number): string {
+  const minutes = Math.round((now - Date.parse(iso ?? '')) / 60000);
+  if (!Number.isFinite(minutes)) return 'unknown';
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes} min ago`;
+  const h = Math.round(minutes / 60);
+  if (h < 48) return `${h} h ago`;
+  return `${Math.round(h / 24)} days ago`;
+}
+
+/**
+ * True when the source's kept data is stale at `now` (ms): the refresh recorded `staleSince` (a partial run kept
+ * values it should have refreshed) and that time is more than `windowMinutes` before `now`. A `staleSince` that
+ * cannot be parsed still counts: the refresh only records it for stale data, and its age being unknown does not make
+ * the data fresh. Whatever the latest outcome (a failed run leaves `staleSince` in place).
+ */
+export function keptDataStale(s: SourceFreshness, now: number, windowMinutes: number): boolean {
+  if (!s.staleSince) return false;
+  const since = Date.parse(s.staleSince);
+  if (!Number.isFinite(since) || !Number.isFinite(now)) return true;
+  return now - since > windowMinutes * 60_000;
+}
+
+/**
+ * Sources the header counts as "stale": kept data stale (see keptDataStale) on a source whose latest attempt did not
+ * fail. Failed sources are counted as failing instead, so one source is never in both counts.
+ */
+export function staleSources<T extends SourceFreshness>(sources: T[], now: number, windowMinutes: number): T[] {
+  return sources.filter((s) => s.lastOutcome !== 'failed' && keptDataStale(s, now, windowMinutes));
+}
+
+/**
+ * The time (ms) at which the build judges source staleness: the later of the shown data's generation time and the
+ * finish of the latest refresh run. status.json records each source as of that run, so a site.json kept from an
+ * earlier run (derivation failed) must not make a source that was already stale at the run read as not yet stale.
+ * NaN when neither time can be read (keptDataStale then treats recorded kept data as stale, never as fresh).
+ */
+export function statusJudgedAt(generatedAt: string | null | undefined, lastRunAt?: string | null): number {
+  const times = [Date.parse(generatedAt ?? ''), Date.parse(lastRunAt ?? '')].filter((t) => Number.isFinite(t));
+  return times.length ? Math.max(...times) : Number.NaN;
+}
+
+/** " · 1 source stale" (empty for none): the header pill's count, in the build and in the client. */
+export function staleCountText(n: number): string {
+  return n > 0 ? ` · ${n} source${n > 1 ? 's' : ''} stale` : '';
+}
+
+/** " · 1 source failing" (empty for none): the header pill's failing count, worded like staleCountText. */
+export function failingCountText(n: number): string {
+  return n > 0 ? ` · ${n} source${n > 1 ? 's' : ''} failing` : '';
+}
+
+/**
+ * " · 1 failing · 2 stale" (empty for none): the counts as the pill shows them. The pill has little room (beside the
+ * section links it is about 140 px wide), so the visible counts are short and come before the update time in priority
+ * (the time is truncated first); the full wording stays in the pill for screen readers and in its title.
+ */
+export function freshShortText(failing: number, stale: number): string {
+  return `${failing > 0 ? ` · ${failing} failing` : ''}${stale > 0 ? ` · ${stale} stale` : ''}`;
+}
+
+/** The pill's title: the counts in full, e.g. "1 source failing · 2 sources stale" (empty for none). */
+export function freshCountsTitle(failing: number, stale: number): string {
+  return `${failingCountText(failing)}${staleCountText(stale)}`.replace(/^ · /, '');
+}
+
+/**
+ * A source without a last complete collection time: `null` means the refresh recorded that none was ever complete;
+ * an absent field (undefined) means the status was written before that time was recorded (run.ts adds it on its next
+ * run), so whether one was complete is unknown and never reads as "none".
+ */
+export function completeUnknownText(lastCompleteAt: string | null | undefined): string {
+  return lastCompleteAt === undefined ? 'time of the last complete collection not recorded' : 'no complete collection recorded';
+}
+
+/**
+ * The age line of one source on the Sources page, at `now` (ms). Stale when its kept data is stale, when it never
+ * succeeded, or when its last success is older than the window; a partial source says how old its last complete
+ * collection is.
+ */
+export function sourceAgeLine(s: SourceFreshness, now: number, windowMinutes: number): { stale: boolean; text: string } {
+  const complete = s.lastCompleteAt ? `complete data from ${agoText(s.lastCompleteAt, now)}` : completeUnknownText(s.lastCompleteAt);
+  if (keptDataStale(s, now, windowMinutes)) {
+    return { stale: true, text: `stale: kept data not refreshed since ${agoText(s.staleSince, now)} · ${complete}` };
+  }
+  if (!s.lastSuccessAt) return { stale: true, text: 'never succeeded' };
+  const success = Date.parse(s.lastSuccessAt);
+  if (!Number.isFinite(success) || now - success > windowMinutes * 60_000) return { stale: true, text: `stale: last success ${agoText(s.lastSuccessAt, now)}` };
+  if (s.lastOutcome === 'partial') return { stale: false, text: `partial · ${complete}` };
+  return { stale: false, text: `data age ${agoText(s.lastSuccessAt, now)}` };
+}

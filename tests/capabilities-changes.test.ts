@@ -115,8 +115,15 @@ test('advisory ranges are compared with Brave pins; server advisories are not ma
   assert.equal(satisfiesRange('0.24.0-rc.1', '< 0.24.0'), true, 'prerelease is below the release');
   assert.equal(satisfiesRange('1.0.0', 'garbage range'), null);
   const deps = { snapshots: { master: { ref: 'master', commitSha: 'x', channels: ['master'], lock: { orchard: { version: '0.15.0', source: 'crates.io' as const }, halo2_gadgets: { version: '0.5.0', source: 'crates.io' as const } }, requirements: {}, forkPin: null, endpoints: [], retrievedAt: 'x', links: { lockfile: '', deps: '', cargo: '' } } } };
-  const v = advisoryVerdicts({ id: 'GHSA-ww9q-8r59-xv46', aliases: ['CVE-2026-54496'], summary: 's', severity: 'critical', packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, deps);
-  assert.equal(v.affected, false);
+  const ww9q = { id: 'GHSA-ww9q-8r59-xv46', aliases: ['CVE-2026-54496'], summary: 's', severity: 'critical', packages: ['rust:orchard', 'rust:halo2_gadgets'], vulnerableRanges: ['orchard < 0.14.0', 'halo2_gadgets < 0.5.0'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' };
+  // With every linked version recorded (graph resolution), pins outside the ranges are compared build by build.
+  const graph = { snapshots: { master: { ...deps.snapshots.master, resolver: 3, resolution: { method: 'graph' as const, root: { name: 'zcash', version: '1.0.0', from: 'cargo-toml' as const }, candidates: { orchard: [{ version: '0.15.0', source: 'crates.io' as const, reachable: true, direct: true }], halo2_gadgets: [{ version: '0.5.0', source: 'crates.io' as const, reachable: true, direct: true }] }, multiple: [], ambiguous: [], unreachable: [], unresolvedEdges: [] } } } };
+  // R3-ADV-NAMES: without the full Cargo.lock package list another spelling of a crate is not ruled out, so these
+  // pins are outside but the verdict is unknown (tests/audit3-derive.test.ts pins false with the list recorded).
+  assert.equal(advisoryVerdicts(ww9q, graph).affected, null);
+  // A snapshot that records only the newest version in Cargo.lock cannot rule out an older linked one (R-ADV).
+  const v = advisoryVerdicts(ww9q, deps);
+  assert.equal(v.affected, null);
   const depsRpc = { snapshots: { master: { ...deps.snapshots.master, rpcMethods: ['GetAddressUtxos', 'GetBlockRange', 'GetTreeState', 'SendTransaction'] } } };
   const lw = advisoryVerdicts({ id: 'GHSA-932p-ww36-57vg', aliases: [], summary: 'Public `GetAddressUtxos` requests can overfetch backend UTXOs', severity: 'medium', packages: ['go:github.com/zcash/lightwalletd'], vulnerableRanges: ['github.com/zcash/lightwalletd <= 0.5.4'], patched: [], publishedAt: null, updatedAt: null, withdrawnAt: null, url: 'https://example.invalid' }, depsRpc);
   assert.equal(lw.affected, null, 'server-side exposure is never asserted');

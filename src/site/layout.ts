@@ -2,6 +2,7 @@ import { FRESHNESS, SITE } from '../../config/tracker.ts';
 import type { SourceStatus } from '../lib/types.ts';
 import { html, raw, type SafeHtml } from './html.ts';
 import { GLYPH_SPRITE, time, u } from './components.ts';
+import { failingCountText, freshCountsTitle, freshShortText, staleCountText, staleSources, statusJudgedAt } from './client/logic.ts';
 
 export interface PageMeta {
   title: string;
@@ -43,6 +44,9 @@ const CSP = [
 
 export function page(meta: PageMeta, fresh: Freshness, body: SafeHtml): string {
   const failing = fresh.sources.filter((s) => s.lastOutcome === 'failed');
+  const stale = headerStaleSources(fresh);
+  // Sources whose kept data may become stale by the time the page is read (the client re-checks them).
+  const watched = fresh.sources.filter((s) => s.staleSince && s.lastOutcome !== 'failed');
   const doc = html`<!doctype html>
 <html lang="en">
 <head>
@@ -73,9 +77,9 @@ ${raw(GLYPH_SPRITE)}
     <nav class="nav-wide" aria-label="Sections">${navList(meta)}</nav>
     <div class="top-actions">
       <a class="search-btn" href="${u('work/')}" data-search-open aria-label="Search features, work, releases and reports">${raw(SEARCH_ICON)}<span class="search-btn-text">Search</span><kbd>/</kbd></a>
-      <a class="fresh" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}">
+      <a class="fresh${failing.length ? ' has-failing' : ''}${stale.length ? ' has-stale' : ''}" href="${u('sources/')}" data-generated="${fresh.generatedAt}" data-stale-after="${FRESHNESS.staleAfterMinutes}" data-failing="${failing.length}" data-stale="${stale.length}" title="${freshCountsTitle(failing.length, stale.length)}">
         <span class="fresh-dot" aria-hidden="true"></span>
-        <span class="fresh-text">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}${failing.length ? html` · ${failing.length} source${failing.length > 1 ? 's' : ''} failing` : ''}</span>
+        <span class="fresh-text"><span class="fresh-when">Updated ${time(fresh.generatedAt, { rel: true, withTime: true })}</span><span class="fresh-short" aria-hidden="true">${freshShortText(failing.length, stale.length)}</span>${failing.length ? html`<span class="fresh-fail vh">${failingCountText(failing.length)}</span>` : ''}<span class="fresh-stale vh">${staleCountText(stale.length)}</span></span>
       </a>
       <details class="menu">
         <summary aria-label="Menu">${raw(MENU_ICON)}<span>Menu</span></summary>
@@ -84,10 +88,18 @@ ${raw(GLYPH_SPRITE)}
     </div>
   </div>
   ${fresh.mode === 'fixture' ? html`<div class="wrap"><div class="banner banner-warn" role="alert"><strong>Fixture data.</strong> This build uses isolated test fixtures and must not be published.</div></div>` : ''}
+  ${lastRunFailed(fresh) ? html`<div class="wrap run-failed-banner"><div class="banner banner-warn" role="status">
+    <strong>Latest refresh failed.</strong> The refresh run that finished ${time(fresh.lastRunAt, { withTime: true })} failed. The information here was generated ${time(fresh.generatedAt, { withTime: true })} from the last successfully collected data and may be missing newer upstream changes. <a href="${u('sources/')}">Check source status</a>.
+  </div></div>` : ''}
   <div class="wrap stale-banner" role="status" hidden><div class="banner banner-warn">
     <strong>Data may be stale.</strong> <span class="stale-text"></span> <a href="${u('sources/')}">Check source status</a>.
   </div></div>
 </header>
+${watched.length ? html`<div class="wrap source-stale-banner" role="status" ${stale.length ? '' : raw('hidden')}><div class="banner banner-warn">
+  <strong>Some data is stale.</strong> Recent refreshes could not update part of what these sources provide, so the last good data is shown for it:
+  <ul class="stale-sources">${watched.map((s) => html`<li data-stale-since="${s.staleSince ?? ''}" ${stale.includes(s) ? '' : raw('hidden')}><strong>${s.name}</strong>: kept data not refreshed since ${time(s.staleSince, { withTime: true })}${s.lastCompleteAt && s.lastCompleteAt !== s.staleSince ? html` (last complete collection ${time(s.lastCompleteAt, { withTime: true })})` : ''}</li>`)}</ul>
+  <a href="${u('sources/')}">Check source status</a>.
+</div></div>` : ''}
 <dialog class="search-dlg" id="search-dlg" aria-label="Search the tracker">
   <div class="sd-head">${raw(SEARCH_ICON)}<input id="sd-q" type="text" inputmode="search" placeholder="Search features, issues, PRs, release notes, reports" autocomplete="off" spellcheck="false" aria-label="Search" aria-controls="sd-results"><button type="button" class="sd-close" data-search-close>Esc</button></div>
   <ul id="sd-results" class="sd-results"></ul>
@@ -110,6 +122,28 @@ ${body}
 </html>
 `;
   return doc.value;
+}
+
+/**
+ * Sources the header reports as stale: their kept data has not been refreshed for longer than the staleness window
+ * (`staleSince`), judged at the later of the shown data's generation and the latest refresh run (see statusJudgedAt:
+ * status.json is as of that run, also when derivation failed and an older site.json was kept). Same rule as the
+ * client (see staleSources), which re-checks with the viewer's clock. Failed sources are counted as failing instead.
+ */
+export function headerStaleSources(fresh: Pick<Freshness, 'generatedAt' | 'sources'> & Partial<Pick<Freshness, 'lastRunAt'>>): SourceStatus[] {
+  return staleSources(fresh.sources, statusJudgedAt(fresh.generatedAt, fresh.lastRunAt), FRESHNESS.staleAfterMinutes);
+}
+
+/**
+ * True when the latest refresh run failed (every source failed, or derivation failed and the
+ * previously derived data was kept), or when that run finished well after the shown data was
+ * generated. A normal run finishes within its 45-minute job timeout of its own generatedAt.
+ */
+export function lastRunFailed(fresh: Pick<Freshness, 'generatedAt' | 'lastRunOutcome' | 'lastRunAt'>): boolean {
+  if (!fresh.lastRunAt) return false;
+  if (fresh.lastRunOutcome === 'failed') return true;
+  const gap = Date.parse(fresh.lastRunAt) - Date.parse(fresh.generatedAt);
+  return Number.isFinite(gap) && gap > 60 * 60_000;
 }
 
 function navList(meta: PageMeta): SafeHtml {

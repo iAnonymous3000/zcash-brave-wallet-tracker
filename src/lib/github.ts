@@ -1,4 +1,4 @@
-import { Http, HttpError, nextLink } from './http.ts';
+import { Http, HttpError, nextLink, redact } from './http.ts';
 
 const API = 'https://api.github.com';
 
@@ -14,8 +14,18 @@ export interface SearchIssueHit {
 export interface SearchOutcome {
   hits: SearchIssueHit[];
   totalCount: number;
+  /** GitHub reported incomplete_results=true (search timed out) for at least one page. */
   incomplete: boolean;
+  /** At least one query window still matched more than the 1000 retrievable results. */
+  truncated?: boolean;
   limitations: string[];
+}
+
+/** A GraphQL error with the response path it applies to (e.g. ["repository", "n123", "subIssues"]). */
+export interface GraphqlErrorDetail {
+  message: string;
+  type: string | null;
+  path: (string | number)[] | null;
 }
 
 export class GitHub {
@@ -31,7 +41,10 @@ export class GitHub {
     return this.http.json<T>(url, { scope: 'github-core', okStatuses: opts.okStatuses, headers });
   }
 
-  /** Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation. */
+  /**
+   * Follow Link rel="next" pagination. Stops after `maxPages` and reports truncation.
+   * A page that is neither a list nor an object with an `items` list is an error, never an empty page.
+   */
   async paginate<T>(path: string, maxPages = 50): Promise<{ items: T[]; truncated: boolean }> {
     let url: string | null = path.startsWith('http') ? path : `${API}${path}`;
     const items: T[] = [];
@@ -39,7 +52,8 @@ export class GitHub {
     while (url) {
       if (pages >= maxPages) return { items, truncated: true };
       const { data, res } = await this.http.json<T[] | { items?: T[] }>(url, { scope: 'github-core' });
-      const page = Array.isArray(data) ? data : (data.items ?? []);
+      const page = listPage<T>(data);
+      if (!page) throw new HttpError(res.status, redact(url), `unexpected response shape (expected a list): ${JSON.stringify(data).slice(0, 80)}`);
       items.push(...page);
       pages += 1;
       url = nextLink(res);
@@ -68,6 +82,7 @@ export class GitHub {
           hits: dedupeHits([...a.hits, ...b.hits]),
           totalCount: first.total,
           incomplete: a.incomplete || b.incomplete,
+          truncated: Boolean(a.truncated || b.truncated),
           limitations: [...a.limitations, ...b.limitations],
         };
       }
@@ -82,27 +97,39 @@ export class GitHub {
     }
     if (first.total > 1000) limitations.push(`search "${q}" matched ${first.total} items; only 1000 retrievable`);
     if (incomplete) limitations.push(`search "${q}" returned incomplete_results=true (GitHub timeout)`);
-    return { hits: dedupeHits(hits), totalCount: first.total, incomplete, limitations };
+    return { hits: dedupeHits(hits), totalCount: first.total, incomplete, truncated: first.total > 1000, limitations };
   }
 
   private async searchPage(q: string, page: number): Promise<{ items: SearchIssueHit[]; total: number; incomplete: boolean }> {
     const url = `${API}/search/issues?q=${encodeURIComponent(q)}&per_page=100&page=${page}&sort=updated&order=desc`;
     // Search is limited to 30 req/min; pace requests to stay under it.
     await pace(this, 2100);
-    const { data } = await this.http.json<{ total_count: number; incomplete_results: boolean; items: SearchIssueHit[] }>(url, { scope: 'github-search' });
-    return { items: data.items ?? [], total: data.total_count ?? 0, incomplete: Boolean(data.incomplete_results) };
+    const { data, res } = await this.http.json<{ total_count: number; incomplete_results: boolean; items: SearchIssueHit[] }>(url, { scope: 'github-search' });
+    // A body without an items list is an unread page, not zero hits.
+    if (!data || !Array.isArray(data.items)) throw new HttpError(res.status, redact(url), `unexpected search response shape: ${JSON.stringify(data).slice(0, 80)}`);
+    return { items: data.items, total: data.total_count ?? 0, incomplete: Boolean(data.incomplete_results) };
   }
 
-  async graphql<T = any>(query: string, variables: Record<string, unknown> = {}): Promise<{ data: T; errors: string[] }> {
+  /**
+   * GraphQL query. `errors` keeps the historical string form; `errorDetails` adds each error's
+   * response path so callers can tell which node/field a partial response is missing.
+   */
+  async graphql<T = any>(query: string, variables: Record<string, unknown> = {}): Promise<{ data: T; errors: string[]; errorDetails: GraphqlErrorDetail[] }> {
     const { data } = await this.http.json<{ data?: T; errors?: { message: string; type?: string; path?: unknown[] }[] }>(`${API}/graphql`, {
       method: 'POST',
       body: JSON.stringify({ query, variables }),
       headers: { 'Content-Type': 'application/json' },
       scope: 'github-graphql',
     });
-    const errors = (data.errors ?? []).map((e) => `${e.type ?? 'ERROR'}: ${e.message}`);
+    const raw = Array.isArray(data.errors) ? data.errors : [];
+    const errors = raw.map((e) => `${e.type ?? 'ERROR'}: ${e.message}`);
+    const errorDetails: GraphqlErrorDetail[] = raw.map((e) => ({
+      message: String(e.message ?? ''),
+      type: e.type ?? null,
+      path: Array.isArray(e.path) ? e.path.filter((x): x is string | number => typeof x === 'string' || typeof x === 'number') : null,
+    }));
     if (!data.data) throw new HttpError(200, `${API}/graphql`, `GraphQL errors: ${errors.join('; ').slice(0, 300)}`);
-    return { data: data.data, errors };
+    return { data: data.data, errors, errorDetails };
   }
 
   /** Read a file at a ref via the contents API (raw media type). Returns null on 404. */
@@ -129,15 +156,23 @@ export class GitHub {
 }
 
 let lastSearchAt = 0;
-async function pace(_gh: GitHub, minGapMs: number): Promise<void> {
+async function pace(gh: GitHub, minGapMs: number): Promise<void> {
   const wait = lastSearchAt + minGapMs - Date.now();
-  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  // Through the injected sleep, so tests with a no-op sleep are not slowed by real pacing.
+  if (wait > 0) await gh.http.pause(wait);
   lastSearchAt = Date.now();
 }
 
 /** Test hook: reset search pacing state. */
 export function resetSearchPacing(): void {
   lastSearchAt = 0;
+}
+
+/** The entries of a list response (a JSON array, or a search-style `{ items: [...] }`), or null for any other shape. */
+export function listPage<T>(data: unknown): T[] | null {
+  if (Array.isArray(data)) return data as T[];
+  if (data && typeof data === 'object' && Array.isArray((data as { items?: unknown }).items)) return (data as { items: T[] }).items;
+  return null;
 }
 
 function dayAfter(d: string): string {

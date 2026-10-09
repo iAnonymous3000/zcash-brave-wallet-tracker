@@ -1,0 +1,4 @@
+{
+ "description": "Inputs on which parseGate3Switch breaks the oracle invariant. Empty: the hand-written Python reader was replaced by a strict constants-module allowlist, and no input in the corpus breaks the invariant. Never add entries to make the test pass; fix the reader instead.",
+ "findings": []
+}

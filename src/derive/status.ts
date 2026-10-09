@@ -7,7 +7,7 @@ import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { compareVersions } from '../lib/util.ts';
 import { inclusionAt, type PrInclusion } from '../ingest/sources/build-inclusion.ts';
 import { osLabels, parseMilestone, parseQaLabels, qaPlatform } from '../ingest/parsers.ts';
-import { isDuplicateIssue, isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
+import { isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
 
 export type Stage =
   | 'released'
@@ -23,12 +23,30 @@ export type Stage =
   | 'not-planned'
   | 'duplicate';
 
+/**
+ * Labels of the 'merged' stage by what the build checks say. Only explicit "not included" checks support absence;
+ * a build whose presence could not be determined stays unknown (see mergedStageLabel).
+ */
+export const MERGED_LABEL = {
+  /** Every current build was checked and none includes the fix. */
+  notIncluded: 'Merged, not yet in a checked build',
+  /** Presence could not be determined in any current build (or no current build is known). */
+  unknown: 'Merged, build presence unknown',
+  /** Some builds are confirmed not to include it; the rest could not be checked. Also the stage-wide label. */
+  partlyUnknown: 'Merged, not confirmed in a current build',
+} as const;
+
+/**
+ * Default label per stage. For 'merged' it is the absence wording, which a group gets only when every current
+ * build was checked and confirmed not to include the fix; groups get their own label from mergedStageLabel(), and
+ * the stage as a whole (filters, legend) is listed as MERGED_LABEL.partlyUnknown.
+ */
 export const STAGE_LABEL: Record<Stage, string> = {
   released: 'In release notes',
   'in-release-build': 'In a Release build',
   'in-beta': 'In a Beta build',
   'in-nightly': 'In a Nightly build',
-  merged: 'Merged, not yet in a checked build',
+  merged: MERGED_LABEL.notIncluded,
   'service-change': 'Merged in a Brave service',
   'in-progress': 'PR in progress',
   open: 'Open',
@@ -43,11 +61,11 @@ export const STAGE_HELP: Record<Stage, string> = {
   'in-release-build': 'A merged PR is an ancestor of the brave-core tag of a current Release build, but no release note lists it.',
   'in-beta': 'A merged PR is in a current Beta build. Beta is a pre-release channel.',
   'in-nightly': 'A merged PR is in a current Nightly build. Nightly is a development channel.',
-  merged: 'A linked PR is merged but has not been confirmed in a published build yet.',
+  merged: `A linked PR is merged, but no current build is confirmed to include it. A group reads “${MERGED_LABEL.unknown}” when its presence could not be determined in any current build, “${MERGED_LABEL.partlyUnknown}” when some builds were confirmed not to include it and the rest could not be checked, and “${MERGED_LABEL.notIncluded}” only when every checked build was confirmed not to include it.`,
   'service-change': 'Merged in a Brave server-side repository (swap backend or field-trial config). It takes effect when Brave deploys it, which is not public, and applies regardless of browser version.',
   'in-progress': 'An open (or draft) pull request exists.',
   open: 'Open issue with no merged or open PR found.',
-  'closed-unverified': 'Closed as completed, but no merged PR or release note is linked. Treat as unknown, not shipped.',
+  'closed-unverified': 'Closed, but no merged PR or release note is linked (closed as completed, without a reason, or as a duplicate whose records contradict each other). Treat as unknown, not shipped.',
   'closed-unmerged': 'The pull request was closed without being merged.',
   'not-planned': 'Closed as not planned (won’t fix, invalid, or handled elsewhere). Nothing shipped through this issue; labels such as release-notes/include do not change that.',
   duplicate: 'Closed as a duplicate. Follow the canonical issue instead.',
@@ -105,8 +123,17 @@ export function computeGroupStatus(
     if (/\b(proposal|rfc|idea|consider)\b/i.test(issue.title) || labels.includes('needs-discussion')) kind = kind === 'bug' ? kind : 'proposal';
   }
 
-  // Issue state.
-  const dup = issue ? isDuplicateIssue(issue) : { duplicate: false, canonical: null, basis: null };
+  // Issue state. Duplicate state comes from the relations, which reconcile both issues' timelines.
+  let dup: { duplicate: boolean; canonical: string | null; basis: string | null } = issue && r.duplicateOf.has(issue.id)
+    ? { duplicate: true, canonical: r.duplicateOf.get(issue.id) ?? null, basis: r.duplicateBasis.get(issue.id) ?? null }
+    : { duplicate: false, canonical: null, basis: null };
+  // Contradictory records (A marked as a duplicate of B and B of A, or a longer cycle): buildGroups folds the
+  // cycle into the group led by its lowest id, so the recorded canonical sits inside this very group. There is no
+  // other issue to follow, so the lead is not staged as a duplicate; the facet keeps the record and says why.
+  const contradictory = dup.duplicate && dup.canonical !== null && (dup.canonical === g.lead || g.duplicates.includes(dup.canonical));
+  if (contradictory) {
+    dup = { duplicate: true, canonical: null, basis: `${dup.basis ?? 'duplicate'}; contradictory records: the recorded canonical ${dup.canonical!.replace('brave/', '')} is itself recorded, directly or through other duplicates, as a duplicate of this issue, so none of them is treated as canonical and this group gathers them all` };
+  }
   const issueState = issue
     ? {
         state: issue.state === 'open' ? ('open' as const) : ('closed' as const),
@@ -115,7 +142,7 @@ export function computeGroupStatus(
       }
     : null;
 
-  // Implementation (master PRs, plus duplicates' PRs are already folded by grouping).
+  // Implementation (master PRs; buildGroups folds the duplicates' implementing PRs into masterPrs/uplifts).
   const merged = masters.filter((p) => p.state === 'merged');
   const open = masters.filter((p) => p.state === 'open');
   const implState: GroupStatus['implementation']['state'] = merged.length ? 'merged' : open.some((p) => !p.isDraft) ? 'open' : open.length ? 'draft' : masters.length ? 'closed-unmerged' : 'none';
@@ -182,7 +209,7 @@ export function computeGroupStatus(
 
   // Stage (ordered rules; see STAGE_HELP).
   let stage: Stage;
-  if (dup.duplicate) stage = 'duplicate';
+  if (dup.duplicate && !contradictory) stage = 'duplicate';
   else if (issue && issue.state === 'closed' && issue.stateReason === 'not_planned') stage = 'not-planned';
   else if (releaseNotes.length) stage = 'released';
   else if (builds.some((b) => b.channel === 'release' && b.included)) stage = 'in-release-build';
@@ -212,8 +239,18 @@ export function computeGroupStatus(
     regression,
     security,
     stage,
-    stageLabel: STAGE_LABEL[stage],
+    stageLabel: stage === 'merged' ? mergedStageLabel(builds) : STAGE_LABEL[stage],
   };
+}
+
+/**
+ * Label of a group in the 'merged' stage (no build confirmed to include the fix). Absence is stated only when every
+ * current build was checked and confirmed not to include it; unknown presence is never worded as absence.
+ */
+export function mergedStageLabel(builds: Pick<BuildCell, 'included'>[]): string {
+  const absent = builds.filter((b) => b.included === false).length;
+  if (builds.length && absent === builds.length) return MERGED_LABEL.notIncluded;
+  return absent ? MERGED_LABEL.partlyUnknown : MERGED_LABEL.unknown;
 }
 
 /** For PRs merged into a feature branch: the merged PR whose head is that branch (it carried the change on). */
