@@ -223,6 +223,45 @@ test('R3-ING-23 repair 2: every line a lone CR ends is read, so two release head
   assert.deepEqual(changelogVersions('## 1.2.3\r\n## 1.2.2\r\n- Zcash a.'), ['1.2.3', '1.2.2']);
 });
 
+test('R3-ING-23 repair 2: a whole tag on a line continuing a list item or quote paragraph is read both ways, so the headings it decides are in doubt', () => {
+  // GitHub (cmark-gfm) starts an HTML block at a whole open or closing tag on a lazy line (one that continues a list
+  // item's or a block quote's paragraph without the item's indentation or the ">"): the item or quote ends there and
+  // the HTML block runs to the next blank line, hiding the headings in it. CommonMark (micromark for a single such
+  // line, markdown-it) continues the paragraph, so the heading is real there. The first repair (and the base) read
+  // these as CommonMark alone and credited "Zcash c." to 1.98.0, a release GitHub does not show.
+  for (const tagLine of ['<img src="shot.png">', '</span>', ' <img src="x">']) {
+    const text = md('## 1.99.0', '- Zcash a.', tagLine, '## 1.98.0', '- Zcash c.');
+    assert.deepEqual(got(text), ['1.99.0:Zcash a.'], tagLine);
+    assert.deepEqual(changelogVersions(text), ['1.99.0'], tagLine);
+  }
+  for (const text of [md('## 1.99.0', '> Zcash a.', '<img src="shot.png">', '## 1.98.0', '- Zcash c.'), md('## 1.99.0', '1. Zcash a.', '<b>', '## 1.98.0', '- Zcash c.')]) {
+    assert.deepEqual(got(text), [], text);
+    assert.deepEqual(changelogVersions(text), ['1.99.0'], text);
+  }
+  // After two such lines micromark hides the heading as GitHub does.
+  const two = md('## 1.2.11', '* Zcash b.', '<x/>', '<img src=x>', '## 1.2.12', '- Zcash c.');
+  assert.deepEqual(got(two), ['1.2.11:Zcash b.']);
+  assert.deepEqual(changelogVersions(two), ['1.2.11']);
+  // Before the first release such a heading leaves the latest release unknown (GitHub: 1.98.0; CommonMark: 1.99.0).
+  const latest = md('# Changelog', '', '- Note', '<img src="x">', '## 1.99.0', '- Zcash x.', '', '## 1.98.0', '- Zcash y.');
+  assert.deepEqual(changelogVersions(latest), []);
+  assert.deepEqual(got(latest), ['1.98.0:Zcash y.']);
+  // Where the two read the same, nothing is in doubt: a blank line ends the HTML block before the heading; a tag
+  // indented into the item, or into the outer item after a nested one, is no lazy line; after a top-level paragraph
+  // neither starts an HTML block.
+  assert.deepEqual(got(md('## 1.99.0', '- Zcash a.', '<img src="x">', '', '## 1.98.0', '- Zcash c.')), ['1.99.0:Zcash a.', '1.98.0:Zcash c.']);
+  assert.deepEqual(got(md('## 1.99.0', '- Zcash a.', '    <img src="x">', '## 1.98.0', '- Zcash c.')), ['1.99.0:Zcash a.', '1.98.0:Zcash c.']);
+  assert.deepEqual(got(md('## 1.99.0', '- Zcash a.', '  - Zcash b.', '  <img src="x">', '## 1.98.0', '- Zcash c.')), ['1.99.0:Zcash a.', '1.99.0:Zcash b.', '1.98.0:Zcash c.']);
+  assert.deepEqual(got(md('## 1.99.0', 'Text', '<img src="x">', '## 1.98.0', '- Zcash c.')), ['1.98.0:Zcash c.']);
+  // A doubtful setext heading names its version below the line that holds its mark: the latest release is not known
+  // either ("---" after a link reference definition is a thematic break to micromark and markdown-it, which then read
+  // "[y]: /url" + "1.2.23" + "---" as the release 1.2.23, and paragraph text to GitHub). The first repair listed 1.2.22
+  // as the latest release.
+  const setext = md('# Changelog', '', '[x]: <u>', '---', '[y]: /url', '1.2.23', '---', '- Zcash a.', '', '## 1.2.22', '- Zcash b.');
+  assert.deepEqual(changelogVersions(setext), []);
+  assert.deepEqual(got(setext), ['1.2.22:Zcash b.']);
+});
+
 test('R3-ING-23 repair 2: a changelog read in part is never reported as read in full; nested structure is read to its end or the read fails', async () => {
   // Brave's desktop changelog (fixture) with one line inserted after its first release section. The first repair
   // stopped reading at 33 nested quotes or list items, or once quotes with long runs of lazy lines had cost a fixed

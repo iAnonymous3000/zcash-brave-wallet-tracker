@@ -425,6 +425,12 @@ function headerRowCells(s: string): number {
 const OPEN_TAG = '<[A-Za-z][A-Za-z0-9\\-]*(?:\\s+[a-zA-Z_:][a-zA-Z0-9:._-]*(?:\\s*=\\s*(?:[^"\'=<>`\\x00-\\x20]+|\'[^\']*\'|"[^"]*"))?)*\\s*\\/?>';
 const CLOSE_TAG = '<\\/[A-Za-z][A-Za-z0-9\\-]*\\s*>';
 const HTML_BLOCK_7 = new RegExp(`^(?:${OPEN_TAG}|${CLOSE_TAG})\\s*$`);
+/**
+ * Whether `line` is a whole open or closing tag (an HTML block start of kind 7, unless its tag name makes it one of
+ * kinds 1-6, which every caller has ruled out or does not need to tell apart).
+ */
+const wholeTagLine = (state: StateBlock, line: number) =>
+  state.src.charCodeAt(state.bMarks[line] + state.tShift[line]) === 0x3c && HTML_BLOCK_7.test(lineText(state, line));
 
 /**
  * A GFM table, as GitHub and micromark-extension-gfm-table read it: a header row (any line a paragraph could start or
@@ -458,7 +464,7 @@ function tableRule(state: StateBlock, startLine: number, endLine: number, silent
   for (; line < endLine; line++) {
     if (state.isEmpty(line) || state.sCount[line] < state.blkIndent || state.sCount[line] - state.blkIndent >= 4) break;
     // Kinds 1-6 and every other block start are among the terminators (with parentType "table", any list item).
-    if (state.src.charCodeAt(state.bMarks[line] + state.tShift[line]) === 0x3c && HTML_BLOCK_7.test(lineText(state, line))) break;
+    if (wholeTagLine(state, line)) break;
     if (terminators.some((rule) => rule(state, line, endLine, true))) break;
   }
   state.parentType = oldParentType;
@@ -480,7 +486,7 @@ function tableHeaderRule(state: StateBlock, startLine: number, endLine: number, 
   const parse = parseInfo(state);
   if (silent || parse.tableHeader !== startLine) return false;
   parse.tableHeader = -1;
-  if (state.src.charCodeAt(state.bMarks[startLine] + state.tShift[startLine]) === 0x3c && HTML_BLOCK_7.test(lineText(state, startLine))) {
+  if (wholeTagLine(state, startLine)) {
     parse.differs = true;
     if (!parse.github) return false;
   }
@@ -625,6 +631,12 @@ function paragraphRule(state: StateBlock, startLine: number, endLine: number): b
     }
     if (state.sCount[line] < 0 || lazyIndented(state, line)) continue;
     if (interrupted(line)) break;
+    // A lazy line (less indented than the list item the paragraph is in) that is a whole tag: GitHub starts an HTML
+    // block of kind 7 there (ParseInfo.github), CommonMark continues the paragraph.
+    if (state.sCount[line] < state.blkIndent && wholeTagLine(state, line)) {
+      parse.differs = true;
+      if (parse.github) break;
+    }
   }
   state.parentType = oldParentType;
 
@@ -775,7 +787,17 @@ function readQuote(state: StateBlock, startLine: number, endLine: number, limit:
     if (lastLineEmpty) break;
     // A lazy line of an enclosing quote is lazy here too: that quote already found it starts no block. (markdown-it
     // checks it again with its indentation lost, so "    ```" there ends this quote as a fence would.)
-    if (state.sCount[nextLine] >= 0 && !lazyIndented(state, nextLine) && terminatorRules.some((rule) => rule(state, nextLine, endLine, true))) {
+    let ends = false;
+    if (state.sCount[nextLine] >= 0 && !lazyIndented(state, nextLine)) {
+      ends = terminatorRules.some((rule) => rule(state, nextLine, endLine, true));
+      // A whole tag (an HTML block of kind 7, which cannot interrupt a paragraph) continues a paragraph here in
+      // CommonMark; GitHub ends the quote and starts the HTML block (ParseInfo.github).
+      if (!ends && state.sCount[nextLine] - state.blkIndent < 4 && wholeTagLine(state, nextLine)) {
+        parse.differs = true;
+        ends = parse.github;
+      }
+    }
+    if (ends) {
       state.lineMax = nextLine;
       if (state.blkIndent !== 0) {
         oldBMarks.push(state.bMarks[nextLine]);
@@ -1272,9 +1294,10 @@ const VERSION_IN_TEXT = /(?<!\d)\d+\.\d+\.\d+/;
 
 /**
  * Ordered list of released versions as their top-level level-2 headings appear (newest first in Brave's files). The
- * first one is read as the latest release, so when a doubtful line that could name a version (one with an x.y.z in it
- * or in the lines of text just above it, for a setext underline) comes before it, the latest release is not known
- * and the list is empty. Throws ChangelogStructureError when the text's structure cannot be read to its end.
+ * first one is read as the latest release, so when a doubtful line that could name a version (one with an x.y.z in
+ * the run of non-blank lines it is in: the text of a setext heading is above its underline and below the heading's
+ * first line, which holds the mark) comes before it, the latest release is not known and the list is empty. Throws
+ * ChangelogStructureError when the text's structure cannot be read to its end.
  */
 export function changelogVersions(text: string, opts: { now?: string | number | Date } = {}): string[] {
   const now = epochMs(opts.now);
@@ -1282,12 +1305,21 @@ export function changelogVersions(text: string, opts: { now?: string | number | 
   const { marks, lines, refs } = structureOf(text);
   const out: string[] = [];
   // Whether the run of non-blank lines up to the current one holds a version number.
-  let versionInRun = false;
+  let versionAbove = false;
+  // Per line, whether the run of non-blank lines from it on holds one (worked out when a doubtful line needs it).
+  let versionBelow: boolean[] | null = null;
+  const versionFrom = (i: number) => {
+    if (!versionBelow) {
+      versionBelow = new Array<boolean>(lines.length + 1).fill(false);
+      for (let k = lines.length - 1; k >= 0; k--) versionBelow[k] = /\S/.test(lines[k]) && (versionBelow[k + 1] || VERSION_IN_TEXT.test(lines[k]));
+    }
+    return versionBelow[i];
+  };
   for (let i = 0; i < marks.length; i++) {
     const mark = marks[i];
     if (out.length === 0) {
-      versionInRun = /\S/.test(lines[i]) && (versionInRun || VERSION_IN_TEXT.test(lines[i]));
-      if (mark?.t === 'doubt' && versionInRun) return [];
+      versionAbove = /\S/.test(lines[i]) && (versionAbove || VERSION_IN_TEXT.test(lines[i]));
+      if (mark?.t === 'doubt' && (versionAbove || versionFrom(i))) return [];
     }
     const v = mark?.t === 'heading' && mark.level === 2 && !mark.nested ? releaseHeadingVersion(mark.text, refs, now) : null;
     if (v) out.push(v);
