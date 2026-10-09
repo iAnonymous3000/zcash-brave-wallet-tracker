@@ -273,7 +273,10 @@ interface WorkBudget {
   used: number;
   limit: number;
 }
-/** Throws when the readings of a text, with `tokens` made so far in the reading in progress, are over budget. */
+/**
+ * Throws when the readings of a text, with `tokens` made so far in the reading in progress, are over budget (`line`:
+ * where the reading is, or -1 between readings).
+ */
 function checkWork(budget: WorkBudget, tokens: number, line: number): void {
   if (budget.used + WORK_PER_TOKEN * tokens > budget.limit) throw new ChangelogStructureError('a structure too dense to read in time (block quotes or list items nested deep with long runs of lines)', line);
 }
@@ -317,7 +320,7 @@ const parseInfo = (state: StateBlock) => state.env[PARSE] as ParseInfo;
  */
 export class ChangelogStructureError extends Error {
   constructor(what: string, line: number) {
-    super(`changelog structure not read: ${what} (from line ${line + 1})`);
+    super(`changelog structure not read: ${what}${line >= 0 ? ` (from line ${line + 1})` : ''}`);
     this.name = 'ChangelogStructureError';
   }
 }
@@ -1079,10 +1082,10 @@ function readStructure(lines: string[], budget: WorkBudget, rereads = 0, github 
   };
   const env: Env = { [PARSE]: parse };
   budget.used += WORK_PER_LINE * lines.length;
-  checkWork(budget, 0, 0);
+  checkWork(budget, 0, -1);
   const tokens: Token[] = markdown.parse(src, env);
   budget.used += WORK_PER_TOKEN * tokens.length;
-  checkWork(budget, 0, 0);
+  checkWork(budget, 0, -1);
   const refs = new Map<string, LinkDef>();
   for (const [label, r] of Object.entries(env.references ?? {})) refs.set(label, { dest: r.href, title: r.title === '' ? null : r.title });
 
