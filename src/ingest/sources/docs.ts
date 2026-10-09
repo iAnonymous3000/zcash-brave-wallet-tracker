@@ -171,10 +171,12 @@ function hidesElement(tag: string): boolean {
 /**
  * The HTML that renders as text: comments (including `<!-->`, `--!>` endings and an unclosed comment), doctype,
  * CDATA and processing instructions, raw-text elements that are not shown (script, style, title, ... closed or not),
- * templates, media fallback content and elements hidden by a `hidden` attribute or an inline style are dropped
- * (nested elements of the same name are counted; an element never closed hides the rest of the body); every other tag
- * becomes a space. Markup this cannot judge (stylesheet classes, an end tag implied by HTML's rules) reads as hidden,
- * so the only error it can make is to call a body unreadable, which keeps the last captured copy.
+ * templates, media fallback content and elements hidden by a `hidden` attribute or an inline display:none,
+ * visibility:hidden, font-size:0 or opacity:0 style are dropped (nested elements of the same name are counted); every
+ * other tag becomes a space. Where this errs toward unreadable (which keeps the last captured copy): an end tag that
+ * HTML's rules imply but the body does not write (`<p hidden>a<p>b`), or a hiding element never closed, hides the
+ * rest of the body. Hiding it cannot see reads as visible: stylesheet rules and classes (`class="hidden"`) and other
+ * inline CSS (`height:0; overflow:hidden`) are not evaluated.
  */
 function renderedMarkupText(html: string): string {
   let out = '';

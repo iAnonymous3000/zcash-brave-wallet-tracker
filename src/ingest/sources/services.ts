@@ -1418,12 +1418,13 @@ function encodingProblem(src: string): string | null {
  * true/false only when every statement of the module is an inert form (see statementProblem: imports, docstrings,
  * annotations, `NAME[: T] = value` with inert values, one-line `def f(...): pass`, one-line `if ...: raise
  * BuiltinError(...)` guards, calls whose root name is defined nowhere), the module compiles on every Python version
- * (anything that compiles on some versions only is unknown), and the switch is bound exactly once, to a literal
- * tuple/list/set of Chain members. Anything else leaves the value unknown (null): a statement that can run code could
- * rebind or modify the switch in ways reading the file cannot rule out. A star import, or a name rebound after the
- * definition, releases an object from another module after the store, and its finaliser can rebind the switch, so
- * those are unknown too. Code in other modules (what an import runs, how Chain is defined) is outside what this file
- * can show. `src` is the decoded file, with its byte order mark if it has one.
+ * checked (3.9, 3.11 and 3.13; a form on which versions may disagree is unknown), and the switch is bound exactly once,
+ * to a literal tuple/list/set of Chain members. Anything else leaves the value unknown (null): a statement that can run
+ * code could rebind or modify the switch in ways reading the file cannot rule out. A star import, or a name rebound
+ * after the definition, may release an object from another module after the store, and its finaliser can rebind the
+ * switch, so those are unknown too (rebinding is unknown even when the earlier value was a literal: the rule is kept
+ * simple and errs toward unknown). Code in other modules (what an import runs, how Chain is defined) is outside what
+ * this file can show. `src` is the decoded file, with its byte order mark if it has one.
  */
 export function parseGate3Switch(src: string): { zcashDisabled: boolean | null; line: number | null; reason: string | null } {
   const stmts = pythonStatements(src);

@@ -121,7 +121,7 @@ test('R3-ING-08: a statement after ";" on a compound header line belongs to the 
   for (const [src, v] of reads) assert.equal(parseGate3Switch(src).zcashDisabled, v, src);
 });
 
-test('R3-ING-08: after a star import the definition only wins when nothing after its store can run star-imported code', async () => {
+test('R3-ING-08: after a star import the definition never certainly wins: annotated, followed by code, or quiet, it is unknown', async () => {
   // A star import can bind any name (frozenset, Chain, __annotations__, ...) to an object whose __class_getitem__,
   // __setitem__, __hash__, __add__ or __getattr__ rebinds the switch. CPython 3.9 evaluates an annotated definition's
   // annotation and stores it into __annotations__ after storing the value, so in each module below such an object
