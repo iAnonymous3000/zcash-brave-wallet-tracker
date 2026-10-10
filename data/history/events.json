@@ -1,5 +1,29 @@
 [
  {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-10T13:03:09Z",
+  "title": "Upstream: lightwalletd v0.5.5",
+  "impact": "lightwalletd v0.5.5 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.5"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-10T13:03:09Z",
+   "not in Brave lockfile"
+  ],
+  "id": "9a944e77f66834cd",
+  "detectedAt": "2026-10-10T18:37:57.169Z",
+  "basis": "observed"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-10-09T19:30:13Z",
   "title": "New feature request: Allow users to choose a priority fee for Zcash sends",
@@ -14223,67 +14247,6 @@
    "created 2025-10-13T10:11:48Z"
   ],
   "id": "fdd4fc4ee7db4bc2",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-10-10T15:36:43Z",
-  "title": "Closed (completed): Disabling Zcash flag disables Cardano option in Add account modal",
-  "impact": "Closed as completed. Listed in Desktop Stable 1.85.111 release notes.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-browser#50001"
-  ],
-  "topic": "addresses",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50001",
-    "url": "https://github.com/brave/brave-browser/issues/50001"
-   },
-   {
-    "label": "brave-core#31753",
-    "url": "https://github.com/brave/brave-core/pull/31753"
-   }
-  ],
-  "evidence": [
-   "closed by supermassive at 2025-10-10T15:36:43Z",
-   "state reason: completed"
-  ],
-  "id": "de2489e69ebbd485",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-10-10T15:36:41Z",
-  "title": "Merged: Fix create cardano account option",
-  "impact": "Merged into brave-core master on 2025-10-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-core#31753"
-  ],
-  "topic": "addresses",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31753",
-    "url": "https://github.com/brave/brave-core/pull/31753"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-10T15:36:41Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "f6ded67bad95d466",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

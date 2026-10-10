@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-10T12:34:30.012Z",
+ "retrievedAt": "2026-10-10T18:37:57.169Z",
  "data": {
   "crates": {
    "orchard": {
@@ -857,6 +857,16 @@
    }
   },
   "releases": [
+   {
+    "id": "zcash/lightwalletd@v0.5.5",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.5.5",
+    "publishedAt": "2026-10-10T13:03:09Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.5.5",
+    "source": "github-release",
+    "prerelease": false
+   },
    {
     "id": "crates.io/pasta_curves@0.6.1",
     "project": "pasta_curves",
@@ -2716,16 +2726,6 @@
     "prerelease": false
    },
    {
-    "id": "zcash/lightwalletd@v0.4.9",
-    "project": "lightwalletd",
-    "repo": "zcash/lightwalletd",
-    "version": "v0.4.9",
-    "publishedAt": "2021-12-09T22:40:02Z",
-    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.9",
-    "source": "github-release",
-    "prerelease": false
-   },
-   {
     "id": "zcash/lightwallet-protocol@v0.3.1",
     "project": "lightwallet-protocol",
     "repo": "zcash/lightwallet-protocol",
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-10T12:34:30.012Z"
+   "checkedAt": "2026-10-10T18:37:57.169Z"
   },
   "zips": {
    "2005": {
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-10T12:34:30.012Z"
+   "checkedAt": "2026-10-10T18:37:57.169Z"
   }
  },
- "completeAt": "2026-10-10T12:34:30.012Z"
+ "completeAt": "2026-10-10T18:37:57.169Z"
 }
