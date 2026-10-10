@@ -1,5 +1,118 @@
 [
  {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Memos on shielded sends on Android Release: opt-in → in-build",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → in-build"
+  ],
+  "id": "490ee23727dfe87f",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Orchard → Ironwood migration on Android Release: opt-in → in-build",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → in-build"
+  ],
+  "id": "98d87c24e75cbfb7",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "flag-changed",
+  "sourceAt": null,
+  "title": "kZCashIronwoodEnabled default off → on in Android Release v1.97.56",
+  "impact": "The compiled-in default for kZCashIronwoodEnabled changed between v1.96.61 and v1.97.56 for Android. Defaults can still be overridden by brave://flags or server-side variations.",
+  "highlight": "migration",
+  "itemIds": [],
+  "topic": "ironwood",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "features.cc @ v1.97.56",
+    "url": "https://github.com/brave/brave-core/blob/v1.97.56/components/brave_wallet/common/features.cc"
+   }
+  ],
+  "evidence": [
+   "v1.96.61: off",
+   "v1.97.56: on"
+  ],
+  "id": "cc05e7a2f27e7856",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Ironwood pool (NU6.3) on Android Release: opt-in → in-build",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → in-build"
+  ],
+  "id": "df7fab6f6c0e8686",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-10-10T21:25:25Z",
+  "title": "Merged: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "Merged into brave-core master on 2026-10-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "merged 2026-10-10T21:25:25Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "d5d99b668d02c43d",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "observed"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-10-10T13:03:09Z",
   "title": "Upstream: lightwalletd v0.5.5",
@@ -108,6 +221,33 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: fix: reject fractional Zcash account birthday blocks",
+  "impact": "The merged code (brave-core#39811) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#58757"
+  ],
+  "topic": "sync",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58757",
+    "url": "https://github.com/brave/brave-browser/issues/58757"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...748099ff: behind"
+  ],
+  "id": "257b4eea6000e7b9",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "released",
   "sourceAt": "2026-10-07T03:18:14Z",
   "title": "Desktop 1.97.56 release notes: Enabled Zcash Ironwood support by default. (#56872)",
@@ -140,6 +280,60 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: fix: Zcash Ironwood transactions miscalculate fees and action counts",
+  "impact": "The merged code (brave-core#39877) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "migration",
+  "itemIds": [
+   "brave/brave-browser#58957"
+  ],
+  "topic": "ironwood",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58957",
+    "url": "https://github.com/brave/brave-browser/issues/58957"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...482afb5b: behind"
+  ],
+  "id": "62dcd46c4717abc2",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: fix: reject negative Zcash send amounts before review",
+  "impact": "The merged code (brave-core#39703) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#58755"
+  ],
+  "topic": "transactions",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58755",
+    "url": "https://github.com/brave/brave-browser/issues/58755"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...aaa04be1: behind"
+  ],
+  "id": "84aa2fb9a49dff6c",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "released",
   "sourceAt": "2026-10-07T03:18:14Z",
   "title": "Desktop 1.97.56 release notes: Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
@@ -169,6 +363,114 @@
   ],
   "id": "8ae97e254b18e23f",
   "detectedAt": "2026-10-08T14:35:45.102Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: [ZCash] Ironwood support root issue.",
+  "impact": "The merged code (brave-core#40152) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "migration",
+  "itemIds": [
+   "brave/brave-browser#56872"
+  ],
+  "topic": "ironwood",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#56872",
+    "url": "https://github.com/brave/brave-browser/issues/56872"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...f93e4a6b: behind"
+  ],
+  "id": "902b6acf2d069ea1",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: [ZCash] Enable ironwood by default.",
+  "impact": "The merged code (brave-core#40152) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "migration",
+  "itemIds": [
+   "brave/brave-browser#58832"
+  ],
+  "topic": "ironwood",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58832",
+    "url": "https://github.com/brave/brave-browser/issues/58832"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...f93e4a6b: behind"
+  ],
+  "id": "c7c1e1ce49428b88",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: [Wallet] Adding custom user asset displays scrollbars",
+  "impact": "The merged code (brave-core#39591) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#58567"
+  ],
+  "topic": "display",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58567",
+    "url": "https://github.com/brave/brave-browser/issues/58567"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...ac05a811: behind"
+  ],
+  "id": "c817ad1520314011",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-07T03:18:14Z",
+  "title": "In Android Release 1.97.56: [ZCash] Reset migration flag when turn off ironwood feature",
+  "impact": "The merged code (brave-core#39838) is now part of the Android Release build 1.97.56. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "migration",
+  "itemIds": [
+   "brave/brave-browser#58970"
+  ],
+  "topic": "ironwood",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#58970",
+    "url": "https://github.com/brave/brave-browser/issues/58970"
+   }
+  ],
+  "evidence": [
+   "GitHub compare v1.97.56...7a8a8570: behind"
+  ],
+  "id": "cc3005f078d37766",
+  "detectedAt": "2026-10-10T23:35:20.505Z",
   "basis": "backfill"
  },
  {
