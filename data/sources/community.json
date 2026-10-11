@@ -1,7 +1,7 @@
 {
  "sourceId": "community",
  "schema": 1,
- "retrievedAt": "2026-10-11T12:52:39.295Z",
+ "retrievedAt": "2026-10-11T18:56:44.912Z",
  "data": {
   "topics": [
    {
@@ -138,7 +138,7 @@
     "postsCount": 7,
     "replyCount": 4,
     "views": 116,
-    "closed": false,
+    "closed": true,
     "archived": false,
     "hasAcceptedAnswer": false,
     "tags": [],
@@ -939,5 +939,5 @@
    "ironwood order:latest p1"
   ]
  },
- "completeAt": "2026-10-11T12:52:39.295Z"
+ "completeAt": "2026-10-11T18:56:44.912Z"
 }

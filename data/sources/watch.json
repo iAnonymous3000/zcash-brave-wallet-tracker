@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-11T12:52:39.295Z",
+ "retrievedAt": "2026-10-11T18:56:44.912Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.6.0.",
-    "metadataReadAt": "2026-10-11T12:52:39.295Z"
+    "metadataReadAt": "2026-10-11T18:56:44.912Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Discovery that continues past its budget, and a test shard service for….",
-    "metadataReadAt": "2026-10-11T12:52:39.295Z"
+    "metadataReadAt": "2026-10-11T18:56:44.912Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-11T12:52:39.295Z",
-    "searchCheckedAt": "2026-10-11T12:52:39.295Z"
+    "checkedAt": "2026-10-11T18:56:44.912Z",
+    "searchCheckedAt": "2026-10-11T18:56:44.912Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-11T12:52:39.295Z",
-    "searchCheckedAt": "2026-10-11T12:52:39.295Z"
+    "checkedAt": "2026-10-11T18:56:44.912Z",
+    "searchCheckedAt": "2026-10-11T18:56:44.912Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-11T12:52:39.295Z",
-    "searchCheckedAt": "2026-10-11T12:52:39.295Z"
+    "checkedAt": "2026-10-11T18:56:44.912Z",
+    "searchCheckedAt": "2026-10-11T18:56:44.912Z"
    }
   ]
  },
- "completeAt": "2026-10-11T12:52:39.295Z"
+ "completeAt": "2026-10-11T18:56:44.912Z"
 }
