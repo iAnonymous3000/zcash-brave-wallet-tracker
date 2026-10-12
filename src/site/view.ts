@@ -7,6 +7,8 @@ import { STAGE_LABEL } from '../derive/status.ts';
 import { CELL_LABEL, SERVICE_UNKNOWN_TEXT as DERIVED_SERVICE_UNKNOWN } from '../derive/capabilities.ts';
 import type { Channel, EvidenceRecord, Platform, WorkItem } from '../lib/types.ts';
 import { compareSemver, compareVersions } from '../lib/util.ts';
+import { ZCASH_TEXT } from '../ingest/parsers.ts';
+import { pendingNotesIssue } from '../ingest/sources/changelogs.ts';
 
 export const PLATFORMS: Platform[] = ['desktop', 'android', 'ios'];
 export const CHANNELS: Channel[] = ['release', 'beta', 'nightly'];
@@ -605,6 +607,8 @@ export interface ReleaseNoteLine {
   draft: boolean;
   removed: boolean;
   issueRefs: string[];
+  /** A tracked issue reference alone does not make the release-note text Zcash-specific. */
+  scope: 'zcash' | 'wallet-context';
 }
 export interface ReleaseVersion {
   platform: Platform;
@@ -626,9 +630,10 @@ export function groupReleaseNotes(evidence: Pick<EvidenceRecord, 'kind' | 'platf
       text: e.text,
       permalink: e.permalink,
       source: e.source,
-      draft: /draft|pending/i.test(e.source),
+      draft: e.kind === 'release-notes' || pendingNotesIssue(e.source) !== null,
       removed: Boolean(e.goneSince),
       issueRefs: [...e.text.matchAll(/#(\d{4,6})\b/g)].map((m) => `brave/brave-browser#${m[1]}`),
+      scope: ZCASH_TEXT.test(e.text) ? 'zcash' : 'wallet-context',
     });
   }
   return [...map.values()].sort((a, b) => compareVersions(b.version, a.version) || a.platform.localeCompare(b.platform));
@@ -732,7 +737,7 @@ export function searchIndex(d: SiteData, notes: ReleaseVersion[], href: { featur
     const members = [...g.members.issues, ...g.members.masterPrs, ...g.members.uplifts, ...g.members.duplicates].map((id) => `#${id.split('#')[1]} ${id.replace(/^brave\//, '')}`);
     add({ k: 'Work', t: g.title, s: `${ref} · ${stageView(g).label}`, u: href.work(g.id) }, `${members.join(' ')} ${g.topic.name}`);
   }
-  for (const v of notes) for (const l of v.lines) add({ k: 'Release note', t: l.text, s: `${PLATFORM_LABEL[v.platform]} ${v.version}${l.draft ? ' (draft)' : ''}`, u: `${href.page('releases/')}#${v.platform}-${v.version.replace(/\./g, '-')}` });
+  for (const v of notes) for (const l of v.lines) add({ k: 'Release note', t: l.text, s: `${PLATFORM_LABEL[v.platform]} ${v.version}${l.scope === 'wallet-context' ? ' · Wallet context' : ''}${l.draft ? ' · Release-notes issue' : ''}`, u: `${href.page('releases/')}#${v.platform}-${v.version.replace(/\./g, '-')}` });
   for (const c of d.community) add({ k: 'Community', t: c.title, s: `Brave Community · ${c.postsCount} posts`, u: c.url });
   return out;
 }

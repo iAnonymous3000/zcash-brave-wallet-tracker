@@ -118,9 +118,9 @@ export function homePage(data: SiteData, events: ChangeEvent[], notes: ReleaseVe
   <section class="panel" aria-labelledby="new-h">
     <div class="panel-head"><h2 id="new-h">What’s new in releases</h2><a class="head-link" href="${u('releases/')}">All releases</a></div>
     ${recentNotes.length ? html`<ul class="notes-list">${recentNotes.map((v) => html`<li>
-      <p class="nl-head"><a href="${u(`releases/#${v.platform}-${v.version.replace(/\./g, '-')}`)}">${PLATFORM_LABEL[v.platform]} ${v.version}</a>${v.lines.some((l) => l.draft) ? html` <span class="tag">Draft notes</span>` : ''}</p>
-      <ul>${v.lines.filter((l) => !l.removed).map((l) => html`<li>${l.text} ${ext(l.permalink, 'source', 'src-link')}</li>`)}</ul>
-    </li>`)}</ul>` : html`<p class="panel-empty">No Zcash lines in the captured release notes.</p>`}
+      <p class="nl-head"><a href="${u(`releases/#${v.platform}-${v.version.replace(/\./g, '-')}`)}">${PLATFORM_LABEL[v.platform]} ${v.version}</a>${v.lines.some((l) => l.draft) ? html` <span class="tag">Release-notes issue</span>` : ''}</p>
+      <ul>${v.lines.filter((l) => !l.removed).map((l) => html`<li>${l.scope === 'wallet-context' ? html`<span class="tag">Wallet context</span> ` : ''}${l.text} ${ext(l.permalink, 'source', 'src-link')}</li>`)}</ul>
+    </li>`)}</ul>` : html`<p class="panel-empty">No Zcash or related wallet lines in the captured release notes.</p>`}
   </section>
 
   <section class="panel" aria-labelledby="ki-h">

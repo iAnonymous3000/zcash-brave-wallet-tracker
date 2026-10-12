@@ -27,12 +27,16 @@ Search (`/` or ⌘K/Ctrl+K) covers features, work items, release notes and commu
 
 ```
 GitHub Actions (cron every 2 h, built-in GITHUB_TOKEN)
+  └─ check out + synchronize     adopt newer data only when the source tree is unchanged
+  └─ npm run check               typecheck + tests before collection
   └─ node src/ingest/run.ts       collectors → data/sources/*.json (last good data kept per source)
        └─ src/derive/*            relationships, statuses, capabilities, change events
                                   → data/derived/site.json, data/history/events.json
-  └─ git commit data/             auditable history of every refresh
   └─ node src/site/build.ts       static HTML (one page per work group) → dist/
+  └─ scan dist/ and data/         block publication on sensitive patterns or incomplete scans
+  └─ git commit + push data/      auditable history of the published refresh
   └─ deploy to GitHub Pages       served from a CDN; page views never trigger crawls
+  └─ report refresh outcome       fail the job on a failed refresh or over-window stale sources
 ```
 
 ### Sources (all public)
@@ -60,10 +64,11 @@ GitHub Actions (cron every 2 h, built-in GITHUB_TOKEN)
    keeps scheduled workflows from being auto-disabled for inactivity.
 2. **Only the built-in `GITHUB_TOKEN`.** It can only read public data, so private repositories can never
    leak into the site even by mistake. No personal access token exists. References to non-public
-   repositories are additionally dropped at ingestion and the build fails if any reach the output.
+   repositories are additionally dropped at ingestion and checked by the publication secret scan.
 3. **Per-source isolation with last-good data.** Each collector writes its own envelope; a failure keeps the
    previous envelope, records the error, and the site shows the source's age (computed in the browser, so a
-   stale build still reads as stale). A run where every source fails exits non-zero after redeploying.
+   stale build still reads as stale). A failed refresh remains visible even when its retained data can be
+   built, validated and deployed; the workflow then reports the failure.
 4. **Deterministic extraction only.** No AI service. Status and "why it matters" text come from documented
    rules and templates filled with captured facts.
 5. **Facts kept separate.** Issue state, PR state, build presence, release notes, QA labels and milestones
@@ -110,17 +115,29 @@ do not commit what it produces.
 
 * **Deploy retry.** `actions/deploy-pages` occasionally reports "Found 0 artifact(s)" right after upload;
   the workflow waits 90 s and retries once, and fails visibly if the retry fails. Data is committed before
-  the deploy, so nothing is lost.
-* **Partial outages.** One failed source never blocks the others; its last good data stays published and the
-  Sources page shows its age, last attempt and error. The job exits non-zero only when every source fails.
+  the deploy, so a failed deployment leaves a repository record and the previous live deployment.
+* **Queued refreshes.** Immediately after checkout, the workflow fetches its event branch and adopts the
+  current tip only when every tracked path outside `data/` is unchanged. This carries forward an earlier
+  refresh's data before collecting again. A source, configuration, dependency or test change stops the run
+  before installation and collection; dispatch a new run from the updated revision.
+* **Refresh outcomes.** A partial source outage within the six-hour staleness window can publish and exit
+  successfully while showing its failed reads. The refresh process exits 1 when every selected source fails
+  or derivation fails, and 2 when a source remains stale beyond that window. Eligible collected or retained
+  data is still built, scanned, committed and deployed before the workflow reports that refresh failure.
+  A build, secret scan or push failure blocks deployment; a failed deploy keeps the previous live site.
+* **Push retries.** A rejected data push is retried after rebase only when the source tree is unchanged.
+  The exact rebased data is rebuilt and rescanned before another push. A conflict or changed source stops
+  publication and requires a fresh run.
 * **Rate limits.** Per-source request budgets keep a run well under the `GITHUB_TOKEN` hourly limit; long
   backlogs (e.g. build-ancestry checks) resume on the next run.
-* **Auditing the data.** Every refresh is a commit (`data: refresh (<trigger>, run <id>)`), so `git log -p data/`
+* **Auditing the data.** Every published refresh has a commit (`data: refresh (<trigger>, run <id>)`), so `git log -p data/`
   shows exactly what changed when.
 
 ## Refresh and deployment
 
 * Workflow: `.github/workflows/refresh.yml` — schedule `17 */2 * * *` plus manual "Run workflow".
+* Scheduled starts can be delayed or skipped by GitHub Actions. The Sources page reports actual run
+  intervals and data ages; the two-hour schedule is not a guarantee of two-hour freshness.
 * Permissions: `contents: write` (commit data), `pages: write`, `id-token: write` (Pages deploy).
 * Pages: Settings → Pages → Source: **GitHub Actions**.
 * `ci.yml` runs typecheck, tests and a build on code pushes (bot data commits do not trigger it).
