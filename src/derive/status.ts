@@ -6,6 +6,7 @@ import type { ChangelogEntry, Channel, ChannelVersion, Platform, WorkItem } from
 import { SERVICE_REPOS } from '../../config/tracker.ts';
 import { compareVersions } from '../lib/util.ts';
 import { inclusionAt, type PrInclusion } from '../ingest/sources/build-inclusion.ts';
+import { pendingNotesIssue } from '../ingest/sources/changelogs.ts';
 import { osLabels, parseMilestone, parseQaLabels, qaPlatform } from '../ingest/parsers.ts';
 import { isUpliftPr, type Relations, type WorkGroup } from './relations.ts';
 
@@ -87,7 +88,8 @@ export interface GroupStatus {
   implementation: { state: 'none' | 'open' | 'draft' | 'merged' | 'closed-unmerged'; mergedAt: string | null; prs: string[] };
   uplifts: { id: string; base: string | null; state: WorkItem['state']; mergedAt: string | null }[];
   builds: BuildCell[];
-  releaseNotes: { platform: Platform; version: string; text: string; permalink: string; issue: string }[];
+  /** `notesIssue`: set when the line comes from an iOS release-notes issue not yet merged into CHANGELOG_iOS.md. */
+  releaseNotes: { platform: Platform; version: string; text: string; permalink: string; issue: string; notesIssue?: number }[];
   qa: { required: boolean | null; passed: { label: string; platform: Platform | null }[]; failed: string[]; blocked: boolean };
   milestone: { title: string; line: string | null; note: string } | null;
   platforms: Platform[];
@@ -180,7 +182,10 @@ export function computeGroupStatus(
   const groupIssues = new Set([...g.issues, ...g.duplicates]);
   const releaseNotes = ctx.changelog
     .filter((e) => e.issueRefs.some((x) => groupIssues.has(x)))
-    .map((e) => ({ platform: e.platform, version: e.version, text: e.text, permalink: e.permalink, issue: e.issueRefs.find((x) => groupIssues.has(x))! }))
+    .map((e) => {
+      const notesIssue = pendingNotesIssue(e.file);
+      return { platform: e.platform, version: e.version, text: e.text, permalink: e.permalink, issue: e.issueRefs.find((x) => groupIssues.has(x))!, ...(notesIssue === null ? {} : { notesIssue }) };
+    })
     .sort((a, b) => compareVersions(a.version, b.version));
 
   // QA (issue labels).

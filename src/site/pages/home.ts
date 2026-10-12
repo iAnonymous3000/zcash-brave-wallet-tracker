@@ -2,12 +2,12 @@ import type { SiteData } from '../../derive/index.ts';
 import type { ChangeEvent, Channel, Platform } from '../../lib/types.ts';
 import { ext, featureHref, glyph, html, itemHref, raw, shortRef, statusBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, presentSite, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
+import { CHANNELS, CHANNEL_LABEL, PLATFORMS, PLATFORM_LABEL, EVIDENCE_LABEL, buildSummary, decidingEvidence, docConflict, docPublisher, docQuote, comingNext, comingNextNote, fixFacts, gate3Facts, groupFeatures, knownIssues, nu7Facts, overviewCounts, presentSite, statusExplain, statusLabel, type Gate3State, type ReleaseVersion } from '../view.ts';
 import { KIND_LABEL, eventGroup, eventScope, nowShownNote, outdatedMarker, presentEvent } from './changes.ts';
 import { groupStageBadge } from './work.ts';
 
 const DEFAULT = 'desktop/release';
-const SUMMARY_ORDER = ['available', 'in-build', 'opt-in', 'off', 'service-off', 'absent', 'not-verified', 'not-planned'];
+const SUMMARY_ORDER = ['available', 'in-build', 'opt-in', 'off', 'hidden', 'service-off', 'absent', 'not-verified', 'not-planned'];
 
 export function splitName(name: string): [string, string] {
   const m = name.match(/^(.*?)\s*\((.*)\)$/);
@@ -89,10 +89,12 @@ export function homePage(data: SiteData, events: ChangeEvent[], notes: ReleaseVe
           </div>
           ${builds.map((b) => {
             const cell = row.cells.find((x) => x.platform === b.p && x.channel === b.c)!;
-            const ev = cell.evidence.find((e) => !e.contrary && e.url) ?? cell.evidence.find((e) => e.url);
+            const dec = decidingEvidence(cell, d.capabilities);
+            const conflict = docConflict(cell);
             return html`<div class="fcard-v" data-k="${b.k}" ${hidden(b.k)}>
               <p class="fcard-why">${statusExplain(cell, true)}</p>
-              ${ev?.url ? html`<p class="fcard-ev">${ext(ev.url, `Evidence: ${EVIDENCE_LABEL[ev.kind] ?? ev.kind}`, 'ev-link')}</p>` : ''}
+              ${conflict?.url ? html`<p class="fcard-conflict">${glyph('warn')}<span>${ext(conflict.url, docPublisher(conflict.url))}: “${docQuote(conflict, b.p)}”${conflict.date ? ` (edited ${conflict.date})` : ''}</span></p>` : ''}
+              ${dec?.e.url ? html`<p class="fcard-ev">${ext(dec.e.url, `Evidence: ${EVIDENCE_LABEL[dec.e.kind] ?? dec.e.kind}${dec.via ? ` (${dec.via})` : ''}`, 'ev-link')}</p>` : ''}
             </div>`;
           })}
         </article>`;

@@ -38,7 +38,7 @@ const errText = (err: unknown) => (err instanceof Error ? err.message : String(e
 /** Why a cached topic must be re-read, judging from its search metadata; null when it looks unchanged. */
 export function searchMetadataChange(old: CommunityTopic, hit: any): string | null {
   if ((hit.last_posted_at ?? null) !== old.lastPostedAt) return 'new post';
-  if (typeof hit.title === 'string' && decodeEntities(hit.title) !== old.title) return 'title changed';
+  if (typeof hit.title === 'string' && redactNonPublicLinks(decodeEntities(hit.title)) !== old.title) return 'title changed';
   if (typeof hit.category_id === 'number' && hit.category_id !== old.categoryId) return 'category changed';
   if (Array.isArray(hit.tags) && Array.isArray(old.tags)) {
     const tags = hit.tags.map((x: any) => (typeof x === 'string' ? x : x?.name)).filter(Boolean).sort().join(',');
@@ -148,8 +148,9 @@ export const community: Collector<CommunityData> = {
       const first = d.post_stream?.posts?.[0];
       const cooked: string = first?.cooked ?? '';
       const allCooked = (d.post_stream?.posts ?? []).map((p: any) => p.cooked ?? '').join('\n');
-      const title = decodeEntities(String(d.title ?? t.title ?? ''));
-      const text = `${title}\n${allCooked}`;
+      const rawTitle = decodeEntities(String(d.title ?? t.title ?? ''));
+      const title = redactNonPublicLinks(rawTitle);
+      const text = `${rawTitle}\n${allCooked}`;
       const matched = TERMS.filter((term) => new RegExp(`\\b${term}\\b`, 'i').test(text));
       if (!CONFIRM.test(text)) return 'not-zcash'; // search stemming false positive, or edited
       const categoryId = d.category_id ?? t.category_id;
@@ -172,7 +173,7 @@ export const community: Collector<CommunityData> = {
         archived: Boolean(d.archived),
         hasAcceptedAnswer: Boolean(d.has_accepted_answer ?? t.has_accepted_answer),
         tags: (d.tags ?? []).map((x: any) => (typeof x === 'string' ? x : x?.name)).filter(Boolean),
-        excerpt: plainExcerpt(redactNonPublicLinks(cooked), 360),
+        excerpt: redactNonPublicLinks(plainExcerpt(redactNonPublicLinks(cooked), 360)),
         githubRefs,
         matchedTerms: matched,
         retrievedAt: ctx.now,

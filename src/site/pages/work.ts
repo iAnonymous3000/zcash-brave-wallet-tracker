@@ -2,6 +2,7 @@ import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { ChangeEvent, CommunityTopic, Platform, TimelineEntry, WorkItem } from '../../lib/types.ts';
 import { CHANNEL_NAME, PLATFORM_NAME, chip, ext, ghLink, glyph, html, itemHref, raw, shortRef, stageBadge, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
+import { notesIssueClause } from '../../ingest/sources/changelogs.ts';
 import { fixFacts, gate3Facts, presentStages, stageView } from '../view.ts';
 import { eventCard } from './changes.ts';
 import { gate3Clause } from './home.ts';
@@ -26,8 +27,13 @@ function prState(it: Pick<WorkItem, "state" | "mergedAt" | "isDraft">): string {
 
 function notesSummary(g: SiteGroup): string {
   const byPlatform = new Map<Platform, string>();
-  for (const n of g.status.releaseNotes) if (!byPlatform.has(n.platform)) byPlatform.set(n.platform, n.version);
+  for (const n of g.status.releaseNotes) if (!byPlatform.has(n.platform)) byPlatform.set(n.platform, noteLabel(n));
   return [...byPlatform].map(([p, v]) => `${PLATFORM_NAME[p]} ${v}`).join(', ');
+}
+
+/** A note's version, marked when it comes from an iOS release-notes issue rather than a changelog file. */
+function noteLabel(n: SiteGroup['status']['releaseNotes'][number]): string {
+  return n.notesIssue ? `${n.version} (release-notes issue)` : n.version;
 }
 
 export function workPage(d: SiteData): SafeHtml {
@@ -157,8 +163,8 @@ ${factStrip(g, d)}
     ${g.members.masterPrs.length ? html`<ul class="plain">${g.members.masterPrs.map((id) => { const p = d.items[id]; return html`<li>${ghLink(id, p.url)} <strong>${prState(p)}</strong> into <code>${p.baseRef ?? '?'}</code>${p.author ? ` by ${p.author}` : ''}<br><span class="muted">${p.title}</span><br><span class="muted">Linked by: ${linkBasis(p, g.lead)}</span></li>`; })}</ul>` : html`<p class="muted">No pull request is linked by closing keywords, GitHub’s closing references, a <code>brave_&lt;issue&gt;</code> branch name or the issue timeline.</p>`}
     ${g.members.uplifts.length ? html`<h3>Uplifts to release branches</h3><ul class="plain">${g.members.uplifts.map((id) => { const p = d.items[id]; const line = (p.baseRef ?? '').replace(/\.x$/, ''); return html`<li>${ghLink(id, p.url)} → <code>${p.baseRef}</code>${d.lineChannel[line] ? html` <span class="muted">(currently ${d.lineChannel[line]})</span>` : ''}: <strong>${prState(p)}</strong></li>`; })}</ul>` : ''}
   </section>
-  <section class="facet" aria-labelledby="f-notes"><h2 id="f-notes">Release notes (Stable)</h2>
-    ${st.releaseNotes.length ? html`<ul class="plain">${st.releaseNotes.map((n) => html`<li><strong>${PLATFORM_NAME[n.platform]} ${n.version}</strong>: “${n.text}” ${ext(n.permalink, 'changelog line', 'ref')}</li>`)}</ul><p class="muted">Release notes are per platform. A platform without an entry is not covered by these lines.</p>` : html`<p class="muted">No platform changelog lists this item.</p>`}
+  <section class="facet" aria-labelledby="f-notes"><h2 id="f-notes">Release notes</h2>
+    ${st.releaseNotes.length ? html`<ul class="plain">${st.releaseNotes.map((n) => html`<li><strong>${PLATFORM_NAME[n.platform]} ${n.version}</strong>: “${n.text}” ${ext(n.permalink, n.notesIssue ? `release-notes issue #${n.notesIssue}` : 'changelog line', 'ref')}${n.notesIssue ? html`<br><span class="muted">From ${notesIssueClause(n.notesIssue)}.</span>` : ''}</li>`)}</ul><p class="muted">Release notes are per platform. Lines come from each platform’s Stable changelog${st.releaseNotes.some((n) => n.notesIssue) ? ', or, where marked, from Brave’s iOS release-notes issue before it is merged into that changelog' : ''}. A platform without an entry is not covered by these lines.</p>` : html`<p class="muted">No platform changelog lists this item.</p>`}
   </section>
   <section class="facet" aria-labelledby="f-qa"><h2 id="f-qa">Validation</h2>
     <p>${st.qa.required === true ? 'QA required (QA/Yes).' : st.qa.required === false ? 'Not QA-tested (QA/No).' : 'No QA label.'}${st.qa.blocked ? ' QA blocked.' : ''}</p>
@@ -173,7 +179,7 @@ ${factStrip(g, d)}
 </div>
 
 ${serviceOnly(g, d) ? html`<section class="block" aria-labelledby="f-builds"><h2 id="f-builds">Where this applies</h2>
-  <p>This change was merged in a Brave server-side repository (${g.members.masterPrs.map((id) => shortRef(id)).join(', ')}). It is not part of any browser build: once Brave deploys it, it applies to every platform and channel at the same time. Deployment timing is not public.</p>
+  <p>This change was merged in a Brave server-side repository (${g.members.masterPrs.map((id) => shortRef(id)).join(', ')}). It is not part of any browser build. ${serverReach(g)} Deployment timing is not public.</p>
   ${d.upstream.services?.gate3 && g.lead.startsWith('brave/gate3') ? html`<p>Current state of the public repository: ${gate3Clause(gate3Facts(d.upstream.services.gate3.zcashDisabled).state)} (${ext(d.upstream.services.gate3.url, 'source')}, checked ${time(d.upstream.services.gate3.checkedAt, { rel: true })}). The deployed service could differ.</p>` : ''}
 </section>` : html`<section class="block" aria-labelledby="f-builds">
   <h2 id="f-builds">Build presence</h2>
@@ -208,7 +214,7 @@ function factStrip(g: SiteGroup, d: SiteData): SafeHtml {
   const f = fixFacts(g);
   const known = st.builds.filter((b) => b.included !== null);
   const yes = st.builds.filter((b) => b.included === true);
-  const notePlatforms = [...new Set(st.releaseNotes.map((n) => `${PLATFORM_NAME[n.platform]} ${n.version}`))];
+  const notePlatforms = [...new Set(st.releaseNotes.map((n) => `${PLATFORM_NAME[n.platform]} ${noteLabel(n)}`))];
   const builds = serviceOnly(g, d) ? 'Server-side change, not in browser builds' : !st.builds.length ? 'No build checked' : !known.length ? `Unknown for all ${st.builds.length} current builds` : `${yes.length} of ${st.builds.length} current builds${known.length < st.builds.length ? ` (${st.builds.length - known.length} unknown)` : ''}`;
   return html`<ul class="factstrip" aria-label="Key facts, each from its own source">
     <li><span class="fs-k">Issue</span><span class="fs-v">${st.issueState ? st.issueState.label : 'None (led by a pull request)'}</span></li>
@@ -225,6 +231,15 @@ function linkBasis(p: { closingRefs: string[]; resolvesRefs: string[]; branchRef
   if (p.resolvesRefs.includes(issue)) out.push('“Resolves/Fixes” line in the PR description');
   if ((p.branchRefs ?? []).includes(issue)) out.push(`branch name ${p.headRef} (weaker evidence; titles share a keyword)`);
   return out.length ? out.join(', ') : 'issue timeline (closing cross-reference or closed by this PR)';
+}
+
+/** Which clients a server-side change can reach, per repository: a variations study is limited by its own filter. */
+function serverReach(g: SiteGroup): string {
+  const repos = new Set([...g.members.masterPrs, ...g.members.uplifts].map((id) => id.split('#')[0]));
+  const parts: string[] = [];
+  if (repos.has('brave/gate3')) parts.push('Brave’s swap backend (brave/gate3) serves every client, so once deployed it applies to swaps and bridging on every platform, channel and version.');
+  if (repos.has('brave/brave-variations')) parts.push('A variations study (brave/brave-variations) takes effect when Brave publishes an updated seed, and only for the channels, platforms and versions in that study’s filter.');
+  return parts.join(' ');
 }
 
 function serviceOnly(g: SiteGroup, d: SiteData): boolean {

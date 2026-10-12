@@ -13,6 +13,8 @@ export interface SourceCheckDef {
   files: string[];
   pattern: RegExp;
   describe: string;
+  /** Match the pattern against the whole file (for code that spans lines) instead of line by line. */
+  wholeFile?: boolean;
 }
 
 export interface CapabilitySourceRef {
@@ -38,6 +40,14 @@ export interface CapabilityDef {
   docMatch?: RegExp;
   /** Capability ids this one depends on; a cell is never shown as more available than its prerequisites. */
   requires?: string[];
+  /**
+   * Capabilities that builds need turned on for this one to work, although it shipped before them, each with the
+   * source check (SOURCE_CHECKS id) that finds that requirement in a build's code. Where the check is present, the
+   * cell is capped at the dependency's status; where it is absent (builds from before the requirement), there is no
+   * cap; where it could not be run, a cell the cap would lower is not verified. Unlike `requires`, the "since"
+   * version is never moved to the dependency's and the row's release notes never imply that the dependency shipped.
+   */
+  cappedBy?: { id: string; check: string }[];
   /** Server-side switch ids (see derive/index.ts) that can turn the capability off for everyone. */
   serviceChecks?: string[];
   /** Open tracked issues whose title matches are listed as known open issues for the row. */
@@ -55,6 +65,8 @@ export const SOURCE_CHECKS: SourceCheckDef[] = [
   { id: 'bridge-hidden-ios', files: ['components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx'], pattern: /!isIOS\s*&&\s*isBridgeSupported/, describe: 'Bridge action hidden on iOS in the wallet UI' },
   { id: 'testnet-ios-debug-only', files: ['ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift'], pattern: /isZcashTestnetEnabled/, describe: 'iOS shows Zcash testnet only behind a developer debug toggle' },
   { id: 'near-intents-zec', files: ['components/brave_wallet/browser/swap_service.cc'], pattern: /kZCashMainnet/, describe: 'NEAR Intents (gate3) supports the Zcash mainnet network' },
+  // The body of CreateShieldAllTransaction (up to its first closing brace) checks IsZCashIronwoodEnabled().
+  { id: 'shield-all-requires-ironwood', files: ['components/brave_wallet/browser/zcash/zcash_wallet_service.cc'], pattern: /ZCashWalletService::CreateShieldAllTransaction\([^{]*\{[^}]*IsZCashIronwoodEnabled\(\)/, wholeFile: true, describe: 'Shielding transparent funds requires Ironwood to be enabled' },
 ];
 
 const ZEC = { name: 'kBraveWalletZCashFeature', expect: true };
@@ -87,6 +99,8 @@ export const CAPABILITIES: CapabilityDef[] = [
   {
     id: 'shielding',
     requires: ['shielded'],
+    // brave-core CreateShieldAllTransaction fails unless Ironwood is enabled (found at v1.96.62 and later builds).
+    cappedBy: [{ id: 'ironwood', check: 'shield-all-requires-ironwood' }],
     name: 'Shield transparent funds',
     description: '"Shield Funds" / "Shield Account": move transparent ZEC into the shielded pool.',
     releaseNoteIssues: [bb(46596), bb(49621)],
@@ -173,6 +187,7 @@ export const CAPABILITIES: CapabilityDef[] = [
     releaseNoteMatch: /\bdeposit\b|\bunified address|\btransparent address/i,
     flags: [ZEC],
     implementedBy: [bb(45185)],
+    docMatch: /\b(?:transparent|shielded|unified) addresses?\b|\b[tz]-addr(?:ess)?(?:es)?\b/i,
     openIssueMatch: /address|unified/i,
   },
   {
@@ -225,3 +240,8 @@ export const CAPABILITIES: CapabilityDef[] = [
     notes: ['Both requests were closed as not planned on 2026-09-30; Brave proposed removing the setting entirely (#59539).'],
   },
 ];
+
+/** Every capability id a row depends on, for capping and for server-side switches (requires, then cappedBy). */
+export function dependencies(def: Pick<CapabilityDef, 'requires' | 'cappedBy'>): string[] {
+  return [...(def.requires ?? []), ...(def.cappedBy ?? []).map((c) => c.id)];
+}

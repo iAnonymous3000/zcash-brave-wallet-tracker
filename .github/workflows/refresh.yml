@@ -62,9 +62,11 @@ jobs:
           exit "$code"
 
       - name: Build site
+        id: build
         run: node src/site/build.ts
 
       - name: Scan build output for secrets
+        id: scan
         run: node scripts/scan-secrets.ts dist data
 
       - name: Commit refreshed data
@@ -123,6 +125,17 @@ jobs:
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
+      # Build site or the secret scan failing stops the commit and the deploy whatever the refresh outcome, so
+      # the live site keeps its previous data and this run's record is not committed. The report below only
+      # covers a failed refresh step; this one says why nothing was published in the other cases.
+      - name: Report blocked publication
+        if: failure() && (steps.build.outcome == 'failure' || steps.scan.outcome == 'failure')
+        env:
+          BLOCKED_BY: ${{ steps.build.outcome == 'failure' && 'Build site' || 'the secret scan of dist and data' }}
+        run: |
+          echo "::error::Nothing was published: $BLOCKED_BY failed, so this run's data was neither committed nor deployed and the live site keeps its previous data. The step log above names the cause."
+          exit 1
+
       # The refresh step exits non-zero when every source failed or when derivation failed (exit 1),
       # when a source has been stale for longer than the staleness window (exit 2: everything read
       # was stored and derived, and the run record lists the stale sources in `stale`), and also when
@@ -142,6 +155,7 @@ jobs:
           REFRESH_EXIT_CODE: ${{ steps.refresh.outputs.exit_code }}
           REFRESH_STARTED: ${{ steps.refresh.outputs.started }}
           PAGES_DEPLOYED: ${{ steps.deployment.outcome == 'success' || steps.deployment_retry.outcome == 'success' }}
+          BLOCKED_BY: ${{ steps.build.outcome == 'failure' && 'Build site' || steps.scan.outcome == 'failure' && 'the secret scan of dist and data' || '' }}
         run: |
           node -e '
             const fs = require("node:fs");
@@ -166,7 +180,7 @@ jobs:
             const staleList = stale.map(([id, since]) => `${id} (${(run.sources && run.sources[id]) || "outcome unknown"}) not refreshed since ${since}${hoursBefore(since)}`).join("; ");
             const staleNote = stale.length ? ` Stale for longer than the staleness window: ${staleList}.` : "";
             const deployed = process.env.PAGES_DEPLOYED;
-            let head = "Refresh failed", reason, site;
+            let head = "Refresh failed", reason, site, deployAware = false;
             if (!run) {
               reason = "no run record was written";
               site = "";
@@ -174,6 +188,7 @@ jobs:
               reason = `the refresh process ${exited} before writing a run record; the latest record (run ${run.id} started ${run.startedAt}, outcome ${run.outcome}) is from an earlier refresh`;
               site = " The site was built from whatever data this refresh stored before it stopped; no run record describes it.";
             } else if (!recorded && stale.length && code === STALE_EXIT) {
+              deployAware = true;
               head = "Refresh left stale sources";
               reason = `run ${run.id} started ${run.startedAt} (outcome ${run.outcome}) left ${stale.length} source${stale.length > 1 ? "s" : ""} stale for longer than the staleness window: ${staleList}`;
               site = deployed === "true" ? " Everything this run read was committed, and the site was rebuilt and deployed from it before this report; those sources show their last good data, marked stale on the Sources page."
@@ -189,6 +204,13 @@ jobs:
                 : `outcome ${run.outcome}; sources not ok: ${Object.entries(run.sources).filter(([, o]) => o !== "ok").map(([id, o]) => `${id}=${o}`).join(", ") || "none"}`);
               site = (derived ? " The published site keeps the previously derived data and its original generation time."
                 : " The site was derived from the last stored source data and carries a failed-refresh banner.") + staleNote;
+            }
+            // What the site shows depends on whether this run deployed. When it did not, a claim above about the
+            // site is replaced: always when Build site or the scan blocked publication (nothing was committed
+            // either), otherwise unless that branch already said so.
+            const blocked = process.env.BLOCKED_BY;
+            if (deployed === "false" && (blocked || !deployAware)) {
+              site = ` Nothing from this run was published: ${blocked ? `${blocked} failed, so its data was neither committed nor deployed` : "this run did not deploy the site (see the deploy steps above)"}; the live site still shows the previous deployment.${deployAware ? "" : staleNote}`;
             }
             console.log(`::error::${head} (${reason.replace(/[\r\n]+/g, " ")}).${site}${exitNote}`);
           '

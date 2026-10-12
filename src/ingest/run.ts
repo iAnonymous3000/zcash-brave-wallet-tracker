@@ -30,6 +30,7 @@ import { dirname, join } from 'node:path';
 import { GitHub } from '../lib/github.ts';
 import { Http } from '../lib/http.ts';
 import { dataDir, dataPath, readJson, writeJson } from '../lib/store.ts';
+import { scrubDeep, scrubSecretShapes } from '../lib/secret-patterns.ts';
 import type { RunRecord, SourceEnvelope, SourceOutcome, SourceStatus } from '../lib/types.ts';
 import { errorMessage, shortHash } from '../lib/util.ts';
 import type { Collector, Ctx } from './framework.ts';
@@ -169,6 +170,9 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
       if (stale) {
         limitations.unshift(staleNote(result.staleWhat ?? null, keptSince!, now, completeAt));
       }
+      // Stored data is published: no field may carry a shape the publication scan rejects (scripts/scan-secrets.ts).
+      data = scrubDeep(data);
+      for (let i = 0; i < limitations.length; i++) limitations[i] = scrubSecretShapes(limitations[i]);
       const env: SourceEnvelope<unknown> = { sourceId: c.id, schema: c.schema, retrievedAt: now, data, ...(partial ? { partial: true } : {}), completeAt };
       writeJson(dataPath('sources', `${c.id}.json`), env);
       fresh.set(c.id, env);
@@ -264,9 +268,10 @@ export async function runRefresh(opts: RunOptions = {}): Promise<RunRecord> {
     derive: deriveResult,
     ...(staleIds.length ? { stale } : {}),
   };
-  writeJson(statusPath, { updatedAt: record.finishedAt, lastRun: record, rateLimit: http.meter.rateLimit, sources: statusFile.sources, derive: deriveStatus });
+  // Error messages and notes can quote upstream text; these files are published too.
+  writeJson(statusPath, scrubDeep({ updatedAt: record.finishedAt, lastRun: record, rateLimit: http.meter.rateLimit, sources: statusFile.sources, derive: deriveStatus }));
   runs.unshift(record);
-  writeJson(runsPath, runs.slice(0, 300));
+  writeJson(runsPath, scrubDeep(runs.slice(0, 300)));
   log(`run ${record.id}: ${record.outcome}, ${record.requests} requests, ${events} new events (data dir ${dataDir()})`);
   return record;
 }

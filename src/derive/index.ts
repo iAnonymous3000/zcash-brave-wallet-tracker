@@ -316,7 +316,7 @@ export function deriveAll(inp: DeriveInput): { newEvents: number; notes: string[
     'GitHub keyword search is capped at 1,000 results per query and ranks by relevance; queries are split by date when needed, but an item that never uses Zcash vocabulary, carries no Zcash label, does not touch Zcash code paths, and is not linked from tracked work can be missed.',
     'Platform changelogs cover Stable releases only. Beta and Nightly evidence is build-level (code ancestry and compiled-in flag defaults), not release announcements.',
     'Flag values are compile-time defaults. Brave can change behaviour at runtime with server-side variations (Griffin) or brave://flags; that runtime state is not public.',
-    'The iOS App Store publishes only a marketing version (e.g. 1.96), not the build number, so iOS Release cannot be pinned to a brave-core tag for flag or code checks.',
+    'The iOS App Store publishes only a marketing version (e.g. 1.96), not the build number. iOS Release is pinned to a brave-core tag only when Brave’s iOS release-notes issue for that version names the build and a GitHub release carries it; otherwise iOS Release flag and code checks cannot be pinned.',
     'Code ancestry shows a merged commit is part of a build; it does not detect later reverts, and it does not prove a platform exposes the feature in its UI.',
     'The software and version behind Brave’s mainnet Zcash proxy (zcash.wallet.brave.com) are not public, so server-side advisories (e.g. lightwalletd) cannot be mapped to Brave users.',
     'Buy (Meld) provider support for ZEC is decided at runtime by Meld and is not publicly verifiable.',

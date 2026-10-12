@@ -10,6 +10,7 @@ import { repoFromApiUrl } from '../../lib/github.ts';
 import type { TimelineEntry, WorkItem } from '../../lib/types.ts';
 import { extractRefs, itemId, parseItemId, plainExcerpt, uniq } from '../../lib/util.ts';
 import type { Collector, Ctx } from '../framework.ts';
+import { scrubSecretShapes } from '../../lib/secret-patterns.ts';
 
 export interface GithubItemsData {
   items: Record<string, WorkItem>;
@@ -264,6 +265,8 @@ export const githubItems: Collector<GithubItemsData> = {
         mentionsDropped,
       },
     };
+    // Stored records, including copies kept from earlier runs, carry only publishable text.
+    for (const [id, item] of Object.entries(items)) items[id] = sanitizeStoredItem(item);
     // Keep the previous record (and its retrievedAt) when nothing but the retrieval time changed,
     // so committed history only records real source changes.
     for (const [id, item] of Object.entries(items)) {
@@ -278,11 +281,52 @@ export const githubItems: Collector<GithubItemsData> = {
   },
 };
 
-/** Replace links to repositories that are not known-public (e.g. brave/internal) in stored text. */
+/**
+ * Make stored free text (titles, bodies, labels, milestones, timeline details) publishable: links to repositories
+ * that are not known-public (e.g. brave/internal), with or without a scheme or subdomain, and shorthand references
+ * to private Brave repositories are replaced, and so is anything shaped like a credential. Covers every shape the
+ * build-output scan fails on (SECRET_PATTERNS), so public text cannot stop publication.
+ */
 export function redactNonPublicLinks(s: string): string {
-  return s
-    .replace(/https?:\/\/github\.com\/([\w.-]+)\/([\w.-]+)(\/[^\s)>\]]*)?/gi, (m, owner: string, repo: string) => (isPublicRef(`${owner}/${repo}#1`) ? m : '[GitHub link omitted]'))
-    .replace(/\b(brave\/(?:internal|reviews|security|devops)[\w.-]*)#\d+/gi, '[reference omitted]');
+  let out = s;
+  // Removing one match can join its neighbours into a new one; repeat until nothing changes.
+  for (let i = 0; i < 5; i++) {
+    const before = out;
+    out = out
+      // Links with a scheme or a subdomain (www., api.): any repository that is not known-public. The prefix only
+      // starts where a word starts and is bounded, so matching stays linear on hostile text (e.g. "a.a.a…").
+      .replace(/(?<![\w-])(?:https?:\/\/(?:[\w-]+\.){0,3}|(?:[\w-]+\.){1,3})github\.com\/([\w.-]+)\/([\w.-]+)(\/[^\s)>\]]*)?/gi, (m, owner: string, repo: string) => (isPublicRef(`${owner}/${repo}#1`) ? m : '[GitHub link omitted]'))
+      // Any other "github.com/brave/<repo>" wherever it appears (the scan matches it anywhere); other owners' bare
+      // paths (e.g. a mirror's ".../external/github.com/google/googletest") are left alone.
+      .replace(/github\.com\/brave\/([\w.-]+)(\/[^\s)>\]]*)?/gi, (m, repo: string) => (isPublicRef(`brave/${repo}#1`) ? m : '[GitHub link omitted]'))
+      .replace(/\b(brave\/(?:internal|reviews|security|devops)[\w.-]*)#\d+/gi, '[reference omitted]');
+    out = scrubSecretShapes(out);
+    if (out === before) break;
+  }
+  return out;
+}
+
+/**
+ * A stored work item with every free-text field made publishable (redactNonPublicLinks), applied to the final record:
+ * after text normalization, and to copies kept from earlier runs. Relevance, references and relations are computed
+ * from the original text before this.
+ */
+export function sanitizeStoredItem(item: WorkItem): WorkItem {
+  // Tolerant of records stored by older collectors: a missing field stays missing.
+  const r = <T,>(s: T): T => (typeof s === 'string' ? (redactNonPublicLinks(s) as T) : s);
+  const all = <T,>(xs: T[], f: (x: T) => T): T[] => (Array.isArray(xs) ? xs.map(f) : xs);
+  return {
+    ...item,
+    title: r(item.title),
+    bodyExcerpt: r(item.bodyExcerpt),
+    labels: all(item.labels, r),
+    milestone: item.milestone ? { ...item.milestone, title: r(item.milestone.title) } : item.milestone,
+    baseRef: r(item.baseRef),
+    headRef: r(item.headRef),
+    issueType: r(item.issueType),
+    matchedTerms: all(item.matchedTerms, r),
+    timeline: all(item.timeline, (t) => (t && typeof t.detail === 'string' ? { ...t, detail: r(t.detail) } : t)),
+  };
 }
 
 export function sameContent(a: WorkItem, b: WorkItem): boolean {
@@ -753,7 +797,8 @@ export function toWorkItem(node: any, repoIn: string, discovery: string[], now: 
     assignees: (node.assignees?.nodes ?? []).map((a: any) => a.login),
     labels,
     milestone: node.milestone ? { title: node.milestone.title, dueOn: node.milestone.dueOn ?? null, state: node.milestone.state ?? null } : null,
-    bodyExcerpt: plainExcerpt(redactNonPublicLinks(body), 480),
+    // Redacted before normalization (links) and again after it (entity decoding can form new references).
+    bodyExcerpt: redactNonPublicLinks(plainExcerpt(redactNonPublicLinks(body), 480)),
     bodyRefs,
     resolvesRefs: resolvesRefsOf(stripHtmlComments(body)).filter(isPublicRef),
     upliftOfRefs: isPr ? upliftRefsOf(stripHtmlComments(body), node.title ?? '', node.headRefName ?? null, repo) : [],

@@ -2,17 +2,18 @@ import type { SiteData, SiteGroup } from '../../derive/index.ts';
 import type { Channel, Platform } from '../../lib/types.ts';
 import { ext, featureHref, glyph, html, itemHref, shortRef, statusBadge, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { CHANNELS, CHANNEL_LABEL, EVIDENCE_LABEL, PLATFORMS, evidenceShort, PLATFORM_LABEL, fixFacts, groupFeatures, presentSite, statusExplain, statusLabel } from '../view.ts';
+import { CHANNELS, CHANNEL_LABEL, EVIDENCE_LABEL, PLATFORMS, decidingEvidence, docConflict, docPublisher, evidenceShort, PLATFORM_LABEL, fixFacts, groupFeatures, presentSite, statusExplain, statusLabel } from '../view.ts';
 import { splitName } from './home.ts';
 import { groupStageBadge } from './work.ts';
 
 type Row = SiteData['capabilities'][number];
 
-const LEGEND = ['available', 'in-build', 'opt-in', 'service-off', 'absent', 'not-planned'];
+const LEGEND = ['available', 'in-build', 'opt-in', 'hidden', 'service-off', 'absent', 'not-planned'];
 const LEGEND_HELP: Record<string, string> = {
   available: 'Announced in that platform’s Stable release notes.',
   'in-build': 'The code is in that build and on by default, but no release note announces it (Release) or it is a pre-release build (Beta, Nightly).',
   'opt-in': 'Present but off by default; an option exists in brave://flags.',
+  hidden: 'The code is in that build, but the app hides it from ordinary users (for example behind a developer-only setting).',
   'service-off': 'Brave’s public server-side code switches it off for everyone; the deployed service could differ.',
   absent: 'Not present in that build.',
   'not-planned': 'Requested, then closed as not planned.',
@@ -94,11 +95,16 @@ export function featurePage(input: Row, data: SiteData): SafeHtml {
       <h3>${PLATFORM_LABEL[p]}</h3>
       <ul>${CHANNELS.map((c) => {
         const cell = row.cells.find((x) => x.platform === p && x.channel === c)!;
-        const ev = cell.evidence.filter((e) => e.url).slice(0, 3);
+        // The evidence that decided the status first (a prerequisite's, when it capped this cell), then the cell's own.
+        const dec = decidingEvidence(cell, d.capabilities);
+        const own = cell.evidence.filter((e) => e.url && e !== dec?.e);
+        const ev = [...(dec ? [{ e: dec.e, via: dec.via }] : []), ...own.map((e) => ({ e, via: null }))].slice(0, 3);
+        const conflict = docConflict(cell);
         return html`<li>
           <p class="pc-head"><span class="pc-ch" title="Version: ${d.channels.find((x) => x.platform === p && x.channel === c)?.basis ?? 'unknown'}">${CHANNEL_LABEL[c]} <span class="mono">${cell.version ?? '?'}</span></span>${statusBadge(cell.status, statusLabel(cell.status, c))}</p>
           <p class="pc-why">${statusExplain(cell)}</p>
-          ${ev.length ? html`<p class="pc-ev">${ev.map((e, i) => html`${i ? ' · ' : ''}${ext(e.url, evidenceShort(e), e.contrary ? 'ev-contrary' : '')}`)}</p>` : ''}
+          ${conflict?.url ? html`<p class="pc-conflict">${glyph('warn')}<span>${docPublisher(conflict.url)} disagrees: ${ext(conflict.url, conflict.text)}</span></p>` : ''}
+          ${ev.length ? html`<p class="pc-ev">${ev.map(({ e, via }, i) => html`${i ? ' · ' : ''}${ext(e.url, `${evidenceShort(e)}${via ? ` (${via})` : ''}`, e.contrary ? 'ev-contrary' : '')}`)}</p>` : ''}
         </li>`;
       })}</ul>
     </div>`)}

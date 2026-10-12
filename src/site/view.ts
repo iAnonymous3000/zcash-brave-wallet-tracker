@@ -1,7 +1,7 @@
 // Pure view-model helpers: plain-language wording and page data built from derived data.
 // No markup here; every function is deterministic and unit-tested (tests/site-view.test.ts).
 
-import { CAPABILITIES } from '../../config/capabilities.ts';
+import { CAPABILITIES, dependencies } from '../../config/capabilities.ts';
 import { serviceChecks, type SiteData, type SiteGroup } from '../derive/index.ts';
 import { STAGE_LABEL } from '../derive/status.ts';
 import { CELL_LABEL, SERVICE_UNKNOWN_TEXT as DERIVED_SERVICE_UNKNOWN } from '../derive/capabilities.ts';
@@ -31,6 +31,8 @@ export function statusLabel(status: string, channel: Channel): string {
       return 'Behind a flag';
     case 'off':
       return 'Off by default';
+    case 'hidden':
+      return 'Hidden from users';
     case 'service-off':
       return 'Off server-side';
     case 'absent':
@@ -68,6 +70,11 @@ export function statusExplain(cell: CellLike, short = false): string {
   if (cell.status === 'available' && (m = sum.match(/^Implied by \w+ release notes for “([^”]+)” \(([\d.]+)\)/))) {
     return `Implied by the ${p} release notes for ${shortName(m[1])} (${m[2]}), which need it.`;
   }
+  if (cell.status === 'hidden') {
+    const why = sum.match(/hides it from ordinary users \(([^)]+)\)/)?.[1];
+    return short ? 'In the code, but hidden from users on this platform.' : `The code is in ${p}${v}, but the wallet hides it from ordinary users${why ? ` (${why})` : ''}. Code presence is not availability.`;
+  }
+  // Data derived before "hidden" existed recorded a hidden feature as not present.
   if (cell.status === 'absent' && /hides this/i.test(sum)) return short ? 'Hidden by the wallet on this platform.' : `The wallet hides this on ${p}${v}.`;
   if (short) {
     switch (cell.status) {
@@ -155,7 +162,7 @@ export function presentCapabilities(d: Pick<SiteData, 'capabilities' | 'upstream
   const off = (id: string) => switches(id).some((s) => states[s] === true);
   const unknown = (id: string) => switches(id).some((s) => states[s] === null);
   const prereqs = (id: string, seen = new Set<string>()): string[] => {
-    for (const r of defs.get(id)?.requires ?? []) {
+    for (const r of dependencies(defs.get(id) ?? {})) {
       if (seen.has(r)) continue;
       seen.add(r);
       prereqs(r, seen);
@@ -178,7 +185,7 @@ export function presentCapabilities(d: Pick<SiteData, 'capabilities' | 'upstream
       const read = unknownVia.cells.some((c) => c.evidence.some((e) => e.kind === 'service'));
       const evidence = [
         ...cell.evidence,
-        ...(read || unknownVia !== row ? [] : [{ kind: 'service' as const, text: 'Brave’s server-side switch for this feature was not read (no service data), so its state is unknown', url: null, contrary: false }]),
+        ...(read || unknownVia !== row ? [] : [{ kind: 'service' as const, text: 'Brave’s server-side switch for this feature was not read (no service data), so its state is unknown', url: null, contrary: false, unknown: true }]),
         { kind: 'note' as const, text: `Shown as not verified because ${SERVICE_UNKNOWN_TEXT}${unknownVia === row ? '' : ` (it depends on “${unknownVia.name}”)`}. App-side status: ${statusLabel(cell.status, cell.channel)} — ${cell.summary}`, url: null },
       ];
       const summary = unknownVia === row
@@ -379,6 +386,130 @@ export function evidenceShort(e: { kind: string; text: string; version?: string 
   }
 }
 
+type EvidenceLike = ShownCell['evidence'][number];
+
+/**
+ * The evidence that decided a cell's status, for the single link a compact view shows: the server-side switch for
+ * "off server-side", the release note for "available", this build's inclusion or flag for "in build", the
+ * default-off flag for "behind a flag" and "off", the negative check for "not in this build". A cell capped by a
+ * prerequisite (`limitedBy`, set by derivation) links the prerequisite's deciding evidence, named in `via`.
+ * Contrary evidence keeps its classification; it is chosen when it is what set the status. Null without a link.
+ */
+export function decidingEvidence(cell: ShownCell, rows: readonly ShownRow[] = [], depth = 0): { e: EvidenceLike; via: string | null } | null {
+  const fromDependency = (id: string | undefined): { e: EvidenceLike; via: string | null } | null => {
+    const dep = id ? rows.find((r) => r.id === id) : undefined;
+    const dc = dep?.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel);
+    if (!dep || !dc || dc.status !== cell.status || depth >= 5) return null;
+    const d = decidingEvidence(dc, rows, depth + 1);
+    return d ? { e: d.e, via: d.via ?? shortName(dep.name) } : null;
+  };
+  if (cell.limitedBy) {
+    const d = fromDependency(cell.limitedBy);
+    if (d) return d;
+  }
+  const own = ownDecidingEvidence(cell);
+  if (own) return { e: own, via: null };
+  // Data derived before `limitedBy` was recorded: a prerequisite at the same status decided it.
+  const def = CAPABILITIES.find((x) => x.id === rows.find((r) => r.cells.includes(cell))?.id);
+  for (const id of def ? dependencies(def) : []) {
+    const d = fromDependency(id);
+    if (d) return d;
+  }
+  // Nothing more specific: evidence on the same side as the status, never evidence for availability on a cell that
+  // does not claim it (a not-verified cell links only the check that could not be completed, or nothing).
+  const linked = cell.evidence.filter((e) => e.url);
+  const claimsUse = cell.status === 'available' || cell.status === 'in-build';
+  const e = cell.status === 'not-verified' ? null : (linked.find((x) => (claimsUse ? !x.contrary : Boolean(x.contrary))) ?? null);
+  return e ? { e, via: null } : null;
+}
+
+/** The cell's own evidence that matches what its status says, or null. */
+function ownDecidingEvidence(cell: ShownCell): EvidenceLike | null {
+  const linked = cell.evidence.filter((e) => e.url);
+  const first = (...preds: ((e: EvidenceLike) => boolean)[]): EvidenceLike | null => {
+    for (const p of preds) {
+      const hit = linked.find(p);
+      if (hit) return hit;
+    }
+    return null;
+  };
+  const included = (e: EvidenceLike) => e.kind === 'build' && /\bincluded in\b/.test(e.text) && !/\bnot included\b/.test(e.text);
+  const pro = (kind: string) => (e: EvidenceLike) => e.kind === kind && !e.contrary;
+  const against = (...kinds: string[]) => (e: EvidenceLike) => kinds.includes(e.kind) && Boolean(e.contrary);
+  let e: EvidenceLike | null = null;
+  switch (cell.status) {
+    case 'service-off':
+      e = first(against('service'));
+      break;
+    case 'available':
+      e = first(pro('release-note'));
+      break;
+    case 'in-build': {
+      // The most specific default-on flag (definitions list flags from general to specific), read at this exact tag.
+      const flag = [...linked].reverse().find(pro('flag')) ?? null;
+      e = flag ?? first(included, pro('source'), pro('release-note'));
+      break;
+    }
+    case 'opt-in':
+    case 'off':
+      e = first(against('flag'), against('source'));
+      break;
+    case 'absent':
+    case 'hidden':
+      e = first(against('source', 'flag'));
+      break;
+    case 'not-planned':
+      e = first((x) => x.kind === 'not-planned');
+      break;
+    case 'not-verified':
+      // Only the check whose result is unknown (derivation marks it), never a check that succeeded. Data derived
+      // before the marker existed: a source check whose recorded result reads unknown or not checked.
+      e = first((x) => x.unknown === true, (x) => x.unknown === undefined && x.kind === 'source' && /: (?:unknown|not checked) at\b/.test(x.text));
+      break;
+  }
+  return e;
+}
+
+/**
+ * A help article or brave.com page saying the feature is not available on a Release build that the evidence shows as
+ * usable. Docs are never decisive, but the disagreement is shown next to the status rather than only in the evidence
+ * list. Beta and Nightly statuses come from the code in that build, which docs do not describe.
+ */
+export function docConflict(cell: ShownCell): EvidenceLike | null {
+  if (cell.channel !== 'release' || !USABLE.has(cell.status)) return null;
+  return cell.evidence.find((e) => e.kind === 'doc' && e.contrary && e.url) ?? null;
+}
+
+/** A doc statement short enough for a card: whole when short, else its sentences that name the platform. */
+export function docQuote(e: EvidenceLike, platform: Platform, max = 160): string {
+  const q = e.quote ?? e.text.replace(/^[^“]*“|”[^”]*$/g, '');
+  if (q.length <= max) return q;
+  const name = PLATFORM_LABEL[platform];
+  const hits = q.split(/(?<=[.!?])\s+/).filter((x) => new RegExp(`\\b${name}\\b|desktop[- ]only|only (?:available )?on desktop`, 'i').test(x));
+  const short = hits.join(' ');
+  return short && short.length <= max ? `… ${short}` : `${q.slice(0, max - 1)}…`;
+}
+
+/** Who published a doc, from its URL. */
+export function docPublisher(url: string | null): string {
+  return url && /^https:\/\/support\.brave\.app\//.test(url) ? 'Brave’s Help Center' : 'Brave’s website';
+}
+
+/**
+ * How often refreshes actually run: the gaps between the starts of the most recent scheduled runs (newest first in
+ * `runs`), in hours. GitHub Actions starts scheduled runs late or skips them, so the configured interval is a lower
+ * bound. Null with fewer than three scheduled runs.
+ */
+export function scheduledCadence(runs: readonly { trigger: string; startedAt: string }[], max = 12): { runs: number; minHours: number; maxHours: number; medianHours: number } | null {
+  const starts = runs.filter((r) => r.trigger === 'schedule').map((r) => Date.parse(r.startedAt)).filter(Number.isFinite).slice(0, max);
+  if (starts.length < 3) return null;
+  const gaps = starts.slice(1).map((t, i) => (starts[i] - t) / 3_600_000).filter((h) => h > 0).sort((a, b) => a - b);
+  if (gaps.length < 2) return null;
+  const mid = gaps.length >> 1;
+  const median = gaps.length % 2 ? gaps[mid] : (gaps[mid - 1] + gaps[mid]) / 2;
+  return { runs: gaps.length + 1, minHours: gaps[0], maxHours: gaps[gaps.length - 1], medianHours: median };
+}
+
 /** Grouping of capabilities for people scanning the overview. Unknown ids fall into "More". */
 export const FEATURE_GROUPS: { id: string; title: string; ids: string[] }[] = [
   { id: 'basics', title: 'Accounts & sending', ids: ['accounts', 'addresses', 'sync', 'fees'] },
@@ -409,7 +540,7 @@ export function buildSummary(d: SiteData, platform: Platform, channel: Channel):
   return { total: d.capabilities.length, byStatus };
 }
 
-const RANK: Record<string, number> = { 'not-planned': 0, absent: 1, 'not-verified': 1, 'service-off': 1, off: 2, 'opt-in': 3, 'in-build': 4, available: 5 };
+const RANK: Record<string, number> = { 'not-planned': 0, absent: 1, 'not-verified': 1, 'service-off': 1, hidden: 1, off: 2, 'opt-in': 3, 'in-build': 4, available: 5 };
 
 /** Features that a pre-release build of this platform has further along than its Release build. */
 export function comingNext(d: SiteData, platform: Platform): { id: string; name: string; release: CellLike; ahead: CellLike }[] {
@@ -437,6 +568,7 @@ export function comingNextNote(items: { release: Pick<CellLike, 'status'>; ahead
   const flagged = (['opt-in', 'off'] as const).filter((s) => rel.has(s));
   if (flagged.length) parts.push(`${flagged.map(q).join(' or ')} in Release means the code is already in the Release build but switched off by default.`);
   if (rel.has('in-build')) parts.push(`${q('in-build')} means the code is on by default in Release, but no release note announces it.`);
+  if (rel.has('hidden')) parts.push(`${q('hidden')} means the Release build contains the code but hides it from ordinary users.`);
   if (rel.has('absent')) parts.push(`${q('absent')} means the Release build does not contain it.`);
   if (rel.has('service-off')) parts.push(`${q('service-off')} means Brave’s public server-side code switches it off, whatever the build.`);
   if (rel.has('not-verified')) parts.push(`${q('not-verified')} means its presence in the Release build is unknown.`);
