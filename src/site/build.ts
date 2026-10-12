@@ -65,7 +65,7 @@ export async function buildSite(opts: { outDir?: string; basePath?: string } = {
   for (const row of site.capabilities) {
     write(`features/${row.id}/index.html`, page({ title: row.name, description: `${row.description} Status on every platform and channel, release notes, help articles, open issues and evidence.`, path: `features/${row.id}/`, active: 'features' }, fresh, featurePage(row, site)));
   }
-  write('releases/index.html', page({ title: 'Releases', description: 'Zcash-related lines in Brave release notes by platform and version, and the current version of each channel.', path: 'releases/', active: 'releases' }, fresh, releasesPage(site, notes, changelogs.files)));
+  write('releases/index.html', page({ title: 'Releases', description: 'Captured Zcash and related wallet lines in Brave release notes by platform and version, and the current version of each channel.', path: 'releases/', active: 'releases' }, fresh, releasesPage(site, notes, changelogs.files)));
   write('work/index.html', page({ title: 'Tracked work', description: 'Searchable list of Zcash issues and pull requests in Brave, grouped with their fixes, uplifts and duplicates.', path: 'work/', active: 'work' }, fresh, workPage(site)));
   const seen = new Set<string>();
   for (const g of site.groups) {

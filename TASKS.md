@@ -43,6 +43,7 @@ Concise working checklist. `[x]` done · `[~]` in progress · `[ ]` open · `[!]
 
 ## 5. Deploy & prove operation
 - [x] Push code, enable Pages (Actions), dispatched refreshes with GITHUB_TOKEN succeed (all sources OK; ~260 requests steady state)
-- [ ] Observe a `schedule`-triggered run succeed; confirm a real source change appears live
+- [x] Observe scheduled refreshes succeed and a real upstream change appear live: [scheduled Actions run 38000363944](https://github.com/iAnonymous3000/zcash-brave-wallet-tracker/actions/runs/38000363944), recorded as `94bc91180434`, detected brave-browser#59828 on 2026-10-09 at 22:40 UTC; its observed event is published with the upstream creation time 19:30:13 UTC. Scheduled Actions run [38270342652](https://github.com/iAnonymous3000/zcash-brave-wallet-tracker/actions/runs/38270342652) also succeeded on 2026-10-12.
 - [x] Direct routes load unauthenticated (200; unknown path → 404 page); secret scan in workflow (clean)
-- [ ] Handoff
+- [x] Handoff documentation prepared (2026-10-12): release-note scope and source provenance are explained, operations match the workflow's publication order and failure conditions, and scheduled-operation evidence is linked above. Changes require passing checks and review before publication; deployment and live verification are recorded in the pull request and Actions runs.
+- [ ] Send the verified handoff to the Brave team; team delivery has not been sent.
