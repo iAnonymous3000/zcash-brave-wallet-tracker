@@ -284,6 +284,20 @@ test('R3-CI-STALE: the report names stale sources next to a recorded failure or 
     // Exit 1 although the record is not a failure: still a crash after the record, with the stale sources added.
     const crash = simulate(root, `${record('partial', { outcome: 'ok', error: null }, srcs)}\nexit 1`);
     assert.match(crash.report.out, /::error::Refresh failed \(the refresh process exited with code 1 after recording run r3x started \S+ with outcome partial; it crashed or was interrupted after writing that record, so the record does not show how the run ended\)\. The site was built from the data and derived files written before the crash; see the Refresh sources log for the error\. Stale for longer than the staleness window: brave-deps \(partial\)/);
+
+    // Pre-share review: a failed refresh whose build or scan then blocked publication never claims what the site
+    // shows; every branch says nothing from the run was published, and why.
+    const report = workflowStep('Report refresh failure');
+    assert.equal(report.env.BLOCKED_BY, "${{ steps.build.outcome == 'failure' && 'Build site' || steps.scan.outcome == 'failure' && 'the secret scan of dist and data' || '' }}");
+    const recorded = simulate(root, `${record('failed', { outcome: 'ok', error: null }, { ...srcs, 'github-items': 'failed' })}\nexit 1`, {}, { PAGES_DEPLOYED: 'false', BLOCKED_BY: 'the secret scan of dist and data' });
+    assert.match(recorded.report.out, /::error::Refresh failed \(last recorded run r3x started \S+: outcome failed; sources not ok: [^)]*\)\. Nothing from this run was published: the secret scan of dist and data failed, so its data was neither committed nor deployed; the live site still shows the previous deployment\. Stale for longer/);
+    assert.doesNotMatch(recorded.report.out, /failed-refresh banner|site was built|published site keeps/);
+    const staleBlocked = simulate(root, `${record('partial', { outcome: 'ok', error: null }, srcs)}\nexit 2`, {}, { PAGES_DEPLOYED: 'false', BLOCKED_BY: 'Build site' });
+    assert.match(staleBlocked.report.out, /\)\. Nothing from this run was published: Build site failed, so its data was neither committed nor deployed; the live site still shows the previous deployment\. The refresh process exited with code 2\./);
+    assert.doesNotMatch(staleBlocked.report.out, /Everything this run read was/);
+    // A run that did deploy keeps its description.
+    const deployed = simulate(root, `${record('failed', { outcome: 'ok', error: null }, { ...srcs, 'github-items': 'failed' })}\nexit 1`, {}, { PAGES_DEPLOYED: 'true', BLOCKED_BY: '' });
+    assert.match(deployed.report.out, /carries a failed-refresh banner/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -55,6 +55,7 @@ const GLYPH_PATHS: Record<string, string> = {
   'opt-in': '<rect x="1.6" y="4.4" width="12.8" height="7.2" rx="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5.3" cy="8" r="1.9" fill="currentColor"/>',
   off: '<circle cx="8" cy="8" r="5.4" fill="none" stroke="currentColor" stroke-width="1.6"/>',
   'service-off': '<circle cx="8" cy="8" r="5.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.3 11.7l7.4-7.4" stroke="currentColor" stroke-width="1.6"/>',
+  hidden: '<path d="M1.8 8s2.3-3.9 6.2-3.9S14.2 8 14.2 8s-2.3 3.9-6.2 3.9S1.8 8 1.8 8z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.4 12.6l9.2-9.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
   absent: '<path d="M4 8h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
   'not-planned': '<path d="M4.6 4.6l6.8 6.8M11.4 4.6l-6.8 6.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
   'not-verified': '<circle cx="8" cy="8" r="5.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.1 2.1"/>',

@@ -109,7 +109,7 @@ export const flags: Collector<FlagsData> = {
 
 /** Signature of a check definition, so cached results are recomputed when the definition changes. */
 export function checkSig(sc: (typeof SOURCE_CHECKS)[number]): string {
-  return sha256(`${sc.files.join('|')}::${sc.pattern.source}::${sc.pattern.flags}`).slice(0, 12);
+  return sha256(`${sc.files.join('|')}::${sc.pattern.source}::${sc.pattern.flags}${sc.wholeFile ? '::whole' : ''}`).slice(0, 12);
 }
 
 /** Present if ANY candidate file at the tag matches (code moves between files across versions). */
@@ -120,7 +120,9 @@ export async function runSourceCheck(ctx: { http: import('../../lib/http.ts').Ht
     if (src === null) continue;
     firstExisting ??= file;
     const lines = src.split('\n');
-    const idx = lines.findIndex((l) => sc.pattern.test(l));
+    // A whole-file match is located at the line where it starts.
+    const at = sc.wholeFile ? new RegExp(sc.pattern.source, sc.pattern.flags.replace('g', '')).exec(src)?.index : undefined;
+    const idx = sc.wholeFile ? (at === undefined ? -1 : src.slice(0, at).split('\n').length - 1) : lines.findIndex((l) => sc.pattern.test(l));
     if (idx !== -1) return { id: sc.id, tag, present: true, file, line: idx + 1, url: `https://github.com/brave/brave-core/blob/${tag}/${file}#L${idx + 1}`, sig: checkSig(sc) };
   }
   const file = firstExisting ?? sc.files[0];

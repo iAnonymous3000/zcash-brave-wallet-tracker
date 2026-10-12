@@ -57,7 +57,7 @@ const TOPICS: { topic: string; repo: string | null; mode: 'releases' | 'commits'
     title: 'zkDragon (X/Twitter handle, not a code project)',
     url: 'https://x.com/zkDragon',
     summary: 'No zkDragon repository or library exists; the name is an X/Twitter handle cited in Zcash ecosystem digests. It is not monitored live because X is not publicly readable without an account.',
-    attribution: 'Identity mapping (reported as Dev Ojha) comes from third-party ZecHub newsletters and is unconfirmed.',
+    attribution: 'Mentions come from third-party ZecHub newsletters and are unconfirmed.',
     terms: ['zkdragon'],
   },
 ];

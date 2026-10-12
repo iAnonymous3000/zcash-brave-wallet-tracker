@@ -65,17 +65,125 @@ export function htmlToText(html: string): string {
     .trim();
 }
 
-/** Sentences mentioning Zcash, de-duplicated and length-bounded. */
-export function zcashSentences(text: string, max = 8): string[] {
-  const out: string[] = [];
+/** Words saying whether something is available or supported. */
+const AVAILABILITY = String.raw`(?:unavailable|not (?:yet )?(?:available|supported)|available|supported|coming soon)`;
+const PLATFORM = String.raw`(?:android|ios|desktop|mobile)`;
+/**
+ * A sentence whose subject is platforms and that says whether they have it (e.g. "Android and iOS are unavailable at
+ * this time.", "iOS support is coming soon.", "Android and iOS are, while X is completed, currently unavailable."):
+ * between the verb and the availability words only adverbs or a comma-enclosed aside may stand. One that brings in a
+ * subject of its own ("On Android, transparent addresses are unavailable.", "Android users will find that
+ * transparent addresses are unavailable.") is about something else and is not a limit on the statement before it.
+ */
+const LIMIT_VERB = String.raw`(?:is|are|isn't|aren't|was|were|remains?|will(?: not)? be|won't be)`;
+const LIMIT_ASIDE = String.raw`(,[^,.]*,)?`; // captured: an aside must not make a claim of its own either
+const LIMIT_ADVERBS = String.raw`(?: (?:currently|still|also|temporarily|presently|now|only|yet|so far|for now))*`;
+const PLATFORM_LIMIT = new RegExp(String.raw`^(?:but |however,? )?(?:the )?${PLATFORM}(?:(?:, | and | or | & )(?:the )?${PLATFORM})*(?: (?:apps?|versions?|users|support|devices?|browsers?)(?: of (?:the )?Brave(?: Wallet| browser)?)?)?(?: ${LIMIT_VERB}${LIMIT_ASIDE}${LIMIT_ADVERBS} ${AVAILABILITY}\b| ${AVAILABILITY}\b)`, 'i');
+/**
+ * Around its availability words, a platform limit only qualifies them ("at this time", "while X is completed"). A
+ * contrasting clause or a second availability predicate, after them ("Android and iOS browsers are available, but
+ * extensions are not supported.") or in the aside before them ("Android and iOS are, although extensions are not
+ * supported, available."), makes a claim about something else, so the sentence is not a limit.
+ */
+const LIMIT_CONTRAST = /[;:]|\b(?:but|however|although|though|whereas|except|unlike)\b/i;
+const LIMIT_SECOND_PREDICATE = new RegExp(String.raw`\b${AVAILABILITY}\b`, 'i');
+
+/** Whether `t` is a platform limit on the statement before it (see PLATFORM_LIMIT and LIMIT_CONTRAST). */
+export function isPlatformLimit(t: string): boolean {
+  const m = PLATFORM_LIMIT.exec(t);
+  if (!m) return false;
+  const aside = m[1] ?? '';
+  const rest = t.slice(m[0].length);
+  return ![aside, rest].some((part) => LIMIT_CONTRAST.test(part) || LIMIT_SECOND_PREDICATE.test(part));
+}
+
+const MAX_STATEMENT = 320;
+/** A statement of what is supported (e.g. "Brave Wallet supports shielded addresses in 1.77x and above."). */
+const SUPPORT_CLAIM = /\b(?:supports?|supported|unavailable|not (?:yet )?(?:available|supported)|available)\b/i;
+const QUALIFIER = new RegExp(String.raw`\b${AVAILABILITY}\b`, 'gi');
+const PLATFORM_WORD = new RegExp(String.raw`\b${PLATFORM}\b`, 'gi');
+
+/**
+ * `t` in at most `max` characters. When it must be shortened and says whether something is available, the end of
+ * the text is not simply cut: the last availability qualifier and the platforms named just before it are kept, and
+ * the text between the opening and them is elided.
+ */
+export function shortenStatement(t: string, max: number): string {
+  if (t.length <= max) return t;
+  const cut = (x: string, n: number) => `${x.slice(0, Math.max(n - 1, 0)).trimEnd()}…`;
+  const q = [...t.matchAll(QUALIFIER)].at(-1);
+  if (!q || q.index === undefined || max < 40) return cut(t, max);
+  const qEnd = q.index + q[0].length;
+  // The kept window starts at the first platform named shortly before the qualifier, else a few words before it.
+  const p = [...t.slice(0, q.index).matchAll(PLATFORM_WORD)].find((m) => m.index !== undefined && q.index! - m.index <= 100);
+  let from = p?.index ?? Math.max(0, q.index - 40);
+  from = Math.max(0, t.lastIndexOf(' ', from) + 1);
+  const room = Math.floor(max * 0.6);
+  let tail = t.slice(from);
+  if (tail.length > room) tail = qEnd - from + 1 <= room ? `${t.slice(from, Math.max(qEnd, from + room - 1)).trimEnd()}…` : `…${t.slice(Math.max(from, qEnd - (room - 2)), qEnd)}…`;
+  if (from === 0) return tail.length <= max ? tail : cut(t, max);
+  const head = max - tail.length - 2; // "… " joins the opening to the kept window
+  return head >= 10 ? `${t.slice(0, head).trimEnd()}… ${tail}` : tail.slice(0, max);
+}
+
+/**
+ * `parts` joined in at most `max` characters, each part keeping its own meaning: parts that fit an equal share are
+ * kept whole, and the longer ones share what is left, each shortened on its own (shortenStatement). So a long denial
+ * for some platforms is never elided in favour of a later allowance for others.
+ */
+function fitParts(parts: string[], max: number): string {
+  const whole = parts.join(' ');
+  if (whole.length <= max || parts.length < 2) return shortenStatement(whole, max);
+  let room = max - (parts.length - 1);
+  const budget = new Map<number, number>();
+  const order = parts.map((p, i) => i).sort((a, b) => parts[a].length - parts[b].length);
+  order.forEach((i, k) => {
+    const share = Math.floor(room / (order.length - k));
+    budget.set(i, Math.min(parts[i].length, share));
+    room -= budget.get(i)!;
+  });
+  return parts.map((p, i) => shortenStatement(p, budget.get(i)!)).join(' ');
+}
+
+/**
+ * Sentences mentioning Zcash, de-duplicated and at most 320 characters each. In an article whose title names Zcash
+ * (`zcashTitled`), statements of what is supported count too, since the whole article is about Zcash. A following
+ * sentence in the same paragraph that limits what came before to some platforms is joined to it: each reads wrongly
+ * without the other. When that paragraph made several statements first, the limit is joined to all of them together
+ * rather than guessed to belong to the nearest one. A statement that follows an applied limit starts a new group: an
+ * earlier statement never takes on a later statement's limits, nor the reverse.
+ */
+export function zcashSentences(text: string, max = 8, opts: { zcashTitled?: boolean } = {}): string[] {
+  type Statement = { heads: string[]; limits: string[] };
+  const out: Statement[] = [];
   for (const block of text.split('\n')) {
-    for (const s of block.split(/(?<=[.!?])\s+(?=[A-Z])/)) {
+    let run: Statement[] = []; // statements kept from consecutive sentences of this block, up to the current one
+    for (const s of block.split(/(?<=[.!?])\s+(?=[A-Z]|iOS\b)/)) {
       const t = s.trim();
-      if (t.length < 12 || !ZCASH.test(t)) continue;
-      out.push(t.length > 320 ? `${t.slice(0, 319)}…` : t);
+      if (run.length && t.length >= 12 && !ZCASH.test(t) && isPlatformLimit(t)) {
+        if (run.length > 1) {
+          const merged: Statement = { heads: run.flatMap((x) => x.heads), limits: run.flatMap((x) => x.limits) };
+          out.splice(out.length - run.length, run.length, merged);
+          run = [merged];
+        }
+        run[0].limits.push(t);
+      } else if (t.length >= 12 && (ZCASH.test(t) || (opts.zcashTitled && SUPPORT_CLAIM.test(t)))) {
+        const st: Statement = { heads: [t], limits: [] };
+        out.push(st);
+        if (run.some((x) => x.limits.length)) run = []; // the earlier group already has its limit
+        run.push(st);
+      } else {
+        run = [];
+      }
     }
   }
-  return uniq(out).slice(0, max);
+  // Within the bound, the platform limits are kept first and the statements before them are shortened.
+  const joined = out.map(({ heads, limits }) => {
+    const tail = limits.length ? fitParts(limits, MAX_STATEMENT - 41) : '';
+    const head = fitParts(heads, MAX_STATEMENT - (tail ? tail.length + 1 : 0));
+    return tail ? `${head} ${tail}` : head;
+  });
+  return uniq(joined).slice(0, max);
 }
 
 const errText = (err: unknown) => (err instanceof Error ? err.message : String(err)).slice(0, 100);
@@ -285,7 +393,7 @@ function supportPage(a: any, now: string): { page: DocPage; mentionsZcash: boole
       // edited_at tracks real content edits; updated_at changes for unrelated reasons.
       updatedAt: a.edited_at ?? a.updated_at ?? null,
       contentHash: sha256(text).slice(0, 16),
-      zcashStatements: zcashSentences(text),
+      zcashStatements: zcashSentences(text, 8, { zcashTitled: ZCASH.test(a.title ?? '') }),
       retrievedAt: now,
     },
   };
@@ -480,10 +588,11 @@ export const docs: Collector<DocsData> = {
       throw new Error(bodyless.length ? 'Help Center articles came without a body (API shape changed?) and no earlier copy exists' : 'no Zcash articles found in the Help Center (API or category changed?)');
     }
 
-    // Unchanged pages keep their previous record (retrieval time = when this content was first captured).
+    // Unchanged pages keep their previous record (retrieval time = when this content was first captured). Their
+    // statements are taken from this read, so a change in how statements are extracted reaches unchanged pages too.
     for (let i = 0; i < pages.length; i++) {
       const old = prevPages.find((x) => x.id === pages[i].id);
-      if (old && old.contentHash === pages[i].contentHash && old.updatedAt === pages[i].updatedAt) pages[i] = old;
+      if (old && old.contentHash === pages[i].contentHash && old.updatedAt === pages[i].updatedAt) pages[i] = { ...old, zcashStatements: pages[i].zcashStatements };
     }
     // History: keep superseded statement sets so a changed page stays auditable.
     for (const old of prevPages) {

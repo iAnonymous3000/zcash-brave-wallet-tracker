@@ -34,18 +34,22 @@
 // "not-verified", keeping their app-side status as `appStatus`. buildCapabilities() alone returns the app-side
 // statuses.
 
-import type { CapabilityDef } from '../../config/capabilities.ts';
+import { dependencies, SOURCE_CHECKS, type CapabilityDef } from '../../config/capabilities.ts';
 import type { ChangelogEntry, Channel, ChannelVersion, DocPage, FlagSnapshot, Platform, WorkItem } from '../lib/types.ts';
 import { compareVersions } from '../lib/util.ts';
 import type { GroupStatus } from './status.ts';
 
-export type CellStatus = 'available' | 'in-build' | 'opt-in' | 'off' | 'service-off' | 'absent' | 'not-planned' | 'not-verified';
+/** What each source check looks for, by id (config/capabilities.ts SOURCE_CHECKS). */
+const SOURCE_CHECK_TEXT = new Map(SOURCE_CHECKS.map((c) => [c.id, c.describe]));
+
+export type CellStatus = 'available' | 'in-build' | 'opt-in' | 'off' | 'hidden' | 'service-off' | 'absent' | 'not-planned' | 'not-verified';
 
 export const CELL_LABEL: Record<CellStatus, string> = {
   available: 'Available',
   'in-build': 'In build',
   'opt-in': 'Opt-in (brave://flags)',
   off: 'Off by default',
+  hidden: 'Hidden from users',
   'service-off': 'Off server-side',
   absent: 'Not present',
   'not-planned': 'Not planned',
@@ -57,6 +61,7 @@ export const CELL_HELP: Record<CellStatus, string> = {
   'in-build': 'The code and an enabled-by-default flag are in this build (Beta/Nightly, or Stable without a release note). Not a release announcement.',
   'opt-in': 'Present but disabled by default; can be turned on in brave://flags.',
   off: 'The feature flag is disabled by default in this build.',
+  hidden: 'The code is in this build, but the wallet hides it from ordinary users (for example, only a developer setting shows it). Code presence is not availability.',
   'service-off': 'The app code may be present, but Brave’s public server-side code (e.g. its swap backend repository, brave/gate3) switches this off for Zcash, for every client. The deployed service is not public and could differ.',
   absent: 'The flag or code this capability depends on is not present in this build.',
   'not-planned': 'Brave closed the request as not planned.',
@@ -73,6 +78,12 @@ export interface Evidence {
   version?: string | null;
   /** True when this evidence argues against availability (e.g. docs saying "unavailable"). */
   contrary?: boolean;
+  /** For help articles: the date the article's content was last edited. */
+  date?: string | null;
+  /** For help articles: the statement itself, as published. */
+  quote?: string;
+  /** True when this records a check whose result is unknown: not read, not completed, or the setting not found. */
+  unknown?: boolean;
 }
 
 export interface Cell {
@@ -89,6 +100,8 @@ export interface Cell {
    * server-side switch its row depends on (directly or through a prerequisite) could not be read.
    */
   appStatus?: CellStatus;
+  /** Id of the prerequisite (requires or cappedBy) whose status capped this cell; its evidence decides the status. */
+  limitedBy?: string;
 }
 
 export interface CapabilityRow {
@@ -199,7 +212,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         // Source checks (e.g. brave://flags option, platform UI code).
         let optIn = false;
         let platformCodeMissing = false;
-        let blocked = false;
+        let blocked: string | null = null; // what hides it from users, when a blocking check is present
         const requiredUnknown: string[] = [];
         incompleteRequired.set(`${def.id}|${platform}|${channel}`, requiredUnknown);
         for (const sc of def.sourceChecks ?? []) {
@@ -207,13 +220,13 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           const res = cv?.tag ? inp.sourceChecks[cv.tag]?.find((x) => x.id === sc.id) : undefined;
           if (sc.role === 'required' && (!res || res.present === null)) {
             requiredUnknown.push(sc.describe);
-            if (cv?.tag && !res) ev.push({ kind: 'source', text: `${sc.describe}: not checked at ${cv.tag}`, url: null, version: cv.version, contrary: false });
+            if (cv?.tag && !res) ev.push({ kind: 'source', text: `${sc.describe}: not checked at ${cv.tag}`, url: null, version: cv.version, contrary: false, unknown: true });
           }
           if (!res) continue;
-          ev.push({ kind: 'source', text: `${sc.describe}: ${res.present === null ? 'unknown' : res.present ? 'present' : 'absent'} at ${res.tag}`, url: res.url, version: cv?.version ?? null, contrary: (sc.role === 'required' && res.present === false) || (sc.role === 'blocks' && res.present === true) });
+          ev.push({ kind: 'source', text: `${sc.describe}: ${res.present === null ? 'unknown' : res.present ? 'present' : 'absent'} at ${res.tag}`, url: res.url, version: cv?.version ?? null, contrary: (sc.role === 'required' && res.present === false) || (sc.role === 'blocks' && res.present === true), ...(res.present === null ? { unknown: true } : {}) });
           if (sc.role === 'opt-in' && res.present) optIn = true;
           if (sc.role === 'required' && res.present === false) platformCodeMissing = true;
-          if (sc.role === 'blocks' && res.present) blocked = true;
+          if (sc.role === 'blocks' && res.present) blocked = sc.describe;
         }
 
         // Build presence of implementing work.
@@ -241,17 +254,20 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
         for (const sid of def.serviceChecks ?? []) {
           const sc = inp.serviceChecks?.[sid];
           if (!sc) continue;
-          ev.push({ kind: 'service', text: sc.text, url: sc.url, contrary: sc.disabled === true });
-          if (sc.since && sc.sinceUrl) ev.push({ kind: 'service', text: sc.since, url: sc.sinceUrl, contrary: sc.disabled === true });
+          const unknown = sc.disabled === null ? { unknown: true } : {};
+          ev.push({ kind: 'service', text: sc.text, url: sc.url, contrary: sc.disabled === true, ...unknown });
+          if (sc.since && sc.sinceUrl) ev.push({ kind: 'service', text: sc.since, url: sc.sinceUrl, contrary: sc.disabled === true, ...unknown });
           if (sc.disabled === true) serviceOff = sc;
         }
 
         // Docs (shown, never decisive).
         for (const d of inp.docs) {
+          // Help Center dates are ISO; brave.com pages may only send an HTTP Last-Modified date.
+          const edited = d.updatedAt && Number.isFinite(Date.parse(d.updatedAt)) ? new Date(Date.parse(d.updatedAt)).toISOString().slice(0, 10) : null;
           for (const s of d.zcashStatements) {
             if (def.docMatch && def.docMatch.test(s)) {
               const contrary = new RegExp(`${PLATFORM_NAME[platform]}[^.]*\\b(unavailable|not (yet )?(available|supported))`, 'i').test(s) || (platform !== 'desktop' && /desktop[- ]only|only (available )?on desktop/i.test(s));
-              if (contrary || platform === 'desktop') ev.push({ kind: 'doc', text: `${d.title}: “${s}”${d.updatedAt ? ` (edited ${d.updatedAt.slice(0, 10)})` : ''}`, url: d.url, contrary });
+              if (contrary || platform === 'desktop') ev.push({ kind: 'doc', text: `${d.title}: “${s}”${edited ? ` (edited ${edited})` : ''}`, url: d.url, contrary, date: edited, quote: s });
             }
           }
         }
@@ -275,8 +291,9 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           status = 'service-off';
           summary = `${firstNote ? `Shipped in ${PLATFORM_NAME[platform]} ${firstNote.version}, but ` : ''}${serviceOff.what ?? 'Brave’s public server-side code'} disables Zcash for every platform and version. The deployed service is not public and could differ.`;
         } else if (blocked) {
-          status = 'absent';
-          summary = `The wallet UI hides this on ${PLATFORM_NAME[platform]} in ${cv?.tag ?? 'this build'}.`;
+          // The code is there; the app hides it from ordinary users. Never "not present".
+          status = 'hidden';
+          summary = `The code is in ${cv?.tag ?? 'this build'}, but the ${PLATFORM_NAME[platform]} wallet hides it from ordinary users (${blocked}).`;
         } else if (notPlanned.length && !firstNote) {
           status = 'not-planned';
           summary = `Requested in ${notPlanned.map((i) => shortId(i.id)).join(', ')}; closed as not planned.`;
@@ -357,7 +374,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
     rows.push({ id: def.id, name: def.name, description: def.description, cells, notes });
   }
   // Prerequisites: a dependent capability is capped at its prerequisite's status (evidence is kept).
-  const RANK: Record<CellStatus, number> = { available: 7, 'in-build': 6, 'opt-in': 5, off: 4, 'service-off': 3, absent: 2, 'not-verified': 1, 'not-planned': 0 };
+  const RANK: Record<CellStatus, number> = { available: 8, 'in-build': 7, 'opt-in': 6, off: 5, hidden: 4, 'service-off': 3, absent: 2, 'not-verified': 1, 'not-planned': 0 };
   const byId = new Map(rows.map((r) => [r.id, r]));
   const order = topoOrder(inp.defs);
   // 1) Lift: a dependent capability listed in this platform's release notes implies its prerequisite shipped there
@@ -388,16 +405,43 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
       }
     }
   }
-  // 2) Cap: never more available than a prerequisite.
+  // 2) Cap: never more available than a prerequisite. A cap-only dependency (cappedBy) applies only to builds whose
+  //    code has the requirement (its source check), and never moves "since": the feature shipped before it.
   for (const def of order) {
     const row = byId.get(def.id)!;
-    for (const reqId of def.requires ?? []) {
+    for (const reqId of dependencies(def)) {
       const req = byId.get(reqId);
       if (!req) continue;
+      const capCheck = (def.cappedBy ?? []).find((c) => c.id === reqId && !(def.requires ?? []).includes(reqId))?.check ?? null;
+      const capOnly = capCheck !== null;
       for (const cell of row.cells) {
         const rc = req.cells.find((c) => c.platform === cell.platform && c.channel === cell.channel)!;
+        if (capCheck) {
+          const tag = inp.current.find((c) => c.platform === cell.platform && c.channel === cell.channel)?.tag ?? null;
+          let res = tag ? inp.sourceChecks[tag]?.find((x) => x.id === capCheck) : undefined;
+          const describe = SOURCE_CHECK_TEXT.get(capCheck) ?? capCheck;
+          // Not found in a build at least as new as one where it was found: the code moved (the pattern no longer
+          // matches), not a build from before the requirement. That is unknown, never a reason to drop the cap.
+          if (res?.present === false && tag && Object.entries(inp.sourceChecks).some(([t, rs]) => /^v\d/.test(t) && compareVersions(t.slice(1), tag.slice(1)) <= 0 && rs.some((x) => x.id === capCheck && x.present === true))) {
+            res = { ...res, present: null };
+          }
+          if (res?.present === false) continue; // a build from before the requirement
+          if (!res || res.present === null) {
+            // Whether this build has the requirement is unknown: a cell the cap would lower is not verified.
+            if (RANK[rc.status] < RANK[cell.status] && rc.status !== 'not-planned' && cell.status !== 'not-verified') {
+              const at = tag ?? 'this build';
+              cell.evidence.push({ kind: 'source', text: `${describe}: ${tag ? `not checked at ${tag}` : 'not checked (no brave-core tag for this build)'}`, url: res?.url ?? null, contrary: false, unknown: true });
+              cell.evidence.push({ kind: 'note', text: `Required check not completed at ${at} (${describe}), so it is not verified whether this build needs “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here. Without that check the evidence would read: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null });
+              cell.summary = `The required check could not be completed (${describe}) at ${at}, so it is not verified whether this build needs “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here.`;
+              cell.status = 'not-verified';
+              cell.since = null;
+            }
+            continue;
+          }
+          if (RANK[rc.status] < RANK[cell.status]) cell.evidence.push({ kind: 'source', text: `${describe}: present at ${res.tag}`, url: res.url, contrary: false });
+        }
         // A dependent cannot have been available earlier than its prerequisite.
-        if (cell.status === 'available' && rc.status === 'available' && cell.since && rc.since && compareVersions(rc.since, cell.since) > 0) {
+        if (!capOnly && cell.status === 'available' && rc.status === 'available' && cell.since && rc.since && compareVersions(rc.since, cell.since) > 0) {
           cell.evidence.push({ kind: 'note', text: `Its earliest ${PLATFORM_NAME[cell.platform]} release note (${cell.since}) predates “${req.name}” becoming available there (${rc.since}).`, url: null });
           cell.summary = `Since ${PLATFORM_NAME[cell.platform]} ${rc.since}, when “${req.name}” became available (an earlier ${cell.since} release note predates it).`;
           cell.since = rc.since;
@@ -408,6 +452,7 @@ export function buildCapabilities(inp: CapabilityInputs): CapabilityRow[] {
           cell.evidence.push({ kind: 'note', text: `Capped by prerequisite “${req.name}”, which is ${CELL_LABEL[rc.status].toLowerCase()} here. Uncapped: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null });
           cell.status = rc.status;
           cell.summary = `Limited by “${req.name}” (${CELL_LABEL[rc.status].toLowerCase()} here): ${rc.summary}`;
+          cell.limitedBy = req.id;
         }
       }
     }
@@ -430,7 +475,7 @@ export function applyUnknownServiceSwitches(rows: CapabilityRow[], defs: Capabil
   const rowOf = new Map(rows.map((r) => [r.id, r]));
   const unknownSwitches = (id: string) => (defOf.get(id)?.serviceChecks ?? []).filter((sid) => (checks?.[sid]?.disabled ?? null) === null);
   const prereqs = (id: string, seen = new Set<string>()): string[] => {
-    for (const r of defOf.get(id)?.requires ?? []) {
+    for (const r of dependencies(defOf.get(id) ?? {})) {
       if (seen.has(r)) continue;
       seen.add(r);
       prereqs(r, seen);
@@ -450,7 +495,7 @@ export function applyUnknownServiceSwitches(rows: CapabilityRow[], defs: Capabil
       const unread = own.filter((sid) => !checks?.[sid]);
       const evidence: Evidence[] = [
         ...cell.evidence,
-        ...unread.map((sid) => ({ kind: 'service' as const, text: `Brave’s server-side switch for this feature (${sid}) was not read (no service data), so its state is unknown`, url: null, contrary: false })),
+        ...unread.map((sid) => ({ kind: 'service' as const, text: `Brave’s server-side switch for this feature (${sid}) was not read (no service data), so its state is unknown`, url: null, contrary: false, unknown: true })),
         { kind: 'note', text: `Shown as not verified because ${SERVICE_UNKNOWN_TEXT}${via ? ` (it depends on “${via.name}”)` : ''}. App-side status: ${CELL_LABEL[cell.status]} — ${cell.summary}`, url: null },
       ];
       const summary = via ? `Limited by “${via.name}” (not verified here): ${SERVICE_UNKNOWN_TEXT}.` : `${app}, but ${SERVICE_UNKNOWN_TEXT}.`;
@@ -467,7 +512,7 @@ function topoOrder(defs: CapabilityDef[]): CapabilityDef[] {
     if (seen.has(d.id)) return;
     if (stack.has(d.id)) throw new Error(`capability prerequisite cycle at ${d.id}`);
     stack.add(d.id);
-    for (const r of d.requires ?? []) {
+    for (const r of dependencies(d)) {
       const rd = defs.find((x) => x.id === r);
       if (rd) visit(rd, stack);
     }

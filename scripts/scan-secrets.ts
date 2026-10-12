@@ -4,16 +4,9 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { ROOT } from '../src/lib/store.ts';
+import { SECRET_PATTERNS } from '../src/lib/secret-patterns.ts';
 
-const PATTERNS: [string, RegExp][] = [
-  ['GitHub token', /\b(gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b/],
-  ['Bearer header', /Authorization:\s*Bearer\s+[A-Za-z0-9._-]{20,}/i],
-  ['AWS key', /\bAKIA[0-9A-Z]{16}\b/],
-  ['Private key', /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
-  ['Slack token', /\bxox[abpr]-[A-Za-z0-9-]{10,}/],
-  ['Brave services key header', /x-brave-key\s*[:=]\s*["']?[A-Za-z0-9]{16,}/i],
-  ['Private Brave reference', /github\.com\/brave\/(?:internal|reviews|security)\/(?:issues|pull)\/\d+/i],
-];
+const PATTERNS = SECRET_PATTERNS;
 const SKIP = new Set(['node_modules', '.git', '.cache']);
 
 const inputs = process.argv.slice(2);

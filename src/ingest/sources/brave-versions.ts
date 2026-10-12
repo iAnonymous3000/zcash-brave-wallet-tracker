@@ -281,11 +281,13 @@ export const braveVersions: Collector<BraveVersionsData> = {
         // answered "not published" does not lower it while another desktop OS pointer was read in this run.
         const used = platform === 'desktop' && readNow.length ? known.filter((n) => !carriedNotPublished.includes(n)) : known;
         const version = used.map((n) => detail[n]).sort(compareVersions)[0];
+        // The pointer the version comes from (one read this run when several agree): the source link opens it.
+        const source = used.find((n) => detail[n] === version && readNow.includes(n)) ?? used.find((n) => detail[n] === version) ?? known[0];
         const isBuild = /^\d+\.\d+\.\d+$/.test(version);
         const carriedNames = Object.keys(carried);
         let basis: string;
         if (platform === 'desktop') {
-          if (readNow.length === names.length) basis = `lowest of ${names.length} desktop OS pointers on versions.brave.com`;
+          if (readNow.length === names.length) basis = `lowest of ${names.length} desktop OS pointers on versions.brave.com (${source})`;
           else {
             const notes: string[] = [];
             const outageCarried = carriedNames.filter((n) => !carriedNotPublished.includes(n));
@@ -299,7 +301,7 @@ export const braveVersions: Collector<BraveVersionsData> = {
               for (const n of unavailable) byWhy.set(unavailableWhy[n], [...(byWhy.get(unavailableWhy[n]) ?? []), n]);
               notes.push(`${[...byWhy].map(([why, ns]) => `${ns.join(', ')} ${why}`).join('; ')} (no value from the last ${MAX_POINTER_CARRY_MS / 86_400_000} days)`);
             }
-            basis = `lowest of ${used.length} of ${names.length} desktop OS pointer values on versions.brave.com (${readNow.length} read this run); ${notes.join('; ')}; so this version is not confirmed for every desktop OS this run`;
+            basis = `lowest of ${used.length} of ${names.length} desktop OS pointer values on versions.brave.com (${source}; ${readNow.length} read this run); ${notes.join('; ')}; so this version is not confirmed for every desktop OS this run`;
           }
         } else {
           const carriedNote = carriedNames.length ? ` (${carriedNotPublished.length ? 'answered "not published" this run' : 'not readable this run'}; value last read ${readTimes(Object.values(carried))})` : '';
@@ -312,7 +314,7 @@ export const braveVersions: Collector<BraveVersionsData> = {
           tag: isBuild ? `v${version}` : null,
           publishedAt: null,
           basis,
-          url: `https://versions.brave.com/latest/${(readNow[0] ?? known[0])}.version`,
+          url: `https://versions.brave.com/latest/${platform === 'desktop' ? source : (readNow[0] ?? known[0])}.version`,
           detail: Object.fromEntries(known.map((n) => [n, detail[n]])),
           ...(carriedNames.length ? { carriedPointers: carried } : {}),
           ...(carriedNotPublished.length ? { notPublishedPointers: carriedNotPublished } : {}),

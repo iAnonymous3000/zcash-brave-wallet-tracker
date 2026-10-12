@@ -117,6 +117,17 @@ export function pendingIosNotesFile(issue: number): string {
   return `pending iOS release notes (draft issue #${issue})`;
 }
 
+/** The brave-browser issue number behind a pendingIosNotesFile() name; null for a changelog file. */
+export function pendingNotesIssue(file: string): number | null {
+  const m = /^pending iOS release notes \(draft issue #(\d+)\)$/.exec(file);
+  return m ? Number(m[1]) : null;
+}
+
+/** How a release line's source is described where it is shown: a release-notes issue is named as one. */
+export function notesIssueClause(issue: number): string {
+  return `Brave’s iOS release-notes issue brave-browser#${issue}, not yet merged into CHANGELOG_iOS.md (its lines may still change)`;
+}
+
 const errText = (err: unknown) => (err instanceof Error ? err.message : String(err)).slice(0, 200);
 
 const byFirstSeen = (a: EvidenceRecord, b: EvidenceRecord) => a.firstSeenAt.localeCompare(b.firstSeenAt) || a.id.localeCompare(b.id);

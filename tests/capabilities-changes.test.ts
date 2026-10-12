@@ -61,7 +61,10 @@ test('capability cells: per-platform release notes, flags at each tag, opt-in, i
   assert.equal(cell('desktop', 'beta').status, 'in-build', 'Beta never says "available"');
   const br = rows.find((r) => r.id === 'bridge')!;
   assert.equal(br.cells.find((x) => x.platform === 'android' && x.channel === 'release')!.status, 'available');
-  assert.equal(br.cells.find((x) => x.platform === 'ios' && x.channel === 'beta')!.status, 'absent', 'UI hides bridge on iOS');
+  // The code is in the build but the UI hides it: not available to users, and not "not present" either.
+  const iosBridge = br.cells.find((x) => x.platform === 'ios' && x.channel === 'beta')!;
+  assert.equal(iosBridge.status, 'hidden', 'UI hides bridge on iOS');
+  assert.match(iosBridge.summary, /hides it from ordinary users/);
 });
 
 test('prerequisites: dependent release notes lift a prerequisite; contrary build evidence caps the dependent', () => {

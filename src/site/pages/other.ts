@@ -4,7 +4,7 @@ import type { RunRecord, SourceStatus } from '../../lib/types.ts';
 import { completeUnknownText, keptDataStale, statusJudgedAt } from '../client/logic.ts';
 import { ext, glyph, html, itemHref, shortRef, time, u } from '../components.ts';
 import type { SafeHtml } from '../html.ts';
-import { crateVersions, gate3Facts, presentSite, sharePct, studyView, watchAdoption } from '../view.ts';
+import { crateVersions, gate3Facts, presentSite, scheduledCadence, sharePct, studyView, watchAdoption } from '../view.ts';
 import { gate3Clause } from './home.ts';
 
 // ---------------------------------------------------------------------------
@@ -190,6 +190,15 @@ function sourceStatusCell(s: SourceStatus, at: number): SafeHtml {
   return html`<div class="src-cell"><span class="src-state src-${s.lastOutcome ?? 'never'}">${label}</span>${stale ? html` <span class="src-flag">Stale</span>` : ''}<span class="src-age"${lastComplete} data-stale-since="${s.staleSince ?? ''}">${age}</span></div>`;
 }
 
+/** The configured refresh interval, and how far apart scheduled runs actually started. */
+function cadenceText(everyMinutes: number, c: ReturnType<typeof scheduledCadence>): string {
+  const h = (x: number) => (Math.round(x * 10) / 10).toString();
+  const planned = `Refreshes are scheduled every ${h(everyMinutes / 60)} hours`;
+  if (!c) return `${planned}; GitHub Actions can start scheduled runs late or skip them.`;
+  const late = c.medianHours > (everyMinutes / 60) * 1.5;
+  return `${planned}${late ? ', but GitHub Actions starts scheduled runs late or skips them' : ''}: the last ${c.runs} scheduled runs started ${h(c.minHours)}–${h(c.maxHours)} hours apart (median ${h(c.medianHours)}).`;
+}
+
 export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<string, { remaining: number | null; limit: number | null; resetAt: string | null }>, statusSources?: SourceStatus[], lastRunAt?: string | null): SafeHtml {
   const d = presentSite(data);
   const c = d.coverage.counts;
@@ -216,7 +225,7 @@ export function sourcesPage(data: SiteData, runs: RunRecord[], rate: Record<stri
     <td data-label="Notes">${s.lastError ? html`<p class="err">${s.lastError}${s.consecutiveFailures > 1 ? ` (${s.consecutiveFailures} consecutive failures)` : ''}</p>` : ''}${s.limitations.length ? html`<details><summary>${s.limitations.length} limitation${s.limitations.length > 1 ? 's' : ''}</summary><ul>${s.limitations.map((l) => html`<li>${l}</li>`)}</ul></details>` : ''}</td>
   </tr>`)}
   </tbody></table></div>
-  <p class="muted">A source counts as stale when its last success is more than ${FRESHNESS.staleAfterMinutes / 60} hours old, or when a refresh had to keep data it should have updated for longer than that (“Stale”; the rest of its data was read). “Partial” means some reads failed and their last good values were kept; the age of its last complete collection is shown. Refreshes run about every ${d.site.refreshEveryMinutes / 60} hours. Ages above are computed in your browser from the stored timestamps.</p>
+  <p class="muted">A source counts as stale when its last success is more than ${FRESHNESS.staleAfterMinutes / 60} hours old, or when a refresh had to keep data it should have updated for longer than that (“Stale”; the rest of its data was read). “Partial” means some reads failed and their last good values were kept; the age of its last complete collection is shown. ${cadenceText(d.site.refreshEveryMinutes, scheduledCadence(runs))} Ages above are computed in your browser from the stored timestamps.</p>
 </section>
 
 <section class="block" aria-labelledby="runs-h">

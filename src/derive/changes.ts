@@ -18,6 +18,7 @@ import { isUpliftPr } from './relations.ts';
 import type { ChangelogEntry } from '../lib/types.ts';
 import type { UpstreamData } from '../ingest/sources/upstream.ts';
 import { linkedVersions, rangeExposure, type DepsData, type LockSource } from '../ingest/sources/deps.ts';
+import { notesIssueClause, pendingNotesIssue } from '../ingest/sources/changelogs.ts';
 
 export const HISTORY_DAYS = 365;
 /**
@@ -48,8 +49,11 @@ export const HISTORY_DAYS = 365;
  * v16: adoption keeps legacy dependency reachability unknown and distinguishes an unread lockfile from absence;
  * mixed server/client advisories retain confirmed client exposure; feature-branch carriers must postdate the fix;
  * prerelease note corroboration respects each build, and prerequisite uncertainty preserves definite absence.
+ * v17: cap-only dependencies (shielding is capped by Ironwood); help-article availability sentences become doc
+ * evidence; release lines from an iOS release-notes issue are described by that source, not as changelog lines;
+ * a feature whose code is present but hidden from users is "hidden", never "not present".
  */
-export const DERIVE_RULES_VERSION = 16;
+export const DERIVE_RULES_VERSION = 17;
 export const MAX_EVENTS = 2500;
 
 export interface Snapshot {
@@ -221,7 +225,10 @@ export function generateEvents(inp: ChangeInputs, opts: { refreshCandidates?: bo
     if (!at && !inp.releaseDates.size) continue;
     if (!at) continue; // outside the retained release window: shown on the item, not in the feed
     const g = e.issueRefs.map((r) => ctxOf(r)).find(Boolean) ?? null;
-    out.push(ev({ key: `${e.platform}|${e.version}|${e.text}`, kind: 'released', sourceAt: at, title: `${PLATFORM_NAME[e.platform]} ${e.version} release notes: ${e.text}`, impact: `Listed in Brave's ${PLATFORM_NAME[e.platform]} Stable release notes for ${e.version}. Release notes are per platform; other platforms need their own entry.`, highlight: /^\[security\]/i.test(e.text) ? 'security' : highlightFor(g?.topic.id ?? null, g?.status ?? null, 'released'), itemIds: e.issueRefs.filter((r) => inp.items[r]), topic: g?.topic.id ?? null, platforms: [e.platform], channel: 'release', links: [{ label: `${e.file} L${e.line}`, url: e.permalink }, ...e.issueRefs.slice(0, 2).map((r) => link(r, inp.items))], evidence: [`"${e.text}"`, `captured at commit ${e.commitSha.slice(0, 8)}`] }));
+    // Lines of an iOS release-notes issue not yet merged into CHANGELOG_iOS.md are described by that source.
+    const notesIssue = pendingNotesIssue(e.file);
+    const listed = notesIssue === null ? `Listed in Brave's ${PLATFORM_NAME[e.platform]} Stable release notes for ${e.version}.` : `Listed for ${PLATFORM_NAME[e.platform]} ${e.version} in ${notesIssueClause(notesIssue)}.`;
+    out.push(ev({ key: `${e.platform}|${e.version}|${e.text}`, kind: 'released', sourceAt: at, title: `${PLATFORM_NAME[e.platform]} ${e.version} release notes${notesIssue === null ? '' : ` (issue #${notesIssue})`}: ${e.text}`, impact: `${listed} Release notes are per platform; other platforms need their own entry.`, highlight: /^\[security\]/i.test(e.text) ? 'security' : highlightFor(g?.topic.id ?? null, g?.status ?? null, 'released'), itemIds: e.issueRefs.filter((r) => inp.items[r]), topic: g?.topic.id ?? null, platforms: [e.platform], channel: 'release', links: [{ label: notesIssue === null ? `${e.file} L${e.line}` : `iOS release-notes issue #${notesIssue}`, url: e.permalink }, ...e.issueRefs.slice(0, 2).map((r) => link(r, inp.items))], evidence: [`"${e.text}"`, notesIssue === null ? `captured at commit ${e.commitSha.slice(0, 8)}` : `captured from brave-browser#${notesIssue}`] }));
   }
 
   // 3. Build inclusion (diff only; no source timestamp for "became part of a build").
