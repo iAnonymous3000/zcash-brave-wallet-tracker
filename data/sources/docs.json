@@ -1,7 +1,7 @@
 {
  "sourceId": "docs",
  "schema": 1,
- "retrievedAt": "2026-10-12T06:00:31.293Z",
+ "retrievedAt": "2026-10-12T15:28:07.837Z",
  "data": {
   "pages": [
    {
@@ -14,7 +14,8 @@
     "zcashStatements": [
      "Zcash is a secure digital currency that helps protect your privacy.",
      "With Zcash, there are two types of addresses:",
-     "Transparent addresses: Transactions with transparent addresses, or t-addresses, can be tracked on the Zcash blockchain the same way Bitcoin can."
+     "Transparent addresses: Transactions with transparent addresses, or t-addresses, can be tracked on the Zcash blockchain the same way Bitcoin can.",
+     "Brave Wallet supports shielded addresses in 1.77x and above. Android and iOS are unavailable at this time."
     ],
     "retrievedAt": "2026-10-08T14:35:45.102Z"
    },
@@ -126,5 +127,5 @@
   ],
   "history": []
  },
- "completeAt": "2026-10-12T06:00:31.293Z"
+ "completeAt": "2026-10-12T15:28:07.837Z"
 }

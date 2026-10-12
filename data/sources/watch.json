@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-12T06:00:31.293Z",
+ "retrievedAt": "2026-10-12T15:28:07.837Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.6.0.",
-    "metadataReadAt": "2026-10-12T06:00:31.293Z"
+    "metadataReadAt": "2026-10-12T15:28:07.837Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Discovery that continues past its budget, and a test shard service for….",
-    "metadataReadAt": "2026-10-12T06:00:31.293Z"
+    "metadataReadAt": "2026-10-12T15:28:07.837Z"
    },
    {
     "id": "watch-zkdragon",
@@ -41,7 +41,7 @@
     "url": "https://x.com/zkDragon",
     "updatedAt": null,
     "summary": "No zkDragon repository or library exists; the name is an X/Twitter handle cited in Zcash ecosystem digests. It is not monitored live because X is not publicly readable without an account.",
-    "attribution": "Identity mapping (reported as Dev Ojha) comes from third-party ZecHub newsletters and is unconfirmed.",
+    "attribution": "Mentions come from third-party ZecHub newsletters and are unconfirmed.",
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No zkdragon packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zkdragon\"."
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-12T06:00:31.293Z",
-    "searchCheckedAt": "2026-10-12T06:00:31.293Z"
+    "checkedAt": "2026-10-12T15:28:07.837Z",
+    "searchCheckedAt": "2026-10-12T15:28:07.837Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-12T06:00:31.293Z",
-    "searchCheckedAt": "2026-10-12T06:00:31.293Z"
+    "checkedAt": "2026-10-12T15:28:07.837Z",
+    "searchCheckedAt": "2026-10-12T15:28:07.837Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-12T06:00:31.293Z",
-    "searchCheckedAt": "2026-10-12T06:00:31.293Z"
+    "checkedAt": "2026-10-12T15:28:07.837Z",
+    "searchCheckedAt": "2026-10-12T15:28:07.837Z"
    }
   ]
  },
- "completeAt": "2026-10-12T06:00:31.293Z"
+ "completeAt": "2026-10-12T15:28:07.837Z"
 }

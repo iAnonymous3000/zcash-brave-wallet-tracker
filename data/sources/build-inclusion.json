@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-12T06:00:31.293Z",
+ "retrievedAt": "2026-10-12T15:28:07.837Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3635,24 +3635,17 @@
     ]
    },
    {
-    "tag": "v1.99.29",
-    "version": "1.99.29",
-    "publishedAt": "2026-10-09T13:28:49Z",
+    "tag": "v1.99.33",
+    "version": "1.99.33",
+    "publishedAt": "2026-10-12T13:23:38Z",
     "usedBy": [
-     "ios/nightly"
-    ]
-   },
-   {
-    "tag": "v1.99.32",
-    "version": "1.99.32",
-    "publishedAt": "2026-10-12T01:17:57Z",
-    "usedBy": [
+     "ios/nightly",
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 1
+  "calls": 0
  },
- "completeAt": "2026-10-12T06:00:31.293Z"
+ "completeAt": "2026-10-12T15:28:07.837Z"
 }

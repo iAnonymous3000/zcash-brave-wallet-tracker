@@ -942,7 +942,7 @@
   "kind": "issue-closed",
   "sourceAt": "2026-09-24T07:05:15Z",
   "title": "Closed (completed): [ZCash] Reset migration flag when turn off ironwood feature",
-  "impact": "Closed as completed; linked PR merged 2026-09-15. Code is in current Release builds for Desktop.",
+  "impact": "Closed as completed; linked PR merged 2026-09-15. Code is in current Release builds for Desktop, Android.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58970"
@@ -1442,8 +1442,8 @@
  {
   "kind": "released",
   "sourceAt": "2026-09-18T03:05:24Z",
-  "title": "iOS 1.95.104 release notes: Added Zcash Ironwood migration banner. (#58493)",
-  "impact": "Listed in Brave's iOS Stable release notes for 1.95.104. Release notes are per platform; other platforms need their own entry.",
+  "title": "iOS 1.95.104 release notes (issue #59793): Added Zcash Ironwood migration banner. (#58493)",
+  "impact": "Listed for iOS 1.95.104 in Brave’s iOS release-notes issue brave-browser#59793, not yet merged into CHANGELOG_iOS.md (its lines may still change). Release notes are per platform; other platforms need their own entry.",
   "highlight": "migration",
   "itemIds": [
    "brave/brave-browser#58493"
@@ -1455,7 +1455,7 @@
   "channel": "release",
   "links": [
    {
-    "label": "pending iOS release notes (draft issue #59793) L5",
+    "label": "iOS release-notes issue #59793",
     "url": "https://github.com/brave/brave-browser/issues/59793"
    },
    {
@@ -1465,7 +1465,7 @@
   ],
   "evidence": [
    "\"Added Zcash Ironwood migration banner. (#58493)\"",
-   "captured at commit issue"
+   "captured from brave-browser#59793"
   ],
   "id": "7ba0f1d0e3b6cbff",
   "detectedAt": "2026-10-08T17:03:02.983Z",
@@ -4396,7 +4396,7 @@
   ],
   "evidence": [
    "posted 2026-08-06T19:21:12.661Z",
-   "7 post(s)"
+   "7 post(s), closed"
   ],
   "id": "d0e4d8abd4cae489",
   "detectedAt": "2026-10-08T14:35:45.102Z",
@@ -6418,7 +6418,7 @@
   "kind": "advisory",
   "sourceAt": "2026-07-06T21:23:41Z",
   "title": "Security advisory GHSA-ww9q-8r59-xv46 (CVE-2026-54496): Zebra: Missing copy constraint in halo2_gadgets variable-base scalar multiplication allows under-constrained base, breaking Orchard Action circuit soundness",
-  "impact": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 10 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.29, v1.98.53, v1.99.30)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 10 channel builds (v1.97.56, v1.96.61, v1.98.47, v1.98.52, v1.99.20, v1.99.26, v1.96.62, v1.99.29, v1.98.53, v1.99.30)). zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+  "impact": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 8 channel builds (v1.97.56, v1.98.47, v1.98.52, v1.99.26, v1.96.62, v1.99.25, v1.98.54, v1.99.33)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 8 channel builds (v1.97.56, v1.98.47, v1.98.52, v1.99.26, v1.96.62, v1.99.25, v1.98.54, v1.99.33)). zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
   "highlight": "security",
   "itemIds": [],
   "topic": "security",
@@ -6435,10 +6435,10 @@
    "halo2_gadgets < 0.5.0",
    "orchard < 0.14.0",
    "zcash_primitives < 0.28.0",
-   "v1.97.56 (desktop/release, github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-   "v1.97.56 (desktop/release, github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-   "v1.97.56 (desktop/release, github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-   "v1.96.61 (android/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0"
+   "v1.97.56 (desktop/release, android/release, github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+   "v1.97.56 (desktop/release, android/release, github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+   "v1.97.56 (desktop/release, android/release, github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+   "v1.98.47 (desktop/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0"
   ],
   "id": "0095495ed31de756",
   "detectedAt": "2026-10-08T14:35:45.102Z",
