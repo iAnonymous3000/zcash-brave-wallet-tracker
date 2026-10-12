@@ -32,6 +32,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      # A queued run retains its event's SHA even after an earlier refresh advances the branch.
+      # Adopt that run's data before collecting again, but never run source that was not in this event.
+      - name: Synchronize queued refresh
+        run: |
+          case "$GITHUB_REF" in
+            refs/heads/*) ;;
+            *) echo "::error::Refresh publication requires a branch ref."; exit 1 ;;
+          esac
+          queued_revision=$(git rev-parse HEAD)
+          git fetch --no-tags origin "$GITHUB_REF"
+          if ! git diff --quiet "$queued_revision" FETCH_HEAD -- . ':(exclude)data'; then
+            echo "::error::Source changed while this refresh was queued; refusing to run a different source revision. Run refresh again on the new revision."
+            exit 1
+          fi
+          git reset --hard FETCH_HEAD
+
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
