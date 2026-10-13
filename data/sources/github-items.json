@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-13T16:01:11.756Z",
+ "retrievedAt": "2026-10-13T21:16:54.774Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -423,7 +423,7 @@
     "milestone": {
      "title": "1.97.x - Release",
      "dueOn": "2026-10-07T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "On macOS Nightly 1.97.1, entering -1 or -0.00000001 ZEC with a valid transparent recipient enables Review send, even with a zero balance. Reviewing -1 then produces a generic transaction error suggesting a smaller amount, instead of explaining that the amount must be positive. Reject negative amounts before enabling review; no successful transfer was observed. cc @kdenhartog",
     "bodyRefs": [],
@@ -544,7 +544,7 @@
      "title:zcash",
      "body:zec"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-13T21:16:54.774Z"
    },
    "brave/brave-browser#51665": {
     "id": "brave/brave-browser#51665",
@@ -786,7 +786,7 @@
     "milestone": {
      "title": "1.97.x - Release",
      "dueOn": "2026-10-07T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "On macOS Nightly 1.97.1, entering 1687104.5 in Shield account → Advanced settings leaves Shield account enabled, although a block height must be a whole number. Reject fractional birthdays before enabling the action; the invalid value was not submitted, so the resulting sync behavior was not tested. cc @kdenhartog",
     "bodyRefs": [],
@@ -899,7 +899,7 @@
      "label:feature/web3/wallet/zcash",
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-13T21:16:54.774Z"
    },
    "brave/brave-browser#58970": {
     "id": "brave/brave-browser#58970",
@@ -27233,7 +27233,7 @@
     "milestone": {
      "title": "1.97.x - Release",
      "dueOn": "2026-10-07T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Description This is a root issue: 0) Update orchard crate to v15 -- https://github.com/brave/brave-browser/issues/57124 1) Add a feature for ironwood support. Rename shielded feature to orchard feature. -- https://github.com/brave/brave-browser/issues/56873 2) Add ironwood native token. Change is_shielded to is_orchard, add is_ironwood to token info. -- https://github.com/brave/brave-browser/issues/57324 3) Update database tables, add “pool” column with values…",
     "bodyRefs": [
@@ -27501,7 +27501,7 @@
      "title:zcash",
      "body:ironwood"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-13T21:16:54.774Z"
    },
    "brave/brave-browser#57431": {
     "id": "brave/brave-browser#57431",
@@ -78889,7 +78889,7 @@
     "milestone": {
      "title": "1.97.x - Release",
      "dueOn": "2026-10-07T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "When selecting the decimals of precision for a user-defined asset in the Wallet, the scrollbars will erroneously appear in the UI. [image]",
     "bodyRefs": [],
@@ -78978,7 +78978,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-13T21:16:54.774Z"
    },
    "brave/brave-browser#57645": {
     "id": "brave/brave-browser#57645",
@@ -89747,5 +89747,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-13T16:01:11.756Z"
+ "completeAt": "2026-10-13T21:16:54.774Z"
 }
