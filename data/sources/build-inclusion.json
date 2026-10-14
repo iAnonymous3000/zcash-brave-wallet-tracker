@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-14T01:14:25.078Z",
+ "retrievedAt": "2026-10-14T07:40:35.013Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -25,10 +25,10 @@
      "basis": "GitHub compare v1.98.47...c37d73e3: behind"
     },
     "maxExcluded": {
-     "version": "1.97.56",
-     "tag": "v1.97.56",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.97.56...c37d73e3: diverged"
+     "version": "1.97.57",
+     "tag": "v1.97.57",
+     "checkedAt": "2026-10-14T07:40:35.013Z",
+     "basis": "GitHub compare v1.97.57...c37d73e3: diverged"
     }
    },
    "brave/brave-core#39998": {
@@ -63,10 +63,10 @@
      "basis": "GitHub compare v1.98.47...60c8ff0b: behind"
     },
     "maxExcluded": {
-     "version": "1.97.56",
-     "tag": "v1.97.56",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.97.56...60c8ff0b: diverged"
+     "version": "1.97.57",
+     "tag": "v1.97.57",
+     "checkedAt": "2026-10-14T07:40:35.013Z",
+     "basis": "GitHub compare v1.97.57...60c8ff0b: diverged"
     }
    },
    "brave/brave-core#39979": {
@@ -79,10 +79,10 @@
      "basis": "GitHub compare v1.98.47...509aefb7: behind"
     },
     "maxExcluded": {
-     "version": "1.97.56",
-     "tag": "v1.97.56",
-     "checkedAt": "2026-10-08T14:35:45.102Z",
-     "basis": "GitHub compare v1.97.56...509aefb7: diverged"
+     "version": "1.97.57",
+     "tag": "v1.97.57",
+     "checkedAt": "2026-10-14T07:40:35.013Z",
+     "basis": "GitHub compare v1.97.57...509aefb7: diverged"
     }
    },
    "brave/brave-core#39877": {
@@ -3589,7 +3589,14 @@
     "publishedAt": "2026-10-07T03:18:14Z",
     "usedBy": [
      "desktop/release",
-     "android/release",
+     "android/release"
+    ]
+   },
+   {
+    "tag": "v1.97.57",
+    "version": "1.97.57",
+    "publishedAt": "2026-10-14T05:35:25Z",
+    "usedBy": [
      "github/release"
     ]
    },
@@ -3611,9 +3618,9 @@
     ]
    },
    {
-    "tag": "v1.98.55",
-    "version": "1.98.55",
-    "publishedAt": "2026-10-13T05:22:09Z",
+    "tag": "v1.98.56",
+    "version": "1.98.56",
+    "publishedAt": "2026-10-14T05:30:30Z",
     "usedBy": [
      "github/beta"
     ]
@@ -3643,16 +3650,16 @@
     ]
    },
    {
-    "tag": "v1.99.39",
-    "version": "1.99.39",
-    "publishedAt": "2026-10-13T17:23:05Z",
+    "tag": "v1.99.40",
+    "version": "1.99.40",
+    "publishedAt": "2026-10-14T01:21:26Z",
     "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 3
  },
- "completeAt": "2026-10-14T01:14:25.078Z"
+ "completeAt": "2026-10-14T07:40:35.013Z"
 }
