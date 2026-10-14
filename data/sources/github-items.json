@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-13T21:16:54.774Z",
+ "retrievedAt": "2026-10-14T01:14:25.078Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -39509,6 +39509,157 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#34256": {
+    "id": "brave/brave-core#34256",
+    "repo": "brave/brave-core",
+    "number": 34256,
+    "kind": "pr",
+    "title": "fix: ZCashTransaction::operator== compares orchard_part_ with itself",
+    "url": "https://github.com/brave/brave-core/pull/34256",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-02-27T15:19:12Z",
+    "updatedAt": "2026-10-14T00:06:08Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "fix/zcash-operator-eq-bug",
+    "author": "dev-doshi",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "Summary Fixed a bug in ZCashTransaction::operator== where this->orchard_part_ was compared with itself instead of other.orchard_part_ on the right-hand side of the std::tie comparison. Bug Details The equality operator was: [code] This means the orchard (shielded) part was never actually compared between two ZCashTransaction objects. Two transactions with different shielded inputs/outputs would incorrectly compare as equal if all other fields matched. Impact - Transaction…",
+    "bodyRefs": [
+     "brave/brave-browser#53219"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#53219"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#53219"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-02-27T17:43:04Z",
+      "actor": "dev-doshi",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#53218",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-02-27T17:43:09Z",
+      "actor": "dev-doshi",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#53219",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-03-05T09:05:49Z",
+      "actor": "brave-builds",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#34471",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard is:pr",
+     "search:shielded is:pr",
+     "search:zcash is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcashtransaction",
+     "body:zcashtransaction"
+    ],
+    "retrievedAt": "2026-10-14T01:14:25.078Z"
+   },
+   "brave/brave-core#34260": {
+    "id": "brave/brave-core#34260",
+    "repo": "brave/brave-core",
+    "number": 34260,
+    "kind": "pr",
+    "title": "fix: use CheckedNumeric for ZCashTransaction::TotalInputsAmount to prevent overflow",
+    "url": "https://github.com/brave/brave-core/pull/34260",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-02-27T15:26:59Z",
+    "updatedAt": "2026-10-14T00:05:45Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "fix/zcash-total-inputs-overflow",
+    "author": "dev-doshi",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "Summary Change ZCashTransaction::TotalInputsAmount() return type from uint64_t to base::CheckedNumeric to detect integer overflow when summing UTXO input amounts. Bug Description TotalInputsAmount() used raw uint64_t arithmetic to sum transparent and orchard input amounts. If a transaction had many inputs with large amounts, the sum could silently wrap around, producing a much smaller value than the actual total. This is inconsistent with ValidateAmounts() in the same file,…",
+    "bodyRefs": [
+     "brave/brave-browser#53223"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#53223"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#53223"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-02-27T17:43:38Z",
+      "actor": "dev-doshi",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#53223",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-02-27T20:03:49Z",
+      "actor": "dev-doshi",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#34308",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-03-16T03:55:49Z",
+      "actor": "brave-builds",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#34745",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard is:pr",
+     "search:zcash is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcashtransaction",
+     "body:zcashtransaction"
+    ],
+    "retrievedAt": "2026-10-14T01:14:25.078Z"
+   },
    "brave/brave-core#40695": {
     "id": "brave/brave-core#40695",
     "repo": "brave/brave-core",
@@ -46117,81 +46268,6 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
-   "brave/brave-core#34260": {
-    "id": "brave/brave-core#34260",
-    "repo": "brave/brave-core",
-    "number": 34260,
-    "kind": "pr",
-    "title": "fix: use CheckedNumeric for ZCashTransaction::TotalInputsAmount to prevent overflow",
-    "url": "https://github.com/brave/brave-core/pull/34260",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": false,
-    "createdAt": "2026-02-27T15:26:59Z",
-    "updatedAt": "2026-03-26T08:40:19Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": "master",
-    "headRef": "fix/zcash-total-inputs-overflow",
-    "author": "dev-doshi",
-    "assignees": [],
-    "labels": [],
-    "milestone": null,
-    "bodyExcerpt": "Summary Change ZCashTransaction::TotalInputsAmount() return type from uint64_t to base::CheckedNumeric to detect integer overflow when summing UTXO input amounts. Bug Description TotalInputsAmount() used raw uint64_t arithmetic to sum transparent and orchard input amounts. If a transaction had many inputs with large amounts, the sum could silently wrap around, producing a much smaller value than the actual total. This is inconsistent with ValidateAmounts() in the same file,…",
-    "bodyRefs": [
-     "brave/brave-browser#53223"
-    ],
-    "resolvesRefs": [
-     "brave/brave-browser#53223"
-    ],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [
-     "brave/brave-browser#53223"
-    ],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "cross_referenced",
-      "at": "2026-02-27T17:43:38Z",
-      "actor": "dev-doshi",
-      "detail": "Issue",
-      "ref": "brave/brave-browser#53223",
-      "willClose": false
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-02-27T20:03:49Z",
-      "actor": "dev-doshi",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#34308",
-      "willClose": false
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-03-16T03:55:49Z",
-      "actor": "brave-builds",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#34745",
-      "willClose": false
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:orchard is:pr",
-     "search:zcash is:pr"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcashtransaction",
-     "body:zcashtransaction"
-    ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
    "brave/brave-core#33537": {
     "id": "brave/brave-core#33537",
     "repo": "brave/brave-core",
@@ -46922,82 +46998,6 @@
     "matchedTerms": [
      "title:zcash",
      "body:zcash"
-    ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
-   "brave/brave-core#34256": {
-    "id": "brave/brave-core#34256",
-    "repo": "brave/brave-core",
-    "number": 34256,
-    "kind": "pr",
-    "title": "fix: ZCashTransaction::operator== compares orchard_part_ with itself",
-    "url": "https://github.com/brave/brave-core/pull/34256",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": false,
-    "createdAt": "2026-02-27T15:19:12Z",
-    "updatedAt": "2026-03-12T09:41:47Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": "master",
-    "headRef": "fix/zcash-operator-eq-bug",
-    "author": "dev-doshi",
-    "assignees": [],
-    "labels": [],
-    "milestone": null,
-    "bodyExcerpt": "Summary Fixed a bug in ZCashTransaction::operator== where this->orchard_part_ was compared with itself instead of other.orchard_part_ on the right-hand side of the std::tie comparison. Bug Details The equality operator was: [code] This means the orchard (shielded) part was never actually compared between two ZCashTransaction objects. Two transactions with different shielded inputs/outputs would incorrectly compare as equal if all other fields matched. Impact - Transaction…",
-    "bodyRefs": [
-     "brave/brave-browser#53219"
-    ],
-    "resolvesRefs": [
-     "brave/brave-browser#53219"
-    ],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [
-     "brave/brave-browser#53219"
-    ],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "cross_referenced",
-      "at": "2026-02-27T17:43:04Z",
-      "actor": "dev-doshi",
-      "detail": "Issue",
-      "ref": "brave/brave-browser#53218",
-      "willClose": false
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-02-27T17:43:09Z",
-      "actor": "dev-doshi",
-      "detail": "Issue",
-      "ref": "brave/brave-browser#53219",
-      "willClose": false
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-03-05T09:05:49Z",
-      "actor": "brave-builds",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#34471",
-      "willClose": false
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:orchard is:pr",
-     "search:shielded is:pr",
-     "search:zcash is:pr"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcashtransaction",
-     "body:zcashtransaction"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
@@ -89656,6 +89656,8 @@
    "brave/brave-browser#20554": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
+   "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#34308": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40325": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40696": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89678,8 +89680,6 @@
    "brave/brave-core#34471": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34745": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#32982": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#34308": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34317": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34279": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#33554": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89747,5 +89747,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-13T21:16:54.774Z"
+ "completeAt": "2026-10-14T01:14:25.078Z"
 }
