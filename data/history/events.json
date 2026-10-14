@@ -1,5 +1,77 @@
 [
  {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-14T16:16:14.186328Z",
+  "title": "Upstream: zcash_client_backend 0.25.0-pre.2",
+  "impact": "zcash_client_backend 0.25.0-pre.2 was published upstream. Brave master still resolves 0.24.0-rc.1 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_client_backend/0.25.0-pre.2"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-14T16:16:14.186328Z",
+   "Brave master: 0.24.0-rc.1"
+  ],
+  "id": "f62342ff7cec2140",
+  "detectedAt": "2026-10-14T18:39:43.835Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-14T16:13:56.997560Z",
+  "title": "Upstream: zcash_primitives 0.31.0-pre.2",
+  "impact": "zcash_primitives 0.31.0-pre.2 was published upstream. Brave master still resolves 0.29.0 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-pre.2"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-14T16:13:56.997560Z",
+   "Brave master: 0.29.0"
+  ],
+  "id": "862c1dc955787a6b",
+  "detectedAt": "2026-10-14T18:39:43.835Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-14T16:12:10.542712Z",
+  "title": "Upstream: zcash_protocol 0.11.0-pre.1",
+  "impact": "zcash_protocol 0.11.0-pre.1 was published upstream. Brave master still resolves 0.10.0 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_protocol/0.11.0-pre.1"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-14T16:12:10.542712Z",
+   "Brave master: 0.10.0"
+  ],
+  "id": "7ef938f083365f3c",
+  "detectedAt": "2026-10-14T18:39:43.835Z",
+  "basis": "observed"
+ },
+ {
   "kind": "capability-changed",
   "sourceAt": null,
   "title": "Memos on shielded sends on Android Release: opt-in → in-build",

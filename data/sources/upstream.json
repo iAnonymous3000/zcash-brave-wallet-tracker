@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-14T13:45:21.279Z",
+ "retrievedAt": "2026-10-14T18:39:43.835Z",
  "data": {
   "crates": {
    "orchard": {
@@ -76,9 +76,14 @@
    "zcash_primitives": {
     "crate": "zcash_primitives",
     "maxStable": "0.30.1",
-    "newest": "0.31.0-pre.1",
-    "updatedAt": "2026-10-06T20:29:07.124941Z",
+    "newest": "0.31.0-pre.2",
+    "updatedAt": "2026-10-14T16:13:56.997560Z",
     "recent": [
+     {
+      "version": "0.31.0-pre.2",
+      "createdAt": "2026-10-14T16:13:56.997560Z",
+      "yanked": false
+     },
      {
       "version": "0.31.0-pre.1",
       "createdAt": "2026-10-06T20:29:07.124941Z",
@@ -133,11 +138,6 @@
       "version": "0.26.3",
       "createdAt": "2025-12-15T16:35:45.328748Z",
       "yanked": false
-     },
-     {
-      "version": "0.26.2",
-      "createdAt": "2025-12-12T21:34:30.256328Z",
-      "yanked": true
      }
     ],
     "url": "https://crates.io/crates/zcash_primitives"
@@ -145,9 +145,14 @@
    "zcash_protocol": {
     "crate": "zcash_protocol",
     "maxStable": "0.10.6",
-    "newest": "0.11.0-pre.0",
-    "updatedAt": "2026-10-01T02:23:57.891392Z",
+    "newest": "0.11.0-pre.1",
+    "updatedAt": "2026-10-14T16:12:10.542712Z",
     "recent": [
+     {
+      "version": "0.11.0-pre.1",
+      "createdAt": "2026-10-14T16:12:10.542712Z",
+      "yanked": false
+     },
      {
       "version": "0.11.0-pre.0",
       "createdAt": "2026-10-01T02:23:57.891392Z",
@@ -202,11 +207,6 @@
       "version": "0.8.0",
       "createdAt": "2026-04-24T04:24:25.485398Z",
       "yanked": false
-     },
-     {
-      "version": "0.7.2",
-      "createdAt": "2025-12-11T16:32:11.296058Z",
-      "yanked": false
      }
     ],
     "url": "https://crates.io/crates/zcash_protocol"
@@ -214,9 +214,14 @@
    "zcash_client_backend": {
     "crate": "zcash_client_backend",
     "maxStable": "0.24.0",
-    "newest": "0.25.0-pre.1",
-    "updatedAt": "2026-10-06T20:31:38.015499Z",
+    "newest": "0.25.0-pre.2",
+    "updatedAt": "2026-10-14T16:16:14.186328Z",
     "recent": [
+     {
+      "version": "0.25.0-pre.2",
+      "createdAt": "2026-10-14T16:16:14.186328Z",
+      "yanked": false
+     },
      {
       "version": "0.25.0-pre.1",
       "createdAt": "2026-10-06T20:31:38.015499Z",
@@ -270,11 +275,6 @@
      {
       "version": "0.23.0",
       "createdAt": "2026-06-03T04:57:15.201605Z",
-      "yanked": false
-     },
-     {
-      "version": "0.22.0",
-      "createdAt": "2026-04-28T04:09:58.031016Z",
       "yanked": false
      }
     ],
@@ -857,6 +857,39 @@
    }
   },
   "releases": [
+   {
+    "id": "crates.io/zcash_client_backend@0.25.0-pre.2",
+    "project": "zcash_client_backend",
+    "repo": "zcash/librustzcash",
+    "version": "0.25.0-pre.2",
+    "publishedAt": "2026-10-14T16:16:14.186328Z",
+    "url": "https://crates.io/crates/zcash_client_backend/0.25.0-pre.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_primitives@0.31.0-pre.2",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.31.0-pre.2",
+    "publishedAt": "2026-10-14T16:13:56.997560Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-pre.2",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
+   {
+    "id": "crates.io/zcash_protocol@0.11.0-pre.1",
+    "project": "zcash_protocol",
+    "repo": "zcash/librustzcash",
+    "version": "0.11.0-pre.1",
+    "publishedAt": "2026-10-14T16:12:10.542712Z",
+    "url": "https://crates.io/crates/zcash_protocol/0.11.0-pre.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
    {
     "id": "zcash/lightwalletd@v0.5.5",
     "project": "lightwalletd",
@@ -1759,17 +1792,6 @@
     "prerelease": false
    },
    {
-    "id": "crates.io/zcash_client_backend@0.22.0",
-    "project": "zcash_client_backend",
-    "repo": "zcash/librustzcash",
-    "version": "0.22.0",
-    "publishedAt": "2026-04-28T04:09:58.031016Z",
-    "url": "https://crates.io/crates/zcash_client_backend/0.22.0",
-    "source": "crates.io",
-    "yanked": false,
-    "prerelease": false
-   },
-   {
     "id": "crates.io/orchard@0.13.1",
     "project": "orchard",
     "repo": "zcash/orchard",
@@ -1861,28 +1883,6 @@
     "version": "0.26.3",
     "publishedAt": "2025-12-15T16:35:45.328748Z",
     "url": "https://crates.io/crates/zcash_primitives/0.26.3",
-    "source": "crates.io",
-    "yanked": false,
-    "prerelease": false
-   },
-   {
-    "id": "crates.io/zcash_primitives@0.26.2",
-    "project": "zcash_primitives",
-    "repo": "zcash/librustzcash",
-    "version": "0.26.2",
-    "publishedAt": "2025-12-12T21:34:30.256328Z",
-    "url": "https://crates.io/crates/zcash_primitives/0.26.2",
-    "source": "crates.io",
-    "yanked": true,
-    "prerelease": false
-   },
-   {
-    "id": "crates.io/zcash_protocol@0.7.2",
-    "project": "zcash_protocol",
-    "repo": "zcash/librustzcash",
-    "version": "0.7.2",
-    "publishedAt": "2025-12-11T16:32:11.296058Z",
-    "url": "https://crates.io/crates/zcash_protocol/0.7.2",
     "source": "crates.io",
     "yanked": false,
     "prerelease": false
@@ -2892,11 +2892,11 @@
    "repo": "brave/librustzcash",
    "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
    "aheadBy": 2,
-   "behindBy": 990,
+   "behindBy": 1003,
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-14T13:45:21.279Z"
+   "checkedAt": "2026-10-14T18:39:43.835Z"
   },
   "zips": {
    "2005": {
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-14T13:45:21.279Z"
+   "checkedAt": "2026-10-14T18:39:43.835Z"
   }
  },
- "completeAt": "2026-10-14T13:45:21.279Z"
+ "completeAt": "2026-10-14T18:39:43.835Z"
 }
