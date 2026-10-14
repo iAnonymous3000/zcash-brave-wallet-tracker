@@ -1,5 +1,31 @@
 [
  {
+  "kind": "release-evidence-changed",
+  "sourceAt": null,
+  "title": "Release note text changed upstream: Added Zcash Ironwood migration banner. (#58493)",
+  "impact": "This pending iOS release notes (draft issue #59793) line (1.95.104) is no longer present upstream. The captured copy and its permalink are kept as evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "Captured permalink",
+    "url": "https://github.com/brave/brave-browser/issues/59793"
+   }
+  ],
+  "evidence": [
+   "first seen 2026-10-08T17:03:02.983Z",
+   "gone since 2026-10-14T23:16:08.055Z"
+  ],
+  "id": "1c31986d5206af33",
+  "detectedAt": "2026-10-14T23:16:08.055Z",
+  "basis": "observed"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-10-14T16:16:14.186328Z",
   "title": "Upstream: zcash_client_backend 0.25.0-pre.2",

@@ -1,5 +1,5 @@
 {
- "at": "2026-10-14T18:39:43.835Z",
+ "at": "2026-10-14T23:16:08.055Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#53219": {
@@ -5068,7 +5068,8 @@
   "bravecom-blog/web3-privacy": "e2403dd6f28140bf"
  },
  "goneEvidence": [
-  "d481ff6723632c2b717e"
+  "d481ff6723632c2b717e",
+  "7407a70cf80d4f16c8ea"
  ],
  "services": {
   "gate3ZcashDisabled": true,

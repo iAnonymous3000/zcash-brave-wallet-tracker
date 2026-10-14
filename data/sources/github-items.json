@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-14T18:39:43.835Z",
+ "retrievedAt": "2026-10-14T23:16:08.055Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -27122,7 +27122,7 @@
      "OS/Desktop"
     ],
     "milestone": {
-     "title": "1.98.x - Beta",
+     "title": "1.98.x - Release",
      "dueOn": "2026-10-20T00:00:00Z",
      "state": "OPEN"
     },
@@ -27200,7 +27200,7 @@
      "title:shielded",
      "body:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-14T23:16:08.055Z"
    },
    "brave/brave-browser#56872": {
     "id": "brave/brave-browser#56872",
@@ -39687,7 +39687,7 @@
      "puLL-Merge"
     ],
     "milestone": {
-     "title": "1.99.x - Nightly",
+     "title": "1.99.x - Beta",
      "dueOn": "2026-11-03T00:00:00Z",
      "state": "OPEN"
     },
@@ -39748,7 +39748,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-12T06:00:31.293Z"
+    "retrievedAt": "2026-10-14T23:16:08.055Z"
    },
    "brave/brave-core#39547": {
     "id": "brave/brave-core#39547",
@@ -39958,7 +39958,7 @@
      "puLL-Merge"
     ],
     "milestone": {
-     "title": "1.98.x - Beta",
+     "title": "1.98.x - Release",
      "dueOn": "2026-10-20T00:00:00Z",
      "state": "OPEN"
     },
@@ -40081,7 +40081,7 @@
     "matchedTerms": [
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-14T23:16:08.055Z"
    },
    "brave/brave-core#39838": {
     "id": "brave/brave-core#39838",
@@ -40508,7 +40508,7 @@
      "feature/web3/wallet/core"
     ],
     "milestone": {
-     "title": "1.98.x - Beta",
+     "title": "1.98.x - Release",
      "dueOn": "2026-10-20T00:00:00Z",
      "state": "OPEN"
     },
@@ -40611,7 +40611,7 @@
     "matchedTerms": [
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-14T23:16:08.055Z"
    },
    "brave/brave-core#39977": {
     "id": "brave/brave-core#39977",
@@ -40639,7 +40639,7 @@
      "feature/web3/wallet"
     ],
     "milestone": {
-     "title": "1.98.x - Beta",
+     "title": "1.98.x - Release",
      "dueOn": "2026-10-20T00:00:00Z",
      "state": "OPEN"
     },
@@ -40706,7 +40706,7 @@
      "title:shielded",
      "body:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-14T23:16:08.055Z"
    },
    "brave/brave-core#40008": {
     "id": "brave/brave-core#40008",
@@ -89660,7 +89660,6 @@
    "brave/brave-core#34308": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40325": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#40696": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40264": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#39840": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#39475": "discovered via search:zcash is:pr, search:shielded is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89737,15 +89736,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 820,
-   "searchHits": 1168,
+   "discovered": 819,
+   "searchHits": 1166,
    "tracked": 789,
    "direct": 623,
    "mention": 64,
    "linked": 102,
-   "excluded": 133,
+   "excluded": 132,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-14T18:39:43.835Z"
+ "completeAt": "2026-10-14T23:16:08.055Z"
 }

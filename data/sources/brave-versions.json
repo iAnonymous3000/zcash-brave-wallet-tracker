@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-10-14T18:39:43.835Z",
+ "retrievedAt": "2026-10-14T23:16:08.055Z",
  "data": {
   "current": [
    {
@@ -103,7 +103,7 @@
      "nightly-windows-x64": "1.99.41",
      "nightly-windows-x86": "1.99.41",
      "nightly-windows-arm64": "1.99.41",
-     "nightly-macos-x64": "1.99.35",
+     "nightly-macos-x64": "1.99.41",
      "nightly-macos-arm64": "1.99.41",
      "nightly-linux-x64": "1.99.25",
      "nightly-linux-arm64": "1.99.41"
@@ -137,25 +137,25 @@
   "missing": [],
   "iosNotes": [
    {
-    "number": 59793,
-    "url": "https://github.com/brave/brave-browser/issues/59793",
-    "title": "Release Notes for iOS Release 1.95 [Changelog]",
-    "marketing": "1.95",
-    "build": "1.95.104",
-    "updatedAt": "2026-10-08T17:02:47Z",
-    "body": "## [1.95.104](https://github.com/brave/brave-browser/releases/tag/v1.95.104)\n\n### Web3\n\n - Added Zcash Ironwood migration banner. ([#58493](https://github.com/brave/brave-browser/issues/58493))\n - Fixed spacing for asset loading skeleton on the \"Accounts\" page. ([#57871](https://github.com/brave/brave-browser/issues/57871))\n\n### Leo\n\n - Added the ability to share a Leo conversation. ([#56444](https://github.com/brave/brave-browser/issues/56444))\n - Removed 15 word limit from the Leo voice input. ([#57829](https://github.com/brave/brave-browser/issues/57829))\n\n### General\n\n - Added an option to reset the Rewards profile in \"Brave Rewards” settings page. ([#40768](https://github.com/brave/brave-browser/issues/40768))\n - Updated tab tray UI. ([#57053](https://github.com/brave/brave-browser/issues/57053))\n - Updated the design of the VPN promo callout in Settings menu. ([#57587](https://github.com/brave/brave-browser/issues/57587))\n - Fixed crashes related to the cosmetic filtering tab helper. ([#58967](https://github.com/brave/brave-browser/issues/58967))\n - Fixed regional filter lists not being enabled by default for certain locales. ([#58808](https://github.com/brave/brave-browser/issues/58808))\n - Fixed media being downloaded twice when adding to Playlist. ([#57523](https://github.com/brave/brave-browser/issues/57523))\n - Fixed blank screen being shown when opening the Brave app using CarPlay. ([#55775](https://github.com/brave/brave-browser/issues/55775))\n - Upgraded Chromium to 153.0.8010.53. ([#59125](https://github.com/brave/brave-browser/issues/59125))([Changelog for 153.0.8010.53](https://chromium.googlesource.com/chromium/src/+log/152.0.7977.83..153.0.8010.53?pretty=fuller&n=10000))\n",
-    "authorAssociation": "CONTRIBUTOR",
-    "authorId": 17885425,
-    "authorLogin": "Uni-verse"
-   },
-   {
     "number": 59758,
     "url": "https://github.com/brave/brave-browser/issues/59758",
     "title": "Release Notes for iOS Release 1.96 [Changelog]",
     "marketing": "1.96",
     "build": "1.96.62",
-    "updatedAt": "2026-10-07T15:47:36Z",
-    "body": "## [1.96.62](https://github.com/brave/brave-browser/releases/tag/v1.96.62)\n\n - Added Leo AI voice input support to home screen and lock screen widgets. ([#58183](https://github.com/brave/brave-browser/issues/58183))\n - Added support for new GPC API on iOS 27. ([#55958](https://github.com/brave/brave-browser/issues/55958))\n - Added support for rendering mathematical equations in Leo responses. ([#56523](https://github.com/brave/brave-browser/issues/56523))\n - Added variable blur effect to the top of the web view on iOS 26+. ([#58418](https://github.com/brave/brave-browser/issues/58418))\n - [Security] Fixed Private Browsing Only mode being bypassed when opening deep links as reported on HackerOne by syarif07. ([#59400])(https://github.com/brave/brave-browser/issues/59400))\n - Removed playlist icon in the URL bar from being displayed on the YouTube homepage. ([#58718](https://github.com/brave/brave-browser/issues/58718))\n - Updated the New Tab Page background to be extended to the screen edges for iOS 26+. ([#58450](https://github.com/brave/brave-browser/issues/58450))\n - Updated filter lists to use full permissions. ([#59112](https://github.com/brave/brave-browser/issues/59112))\n - Fixed Instagram reels not working when forwarded via DMs. ([#54921](https://github.com/brave/brave-browser/issues/54921))\n - Fixed \"Site Tabs Closed\" being truncated in the Shields panel's Shred detail view. ([#58585](https://github.com/brave/brave-browser/issues/58585))",
+    "updatedAt": "2026-10-14T19:57:21Z",
+    "body": "## [1.96.62](https://github.com/brave/brave-browser/releases/tag/v1.96.62)\n\n### Leo\n\n - Added Leo AI voice input support to homescreen and lockscreen widgets. ([#58183](https://github.com/brave/brave-browser/issues/58183))\n - Added support for rendering mathematical equations in Leo responses. ([#56523](https://github.com/brave/brave-browser/issues/56523))\n \n### General\n\n - Added support for new GPC API on iOS 27. ([#55958](https://github.com/brave/brave-browser/issues/55958))\n - Added variable blur effect to the top of the webview on iOS 26+. ([#58418](https://github.com/brave/brave-browser/issues/58418))\n - [Security] Fixed Private Browsing Only mode being bypassed when opening deep links as reported on HackerOne by syarif07. ([#59400](https://github.com/brave/brave-browser/issues/59400))\n - Removed playlist icon in the URL bar from being displayed on the YouTube homepage. ([#58718](https://github.com/brave/brave-browser/issues/58718))\n - Updated the New Tab Page background to be extended to the screen edges for iOS 26+. ([#58450](https://github.com/brave/brave-browser/issues/58450))\n - Updated filter lists to use full permissions. ([#59112](https://github.com/brave/brave-browser/issues/59112))\n - Fixed Instagram reels not working when forwarded via direct message. ([#54921](https://github.com/brave/brave-browser/issues/54921))\n - Fixed \"Site Tabs Closed\" being truncated in the shields panel's Shred detail view. ([#58585](https://github.com/brave/brave-browser/issues/58585))\n - Upgraded Chromium to 154.0.8037.98. ([#59587](https://github.com/brave/brave-browser/issues/59587))([Changelog for 154.0.8037.98](https://chromium.googlesource.com/chromium/src/+log/153.0.8010.53..154.0.8037.98?pretty=fuller&n=10000))",
+    "authorAssociation": "CONTRIBUTOR",
+    "authorId": 17885425,
+    "authorLogin": "Uni-verse"
+   },
+   {
+    "number": 59793,
+    "url": "https://github.com/brave/brave-browser/issues/59793",
+    "title": "Release Notes for iOS Release 1.95 [Changelog]",
+    "marketing": "1.95",
+    "build": "1.95.104",
+    "updatedAt": "2026-10-14T19:21:38Z",
+    "body": "## [1.95.104](https://github.com/brave/brave-browser/releases/tag/v1.95.104)\n\n### Web3\n\n - Added Zcash Ironwood migration banner. ([#58493](https://github.com/brave/brave-browser/issues/58493))\n - Fixed spacing for asset loading skeleton on the \"Accounts\" page. ([#57871](https://github.com/brave/brave-browser/issues/57871))\n\n### Leo\n\n - Added the ability to share a Leo conversation. ([#56444](https://github.com/brave/brave-browser/issues/56444))\n - Removed 15 word limit when using Leo voice input. ([#57829](https://github.com/brave/brave-browser/issues/57829))\n\n### General\n\n - Added option to reset the Rewards profile in \"Brave Rewards” settings page. ([#40768](https://github.com/brave/brave-browser/issues/40768))\n - Updated tab tray UI. ([#57053](https://github.com/brave/brave-browser/issues/57053))\n - Updated the design of the VPN promo callout in \"Settings\" menu. ([#57587](https://github.com/brave/brave-browser/issues/57587))\n - Fixed crashes related to the cosmetic filtering tab helper. ([#58967](https://github.com/brave/brave-browser/issues/58967))\n - Fixed regional filter lists not being enabled by default for certain locales. ([#58808](https://github.com/brave/brave-browser/issues/58808))\n - Fixed media being downloaded twice when adding to Playlist. ([#57523](https://github.com/brave/brave-browser/issues/57523))\n - Fixed blank screen being shown when opening the Brave app using CarPlay. ([#55775](https://github.com/brave/brave-browser/issues/55775))\n - Upgraded Chromium to 153.0.8010.53. ([#59125](https://github.com/brave/brave-browser/issues/59125))([Changelog for 153.0.8010.53](https://chromium.googlesource.com/chromium/src/+log/152.0.7977.83..153.0.8010.53?pretty=fuller&n=10000))\n",
     "authorAssociation": "CONTRIBUTOR",
     "authorId": 17885425,
     "authorLogin": "Uni-verse"
@@ -512,114 +512,114 @@
   "pointers": {
    "release-windows-x64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-windows-x86": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-windows-arm64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-macos-x64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-macos-arm64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-linux-x64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-linux-arm64": {
     "version": "1.97.57",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-android-google-play": {
     "version": "1.97.56",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "release-ios-app-store": {
     "version": "1.96",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-windows-x64": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-windows-x86": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-windows-arm64": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-macos-x64": {
     "version": "1.98.56",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-macos-arm64": {
     "version": "1.98.56",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-linux-x64": {
     "version": "1.98.47",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-linux-arm64": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-android-google-play": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "beta-ios": {
     "version": "1.98.52",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-windows-x64": {
     "version": "1.99.41",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-windows-x86": {
     "version": "1.99.41",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-windows-arm64": {
     "version": "1.99.41",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-macos-x64": {
-    "version": "1.99.35",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "version": "1.99.41",
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-macos-arm64": {
     "version": "1.99.41",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-linux-x64": {
     "version": "1.99.25",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-linux-arm64": {
     "version": "1.99.41",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-android-google-play": {
     "version": "1.99.26",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    },
    "nightly-ios": {
     "version": "1.99.33",
-    "readAt": "2026-10-14T18:39:43.835Z"
+    "readAt": "2026-10-14T23:16:08.055Z"
    }
   },
-  "iosNotesReadAt": "2026-10-14T18:39:43.835Z"
+  "iosNotesReadAt": "2026-10-14T23:16:08.055Z"
  },
- "completeAt": "2026-10-14T18:39:43.835Z"
+ "completeAt": "2026-10-14T23:16:08.055Z"
 }
