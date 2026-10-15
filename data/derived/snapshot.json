@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T11:31:55.044Z",
+ "at": "2026-10-15T17:03:27.386Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#53219": {
@@ -4876,7 +4876,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.99.33",
+   "tag": "v1.100.2",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
