@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-10-16T18:05:27.894Z",
+ "retrievedAt": "2026-10-16T21:11:12.646Z",
  "data": {
   "current": [
    {
@@ -25,13 +25,13 @@
    {
     "channel": "release",
     "platform": "android",
-    "version": "1.97.56",
-    "tag": "v1.97.56",
+    "version": "1.97.57",
+    "tag": "v1.97.57",
     "publishedAt": null,
     "basis": "versions.brave.com/latest/release-android-google-play.version",
     "url": "https://versions.brave.com/latest/release-android-google-play.version",
     "detail": {
-     "release-android-google-play": "1.97.56"
+     "release-android-google-play": "1.97.57"
     }
    },
    {
@@ -103,7 +103,7 @@
      "nightly-windows-x64": "1.100.5",
      "nightly-windows-x86": "1.100.5",
      "nightly-windows-arm64": "1.100.5",
-     "nightly-macos-x64": "1.100.5",
+     "nightly-macos-x64": "1.100.7",
      "nightly-macos-arm64": "1.100.5",
      "nightly-linux-x64": "1.100.7",
      "nightly-linux-arm64": "1.100.7"
@@ -512,114 +512,114 @@
   "pointers": {
    "release-windows-x64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-windows-x86": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-windows-arm64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-macos-x64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-macos-arm64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-linux-x64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-linux-arm64": {
     "version": "1.97.59",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-android-google-play": {
-    "version": "1.97.56",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "version": "1.97.57",
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "release-ios-app-store": {
     "version": "1.96",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-windows-x64": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-windows-x86": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-windows-arm64": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-macos-x64": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-macos-arm64": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-linux-x64": {
     "version": "1.98.47",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-linux-arm64": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-android-google-play": {
     "version": "1.98.52",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "beta-ios": {
     "version": "1.99.44",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-windows-x64": {
     "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-windows-x86": {
     "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-windows-arm64": {
     "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-macos-x64": {
-    "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "version": "1.100.7",
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-macos-arm64": {
     "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-linux-x64": {
     "version": "1.100.7",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-linux-arm64": {
     "version": "1.100.7",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-android-google-play": {
     "version": "1.100.5",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    },
    "nightly-ios": {
     "version": "1.100.7",
-    "readAt": "2026-10-16T18:05:27.894Z"
+    "readAt": "2026-10-16T21:11:12.646Z"
    }
   },
-  "iosNotesReadAt": "2026-10-16T18:05:27.894Z"
+  "iosNotesReadAt": "2026-10-16T21:11:12.646Z"
  },
- "completeAt": "2026-10-16T18:05:27.894Z"
+ "completeAt": "2026-10-16T21:11:12.646Z"
 }
