@@ -1,7 +1,7 @@
 {
  "sourceId": "community",
  "schema": 1,
- "retrievedAt": "2026-10-16T07:12:09.864Z",
+ "retrievedAt": "2026-10-16T18:05:27.894Z",
  "data": {
   "topics": [
    {
@@ -113,7 +113,7 @@
     "lastPostedAt": "2026-08-24T13:24:58.445Z",
     "postsCount": 2,
     "replyCount": 0,
-    "views": 26,
+    "views": 29,
     "closed": false,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -125,7 +125,7 @@
     "matchedTerms": [
      "zec"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 656660,
@@ -623,7 +623,7 @@
     "lastPostedAt": "2025-06-17T21:30:09.551Z",
     "postsCount": 11,
     "replyCount": 9,
-    "views": 301,
+    "views": 324,
     "closed": true,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -640,7 +640,7 @@
      "zcash",
      "zec"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 620374,
@@ -735,13 +735,13 @@
     "tags": [
      "bug"
     ],
-    "excerpt": "Description of the issue: I select \"Send->Zcash->“max”: [image] maxsendissue01 808×607 27.1 KB If I select “Review send” I am returned to the blank screen automatically: [image] maxsendissueblank 817×541 15.5 KB However if I reduce the send balance by 0.0001 ZEC which is sufficient to cover the sending fee, the transaction goes through. [image]…",
+    "excerpt": "Description of the issue: I select \"Send->Zcash->“max”: [image] max_send_issue_01 808×607 27.1 KB If I select “Review send” I am returned to the blank screen automatically: [image] max_send_issue_blank 817×541 15.5 KB However if I reduce the send balance by 0.0001 ZEC which is sufficient to cover the sending fee, the transaction goes through. [image]…",
     "githubRefs": [],
     "matchedTerms": [
      "zcash",
      "zec"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 544669,
@@ -753,7 +753,7 @@
     "lastPostedAt": "2024-06-11T09:50:58.962Z",
     "postsCount": 9,
     "replyCount": 7,
-    "views": 414,
+    "views": 427,
     "closed": true,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -764,7 +764,7 @@
      "zcash",
      "zec"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 538923,
@@ -776,7 +776,7 @@
     "lastPostedAt": "2024-03-22T03:52:40.195Z",
     "postsCount": 1,
     "replyCount": 0,
-    "views": 228,
+    "views": 230,
     "closed": true,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -787,7 +787,7 @@
      "zcash",
      "zec"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 511407,
@@ -799,7 +799,7 @@
     "lastPostedAt": "2024-04-26T02:44:14.078Z",
     "postsCount": 2,
     "replyCount": 0,
-    "views": 341,
+    "views": 344,
     "closed": false,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -811,7 +811,7 @@
     "matchedTerms": [
      "zcash"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 459260,
@@ -845,7 +845,7 @@
     "lastPostedAt": "2022-10-12T08:36:32.761Z",
     "postsCount": 6,
     "replyCount": 2,
-    "views": 913,
+    "views": 923,
     "closed": true,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -855,7 +855,7 @@
     "matchedTerms": [
      "zcash"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    {
     "id": 302620,
@@ -867,7 +867,7 @@
     "lastPostedAt": "2026-09-01T11:36:34.840Z",
     "postsCount": 9,
     "replyCount": 3,
-    "views": 3852,
+    "views": 3866,
     "closed": false,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -879,7 +879,7 @@
     "matchedTerms": [
      "zcash"
     ],
-    "retrievedAt": "2026-10-08T14:35:45.102Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    }
   ],
   "categories": {
@@ -939,5 +939,5 @@
    "ironwood order:latest p1"
   ]
  },
- "completeAt": "2026-10-16T07:12:09.864Z"
+ "completeAt": "2026-10-16T18:05:27.894Z"
 }

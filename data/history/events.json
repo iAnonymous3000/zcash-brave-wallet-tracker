@@ -1,5 +1,86 @@
 [
  {
+  "kind": "pr-merged",
+  "sourceAt": "2026-10-16T15:01:12Z",
+  "title": "Merged: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "Merged into brave-core master on 2026-10-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "merged 2026-10-16T15:01:12Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "feeceb99a8256401",
+  "detectedAt": "2026-10-16T18:05:27.894Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-15T21:40:00Z",
+  "title": "In Desktop Nightly 1.100.5: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "The merged code (brave-core#40695) is now part of the Desktop Nightly build 1.100.5. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "in v1.99.32 (GitHub compare v1.99.32...5e268a04: behind); later builds of the same history include it"
+  ],
+  "id": "25f6fc394547f186",
+  "detectedAt": "2026-10-16T18:05:27.894Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-15T21:40:00Z",
+  "title": "In Android Nightly 1.100.5: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "The merged code (brave-core#40695) is now part of the Android Nightly build 1.100.5. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "in v1.99.32 (GitHub compare v1.99.32...5e268a04: behind); later builds of the same history include it"
+  ],
+  "id": "a095f26b567187eb",
+  "detectedAt": "2026-10-16T18:05:27.894Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "in-build",
   "sourceAt": "2026-10-15T05:16:14Z",
   "title": "In Android Beta 1.99.44: [iwyu] Remove unused includes in components (1/5)",
@@ -14051,67 +14132,6 @@
    "2 post(s), closed"
   ],
   "id": "2278564896ac7024",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-10-16T08:35:35Z",
-  "title": "Closed (completed): [Zcash] Remove reduntant chain_id argument",
-  "impact": "Closed as completed; linked PR merged 2025-10-16. Code is in current Release builds for Desktop, Android, iOS.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50148"
-  ],
-  "topic": "general",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50148",
-    "url": "https://github.com/brave/brave-browser/issues/50148"
-   },
-   {
-    "label": "brave-core#31802",
-    "url": "https://github.com/brave/brave-core/pull/31802"
-   }
-  ],
-  "evidence": [
-   "closed by cypt4 at 2025-10-16T08:35:35Z",
-   "state reason: completed"
-  ],
-  "id": "8a2f7cce401e1843",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-10-16T08:35:34Z",
-  "title": "Merged: [ZCash] Remove redundant chain_id parameters from function calls",
-  "impact": "Merged into brave-core master on 2025-10-16. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#31802"
-  ],
-  "topic": "general",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31802",
-    "url": "https://github.com/brave/brave-core/pull/31802"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-16T08:35:34Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "ddd2fb8a9abf8b15",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

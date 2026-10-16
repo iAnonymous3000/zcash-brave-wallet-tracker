@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-16T07:12:09.864Z",
+ "retrievedAt": "2026-10-16T18:05:27.894Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -37045,6 +37045,14 @@
       "at": "2026-09-30T23:12:23Z",
       "actor": "kdenhartog",
       "detail": "QA/No"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-10-16T08:45:03Z",
+      "actor": "MarkusNuo",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#40863",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -37055,7 +37063,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    "brave/brave-browser#54171": {
     "id": "brave/brave-browser#54171",
@@ -39508,6 +39516,114 @@
      "body:orchard"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-core#40325": {
+    "id": "brave/brave-core#40325",
+    "repo": "brave/brave-core",
+    "number": 40325,
+    "kind": "pr",
+    "title": "[Wallet] Use JSTime instead of TimeDelta in mojom",
+    "url": "https://github.com/brave/brave-core/pull/40325",
+    "state": "merged",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-09-29T17:08:38Z",
+    "updatedAt": "2026-10-16T16:07:48Z",
+    "closedAt": "2026-10-16T15:01:12Z",
+    "mergedAt": "2026-10-16T15:01:12Z",
+    "mergeCommitSha": "dbb35190a63b8c86d7ba1bf6cf9994abed44af51",
+    "baseRef": "master",
+    "headRef": "wallet_use_jstime",
+    "author": "supermassive",
+    "assignees": [
+     "supermassive"
+    ],
+    "labels": [
+     "CI/storybook-url",
+     "feature/web3/wallet",
+     "feature/web3/wallet/core",
+     "puLL-Merge"
+    ],
+    "milestone": {
+     "title": "1.100.x - Nightly",
+     "dueOn": "2026-11-17T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "- Switch AssetTimePrice.date and TransactionInfo's time fields from mojo_base.mojom.TimeDelta to JSTime, so they carry a real epoch-ms timestamp instead of a raw delta callers had to convert by hand. Updates all wallet backends and frontend consumers accordingly, dropping several now-unneeded conversion helpers.",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-09-29T17:09:45Z",
+      "actor": "github-actions",
+      "detail": "puLL-Merge"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-29T17:09:50Z",
+      "actor": "github-actions",
+      "detail": "CI/storybook-url"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-29T17:09:50Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-29T17:09:50Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-08T14:06:35Z",
+      "actor": "github-actions",
+      "detail": "chromium-version-mismatch"
+     },
+     {
+      "type": "unlabeled",
+      "at": "2026-10-08T14:07:10Z",
+      "actor": "github-actions",
+      "detail": "chromium-version-mismatch"
+     },
+     {
+      "type": "merged",
+      "at": "2026-10-16T15:01:12Z",
+      "actor": "supermassive",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-10-16T15:01:12Z",
+      "actor": "supermassive",
+      "detail": null,
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-10-16T15:01:22Z",
+      "actor": "brave-builds",
+      "detail": "1.100.x - Nightly"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "path:components/brave_wallet/browser/zcash",
+     "search:zcash is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [],
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
    },
    "brave/brave-core#34256": {
     "id": "brave/brave-core#34256",
@@ -78419,6 +78535,52 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#40863": {
+    "id": "brave/brave-core#40863",
+    "repo": "brave/brave-core",
+    "number": 40863,
+    "kind": "pr",
+    "title": "[Wallet] Remove default base cryptocurrency setting",
+    "url": "https://github.com/brave/brave-core/pull/40863",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-10-16T08:45:02Z",
+    "updatedAt": "2026-10-16T08:45:14Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "remove-default-base-cryptocurrency",
+    "author": "MarkusNuo",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "Resolves https://github.com/brave/brave-browser/issues/59539 The \"Default base cryptocurrency\" setting in brave://settings/web3 had no effect: no wallet client used the stored value. This removes the setting, its mojom API, the change event and the UI plumbing on desktop, Android and iOS. The old pref is cleared from existing profiles on startup. Checked locally (Windows): build, presubmit, gn_check, BraveWalletServiceUnitTest, wallet prefs/utils/migration unit tests and…",
+    "bodyRefs": [
+     "brave/brave-browser#59539"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#59539"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#59539"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-browser#59539"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-10-16T18:05:27.894Z"
+   },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
     "repo": "brave/brave-core",
@@ -89407,7 +89569,7 @@
   },
   "pathHistory": {
    "components/brave_wallet/browser/zcash": {
-    "lastCommitAt": "2026-10-10T21:25:24Z",
+    "lastCommitAt": "2026-10-16T15:01:11Z",
     "prs": [
      19783,
      20351,
@@ -89568,6 +89730,7 @@
      39838,
      39877,
      39979,
+     40325,
      40695
     ],
     "commitsWithoutPr": 21,
@@ -89659,7 +89822,6 @@
    "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34308": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#40325": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40264": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#39840": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#39475": "discovered via search:zcash is:pr, search:shielded is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89738,13 +89900,13 @@
   "stats": {
    "discovered": 819,
    "searchHits": 1166,
-   "tracked": 789,
-   "direct": 623,
+   "tracked": 791,
+   "direct": 624,
    "mention": 64,
-   "linked": 102,
-   "excluded": 132,
+   "linked": 103,
+   "excluded": 131,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-16T07:12:09.864Z"
+ "completeAt": "2026-10-16T18:05:27.894Z"
 }
