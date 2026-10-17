@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-17T06:59:09.564Z",
+ "retrievedAt": "2026-10-17T12:13:13.006Z",
  "data": {
   "releases": [
    {
@@ -811,7 +811,8 @@
      "android",
      "ios",
      "linux",
-     "macos"
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": true
    },
@@ -6740,5 +6741,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-17T06:59:09.564Z"
+ "completeAt": "2026-10-17T12:13:13.006Z"
 }
