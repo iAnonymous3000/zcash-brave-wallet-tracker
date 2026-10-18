@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-18T15:54:33.391Z",
+ "retrievedAt": "2026-10-18T18:39:34.403Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -89826,7 +89826,10 @@
    "brave/brave-core#39840": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#39475": "discovered via search:zcash is:pr, search:shielded is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#38332": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#38400": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#38404": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#38318": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#38301": "discovered via search:zcash is:pr, search:ironwood is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#36755": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#36515": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#35425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -89898,15 +89901,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 819,
-   "searchHits": 1166,
+   "discovered": 822,
+   "searchHits": 1171,
    "tracked": 791,
    "direct": 624,
    "mention": 64,
    "linked": 103,
-   "excluded": 131,
+   "excluded": 134,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-18T15:54:33.391Z"
+ "completeAt": "2026-10-18T18:39:34.403Z"
 }
