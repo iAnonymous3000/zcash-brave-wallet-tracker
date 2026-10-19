@@ -14108,32 +14108,5 @@
   "id": "c2bfd3267150865f",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-10-19T16:36:53Z",
-  "title": "New issue: Remove inferable `operator!=`",
-  "impact": "Opened in brave-browser#50319. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50319"
-  ],
-  "topic": "testing",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50319",
-    "url": "https://github.com/brave/brave-browser/issues/50319"
-   }
-  ],
-  "evidence": [
-   "created 2025-10-19T16:36:53Z"
-  ],
-  "id": "7fb9b2e4e3507b2b",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
