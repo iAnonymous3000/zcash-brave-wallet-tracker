@@ -1,7 +1,18 @@
 {
- "at": "2026-10-18T22:27:21.869Z",
+ "at": "2026-10-19T04:43:30.819Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/gate3#341": {
+   "desktop/release": null,
+   "android/release": null,
+   "ios/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/brave-core#40325": {
    "desktop/release": false,
    "android/release": false,

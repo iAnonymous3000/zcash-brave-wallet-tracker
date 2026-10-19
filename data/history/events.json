@@ -1,5 +1,30 @@
 [
  {
+  "kind": "item-tracked",
+  "sourceAt": "2026-10-19T02:31:21Z",
+  "title": "New issue: NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
+  "impact": "Opened in brave/gate3#341. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/gate3#341"
+  ],
+  "topic": "swaps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/gate3#341",
+    "url": "https://github.com/brave/gate3/issues/341"
+   }
+  ],
+  "evidence": [
+   "created 2026-10-19T02:31:21Z"
+  ],
+  "id": "1ea896b45aa71b90",
+  "detectedAt": "2026-10-19T04:43:30.819Z",
+  "basis": "observed"
+ },
+ {
   "kind": "pr-merged",
   "sourceAt": "2026-10-16T15:01:12Z",
   "title": "Merged: [Wallet] Use JSTime instead of TimeDelta in mojom",

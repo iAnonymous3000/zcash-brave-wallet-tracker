@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-18T22:27:21.869Z",
+ "retrievedAt": "2026-10-19T04:43:30.819Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -72312,6 +72312,49 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/gate3#341": {
+    "id": "brave/gate3#341",
+    "repo": "brave/gate3",
+    "number": 341,
+    "kind": "issue",
+    "title": "NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
+    "url": "https://github.com/brave/gate3/issues/341",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-10-19T02:31:21Z",
+    "updatedAt": "2026-10-19T02:31:21Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "Anirudh-712",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "to_near_intents_request sets the 1Click deadline to now + 10 minutes for every source chain (app/api/swap/providers/near_intents/transformations.py L124-L126 at 173a240), including Bitcoin, Zcash and Cardano deposits (L174-L203). 1Click's API says this deadline \"must exceed the time required for the deposit transaction to be mined. For example, Bitcoin may require around one hour\", and that the refund begins if the swap isn't completed by then (QuoteRequest.deadline in…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-10-19T04:43:30.819Z"
+   },
    "brave/gate3#335": {
     "id": "brave/gate3#335",
     "repo": "brave/gate3",
@@ -89901,15 +89944,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 822,
-   "searchHits": 1171,
-   "tracked": 791,
-   "direct": 624,
+   "discovered": 823,
+   "searchHits": 1172,
+   "tracked": 792,
+   "direct": 625,
    "mention": 64,
    "linked": 103,
    "excluded": 134,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-18T22:27:21.869Z"
+ "completeAt": "2026-10-19T04:43:30.819Z"
 }
