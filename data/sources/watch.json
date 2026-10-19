@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-19T04:43:30.819Z",
+ "retrievedAt": "2026-10-19T13:18:56.159Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.7.0-rc1.",
-    "metadataReadAt": "2026-10-19T04:43:30.819Z"
+    "metadataReadAt": "2026-10-19T13:18:56.159Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Consolidate PIR libraries by client, publisher and query-server roles (#254).",
-    "metadataReadAt": "2026-10-19T04:43:30.819Z"
+    "metadataReadAt": "2026-10-19T13:18:56.159Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-19T04:43:30.819Z",
-    "searchCheckedAt": "2026-10-19T04:43:30.819Z"
+    "checkedAt": "2026-10-19T13:18:56.159Z",
+    "searchCheckedAt": "2026-10-19T13:18:56.159Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-19T04:43:30.819Z",
-    "searchCheckedAt": "2026-10-19T04:43:30.819Z"
+    "checkedAt": "2026-10-19T13:18:56.159Z",
+    "searchCheckedAt": "2026-10-19T13:18:56.159Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-19T04:43:30.819Z",
-    "searchCheckedAt": "2026-10-19T04:43:30.819Z"
+    "checkedAt": "2026-10-19T13:18:56.159Z",
+    "searchCheckedAt": "2026-10-19T13:18:56.159Z"
    }
   ]
  },
- "completeAt": "2026-10-19T04:43:30.819Z"
+ "completeAt": "2026-10-19T13:18:56.159Z"
 }

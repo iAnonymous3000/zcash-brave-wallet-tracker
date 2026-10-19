@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-19T04:43:30.819Z",
+ "retrievedAt": "2026-10-19T13:18:56.159Z",
  "data": {
   "releases": [
    {
@@ -15,6 +15,7 @@
     "assetPlatforms": [
      "android",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": true
@@ -174,6 +175,22 @@
     "chromium": "156.0.8078.25",
     "publishedAt": "2026-10-15T01:20:03Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.1",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.99.46",
+    "version": "1.99.46",
+    "channel": "beta",
+    "name": "Beta v1.99.46 (Chromium 156.0.8078.39)",
+    "chromium": "156.0.8078.39",
+    "publishedAt": "2026-10-19T05:17:57Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.46",
     "assetPlatforms": [
      "android",
      "linux",
@@ -6764,11 +6781,11 @@
    {
     "channel": "beta",
     "platform": "all",
-    "version": "1.99.45",
-    "tag": "v1.99.45",
-    "publishedAt": "2026-10-16T05:19:07Z",
-    "basis": "GitHub release name \"Beta v1.99.45 (Chromium 156.0.8078.39)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.45"
+    "version": "1.99.46",
+    "tag": "v1.99.46",
+    "publishedAt": "2026-10-19T05:17:57Z",
+    "basis": "GitHub release name \"Beta v1.99.46 (Chromium 156.0.8078.39)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.46"
    },
    {
     "channel": "nightly",
@@ -6782,5 +6799,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-19T04:43:30.819Z"
+ "completeAt": "2026-10-19T13:18:56.159Z"
 }
