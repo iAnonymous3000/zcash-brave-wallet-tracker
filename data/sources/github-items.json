@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-20T11:39:26.137Z",
+ "retrievedAt": "2026-10-20T17:09:13.871Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -29296,7 +29296,7 @@
     "mergeCommitSha": null,
     "baseRef": null,
     "headRef": null,
-    "author": "lambdachad",
+    "author": null,
     "assignees": [],
     "labels": [
      "OS/Desktop"
@@ -29316,7 +29316,7 @@
      {
       "type": "labeled",
       "at": "2026-06-08T05:56:54Z",
-      "actor": "lambdachad",
+      "actor": null,
       "detail": "OS/Desktop"
      }
     ],
@@ -29332,7 +29332,7 @@
      "title:shielded",
      "body:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-20T17:09:13.871Z"
    },
    "brave/brave-browser#55371": {
     "id": "brave/brave-browser#55371",
@@ -89954,5 +89954,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-20T11:39:26.137Z"
+ "completeAt": "2026-10-20T17:09:13.871Z"
 }
