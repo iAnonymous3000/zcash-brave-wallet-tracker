@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-20T17:09:13.871Z",
+ "retrievedAt": "2026-10-20T21:39:13.809Z",
  "data": {
   "crates": {
    "orchard": {
@@ -857,6 +857,16 @@
    }
   },
   "releases": [
+   {
+    "id": "zcash/lightwalletd@v0.6.0",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.6.0",
+    "publishedAt": "2026-10-20T20:40:58Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.0",
+    "source": "github-release",
+    "prerelease": false
+   },
    {
     "id": "crates.io/zcash_client_backend@0.25.0-pre.2",
     "project": "zcash_client_backend",
@@ -2597,16 +2607,6 @@
     "prerelease": false
    },
    {
-    "id": "zcash/lightwalletd@v0.4.10",
-    "project": "lightwalletd",
-    "repo": "zcash/lightwalletd",
-    "version": "v0.4.10",
-    "publishedAt": "2022-04-26T03:22:00Z",
-    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.10",
-    "source": "github-release",
-    "prerelease": false
-   },
-   {
     "id": "crates.io/pasta_curves@0.3.1",
     "project": "pasta_curves",
     "repo": "zcash/pasta_curves",
@@ -2892,11 +2892,11 @@
    "repo": "brave/librustzcash",
    "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
    "aheadBy": 2,
-   "behindBy": 1036,
+   "behindBy": 1043,
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-20T17:09:13.871Z"
+   "checkedAt": "2026-10-20T21:39:13.809Z"
   },
   "zips": {
    "2005": {
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-20T17:09:13.871Z"
+   "checkedAt": "2026-10-20T21:39:13.809Z"
   }
  },
- "completeAt": "2026-10-20T17:09:13.871Z"
+ "completeAt": "2026-10-20T21:39:13.809Z"
 }

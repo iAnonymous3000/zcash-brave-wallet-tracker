@@ -1,5 +1,29 @@
 [
  {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-20T20:40:58Z",
+  "title": "Upstream: lightwalletd v0.6.0",
+  "impact": "lightwalletd v0.6.0 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-20T20:40:58Z",
+   "not in Brave lockfile"
+  ],
+  "id": "82bc77446edd26da",
+  "detectedAt": "2026-10-20T21:39:13.809Z",
+  "basis": "observed"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-10-19T02:31:21Z",
   "title": "New issue: NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
