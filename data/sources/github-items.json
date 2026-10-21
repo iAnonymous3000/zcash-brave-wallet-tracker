@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-21T07:41:21.101Z",
+ "retrievedAt": "2026-10-21T18:40:56.720Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -42227,6 +42227,75 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#39234": {
+    "id": "brave/brave-core#39234",
+    "repo": "brave/brave-core",
+    "number": 39234,
+    "kind": "pr",
+    "title": "Ironwood tasks",
+    "url": "https://github.com/brave/brave-core/pull/39234",
+    "state": "closed",
+    "stateReason": null,
+    "isDraft": true,
+    "createdAt": "2026-08-19T15:36:28Z",
+    "updatedAt": "2026-08-28T06:24:34Z",
+    "closedAt": "2026-08-28T06:24:34Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "apply_ironwood_tasks_1",
+    "author": "cypt4",
+    "assignees": [
+     "cypt4"
+    ],
+    "labels": [
+     "feature/web3/wallet",
+     "feature/web3/wallet/core"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "- Resolves",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-08-19T15:36:47Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-08-19T15:36:47Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "closed",
+      "at": "2026-08-28T06:24:34Z",
+      "actor": "cypt4",
+      "detail": null,
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood is:pr",
+     "search:orchard is:pr",
+     "search:zcash is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:ironwood"
+    ],
+    "retrievedAt": "2026-10-21T18:40:56.720Z"
+   },
    "brave/brave-core#39114": {
     "id": "brave/brave-core#39114",
     "repo": "brave/brave-core",
@@ -71121,73 +71190,6 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
-   "brave/brave-core#39234": {
-    "id": "brave/brave-core#39234",
-    "repo": "brave/brave-core",
-    "number": 39234,
-    "kind": "pr",
-    "title": "Ironwood tasks",
-    "url": "https://github.com/brave/brave-core/pull/39234",
-    "state": "closed",
-    "stateReason": null,
-    "isDraft": true,
-    "createdAt": "2026-08-19T15:36:28Z",
-    "updatedAt": "2026-08-28T06:24:34Z",
-    "closedAt": "2026-08-28T06:24:34Z",
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": "master",
-    "headRef": "apply_ironwood_tasks_1",
-    "author": "cypt4",
-    "assignees": [
-     "cypt4"
-    ],
-    "labels": [
-     "feature/web3/wallet",
-     "feature/web3/wallet/core"
-    ],
-    "milestone": null,
-    "bodyExcerpt": "- Resolves",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-08-19T15:36:47Z",
-      "actor": "github-actions",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-08-19T15:36:47Z",
-      "actor": "github-actions",
-      "detail": "feature/web3/wallet/core"
-     },
-     {
-      "type": "closed",
-      "at": "2026-08-28T06:24:34Z",
-      "actor": "cypt4",
-      "detail": null,
-      "ref": null
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:ironwood is:pr"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:ironwood"
-    ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
    "brave/brave-core#38757": {
     "id": "brave/brave-core#38757",
     "repo": "brave/brave-core",
@@ -78590,7 +78592,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-16T08:45:02Z",
-    "updatedAt": "2026-10-21T07:39:14Z",
+    "updatedAt": "2026-10-21T07:48:50Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -78623,7 +78625,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-21T07:41:21.101Z"
+    "retrievedAt": "2026-10-21T18:40:56.720Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -89946,7 +89948,7 @@
   ],
   "stats": {
    "discovered": 823,
-   "searchHits": 1173,
+   "searchHits": 1175,
    "tracked": 792,
    "direct": 625,
    "mention": 64,
@@ -89955,5 +89957,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-21T07:41:21.101Z"
+ "completeAt": "2026-10-21T18:40:56.720Z"
 }
