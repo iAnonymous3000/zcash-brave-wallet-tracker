@@ -1,7 +1,18 @@
 {
- "at": "2026-10-21T00:39:05.081Z",
+ "at": "2026-10-21T07:41:21.101Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-browser#59539": {
+   "desktop/release": null,
+   "android/release": null,
+   "ios/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/gate3#341": {
    "desktop/release": null,
    "android/release": null,
@@ -23,17 +34,6 @@
    "desktop/nightly": false,
    "android/nightly": false,
    "ios/nightly": false
-  },
-  "brave/brave-browser#59539": {
-   "desktop/release": null,
-   "android/release": null,
-   "ios/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
   },
   "brave/brave-browser#53219": {
    "desktop/release": null,

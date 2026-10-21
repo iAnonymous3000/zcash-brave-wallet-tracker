@@ -1,9 +1,25 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-21T00:39:05.081Z",
+ "retrievedAt": "2026-10-21T07:41:21.101Z",
  "data": {
   "releases": [
+   {
+    "tag": "v1.100.20",
+    "version": "1.100.20",
+    "channel": "nightly",
+    "name": "Nightly v1.100.20 (Chromium 156.0.8078.39)",
+    "chromium": "156.0.8078.39",
+    "publishedAt": "2026-10-21T01:26:30Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.20",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
+   },
    {
     "tag": "v1.100.19",
     "version": "1.100.19",
@@ -285,6 +301,21 @@
      "android",
      "linux",
      "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.99.48",
+    "version": "1.99.48",
+    "channel": "beta",
+    "name": "Beta v1.99.48 (Chromium 156.0.8078.39)",
+    "chromium": "156.0.8078.39",
+    "publishedAt": "2026-10-21T05:22:06Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.48",
+    "assetPlatforms": [
+     "android",
+     "linux",
      "windows"
     ],
     "prereleaseFlag": true
@@ -6921,23 +6952,23 @@
    {
     "channel": "beta",
     "platform": "all",
-    "version": "1.99.47",
-    "tag": "v1.99.47",
-    "publishedAt": "2026-10-20T05:21:01Z",
-    "basis": "GitHub release name \"Beta v1.99.47 (Chromium 156.0.8078.39)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.47"
+    "version": "1.99.48",
+    "tag": "v1.99.48",
+    "publishedAt": "2026-10-21T05:22:06Z",
+    "basis": "GitHub release name \"Beta v1.99.48 (Chromium 156.0.8078.39)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.48"
    },
    {
     "channel": "nightly",
     "platform": "all",
-    "version": "1.100.19",
-    "tag": "v1.100.19",
-    "publishedAt": "2026-10-20T17:30:55Z",
-    "basis": "GitHub release name \"Nightly v1.100.19 (Chromium 156.0.8078.39)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.19"
+    "version": "1.100.20",
+    "tag": "v1.100.20",
+    "publishedAt": "2026-10-21T01:26:30Z",
+    "basis": "GitHub release name \"Nightly v1.100.20 (Chromium 156.0.8078.39)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.20"
    }
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-21T00:39:05.081Z"
+ "completeAt": "2026-10-21T07:41:21.101Z"
 }
