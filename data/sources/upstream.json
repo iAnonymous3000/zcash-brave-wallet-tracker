@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-20T21:39:13.809Z",
+ "retrievedAt": "2026-10-21T00:39:05.081Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-20T21:39:13.809Z"
+   "checkedAt": "2026-10-21T00:39:05.081Z"
   },
   "zips": {
    "2005": {
@@ -2972,10 +2972,10 @@
    "0258": {
     "num": "0258",
     "title": "Deployment of the NU6.3 Network Upgrade",
-    "status": "Draft",
-    "lastCommitAt": "2026-07-20T14:23:04Z",
-    "lastCommitMessage": "ZIP 204: specify protocol version assignment; ZIP 258: assign NU6.3 versions",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/b93e824b3fecbfdbcbbb5b4205223780a1320a25",
+    "status": "Final",
+    "lastCommitAt": "2026-09-29T21:04:13Z",
+    "lastCommitMessage": "[ZIP 258] Promote from Draft to Final.",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/9f0578fc6e3ea1f580a87e2685a24e44b6a26aff",
     "url": "https://zips.z.cash/zip-0258",
     "path": "zips/zip-0258.md"
    },
@@ -2983,9 +2983,9 @@
     "num": "0318",
     "title": "Orchard to Ironwood Migration",
     "status": "Draft",
-    "lastCommitAt": "2026-07-31T11:41:43Z",
-    "lastCommitMessage": "Apply suggestions from review (nits and fixing an inaccurate time calculation)",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/60db9f1e6a1e9988da442b7d8436da6b16dd5c26",
+    "lastCommitAt": "2026-10-20T21:48:56Z",
+    "lastCommitMessage": "Apply suggestion from @daira",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/42a3618db9a1eb7f1436d4475c785d73e2d97b99",
     "url": "https://zips.z.cash/zip-0318",
     "path": "zips/zip-0318.md"
    },
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-20T21:39:13.809Z"
+   "checkedAt": "2026-10-21T00:39:05.081Z"
   }
  },
- "completeAt": "2026-10-20T21:39:13.809Z"
+ "completeAt": "2026-10-21T00:39:05.081Z"
 }

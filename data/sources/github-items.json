@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-20T21:39:13.809Z",
+ "retrievedAt": "2026-10-21T00:39:05.081Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -42288,13 +42288,14 @@
     ],
     "timelineTruncated": false,
     "discovery": [
+     "search:orchard is:pr",
      "search:zcash is:pr"
     ],
     "relevance": "direct",
     "matchedTerms": [
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-10-21T00:39:05.081Z"
    },
    "brave/brave-core#39113": {
     "id": "brave/brave-core#39113",
@@ -89945,7 +89946,7 @@
   ],
   "stats": {
    "discovered": 823,
-   "searchHits": 1172,
+   "searchHits": 1173,
    "tracked": 792,
    "direct": 625,
    "mention": 64,
@@ -89954,5 +89955,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-20T21:39:13.809Z"
+ "completeAt": "2026-10-21T00:39:05.081Z"
 }
