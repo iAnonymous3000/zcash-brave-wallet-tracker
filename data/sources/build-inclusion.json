@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-21T18:40:56.720Z",
+ "retrievedAt": "2026-10-21T23:21:46.760Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3592,14 +3592,6 @@
   },
   "targets": [
    {
-    "tag": "v1.96.62",
-    "version": "1.96.62",
-    "publishedAt": "2026-10-05T05:45:40Z",
-    "usedBy": [
-     "ios/release"
-    ]
-   },
-   {
     "tag": "v1.97.59",
     "version": "1.97.59",
     "publishedAt": "2026-10-16T03:32:04Z",
@@ -3677,5 +3669,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-10-21T18:40:56.720Z"
+ "completeAt": "2026-10-21T23:21:46.760Z"
 }

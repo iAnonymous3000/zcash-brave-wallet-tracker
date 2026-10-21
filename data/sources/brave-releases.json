@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-21T18:40:56.720Z",
+ "retrievedAt": "2026-10-21T23:21:46.760Z",
  "data": {
   "releases": [
    {
@@ -14,9 +14,11 @@
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.23",
     "assetPlatforms": [
      "android",
-     "linux"
+     "linux",
+     "macos",
+     "windows"
     ],
-    "prereleaseFlag": true
+    "prereleaseFlag": false
    },
    {
     "tag": "v1.100.22",
@@ -7031,5 +7033,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-21T18:40:56.720Z"
+ "completeAt": "2026-10-21T23:21:46.760Z"
 }

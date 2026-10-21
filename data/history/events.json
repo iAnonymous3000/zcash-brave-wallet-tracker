@@ -1,5 +1,280 @@
 [
  {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Sync, birthday & recovery tools on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "1affd92d13cf23c7",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Deposit addresses (unified, shielded, transparent) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "1e4f70cfb842d8d5",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": null,
+  "title": "ZIP 259: NU7 Mainnet activation height is now “3543405”",
+  "impact": "The next Zcash network upgrade has a new Mainnet activation value. Wallets need the final consensus branch ID before activation to keep creating valid transactions.",
+  "highlight": "migration",
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "ZIP 259",
+    "url": "https://zips.z.cash/zip-0259"
+   }
+  ],
+  "evidence": [
+   "TBD (To be set on OCT 20) → 3543405"
+  ],
+  "id": "20636a091dd46071",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Ironwood pool (NU6.3) on iOS Release: opt-in → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → not-verified"
+  ],
+  "id": "2294005586c53e90",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Shield transparent funds on iOS Release: opt-in → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → not-verified"
+  ],
+  "id": "3d78bc45b8f000b0",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Orchard → Ironwood migration on iOS Release: opt-in → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → not-verified"
+  ],
+  "id": "786ea1e9241aa092",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Zcash testnet on iOS Release: hidden → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "hidden → not-verified"
+  ],
+  "id": "87a9781a6e219a28",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Memos on shielded sends on iOS Release: opt-in → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "opt-in → not-verified"
+  ],
+  "id": "a733a26f20e2bb01",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "bb757e6b73692124",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Automatic ZIP-317 fees on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "df4f4d26f879051e",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-21T20:27:15.014519Z",
+  "title": "Upstream: zcash_client_backend 0.25.0",
+  "impact": "zcash_client_backend 0.25.0 was published upstream. Brave master still resolves 0.24.0-rc.1 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_client_backend/0.25.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-21T20:27:15.014519Z",
+   "Brave master: 0.24.0-rc.1"
+  ],
+  "id": "047cd900502925d2",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-21T20:27:05.293348Z",
+  "title": "Upstream: zcash_primitives 0.31.0",
+  "impact": "zcash_primitives 0.31.0 was published upstream. Brave master still resolves 0.29.0 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-21T20:27:05.293348Z",
+   "Brave master: 0.29.0"
+  ],
+  "id": "e87d6def5c8c51b5",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-21T20:26:57.950537Z",
+  "title": "Upstream: zcash_protocol 0.11.0",
+  "impact": "zcash_protocol 0.11.0 was published upstream. Brave master still resolves 0.10.0 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_protocol/0.11.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-21T20:26:57.950537Z",
+   "Brave master: 0.10.0"
+  ],
+  "id": "2dc60643e0139133",
+  "detectedAt": "2026-10-21T23:21:46.760Z",
+  "basis": "observed"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-10-20T20:40:58Z",
   "title": "Upstream: lightwalletd v0.6.0",
