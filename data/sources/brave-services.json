@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-21T23:21:46.760Z",
+ "retrievedAt": "2026-10-22T04:49:10.963Z",
  "data": {
   "gate3": {
    "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
@@ -9,7 +9,7 @@
    "zcashDisabled": true,
    "line": 18,
    "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-   "checkedAt": "2026-10-21T23:21:46.760Z"
+   "checkedAt": "2026-10-22T04:49:10.963Z"
   },
   "studies": [
    {
@@ -93,7 +93,7 @@
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.100.5",
-      "reason": "156.1.100.23 (macOS arm64) and 156.1.100.7 (macOS x64, Linux) and 156.1.100.5 (Windows) are outside the version range 139.1.81.129 – 152.*"
+      "reason": "156.1.100.23 (macOS) and 156.1.100.7 (Linux) and 156.1.100.5 (Windows) are outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-21T23:21:46.760Z"
+    "verifiedAt": "2026-10-22T04:49:10.963Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -232,7 +232,7 @@
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.100.5",
-      "reason": "156.1.100.23 (macOS arm64) and 156.1.100.7 (macOS x64, Linux) and 156.1.100.5 (Windows) are outside the version range any – 139.1.81.128"
+      "reason": "156.1.100.23 (macOS) and 156.1.100.7 (Linux) and 156.1.100.5 (Windows) are outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-21T23:21:46.760Z"
+    "verifiedAt": "2026-10-22T04:49:10.963Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -366,7 +366,7 @@
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.100.5",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.100.23 (macOS arm64) and 156.1.100.7 (macOS x64, Linux) and 156.1.100.5 (Windows) are outside the version range 146.1.89.116 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.100.23 (macOS) and 156.1.100.7 (Linux) and 156.1.100.5 (Windows) are outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-21T23:21:46.760Z"
+    "verifiedAt": "2026-10-22T04:49:10.963Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -490,7 +490,7 @@
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.100.5",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 156.1.100.23 (macOS arm64) and 156.1.100.7 (macOS x64, Linux) and 156.1.100.5 (Windows) are outside the version range 147.1.89.144 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 156.1.100.23 (macOS) and 156.1.100.7 (Linux) and 156.1.100.5 (Windows) are outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-21T23:21:46.760Z",
+    "verifiedAt": "2026-10-22T04:49:10.963Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "14eb665a528337ab5bc67a66f24ad3adb34b079f",
-  "studiesReadAt": "2026-10-21T23:21:46.760Z",
+  "studiesReadAt": "2026-10-22T04:49:10.963Z",
   "studiesDigest": "7929c4b6e6fd7af667d916210b7cbc02b575ae2f766bcf1c9720442ee39925c1"
  },
- "completeAt": "2026-10-21T23:21:46.760Z"
+ "completeAt": "2026-10-22T04:49:10.963Z"
 }
