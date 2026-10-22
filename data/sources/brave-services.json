@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-22T17:12:34.547Z",
+ "retrievedAt": "2026-10-22T21:38:05.099Z",
  "data": {
   "gate3": {
    "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
@@ -9,7 +9,7 @@
    "zcashDisabled": true,
    "line": 18,
    "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-   "checkedAt": "2026-10-22T17:12:34.547Z"
+   "checkedAt": "2026-10-22T21:38:05.099Z"
   },
   "studies": [
    {
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-22T17:12:34.547Z"
+    "verifiedAt": "2026-10-22T21:38:05.099Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-22T17:12:34.547Z"
+    "verifiedAt": "2026-10-22T21:38:05.099Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-22T17:12:34.547Z"
+    "verifiedAt": "2026-10-22T21:38:05.099Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -509,15 +509,6 @@
       "reason": "channel filter (RELEASE) excludes nightly; 156.1.100.7 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.97",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.97",
-      "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ],
     "url": "https://github.com/brave/brave-variations/blob/165f9af4641d70dfbbd067d3cc4757ba4676e943/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
@@ -552,12 +543,21 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-22T17:12:34.547Z"
+    "verifiedAt": "2026-10-22T21:38:05.099Z",
+    "appliesUnknown": [
+     {
+      "build": "iOS release 1.97",
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.97",
+      "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+     }
+    ]
    }
   ],
   "studiesCommit": "165f9af4641d70dfbbd067d3cc4757ba4676e943",
-  "studiesReadAt": "2026-10-22T17:12:34.547Z",
+  "studiesReadAt": "2026-10-22T21:38:05.099Z",
   "studiesDigest": "64739cc3f034f08b348bf200d11be1b15cef9f02cff845e7e51c0c59d804a2cd"
  },
- "completeAt": "2026-10-22T17:12:34.547Z"
+ "completeAt": "2026-10-22T21:38:05.099Z"
 }
