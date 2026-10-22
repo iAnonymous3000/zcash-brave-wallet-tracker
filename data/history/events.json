@@ -326,6 +326,30 @@
   "basis": "observed"
  },
  {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-19T22:06:22Z",
+  "title": "Upstream: lightwallet-protocol v0.6.0",
+  "impact": "lightwallet-protocol v0.6.0 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwallet-protocol/releases/tag/v0.6.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-19T22:06:22Z",
+   "not in Brave lockfile"
+  ],
+  "id": "bc25b240536dab1b",
+  "detectedAt": "2026-10-22T17:12:34.547Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-10-19T02:31:21Z",
   "title": "New issue: NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
@@ -14405,33 +14429,6 @@
    "base branch master"
   ],
   "id": "074f247c33736568",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-10-22T12:07:30Z",
-  "title": "New bug report: [ZCash] Show shielded inputs on the tx details page",
-  "impact": "Opened in brave-browser#50392. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50392"
-  ],
-  "topic": "shielded",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50392",
-    "url": "https://github.com/brave/brave-browser/issues/50392"
-   }
-  ],
-  "evidence": [
-   "created 2025-10-22T12:07:30Z"
-  ],
-  "id": "c2bfd3267150865f",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }
