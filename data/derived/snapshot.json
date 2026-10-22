@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T04:49:10.963Z",
+ "at": "2026-10-22T11:55:20.725Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#59539": {
@@ -73,7 +73,7 @@
    "ios/nightly": null
   },
   "brave/brave-browser#59103": {
-   "desktop/release": false,
+   "desktop/release": true,
    "android/release": false,
    "desktop/beta": true,
    "android/beta": true,
@@ -4395,7 +4395,7 @@
  },
  "flags": {
   "desktop/release": {
-   "tag": "v1.97.59",
+   "tag": "v1.98.60",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,

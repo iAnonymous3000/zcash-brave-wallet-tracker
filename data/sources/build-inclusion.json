@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-22T04:49:10.963Z",
+ "retrievedAt": "2026-10-22T11:55:20.725Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3596,7 +3596,6 @@
     "version": "1.97.59",
     "publishedAt": "2026-10-16T03:32:04Z",
     "usedBy": [
-     "desktop/release",
      "android/release"
     ]
    },
@@ -3620,6 +3619,14 @@
     "tag": "v1.98.60",
     "version": "1.98.60",
     "publishedAt": "2026-10-21T09:09:05Z",
+    "usedBy": [
+     "desktop/release"
+    ]
+   },
+   {
+    "tag": "v1.98.61",
+    "version": "1.98.61",
+    "publishedAt": "2026-10-22T06:41:00Z",
     "usedBy": [
      "github/release"
     ]
@@ -3658,9 +3665,9 @@
     ]
    },
    {
-    "tag": "v1.100.23",
-    "version": "1.100.23",
-    "publishedAt": "2026-10-21T17:20:38Z",
+    "tag": "v1.100.24",
+    "version": "1.100.24",
+    "publishedAt": "2026-10-22T05:59:18Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3669,5 +3676,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-10-22T04:49:10.963Z"
+ "completeAt": "2026-10-22T11:55:20.725Z"
 }

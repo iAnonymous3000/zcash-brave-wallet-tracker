@@ -1,7 +1,7 @@
 {
  "sourceId": "community",
  "schema": 1,
- "retrievedAt": "2026-10-22T04:49:10.963Z",
+ "retrievedAt": "2026-10-22T11:55:20.725Z",
  "data": {
   "topics": [
    {
@@ -80,7 +80,7 @@
    },
    {
     "id": 657600,
-    "title": "bridge problem eth to zcash",
+    "title": "Bridge problem eth to zcash",
     "url": "https://community.brave.app/t/bridge-problem-eth-to-zcash/657600",
     "categoryId": 131,
     "categoryName": "Brave Wallet (Self Custody)",
@@ -88,7 +88,7 @@
     "lastPostedAt": "2026-08-31T20:03:11.509Z",
     "postsCount": 2,
     "replyCount": 0,
-    "views": 45,
+    "views": 49,
     "closed": false,
     "archived": false,
     "hasAcceptedAnswer": false,
@@ -101,7 +101,7 @@
      "zcash",
      "zec"
     ],
-    "retrievedAt": "2026-10-15T17:03:27.386Z"
+    "retrievedAt": "2026-10-22T11:55:20.725Z"
    },
    {
     "id": 657305,
@@ -939,5 +939,5 @@
    "ironwood order:latest p1"
   ]
  },
- "completeAt": "2026-10-22T04:49:10.963Z"
+ "completeAt": "2026-10-22T11:55:20.725Z"
 }

@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-22T04:49:10.963Z",
+ "retrievedAt": "2026-10-22T11:55:20.725Z",
  "data": {
   "gate3": {
    "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
@@ -9,7 +9,7 @@
    "zcashDisabled": true,
    "line": 18,
    "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-   "checkedAt": "2026-10-22T04:49:10.963Z"
+   "checkedAt": "2026-10-22T11:55:20.725Z"
   },
   "studies": [
    {
@@ -40,12 +40,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.97.59 (155.1.97.59)",
+      "build": "Desktop release 1.98.60 (156.1.98.60)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.97.59",
-      "reason": "155.1.97.59 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.98.60",
+      "reason": "156.1.98.60 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android release 1.97.59 (155.1.97.59)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-22T04:49:10.963Z"
+    "verifiedAt": "2026-10-22T11:55:20.725Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -179,12 +179,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.97.59 (155.1.97.59)",
+      "build": "Desktop release 1.98.60 (156.1.98.60)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.97.59",
-      "reason": "155.1.97.59 is outside the version range any – 139.1.81.128"
+      "version": "1.98.60",
+      "reason": "156.1.98.60 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android release 1.97.59 (155.1.97.59)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-22T04:49:10.963Z"
+    "verifiedAt": "2026-10-22T11:55:20.725Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -313,12 +313,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.97.59 (155.1.97.59)",
+      "build": "Desktop release 1.98.60 (156.1.98.60)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.97.59",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 155.1.97.59 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.98.60",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 156.1.98.60 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android release 1.97.59 (155.1.97.59)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-22T04:49:10.963Z"
+    "verifiedAt": "2026-10-22T11:55:20.725Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -445,12 +445,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.97.59 (155.1.97.59)",
+      "build": "Desktop release 1.98.60 (156.1.98.60)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.97.59",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 155.1.97.59 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.98.60",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.98.60 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android release 1.97.59 (155.1.97.59)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-10-20T17:09:13.871Z",
-    "verifiedAt": "2026-10-22T04:49:10.963Z",
+    "verifiedAt": "2026-10-22T11:55:20.725Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "14eb665a528337ab5bc67a66f24ad3adb34b079f",
-  "studiesReadAt": "2026-10-22T04:49:10.963Z",
+  "studiesReadAt": "2026-10-22T11:55:20.725Z",
   "studiesDigest": "7929c4b6e6fd7af667d916210b7cbc02b575ae2f766bcf1c9720442ee39925c1"
  },
- "completeAt": "2026-10-22T04:49:10.963Z"
+ "completeAt": "2026-10-22T11:55:20.725Z"
 }
