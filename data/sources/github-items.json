@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-23T07:34:06.724Z",
+ "retrievedAt": "2026-10-23T13:29:06.150Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -78592,7 +78592,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-16T08:45:02Z",
-    "updatedAt": "2026-10-23T05:23:51Z",
+    "updatedAt": "2026-10-23T09:58:40Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -78604,7 +78604,8 @@
     "milestone": null,
     "bodyExcerpt": "Resolves https://github.com/brave/brave-browser/issues/59539 The \"Default base cryptocurrency\" setting in brave://settings/web3 had no effect: no wallet client used the stored value. This removes the setting, its mojom API, the change event and the UI plumbing on desktop, Android and iOS. The old pref is cleared from existing profiles on startup. Checked locally (Windows): build, presubmit, gn_check, BraveWalletServiceUnitTest, wallet prefs/utils/migration unit tests and…",
     "bodyRefs": [
-     "brave/brave-browser#59539"
+     "brave/brave-browser#59539",
+     "brave/brave-core#40957"
     ],
     "resolvesRefs": [
      "brave/brave-browser#59539"
@@ -78626,6 +78627,14 @@
       "detail": "PullRequest",
       "ref": "brave/brave-core#40957",
       "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-10-23T09:14:01Z",
+      "actor": "mihaiplesa",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#40959",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -78634,7 +78643,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-23T07:34:06.724Z"
+    "retrievedAt": "2026-10-23T13:29:06.150Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -89966,5 +89975,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-23T07:34:06.724Z"
+ "completeAt": "2026-10-23T13:29:06.150Z"
 }
