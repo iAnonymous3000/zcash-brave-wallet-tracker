@@ -14282,32 +14282,5 @@
   "id": "f6b9dd4855b203c4",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-10-23T15:20:08Z",
-  "title": "Merged: [wallet][safe-numerics] Improve `BtcLikeSerializerStream` use",
-  "impact": "Merged into brave-core master on 2025-10-23. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#31886"
-  ],
-  "topic": "general",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31886",
-    "url": "https://github.com/brave/brave-core/pull/31886"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-23T15:20:08Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "2d39a6cc85c5eada",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
