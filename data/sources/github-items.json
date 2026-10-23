@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-23T00:42:00.104Z",
+ "retrievedAt": "2026-10-23T07:34:06.724Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -78592,7 +78592,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-16T08:45:02Z",
-    "updatedAt": "2026-10-22T06:22:45Z",
+    "updatedAt": "2026-10-23T05:23:51Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -78618,14 +78618,23 @@
     ],
     "subIssues": [],
     "parent": null,
-    "timeline": [],
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-10-23T05:27:24Z",
+      "actor": "brave-builds",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#40957",
+      "willClose": false
+     }
+    ],
     "timelineTruncated": false,
     "discovery": [
      "linked:brave/brave-browser#59539"
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-22T11:55:20.725Z"
+    "retrievedAt": "2026-10-23T07:34:06.724Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -89957,5 +89966,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-23T00:42:00.104Z"
+ "completeAt": "2026-10-23T07:34:06.724Z"
 }
