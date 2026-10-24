@@ -14255,32 +14255,5 @@
   "id": "6f20d21988215e83",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-10-24T09:34:58Z",
-  "title": "Merged: Enable rustfmt.",
-  "impact": "Merged into brave-core master on 2025-10-24. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#31974"
-  ],
-  "topic": "general",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#31974",
-    "url": "https://github.com/brave/brave-core/pull/31974"
-   }
-  ],
-  "evidence": [
-   "merged 2025-10-24T09:34:58Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "f6b9dd4855b203c4",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
