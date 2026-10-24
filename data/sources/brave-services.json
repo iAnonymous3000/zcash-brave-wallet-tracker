@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-23T18:23:17.177Z",
+ "retrievedAt": "2026-10-24T04:39:08.067Z",
  "data": {
   "gate3": {
    "commitSha": "173a2408a66739d5c5204e3bac386fa9d2c2a17c",
@@ -9,7 +9,7 @@
    "zcashDisabled": true,
    "line": 18,
    "url": "https://github.com/brave/gate3/blob/173a2408a66739d5c5204e3bac386fa9d2c2a17c/app/api/swap/constants.py#L18",
-   "checkedAt": "2026-10-23T18:23:17.177Z"
+   "checkedAt": "2026-10-24T04:39:08.067Z"
   },
   "studies": [
    {
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-23T18:23:17.177Z"
+    "verifiedAt": "2026-10-24T04:39:08.067Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-23T18:23:17.177Z"
+    "verifiedAt": "2026-10-24T04:39:08.067Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-23T18:23:17.177Z"
+    "verifiedAt": "2026-10-24T04:39:08.067Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-10-22T17:12:34.547Z",
-    "verifiedAt": "2026-10-23T18:23:17.177Z",
+    "verifiedAt": "2026-10-24T04:39:08.067Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "165f9af4641d70dfbbd067d3cc4757ba4676e943",
-  "studiesReadAt": "2026-10-23T18:23:17.177Z",
+  "studiesReadAt": "2026-10-24T04:39:08.067Z",
   "studiesDigest": "64739cc3f034f08b348bf200d11be1b15cef9f02cff845e7e51c0c59d804a2cd"
  },
- "completeAt": "2026-10-23T18:23:17.177Z"
+ "completeAt": "2026-10-24T04:39:08.067Z"
 }
