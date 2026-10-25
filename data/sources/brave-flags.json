@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-flags",
  "schema": 1,
- "retrievedAt": "2026-10-25T11:31:55.366Z",
+ "retrievedAt": "2026-10-25T16:22:06.078Z",
  "data": {
   "snapshots": {
    "v1.98.47": {
@@ -53,7 +53,7 @@
     "channel": "nightly",
     "version": "master",
     "file": "components/brave_wallet/common/features.cc",
-    "permalink": "https://github.com/brave/brave-core/blob/1e6f00267d382150bac8f87266a163d36e609eb8/components/brave_wallet/common/features.cc",
+    "permalink": "https://github.com/brave/brave-core/blob/c664e847feb86771bb37ddc17ce8a90d102f7164/components/brave_wallet/common/features.cc",
     "flags": [
      {
       "name": "kBraveWalletZCashFeature",
@@ -89,8 +89,8 @@
       }
      }
     ],
-    "retrievedAt": "2026-10-25T11:31:55.366Z",
-    "commitSha": "1e6f00267d382150bac8f87266a163d36e609eb8"
+    "retrievedAt": "2026-10-25T16:22:06.078Z",
+    "commitSha": "c664e847feb86771bb37ddc17ce8a90d102f7164"
    },
    "v1.99.44": {
     "tag": "v1.99.44",
@@ -2973,5 +2973,5 @@
    ]
   }
  },
- "completeAt": "2026-10-25T11:31:55.366Z"
+ "completeAt": "2026-10-25T16:22:06.078Z"
 }
