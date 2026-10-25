@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-25T16:22:06.078Z",
+ "retrievedAt": "2026-10-25T20:52:56.132Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -72315,6 +72315,49 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/gate3#345": {
+    "id": "brave/gate3#345",
+    "repo": "brave/gate3",
+    "number": 345,
+    "kind": "pr",
+    "title": "fix(swap): re-enable Zcash swap/bridge routing",
+    "url": "https://github.com/brave/gate3/pull/345",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-10-25T18:04:52Z",
+    "updatedAt": "2026-10-25T18:38:48Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "fix/reenable-zcash-swap-routing",
+    "author": "kdenhartog",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "BTC→ZEC quotes fail with UNSUPPORTED_NETWORK because the kill switch from #335 still lists Chain.ZCASH. This empties SWAP_DISABLED_CHAINS rather than reverting #335 — the mechanism is behaviorally inert but keeps a future kill switch to a one-line change.",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "body:zec"
+    ],
+    "retrievedAt": "2026-10-25T20:52:56.132Z"
+   },
    "brave/gate3#341": {
     "id": "brave/gate3#341",
     "repo": "brave/gate3",
@@ -89965,15 +90008,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 823,
-   "searchHits": 1175,
-   "tracked": 792,
-   "direct": 625,
+   "discovered": 824,
+   "searchHits": 1176,
+   "tracked": 793,
+   "direct": 626,
    "mention": 64,
    "linked": 103,
    "excluded": 134,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-25T16:22:06.078Z"
+ "completeAt": "2026-10-25T20:52:56.132Z"
 }
