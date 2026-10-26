@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-26T07:49:30.503Z",
+ "retrievedAt": "2026-10-26T15:13:42.118Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -72322,14 +72322,14 @@
     "kind": "pr",
     "title": "fix(swap): re-enable Zcash swap/bridge routing",
     "url": "https://github.com/brave/gate3/pull/345",
-    "state": "open",
+    "state": "merged",
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-25T18:04:52Z",
-    "updatedAt": "2026-10-25T18:38:48Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
+    "updatedAt": "2026-10-26T09:48:44Z",
+    "closedAt": "2026-10-26T09:48:44Z",
+    "mergedAt": "2026-10-26T09:48:44Z",
+    "mergeCommitSha": "7748e701ec8b2f79842fad0a541b2a12015a7ede",
     "baseRef": "master",
     "headRef": "fix/reenable-zcash-swap-routing",
     "author": "kdenhartog",
@@ -72346,7 +72346,21 @@
     "closingRefs": [],
     "subIssues": [],
     "parent": null,
-    "timeline": [],
+    "timeline": [
+     {
+      "type": "merged",
+      "at": "2026-10-26T09:48:44Z",
+      "actor": "onyb",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-10-26T09:48:44Z",
+      "actor": "onyb",
+      "detail": null,
+      "ref": null
+     }
+    ],
     "timelineTruncated": false,
     "discovery": [
      "search:zcash"
@@ -72356,7 +72370,7 @@
      "title:zcash",
      "body:zec"
     ],
-    "retrievedAt": "2026-10-25T20:52:56.132Z"
+    "retrievedAt": "2026-10-26T15:13:42.118Z"
    },
    "brave/gate3#341": {
     "id": "brave/gate3#341",
@@ -90018,5 +90032,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-26T07:49:30.503Z"
+ "completeAt": "2026-10-26T15:13:42.118Z"
 }

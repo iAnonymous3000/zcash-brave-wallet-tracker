@@ -2,6 +2,236 @@
  {
   "kind": "capability-changed",
   "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Release: service-off → available",
+  "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
+  "highlight": "release",
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "service-off → available"
+  ],
+  "id": "038a0f11a82af507",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Beta: service-off → in-build",
+  "impact": "The evidence for this capability changed for Desktop Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "12116653e6e95d96",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Nightly: service-off → in-build",
+  "impact": "The evidence for this capability changed for Android Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "4b25f3874e6cefa1",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Release: service-off → available",
+  "impact": "The evidence for this capability changed for Desktop Release. See the capability matrix for the supporting evidence.",
+  "highlight": "release",
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "service-off → available"
+  ],
+  "id": "621919fcf185d469",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on iOS Nightly: service-off → in-build",
+  "impact": "The evidence for this capability changed for iOS Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "701ea78d75126adb",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Desktop Nightly: service-off → in-build",
+  "impact": "The evidence for this capability changed for Desktop Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "ad1526cb1e446161",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on iOS Beta: service-off → in-build",
+  "impact": "The evidence for this capability changed for iOS Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "d0856267c462ac41",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on iOS Release: service-off → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "service-off → not-verified"
+  ],
+  "id": "d6126533b69b810d",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Zcash swap/bridge routing turned back on in gate3",
+  "impact": "Brave’s swap backend repository no longer excludes Zcash; ZEC swaps and bridges can work again once deployed.",
+  "highlight": "release",
+  "itemIds": [],
+  "topic": "swaps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "gate3 constants",
+    "url": "https://github.com/brave/gate3/blob/master/app/api/swap/constants.py"
+   }
+  ],
+  "evidence": [
+   "SWAP_DISABLED_CHAINS contains ZCASH: true → false"
+  ],
+  "id": "dd1cae73a5600341",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Beta: service-off → in-build",
+  "impact": "The evidence for this capability changed for Android Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "service-off → in-build"
+  ],
+  "id": "ecce076341db4b7d",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-10-26T09:48:44Z",
+  "title": "Merged in brave/gate3: fix(swap): re-enable Zcash swap/bridge routing",
+  "impact": "Merged into brave/gate3 (master branch) on 2026-10-26. This is a Brave server-side repository: the change takes effect only when Brave deploys it, which is not public, so deployment is unverified. It does not depend on a browser build or version.",
+  "highlight": null,
+  "itemIds": [
+   "brave/gate3#345"
+  ],
+  "topic": "swaps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave/gate3#345",
+    "url": "https://github.com/brave/gate3/pull/345"
+   }
+  ],
+  "evidence": [
+   "merged 2026-10-26T09:48:44Z",
+   "repository brave/gate3",
+   "base branch master"
+  ],
+  "id": "d9c0a5612982e5e7",
+  "detectedAt": "2026-10-26T15:13:42.118Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
   "title": "Sync, birthday & recovery tools on iOS Release: in-build → not-verified",
   "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
   "highlight": null,

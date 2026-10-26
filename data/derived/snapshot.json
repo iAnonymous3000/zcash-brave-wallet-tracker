@@ -1,5 +1,5 @@
 {
- "at": "2026-10-26T07:49:30.503Z",
+ "at": "2026-10-26T15:13:42.118Z",
  "rulesVersion": 17,
  "builds": {
   "brave/gate3#345": {
@@ -4598,15 +4598,15 @@
    "ios/nightly": "in-build"
   },
   "bridge": {
-   "desktop/release": "service-off",
-   "desktop/beta": "service-off",
-   "desktop/nightly": "service-off",
-   "android/release": "service-off",
-   "android/beta": "service-off",
-   "android/nightly": "service-off",
-   "ios/release": "service-off",
-   "ios/beta": "service-off",
-   "ios/nightly": "service-off"
+   "desktop/release": "available",
+   "desktop/beta": "in-build",
+   "desktop/nightly": "in-build",
+   "android/release": "available",
+   "android/beta": "in-build",
+   "android/nightly": "in-build",
+   "ios/release": "not-verified",
+   "ios/beta": "in-build",
+   "ios/nightly": "in-build"
   },
   "buy": {
    "desktop/release": "in-build",
@@ -4657,7 +4657,7 @@
   "7407a70cf80d4f16c8ea"
  ],
  "services": {
-  "gate3ZcashDisabled": true,
+  "gate3ZcashDisabled": false,
   "studies": [
    "ZCashStudy.json5:ZCashStudy_DisabledOnOldVersions",
    "ZCashStudy.json5:ZCashStudy_EnabledWithShieldingOnNewVersions",

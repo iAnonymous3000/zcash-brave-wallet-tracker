@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-26T07:49:30.503Z",
+ "retrievedAt": "2026-10-26T15:13:42.118Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.7.0.",
-    "metadataReadAt": "2026-10-26T07:49:30.503Z"
+    "metadataReadAt": "2026-10-26T15:13:42.118Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: ci(verify): checksum the pinned protoc release download (#309).",
-    "metadataReadAt": "2026-10-26T07:49:30.503Z"
+    "metadataReadAt": "2026-10-26T15:13:42.118Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-26T07:49:30.503Z",
-    "searchCheckedAt": "2026-10-26T07:49:30.503Z"
+    "checkedAt": "2026-10-26T15:13:42.118Z",
+    "searchCheckedAt": "2026-10-26T15:13:42.118Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-26T07:49:30.503Z",
-    "searchCheckedAt": "2026-10-26T07:49:30.503Z"
+    "checkedAt": "2026-10-26T15:13:42.118Z",
+    "searchCheckedAt": "2026-10-26T15:13:42.118Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-26T07:49:30.503Z",
-    "searchCheckedAt": "2026-10-26T07:49:30.503Z"
+    "checkedAt": "2026-10-26T15:13:42.118Z",
+    "searchCheckedAt": "2026-10-26T15:13:42.118Z"
    }
   ]
  },
- "completeAt": "2026-10-26T07:49:30.503Z"
+ "completeAt": "2026-10-26T15:13:42.118Z"
 }
