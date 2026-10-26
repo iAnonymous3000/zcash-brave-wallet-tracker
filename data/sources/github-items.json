@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-26T15:13:42.118Z",
+ "retrievedAt": "2026-10-26T21:02:02.452Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -90009,6 +90009,8 @@
    "brave/brave-core#32111": "discovered via search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#30448": "discovered via search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#33475": "discovered via search:shielded is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/gate3#356": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/gate3#355": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/gate3#245": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/gate3#213": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/gate3#163": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -90022,15 +90024,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 824,
-   "searchHits": 1176,
+   "discovered": 826,
+   "searchHits": 1178,
    "tracked": 793,
    "direct": 626,
    "mention": 64,
    "linked": 103,
-   "excluded": 134,
+   "excluded": 136,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-26T15:13:42.118Z"
+ "completeAt": "2026-10-26T21:02:02.452Z"
 }

@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-26T15:13:42.118Z",
+ "retrievedAt": "2026-10-26T21:02:02.452Z",
  "data": {
   "releases": [
    {
@@ -13,7 +13,8 @@
     "publishedAt": "2026-10-26T15:02:19Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.33",
     "assetPlatforms": [
-     "ios"
+     "ios",
+     "macos"
     ],
     "prereleaseFlag": true
    },
@@ -7192,5 +7193,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-26T15:13:42.118Z"
+ "completeAt": "2026-10-26T21:02:02.452Z"
 }
