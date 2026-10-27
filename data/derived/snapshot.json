@@ -1,5 +1,5 @@
 {
- "at": "2026-10-27T14:33:35.413Z",
+ "at": "2026-10-27T20:43:20.385Z",
  "rulesVersion": 17,
  "builds": {
   "brave/gate3#345": {
@@ -38,9 +38,9 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#53219": {
    "desktop/release": null,
@@ -4445,7 +4445,7 @@
    }
   },
   "desktop/nightly": {
-   "tag": "v1.100.5",
+   "tag": "v1.100.36",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -4461,7 +4461,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.100.7",
+   "tag": "v1.100.37",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -4611,13 +4611,13 @@
   "buy": {
    "desktop/release": "in-build",
    "desktop/beta": "in-build",
-   "desktop/nightly": "in-build",
+   "desktop/nightly": "absent",
    "android/release": "in-build",
    "android/beta": "in-build",
    "android/nightly": "in-build",
    "ios/release": "not-verified",
    "ios/beta": "in-build",
-   "ios/nightly": "in-build"
+   "ios/nightly": "absent"
   },
   "testnet": {
    "desktop/release": "available",

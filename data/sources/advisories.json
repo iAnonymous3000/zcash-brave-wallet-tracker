@@ -1,9 +1,28 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-10-27T14:33:35.413Z",
+ "retrievedAt": "2026-10-27T20:43:20.385Z",
  "data": {
   "advisories": [
+   {
+    "id": "GHSA-xq7v-jj38-pcwr",
+    "aliases": [],
+    "summary": "Unauthenticated concurrent GetBlockRange streams can OOM-terminate lightwalletd",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.0"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.1"
+    ],
+    "publishedAt": "2026-10-27T19:57:28Z",
+    "updatedAt": "2026-10-27T19:57:28Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-xq7v-jj38-pcwr"
+   },
    {
     "id": "GHSA-932p-ww36-57vg",
     "aliases": [],
@@ -365,5 +384,5 @@
   ],
   "rustsecCrates": []
  },
- "completeAt": "2026-10-27T14:33:35.413Z"
+ "completeAt": "2026-10-27T20:43:20.385Z"
 }

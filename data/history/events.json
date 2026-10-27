@@ -2,6 +2,148 @@
  {
   "kind": "capability-changed",
   "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on iOS Nightly: in-build → absent",
+  "impact": "The evidence for this capability changed for iOS Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "0feb6085d8a16ea9",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Desktop Nightly: in-build → absent",
+  "impact": "The evidence for this capability changed for Desktop Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "c091aed2eb5e7344",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-10-27T19:57:28Z",
+  "title": "Security advisory GHSA-xq7v-jj38-pcwr: Unauthenticated concurrent GetBlockRange streams can OOM-terminate lightwalletd",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.0). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetBlockRange; Brave Wallet’s Zcash client calls GetBlockRange.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-xq7v-jj38-pcwr",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-xq7v-jj38-pcwr"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.0",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "82d3a9a5eba4daa4",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-10-27T19:50:45Z",
+  "title": "Upstream: lightwalletd v0.6.1",
+  "impact": "lightwalletd v0.6.1 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.1"
+   }
+  ],
+  "evidence": [
+   "published 2026-10-27T19:50:45Z",
+   "not in Brave lockfile"
+  ],
+  "id": "8abfe7e2ebd5775a",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-27T13:29:48Z",
+  "title": "In iOS Nightly 1.100.37: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the iOS Nightly build 1.100.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "5737beb68400dbe3",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-27T01:23:38Z",
+  "title": "In Desktop Nightly 1.100.36: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the Desktop Nightly build 1.100.36. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "5a60208cee0f0d76",
+  "detectedAt": "2026-10-27T20:43:20.385Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
   "title": "Cross-chain swaps / bridge (NEAR Intents) on Android Release: service-off → available",
   "impact": "The evidence for this capability changed for Android Release. See the capability matrix for the supporting evidence.",
   "highlight": "release",
