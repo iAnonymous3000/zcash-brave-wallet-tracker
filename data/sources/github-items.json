@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-27T01:30:13.123Z",
+ "retrievedAt": "2026-10-27T07:53:43.011Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -27124,7 +27124,7 @@
     "milestone": {
      "title": "1.98.x - Release",
      "dueOn": "2026-10-22T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Description Hide Deposit/Bridge buttons for Zcash (Shielded Legacy) account Steps to reproduce 1. Enable Zcash Shielded Legacy account 2. Open Accounts page 3. Click on Zcash Shielded legacy account menu 4. Deposit/Bridge options are shown Actual result [image] Expected result Should not show Deposit/Bridge options on Zcash Shielded Legacy account Reproduces how often Easily reproduced Brave version (brave://version info) Brave | 1.96.53 Chromium: 153.0.8010.37 (Official…",
     "bodyRefs": [],
@@ -27200,7 +27200,7 @@
      "title:shielded",
      "body:zcash"
     ],
-    "retrievedAt": "2026-10-21T07:41:21.101Z"
+    "retrievedAt": "2026-10-27T07:53:43.011Z"
    },
    "brave/brave-browser#56872": {
     "id": "brave/brave-browser#56872",
@@ -40076,7 +40076,7 @@
     "milestone": {
      "title": "1.98.x - Release",
      "dueOn": "2026-10-22T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Resolves https://github.com/brave/brave-browser/issues/56872",
     "bodyRefs": [
@@ -40197,7 +40197,7 @@
     "matchedTerms": [
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-21T07:41:21.101Z"
+    "retrievedAt": "2026-10-27T07:53:43.011Z"
    },
    "brave/brave-core#39838": {
     "id": "brave/brave-core#39838",
@@ -40626,7 +40626,7 @@
     "milestone": {
      "title": "1.98.x - Release",
      "dueOn": "2026-10-22T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Error message was using error() even if there were no error. Resolves https://github.com/brave/brave-browser/issues/59049",
     "bodyRefs": [
@@ -40727,7 +40727,7 @@
     "matchedTerms": [
      "title:zcash"
     ],
-    "retrievedAt": "2026-10-21T07:41:21.101Z"
+    "retrievedAt": "2026-10-27T07:53:43.011Z"
    },
    "brave/brave-core#39977": {
     "id": "brave/brave-core#39977",
@@ -40757,7 +40757,7 @@
     "milestone": {
      "title": "1.98.x - Release",
      "dueOn": "2026-10-22T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Description - Hide Swap, Bridge, and Deposit for Zcash (Shielded Legacy) / Orchard so new funds go to Ironwood during the NU6.3 migration. - Send stays available so users can move remaining Orchard balances. - Transparent ZEC and Zcash (Shielded) / Ironwood still support Deposit and Bridge. Resolves [image]",
     "bodyRefs": [
@@ -40822,7 +40822,7 @@
      "title:shielded",
      "body:zcash"
     ],
-    "retrievedAt": "2026-10-21T07:41:21.101Z"
+    "retrievedAt": "2026-10-27T07:53:43.011Z"
    },
    "brave/brave-core#40008": {
     "id": "brave/brave-core#40008",
@@ -90034,5 +90034,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-27T01:30:13.123Z"
+ "completeAt": "2026-10-27T07:53:43.011Z"
 }
