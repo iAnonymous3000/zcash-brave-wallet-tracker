@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-28T16:39:19.622Z",
+ "retrievedAt": "2026-10-28T22:37:24.782Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -39545,7 +39545,7 @@
      "puLL-Merge"
     ],
     "milestone": {
-     "title": "1.100.x - Nightly",
+     "title": "1.100.x - Beta",
      "dueOn": "2026-11-17T00:00:00Z",
      "state": "OPEN"
     },
@@ -39623,7 +39623,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-16T18:05:27.894Z"
+    "retrievedAt": "2026-10-28T22:37:24.782Z"
    },
    "brave/brave-core#34256": {
     "id": "brave/brave-core#34256",
@@ -39803,7 +39803,7 @@
      "puLL-Merge"
     ],
     "milestone": {
-     "title": "1.99.x - Beta",
+     "title": "1.99.x - Release",
      "dueOn": "2026-11-03T00:00:00Z",
      "state": "OPEN"
     },
@@ -39864,7 +39864,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-14T23:16:08.055Z"
+    "retrievedAt": "2026-10-28T22:37:24.782Z"
    },
    "brave/brave-core#39547": {
     "id": "brave/brave-core#39547",
@@ -90034,5 +90034,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-28T16:39:19.622Z"
+ "completeAt": "2026-10-28T22:37:24.782Z"
 }

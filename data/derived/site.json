@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-28T16:39:19.622Z",
+ "generatedAt": "2026-10-28T22:37:24.782Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -107,7 +107,7 @@
     "nightly-windows-x64": "1.100.41",
     "nightly-windows-x86": "1.100.41",
     "nightly-windows-arm64": "1.100.41",
-    "nightly-macos-x64": "1.100.37",
+    "nightly-macos-x64": "1.100.41",
     "nightly-macos-arm64": "1.100.36",
     "nightly-linux-x64": "1.100.41",
     "nightly-linux-arm64": "1.100.41"
@@ -622,7 +622,7 @@
      "blocked": false
     },
     "milestone": {
-     "title": "1.100.x - Nightly",
+     "title": "1.100.x - Beta",
      "line": "1.100",
      "note": "A milestone is a target set by Brave, not a release promise. Brave renames milestones as branches move from Nightly to Beta to Release."
     },
@@ -1000,7 +1000,7 @@
      "blocked": false
     },
     "milestone": {
-     "title": "1.99.x - Beta",
+     "title": "1.99.x - Release",
      "line": "1.99",
      "note": "A milestone is a target set by Brave, not a release promise. Brave renames milestones as branches move from Nightly to Beta to Release."
     },
@@ -77998,7 +77998,7 @@
     "puLL-Merge"
    ],
    "milestone": {
-    "title": "1.100.x - Nightly",
+    "title": "1.100.x - Beta",
     "dueOn": "2026-11-17T00:00:00Z",
     "state": "OPEN"
    },
@@ -78019,7 +78019,7 @@
    ],
    "relevance": "direct",
    "matchedTerms": [],
-   "retrievedAt": "2026-10-16T18:05:27.894Z",
+   "retrievedAt": "2026-10-28T22:37:24.782Z",
    "timelineCount": 9
   },
   "brave/brave-core#34256": {
@@ -78150,7 +78150,7 @@
     "puLL-Merge"
    ],
    "milestone": {
-    "title": "1.99.x - Beta",
+    "title": "1.99.x - Release",
     "dueOn": "2026-11-03T00:00:00Z",
     "state": "OPEN"
    },
@@ -78172,7 +78172,7 @@
    ],
    "relevance": "direct",
    "matchedTerms": [],
-   "retrievedAt": "2026-10-14T23:16:08.055Z",
+   "retrievedAt": "2026-10-28T22:37:24.782Z",
    "timelineCount": 6
   },
   "brave/brave-core#39547": {
@@ -150050,7 +150050,7 @@
      "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150062,7 +150062,7 @@
      "text": "Enabled Zcash by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L770",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150074,7 +150074,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150086,7 +150086,7 @@
      "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150098,7 +150098,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L885",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150110,7 +150110,7 @@
      "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150122,7 +150122,7 @@
      "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150134,7 +150134,7 @@
      "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150146,7 +150146,7 @@
      "text": "Updated ZCash endpoint URL. (#38782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150158,7 +150158,7 @@
      "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150170,7 +150170,7 @@
      "text": "Added support for Zcash Testnet. (#50116)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150182,7 +150182,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150194,7 +150194,7 @@
      "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150206,7 +150206,7 @@
      "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150218,7 +150218,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150230,7 +150230,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150242,7 +150242,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L408",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150254,7 +150254,7 @@
      "text": "Added support for BTC Ledger hardware accounts. (#38447)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150266,7 +150266,7 @@
      "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150278,7 +150278,7 @@
      "text": "Enabled ZCash feature flag by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150290,7 +150290,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L790",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150302,7 +150302,7 @@
      "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150314,7 +150314,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L669",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150326,7 +150326,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L460",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150338,7 +150338,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150350,7 +150350,7 @@
      "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150362,7 +150362,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150374,7 +150374,7 @@
      "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150386,7 +150386,7 @@
      "text": "Implemented ZCash Shielded account modal. (#41780)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150398,7 +150398,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150410,7 +150410,7 @@
      "text": "Updated Zcash library to 0.14. (#56404)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150422,7 +150422,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150434,7 +150434,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150446,7 +150446,7 @@
      "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150458,7 +150458,7 @@
      "text": "Added Zcash shielded support. (#44432)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150470,7 +150470,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150482,7 +150482,7 @@
      "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150494,7 +150494,7 @@
      "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150506,7 +150506,7 @@
      "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150518,7 +150518,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L792",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150530,7 +150530,7 @@
      "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150542,7 +150542,7 @@
      "text": "Fixed ZCash balance resolution issue. (#40635)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150554,7 +150554,7 @@
      "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150566,7 +150566,7 @@
      "text": "Enabled Zcash support by default. (#36613)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150578,7 +150578,7 @@
      "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150590,7 +150590,7 @@
      "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150602,7 +150602,7 @@
      "text": "Enabled Zcash Ironwood support by default. (#56872)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150626,7 +150626,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150638,7 +150638,7 @@
      "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150650,7 +150650,7 @@
      "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150662,7 +150662,7 @@
      "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150674,7 +150674,7 @@
      "text": "Added Zcash \"Deposit\" modal. (#42221)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150686,7 +150686,7 @@
      "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150698,7 +150698,7 @@
      "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150710,7 +150710,7 @@
      "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150722,7 +150722,7 @@
      "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150734,7 +150734,7 @@
      "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150746,7 +150746,7 @@
      "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150758,7 +150758,7 @@
      "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150770,7 +150770,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150782,7 +150782,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L1281",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150794,7 +150794,7 @@
      "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150806,7 +150806,7 @@
      "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
      "firstSeenAt": "2026-10-08T14:46:50.765Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     },
     {
@@ -150830,7 +150830,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/464668bb1f02ac7d0414e639ec98e61df2bf3892/CHANGELOG_iOS.md#L26",
      "firstSeenAt": "2026-10-14T23:16:08.055Z",
-     "lastSeenAt": "2026-10-28T16:39:19.622Z",
+     "lastSeenAt": "2026-10-28T22:37:24.782Z",
      "goneSince": null
     }
    ],
@@ -157099,7 +157099,7 @@
       "version": "0.15.0",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.15.0",
       "source": "crates.io"
      }
@@ -157156,7 +157156,7 @@
       "version": "0.29.0",
       "source": "path"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.29.0",
       "source": "path"
      }
@@ -157213,7 +157213,7 @@
       "version": "0.10.0",
       "source": "path"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.10.0",
       "source": "path"
      }
@@ -157270,7 +157270,7 @@
       "version": "0.24.0-rc.1",
       "source": "path"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      }
@@ -157327,7 +157327,7 @@
       "version": "0.4.0",
       "source": "path"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.4.0",
       "source": "path"
      }
@@ -157384,7 +157384,7 @@
       "version": "0.4.1",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.4.1",
       "source": "crates.io"
      }
@@ -157441,7 +157441,7 @@
       "version": "0.7.0",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.7.0",
       "source": "crates.io"
      }
@@ -157498,7 +157498,7 @@
       "version": "0.8.2",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.8.2",
       "source": "crates.io"
      }
@@ -157555,7 +157555,7 @@
       "version": "0.2.1",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.2.1",
       "source": "crates.io"
      }
@@ -157612,7 +157612,7 @@
       "version": "0.3.2",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.3.2",
       "source": "crates.io"
      }
@@ -157669,7 +157669,7 @@
       "version": "0.5.0",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.5.0",
       "source": "crates.io"
      }
@@ -157726,7 +157726,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -157783,7 +157783,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -157840,7 +157840,7 @@
       "version": "0.1.0",
       "source": "crates.io"
      },
-     "v1.100.42 (github/nightly)": {
+     "v1.100.43 (github/nightly)": {
       "version": "0.1.0",
       "source": "crates.io"
      }
@@ -157860,7 +157860,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-28T16:39:19.622Z"
+   "checkedAt": "2026-10-28T22:37:24.782Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -159606,7 +159606,7 @@
     "updatedAt": "2026-07-06T21:23:42Z",
     "withdrawnAt": null,
     "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46",
-    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 10 channel builds (v1.98.47, v1.99.44, v1.98.52, v1.100.5, v1.97.59, v1.100.36, v1.98.62, v1.100.41, v1.99.53, v1.100.42)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 10 channel builds (v1.98.47, v1.99.44, v1.98.52, v1.100.5, v1.97.59, v1.100.36, v1.98.62, v1.100.41, v1.99.53, v1.100.42)), but the assessment is incomplete: iOS Release 1.97 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 10 channel builds (v1.98.47, v1.99.44, v1.98.52, v1.100.5, v1.97.59, v1.100.36, v1.98.62, v1.100.41, v1.99.53, v1.100.43)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 10 channel builds (v1.98.47, v1.99.44, v1.98.52, v1.100.5, v1.97.59, v1.100.36, v1.98.62, v1.100.41, v1.99.53, v1.100.43)), but the assessment is incomplete: iOS Release 1.97 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
     "verdictDetails": [
      "v1.98.47 (desktop/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.98.47 (desktop/beta): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
@@ -159638,10 +159638,10 @@
      "v1.99.53 (github/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.99.53 (github/beta): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.99.53 (github/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "v1.100.42 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.100.42 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.100.42 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "zebrad: not present in Brave's Cargo.lock at v1.98.47 (desktop/beta); master; v1.99.44 (ios/beta); v1.98.52 (android/beta); v1.100.5 (android/nightly); v1.97.59 (android/release); v1.100.36 (desktop/nightly); v1.98.62 (desktop/release, github/release); v1.100.41 (ios/nightly); v1.99.53 (github/beta); v1.100.42 (github/nightly)"
+     "v1.100.43 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.100.43 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.100.43 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "zebrad: not present in Brave's Cargo.lock at v1.98.47 (desktop/beta); master; v1.99.44 (ios/beta); v1.98.52 (android/beta); v1.100.5 (android/nightly); v1.97.59 (android/release); v1.100.36 (desktop/nightly); v1.98.62 (desktop/release, github/release); v1.100.41 (ios/nightly); v1.99.53 (github/beta); v1.100.43 (github/nightly)"
     ],
     "affected": null
    },
@@ -159752,7 +159752,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.7.0.",
-    "metadataReadAt": "2026-10-28T16:39:19.622Z"
+    "metadataReadAt": "2026-10-28T22:37:24.782Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -159767,7 +159767,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Prepare wallet and PIR crates for the next release (#317).",
-    "metadataReadAt": "2026-10-28T16:39:19.622Z"
+    "metadataReadAt": "2026-10-28T22:37:24.782Z"
    },
    {
     "id": "watch-zkdragon",
@@ -159813,7 +159813,7 @@
     "zcashDisabled": false,
     "line": 11,
     "url": "https://github.com/brave/gate3/blob/13e35d9a98c9fae94d337a173d45f7c4032ee102/app/api/swap/constants.py#L11",
-    "checkedAt": "2026-10-28T16:39:19.622Z"
+    "checkedAt": "2026-10-28T22:37:24.782Z"
    },
    "studies": [
     {
@@ -159892,12 +159892,12 @@
        "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.99.44 is outside the version range 139.1.81.129 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.37 (156.1.100.37) / 1.100.41 (156.1.100.41)",
+       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.41 (156.1.100.41)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.100.36",
-       "reason": "156.1.100.41 (Windows, Linux) and 156.1.100.37 (macOS x64) and 156.1.100.36 (macOS arm64) are outside the version range 139.1.81.129 – 152.*"
+       "reason": "156.1.100.41 (Windows, macOS x64, Linux) and 156.1.100.36 (macOS arm64) are outside the version range 139.1.81.129 – 152.*"
       },
       {
        "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -159955,7 +159955,7 @@
       ]
      },
      "readAt": "2026-10-28T16:39:19.622Z",
-     "verifiedAt": "2026-10-28T16:39:19.622Z"
+     "verifiedAt": "2026-10-28T22:37:24.782Z"
     },
     {
      "file": "ZCashStudy.json5",
@@ -160031,12 +160031,12 @@
        "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.99.44 is outside the version range any – 139.1.81.128"
       },
       {
-       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.37 (156.1.100.37) / 1.100.41 (156.1.100.41)",
+       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.41 (156.1.100.41)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.100.36",
-       "reason": "156.1.100.41 (Windows, Linux) and 156.1.100.37 (macOS x64) and 156.1.100.36 (macOS arm64) are outside the version range any – 139.1.81.128"
+       "reason": "156.1.100.41 (Windows, macOS x64, Linux) and 156.1.100.36 (macOS arm64) are outside the version range any – 139.1.81.128"
       },
       {
        "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -160091,7 +160091,7 @@
       ]
      },
      "readAt": "2026-10-28T16:39:19.622Z",
-     "verifiedAt": "2026-10-28T16:39:19.622Z"
+     "verifiedAt": "2026-10-28T22:37:24.782Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -160165,12 +160165,12 @@
        "reason": "156.1.99.44 is outside the version range 146.1.89.116 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.37 (156.1.100.37) / 1.100.41 (156.1.100.41)",
+       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.41 (156.1.100.41)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.100.36",
-       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.100.41 (Windows, Linux) and 156.1.100.37 (macOS x64) and 156.1.100.36 (macOS arm64) are outside the version range 146.1.89.116 – 152.*"
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.100.41 (Windows, macOS x64, Linux) and 156.1.100.36 (macOS arm64) are outside the version range 146.1.89.116 – 152.*"
       },
       {
        "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -160224,7 +160224,7 @@
       ]
      },
      "readAt": "2026-10-28T16:39:19.622Z",
-     "verifiedAt": "2026-10-28T16:39:19.622Z"
+     "verifiedAt": "2026-10-28T22:37:24.782Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -160289,12 +160289,12 @@
        "reason": "channel filter (RELEASE) excludes beta; 156.1.99.44 is outside the version range 147.1.89.144 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.37 (156.1.100.37) / 1.100.41 (156.1.100.41)",
+       "build": "Desktop nightly 1.100.36 (156.1.100.36) / 1.100.41 (156.1.100.41)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.100.36",
-       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 156.1.100.41 (Windows, Linux) and 156.1.100.37 (macOS x64) and 156.1.100.36 (macOS arm64) are outside the version range 147.1.89.144 – 152.*"
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 156.1.100.41 (Windows, macOS x64, Linux) and 156.1.100.36 (macOS arm64) are outside the version range 147.1.89.144 – 152.*"
       },
       {
        "build": "Android nightly 1.100.5 (156.1.100.5)",
@@ -160311,15 +160311,6 @@
        "channel": "nightly",
        "version": "1.100.41",
        "reason": "channel filter (RELEASE) excludes nightly; 156.1.100.41 is outside the version range 147.1.89.144 – 152.*"
-      }
-     ],
-     "appliesUnknown": [
-      {
-       "build": "iOS release 1.97",
-       "platform": "ios",
-       "channel": "release",
-       "version": "1.97",
-       "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
       }
      ],
      "url": "https://github.com/brave/brave-variations/blob/ae0ad7cf58a8b1565ad93ac5f9ecb806c2bb843e/studies/iOSWalletWebUIStudy.json5",
@@ -160356,11 +160347,20 @@
       ]
      },
      "readAt": "2026-10-28T16:39:19.622Z",
-     "verifiedAt": "2026-10-28T16:39:19.622Z"
+     "verifiedAt": "2026-10-28T22:37:24.782Z",
+     "appliesUnknown": [
+      {
+       "build": "iOS release 1.97",
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.97",
+       "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+      }
+     ]
     }
    ],
    "studiesCommit": "ae0ad7cf58a8b1565ad93ac5f9ecb806c2bb843e",
-   "studiesReadAt": "2026-10-28T16:39:19.622Z",
+   "studiesReadAt": "2026-10-28T22:37:24.782Z",
    "studiesDigest": "6b73843839aabc8fae5dc01f339d84993fe0707df055b04b6c3a1e2ddee72bca"
   },
   "nextUpgrade": {
@@ -160376,7 +160376,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-28T16:39:19.622Z"
+   "checkedAt": "2026-10-28T22:37:24.782Z"
   }
  },
  "community": [
@@ -161431,24 +161431,24 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 479,
+   "itemCount": 480,
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
    ],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -161457,87 +161457,87 @@
    "limitations": [
     "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
    ],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 64,
    "requests": 8,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 5,
-   "requests": 129,
+   "requests": 4,
    "limitations": [
     "Repository state is shown; the deployed service could differ and its deployment time is not public",
     "1 study has builds whose eligibility cannot be determined from public data"
    ],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 23,
-   "requests": 26,
+   "requests": 11,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 355,
    "requests": 0,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 793,
    "requests": 65,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -161546,77 +161546,77 @@
    "limitations": [
     "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
    ],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 18,
    "requests": 23,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 190,
    "requests": 32,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 9,
    "requests": 28,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 3,
    "requests": 10,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   },
   {
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-10-28T16:39:19.622Z",
-   "lastSuccessAt": "2026-10-28T16:39:19.622Z",
+   "lastAttemptAt": "2026-10-28T22:37:24.782Z",
+   "lastSuccessAt": "2026-10-28T22:37:24.782Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 24,
-   "requests": 44,
+   "requests": 13,
    "limitations": [],
-   "lastCompleteAt": "2026-10-28T16:39:19.622Z"
+   "lastCompleteAt": "2026-10-28T22:37:24.782Z"
   }
  ],
  "coverage": {
