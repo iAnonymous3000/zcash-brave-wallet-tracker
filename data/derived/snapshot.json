@@ -1,8 +1,8 @@
 {
- "at": "2026-10-27T20:43:20.385Z",
+ "at": "2026-10-28T16:39:19.622Z",
  "rulesVersion": 17,
  "builds": {
-  "brave/gate3#345": {
+  "brave/brave-browser#59539": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -12,7 +12,7 @@
    "android/nightly": null,
    "ios/nightly": null
   },
-  "brave/brave-browser#59539": {
+  "brave/gate3#345": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -4405,7 +4405,7 @@
  },
  "flags": {
   "desktop/release": {
-   "tag": "v1.98.60",
+   "tag": "v1.98.62",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -4461,7 +4461,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.100.37",
+   "tag": "v1.100.41",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
