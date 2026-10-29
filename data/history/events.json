@@ -2,6 +2,174 @@
  {
   "kind": "capability-changed",
   "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Desktop Beta: in-build → absent",
+  "impact": "The evidence for this capability changed for Desktop Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "32021f4146d59cf8",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Android Beta: in-build → absent",
+  "impact": "The evidence for this capability changed for Android Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "62f3546ee9f09335",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on iOS Beta: in-build → absent",
+  "impact": "The evidence for this capability changed for iOS Beta. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "beta",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "d6ed0c04058514a3",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-29T05:16:16Z",
+  "title": "In Android Beta 1.100.44: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the Android Beta build 1.100.44. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "11515862ac775479",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-29T05:16:16Z",
+  "title": "In Desktop Beta 1.100.44: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the Desktop Beta build 1.100.44. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "762e0420354b06df",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-29T05:16:16Z",
+  "title": "In iOS Beta 1.100.44: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the iOS Beta build 1.100.44. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "818caee4227ea0a3",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-29T05:16:16Z",
+  "title": "In Android Beta 1.100.44: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "The merged code (brave-core#40695) is now part of the Android Beta build 1.100.44. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "in v1.99.32 (GitHub compare v1.99.32...5e268a04: behind); later builds of the same history include it"
+  ],
+  "id": "d73e32b05c48d21f",
+  "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on iOS Nightly: in-build → absent",
   "impact": "The evidence for this capability changed for iOS Nightly. See the capability matrix for the supporting evidence.",
   "highlight": null,
@@ -14601,33 +14769,6 @@
    "label \"QA Pass-Win64\" added at 2025-10-30T10:21:59Z"
   ],
   "id": "e2fc687a780d966a",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-10-29T11:32:22Z",
-  "title": "New issue: [ZCash] Refactor tx fee calculation",
-  "impact": "Opened in brave-browser#50537. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50537"
-  ],
-  "topic": "transactions",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50537",
-    "url": "https://github.com/brave/brave-browser/issues/50537"
-   }
-  ],
-  "evidence": [
-   "created 2025-10-29T11:32:22Z"
-  ],
-  "id": "0e595b6df1342575",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }
