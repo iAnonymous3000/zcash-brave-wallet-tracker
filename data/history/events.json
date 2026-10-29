@@ -882,6 +882,33 @@
   "basis": "observed"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-15T05:16:14Z",
+  "title": "In Desktop Beta 1.99.44: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "The merged code (brave-core#40695) is now part of the Desktop Beta build 1.99.44. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "beta",
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "in v1.99.32 (GitHub compare v1.99.32...5e268a04: behind); later builds of the same history include it"
+  ],
+  "id": "6b78c3be44634bff",
+  "detectedAt": "2026-10-29T05:50:46.468Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "release-evidence-changed",
   "sourceAt": null,
   "title": "Release note text changed upstream: Added Zcash Ironwood migration banner. (#58493)",
