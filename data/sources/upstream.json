@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-10-29T23:58:27.116Z",
+ "retrievedAt": "2026-10-30T05:52:07.321Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,16 +2896,16 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-10-29T23:58:27.116Z"
+   "checkedAt": "2026-10-30T05:52:07.321Z"
   },
   "zips": {
    "2005": {
     "num": "2005",
     "title": "Ironwood Quantum Recoverability",
     "status": "Proposed",
-    "lastCommitAt": "2026-08-25T15:10:57Z",
-    "lastCommitMessage": "(zip-2005) fix: remove dangling K",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/840b3f39f77fb3dcccdbc4c00191eda16dba8c7e",
+    "lastCommitAt": "2026-10-22T14:45:44Z",
+    "lastCommitMessage": "ZIPs 2003, 2005, 2006: Cite protocol.pdf for spec version 2026.8.0",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/0e6a3019aef2071258d5bc4c94a431a9977e688b",
     "url": "https://zips.z.cash/zip-2005",
     "path": "zips/zip-2005.md"
    },
@@ -2963,9 +2963,9 @@
     "num": "0229",
     "title": "Version 6 Transaction Format",
     "status": "Draft",
-    "lastCommitAt": "2026-07-28T13:36:35Z",
-    "lastCommitMessage": "zip-0229, zip-0213: describe the NU6.3 version 6 consensus-rule changes",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/2ac8505fc72942e3fb07aef98cd8024c4601c839",
+    "lastCommitAt": "2026-10-22T14:45:43Z",
+    "lastCommitMessage": "ZIP 229: Apply ZIP 2006's wording for bit 2 of flagsOrchard",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/764e2374e0b7a46b0b908848d45a1608cfe3a849",
     "url": "https://zips.z.cash/zip-0229",
     "path": "zips/zip-0229.md"
    },
@@ -2983,9 +2983,9 @@
     "num": "0318",
     "title": "Orchard to Ironwood Migration",
     "status": "Draft",
-    "lastCommitAt": "2026-10-21T16:57:20Z",
-    "lastCommitMessage": "ZIP 318: Drop the Testnet figure for the shortest validity window",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/feab559b14a5cad3241feb860a56be3634ef99a5",
+    "lastCommitAt": "2026-10-22T14:45:43Z",
+    "lastCommitMessage": "ZIP 318: Cite the zcash_pool_migration crate as a reference implementation",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/91be1653fe91acada0bec0296bbdaa37e6871595",
     "url": "https://zips.z.cash/zip-0318",
     "path": "zips/zip-0318.md"
    },
@@ -2993,9 +2993,9 @@
     "num": "0326",
     "title": "NU6.3 Consequences for Wallets",
     "status": "Draft",
-    "lastCommitAt": "2026-07-09T10:12:54Z",
-    "lastCommitMessage": "ZIP 326: apply review suggestions (nuttycom, #1319)",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/02eac4c430503e50bc583140f6b5dd4cc1cab962",
+    "lastCommitAt": "2026-10-22T14:45:43Z",
+    "lastCommitMessage": "ZIPs 326 and 2006: Split long sentences",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/8fc043dd9520636696c8797bda93e0be0c535f5e",
     "url": "https://zips.z.cash/zip-0326",
     "path": "zips/zip-0326.md"
    },
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-10-29T23:58:27.116Z"
+   "checkedAt": "2026-10-30T05:52:07.321Z"
   }
  },
- "completeAt": "2026-10-29T23:58:27.116Z"
+ "completeAt": "2026-10-30T05:52:07.321Z"
 }
