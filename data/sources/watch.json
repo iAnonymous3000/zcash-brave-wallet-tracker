@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-10-30T12:57:53.517Z",
+ "retrievedAt": "2026-10-30T19:24:37.872Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.7.0.",
-    "metadataReadAt": "2026-10-30T12:57:53.517Z"
+    "metadataReadAt": "2026-10-30T19:24:37.872Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Merge pull request #347 from zakura-core/ci/reuse-builds-cancel-main.",
-    "metadataReadAt": "2026-10-30T12:57:53.517Z"
+    "metadataReadAt": "2026-10-30T19:24:37.872Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-30T12:57:53.517Z",
-    "searchCheckedAt": "2026-10-30T12:57:53.517Z"
+    "checkedAt": "2026-10-30T19:24:37.872Z",
+    "searchCheckedAt": "2026-10-30T19:24:37.872Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-10-30T12:57:53.517Z",
-    "searchCheckedAt": "2026-10-30T12:57:53.517Z"
+    "checkedAt": "2026-10-30T19:24:37.872Z",
+    "searchCheckedAt": "2026-10-30T19:24:37.872Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-10-30T12:57:53.517Z",
-    "searchCheckedAt": "2026-10-30T12:57:53.517Z"
+    "checkedAt": "2026-10-30T19:24:37.872Z",
+    "searchCheckedAt": "2026-10-30T19:24:37.872Z"
    }
   ]
  },
- "completeAt": "2026-10-30T12:57:53.517Z"
+ "completeAt": "2026-10-30T19:24:37.872Z"
 }
