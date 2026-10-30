@@ -2,6 +2,26 @@
  {
   "kind": "capability-changed",
   "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Android Nightly: in-build → absent",
+  "impact": "The evidence for this capability changed for Android Nightly. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "889ea449f41848af",
+  "detectedAt": "2026-10-29T23:58:27.116Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on Desktop Beta: in-build → absent",
   "impact": "The evidence for this capability changed for Desktop Beta. See the capability matrix for the supporting evidence.",
   "highlight": null,
@@ -57,6 +77,33 @@
   ],
   "id": "d6ed0c04058514a3",
   "detectedAt": "2026-10-29T19:39:48.458Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-10-29T13:48:54Z",
+  "title": "In Android Nightly 1.101.4: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the Android Nightly build 1.101.4. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "8af5131e6c4a13fd",
+  "detectedAt": "2026-10-29T23:58:27.116Z",
   "basis": "observed"
  },
  {
