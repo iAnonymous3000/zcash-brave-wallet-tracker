@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-30T05:52:07.321Z",
+ "retrievedAt": "2026-10-30T12:57:53.517Z",
  "data": {
   "gate3": {
    "commitSha": "13e35d9a98c9fae94d337a173d45f7c4032ee102",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/13e35d9a98c9fae94d337a173d45f7c4032ee102/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-10-30T05:52:07.321Z"
+   "checkedAt": "2026-10-30T12:57:53.517Z"
   },
   "studies": [
    {
@@ -112,7 +112,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.101.3 is outside the version range 139.1.81.129 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/1430e90baaeeef780c44fee8478c5a2659b47442/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/c73faf372c6d538701328ecfe37de851bb81d558/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -150,8 +150,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-10-29T23:58:27.116Z",
-    "verifiedAt": "2026-10-30T05:52:07.321Z"
+    "readAt": "2026-10-30T12:57:53.517Z",
+    "verifiedAt": "2026-10-30T12:57:53.517Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -251,7 +251,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.101.3 is outside the version range any – 139.1.81.128"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/1430e90baaeeef780c44fee8478c5a2659b47442/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/c73faf372c6d538701328ecfe37de851bb81d558/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "Disabled",
@@ -286,8 +286,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-10-29T23:58:27.116Z",
-    "verifiedAt": "2026-10-30T05:52:07.321Z"
+    "readAt": "2026-10-30T12:57:53.517Z",
+    "verifiedAt": "2026-10-30T12:57:53.517Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -385,7 +385,7 @@
       "reason": "156.1.101.3 is outside the version range 146.1.89.116 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/1430e90baaeeef780c44fee8478c5a2659b47442/studies/iOSWalletWebUIStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/c73faf372c6d538701328ecfe37de851bb81d558/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -419,8 +419,8 @@
       "IOS"
      ]
     },
-    "readAt": "2026-10-29T23:58:27.116Z",
-    "verifiedAt": "2026-10-30T05:52:07.321Z"
+    "readAt": "2026-10-30T12:57:53.517Z",
+    "verifiedAt": "2026-10-30T12:57:53.517Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -509,7 +509,16 @@
       "reason": "channel filter (RELEASE) excludes nightly; 156.1.101.3 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/1430e90baaeeef780c44fee8478c5a2659b47442/studies/iOSWalletWebUIStudy.json5",
+    "appliesUnknown": [
+     {
+      "build": "iOS release 1.97",
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.97",
+      "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/c73faf372c6d538701328ecfe37de851bb81d558/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -542,22 +551,13 @@
       "IOS"
      ]
     },
-    "readAt": "2026-10-29T23:58:27.116Z",
-    "verifiedAt": "2026-10-30T05:52:07.321Z",
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.97",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.97",
-      "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ]
+    "readAt": "2026-10-30T12:57:53.517Z",
+    "verifiedAt": "2026-10-30T12:57:53.517Z"
    }
   ],
-  "studiesCommit": "1430e90baaeeef780c44fee8478c5a2659b47442",
-  "studiesReadAt": "2026-10-30T05:52:07.321Z",
-  "studiesDigest": "8f82ef3324f4de4046d3ed7b5b573ea7faecfdfc0f26d7b9e9c64e3cfee0bc6f"
+  "studiesCommit": "c73faf372c6d538701328ecfe37de851bb81d558",
+  "studiesReadAt": "2026-10-30T12:57:53.517Z",
+  "studiesDigest": "f61f9bcf16197070ddc4ecb4cfdd144989c538778c4dce7a6ce5993e1eff74e4"
  },
- "completeAt": "2026-10-30T05:52:07.321Z"
+ "completeAt": "2026-10-30T12:57:53.517Z"
 }

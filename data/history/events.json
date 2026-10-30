@@ -14791,32 +14791,5 @@
   "id": "1776dfd365aa6634",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "qa-passed",
-  "sourceAt": "2025-10-30T10:21:59Z",
-  "title": "QA Pass-Win64: Disabling Zcash flag disables Cardano option in Add account modal",
-  "impact": "Brave QA marked this as passed on Win64. Other platforms are not covered by this label.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50001"
-  ],
-  "topic": "addresses",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50001",
-    "url": "https://github.com/brave/brave-browser/issues/50001"
-   }
-  ],
-  "evidence": [
-   "label \"QA Pass-Win64\" added at 2025-10-30T10:21:59Z"
-  ],
-  "id": "e2fc687a780d966a",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
