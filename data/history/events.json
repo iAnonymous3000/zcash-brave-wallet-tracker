@@ -889,6 +889,33 @@
   "basis": "backfill"
  },
  {
+  "kind": "in-build",
+  "sourceAt": "2026-10-21T09:09:05Z",
+  "title": "In Android Release 1.98.60: [Wallet] Hide Deposit/Bridge buttons for Zcash (Shielded Legacy) account",
+  "impact": "The merged code (brave-core#39977) is now part of the Android Release build 1.98.60. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#59103"
+  ],
+  "topic": "shielded",
+  "platforms": [
+   "android"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-browser#59103",
+    "url": "https://github.com/brave/brave-browser/issues/59103"
+   }
+  ],
+  "evidence": [
+   "in v1.98.47 (GitHub compare v1.98.47...60c8ff0b: behind); later builds of the same history include it"
+  ],
+  "id": "8ea04f36c6a3d4fd",
+  "detectedAt": "2026-10-30T23:49:14.297Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-10-20T20:40:58Z",
   "title": "Upstream: lightwalletd v0.6.0",

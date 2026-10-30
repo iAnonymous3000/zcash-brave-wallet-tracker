@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-10-30T19:24:37.872Z",
+ "retrievedAt": "2026-10-30T23:49:14.297Z",
  "data": {
   "releases": [
    {
@@ -15,6 +15,7 @@
     "assetPlatforms": [
      "android",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": true
@@ -1534,6 +1535,19 @@
      "windows"
     ],
     "prereleaseFlag": false
+   },
+   {
+    "tag": "v1.98.64",
+    "version": "1.98.64",
+    "channel": "release",
+    "name": "Release v1.98.64 (Chromium 156.0.8078.80)",
+    "chromium": "156.0.8078.80",
+    "publishedAt": "2026-10-30T21:25:24Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.98.64",
+    "assetPlatforms": [
+     "ios"
+    ],
+    "prereleaseFlag": true
    },
    {
     "tag": "v1.98.63",
@@ -7545,11 +7559,11 @@
    {
     "channel": "release",
     "platform": "all",
-    "version": "1.98.63",
-    "tag": "v1.98.63",
-    "publishedAt": "2026-10-30T05:50:37Z",
-    "basis": "GitHub release name \"Release v1.98.63 (Chromium 156.0.8078.80)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.98.63"
+    "version": "1.98.64",
+    "tag": "v1.98.64",
+    "publishedAt": "2026-10-30T21:25:24Z",
+    "basis": "GitHub release name \"Release v1.98.64 (Chromium 156.0.8078.80)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.98.64"
    },
    {
     "channel": "beta",
@@ -7572,5 +7586,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-10-30T19:24:37.872Z"
+ "completeAt": "2026-10-30T23:49:14.297Z"
 }
