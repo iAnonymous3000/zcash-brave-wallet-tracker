@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-31T05:43:51.990Z",
+ "retrievedAt": "2026-10-31T12:32:39.298Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3588,6 +3588,17 @@
      "checkedAt": "2026-10-16T18:05:27.894Z",
      "basis": "merged 2026-10-16T15:01Z, after v1.100.7 was published"
     }
+   },
+   "brave/brave-core#41066": {
+    "sha": "35cefbed93f197d96c3e6da4c5428104f0f61cf3",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.101.10",
+     "tag": "v1.101.10",
+     "checkedAt": "2026-10-31T12:32:39.298Z",
+     "basis": "merged 2026-10-31T08:16Z, after v1.101.10 was published"
+    }
    }
   },
   "targets": [
@@ -3669,5 +3680,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-10-31T05:43:51.990Z"
+ "completeAt": "2026-10-31T12:32:39.298Z"
 }

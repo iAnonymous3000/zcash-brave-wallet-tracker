@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-31T05:43:51.990Z",
+ "retrievedAt": "2026-10-31T12:32:39.298Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -39516,6 +39516,103 @@
      "body:orchard"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-core#41066": {
+    "id": "brave/brave-core#41066",
+    "repo": "brave/brave-core",
+    "number": 41066,
+    "kind": "pr",
+    "title": "[Wallet] Cleanup dapp origin for transaction",
+    "url": "https://github.com/brave/brave-core/pull/41066",
+    "state": "merged",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-10-29T17:09:58Z",
+    "updatedAt": "2026-10-31T08:17:10Z",
+    "closedAt": "2026-10-31T08:16:59Z",
+    "mergedAt": "2026-10-31T08:16:59Z",
+    "mergeCommitSha": "35cefbed93f197d96c3e6da4c5428104f0f61cf3",
+    "baseRef": "master",
+    "headRef": "wallet_tx_origin",
+    "author": "supermassive",
+    "assignees": [
+     "supermassive"
+    ],
+    "labels": [
+     "CI/storybook-url",
+     "feature/web3/wallet",
+     "feature/web3/wallet/core",
+     "puLL-Merge"
+    ],
+    "milestone": {
+     "title": "1.101.x - Nightly",
+     "dueOn": "2026-12-08T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "- Refactor Transaction origin so it actually represents dApp origin when set",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-10-29T17:10:23Z",
+      "actor": "github-actions",
+      "detail": "CI/storybook-url"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-29T17:10:23Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-29T17:10:23Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-29T17:11:05Z",
+      "actor": "github-actions",
+      "detail": "puLL-Merge"
+     },
+     {
+      "type": "merged",
+      "at": "2026-10-31T08:16:59Z",
+      "actor": "supermassive",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-10-31T08:16:59Z",
+      "actor": "supermassive",
+      "detail": null,
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-10-31T08:17:10Z",
+      "actor": "brave-builds",
+      "detail": "1.101.x - Nightly"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "path:components/brave_wallet/browser/zcash",
+     "search:zcash is:pr",
+     "search:zec is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [],
+    "retrievedAt": "2026-10-31T12:32:39.298Z"
    },
    "brave/brave-core#40325": {
     "id": "brave/brave-core#40325",
@@ -89690,7 +89787,7 @@
   },
   "pathHistory": {
    "components/brave_wallet/browser/zcash": {
-    "lastCommitAt": "2026-10-16T15:01:11Z",
+    "lastCommitAt": "2026-10-31T08:16:58Z",
     "prs": [
      19783,
      20351,
@@ -89852,7 +89949,8 @@
      39877,
      39979,
      40325,
-     40695
+     40695,
+     41066
     ],
     "commitsWithoutPr": 21,
     "shasWithoutPr": [
@@ -89940,9 +90038,8 @@
    "brave/brave-browser#20554": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
-   "brave/brave-core#41098": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40792": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#41066": "discovered via search:zcash is:pr, search:zec is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41098": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34308": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#40425": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -90029,13 +90126,13 @@
   "stats": {
    "discovered": 829,
    "searchHits": 1182,
-   "tracked": 793,
-   "direct": 626,
+   "tracked": 794,
+   "direct": 627,
    "mention": 64,
    "linked": 103,
-   "excluded": 139,
+   "excluded": 138,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-31T05:43:51.990Z"
+ "completeAt": "2026-10-31T12:32:39.298Z"
 }

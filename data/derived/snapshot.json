@@ -1,7 +1,17 @@
 {
- "at": "2026-10-31T05:43:51.990Z",
+ "at": "2026-10-31T12:32:39.298Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-core#41066": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": false
+  },
   "brave/brave-browser#59539": {
    "desktop/release": null,
    "android/release": null,

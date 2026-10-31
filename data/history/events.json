@@ -1,5 +1,32 @@
 [
  {
+  "kind": "pr-merged",
+  "sourceAt": "2026-10-31T08:16:59Z",
+  "title": "Merged: [Wallet] Cleanup dapp origin for transaction",
+  "impact": "Merged into brave-core master on 2026-10-31. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#41066"
+  ],
+  "topic": "transactions",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#41066",
+    "url": "https://github.com/brave/brave-core/pull/41066"
+   }
+  ],
+  "evidence": [
+   "merged 2026-10-31T08:16:59Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "07ea126f2ce74321",
+  "detectedAt": "2026-10-31T12:32:39.298Z",
+  "basis": "observed"
+ },
+ {
   "kind": "capability-changed",
   "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on Android Nightly: in-build → absent",
