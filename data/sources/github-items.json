@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-10-31T12:32:39.298Z",
+ "retrievedAt": "2026-10-31T18:35:07.494Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -39528,7 +39528,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-29T17:09:58Z",
-    "updatedAt": "2026-10-31T08:17:10Z",
+    "updatedAt": "2026-10-31T14:58:37Z",
     "closedAt": "2026-10-31T08:16:59Z",
     "mergedAt": "2026-10-31T08:16:59Z",
     "mergeCommitSha": "35cefbed93f197d96c3e6da4c5428104f0f61cf3",
@@ -39542,7 +39542,9 @@
      "CI/storybook-url",
      "feature/web3/wallet",
      "feature/web3/wallet/core",
-     "puLL-Merge"
+     "puLL-Merge",
+     "pr/risk/funds",
+     "pr/risk/security"
     ],
     "milestone": {
      "title": "1.101.x - Nightly",
@@ -39602,6 +39604,18 @@
       "at": "2026-10-31T08:17:10Z",
       "actor": "brave-builds",
       "detail": "1.101.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-31T14:58:36Z",
+      "actor": "netzenbot-reviewer",
+      "detail": "pr/risk/funds"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-10-31T14:58:36Z",
+      "actor": "netzenbot-reviewer",
+      "detail": "pr/risk/security"
      }
     ],
     "timelineTruncated": false,
@@ -39612,7 +39626,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-31T12:32:39.298Z"
+    "retrievedAt": "2026-10-31T18:35:07.494Z"
    },
    "brave/brave-core#40325": {
     "id": "brave/brave-core#40325",
@@ -90134,5 +90148,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-10-31T12:32:39.298Z"
+ "completeAt": "2026-10-31T18:35:07.494Z"
 }
