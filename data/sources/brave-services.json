@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-10-30T23:49:14.297Z",
+ "retrievedAt": "2026-10-31T05:43:51.990Z",
  "data": {
   "gate3": {
    "commitSha": "13e35d9a98c9fae94d337a173d45f7c4032ee102",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/13e35d9a98c9fae94d337a173d45f7c4032ee102/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-10-30T23:49:14.297Z"
+   "checkedAt": "2026-10-31T05:43:51.990Z"
   },
   "studies": [
    {
@@ -40,12 +40,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.98.62 (156.1.98.62) / 1.98.63 (156.1.98.63)",
+      "build": "Desktop release 1.98.63 (156.1.98.63)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.98.62",
-      "reason": "156.1.98.63 (Windows, Linux) and 156.1.98.62 (macOS) are outside the version range 139.1.81.129 – 152.*"
+      "version": "1.98.63",
+      "reason": "156.1.98.63 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android release 1.98.60 (156.1.98.60)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-10-30T12:57:53.517Z",
-    "verifiedAt": "2026-10-30T23:49:14.297Z"
+    "verifiedAt": "2026-10-31T05:43:51.990Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -179,12 +179,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.98.62 (156.1.98.62) / 1.98.63 (156.1.98.63)",
+      "build": "Desktop release 1.98.63 (156.1.98.63)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.98.62",
-      "reason": "156.1.98.63 (Windows, Linux) and 156.1.98.62 (macOS) are outside the version range any – 139.1.81.128"
+      "version": "1.98.63",
+      "reason": "156.1.98.63 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android release 1.98.60 (156.1.98.60)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-10-30T12:57:53.517Z",
-    "verifiedAt": "2026-10-30T23:49:14.297Z"
+    "verifiedAt": "2026-10-31T05:43:51.990Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -313,12 +313,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.98.62 (156.1.98.62) / 1.98.63 (156.1.98.63)",
+      "build": "Desktop release 1.98.63 (156.1.98.63)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.98.62",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 156.1.98.63 (Windows, Linux) and 156.1.98.62 (macOS) are outside the version range 146.1.89.116 – 152.*"
+      "version": "1.98.63",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 156.1.98.63 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android release 1.98.60 (156.1.98.60)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-10-30T12:57:53.517Z",
-    "verifiedAt": "2026-10-30T23:49:14.297Z"
+    "verifiedAt": "2026-10-31T05:43:51.990Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -445,12 +445,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.98.62 (156.1.98.62) / 1.98.63 (156.1.98.63)",
+      "build": "Desktop release 1.98.63 (156.1.98.63)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.98.62",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.98.63 (Windows, Linux) and 156.1.98.62 (macOS) are outside the version range 147.1.89.144 – 152.*"
+      "version": "1.98.63",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.98.63 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android release 1.98.60 (156.1.98.60)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-10-30T12:57:53.517Z",
-    "verifiedAt": "2026-10-30T23:49:14.297Z",
+    "verifiedAt": "2026-10-31T05:43:51.990Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "c73faf372c6d538701328ecfe37de851bb81d558",
-  "studiesReadAt": "2026-10-30T23:49:14.297Z",
+  "studiesReadAt": "2026-10-31T05:43:51.990Z",
   "studiesDigest": "f61f9bcf16197070ddc4ecb4cfdd144989c538778c4dce7a6ce5993e1eff74e4"
  },
- "completeAt": "2026-10-30T23:49:14.297Z"
+ "completeAt": "2026-10-31T05:43:51.990Z"
 }

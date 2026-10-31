@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-10-30T23:49:14.297Z",
+ "retrievedAt": "2026-10-31T05:43:51.990Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3600,9 +3600,9 @@
     ]
    },
    {
-    "tag": "v1.98.62",
-    "version": "1.98.62",
-    "publishedAt": "2026-10-28T03:43:08Z",
+    "tag": "v1.98.63",
+    "version": "1.98.63",
+    "publishedAt": "2026-10-30T05:50:37Z",
     "usedBy": [
      "desktop/release"
     ]
@@ -3669,5 +3669,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-10-30T23:49:14.297Z"
+ "completeAt": "2026-10-31T05:43:51.990Z"
 }
