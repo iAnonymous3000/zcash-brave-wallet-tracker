@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-deps",
  "schema": 1,
- "retrievedAt": "2026-10-31T23:25:16.492Z",
+ "retrievedAt": "2026-11-01T06:07:44.347Z",
  "data": {
   "snapshots": {
    "master": {
@@ -386,7 +386,7 @@
      "GetTreeState",
      "SendTransaction"
     ],
-    "retrievedAt": "2026-10-31T23:25:16.492Z",
+    "retrievedAt": "2026-11-01T06:07:44.347Z",
     "links": {
      "lockfile": "https://github.com/brave/brave-core/blob/5281b2736873bb16f0aee09778e5019c3faa4db9/third_party/rust/chromium_crates_io/Cargo.lock",
      "deps": "https://github.com/brave/brave-core/blob/5281b2736873bb16f0aee09778e5019c3faa4db9/DEPS",
@@ -11336,5 +11336,5 @@
    }
   }
  },
- "completeAt": "2026-10-31T23:25:16.492Z"
+ "completeAt": "2026-11-01T06:07:44.347Z"
 }
