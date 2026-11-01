@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-11-01T13:27:20.767Z",
+ "retrievedAt": "2026-11-01T18:58:12.094Z",
  "data": {
   "items": [
    {
@@ -17,22 +17,22 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.7.0.",
-    "metadataReadAt": "2026-11-01T13:27:20.767Z"
+    "metadataReadAt": "2026-11-01T18:58:12.094Z"
    },
    {
     "id": "watch-wallet-libraries",
     "topic": "wallet-libraries",
     "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
     "url": "https://github.com/zakura-core/wallet-libraries",
-    "updatedAt": "2026-11-01T03:11:37Z",
-    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: Deduplicate derive-deftly macro dependencies in the lockfile.",
+    "updatedAt": "2026-11-01T18:59:03Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: Cancel verification when a pull request closes.",
     "attribution": "Description from the repository README.",
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
-    "latest": " Last commit: Deduplicate derive-deftly macro dependencies in the lockfile.",
-    "metadataReadAt": "2026-11-01T13:27:20.767Z"
+    "latest": " Last commit: Cancel verification when a pull request closes.",
+    "metadataReadAt": "2026-11-01T18:58:12.094Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-01T13:27:20.767Z",
-    "searchCheckedAt": "2026-11-01T13:27:20.767Z"
+    "checkedAt": "2026-11-01T18:58:12.094Z",
+    "searchCheckedAt": "2026-11-01T18:58:12.094Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-11-01T13:27:20.767Z",
-    "searchCheckedAt": "2026-11-01T13:27:20.767Z"
+    "checkedAt": "2026-11-01T18:58:12.094Z",
+    "searchCheckedAt": "2026-11-01T18:58:12.094Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-01T13:27:20.767Z",
-    "searchCheckedAt": "2026-11-01T13:27:20.767Z"
+    "checkedAt": "2026-11-01T18:58:12.094Z",
+    "searchCheckedAt": "2026-11-01T18:58:12.094Z"
    }
   ]
  },
- "completeAt": "2026-11-01T13:27:20.767Z"
+ "completeAt": "2026-11-01T18:58:12.094Z"
 }
