@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-01T23:37:42.251Z",
+ "retrievedAt": "2026-11-02T06:06:06.236Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3592,7 +3592,12 @@
    "brave/brave-core#41066": {
     "sha": "35cefbed93f197d96c3e6da4c5428104f0f61cf3",
     "domain": "master",
-    "minIncluded": null,
+    "minIncluded": {
+     "version": "1.101.11",
+     "tag": "v1.101.11",
+     "checkedAt": "2026-11-02T06:06:06.236Z",
+     "basis": "GitHub compare v1.101.11...35cefbed: behind"
+    },
     "maxExcluded": {
      "version": "1.101.10",
      "tag": "v1.101.10",
@@ -3630,9 +3635,9 @@
     ]
    },
    {
-    "tag": "v1.100.45",
-    "version": "1.100.45",
-    "publishedAt": "2026-10-30T05:17:51Z",
+    "tag": "v1.100.46",
+    "version": "1.100.46",
+    "publishedAt": "2026-11-02T05:20:02Z",
     "usedBy": [
      "github/beta"
     ]
@@ -3662,16 +3667,16 @@
     ]
    },
    {
-    "tag": "v1.101.10",
-    "version": "1.101.10",
-    "publishedAt": "2026-10-30T17:21:35Z",
+    "tag": "v1.101.11",
+    "version": "1.101.11",
+    "publishedAt": "2026-11-02T01:16:04Z",
     "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 1
  },
- "completeAt": "2026-11-01T23:37:42.251Z"
+ "completeAt": "2026-11-02T06:06:06.236Z"
 }
