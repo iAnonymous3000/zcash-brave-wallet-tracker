@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-02T23:32:18.197Z",
+ "retrievedAt": "2026-11-03T06:49:45.215Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3635,9 +3635,9 @@
     ]
    },
    {
-    "tag": "v1.100.46",
-    "version": "1.100.46",
-    "publishedAt": "2026-11-02T05:20:02Z",
+    "tag": "v1.100.47",
+    "version": "1.100.47",
+    "publishedAt": "2026-11-03T05:33:37Z",
     "usedBy": [
      "github/beta"
     ]
@@ -3667,9 +3667,9 @@
     ]
    },
    {
-    "tag": "v1.101.15",
-    "version": "1.101.15",
-    "publishedAt": "2026-11-02T17:22:46Z",
+    "tag": "v1.101.17",
+    "version": "1.101.17",
+    "publishedAt": "2026-11-03T02:42:37Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3678,5 +3678,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-02T23:32:18.197Z"
+ "completeAt": "2026-11-03T06:49:45.215Z"
 }

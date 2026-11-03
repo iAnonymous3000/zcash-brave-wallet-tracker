@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-11-02T23:32:18.197Z",
+ "retrievedAt": "2026-11-03T06:49:45.215Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.8.0.",
-    "metadataReadAt": "2026-11-02T23:32:18.197Z"
+    "metadataReadAt": "2026-11-03T06:49:45.215Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: Forbid rand_distr in the fresh wallet production graph.",
-    "metadataReadAt": "2026-11-02T23:32:18.197Z"
+    "metadataReadAt": "2026-11-03T06:49:45.215Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-02T23:32:18.197Z",
-    "searchCheckedAt": "2026-11-02T23:32:18.197Z"
+    "checkedAt": "2026-11-03T06:49:45.215Z",
+    "searchCheckedAt": "2026-11-03T06:49:45.215Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-11-02T23:32:18.197Z",
-    "searchCheckedAt": "2026-11-02T23:32:18.197Z"
+    "checkedAt": "2026-11-03T06:49:45.215Z",
+    "searchCheckedAt": "2026-11-03T06:49:45.215Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-02T23:32:18.197Z",
-    "searchCheckedAt": "2026-11-02T23:32:18.197Z"
+    "checkedAt": "2026-11-03T06:49:45.215Z",
+    "searchCheckedAt": "2026-11-03T06:49:45.215Z"
    }
   ]
  },
- "completeAt": "2026-11-02T23:32:18.197Z"
+ "completeAt": "2026-11-03T06:49:45.215Z"
 }
