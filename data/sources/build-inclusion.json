@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-03T06:49:45.215Z",
+ "retrievedAt": "2026-11-03T16:16:59.525Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3604,6 +3604,22 @@
      "checkedAt": "2026-10-31T12:32:39.298Z",
      "basis": "merged 2026-10-31T08:16Z, after v1.101.10 was published"
     }
+   },
+   "brave/brave-core#40863": {
+    "sha": "373505e5cb7ac92663a3f973ae0f8ea2004da99a",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.101.18",
+     "tag": "v1.101.18",
+     "checkedAt": "2026-11-03T16:16:59.525Z",
+     "basis": "GitHub compare v1.101.18...373505e5: behind"
+    },
+    "maxExcluded": {
+     "version": "1.101.8",
+     "tag": "v1.101.8",
+     "checkedAt": "2026-11-03T16:16:59.525Z",
+     "basis": "merged 2026-11-03T10:21Z, after v1.101.8 was published"
+    }
    }
   },
   "targets": [
@@ -3667,16 +3683,16 @@
     ]
    },
    {
-    "tag": "v1.101.17",
-    "version": "1.101.17",
-    "publishedAt": "2026-11-03T02:42:37Z",
+    "tag": "v1.101.18",
+    "version": "1.101.18",
+    "publishedAt": "2026-11-03T13:36:40Z",
     "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 1
  },
- "completeAt": "2026-11-03T06:49:45.215Z"
+ "completeAt": "2026-11-03T16:16:59.525Z"
 }

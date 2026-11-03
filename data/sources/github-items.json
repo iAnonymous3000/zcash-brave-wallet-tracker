@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-03T06:49:45.215Z",
+ "retrievedAt": "2026-11-03T16:16:59.525Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -36873,12 +36873,12 @@
     "kind": "issue",
     "title": "Wallet - Remove vestigial default base cryptocurrency setting",
     "url": "https://github.com/brave/brave-browser/issues/59539",
-    "state": "open",
-    "stateReason": null,
+    "state": "closed",
+    "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-09-30T23:07:33Z",
-    "updatedAt": "2026-09-30T23:12:23Z",
-    "closedAt": null,
+    "updatedAt": "2026-11-03T10:22:02Z",
+    "closedAt": "2026-11-03T10:21:55Z",
     "mergedAt": null,
     "mergeCommitSha": null,
     "baseRef": null,
@@ -36894,7 +36894,11 @@
      "OS/Desktop",
      "feature/web3/wallet/core"
     ],
-    "milestone": null,
+    "milestone": {
+     "title": "1.101.x - Nightly",
+     "dueOn": "2026-12-08T00:00:00Z",
+     "state": "OPEN"
+    },
     "bodyExcerpt": "The \"Default base cryptocurrency\" dropdown in brave://settings/web3 is a no-op: the preference is stored and a change notification fires, but no feature (Buy, Swap, Portfolio) reads its value to pick a default asset — those screens use their own hardcoded defaults. It gives users the false impression the choice affects wallet behavior (reported by community in #51665, where selecting a value appears to do nothing). We should remove the setting and its plumbing rather than…",
     "bodyRefs": [
      "brave/brave-browser#51665"
@@ -37052,7 +37056,20 @@
       "actor": "MarkusNuo",
       "detail": "PullRequest",
       "ref": "brave/brave-core#40863",
-      "willClose": true
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-03T10:21:56Z",
+      "actor": "supermassive",
+      "detail": "completed",
+      "ref": "brave/brave-core#40863"
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-03T10:22:02Z",
+      "actor": "brave-builds",
+      "detail": "1.101.x - Nightly"
      }
     ],
     "timelineTruncated": false,
@@ -37063,7 +37080,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-10-16T18:05:27.894Z"
+    "retrievedAt": "2026-11-03T16:16:59.525Z"
    },
    "brave/brave-browser#54171": {
     "id": "brave/brave-browser#54171",
@@ -78756,20 +78773,24 @@
     "kind": "pr",
     "title": "[Wallet] Remove default base cryptocurrency setting",
     "url": "https://github.com/brave/brave-core/pull/40863",
-    "state": "open",
+    "state": "merged",
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-16T08:45:02Z",
-    "updatedAt": "2026-11-02T12:45:22Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
+    "updatedAt": "2026-11-03T12:06:00Z",
+    "closedAt": "2026-11-03T10:21:53Z",
+    "mergedAt": "2026-11-03T10:21:53Z",
+    "mergeCommitSha": "373505e5cb7ac92663a3f973ae0f8ea2004da99a",
     "baseRef": "master",
     "headRef": "remove-default-base-cryptocurrency",
     "author": "MarkusNuo",
     "assignees": [],
     "labels": [],
-    "milestone": null,
+    "milestone": {
+     "title": "1.101.x - Nightly",
+     "dueOn": "2026-12-08T00:00:00Z",
+     "state": "OPEN"
+    },
     "bodyExcerpt": "Resolves https://github.com/brave/brave-browser/issues/59539 The \"Default base cryptocurrency\" setting in brave://settings/web3 had no effect: no wallet client used the stored value. This removes the setting, its mojom API, the change event and the UI plumbing on desktop, Android and iOS. The old pref is cleared from existing profiles on startup. Checked locally (Windows): build, presubmit, gn_check, BraveWalletServiceUnitTest, wallet prefs/utils/migration unit tests and…",
     "bodyRefs": [
      "brave/brave-browser#59539",
@@ -78803,6 +78824,25 @@
       "detail": "PullRequest",
       "ref": "brave/brave-core#40959",
       "willClose": false
+     },
+     {
+      "type": "merged",
+      "at": "2026-11-03T10:21:53Z",
+      "actor": "supermassive",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-03T10:21:53Z",
+      "actor": "supermassive",
+      "detail": null,
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-03T10:21:58Z",
+      "actor": "brave-builds",
+      "detail": "1.101.x - Nightly"
      }
     ],
     "timelineTruncated": false,
@@ -78811,7 +78851,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-02T15:55:56.301Z"
+    "retrievedAt": "2026-11-03T16:16:59.525Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -90148,5 +90188,5 @@
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-11-03T06:49:45.215Z"
+ "completeAt": "2026-11-03T16:16:59.525Z"
 }
