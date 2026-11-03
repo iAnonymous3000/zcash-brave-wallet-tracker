@@ -1,5 +1,159 @@
 [
  {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T20:38:44Z",
+  "title": "New issue: Weak unit tests in zcash_decoder_unittest.cc",
+  "impact": "Opened in brave-browser#60520. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60520"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60520",
+    "url": "https://github.com/brave/brave-browser/issues/60520"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T20:38:44Z"
+  ],
+  "id": "df9190ef13f46e0f",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T20:26:38Z",
+  "title": "New issue: Weak unit tests in zcash_create_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60514. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60514"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60514",
+    "url": "https://github.com/brave/brave-browser/issues/60514"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T20:26:38Z"
+  ],
+  "id": "7c7e9515a0b0603d",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T20:24:18Z",
+  "title": "New issue: Weak unit tests in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60513. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60513"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60513",
+    "url": "https://github.com/brave/brave-browser/issues/60513"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T20:24:18Z"
+  ],
+  "id": "ec3cc5fbf4bdce5f",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T20:21:07Z",
+  "title": "New issue: Weak unit tests in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60512. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60512"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60512",
+    "url": "https://github.com/brave/brave-browser/issues/60512"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T20:21:07Z"
+  ],
+  "id": "8bb3e521ee7f39c3",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-03T18:34:30Z",
+  "title": "In Android Nightly 1.101.21: Wallet - Remove vestigial default base cryptocurrency setting",
+  "impact": "The merged code (brave-core#40863) is now part of the Android Nightly build 1.101.21. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#59539"
+  ],
+  "topic": "general",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#59539",
+    "url": "https://github.com/brave/brave-browser/issues/59539"
+   }
+  ],
+  "evidence": [
+   "in v1.101.18 (GitHub compare v1.101.18...373505e5: behind); later builds of the same history include it"
+  ],
+  "id": "bb01b114d59d04dc",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-03T18:34:30Z",
+  "title": "In Android Nightly 1.101.21: [Wallet] Cleanup dapp origin for transaction",
+  "impact": "The merged code (brave-core#41066) is now part of the Android Nightly build 1.101.21. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#41066"
+  ],
+  "topic": "transactions",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#41066",
+    "url": "https://github.com/brave/brave-core/pull/41066"
+   }
+  ],
+  "evidence": [
+   "in v1.101.11 (GitHub compare v1.101.11...35cefbed: behind); later builds of the same history include it"
+  ],
+  "id": "f897b5a95a831f12",
+  "detectedAt": "2026-11-03T21:51:01.326Z",
+  "basis": "observed"
+ },
+ {
   "kind": "pr-merged",
   "sourceAt": "2026-10-31T08:16:59Z",
   "title": "Merged: [Wallet] Cleanup dapp origin for transaction",

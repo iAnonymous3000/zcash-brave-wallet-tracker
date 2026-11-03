@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-03T16:16:59.525Z",
+ "retrievedAt": "2026-11-03T21:51:01.326Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -27092,6 +27092,358 @@
      "title:zcash"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-browser#60520": {
+    "id": "brave/brave-browser#60520",
+    "repo": "brave/brave-browser",
+    "number": 60520,
+    "kind": "issue",
+    "title": "Weak unit tests in zcash_decoder_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60520",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-03T20:38:44Z",
+    "updatedAt": "2026-11-03T20:38:44Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/services/brave_wallet/zcash/zcash_decoder_unittest.cc would keep passing if the behavior they cover broke. ZCashDecoderUnitTest.ParseGetAddressUtxos (high severity) L209 - Why it's weak: ParseGetAddressUtxos builds input UTXOs with only address, txid and valuezat and asserts only those fields, so the index, script and height mappings (used to build transparent transaction inputs) are not tested. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:38:45Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:38:46Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:38:46Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:38:46Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:38:47Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_decoder_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-03T21:51:01.326Z"
+   },
+   "brave/brave-browser#60514": {
+    "id": "brave/brave-browser#60514",
+    "repo": "brave/brave-browser",
+    "number": 60514,
+    "kind": "issue",
+    "title": "Weak unit tests in zcash_create_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60514",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-03T20:26:38Z",
+    "updatedAt": "2026-11-03T20:26:38Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_transparent_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateTransparentTransactionTaskTest.TransactionCreated, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_Testnet, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_u64Check, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_MaxFunds (high severity) L128 - Why it's weak:…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:39Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:39Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:40Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:40Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:26:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-03T21:51:01.326Z"
+   },
+   "brave/brave-browser#60513": {
+    "id": "brave/brave-browser#60513",
+    "repo": "brave/brave-browser",
+    "number": 60513,
+    "kind": "issue",
+    "title": "Weak unit tests in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60513",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-03T20:24:18Z",
+    "updatedAt": "2026-11-03T20:24:18Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_transparent_to_ironwood_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateTransparentToIronwoodTransactionTaskTest.TransactionCreated, ZCashCreateTransparentToIronwoodTransactionTaskTest.FeeCorrectness (high severity) L129 - Why it's weak: Transparent-to-Ironwood task tests check the change amount but never the change output's address or script_pubkey, and the…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:19Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:19Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:20Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:20Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:20Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:24:20Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_transparent_to_ironwood_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-03T21:51:01.326Z"
+   },
+   "brave/brave-browser#60512": {
+    "id": "brave/brave-browser#60512",
+    "repo": "brave/brave-browser",
+    "number": 60512,
+    "kind": "issue",
+    "title": "Weak unit tests in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60512",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-03T20:21:07Z",
+    "updatedAt": "2026-11-03T20:21:07Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_ironwood_to_transparent_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateIronwoodToTransparentTransactionTaskTest.TransactionCreated (high severity) L134 - Why it's weak: No test checks the Ironwood change output's address for Ironwood-to-transparent sends (the task test checks only its value and the golden signing test has zero change), nor tx.to()/tx.amount(), so…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:09Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:10Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:10Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:10Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:10Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:11Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T20:21:11Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_ironwood_to_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-03T21:51:01.326Z"
    },
    "brave/brave-browser#59103": {
     "id": "brave/brave-browser#59103",
@@ -90178,15 +90530,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 829,
-   "searchHits": 1182,
-   "tracked": 794,
-   "direct": 627,
+   "discovered": 833,
+   "searchHits": 1190,
+   "tracked": 798,
+   "direct": 631,
    "mention": 64,
    "linked": 103,
    "excluded": 138,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-11-03T16:16:59.525Z"
+ "completeAt": "2026-11-03T21:51:01.326Z"
 }
