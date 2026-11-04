@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-04T02:21:54.326Z",
+ "retrievedAt": "2026-11-04T12:10:25.436Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-04T02:21:54.326Z"
+   "checkedAt": "2026-11-04T12:10:25.436Z"
   },
   "studies": [
    {
@@ -64,12 +64,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.48 (157.1.100.48)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "156.1.100.44 is outside the version range 139.1.81.129 – 152.*"
+      "reason": "157.1.100.48 (macOS) and 156.1.100.44 (Windows, Linux) are outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android beta 1.100.44 (156.1.100.44)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T02:21:54.326Z"
+    "verifiedAt": "2026-11-04T12:10:25.436Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -203,12 +203,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.48 (157.1.100.48)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "156.1.100.44 is outside the version range any – 139.1.81.128"
+      "reason": "157.1.100.48 (macOS) and 156.1.100.44 (Windows, Linux) are outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android beta 1.100.44 (156.1.100.44)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T02:21:54.326Z"
+    "verifiedAt": "2026-11-04T12:10:25.436Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -337,12 +337,12 @@
       "reason": "channel filter (NIGHTLY, BETA) excludes release"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.48 (157.1.100.48)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 156.1.100.44 is outside the version range 146.1.89.116 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.100.48 (macOS) and 156.1.100.44 (Windows, Linux) are outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android beta 1.100.44 (156.1.100.44)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T02:21:54.326Z"
+    "verifiedAt": "2026-11-04T12:10:25.436Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -461,12 +461,12 @@
       "reason": "platform filter (IOS) excludes Android; 156.1.98.63 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.48 (157.1.100.48)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 156.1.100.44 is outside the version range 147.1.89.144 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 157.1.100.48 (macOS) and 156.1.100.44 (Windows, Linux) are outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android beta 1.100.44 (156.1.100.44)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T02:21:54.326Z",
+    "verifiedAt": "2026-11-04T12:10:25.436Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "8113371c5133dec2488b6b823e9cd0ed3a3e0549",
-  "studiesReadAt": "2026-11-04T02:21:54.326Z",
+  "studiesReadAt": "2026-11-04T12:10:25.436Z",
   "studiesDigest": "8e750d6be0ba113839ba9f6ea915aa89f01b81c2bd0b61affd3faece1efe227a"
  },
- "completeAt": "2026-11-04T02:21:54.326Z"
+ "completeAt": "2026-11-04T12:10:25.436Z"
 }
