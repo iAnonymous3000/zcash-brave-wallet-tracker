@@ -1,5 +1,59 @@
 [
  {
+  "kind": "in-build",
+  "sourceAt": "2026-11-04T13:30:26Z",
+  "title": "In iOS Nightly 1.101.23: [Wallet] Cleanup dapp origin for transaction",
+  "impact": "The merged code (brave-core#41066) is now part of the iOS Nightly build 1.101.23. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#41066"
+  ],
+  "topic": "transactions",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#41066",
+    "url": "https://github.com/brave/brave-core/pull/41066"
+   }
+  ],
+  "evidence": [
+   "in v1.101.11 (GitHub compare v1.101.11...35cefbed: behind); later builds of the same history include it"
+  ],
+  "id": "2edabf91402e8064",
+  "detectedAt": "2026-11-04T19:47:48.043Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-04T13:30:26Z",
+  "title": "In iOS Nightly 1.101.23: Wallet - Remove vestigial default base cryptocurrency setting",
+  "impact": "The merged code (brave-core#40863) is now part of the iOS Nightly build 1.101.23. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#59539"
+  ],
+  "topic": "general",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#59539",
+    "url": "https://github.com/brave/brave-browser/issues/59539"
+   }
+  ],
+  "evidence": [
+   "in v1.101.18 (GitHub compare v1.101.18...373505e5: behind); later builds of the same history include it"
+  ],
+  "id": "37cf4ecd4df8e49c",
+  "detectedAt": "2026-11-04T19:47:48.043Z",
+  "basis": "observed"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-11-04T01:30:56Z",
   "title": "New bug report: Scanned Orchard/Ironwood notes are stored with note_version 0 instead of 2/3",

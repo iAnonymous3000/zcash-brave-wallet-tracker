@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-04T12:10:25.436Z",
+ "retrievedAt": "2026-11-04T19:47:48.043Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-04T12:10:25.436Z"
+   "checkedAt": "2026-11-04T19:47:48.043Z"
   },
   "studies": [
    {
@@ -88,12 +88,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.100.44 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18)",
+      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18) / 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.101.3",
-      "reason": "157.1.101.18 (Windows, macOS, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      "reason": "157.1.101.23 (Windows, macOS arm64, Linux arm64) and 157.1.101.18 (macOS x64) and 156.1.101.3 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android nightly 1.101.21 (157.1.101.21)",
@@ -104,12 +104,12 @@
       "reason": "157.1.101.21 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.8 (157.1.101.8)",
+      "build": "iOS nightly 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.8",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.101.8 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.101.23",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.101.23 is outside the version range 139.1.81.129 – 152.*"
      }
     ],
     "url": "https://github.com/brave/brave-variations/blob/8113371c5133dec2488b6b823e9cd0ed3a3e0549/studies/ZCashStudy.json5",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T12:10:25.436Z"
+    "verifiedAt": "2026-11-04T19:47:48.043Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -227,12 +227,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.100.44 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18)",
+      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18) / 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.101.3",
-      "reason": "157.1.101.18 (Windows, macOS, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range any – 139.1.81.128"
+      "reason": "157.1.101.23 (Windows, macOS arm64, Linux arm64) and 157.1.101.18 (macOS x64) and 156.1.101.3 (Linux x64) are outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android nightly 1.101.21 (157.1.101.21)",
@@ -243,12 +243,12 @@
       "reason": "157.1.101.21 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "iOS nightly 1.101.8 (157.1.101.8)",
+      "build": "iOS nightly 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.8",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.101.8 is outside the version range any – 139.1.81.128"
+      "version": "1.101.23",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.101.23 is outside the version range any – 139.1.81.128"
      }
     ],
     "url": "https://github.com/brave/brave-variations/blob/8113371c5133dec2488b6b823e9cd0ed3a3e0549/studies/ZCashStudy.json5",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T12:10:25.436Z"
+    "verifiedAt": "2026-11-04T19:47:48.043Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -361,12 +361,12 @@
       "reason": "156.1.100.44 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18)",
+      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18) / 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.101.3",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.101.18 (Windows, macOS, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.101.23 (Windows, macOS arm64, Linux arm64) and 157.1.101.18 (macOS x64) and 156.1.101.3 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android nightly 1.101.21 (157.1.101.21)",
@@ -377,12 +377,12 @@
       "reason": "platform filter (IOS) excludes Android; 157.1.101.21 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.8 (157.1.101.8)",
+      "build": "iOS nightly 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.8",
-      "reason": "157.1.101.8 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.101.23",
+      "reason": "157.1.101.23 is outside the version range 146.1.89.116 – 152.*"
      }
     ],
     "url": "https://github.com/brave/brave-variations/blob/8113371c5133dec2488b6b823e9cd0ed3a3e0549/studies/iOSWalletWebUIStudy.json5",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T12:10:25.436Z"
+    "verifiedAt": "2026-11-04T19:47:48.043Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -485,12 +485,12 @@
       "reason": "channel filter (RELEASE) excludes beta; 156.1.100.44 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18)",
+      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.18 (157.1.101.18) / 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.101.3",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 157.1.101.18 (Windows, macOS, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 157.1.101.23 (Windows, macOS arm64, Linux arm64) and 157.1.101.18 (macOS x64) and 156.1.101.3 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android nightly 1.101.21 (157.1.101.21)",
@@ -501,12 +501,12 @@
       "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes nightly; 157.1.101.21 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.8 (157.1.101.8)",
+      "build": "iOS nightly 1.101.23 (157.1.101.23)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.8",
-      "reason": "channel filter (RELEASE) excludes nightly; 157.1.101.8 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.101.23",
+      "reason": "channel filter (RELEASE) excludes nightly; 157.1.101.23 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
     "url": "https://github.com/brave/brave-variations/blob/8113371c5133dec2488b6b823e9cd0ed3a3e0549/studies/iOSWalletWebUIStudy.json5",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-11-03T21:51:01.326Z",
-    "verifiedAt": "2026-11-04T12:10:25.436Z",
+    "verifiedAt": "2026-11-04T19:47:48.043Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.97",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "8113371c5133dec2488b6b823e9cd0ed3a3e0549",
-  "studiesReadAt": "2026-11-04T12:10:25.436Z",
+  "studiesReadAt": "2026-11-04T19:47:48.043Z",
   "studiesDigest": "8e750d6be0ba113839ba9f6ea915aa89f01b81c2bd0b61affd3faece1efe227a"
  },
- "completeAt": "2026-11-04T12:10:25.436Z"
+ "completeAt": "2026-11-04T19:47:48.043Z"
 }

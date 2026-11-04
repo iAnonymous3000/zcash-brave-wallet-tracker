@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-04T12:10:25.436Z",
+ "retrievedAt": "2026-11-04T19:47:48.043Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3633,9 +3633,9 @@
     ]
    },
    {
-    "tag": "v1.99.54",
-    "version": "1.99.54",
-    "publishedAt": "2026-11-03T22:13:59Z",
+    "tag": "v1.99.55",
+    "version": "1.99.55",
+    "publishedAt": "2026-11-04T18:56:17Z",
     "usedBy": [
      "github/release"
     ]
@@ -3667,14 +3667,6 @@
     ]
    },
    {
-    "tag": "v1.101.8",
-    "version": "1.101.8",
-    "publishedAt": "2026-10-30T13:26:56Z",
-    "usedBy": [
-     "ios/nightly"
-    ]
-   },
-   {
     "tag": "v1.101.21",
     "version": "1.101.21",
     "publishedAt": "2026-11-03T18:34:30Z",
@@ -3683,9 +3675,17 @@
     ]
    },
    {
-    "tag": "v1.101.22",
-    "version": "1.101.22",
-    "publishedAt": "2026-11-04T01:24:41Z",
+    "tag": "v1.101.23",
+    "version": "1.101.23",
+    "publishedAt": "2026-11-04T13:30:26Z",
+    "usedBy": [
+     "ios/nightly"
+    ]
+   },
+   {
+    "tag": "v1.101.25",
+    "version": "1.101.25",
+    "publishedAt": "2026-11-04T17:38:50Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3694,5 +3694,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-04T12:10:25.436Z"
+ "completeAt": "2026-11-04T19:47:48.043Z"
 }

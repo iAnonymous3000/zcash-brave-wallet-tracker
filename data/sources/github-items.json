@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-04T12:10:25.436Z",
+ "retrievedAt": "2026-11-04T19:47:48.043Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -91999,6 +91999,7 @@
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#40792": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41231": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41098": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -92085,15 +92086,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 852,
-   "searchHits": 1229,
+   "discovered": 853,
+   "searchHits": 1230,
    "tracked": 816,
    "direct": 644,
    "mention": 69,
    "linked": 103,
-   "excluded": 139,
+   "excluded": 140,
    "mentionsDropped": 30
   }
  },
- "completeAt": "2026-11-04T12:10:25.436Z"
+ "completeAt": "2026-11-04T19:47:48.043Z"
 }
