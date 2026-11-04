@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-11-03T21:51:01.326Z",
+ "generatedAt": "2026-11-04T02:21:54.326Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -144,6 +144,2166 @@
   "1.101": "Nightly"
  },
  "groups": [
+  {
+   "id": "brave/brave-browser#60900",
+   "lead": "brave/brave-browser#60900",
+   "title": "gRPC stream parser never emits a trailing zero-length message",
+   "url": "https://github.com/brave/brave-browser/issues/60900",
+   "topic": {
+    "id": "sync",
+    "name": "Sync, scanning & storage"
+   },
+   "relevance": "mention",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60900"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "bug",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": null,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-04T01:31:32Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60898",
+   "lead": "brave/brave-browser#60898",
+   "title": "Scanned Orchard/Ironwood notes are stored with note_version 0 instead of 2/3",
+   "url": "https://github.com/brave/brave-browser/issues/60898",
+   "topic": {
+    "id": "ironwood",
+    "name": "Ironwood pool & migration"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60898"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "bug",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": null,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-04T01:30:56Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60897",
+   "lead": "brave/brave-browser#60897",
+   "title": "UpdateSubtreeRoots stores the block hash as root_hash, and its upsert fallback is dead",
+   "url": "https://github.com/brave/brave-browser/issues/60897",
+   "topic": {
+    "id": "sync",
+    "name": "Sync, scanning & storage"
+   },
+   "relevance": "mention",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60897"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "bug",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": null,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-04T01:29:57Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60850",
+   "lead": "brave/brave-browser#60850",
+   "title": "Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60850",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60850"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T23:55:42Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60839",
+   "lead": "brave/brave-browser#60839",
+   "title": "Weak unit tests in permission_utils_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60839",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "mention",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60839"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T23:50:55Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60699",
+   "lead": "brave/brave-browser#60699",
+   "title": "Weak unit tests in zcash_wallet_service_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60699",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60699"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:47:53Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60698",
+   "lead": "brave/brave-browser#60698",
+   "title": "Weak unit tests in zcash_verify_chain_state_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60698",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60698"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:47:41Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60697",
+   "lead": "brave/brave-browser#60697",
+   "title": "Weak unit tests in zcash_tx_meta_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60697",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60697"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:47:27Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60696",
+   "lead": "brave/brave-browser#60696",
+   "title": "Weak unit tests in zcash_transaction_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60696",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60696"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:47:05Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60695",
+   "lead": "brave/brave-browser#60695",
+   "title": "Weak unit tests in zcash_shield_sync_service_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60695",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60695"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:46:45Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60694",
+   "lead": "brave/brave-browser#60694",
+   "title": "Weak unit tests in zcash_resolve_transaction_status_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60694",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60694"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:46:30Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60693",
+   "lead": "brave/brave-browser#60693",
+   "title": "Weak unit tests in zcash_grpc_utils_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60693",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60693"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:46:13Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60692",
+   "lead": "brave/brave-browser#60692",
+   "title": "Weak unit tests in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60692",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60692"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:44:56Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60691",
+   "lead": "brave/brave-browser#60691",
+   "title": "Weak unit tests in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60691",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60691"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:44:41Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60690",
+   "lead": "brave/brave-browser#60690",
+   "title": "Weak unit tests in zcash_blocks_batch_scan_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60690",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60690"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:44:24Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60689",
+   "lead": "brave/brave-browser#60689",
+   "title": "Weak unit tests in zcash_auto_sync_manager_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60689",
+   "topic": {
+    "id": "deps",
+    "name": "Dependencies & Rust crates"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60689"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:44:07Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60671",
+   "lead": "brave/brave-browser#60671",
+   "title": "Weak unit tests in orchard_sync_state_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60671",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "mention",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60671"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:39:55Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
+  {
+   "id": "brave/brave-browser#60670",
+   "lead": "brave/brave-browser#60670",
+   "title": "Weak unit tests in orchard_storage_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60670",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "mention",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#60670"
+    ],
+    "masterPrs": [],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "open",
+     "reason": null,
+     "label": "Open"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "none",
+     "mergedAt": null,
+     "prs": []
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.98.63",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.100.44",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.101.3",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.101.21",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.101.8",
+      "included": null,
+      "via": null,
+      "basis": "no merged PR is linked, so presence in this build is unknown"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [],
+    "owners": [],
+    "authors": [],
+    "lastUpdated": "2026-11-03T22:39:40Z",
+    "regression": false,
+    "security": false,
+    "stage": "open",
+    "stageLabel": "Open"
+   }
+  },
   {
    "id": "brave/brave-browser#60520",
    "lead": "brave/brave-browser#60520",
@@ -73109,6 +75269,766 @@
    "retrievedAt": "2026-10-08T15:20:14.214Z",
    "timelineCount": 4
   },
+  "brave/brave-browser#60900": {
+   "id": "brave/brave-browser#60900",
+   "repo": "brave/brave-browser",
+   "number": 60900,
+   "kind": "issue",
+   "title": "gRPC stream parser never emits a trailing zero-length message",
+   "url": "https://github.com/brave/brave-browser/issues/60900",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-04T01:31:32Z",
+   "updatedAt": "2026-11-04T01:31:32Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "bug",
+    "feature/web3/wallet"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "components/brave_wallet/browser/zcash/zcash_grpc_utils.cc:34 OnDataReceived only parses a 5-byte frame header when data_view.size() > kGrpcHeaderSize. A frame with a zero-length body is exactly 5 bytes, so when it's the last thing in the buffer it's never passed to ProcessMessage; it's only processed if more bytes arrive after it. >= is the correct bound, since a zero-length protobuf is a valid all-defaults message. When it happens: Only via lightwalletd responses on the…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:lightwalletd",
+    "search:zcash"
+   ],
+   "relevance": "mention",
+   "matchedTerms": [
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 2
+  },
+  "brave/brave-browser#60898": {
+   "id": "brave/brave-browser#60898",
+   "repo": "brave/brave-browser",
+   "number": 60898,
+   "kind": "issue",
+   "title": "Scanned Orchard/Ironwood notes are stored with note_version 0 instead of 2/3",
+   "url": "https://github.com/brave/brave-browser/issues/60898",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-04T01:30:56Z",
+   "updatedAt": "2026-11-04T01:30:56Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "bug",
+    "feature/web3/wallet"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "components/brave_wallet/browser/zcash/rust/orchard_decoded_blocks_bundle_impl.cc:30 GetDiscoveredNotes builds OrchardNote without setting note_version, so it keeps the struct default of 0 (zcash_utils.h:154). OrchardBlockScanner hands those notes to UpdateNotes, which explicitly binds note.note_version, so the schema DEFAULT (2 for orchard, 3 for ironwood) never applies. GetUnspentNotes reads 0 back, and ZCashTransaction serialization writes \"0\", even though FromValue…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet",
+    "search:shielded wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:ironwood",
+    "title:orchard",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 2
+  },
+  "brave/brave-browser#60897": {
+   "id": "brave/brave-browser#60897",
+   "repo": "brave/brave-browser",
+   "number": 60897,
+   "kind": "issue",
+   "title": "UpdateSubtreeRoots stores the block hash as root_hash, and its upsert fallback is dead",
+   "url": "https://github.com/brave/brave-browser/issues/60897",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-04T01:29:57Z",
+   "updatedAt": "2026-11-04T01:29:57Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "bug",
+    "feature/web3/wallet"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "components/brave_wallet/browser/internal/orchard_storage/orchard_storage.cc:1013 SubtreeRoot has separate root_hash and complete_block_hash fields (zcash_decoder.mojom:77-81). UpdateSubtreeRoots size-checks and binds complete_block_hash into the shard_tree.root_hash column for both the INSERT and the UPDATE, and roots[i]->root_hash is never used. The conflict fallback compares database_.GetErrorCode() with 19, but sql::Database opens with SQLITE_OPEN_EXRESCODE and…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:lightwalletd",
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "mention",
+   "matchedTerms": [
+    "body:zcash_decoder"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 2
+  },
+  "brave/brave-browser#60850": {
+   "id": "brave/brave-browser#60850",
+   "repo": "brave/brave-browser",
+   "number": 60850,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60850",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T23:55:42Z",
+   "updatedAt": "2026-11-03T23:55:42Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/weak-assertions"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_transparent_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated (low severity) L132 - Why it's weak: Orchard-to-transparent task tests never assert the transaction's amount()/to() metadata that feeds the tx-history/confirmation UI; the signed outputs themselves are covered by the UnshieldFunds golden…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_create_orchard_to_transparent_transaction_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60699": {
+   "id": "brave/brave-browser#60699",
+   "repo": "brave/brave-browser",
+   "number": 60699,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_wallet_service_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60699",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:47:53Z",
+   "updatedAt": "2026-11-03T22:47:53Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/false-positive",
+    "tests/weak-assertions",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_wallet_service_unittest.cc would keep passing if the behavior they cover broke. ZCashWalletServiceUnitTest.GetTransactionType_IronwoodEnabled (medium severity) L1763 - Why it's weak: No test sends from the Ironwood pool to the account's own next transparent receive address, so the kUnshieldingIronwood result is never checked. Returning kUnshieldingOrchard there would route the send through the Orchard-to-transparent…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet",
+    "search:shielded wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_wallet_service_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 8
+  },
+  "brave/brave-browser#60698": {
+   "id": "brave/brave-browser#60698",
+   "repo": "brave/brave-browser",
+   "number": 60698,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_verify_chain_state_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60698",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:47:41Z",
+   "updatedAt": "2026-11-03T22:47:41Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_verify_chain_state_task_unittest.cc would keep passing if the behavior they cover broke. ZCashVerifyChainStateTaskTest.NoReorg (medium severity) L135 - Why it's weak: No ZCashVerifyChainStateTask or shield-sync test covers chain tip equal to the latest scanned block with a matching hash (the normal fully-synced case); every tip==latest test uses a mismatching or failing tree state, so changing…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_verify_chain_state_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60697": {
+   "id": "brave/brave-browser#60697",
+   "repo": "brave/brave-browser",
+   "number": 60697,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_tx_meta_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60697",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:47:27Z",
+   "updatedAt": "2026-11-03T22:47:27Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/false-positive",
+    "tests/weak-assertions"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_tx_meta_unittest.cc would keep passing if the behavior they cover broke. ZCashTxMeta.ToTransactionInfo_TransparentInputs, ZCashTxMeta.ToTransactionInfo_ShieldedInputs (medium severity) L18 - Why it's weak: The ZCashTxMeta::ToTransactionInfo tests never set a memo or check ZecTxData.memo / TransactionInfo.effective_recipient, so dropping the memo (shown on the send confirmation screen) or the effective recipient from…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_tx_meta_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
+  },
+  "brave/brave-browser#60696": {
+   "id": "brave/brave-browser#60696",
+   "repo": "brave/brave-browser",
+   "number": 60696,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_transaction_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60696",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:47:05Z",
+   "updatedAt": "2026-11-03T22:47:05Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/weak-assertions",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_transaction_unittest.cc would keep passing if the behavior they cover broke. ZCashTransaction.TxInput_FromRpcUtxo (medium severity) L62 - Why it's weak: TxInput_FromRpcUtxo uses UTXO index 0 (the default) and never checks script_pub_key; since every ZCash test UTXO has index 0, dropping the outpoint index copy in FromRpcUtxo passes all tests. - Change that would still pass: Delete result.utxo_outpoint.index =…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:lightwalletd",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_transaction_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
+  },
+  "brave/brave-browser#60695": {
+   "id": "brave/brave-browser#60695",
+   "repo": "brave/brave-browser",
+   "number": 60695,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_shield_sync_service_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60695",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:46:45Z",
+   "updatedAt": "2026-11-03T22:46:45Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_shield_sync_service_unittest.cc would keep passing if the behavior they cover broke. ZCashShieldSyncServiceTest.ScanBlocks, ZCashShieldSyncServiceTest.ScanBlocks_IronwoodEnabled, ZCashShieldSyncServiceTest.ScanBlocks_IronwoodDisabled (medium severity) L231 - Why it's weak: ZCashShieldSyncServiceTest wires a mock observer but sets no expectations on OnSyncStart/OnSyncStop and never reads the recorded…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_shield_sync_service_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60694": {
+   "id": "brave/brave-browser#60694",
+   "repo": "brave/brave-browser",
+   "number": 60694,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_resolve_transaction_status_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60694",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:46:30Z",
+   "updatedAt": "2026-11-03T22:46:30Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_resolve_transaction_status_task_unittest.cc would keep passing if the behavior they cover broke. ZCashResolveTransactionStatusTaskTest.Confirmed (medium severity) L114 - Why it's weak: Only one test covers a mined transaction (5 confirmations, well above the threshold of 3), so marking every mined tx completed, shifting the threshold, or removing the chain_tip kTransactionCompleteConfirmations with true (or use >= /…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_resolve_transaction_status_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60693": {
+   "id": "brave/brave-browser#60693",
+   "repo": "brave/brave-browser",
+   "number": 60693,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_grpc_utils_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60693",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:46:13Z",
+   "updatedAt": "2026-11-03T22:46:13Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/weak-assertions",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_grpc_utils_unittest.cc would keep passing if the behavior they cover broke. ZCashGrpcUtilsTest.TestTxStreamHandler (medium severity) L45 - Why it's weak: TestTxStreamHandler only counts delivered messages and never compares their bytes, so framing bugs that deliver shifted or truncated messages (e.g. dropping the 5-byte header the decoder requires) still pass. - Change that would still pass: In…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_grpc_utils_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
+  },
+  "brave/brave-browser#60692": {
+   "id": "brave/brave-browser#60692",
+   "repo": "brave/brave-browser",
+   "number": 60692,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60692",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:44:56Z",
+   "updatedAt": "2026-11-03T22:44:56Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/weak-assertions"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateOrchardToIronwoodTransactionTaskTest.TransactionCreated (medium severity) L112 - Why it's weak: The only Orchard-to-Ironwood task test uses a null memo, never asserts tx.memo()/amount()/to(), and no test covers its insufficient-funds, missing-anchor or GetLatestBlock-error paths. - Change that would…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_create_orchard_to_ironwood_transaction_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60691": {
+   "id": "brave/brave-browser#60691",
+   "repo": "brave/brave-browser",
+   "number": 60691,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60691",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:44:41Z",
+   "updatedAt": "2026-11-03T22:44:41Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateIronwoodToIronwoodTransactionTaskTest.TransactionCreated (medium severity) L121 - Why it's weak: Every Ironwood-to-Ironwood create-task test (and the wallet-service golden test) passes a null memo and none asserts tx.amount()/tx.to()/memo, so dropping the memo from the recipient output or the tx…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_create_ironwood_to_ironwood_transaction_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60690": {
+   "id": "brave/brave-browser#60690",
+   "repo": "brave/brave-browser",
+   "number": 60690,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_blocks_batch_scan_task_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60690",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:44:24Z",
+   "updatedAt": "2026-11-03T22:44:24Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_blocks_batch_scan_task_unittest.cc would keep passing if the behavior they cover broke. ZCashBlocksBatchScanTest.Scan (medium severity) L336 - Why it's weak: All ZCashBlocksBatchScanTest cases use an empty orchardTree and orchard_commitment_tree_size 0 and never capture the OrchardTreeState handed to the scanner, so the orchard tree size, frontier decoding and the 'Failed to parse tree state' error path are…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet",
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_blocks_batch_scan_task_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
+  "brave/brave-browser#60689": {
+   "id": "brave/brave-browser#60689",
+   "repo": "brave/brave-browser",
+   "number": 60689,
+   "kind": "issue",
+   "title": "Weak unit tests in zcash_auto_sync_manager_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60689",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:44:07Z",
+   "updatedAt": "2026-11-03T22:44:07Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_auto_sync_manager_unittest.cc would keep passing if the behavior they cover broke. ZCashAutoSyncManagerTest.InitialSync, ZCashAutoSyncManagerTest.TimerHit (medium severity) L90 - Why it's weak: ZCashAutoSyncManager tests only use a chain-tip status 1000 blocks behind and assert that a sync starts. The kZCashAutoSyncMaxBlocksDelta threshold could be removed, which would auto-start background shield syncs for…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zcash"
+   ],
+   "relevance": "direct",
+   "matchedTerms": [
+    "title:zcash_auto_sync_manager_unittest",
+    "body:zcash"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 6
+  },
   "brave/brave-browser#60520": {
    "id": "brave/brave-browser#60520",
    "repo": "brave/brave-browser",
@@ -77744,6 +80664,56 @@
    "retrievedAt": "2026-10-08T15:20:14.214Z",
    "timelineCount": 4
   },
+  "brave/brave-browser#60839": {
+   "id": "brave/brave-browser#60839",
+   "repo": "brave/brave-browser",
+   "number": 60839,
+   "kind": "issue",
+   "title": "Weak unit tests in permission_utils_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60839",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T23:50:55Z",
+   "updatedAt": "2026-11-03T23:50:55Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/false-positive",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/permission_utils_unittest.cc would keep passing if the behavior they cover broke. PermissionUtilsUnitTest.ParseRequestingOriginFromSubRequest, PermissionUtilsUnitTest.GetSubRequestOrigin, PermissionUtilsUnitTest.CoinTypeToPermissionType, PermissionUtilsUnitTest.CoinTypeToPermissionRequestType (low severity) L24 - Why it's weak: permission_utils handles Polkadot (kBravePolkadot / CoinType::DOT) in its sub-request origin…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:zec"
+   ],
+   "relevance": "mention",
+   "matchedTerms": [
+    "body:zec"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
+  },
   "brave/brave-browser#59539": {
    "id": "brave/brave-browser#59539",
    "repo": "brave/brave-browser",
@@ -78681,6 +81651,108 @@
    ],
    "retrievedAt": "2026-10-08T15:20:14.214Z",
    "timelineCount": 13
+  },
+  "brave/brave-browser#60671": {
+   "id": "brave/brave-browser#60671",
+   "repo": "brave/brave-browser",
+   "number": 60671,
+   "kind": "issue",
+   "title": "Weak unit tests in orchard_sync_state_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60671",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:39:55Z",
+   "updatedAt": "2026-11-03T22:39:55Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/weak-assertions",
+    "tests/missing-coverage"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/internal/orchard_sync_state_unittest.cc would keep passing if the behavior they cover broke. OrchardSyncStateTest.GetSpendableNotes_FilterByAddress_And_Anchor, OrchardSyncStateTest.GetSpendableNotes_FilterByAddress_External, OrchardSyncStateTest.GetSpendableNotes_FilterByAddress_Internal, OrchardSyncStateTest.GetSpendableNotes_NoAnchor, OrchardSyncStateTest.IronwoodPool_GetSpendableNotes_FilterByAddress_And_Anchor (medium…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet"
+   ],
+   "relevance": "mention",
+   "matchedTerms": [
+    "body:ironwood"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
+  },
+  "brave/brave-browser#60670": {
+   "id": "brave/brave-browser#60670",
+   "repo": "brave/brave-browser",
+   "number": 60670,
+   "kind": "issue",
+   "title": "Weak unit tests in orchard_storage_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/60670",
+   "state": "open",
+   "stateReason": null,
+   "isDraft": null,
+   "createdAt": "2026-11-03T22:39:40Z",
+   "updatedAt": "2026-11-03T22:39:40Z",
+   "closedAt": null,
+   "mergedAt": null,
+   "mergeCommitSha": null,
+   "baseRef": null,
+   "headRef": null,
+   "author": "netzenbot",
+   "assignees": [],
+   "labels": [
+    "tests",
+    "QA/No",
+    "release-notes/exclude",
+    "feature/web3/wallet",
+    "tests/test-quality",
+    "tests/false-positive",
+    "tests/weak-assertions"
+   ],
+   "milestone": null,
+   "bodyExcerpt": "Unit tests in components/brave_wallet/browser/internal/orchard_storage/orchard_storage_unittest.cc would keep passing if the behavior they cover broke. OrchardStorageTest.ResetAccountSyncState (medium severity) L1204 - Why it's weak: OrchardStorageTest.ResetAccountSyncState seeds and checks only Orchard notes, spends and checkpoints. Deleting the shard-tree/cap clearing, or skipping the Ironwood pool entirely, would leave every test green. - Change that would still pass: In…",
+   "bodyRefs": [],
+   "resolvesRefs": [],
+   "upliftOfRefs": [],
+   "issueType": null,
+   "branchRefs": [],
+   "commentDuplicateOf": null,
+   "closingRefs": [],
+   "subIssues": [],
+   "parent": null,
+   "timelineTruncated": false,
+   "discovery": [
+    "search:ironwood",
+    "search:orchard wallet"
+   ],
+   "relevance": "mention",
+   "matchedTerms": [
+    "body:ironwood"
+   ],
+   "retrievedAt": "2026-11-04T02:21:54.326Z",
+   "timelineCount": 7
   },
   "brave/brave-browser#47823": {
    "id": "brave/brave-browser#47823",
@@ -120106,6 +123178,534 @@
      "ref": null
     }
    ],
+   "brave/brave-browser#60900": [
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:31:33Z",
+     "actor": "netzenbot",
+     "detail": "bug"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:31:33Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    }
+   ],
+   "brave/brave-browser#60898": [
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:30:58Z",
+     "actor": "netzenbot",
+     "detail": "bug"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:30:58Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    }
+   ],
+   "brave/brave-browser#60897": [
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:29:58Z",
+     "actor": "netzenbot",
+     "detail": "bug"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-04T01:29:59Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    }
+   ],
+   "brave/brave-browser#60850": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:44Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:44Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:44Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:45Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:45Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:55:45Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    }
+   ],
+   "brave/brave-browser#60699": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:55Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:56Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:56Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:56Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:56Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:57Z",
+     "actor": "netzenbot",
+     "detail": "tests/false-positive"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:57Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:57Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60698": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:42Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:43Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:43Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:43Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60697": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:28Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:29Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:29Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:29Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:29Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:30Z",
+     "actor": "netzenbot",
+     "detail": "tests/false-positive"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:30Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    }
+   ],
+   "brave/brave-browser#60696": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:07Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:07Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:07Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:07Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:08Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:08Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:47:08Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60695": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:47Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:47Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:47Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:48Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:48Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:48Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60694": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:32Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:32Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:32Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:32Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:33Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:33Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60693": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:14Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:14Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:15Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:15Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:15Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:16Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:46:16Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60692": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:57Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:57Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:57Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:58Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    }
+   ],
+   "brave/brave-browser#60691": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:42Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:43Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:43Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:43Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60690": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:25Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:25Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:25Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:26Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:26Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:26Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60689": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:08Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:09Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:09Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:09Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:10Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:44:10Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
    "brave/brave-browser#60520": [
     {
      "type": "labeled",
@@ -125681,6 +129281,50 @@
      "ref": null
     }
    ],
+   "brave/brave-browser#60839": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:57Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:58Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:58Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:58Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/false-positive"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T23:50:59Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
    "brave/brave-browser#59539": [
     {
      "type": "cross_referenced",
@@ -127107,6 +130751,94 @@
      "detail": "Issue",
      "ref": "brave/brave-browser#35541",
      "willClose": false
+    }
+   ],
+   "brave/brave-browser#60671": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:56Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:57Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:57Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:57Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:58Z",
+     "actor": "netzenbot",
+     "detail": "tests/missing-coverage"
+    }
+   ],
+   "brave/brave-browser#60670": [
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:42Z",
+     "actor": "netzenbot",
+     "detail": "tests"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:43Z",
+     "actor": "netzenbot",
+     "detail": "QA/No"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:43Z",
+     "actor": "netzenbot",
+     "detail": "release-notes/exclude"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:43Z",
+     "actor": "netzenbot",
+     "detail": "feature/web3/wallet"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:43Z",
+     "actor": "netzenbot",
+     "detail": "tests/test-quality"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/false-positive"
+    },
+    {
+     "type": "labeled",
+     "at": "2026-11-03T22:39:44Z",
+     "actor": "netzenbot",
+     "detail": "tests/weak-assertions"
     }
    ],
    "brave/brave-browser#47823": [
@@ -151167,7 +154899,7 @@
      "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151179,7 +154911,7 @@
      "text": "Enabled Zcash by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L770",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151191,7 +154923,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151203,7 +154935,7 @@
      "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151215,7 +154947,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L885",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151227,7 +154959,7 @@
      "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151239,7 +154971,7 @@
      "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151251,7 +154983,7 @@
      "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151263,7 +154995,7 @@
      "text": "Updated ZCash endpoint URL. (#38782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151275,7 +155007,7 @@
      "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151287,7 +155019,7 @@
      "text": "Added support for Zcash Testnet. (#50116)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151299,7 +155031,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151311,7 +155043,7 @@
      "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151323,7 +155055,7 @@
      "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151335,7 +155067,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151347,7 +155079,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151359,7 +155091,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L408",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151371,7 +155103,7 @@
      "text": "Added support for BTC Ledger hardware accounts. (#38447)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151383,7 +155115,7 @@
      "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151395,7 +155127,7 @@
      "text": "Enabled ZCash feature flag by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151407,7 +155139,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L790",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151419,7 +155151,7 @@
      "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151431,7 +155163,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L669",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151443,7 +155175,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L460",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151455,7 +155187,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151467,7 +155199,7 @@
      "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151479,7 +155211,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151491,7 +155223,7 @@
      "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151503,7 +155235,7 @@
      "text": "Implemented ZCash Shielded account modal. (#41780)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151515,7 +155247,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151527,7 +155259,7 @@
      "text": "Updated Zcash library to 0.14. (#56404)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151539,7 +155271,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151551,7 +155283,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151563,7 +155295,7 @@
      "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151575,7 +155307,7 @@
      "text": "Added Zcash shielded support. (#44432)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151587,7 +155319,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151599,7 +155331,7 @@
      "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151611,7 +155343,7 @@
      "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151623,7 +155355,7 @@
      "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151635,7 +155367,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L792",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151647,7 +155379,7 @@
      "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151659,7 +155391,7 @@
      "text": "Fixed ZCash balance resolution issue. (#40635)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151671,7 +155403,7 @@
      "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151683,7 +155415,7 @@
      "text": "Enabled Zcash support by default. (#36613)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151695,7 +155427,7 @@
      "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151707,7 +155439,7 @@
      "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151719,7 +155451,7 @@
      "text": "Enabled Zcash Ironwood support by default. (#56872)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151743,7 +155475,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151755,7 +155487,7 @@
      "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151767,7 +155499,7 @@
      "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151779,7 +155511,7 @@
      "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151791,7 +155523,7 @@
      "text": "Added Zcash \"Deposit\" modal. (#42221)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151803,7 +155535,7 @@
      "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151815,7 +155547,7 @@
      "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151827,7 +155559,7 @@
      "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151839,7 +155571,7 @@
      "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151851,7 +155583,7 @@
      "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151863,7 +155595,7 @@
      "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151875,7 +155607,7 @@
      "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151887,7 +155619,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151899,7 +155631,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L1281",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151911,7 +155643,7 @@
      "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151923,7 +155655,7 @@
      "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
      "firstSeenAt": "2026-10-08T14:46:50.765Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     },
     {
@@ -151947,7 +155679,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/464668bb1f02ac7d0414e639ec98e61df2bf3892/CHANGELOG_iOS.md#L26",
      "firstSeenAt": "2026-10-14T23:16:08.055Z",
-     "lastSeenAt": "2026-11-03T21:51:01.326Z",
+     "lastSeenAt": "2026-11-04T02:21:54.326Z",
      "goneSince": null
     }
    ],
@@ -153663,14 +157395,14 @@
    ],
    "notes": [],
    "openIssues": [
+    "brave/brave-browser#60695",
     "brave/brave-browser#58280",
     "brave/brave-browser#58130",
     "brave/brave-browser#56177",
     "brave/brave-browser#53720",
     "brave/brave-browser#51921",
     "brave/brave-browser#51767",
-    "brave/brave-browser#51179",
-    "brave/brave-browser#51542"
+    "brave/brave-browser#51179"
    ]
   },
   {
@@ -154884,12 +158616,14 @@
     "The \"Ironwood migration banner\" (#58493) shipped in 1.95.101 before Ironwood was on by default, so it is not evidence of Ironwood availability."
    ],
    "openIssues": [
+    "brave/brave-browser#60898",
+    "brave/brave-browser#60692",
+    "brave/brave-browser#60691",
     "brave/brave-browser#60513",
     "brave/brave-browser#60512",
     "brave/brave-browser#58832",
     "brave/brave-browser#58957",
-    "brave/brave-browser#58958",
-    "brave/brave-browser#57635"
+    "brave/brave-browser#58958"
    ]
   },
   {
@@ -156158,14 +159892,14 @@
    ],
    "notes": [],
    "openIssues": [
+    "brave/brave-browser#60898",
+    "brave/brave-browser#60695",
+    "brave/brave-browser#60690",
+    "brave/brave-browser#60689",
+    "brave/brave-browser#60671",
     "brave/brave-browser#58283",
     "brave/brave-browser#54347",
-    "brave/brave-browser#52985",
-    "brave/brave-browser#50126",
-    "brave/brave-browser#50130",
-    "brave/brave-browser#44739",
-    "brave/brave-browser#46023",
-    "brave/brave-browser#43530"
+    "brave/brave-browser#52985"
    ]
   },
   {
@@ -157975,8 +161709,8 @@
    "id": "ironwood",
    "name": "Ironwood pool & migration",
    "description": "NU6.3 Ironwood shielded pool: v6 transactions, Ironwood scanning/balances, Orchard → Ironwood migration and its UI.",
-   "count": 34,
-   "open": 2
+   "count": 35,
+   "open": 3
   },
   {
    "id": "security",
@@ -157996,8 +161730,8 @@
    "id": "sync",
    "name": "Sync, scanning & storage",
    "description": "Block scanning, chain sync state, account birthday, commitment trees, storage/database, lightwalletd endpoints.",
-   "count": 45,
-   "open": 12
+   "count": 47,
+   "open": 14
   },
   {
    "id": "transactions",
@@ -158031,15 +161765,15 @@
    "id": "deps",
    "name": "Dependencies & Rust crates",
    "description": "Updates to orchard, librustzcash and other Rust crates Brave builds.",
-   "count": 15,
-   "open": 10
+   "count": 27,
+   "open": 22
   },
   {
    "id": "testing",
    "name": "Testnet, tests & tooling",
    "description": "Zcash testnet support, unit/browser tests, CI and developer tooling.",
-   "count": 41,
-   "open": 15
+   "count": 44,
+   "open": 18
   },
   {
    "id": "general",
@@ -158096,7 +161830,7 @@
    "id": "open",
    "label": "Open",
    "help": "Open issue with no merged or open PR found.",
-   "count": 96
+   "count": 114
   },
   {
    "id": "closed-unverified",
@@ -158194,10 +161928,6 @@
       "version": "0.15.0",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.15.0",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.15.0",
       "source": "crates.io"
@@ -158207,6 +161937,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.15.0",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.15.0",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.15.0",
       "source": "crates.io"
      }
@@ -158239,10 +161977,6 @@
       "version": "0.29.0",
       "source": "path"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.29.0",
-      "source": "path"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.29.0",
       "source": "path"
@@ -158252,6 +161986,14 @@
       "source": "path"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.29.0",
+      "source": "path"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.29.0",
+      "source": "path"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.29.0",
       "source": "path"
      }
@@ -158284,10 +162026,6 @@
       "version": "0.10.0",
       "source": "path"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.10.0",
-      "source": "path"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.10.0",
       "source": "path"
@@ -158297,6 +162035,14 @@
       "source": "path"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.10.0",
+      "source": "path"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.10.0",
+      "source": "path"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.10.0",
       "source": "path"
      }
@@ -158329,10 +162075,6 @@
       "version": "0.24.0-rc.1",
       "source": "path"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.24.0-rc.1",
-      "source": "path"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.24.0-rc.1",
       "source": "path"
@@ -158342,6 +162084,14 @@
       "source": "path"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.24.0-rc.1",
+      "source": "path"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.24.0-rc.1",
+      "source": "path"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      }
@@ -158374,10 +162124,6 @@
       "version": "0.4.0",
       "source": "path"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.4.0",
-      "source": "path"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.4.0",
       "source": "path"
@@ -158387,6 +162133,14 @@
       "source": "path"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.4.0",
+      "source": "path"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.4.0",
+      "source": "path"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.4.0",
       "source": "path"
      }
@@ -158419,10 +162173,6 @@
       "version": "0.4.1",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.4.1",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.4.1",
       "source": "crates.io"
@@ -158432,6 +162182,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.4.1",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.4.1",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.4.1",
       "source": "crates.io"
      }
@@ -158464,10 +162222,6 @@
       "version": "0.7.0",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.7.0",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.7.0",
       "source": "crates.io"
@@ -158477,6 +162231,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.7.0",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.7.0",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.7.0",
       "source": "crates.io"
      }
@@ -158509,10 +162271,6 @@
       "version": "0.8.2",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.8.2",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.8.2",
       "source": "crates.io"
@@ -158522,6 +162280,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.8.2",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.8.2",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.8.2",
       "source": "crates.io"
      }
@@ -158554,10 +162320,6 @@
       "version": "0.2.1",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.2.1",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.2.1",
       "source": "crates.io"
@@ -158567,6 +162329,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.2.1",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.2.1",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.2.1",
       "source": "crates.io"
      }
@@ -158599,10 +162369,6 @@
       "version": "0.3.2",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.3.2",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.3.2",
       "source": "crates.io"
@@ -158612,6 +162378,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.3.2",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.3.2",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.3.2",
       "source": "crates.io"
      }
@@ -158644,10 +162418,6 @@
       "version": "0.5.0",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.5.0",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.5.0",
       "source": "crates.io"
@@ -158657,6 +162427,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.5.0",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.5.0",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.5.0",
       "source": "crates.io"
      }
@@ -158689,10 +162467,6 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.5.1",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.5.1",
       "source": "crates.io"
@@ -158702,6 +162476,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -158734,10 +162516,6 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.5.1",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.5.1",
       "source": "crates.io"
@@ -158747,6 +162525,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.5.1",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -158779,10 +162565,6 @@
       "version": "0.1.0",
       "source": "crates.io"
      },
-     "v1.98.64 (github/release)": {
-      "version": "0.1.0",
-      "source": "crates.io"
-     },
      "v1.98.63 (desktop/release, android/release)": {
       "version": "0.1.0",
       "source": "crates.io"
@@ -158792,6 +162574,14 @@
       "source": "crates.io"
      },
      "v1.101.21 (android/nightly)": {
+      "version": "0.1.0",
+      "source": "crates.io"
+     },
+     "v1.99.54 (github/release)": {
+      "version": "0.1.0",
+      "source": "crates.io"
+     },
+     "v1.101.22 (github/nightly)": {
       "version": "0.1.0",
       "source": "crates.io"
      }
@@ -158811,7 +162601,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-03T21:51:01.326Z"
+   "checkedAt": "2026-11-04T02:21:54.326Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -160116,29 +163906,29 @@
     "num": "2005",
     "title": "Ironwood Quantum Recoverability",
     "status": "Proposed",
-    "lastCommitAt": "2026-10-22T14:45:44Z",
-    "lastCommitMessage": "ZIPs 2003, 2005, 2006: Cite protocol.pdf for spec version 2026.8.0",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/0e6a3019aef2071258d5bc4c94a431a9977e688b",
+    "lastCommitAt": "2026-10-30T01:47:42Z",
+    "lastCommitMessage": "Protocol spec: Correct circuit identifier and quoted lead-byte rule",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/7cb2fdafe15978237e826cba58f63d51b4158f4e",
     "url": "https://zips.z.cash/zip-2005",
     "path": "zips/zip-2005.md"
    },
    "2009": {
     "num": "2009",
     "title": "Reduce Marginal Fee to 1000 Zatoshis and Raise the Weight Ratio Cap to 10",
-    "status": "Draft",
-    "lastCommitAt": "2026-10-08T17:06:15Z",
-    "lastCommitMessage": "Fix fat-fingered move of ZIP 2009 to its correct location.",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/51df2a4070fcf4718d995958a4809f8ab4ff8222",
+    "status": "Proposed",
+    "lastCommitAt": "2026-10-21T23:30:22Z",
+    "lastCommitMessage": "Move ZIP 2009 to Proposed",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/5c2b8b4edd862c3f8590fe5819a072576b9c400c",
     "url": "https://zips.z.cash/zip-2009",
     "path": "zips/zip-2009.md"
    },
    "0317": {
     "num": "0317",
     "title": "Proportional Transfer Fee Mechanism",
-    "status": "[Revision 0] Active, [Revision 1: NU6.3] Draft, [Revision 2] Draft",
-    "lastCommitAt": "2026-07-01T05:27:18Z",
-    "lastCommitMessage": "Apply suggestions from code review",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/561b5b4bf692c53e697b5f660fc4fe8a45747edd",
+    "status": "[Revision 0] Active, [Revision 1: NU6.3] Active, [Revision 2] Proposed",
+    "lastCommitAt": "2026-10-21T23:30:22Z",
+    "lastCommitMessage": "ZIP 317: Apply ZIP 2009 as Revision 2",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/ac66aa225c5d50d7e6ba628b32c36d5c27072377",
     "url": "https://zips.z.cash/zip-0317",
     "path": "zips/zip-0317.rst"
    },
@@ -160557,7 +164347,7 @@
     "updatedAt": "2026-07-06T21:23:42Z",
     "withdrawnAt": null,
     "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46",
-    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 7 channel builds (v1.100.44, v1.101.3, v1.101.8, v1.98.64, v1.98.63, v1.100.47, v1.101.21)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 7 channel builds (v1.100.44, v1.101.3, v1.101.8, v1.98.64, v1.98.63, v1.100.47, v1.101.21)), but the assessment is incomplete: iOS Release 1.97 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 8 channel builds (v1.100.44, v1.101.3, v1.101.8, v1.98.63, v1.100.47, v1.101.21, v1.99.54, v1.101.22)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 8 channel builds (v1.100.44, v1.101.3, v1.101.8, v1.98.63, v1.100.47, v1.101.21, v1.99.54, v1.101.22)), but the assessment is incomplete: iOS Release 1.97 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
     "verdictDetails": [
      "master: halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "master: orchard 0.15.0 is outside the vulnerable range < 0.14.0",
@@ -160571,19 +164361,22 @@
      "v1.101.8 (ios/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.101.8 (ios/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.101.8 (ios/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "v1.98.64 (github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.98.64 (github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.98.64 (github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.98.63 (desktop/release, android/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.98.63 (desktop/release, android/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.98.63 (desktop/release, android/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
      "v1.100.47 (github/beta): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.100.47 (github/beta): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.100.47 (github/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "v1.101.21 (android/nightly, github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.101.21 (android/nightly, github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.101.21 (android/nightly, github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "zebrad: not present in Brave's Cargo.lock at master; v1.100.44 (desktop/beta, android/beta, ios/beta); v1.101.3 (desktop/nightly); v1.101.8 (ios/nightly); v1.98.64 (github/release); v1.98.63 (desktop/release, android/release); v1.100.47 (github/beta); v1.101.21 (android/nightly, github/nightly)"
+     "v1.101.21 (android/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.101.21 (android/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.101.21 (android/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "v1.99.54 (github/release): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.99.54 (github/release): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.99.54 (github/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "v1.101.22 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.101.22 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.101.22 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "zebrad: not present in Brave's Cargo.lock at master; v1.100.44 (desktop/beta, android/beta, ios/beta); v1.101.3 (desktop/nightly); v1.101.8 (ios/nightly); v1.98.63 (desktop/release, android/release); v1.100.47 (github/beta); v1.101.21 (android/nightly); v1.99.54 (github/release); v1.101.22 (github/nightly)"
     ],
     "affected": null
    },
@@ -160686,30 +164479,30 @@
     "topic": "Zakura",
     "title": "Zakura full node (Zebra fork) and Zakura Common crypto crates",
     "url": "https://github.com/zakura-core/zakura",
-    "updatedAt": "2026-11-03T08:45:41Z",
-    "summary": "Rust Zcash full node forked from Zebra, with \"Zakura Common\" forks of librustzcash/orchard/halo2. Its sync, proving and verification speed-ups are self-reported by the project. Latest release: v1.8.1.",
+    "updatedAt": "2026-11-04T01:48:40Z",
+    "summary": "Rust Zcash full node forked from Zebra, with \"Zakura Common\" forks of librustzcash/orchard/halo2. Its sync, proving and verification speed-ups are self-reported by the project. Latest release: v1.8.2.",
     "attribution": "Claims from zakura.com and the zakura-core/zakura README; not independently verified and not measured in Brave Wallet.",
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
-    "latest": " Latest release: v1.8.1.",
-    "metadataReadAt": "2026-11-03T21:51:01.326Z"
+    "latest": " Latest release: v1.8.2.",
+    "metadataReadAt": "2026-11-04T02:21:54.326Z"
    },
    {
     "id": "watch-wallet-libraries",
     "topic": "wallet-libraries",
     "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
     "url": "https://github.com/zakura-core/wallet-libraries",
-    "updatedAt": "2026-11-03T18:00:01Z",
-    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: Update embedded Arti to merged wallet dependency reductions.",
+    "updatedAt": "2026-11-04T02:23:11Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: Gap search probes addresses; skip regeneration when gap is stored (#314).",
     "attribution": "Description from the repository README.",
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
-    "latest": " Last commit: Update embedded Arti to merged wallet dependency reductions.",
-    "metadataReadAt": "2026-11-03T21:51:01.326Z"
+    "latest": " Last commit: Gap search probes addresses; skip regeneration when gap is stored (#314).",
+    "metadataReadAt": "2026-11-04T02:21:54.326Z"
    },
    {
     "id": "watch-zkdragon",
@@ -160755,7 +164548,7 @@
     "zcashDisabled": false,
     "line": 11,
     "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-    "checkedAt": "2026-11-03T21:51:01.326Z"
+    "checkedAt": "2026-11-04T02:21:54.326Z"
    },
    "studies": [
     {
@@ -160897,7 +164690,7 @@
       ]
      },
      "readAt": "2026-11-03T21:51:01.326Z",
-     "verifiedAt": "2026-11-03T21:51:01.326Z"
+     "verifiedAt": "2026-11-04T02:21:54.326Z"
     },
     {
      "file": "ZCashStudy.json5",
@@ -161033,7 +164826,7 @@
       ]
      },
      "readAt": "2026-11-03T21:51:01.326Z",
-     "verifiedAt": "2026-11-03T21:51:01.326Z"
+     "verifiedAt": "2026-11-04T02:21:54.326Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -161166,7 +164959,7 @@
       ]
      },
      "readAt": "2026-11-03T21:51:01.326Z",
-     "verifiedAt": "2026-11-03T21:51:01.326Z"
+     "verifiedAt": "2026-11-04T02:21:54.326Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -161255,15 +165048,6 @@
        "reason": "channel filter (RELEASE) excludes nightly; 157.1.101.8 is outside the version range 147.1.89.144 – 152.*"
       }
      ],
-     "appliesUnknown": [
-      {
-       "build": "iOS release 1.97",
-       "platform": "ios",
-       "channel": "release",
-       "version": "1.97",
-       "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-      }
-     ],
      "url": "https://github.com/brave/brave-variations/blob/8113371c5133dec2488b6b823e9cd0ed3a3e0549/studies/iOSWalletWebUIStudy.json5",
      "experiments": [
       {
@@ -161298,11 +165082,20 @@
       ]
      },
      "readAt": "2026-11-03T21:51:01.326Z",
-     "verifiedAt": "2026-11-03T21:51:01.326Z"
+     "verifiedAt": "2026-11-04T02:21:54.326Z",
+     "appliesUnknown": [
+      {
+       "build": "iOS release 1.97",
+       "platform": "ios",
+       "channel": "release",
+       "version": "1.97",
+       "reason": "the Chromium-based version of 1.97 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+      }
+     ]
     }
    ],
    "studiesCommit": "8113371c5133dec2488b6b823e9cd0ed3a3e0549",
-   "studiesReadAt": "2026-11-03T21:51:01.326Z",
+   "studiesReadAt": "2026-11-04T02:21:54.326Z",
    "studiesDigest": "8e750d6be0ba113839ba9f6ea915aa89f01b81c2bd0b61affd3faece1efe227a"
   },
   "nextUpgrade": {
@@ -161318,7 +165111,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-03T21:51:01.326Z"
+   "checkedAt": "2026-11-04T02:21:54.326Z"
   }
  },
  "community": [
@@ -162373,24 +166166,24 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 505,
+   "itemCount": 507,
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
    ],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -162399,87 +166192,87 @@
    "limitations": [
     "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
    ],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 64,
    "requests": 8,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 5,
-   "requests": 132,
+   "requests": 4,
    "limitations": [
     "Repository state is shown; the deployed service could differ and its deployment time is not public",
     "1 study has builds whose eligibility cannot be determined from public data"
    ],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 20,
-   "requests": 11,
+   "itemCount": 21,
+   "requests": 16,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 357,
    "requests": 0,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 798,
-   "requests": 65,
+   "itemCount": 816,
+   "requests": 66,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -162488,97 +166281,97 @@
    "limitations": [
     "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
    ],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 18,
    "requests": 23,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 190,
-   "requests": 32,
+   "requests": 35,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 9,
    "requests": 28,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 3,
    "requests": 10,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   },
   {
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-11-03T21:51:01.326Z",
-   "lastSuccessAt": "2026-11-03T21:51:01.326Z",
+   "lastAttemptAt": "2026-11-04T02:21:54.326Z",
+   "lastSuccessAt": "2026-11-04T02:21:54.326Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 21,
-   "requests": 13,
+   "itemCount": 22,
+   "requests": 23,
    "limitations": [],
-   "lastCompleteAt": "2026-11-03T21:51:01.326Z"
+   "lastCompleteAt": "2026-11-04T02:21:54.326Z"
   }
  ],
  "coverage": {
   "counts": {
-   "trackedItems": 798,
-   "issues": 404,
+   "trackedItems": 816,
+   "issues": 422,
    "prs": 394,
    "upliftPrs": 84,
-   "direct": 631,
-   "mention": 64,
+   "direct": 644,
+   "mention": 69,
    "linked": 103,
-   "groups": 445,
-   "openGroups": 100,
+   "groups": 463,
+   "openGroups": 118,
    "duplicates": 3,
-   "excluded": 138,
+   "excluded": 139,
    "byLabel": 229,
-   "bySearch": 643,
+   "bySearch": 661,
    "byPath": 162,
    "byLinkOnly": 103,
-   "notLabeled": 79,
+   "notLabeled": 92,
    "communityTopics": 36,
    "docs": 8,
    "changelogEntries": 64,
@@ -162910,6 +166703,10 @@
    },
    {
     "id": "brave/brave-core#40792",
+    "reason": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)"
+   },
+   {
+    "id": "brave/brave-core#41231",
     "reason": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)"
    },
    {

@@ -1,6 +1,331 @@
 [
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-04T01:30:56Z",
+  "title": "New bug report: Scanned Orchard/Ironwood notes are stored with note_version 0 instead of 2/3",
+  "impact": "Opened in brave-browser#60898. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60898"
+  ],
+  "topic": "ironwood",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60898",
+    "url": "https://github.com/brave/brave-browser/issues/60898"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-04T01:30:56Z"
+  ],
+  "id": "88fa7caff4473221",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:55:42Z",
+  "title": "New issue: Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60850. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60850"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60850",
+    "url": "https://github.com/brave/brave-browser/issues/60850"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:55:42Z"
+  ],
+  "id": "c249a0c00e60f688",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:47:53Z",
+  "title": "New issue: Weak unit tests in zcash_wallet_service_unittest.cc",
+  "impact": "Opened in brave-browser#60699. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60699"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60699",
+    "url": "https://github.com/brave/brave-browser/issues/60699"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:47:53Z"
+  ],
+  "id": "8ef8331538963b2f",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:47:41Z",
+  "title": "New issue: Weak unit tests in zcash_verify_chain_state_task_unittest.cc",
+  "impact": "Opened in brave-browser#60698. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60698"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60698",
+    "url": "https://github.com/brave/brave-browser/issues/60698"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:47:41Z"
+  ],
+  "id": "f0f4858c289f5204",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:47:27Z",
+  "title": "New issue: Weak unit tests in zcash_tx_meta_unittest.cc",
+  "impact": "Opened in brave-browser#60697. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60697"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60697",
+    "url": "https://github.com/brave/brave-browser/issues/60697"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:47:27Z"
+  ],
+  "id": "69af0990682e3097",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:47:05Z",
+  "title": "New issue: Weak unit tests in zcash_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#60696. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60696"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60696",
+    "url": "https://github.com/brave/brave-browser/issues/60696"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:47:05Z"
+  ],
+  "id": "cd75ab827b0339c1",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:46:45Z",
+  "title": "New issue: Weak unit tests in zcash_shield_sync_service_unittest.cc",
+  "impact": "Opened in brave-browser#60695. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60695"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60695",
+    "url": "https://github.com/brave/brave-browser/issues/60695"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:46:45Z"
+  ],
+  "id": "aa6c8daa22323c1b",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:46:30Z",
+  "title": "New issue: Weak unit tests in zcash_resolve_transaction_status_task_unittest.cc",
+  "impact": "Opened in brave-browser#60694. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60694"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60694",
+    "url": "https://github.com/brave/brave-browser/issues/60694"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:46:30Z"
+  ],
+  "id": "426bb1e1a6eebea9",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:46:13Z",
+  "title": "New issue: Weak unit tests in zcash_grpc_utils_unittest.cc",
+  "impact": "Opened in brave-browser#60693. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60693"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60693",
+    "url": "https://github.com/brave/brave-browser/issues/60693"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:46:13Z"
+  ],
+  "id": "4901a8233bddb450",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:44:56Z",
+  "title": "New issue: Weak unit tests in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60692. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60692"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60692",
+    "url": "https://github.com/brave/brave-browser/issues/60692"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:44:56Z"
+  ],
+  "id": "042dc41ae424b8d9",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:44:41Z",
+  "title": "New issue: Weak unit tests in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#60691. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60691"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60691",
+    "url": "https://github.com/brave/brave-browser/issues/60691"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:44:41Z"
+  ],
+  "id": "e69a1403e80258c9",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:44:24Z",
+  "title": "New issue: Weak unit tests in zcash_blocks_batch_scan_task_unittest.cc",
+  "impact": "Opened in brave-browser#60690. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60690"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60690",
+    "url": "https://github.com/brave/brave-browser/issues/60690"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:44:24Z"
+  ],
+  "id": "cc16217d1f7e4211",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:44:07Z",
+  "title": "New issue: Weak unit tests in zcash_auto_sync_manager_unittest.cc",
+  "impact": "Opened in brave-browser#60689. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60689"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60689",
+    "url": "https://github.com/brave/brave-browser/issues/60689"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:44:07Z"
+  ],
+  "id": "0222aa8e9897da26",
+  "detectedAt": "2026-11-04T02:21:54.326Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-03T20:38:44Z",
   "title": "New issue: Weak unit tests in zcash_decoder_unittest.cc",
   "impact": "Opened in brave-browser#60520. This is a report or request, not a confirmed change to Brave Wallet.",
