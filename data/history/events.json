@@ -15351,32 +15351,5 @@
   "id": "8f8c164b2d25e489",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-05T00:28:20Z",
-  "title": "Merged: [IWYU] `base/memory/ref_counted.h`",
-  "impact": "Merged into brave-core master on 2025-11-05. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32164"
-  ],
-  "topic": "addresses",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32164",
-    "url": "https://github.com/brave/brave-core/pull/32164"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-05T00:28:20Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "1776dfd365aa6634",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]

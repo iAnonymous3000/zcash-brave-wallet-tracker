@@ -1,7 +1,27 @@
 {
- "at": "2026-11-04T19:47:48.043Z",
+ "at": "2026-11-05T00:55:10.274Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-browser#60850": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#60839": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/brave-browser#60900": {
    "desktop/release": null,
    "android/release": null,
@@ -23,26 +43,6 @@
    "ios/nightly": null
   },
   "brave/brave-browser#60897": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#60850": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#60839": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,

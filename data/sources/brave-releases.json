@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-04T19:47:48.043Z",
+ "retrievedAt": "2026-11-05T00:55:10.274Z",
  "data": {
   "releases": [
    {
@@ -15,9 +15,10 @@
     "assetPlatforms": [
      "android",
      "linux",
+     "macos",
      "windows"
     ],
-    "prereleaseFlag": true
+    "prereleaseFlag": false
    },
    {
     "tag": "v1.101.24",
@@ -1027,7 +1028,10 @@
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.99.55",
     "assetPlatforms": [
      "android",
-     "linux"
+     "ios",
+     "linux",
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": true
    },
@@ -7861,5 +7865,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-04T19:47:48.043Z"
+ "completeAt": "2026-11-05T00:55:10.274Z"
 }
