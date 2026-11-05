@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-05T09:31:09.084Z",
+ "retrievedAt": "2026-11-05T18:03:15.345Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3620,6 +3620,22 @@
      "checkedAt": "2026-11-03T16:16:59.525Z",
      "basis": "merged 2026-11-03T10:21Z, after v1.101.8 was published"
     }
+   },
+   "brave/brave-core#41255": {
+    "sha": "c26d75307641a3b437252c46737e1731acc2e44f",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.101.30",
+     "tag": "v1.101.30",
+     "checkedAt": "2026-11-05T18:03:15.345Z",
+     "basis": "GitHub compare v1.101.30...c26d7530: behind"
+    },
+    "maxExcluded": {
+     "version": "1.101.27",
+     "tag": "v1.101.27",
+     "checkedAt": "2026-11-05T18:03:15.345Z",
+     "basis": "GitHub compare v1.101.27...c26d7530: ahead"
+    }
    }
   },
   "targets": [
@@ -3628,7 +3644,6 @@
     "version": "1.98.63",
     "publishedAt": "2026-10-30T05:50:37Z",
     "usedBy": [
-     "desktop/release",
      "android/release"
     ]
    },
@@ -3637,6 +3652,7 @@
     "version": "1.99.55",
     "publishedAt": "2026-11-04T18:56:17Z",
     "usedBy": [
+     "desktop/release",
      "github/release"
     ]
    },
@@ -3645,8 +3661,7 @@
     "version": "1.100.44",
     "publishedAt": "2026-10-29T05:16:16Z",
     "usedBy": [
-     "desktop/beta",
-     "android/beta"
+     "desktop/beta"
     ]
    },
    {
@@ -3654,6 +3669,7 @@
     "version": "1.100.49",
     "publishedAt": "2026-11-05T05:17:15Z",
     "usedBy": [
+     "android/beta",
      "ios/beta",
      "github/beta"
     ]
@@ -3675,24 +3691,24 @@
     ]
    },
    {
-    "tag": "v1.101.23",
-    "version": "1.101.23",
-    "publishedAt": "2026-11-04T13:30:26Z",
+    "tag": "v1.101.27",
+    "version": "1.101.27",
+    "publishedAt": "2026-11-05T13:30:22Z",
     "usedBy": [
      "ios/nightly"
     ]
    },
    {
-    "tag": "v1.101.26",
-    "version": "1.101.26",
-    "publishedAt": "2026-11-05T01:17:26Z",
+    "tag": "v1.101.30",
+    "version": "1.101.30",
+    "publishedAt": "2026-11-05T17:40:44Z",
     "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 2
  },
- "completeAt": "2026-11-05T09:31:09.084Z"
+ "completeAt": "2026-11-05T18:03:15.345Z"
 }

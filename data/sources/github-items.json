@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-05T09:31:09.084Z",
+ "retrievedAt": "2026-11-05T18:03:15.345Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -27093,6 +27093,2449 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#61397": {
+    "id": "brave/brave-browser#61397",
+    "repo": "brave/brave-browser",
+    "number": 61397,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_verify_chain_state_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61397",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T17:14:35Z",
+    "updatedAt": "2026-11-05T17:14:35Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_verify_chain_state_task_unittest.cc break test best practices documented in docs/best-practices. ZCashVerifyChainStateTaskTest.NoReorg, ZCashVerifyChainStateTaskTest.Reorg_ChainTipBeforeLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_ChainTipAfterLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_LatestBlockHashChanged, ZCashVerifyChainStateTaskTest.Error_CheckpointIdFailed,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:36Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_verify_chain_state_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61396": {
+    "id": "brave/brave-browser#61396",
+    "repo": "brave/brave-browser",
+    "number": 61396,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_auto_sync_manager_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61396",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T17:13:57Z",
+    "updatedAt": "2026-11-05T17:13:57Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_auto_sync_manager_unittest.cc break test best practices documented in docs/best-practices. ZCashAutoSyncManagerTest.InitialSync, ZCashAutoSyncManagerTest.TimerHit (low severity) L105 - Rule: TA-005: NEVER Use RunUntilIdle() - Problem: ZCashAutoSyncManagerTest.InitialSync and TimerHit call task_environment().RunUntilIdle(). The first StartShieldSync happens synchronously inside Start(), because the mocked…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:58Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_auto_sync_manager_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61395": {
+    "id": "brave/brave-browser#61395",
+    "repo": "brave/brave-browser",
+    "number": 61395,
+    "kind": "issue",
+    "title": "Test best-practice violations in v6_zcash_serializer_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61395",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T17:13:18Z",
+    "updatedAt": "2026-11-05T17:13:18Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/v6_zcash_serializer_unittest.cc break test best practices documented in docs/best-practices. ZCashV6SerializerTest.HashHeader (low severity) L47 - Rule: TI-002: Test the API, Not Implementation - Problem: ZCashV6SerializerTest.HashHeader uses FRIEND_TEST to call the private ZCashV6Serializer::PushHeader() and HashHeader() and check the header bytes and digest. The header is the first 20 bytes of the public…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:19Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:19Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:19Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:20Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:20Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:20Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61244": {
+    "id": "brave/brave-browser#61244",
+    "repo": "brave/brave-browser",
+    "number": 61244,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_decoder_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61244",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:48:03Z",
+    "updatedAt": "2026-11-05T15:48:03Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/services/brave_wallet/zcash/zcash_decoder_unittest.cc break test best practices documented in docs/best-practices. ZCashDecoderUnitTest.ParseCompactBlock_IronwoodEnabled, ZCashDecoderUnitTest.ParseCompactBlock (medium severity) L494 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: In ParseCompactBlock_IronwoodEnabled and the empty-input case of ParseCompactBlock, the ParseCompactBlocks callback dereferences its…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:48:04Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:48:04Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:48:05Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:48:05Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:48:05Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_decoder_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61223": {
+    "id": "brave/brave-browser#61223",
+    "repo": "brave/brave-browser",
+    "number": 61223,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61223",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:38:28Z",
+    "updatedAt": "2026-11-05T15:38:28Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/zcash_utils_unittest.cc break test best practices documented in docs/best-practices. ZCashUtilsUnitTest.ValidateOrchardRecipientAddress, ZCashUtilsUnitTest.PubkeyToTransparentAddress, ZCashUtilsUnitTest.PubkeyHashToTransparentAddress, ZCashUtilsUnitTest.GetTransparentRawBytes, ZCashUtilsUnitTest.OrchardAddress, ZCashUtilsUnitTest.GetMergedUnifiedAddress, ZCashUtilsUnitTest.RevertHex, ZCashUtilsUnitTest.OrchardMemo,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:30Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:30Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:32Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_utils_unittest",
+     "body:zcash_utils_unittest"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61221": {
+    "id": "brave/brave-browser#61221",
+    "repo": "brave/brave-browser",
+    "number": 61221,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_wallet_service_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61221",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:37:15Z",
+    "updatedAt": "2026-11-05T15:37:15Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_wallet_service_unittest.cc break test best practices documented in docs/best-practices. ZCashWalletServiceUnitTest.AutoSync, ZCashWalletServiceUnitTest.MakeAccountShielded (medium severity) L1535 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: AutoSync and MakeAccountShielded check auto_sync_managers().contains(account_id_1) with a non-fatal EXPECT_TRUE and then immediately…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:16Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:17Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:17Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:17Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:18Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:18Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:37:19Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:shielded wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_wallet_service_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61219": {
+    "id": "brave/brave-browser#61219",
+    "repo": "brave/brave-browser",
+    "number": 61219,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_tx_meta_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61219",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:36:38Z",
+    "updatedAt": "2026-11-05T15:36:38Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_tx_meta_unittest.cc break test best practices documented in docs/best-practices. ZCashTxMeta.ToTransactionInfo_TransparentInputs, ZCashTxMeta.ToTransactionInfo_ShieldedInputs (medium severity) L62 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: ToTransactionInfo_TransparentInputs and ToTransactionInfo_ShieldedInputs use non-fatal EXPECT_TRUE(is_zec_tx_data()) before calling…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:40Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:40Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:40Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:41Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:41Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:41Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash",
+     "search:zec"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_tx_meta_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61218": {
+    "id": "brave/brave-browser#61218",
+    "repo": "brave/brave-browser",
+    "number": 61218,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_transaction_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61218",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:36:03Z",
+    "updatedAt": "2026-11-05T15:36:03Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_transaction_utils_unittest.cc break test best practices documented in docs/best-practices. ZCashTransactionUtilsUnitTest.PickZCashTransparentInputs, ZCashTransactionUtilsUnitTest.PickZCashOrchardInputs, ZCashTransactionUtilsUnitTest.PickZCashIronwoodInputs (medium severity) L37 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: PickZCashTransparentInputs, PickZCashOrchardInputs…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:05Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:05Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:05Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:05Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:06Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:36:06Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_transaction_utils_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61217": {
+    "id": "brave/brave-browser#61217",
+    "repo": "brave/brave-browser",
+    "number": 61217,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_transaction_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61217",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:35:28Z",
+    "updatedAt": "2026-11-05T15:35:28Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_transaction_unittest.cc break test best practices documented in docs/best-practices. ZCashTransaction.FromValue_OldFormatOrchardOnlyParsesAsV5 (medium severity) L783 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: FromValue_OldFormatOrchardOnlyParsesAsV5 dereferences the std::optional anchor_block_height at line 783 without first asserting it has a value, so a parser regression would crash…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:29Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:29Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:29Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:30Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:30Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:30Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_transaction_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61216": {
+    "id": "brave/brave-browser#61216",
+    "repo": "brave/brave-browser",
+    "number": 61216,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_shield_sync_service_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61216",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:35:06Z",
+    "updatedAt": "2026-11-05T15:35:06Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_shield_sync_service_unittest.cc break test best practices documented in docs/best-practices. ZCashShieldSyncServiceTest.ScanBlocks (medium severity) L231 - Rule: TI-042: Don't Let Tests Depend on a Feature Flag's Current Default - Problem: ZCashShieldSyncServiceTest.ScanBlocks does not pin the zcash_ironwood_enabled param of kBraveWalletZCashFeature, although the sync service branches on IsZCashIronwoodEnabled()…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:07Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:08Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:08Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:08Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:09Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:09Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:35:09Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_shield_sync_service_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61215": {
+    "id": "brave/brave-browser#61215",
+    "repo": "brave/brave-browser",
+    "number": 61215,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_scan_blocks_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61215",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:34:28Z",
+    "updatedAt": "2026-11-05T15:34:28Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_scan_blocks_task_unittest.cc break test best practices documented in docs/best-practices. ZCashScanBlocksTaskTest.ScanRanges, ZCashScanBlocksTaskTest.ScanSingle, ZCashScanBlocksTaskTest.ScanLimited, ZCashScanBlocksTaskTest.ScanUnlimited, ZCashScanBlocksTaskTest.PartialScanningDueError, ZCashScanBlocksTaskTest.ChainTipMismatch, ZCashScanBlocksTaskTest.NetworkError_LatestBlock,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:30Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:30Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:31Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:31Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:31Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:32Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:32Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_scan_blocks_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61214": {
+    "id": "brave/brave-browser#61214",
+    "repo": "brave/brave-browser",
+    "number": 61214,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_resolve_transaction_status_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61214",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:34:02Z",
+    "updatedAt": "2026-11-05T15:34:02Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_resolve_transaction_status_task_unittest.cc break test best practices documented in docs/best-practices. ZCashResolveTransactionStatusTaskTest.Confirmed, ZCashResolveTransactionStatusTaskTest.Expired_ExpiryHeight, ZCashResolveTransactionStatusTaskTest.Expired_ExpiryHeight_TransactionError, ZCashResolveTransactionStatusTaskTest.Expired_Time, ZCashResolveTransactionStatusTaskTest.Expired_Time_TransactionError,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:03Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:03Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:04Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:04Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:04Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:04Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:34:05Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:shielded wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_resolve_transaction_status_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61213": {
+    "id": "brave/brave-browser#61213",
+    "repo": "brave/brave-browser",
+    "number": 61213,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_keyring_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61213",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:33:40Z",
+    "updatedAt": "2026-11-05T15:33:40Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_keyring_unittest.cc break test best practices documented in docs/best-practices. ZCashKeyringUnitTest.GetPubKey, ZCashKeyringUnitTest.GetPubkey, ZCashKeyringUnitTest.GetUnifiedAddress, ZCashKeyringUnitTest.GetUnifiedAddress_Testnet, ZCashKeyringUnitTest.GetTransparentAddress (medium severity) L44 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: GetPubKey, GetPubkey, GetTransparentAddress,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_keyring_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61212": {
+    "id": "brave/brave-browser#61212",
+    "repo": "brave/brave-browser",
+    "number": 61212,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_grpc_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61212",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:33:02Z",
+    "updatedAt": "2026-11-05T15:33:02Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_grpc_utils_unittest.cc break test best practices documented in docs/best-practices. ZCashGrpcUtilsTest.TestTxStreamHandler (medium severity) L55 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: TestTxStreamHandler reads std::optional resume_called with .value() six times without checking it was set. OnDataReceived has early-return paths that do not run the resume closure, so a regression…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:03Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:04Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:04Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:04Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:05Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:05Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_grpc_utils_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61211": {
+    "id": "brave/brave-browser#61211",
+    "repo": "brave/brave-browser",
+    "number": 61211,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_get_chaintip_status_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61211",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:32:26Z",
+    "updatedAt": "2026-11-05T15:32:26Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_get_chaintip_status_task_unittest.cc break test best practices documented in docs/best-practices. ZCashGetChainTipStatusTaskTest.Success, ZCashGetChainTipStatusTaskTest.EmptyAccount (medium severity) L157 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: In Success and EmptyAccount the result callback checks result.has_value() with non-fatal EXPECT_TRUE and then calls…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:27Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:27Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:27Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:28Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:28Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:28Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:29Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_get_chaintip_status_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61210": {
+    "id": "brave/brave-browser#61210",
+    "repo": "brave/brave-browser",
+    "number": 61210,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61210",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:31:57Z",
+    "updatedAt": "2026-11-05T15:31:57Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_transparent_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateTransparentTransactionTaskTest.TransactionCreated, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_Testnet, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_u64Check, ZCashCreateTransparentTransactionTaskTest.TransactionCreated_MaxFunds (medium severity) L174 - Rule: TI-034:…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:58Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:59Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:59Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:59Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:59Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:32:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61209": {
+    "id": "brave/brave-browser#61209",
+    "repo": "brave/brave-browser",
+    "number": 61209,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61209",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:31:21Z",
+    "updatedAt": "2026-11-05T15:31:21Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_transparent_to_ironwood_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateTransparentToIronwoodTransactionTaskTest.TransactionCreated, ZCashCreateTransparentToIronwoodTransactionTaskTest.TransactionCreated_MaxAmount, ZCashCreateTransparentToIronwoodTransactionTaskTest.NotEnoughFunds,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:22Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:23Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:23Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:23Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:23Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:31:24Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_transparent_to_ironwood_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61208": {
+    "id": "brave/brave-browser#61208",
+    "repo": "brave/brave-browser",
+    "number": 61208,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61208",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:30:51Z",
+    "updatedAt": "2026-11-05T15:30:51Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_transparent_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated, ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated_MaxAmount, ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated_AllAmount,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:53Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:53Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:53Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:53Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:54Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:54Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_orchard_to_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61207": {
+    "id": "brave/brave-browser#61207",
+    "repo": "brave/brave-browser",
+    "number": 61207,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61207",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:30:30Z",
+    "updatedAt": "2026-11-05T15:30:30Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateOrchardToIronwoodTransactionTaskTest.TransactionCreated (medium severity) L173 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: TransactionCreated dereferences the std::optional returned by GetOrchardRawBytes (orchard_part, and orchard_part.value() later) without…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:31Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:32Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:32Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:32Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:32Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:30:33Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_orchard_to_ironwood_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61206": {
+    "id": "brave/brave-browser#61206",
+    "repo": "brave/brave-browser",
+    "number": 61206,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61206",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:29:51Z",
+    "updatedAt": "2026-11-05T15:29:51Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_ironwood_to_transparent_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateIronwoodToTransparentTransactionTaskTest.TransactionCreated, ZCashCreateIronwoodToTransparentTransactionTaskTest.TransactionCreated_MaxAmount, ZCashCreateIronwoodToTransparentTransactionTaskTest.FeeCorrectness, ZCashCreateIronwoodToTransparentTransactionTaskTest.FeeCorrectness_MaxAmount…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:52Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:53Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:53Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:53Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:53Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:54Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_ironwood_to_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61205": {
+    "id": "brave/brave-browser#61205",
+    "repo": "brave/brave-browser",
+    "number": 61205,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61205",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:29:16Z",
+    "updatedAt": "2026-11-05T15:29:16Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc break test best practices documented in docs/best-practices. ZCashCreateIronwoodToIronwoodTransactionTaskTest.TransactionCreated, ZCashCreateIronwoodToIronwoodTransactionTaskTest.TransactionCreated_MaxAmount, ZCashCreateIronwoodToIronwoodTransactionTaskTest.NotEnoughFunds (medium severity) L157 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values -…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:17Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:18Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:18Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:18Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:18Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:29:19Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_ironwood_to_ironwood_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61204": {
+    "id": "brave/brave-browser#61204",
+    "repo": "brave/brave-browser",
+    "number": 61204,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_complete_transaction_task_v6_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61204",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:28:38Z",
+    "updatedAt": "2026-11-05T15:28:38Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_complete_transaction_task_v6_unittest.cc break test best practices documented in docs/best-practices. ZCashCompleteTransactionTaskV6Test.GetLightdInfoError, ZCashCompleteTransactionTaskV6Test.InvalidConsensusBranchId, ZCashCompleteTransactionTaskV6Test.GetLatestBlockError, ZCashCompleteTransactionTaskV6Test.WitnessCalculateError, ZCashCompleteTransactionTaskV6Test.GetTreeStateError,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:40Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:40Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:41Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:41Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:41Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:41Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_complete_transaction_task_v6_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61203": {
+    "id": "brave/brave-browser#61203",
+    "repo": "brave/brave-browser",
+    "number": 61203,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_blocks_batch_scan_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61203",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:28:13Z",
+    "updatedAt": "2026-11-05T15:28:13Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_blocks_batch_scan_task_unittest.cc break test best practices documented in docs/best-practices. ZCashBlocksBatchScanTest.SingleBlockDecoded, ZCashBlocksBatchScanTest.AllBlocksDecoded, ZCashBlocksBatchScanTest.EmptyFrontierBlock, ZCashBlocksBatchScanTest.EmptyTreeState, ZCashBlocksBatchScanTest.IronwoodFrontierInvalidHexError (medium severity) L296 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:15Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:15Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:15Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:16Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:16Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:16Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:28:17Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_blocks_batch_scan_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61202": {
+    "id": "brave/brave-browser#61202",
+    "repo": "brave/brave-browser",
+    "number": 61202,
+    "kind": "issue",
+    "title": "Test best-practice violations in v5_zcash_serializer_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61202",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:27:37Z",
+    "updatedAt": "2026-11-05T15:27:37Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/v5_zcash_serializer_unittest.cc break test best practices documented in docs/best-practices. ZCashV5SerializerTest.TxId_TransparentOnly, ZCashV5SerializerTest.OrchardBundle (medium severity) L65 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: ZCashV5SerializerTest.TxId_TransparentOnly and OrchardBundle call .value() on optionals returned by ZCashAddressToScriptPubkey, ZCashKeyring::GetPubkey and…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:39Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:39Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:40Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:40Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:27:41Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61179": {
+    "id": "brave/brave-browser#61179",
+    "repo": "brave/brave-browser",
+    "number": 61179,
+    "kind": "issue",
+    "title": "Test best-practice violations in network_manager_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61179",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:17:49Z",
+    "updatedAt": "2026-11-05T15:17:49Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/network_manager_unittest.cc break test best practices documented in docs/best-practices. NetworkManagerUnitTest.CustomChainsExist, NetworkManagerUnitTest.GetAllChainsTest (medium severity) L247 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: In network_manager_unittest.cc, CustomChainsExist checks existing_chains.size() with EXPECT_EQ and then indexes existing_chains[0] and [1], and…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:50Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:50Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:51Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:51Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:51Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:52Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:17:52Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#61173": {
+    "id": "brave/brave-browser#61173",
+    "repo": "brave/brave-browser",
+    "number": 61173,
+    "kind": "issue",
+    "title": "Test best-practice violations in json_rpc_service_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61173",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:14:40Z",
+    "updatedAt": "2026-11-05T15:14:40Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/json_rpc_service_unittest.cc break test best practices documented in docs/best-practices. JsonRpcServiceUnitTest.GetERC20TokenBalances, JsonRpcServiceUnitTest.GetSPLTokenBalances, UnstoppableDomainsUnitTest., ENSL2JsonRpcServiceUnitTest., SnsJsonRpcServiceUnitTest. (medium severity) L593 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: Several mock RPC handlers and result helpers in…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:41Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:41Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:41Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:42Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:14:43Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60850": {
+    "id": "brave/brave-browser#60850",
+    "repo": "brave/brave-browser",
+    "number": 60850,
+    "kind": "issue",
+    "title": "Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60850",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:55:42Z",
+    "updatedAt": "2026-11-05T13:26:14Z",
+    "closedAt": "2026-11-05T13:26:14Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_transparent_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated (low severity) L132 - Why it's weak: Orchard-to-transparent task tests never assert the transaction's amount()/to() metadata that feeds the tx-history/confirmation UI; the signed outputs themselves are covered by the UnshieldFunds golden…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:44Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:44Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:44Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:45Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:45Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:45Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:15Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_create_orchard_to_transparent_transaction_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
    "brave/brave-browser#60900": {
     "id": "brave/brave-browser#60900",
     "repo": "brave/brave-browser",
@@ -27274,102 +29717,6 @@
      "body:zcash_decoder"
     ],
     "retrievedAt": "2026-11-04T02:21:54.326Z"
-   },
-   "brave/brave-browser#60850": {
-    "id": "brave/brave-browser#60850",
-    "repo": "brave/brave-browser",
-    "number": 60850,
-    "kind": "issue",
-    "title": "Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
-    "url": "https://github.com/brave/brave-browser/issues/60850",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": null,
-    "createdAt": "2026-11-03T23:55:42Z",
-    "updatedAt": "2026-11-03T23:55:42Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "tests",
-     "QA/No",
-     "release-notes/exclude",
-     "feature/web3/wallet",
-     "tests/test-quality",
-     "tests/weak-assertions"
-    ],
-    "milestone": null,
-    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_create_orchard_to_transparent_transaction_task_unittest.cc would keep passing if the behavior they cover broke. ZCashCreateOrchardToTransparentTransactionTaskTest.TransactionCreated (low severity) L132 - Why it's weak: Orchard-to-transparent task tests never assert the transaction's amount()/to() metadata that feeds the tx-history/confirmation UI; the signed outputs themselves are covered by the UnshieldFunds golden…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:44Z",
-      "actor": "netzenbot",
-      "detail": "tests"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:44Z",
-      "actor": "netzenbot",
-      "detail": "QA/No"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:44Z",
-      "actor": "netzenbot",
-      "detail": "release-notes/exclude"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:45Z",
-      "actor": "netzenbot",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:45Z",
-      "actor": "netzenbot",
-      "detail": "tests/test-quality"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-03T23:55:45Z",
-      "actor": "netzenbot",
-      "detail": "tests/weak-assertions"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-04T20:59:13Z",
-      "actor": "netzenbot",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41255",
-      "willClose": true
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:orchard wallet",
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash_create_orchard_to_transparent_transaction_task_unittest",
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-11-05T00:55:10.274Z"
    },
    "brave/brave-browser#60699": {
     "id": "brave/brave-browser#60699",
@@ -38506,12 +40853,12 @@
     "kind": "issue",
     "title": "Weak unit tests in permission_utils_unittest.cc",
     "url": "https://github.com/brave/brave-browser/issues/60839",
-    "state": "open",
-    "stateReason": null,
+    "state": "closed",
+    "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-03T23:50:55Z",
-    "updatedAt": "2026-11-03T23:50:55Z",
-    "closedAt": null,
+    "updatedAt": "2026-11-05T13:26:19Z",
+    "closedAt": "2026-11-05T13:26:19Z",
     "mergedAt": null,
     "mergeCommitSha": null,
     "baseRef": null,
@@ -38587,7 +40934,14 @@
       "actor": "netzenbot",
       "detail": "PullRequest",
       "ref": "brave/brave-core#41255",
-      "willClose": true
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:19Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
      }
     ],
     "timelineTruncated": false,
@@ -38598,7 +40952,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-05T00:55:10.274Z"
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
    },
    "brave/brave-browser#59539": {
     "id": "brave/brave-browser#59539",
@@ -40948,6 +43302,93 @@
      "body:zec"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-browser#61165": {
+    "id": "brave/brave-browser#61165",
+    "repo": "brave/brave-browser",
+    "number": 61165,
+    "kind": "issue",
+    "title": "Test best-practice violations in orchard_block_scanner_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61165",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:10:53Z",
+    "updatedAt": "2026-11-05T15:10:53Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/internal/orchard_block_scanner_unittest.cc break test best practices documented in docs/best-practices. OrchardBlockScanner.FoundKnownNullifiers, OrchardBlockScannerTest.DiscoverNewNotes, OrchardBlockScanner.FoundKnownNullifiers_SameBatch (medium severity) L600 - Rule: TI-034: Use ASSERT for Preconditions That Subsequent Code Depends On - Problem: In orchard_block_scanner_unittest.cc, FoundKnownNullifiers checks…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:54Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:54Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:55Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:55Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:55Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:10:55Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood",
+     "search:orchard wallet"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:ironwood"
+    ],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
    },
    "brave/brave-browser#60671": {
     "id": "brave/brave-browser#60671",
@@ -78868,6 +81309,169 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#41255": {
+    "id": "brave/brave-core#41255",
+    "repo": "brave/brave-core",
+    "number": 41255,
+    "kind": "pr",
+    "title": "Improve brave_wallet unit test quality (30 test-quality issues)",
+    "url": "https://github.com/brave/brave-core/pull/41255",
+    "state": "merged",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-11-04T20:59:12Z",
+    "updatedAt": "2026-11-05T16:26:56Z",
+    "closedAt": "2026-11-05T13:26:10Z",
+    "mergedAt": "2026-11-05T13:26:10Z",
+    "mergeCommitSha": "c26d75307641a3b437252c46737e1731acc2e44f",
+    "baseRef": "master",
+    "headRef": "netzenbot/wallet-test-quality-fixes",
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "pr/tests-only"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Test-quality fixes for brave_wallet unit tests, one commit per issue. Resolves https://github.com/brave/brave-browser/issues/60854 Resolves https://github.com/brave/brave-browser/issues/60853 Resolves https://github.com/brave/brave-browser/issues/60852 Resolves https://github.com/brave/brave-browser/issues/60851 Resolves https://github.com/brave/brave-browser/issues/60850 Resolves https://github.com/brave/brave-browser/issues/60849 Resolves…",
+    "bodyRefs": [
+     "brave/brave-browser#60854",
+     "brave/brave-browser#60853",
+     "brave/brave-browser#60852",
+     "brave/brave-browser#60851",
+     "brave/brave-browser#60850",
+     "brave/brave-browser#60849",
+     "brave/brave-browser#60848",
+     "brave/brave-browser#60847",
+     "brave/brave-browser#60845",
+     "brave/brave-browser#60844",
+     "brave/brave-browser#60843",
+     "brave/brave-browser#60842",
+     "brave/brave-browser#60841",
+     "brave/brave-browser#60840",
+     "brave/brave-browser#60839",
+     "brave/brave-browser#60838",
+     "brave/brave-browser#60837",
+     "brave/brave-browser#60836",
+     "brave/brave-browser#60835",
+     "brave/brave-browser#60834",
+     "brave/brave-browser#60833",
+     "brave/brave-browser#60832",
+     "brave/brave-browser#60831",
+     "brave/brave-browser#60830",
+     "brave/brave-browser#60829",
+     "brave/brave-browser#60734",
+     "brave/brave-browser#60702",
+     "brave/brave-browser#60701",
+     "brave/brave-browser#60735",
+     "brave/brave-browser#60736"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#60854",
+     "brave/brave-browser#60853",
+     "brave/brave-browser#60852",
+     "brave/brave-browser#60851",
+     "brave/brave-browser#60850",
+     "brave/brave-browser#60849",
+     "brave/brave-browser#60848",
+     "brave/brave-browser#60847",
+     "brave/brave-browser#60845",
+     "brave/brave-browser#60844",
+     "brave/brave-browser#60843",
+     "brave/brave-browser#60842",
+     "brave/brave-browser#60841",
+     "brave/brave-browser#60840",
+     "brave/brave-browser#60839",
+     "brave/brave-browser#60838",
+     "brave/brave-browser#60837",
+     "brave/brave-browser#60836",
+     "brave/brave-browser#60835",
+     "brave/brave-browser#60834",
+     "brave/brave-browser#60833",
+     "brave/brave-browser#60832",
+     "brave/brave-browser#60831",
+     "brave/brave-browser#60830",
+     "brave/brave-browser#60829",
+     "brave/brave-browser#60734",
+     "brave/brave-browser#60702",
+     "brave/brave-browser#60701",
+     "brave/brave-browser#60735",
+     "brave/brave-browser#60736"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#60701",
+     "brave/brave-browser#60702",
+     "brave/brave-browser#60734",
+     "brave/brave-browser#60735",
+     "brave/brave-browser#60736",
+     "brave/brave-browser#60829",
+     "brave/brave-browser#60830",
+     "brave/brave-browser#60831",
+     "brave/brave-browser#60832",
+     "brave/brave-browser#60833",
+     "brave/brave-browser#60834",
+     "brave/brave-browser#60835",
+     "brave/brave-browser#60836",
+     "brave/brave-browser#60837",
+     "brave/brave-browser#60838",
+     "brave/brave-browser#60839",
+     "brave/brave-browser#60840",
+     "brave/brave-browser#60841",
+     "brave/brave-browser#60842",
+     "brave/brave-browser#60843",
+     "brave/brave-browser#60844",
+     "brave/brave-browser#60845",
+     "brave/brave-browser#60847",
+     "brave/brave-browser#60848",
+     "brave/brave-browser#60849",
+     "brave/brave-browser#60850",
+     "brave/brave-browser#60851",
+     "brave/brave-browser#60852",
+     "brave/brave-browser#60853",
+     "brave/brave-browser#60854"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-04T21:07:29Z",
+      "actor": "netzenbot-reviewer",
+      "detail": "pr/tests-only"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T21:26:06Z",
+      "actor": "brave-builds",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41257",
+      "willClose": false
+     },
+     {
+      "type": "merged",
+      "at": "2026-11-05T13:26:10Z",
+      "actor": "bbondy",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:10Z",
+      "actor": "bbondy",
+      "detail": null,
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "path:components/brave_wallet/browser/zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
    "brave/brave-core#24655": {
     "id": "brave/brave-core#24655",
     "repo": "brave/brave-core",
@@ -79745,157 +82349,6 @@
     "relevance": "linked",
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
-   "brave/brave-core#41255": {
-    "id": "brave/brave-core#41255",
-    "repo": "brave/brave-core",
-    "number": 41255,
-    "kind": "pr",
-    "title": "Improve brave_wallet unit test quality (30 test-quality issues)",
-    "url": "https://github.com/brave/brave-core/pull/41255",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": false,
-    "createdAt": "2026-11-04T20:59:12Z",
-    "updatedAt": "2026-11-05T08:10:25Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": "master",
-    "headRef": "netzenbot/wallet-test-quality-fixes",
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "pr/tests-only"
-    ],
-    "milestone": null,
-    "bodyExcerpt": "Test-quality fixes for brave_wallet unit tests, one commit per issue. Resolves https://github.com/brave/brave-browser/issues/60854 Resolves https://github.com/brave/brave-browser/issues/60853 Resolves https://github.com/brave/brave-browser/issues/60852 Resolves https://github.com/brave/brave-browser/issues/60851 Resolves https://github.com/brave/brave-browser/issues/60850 Resolves https://github.com/brave/brave-browser/issues/60849 Resolves…",
-    "bodyRefs": [
-     "brave/brave-browser#60854",
-     "brave/brave-browser#60853",
-     "brave/brave-browser#60852",
-     "brave/brave-browser#60851",
-     "brave/brave-browser#60850",
-     "brave/brave-browser#60849",
-     "brave/brave-browser#60848",
-     "brave/brave-browser#60847",
-     "brave/brave-browser#60845",
-     "brave/brave-browser#60844",
-     "brave/brave-browser#60843",
-     "brave/brave-browser#60842",
-     "brave/brave-browser#60841",
-     "brave/brave-browser#60840",
-     "brave/brave-browser#60839",
-     "brave/brave-browser#60838",
-     "brave/brave-browser#60837",
-     "brave/brave-browser#60836",
-     "brave/brave-browser#60835",
-     "brave/brave-browser#60834",
-     "brave/brave-browser#60833",
-     "brave/brave-browser#60832",
-     "brave/brave-browser#60831",
-     "brave/brave-browser#60830",
-     "brave/brave-browser#60829",
-     "brave/brave-browser#60734",
-     "brave/brave-browser#60702",
-     "brave/brave-browser#60701",
-     "brave/brave-browser#60735",
-     "brave/brave-browser#60736"
-    ],
-    "resolvesRefs": [
-     "brave/brave-browser#60854",
-     "brave/brave-browser#60853",
-     "brave/brave-browser#60852",
-     "brave/brave-browser#60851",
-     "brave/brave-browser#60850",
-     "brave/brave-browser#60849",
-     "brave/brave-browser#60848",
-     "brave/brave-browser#60847",
-     "brave/brave-browser#60845",
-     "brave/brave-browser#60844",
-     "brave/brave-browser#60843",
-     "brave/brave-browser#60842",
-     "brave/brave-browser#60841",
-     "brave/brave-browser#60840",
-     "brave/brave-browser#60839",
-     "brave/brave-browser#60838",
-     "brave/brave-browser#60837",
-     "brave/brave-browser#60836",
-     "brave/brave-browser#60835",
-     "brave/brave-browser#60834",
-     "brave/brave-browser#60833",
-     "brave/brave-browser#60832",
-     "brave/brave-browser#60831",
-     "brave/brave-browser#60830",
-     "brave/brave-browser#60829",
-     "brave/brave-browser#60734",
-     "brave/brave-browser#60702",
-     "brave/brave-browser#60701",
-     "brave/brave-browser#60735",
-     "brave/brave-browser#60736"
-    ],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [
-     "brave/brave-browser#60701",
-     "brave/brave-browser#60702",
-     "brave/brave-browser#60734",
-     "brave/brave-browser#60735",
-     "brave/brave-browser#60736",
-     "brave/brave-browser#60829",
-     "brave/brave-browser#60830",
-     "brave/brave-browser#60831",
-     "brave/brave-browser#60832",
-     "brave/brave-browser#60833",
-     "brave/brave-browser#60834",
-     "brave/brave-browser#60835",
-     "brave/brave-browser#60836",
-     "brave/brave-browser#60837",
-     "brave/brave-browser#60838",
-     "brave/brave-browser#60839",
-     "brave/brave-browser#60840",
-     "brave/brave-browser#60841",
-     "brave/brave-browser#60842",
-     "brave/brave-browser#60843",
-     "brave/brave-browser#60844",
-     "brave/brave-browser#60845",
-     "brave/brave-browser#60847",
-     "brave/brave-browser#60848",
-     "brave/brave-browser#60849",
-     "brave/brave-browser#60850",
-     "brave/brave-browser#60851",
-     "brave/brave-browser#60852",
-     "brave/brave-browser#60853",
-     "brave/brave-browser#60854"
-    ],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-04T21:07:29Z",
-      "actor": "netzenbot-reviewer",
-      "detail": "pr/tests-only"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-04T21:26:06Z",
-      "actor": "brave-builds",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41257",
-      "willClose": false
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "linked:brave/brave-browser#60839",
-     "linked:brave/brave-browser#60850"
-    ],
-    "relevance": "linked",
-    "matchedTerms": [],
-    "retrievedAt": "2026-11-05T09:31:09.084Z"
    },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
@@ -89873,6 +92326,2806 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#60701": {
+    "id": "brave/brave-browser#60701",
+    "repo": "brave/brave-browser",
+    "number": 60701,
+    "kind": "issue",
+    "title": "Weak unit tests in eth_request_helper_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60701",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T22:48:24Z",
+    "updatedAt": "2026-11-05T13:26:24Z",
+    "closedAt": "2026-11-05T13:26:24Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/eth_request_helper_unittest.cc would keep passing if the behavior they cover broke. EthRequestHelperUnitTest.ParseEthSignTypedDataParams (medium severity) L677 - Why it's weak: ParseEthSignTypedDataParams is tested only with well-formed typed data, so its rejection of malformed dapp input (wrong param count, non-string address, invalid JSON, missing primaryType/domain/message/types) is unverified; removing these guards would turn…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:25Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:26Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:26Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:26Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:26Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:27Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:24Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60702": {
+    "id": "brave/brave-browser#60702",
+    "repo": "brave/brave-browser",
+    "number": 60702,
+    "kind": "issue",
+    "title": "Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60702",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T22:48:41Z",
+    "updatedAt": "2026-11-05T13:26:23Z",
+    "closedAt": "2026-11-05T13:26:23Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/renderer/brave_wallet_response_helpers_unittest.cc would keep passing if the behavior they cover broke. BraveWalletResponseHelpersTest.GetProviderRequestReturnFromEthJsonResponseErrorHTTP, BraveWalletResponseHelpersTest.GetProviderRequestReturnFromEthJsonResponseSuccess, BraveWalletResponseHelpersTest.GetProviderRequestReturnFromEthJsonResponseError (medium severity) L59 - Why it's weak: No test feeds…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:42Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:42Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:42Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:42Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:43Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:48:43Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:24Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60734": {
+    "id": "brave/brave-browser#60734",
+    "repo": "brave/brave-browser",
+    "number": 60734,
+    "kind": "issue",
+    "title": "Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60734",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T22:57:04Z",
+    "updatedAt": "2026-11-05T13:26:23Z",
+    "closedAt": "2026-11-05T13:26:23Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in browser/brave_wallet/brave_wallet_hid_chooser_unittest.cc would keep passing if the behavior they cover broke. BraveWalletHidChooserTest.ExclusionFiltersCancels (low severity) L188 - Why it's weak: ExclusionFiltersCancels uses the Ledger vendor filter as the exclusion filter, so HidChooserController itself excludes every Ledger device and returns an empty list; the test passes even if BraveWalletHidChooser stops rejecting requests that carry exclusion filters.…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:05Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:05Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:06Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:06Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:06Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:06Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:24Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60735": {
+    "id": "brave/brave-browser#60735",
+    "repo": "brave/brave-browser",
+    "number": 60735,
+    "kind": "issue",
+    "title": "Weak unit tests in brave_wallet_service_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60735",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T22:57:25Z",
+    "updatedAt": "2026-11-05T13:26:24Z",
+    "closedAt": "2026-11-05T13:26:24Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in browser/brave_wallet/brave_wallet_service_unittest.cc would keep passing if the behavior they cover broke. BraveWalletServiceUnitTest.AutolockIsDisabledInTests (low severity) L3235 - Why it's weak: The first half of AutolockIsDisabledInTests checks that service_ stays unlocked after 20 minutes, but no wallet is created on service_. KeyringService::IsLockedSync() returns false when no wallet exists, so the check passes whether or not the test-only autolock…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:26Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:27Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:27Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:27Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:27Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:28Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:24Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60736": {
+    "id": "brave/brave-browser#60736",
+    "repo": "brave/brave-browser",
+    "number": 60736,
+    "kind": "issue",
+    "title": "Weak unit tests in eth_allowance_manager_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60736",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T22:57:37Z",
+    "updatedAt": "2026-11-05T13:26:25Z",
+    "closedAt": "2026-11-05T13:26:25Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive",
+     "tests/weak-assertions",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in browser/brave_wallet/eth_allowance_manager_unittest.cc would keep passing if the behavior they cover broke. EthAllowanceManagerUnitTest.BreakAllowanceDiscoveringIfTokenListEmpty (low severity) L579 - Why it's weak: BreakAllowanceDiscoveringIfTokenListEmpty only asserts inside the discovery callback, and it never waits for the callback or checks that it ran. With an empty token list, production never invokes the callback, so the test passes without executing…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:38Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:39Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:39Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:39Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:39Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T22:57:40Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:26Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60829": {
+    "id": "brave/brave-browser#60829",
+    "repo": "brave/brave-browser",
+    "number": 60829,
+    "kind": "issue",
+    "title": "Weak unit tests in bitcoin_transaction_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60829",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:46:16Z",
+    "updatedAt": "2026-11-05T13:26:23Z",
+    "closedAt": "2026-11-05T13:26:23Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/bitcoin/bitcoin_transaction_unittest.cc would keep passing if the behavior they cover broke. BitcoinTransaction.TxOutput_Value, BitcoinTransaction.Value (low severity) L114 - Why it's weak: The BitcoinTransaction round-trip tests only use default kTarget outputs and never set sending_max_amount (which operator== ignores), so serialization of a change output's type and of the max-send flag is never verified; writing every output…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:18Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:18Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:18Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:18Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:19Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:19Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:23Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60830": {
+    "id": "brave/brave-browser#60830",
+    "repo": "brave/brave-browser",
+    "number": 60830,
+    "kind": "issue",
+    "title": "Weak unit tests in blockchain_registry_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60830",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:46:45Z",
+    "updatedAt": "2026-11-05T13:26:22Z",
+    "closedAt": "2026-11-05T13:26:22Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/blockchain_registry_unittest.cc would keep passing if the behavior they cover broke. BlockchainRegistryUnitTest.ParseLists (low severity) L555 - Why it's weak: BlockchainRegistryUnitTest.ParseLists uses the process-wide singleton without resetting it and writes the same fixtures that earlier tests in the suite already loaded, so when tests share a process, UpdateRegistry skipping the token-list, coingecko-ids or chain-list…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:47Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:47Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:48Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:48Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:46:48Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:22Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60831": {
+    "id": "brave/brave-browser#60831",
+    "repo": "brave/brave-browser",
+    "number": 60831,
+    "kind": "issue",
+    "title": "Weak unit tests in brave_wallet_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60831",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:47:21Z",
+    "updatedAt": "2026-11-05T13:26:22Z",
+    "closedAt": "2026-11-05T13:26:22Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/brave_wallet_utils_unittest.cc would keep passing if the behavior they cover broke. BraveWalletUtilsUnitTest.SwapInfoToValue_DifferentProviders (low severity) L336 - Why it's weak: SwapInfoToValue_DifferentProviders round-trips every SwapProvider except kCowSwap, which has explicit Encode/Decode cases, and no other test persists a CowSwap swap_info; removing its mapping would silently turn it into kAuto with all tests passing. -…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:23Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:23Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:23Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:23Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:24Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:24Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:22Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60832": {
+    "id": "brave/brave-browser#60832",
+    "repo": "brave/brave-browser",
+    "number": 60832,
+    "kind": "issue",
+    "title": "Weak unit tests in cardano_provider_impl_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60832",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:47:53Z",
+    "updatedAt": "2026-11-05T13:26:21Z",
+    "closedAt": "2026-11-05T13:26:21Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/cardano/cardano_provider_impl_unittest.cc would keep passing if the behavior they cover broke. CardanoProviderImplUnitTest.IsEnabled_WalletLocked (low severity) L292 - Why it's weak: CardanoProviderImplUnitTest.IsEnabled_WalletLocked locks the wallet before adding the Cardano account, so AddAccount() returns nullptr and IsEnabled returns false through the no-accounts branch; IsEnabled's behavior for a locked wallet with an…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:55Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:55Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:55Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:56Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:47:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:22Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60833": {
+    "id": "brave/brave-browser#60833",
+    "repo": "brave/brave-browser",
+    "number": 60833,
+    "kind": "issue",
+    "title": "Weak unit tests in cardano_rpc_schema_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60833",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:48:11Z",
+    "updatedAt": "2026-11-05T13:26:21Z",
+    "closedAt": "2026-11-05T13:26:21Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/cardano/cardano_rpc_schema_unittest.cc would keep passing if the behavior they cover broke. CardanoRpcSchema.EpochParameters (low severity) L81 - Why it's weak: CardanoRpcSchema.EpochParameters checks invalid min_fee_a and min_fee_b values but not coins_per_utxo_size, so dropping that field's parse-failure return (yielding 0 or a truncated value used in min-ADA calculation) passes all tests. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:12Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:13Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:13Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:13Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:13Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:14Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:21Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60834": {
+    "id": "brave/brave-browser#60834",
+    "repo": "brave/brave-browser",
+    "number": 60834,
+    "kind": "issue",
+    "title": "Weak unit tests in eth_gas_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60834",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:48:33Z",
+    "updatedAt": "2026-11-05T13:26:21Z",
+    "closedAt": "2026-11-05T13:26:21Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/eth_gas_utils_unittest.cc would keep passing if the behavior they cover broke. EthGasUtilsTest.GetSuggested1559Fees (low severity) L33 - Why it's weak: EthGasUtilsTest.GetSuggested1559Fees never produces a high-percentile reward equal to the average one, so the loop that walks the high priority fee forward to the next larger value (and its bounds) is untested; removing it passes the test. - Change that would still pass: Delete…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:35Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:35Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:35Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:35Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:36Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:36Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:21Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60835": {
+    "id": "brave/brave-browser#60835",
+    "repo": "brave/brave-browser",
+    "number": 60835,
+    "kind": "issue",
+    "title": "Weak unit tests in fil_nonce_tracker_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60835",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:48:52Z",
+    "updatedAt": "2026-11-05T13:26:20Z",
+    "closedAt": "2026-11-05T13:26:20Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/fil_nonce_tracker_unittest.cc would keep passing if the behavior they cover broke. FilNonceTrackerUnitTest.GetNonce (low severity) L96 - Why it's weak: FilNonceTrackerUnitTest.GetNonce only feeds successful Filecoin.MpoolGetNonce responses, so OnGetNetworkNonce's error branch is never exercised. A regression that reports a fabricated nonce as success after an RPC failure would go unnoticed. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:53Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:54Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:54Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:54Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:54Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:48:55Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:20Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60836": {
+    "id": "brave/brave-browser#60836",
+    "repo": "brave/brave-browser",
+    "number": 60836,
+    "kind": "issue",
+    "title": "Weak unit tests in fil_transaction_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60836",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:49:11Z",
+    "updatedAt": "2026-11-05T13:26:20Z",
+    "closedAt": "2026-11-05T13:26:20Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/fil_transaction_unittest.cc would keep passing if the behavior they cover broke. FilTransactionUnitTest.FromTxData (low severity) L99 - Why it's weak: In FilTransactionUnitTest.FromTxData, the 'invalid value' and 'invalid address' cases also use a non-numeric max_fee (\"e\"), which rejects them by itself. The value-validation (and address-validation) branches are never isolated. - Change that would still pass: Delete the…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:12Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:12Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:13Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:13Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:13Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:13Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:20Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60837": {
+    "id": "brave/brave-browser#60837",
+    "repo": "brave/brave-browser",
+    "number": 60837,
+    "kind": "issue",
+    "title": "Weak unit tests in json_keystore_parser_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60837",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:49:44Z",
+    "updatedAt": "2026-11-05T13:26:20Z",
+    "closedAt": "2026-11-05T13:26:20Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/json_keystore_parser_unittest.cc would keep passing if the behavior they cover broke. JsonKeystoreParser.DecryptPrivateKeyFromJsonKeystore (low severity) L31 - Why it's weak: JsonKeystoreParser tests only use well-formed v3 aes-128-ctr keystores. The unsupported-cipher rejection (not covered by the MAC) and the missing-field guards are never exercised, so deleting them leaves every test green. - Change that would still pass:…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:45Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:46Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:46Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:46Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:46Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:49:47Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:20Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60838": {
+    "id": "brave/brave-browser#60838",
+    "repo": "brave/brave-browser",
+    "number": 60838,
+    "kind": "issue",
+    "title": "Weak unit tests in json_rpc_response_parser_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60838",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:50:19Z",
+    "updatedAt": "2026-11-05T13:26:19Z",
+    "closedAt": "2026-11-05T13:26:19Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/json_rpc_response_parser_unittest.cc would keep passing if the behavior they cover broke. JsonRpcResponseParserUnitTest.AnkrParseGetAccountBalanceResponse (low severity) L367 - Why it's weak: Every Ankr fixture asset uses a supported blockchain (polygon/eth), so the code that drops assets whose blockchain is not in kAnkrBlockchains is never exercised. - Change that would still pass: In ankr::ParseGetAccountBalanceResponse…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:20Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:20Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:20Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:20Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:21Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:21Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:50:21Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:19Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60840": {
+    "id": "brave/brave-browser#60840",
+    "repo": "brave/brave-browser",
+    "number": 60840,
+    "kind": "issue",
+    "title": "Weak unit tests in polkadot_provider_impl_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60840",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:51:17Z",
+    "updatedAt": "2026-11-05T13:26:18Z",
+    "closedAt": "2026-11-05T13:26:18Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/polkadot/polkadot_provider_impl_unittest.cc would keep passing if the behavior they cover broke. PolkadotProviderImplUnitTest.Enable_TabInactive (low severity) L319 - Why it's weak: Enable_TabInactive checks only that the error code is kUnknown, which is shared with the user-rejected and denied paths; the tab-not-active message that distinguishes this branch is not asserted. - Change that would still pass: In the kTabInactive…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:19Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:19Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:20Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:20Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:20Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:21Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:18Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60841": {
+    "id": "brave/brave-browser#60841",
+    "repo": "brave/brave-browser",
+    "number": 60841,
+    "kind": "issue",
+    "title": "Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60841",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:51:49Z",
+    "updatedAt": "2026-11-05T13:26:18Z",
+    "closedAt": "2026-11-05T13:26:18Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/polkadot/polkadot_substrate_rpc_unittest.cc would keep passing if the behavior they cover broke. PolkadotSubstrateRpcUnitTest.GetAccountBalance (low severity) L185 - Why it's weak: In GetAccountBalance, the 'Account data is too short' response is malformed JSON (\"block\":\"\"0x1bcd...), so it fails at JSON parsing and never exercises the 80-byte account-info length check it is meant to cover. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:51Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:51Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:52Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:52Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:52Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:51:52Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:19Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60842": {
+    "id": "brave/brave-browser#60842",
+    "repo": "brave/brave-browser",
+    "number": 60842,
+    "kind": "issue",
+    "title": "Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60842",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:52:15Z",
+    "updatedAt": "2026-11-05T13:26:17Z",
+    "closedAt": "2026-11-05T13:26:17Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/polkadot/polkadot_transaction_status_task_unittest.cc would keep passing if the behavior they cover broke. PolkadotTransactionStatusTaskUnitTest.ExtrinsicNotInMortalityWindow_NumericLimits (low severity) L433 - Why it's weak: ExtrinsicNotInMortalityWindow_NumericLimits expects kNotFound, which is also what a wrapping (non-saturating) add produces immediately with zero block fetches, so it cannot detect loss of the saturating…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:16Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:16Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:17Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:17Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:17Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:17Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:17Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60843": {
+    "id": "brave/brave-browser#60843",
+    "repo": "brave/brave-browser",
+    "number": 60843,
+    "kind": "issue",
+    "title": "Weak unit tests in polkadot_transaction_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60843",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:52:53Z",
+    "updatedAt": "2026-11-05T13:26:17Z",
+    "closedAt": "2026-11-05T13:26:17Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/polkadot/polkadot_transaction_unittest.cc would keep passing if the behavior they cover broke. PolkadotTransaction.FromValue (low severity) L338 - Why it's weak: The 'ss58_prefix exceeds uint16_t limits' case in PolkadotTransaction.FromValue uses a number too large for int, so it is rejected by the non-int branch and the CheckedNumeric range check is never exercised. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:54Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:54Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:55Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:55Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:55Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:52:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:17Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60844": {
+    "id": "brave/brave-browser#60844",
+    "repo": "brave/brave-browser",
+    "number": 60844,
+    "kind": "issue",
+    "title": "Weak unit tests in simulation_response_parser_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60844",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:53:22Z",
+    "updatedAt": "2026-11-05T13:26:16Z",
+    "closedAt": "2026-11-05T13:26:16Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/simulation_response_parser_unittest.cc would keep passing if the behavior they cover broke. SimulationResponseParserUnitTest.ParseEvmSwapSynForUsdc, SimulationServiceUnitTest.ScanEvmTransactionValidResponse (low severity) L20 - Why it's weak: Every test calls evm::ParseSimulationResponse with an account string that exactly matches the expectedStateChanges key. The lowercase fallback, which production depends on because it passes…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:23Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:24Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:24Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:24Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:25Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:25Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:16Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60845": {
+    "id": "brave/brave-browser#60845",
+    "repo": "brave/brave-browser",
+    "number": 60845,
+    "kind": "issue",
+    "title": "Weak unit tests in simulation_service_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60845",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:53:54Z",
+    "updatedAt": "2026-11-05T13:26:16Z",
+    "closedAt": "2026-11-05T13:26:16Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/simulation_service_unittest.cc would keep passing if the behavior they cover broke. SimulationServiceUnitTest.ScanEVMTransactionUnsupportedNetwork (low severity) L432 - Why it's weak: The SimulationService fixture always enables the simulations feature and sets the Blowfish opt-in to kAllowed, so the CanScanTransaction checks that block sending transactions to Blowfish without consent are never tested. - Change that would still…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:55Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:55Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:55Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:56Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:53:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:16Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60847": {
+    "id": "brave/brave-browser#60847",
+    "repo": "brave/brave-browser",
+    "number": 60847,
+    "kind": "issue",
+    "title": "Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60847",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:54:21Z",
+    "updatedAt": "2026-11-05T13:26:15Z",
+    "closedAt": "2026-11-05T13:26:15Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/snap/execution_environment/wallet_page_snap_host_bridge_controller_unittest.cc would keep passing if the behavior they cover broke. WalletPageSnapHostBridgeControllerUnitTest.UnloadSnapWhileUnboundIsNoop (low severity) L87 - Why it's weak: The only UnloadSnap test uses an unbound controller and asserts nothing. Forwarding to a bound SnapHostBridge is never checked, even though FakeSnapHostBridge already tracks…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:22Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:22Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:22Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:22Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:23Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:23Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:15Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60848": {
+    "id": "brave/brave-browser#60848",
+    "repo": "brave/brave-browser",
+    "number": 60848,
+    "kind": "issue",
+    "title": "Weak unit tests in solana_response_parser_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60848",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:54:41Z",
+    "updatedAt": "2026-11-05T13:26:16Z",
+    "closedAt": "2026-11-05T13:26:16Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/solana_response_parser_unittest.cc would keep passing if the behavior they cover broke. SolanaResponseParserUnitTest.ParseGetSignatureStatuses (low severity) L261 - Why it's weak: ParseGetSignatureStatuses has no test for a missing or wrong-typed confirmationStatus, and that branch is buggy: it pushes std::nullopt and then also pushes the partially parsed status, so the result is one element longer than the input. - Change that…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:42Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:43Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:43Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:43Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:44Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:44Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:54:44Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:17Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60849": {
+    "id": "brave/brave-browser#60849",
+    "repo": "brave/brave-browser",
+    "number": 60849,
+    "kind": "issue",
+    "title": "Weak unit tests in solana_transaction_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60849",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:55:11Z",
+    "updatedAt": "2026-11-05T13:26:15Z",
+    "closedAt": "2026-11-05T13:26:15Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/solana_transaction_unittest.cc would keep passing if the behavior they cover broke. SolanaTransactionUnitTest.FromToValue (low severity) L490 - Why it's weak: The invalid-input loop in SolanaTransactionUnitTest.FromToValue calls SolanaMessage::FromValue instead of SolanaTransaction::FromValue, so none of SolanaTransaction::FromValue's required-field failure paths are tested. - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:13Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:13Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:13Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:14Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:14Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:55:14Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:15Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60851": {
+    "id": "brave/brave-browser#60851",
+    "repo": "brave/brave-browser",
+    "number": 60851,
+    "kind": "issue",
+    "title": "Weak unit tests in btc_like_serializer_stream_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60851",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:56:06Z",
+    "updatedAt": "2026-11-05T13:26:14Z",
+    "closedAt": "2026-11-05T13:26:14Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/weak-assertions"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/btc_like_serializer_stream_unittest.cc would keep passing if the behavior they cover broke. BtcLikeSerializerStreamTest.PushCompactSize, BtcLikeSerializerStreamTest.PushSizeAndBytes (low severity) L58 - Why it's weak: PushCompactSize/PushSizeAndBytes tests use only mid-range values (0xab, 0xabcd, 300, 0x10000, ...), so off-by-one errors in the 0xfd/0xffff/0xffffffff range checks of the Bitcoin CompactSize encoder would not be…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:08Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:08Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:09Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:09Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:09Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:09Z",
+      "actor": "netzenbot",
+      "detail": "tests/weak-assertions"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:14Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60852": {
+    "id": "brave/brave-browser#60852",
+    "repo": "brave/brave-browser",
+    "number": 60852,
+    "kind": "issue",
+    "title": "Weak unit tests in eth_address_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60852",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:56:33Z",
+    "updatedAt": "2026-11-05T13:26:13Z",
+    "closedAt": "2026-11-05T13:26:13Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/eth_address_unittest.cc would keep passing if the behavior they cover broke. EthAddressUnitTest.ToEip1191ChecksumAddress (low severity) L160 - Why it's weak: EthAddressUnitTest.ToEip1191ChecksumAddress only uses chain_id \"0x1\", so ignoring the chain_id (EIP-1191 prefix for RSK chains 30/31) or failing to reject an unparsable chain_id would not be detected. - Change that would still pass: In EthAddress::ToEip1191ChecksumAddress…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:35Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:35Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:35Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:36Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:36Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:36Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:13Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60853": {
+    "id": "brave/brave-browser#60853",
+    "repo": "brave/brave-browser",
+    "number": 60853,
+    "kind": "issue",
+    "title": "Weak unit tests in fil_address_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60853",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:56:54Z",
+    "updatedAt": "2026-11-05T13:26:12Z",
+    "closedAt": "2026-11-05T13:26:12Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/false-positive"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/fil_address_unittest.cc would keep passing if the behavior they cover broke. FilAddressUnitTest.FromPayload (low severity) L133 - Why it's weak: FilAddressUnitTest.FromPayload's 'wrong key/protocol pair secp' block reuses public_bls_key with SECP256K1 instead of passing public_secp_key with BLS, so the BLS (and delegated) payload-size checks in FilAddress::FromPayload are never exercised with a non-empty wrong-size payload. -…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:55Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:56Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:56Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:56Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:56Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:56:57Z",
+      "actor": "netzenbot",
+      "detail": "tests/false-positive"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:13Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41255"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
+   "brave/brave-browser#60854": {
+    "id": "brave/brave-browser#60854",
+    "repo": "brave/brave-browser",
+    "number": 60854,
+    "kind": "issue",
+    "title": "Weak unit tests in value_conversion_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/60854",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-03T23:57:22Z",
+    "updatedAt": "2026-11-05T13:26:12Z",
+    "closedAt": "2026-11-05T13:26:12Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "tests/test-quality",
+     "tests/missing-coverage"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/value_conversion_utils_unittest.cc would keep passing if the behavior they cover broke. ValueConversionUtilsUnitTest.ValueToNetworkInfoTest (low severity) L137 - Why it's weak: ValueToNetworkInfoTest only parses an in-range activeRpcEndpointIndex, so the clamp that resets negative or oversized persisted indices to 0 is untested (and it currently lets index == rpcUrls.size() through). - Change that would still pass: In…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:24Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:24Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:24Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:24Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:25Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-03T23:57:25Z",
+      "actor": "netzenbot",
+      "detail": "tests/missing-coverage"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-04T20:59:13Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41255",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-05T13:26:13Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-core#41255"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-05T18:03:15.345Z"
+   },
    "brave/brave-core#26997": {
     "id": "brave/brave-core#26997",
     "repo": "brave/brave-core",
@@ -91914,7 +97167,7 @@
   },
   "pathHistory": {
    "components/brave_wallet/browser/zcash": {
-    "lastCommitAt": "2026-10-31T08:16:58Z",
+    "lastCommitAt": "2026-11-05T13:26:09Z",
     "prs": [
      19783,
      20351,
@@ -92077,7 +97330,8 @@
      39979,
      40325,
      40695,
-     41066
+     41066,
+     41255
     ],
     "commitsWithoutPr": 21,
     "shasWithoutPr": [
@@ -92147,6 +97401,7 @@
    "brave/brave-browser#36437": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-browser#36004": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#34696": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61222": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#53355": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#53542": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-browser#49235": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -92164,6 +97419,9 @@
    "brave/brave-browser#24108": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#20554": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61168": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61166": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#41257": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41231": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -92253,15 +97511,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 853,
-   "searchHits": 1231,
-   "tracked": 817,
-   "direct": 644,
-   "mention": 69,
-   "linked": 104,
-   "excluded": 140,
-   "mentionsDropped": 30
+   "discovered": 885,
+   "searchHits": 1282,
+   "tracked": 872,
+   "direct": 667,
+   "mention": 74,
+   "linked": 131,
+   "excluded": 144,
+   "mentionsDropped": 31
   }
  },
- "completeAt": "2026-11-05T09:31:09.084Z"
+ "completeAt": "2026-11-05T18:03:15.345Z"
 }

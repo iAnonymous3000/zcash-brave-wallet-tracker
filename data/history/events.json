@@ -1,5 +1,1421 @@
 [
  {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:14:35Z",
+  "title": "New issue: Test best-practice violations in zcash_verify_chain_state_task_unittest.cc",
+  "impact": "Opened in brave-browser#61397. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61397"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61397",
+    "url": "https://github.com/brave/brave-browser/issues/61397"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:14:35Z"
+  ],
+  "id": "93e561e085614cfe",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:13:57Z",
+  "title": "New issue: Test best-practice violations in zcash_auto_sync_manager_unittest.cc",
+  "impact": "Opened in brave-browser#61396. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61396"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61396",
+    "url": "https://github.com/brave/brave-browser/issues/61396"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:13:57Z"
+  ],
+  "id": "549c464c47639a87",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:48:03Z",
+  "title": "New issue: Test best-practice violations in zcash_decoder_unittest.cc",
+  "impact": "Opened in brave-browser#61244. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61244"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61244",
+    "url": "https://github.com/brave/brave-browser/issues/61244"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:48:03Z"
+  ],
+  "id": "1f5a058b733660f9",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:38:28Z",
+  "title": "New issue: Test best-practice violations in zcash_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61223. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61223"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61223",
+    "url": "https://github.com/brave/brave-browser/issues/61223"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:38:28Z"
+  ],
+  "id": "35de4ec73cea69cd",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:37:15Z",
+  "title": "New issue: Test best-practice violations in zcash_wallet_service_unittest.cc",
+  "impact": "Opened in brave-browser#61221. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61221"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61221",
+    "url": "https://github.com/brave/brave-browser/issues/61221"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:37:15Z"
+  ],
+  "id": "ab4a31b4a817a336",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:36:38Z",
+  "title": "New issue: Test best-practice violations in zcash_tx_meta_unittest.cc",
+  "impact": "Opened in brave-browser#61219. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61219"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61219",
+    "url": "https://github.com/brave/brave-browser/issues/61219"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:36:38Z"
+  ],
+  "id": "34345415ddc119f9",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:36:03Z",
+  "title": "New issue: Test best-practice violations in zcash_transaction_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61218. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61218"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61218",
+    "url": "https://github.com/brave/brave-browser/issues/61218"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:36:03Z"
+  ],
+  "id": "af10f4f49de2bcd8",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:35:28Z",
+  "title": "New issue: Test best-practice violations in zcash_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#61217. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61217"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61217",
+    "url": "https://github.com/brave/brave-browser/issues/61217"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:35:28Z"
+  ],
+  "id": "44ecf5fd6d974932",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:35:06Z",
+  "title": "New issue: Test best-practice violations in zcash_shield_sync_service_unittest.cc",
+  "impact": "Opened in brave-browser#61216. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61216"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61216",
+    "url": "https://github.com/brave/brave-browser/issues/61216"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:35:06Z"
+  ],
+  "id": "15fe4b0719cf846c",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:34:28Z",
+  "title": "New issue: Test best-practice violations in zcash_scan_blocks_task_unittest.cc",
+  "impact": "Opened in brave-browser#61215. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61215"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61215",
+    "url": "https://github.com/brave/brave-browser/issues/61215"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:34:28Z"
+  ],
+  "id": "ddd676da83eb923c",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:34:02Z",
+  "title": "New issue: Test best-practice violations in zcash_resolve_transaction_status_task_unittest.cc",
+  "impact": "Opened in brave-browser#61214. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61214"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61214",
+    "url": "https://github.com/brave/brave-browser/issues/61214"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:34:02Z"
+  ],
+  "id": "ca80c23ce0452897",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:33:40Z",
+  "title": "New issue: Test best-practice violations in zcash_keyring_unittest.cc",
+  "impact": "Opened in brave-browser#61213. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61213"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61213",
+    "url": "https://github.com/brave/brave-browser/issues/61213"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:33:40Z"
+  ],
+  "id": "189b021cf0b1b7ae",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:33:02Z",
+  "title": "New issue: Test best-practice violations in zcash_grpc_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61212. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61212"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61212",
+    "url": "https://github.com/brave/brave-browser/issues/61212"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:33:02Z"
+  ],
+  "id": "a2675c28c008adad",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:32:26Z",
+  "title": "New issue: Test best-practice violations in zcash_get_chaintip_status_task_unittest.cc",
+  "impact": "Opened in brave-browser#61211. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61211"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61211",
+    "url": "https://github.com/brave/brave-browser/issues/61211"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:32:26Z"
+  ],
+  "id": "e8524ece855f9b2b",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:31:57Z",
+  "title": "New issue: Test best-practice violations in zcash_create_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61210. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61210"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61210",
+    "url": "https://github.com/brave/brave-browser/issues/61210"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:31:57Z"
+  ],
+  "id": "46009e9feac0647f",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:31:21Z",
+  "title": "New issue: Test best-practice violations in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61209. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61209"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61209",
+    "url": "https://github.com/brave/brave-browser/issues/61209"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:31:21Z"
+  ],
+  "id": "b712e0df8d150dc8",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:30:51Z",
+  "title": "New issue: Test best-practice violations in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61208. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61208"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61208",
+    "url": "https://github.com/brave/brave-browser/issues/61208"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:30:51Z"
+  ],
+  "id": "b9aa5bb8f76cfb04",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:30:30Z",
+  "title": "New issue: Test best-practice violations in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61207. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61207"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61207",
+    "url": "https://github.com/brave/brave-browser/issues/61207"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:30:30Z"
+  ],
+  "id": "0c9bbb3f273844d4",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:29:51Z",
+  "title": "New issue: Test best-practice violations in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61206. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61206"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61206",
+    "url": "https://github.com/brave/brave-browser/issues/61206"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:29:51Z"
+  ],
+  "id": "d4cec6edd5964278",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:29:16Z",
+  "title": "New issue: Test best-practice violations in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+  "impact": "Opened in brave-browser#61205. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61205"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61205",
+    "url": "https://github.com/brave/brave-browser/issues/61205"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:29:16Z"
+  ],
+  "id": "d9932db98d7f7563",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:28:38Z",
+  "title": "New issue: Test best-practice violations in zcash_complete_transaction_task_v6_unittest.cc",
+  "impact": "Opened in brave-browser#61204. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61204"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61204",
+    "url": "https://github.com/brave/brave-browser/issues/61204"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:28:38Z"
+  ],
+  "id": "66dab35c2dc8cca7",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:28:13Z",
+  "title": "New issue: Test best-practice violations in zcash_blocks_batch_scan_task_unittest.cc",
+  "impact": "Opened in brave-browser#61203. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61203"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61203",
+    "url": "https://github.com/brave/brave-browser/issues/61203"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:28:13Z"
+  ],
+  "id": "56cff36e0793a0e3",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:26Z",
+  "title": "Closed (completed): Weak unit tests in eth_allowance_manager_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60736"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60736",
+    "url": "https://github.com/brave/brave-browser/issues/60736"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:26Z",
+   "state reason: completed"
+  ],
+  "id": "72062769d09262ab",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:24Z",
+  "title": "Closed (completed): Weak unit tests in brave_wallet_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60735"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60735",
+    "url": "https://github.com/brave/brave-browser/issues/60735"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:24Z",
+   "state reason: completed"
+  ],
+  "id": "143dd45933b05454",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:24Z",
+  "title": "Closed (completed): Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60734"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60734",
+    "url": "https://github.com/brave/brave-browser/issues/60734"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:24Z",
+   "state reason: completed"
+  ],
+  "id": "b4ff666bc4425098",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:24Z",
+  "title": "Closed (completed): Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60702"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60702",
+    "url": "https://github.com/brave/brave-browser/issues/60702"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:24Z",
+   "state reason: completed"
+  ],
+  "id": "d5f58464c5ddbcce",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:24Z",
+  "title": "Closed (completed): Weak unit tests in eth_request_helper_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60701"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60701",
+    "url": "https://github.com/brave/brave-browser/issues/60701"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:24Z",
+   "state reason: completed"
+  ],
+  "id": "f7f2493e35299e76",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:23Z",
+  "title": "Closed (completed): Weak unit tests in bitcoin_transaction_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60829"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60829",
+    "url": "https://github.com/brave/brave-browser/issues/60829"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:23Z",
+   "state reason: completed"
+  ],
+  "id": "355f2c96e109114b",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:22Z",
+  "title": "Closed (completed): Weak unit tests in brave_wallet_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60831"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60831",
+    "url": "https://github.com/brave/brave-browser/issues/60831"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:22Z",
+   "state reason: completed"
+  ],
+  "id": "17dde7fb135a88ed",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:22Z",
+  "title": "Closed (completed): Weak unit tests in blockchain_registry_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60830"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60830",
+    "url": "https://github.com/brave/brave-browser/issues/60830"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:22Z",
+   "state reason: completed"
+  ],
+  "id": "8f12374aff42bf0e",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:22Z",
+  "title": "Closed (completed): Weak unit tests in cardano_provider_impl_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60832"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60832",
+    "url": "https://github.com/brave/brave-browser/issues/60832"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:22Z",
+   "state reason: completed"
+  ],
+  "id": "a3b398f55ff48461",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:21Z",
+  "title": "Closed (completed): Weak unit tests in cardano_rpc_schema_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60833"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60833",
+    "url": "https://github.com/brave/brave-browser/issues/60833"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:21Z",
+   "state reason: completed"
+  ],
+  "id": "d5a90604c2404169",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:21Z",
+  "title": "Closed (completed): Weak unit tests in eth_gas_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60834"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60834",
+    "url": "https://github.com/brave/brave-browser/issues/60834"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:21Z",
+   "state reason: completed"
+  ],
+  "id": "e2baf558fa55662b",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:20Z",
+  "title": "Closed (completed): Weak unit tests in json_keystore_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60837"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60837",
+    "url": "https://github.com/brave/brave-browser/issues/60837"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:20Z",
+   "state reason: completed"
+  ],
+  "id": "27f4cf2e33c486e5",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:20Z",
+  "title": "Closed (completed): Weak unit tests in fil_nonce_tracker_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60835"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60835",
+    "url": "https://github.com/brave/brave-browser/issues/60835"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:20Z",
+   "state reason: completed"
+  ],
+  "id": "37acb95b6011abd7",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:20Z",
+  "title": "Closed (completed): Weak unit tests in fil_transaction_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60836"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60836",
+    "url": "https://github.com/brave/brave-browser/issues/60836"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:20Z",
+   "state reason: completed"
+  ],
+  "id": "d59b964a2f7a0b19",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:19Z",
+  "title": "Closed (completed): Weak unit tests in json_rpc_response_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60838"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60838",
+    "url": "https://github.com/brave/brave-browser/issues/60838"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:19Z",
+   "state reason: completed"
+  ],
+  "id": "2ee26b377f3da744",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:19Z",
+  "title": "Closed (completed): Weak unit tests in permission_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60839"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60839",
+    "url": "https://github.com/brave/brave-browser/issues/60839"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:19Z",
+   "state reason: completed"
+  ],
+  "id": "ad435b58adb91e77",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:19Z",
+  "title": "Closed (completed): Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60841"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60841",
+    "url": "https://github.com/brave/brave-browser/issues/60841"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:19Z",
+   "state reason: completed"
+  ],
+  "id": "ae8a0c7e797b2f08",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:18Z",
+  "title": "Closed (completed): Weak unit tests in polkadot_provider_impl_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60840"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60840",
+    "url": "https://github.com/brave/brave-browser/issues/60840"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:18Z",
+   "state reason: completed"
+  ],
+  "id": "4bdbcde1a7814c57",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:17Z",
+  "title": "Closed (completed): Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60842"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60842",
+    "url": "https://github.com/brave/brave-browser/issues/60842"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:17Z",
+   "state reason: completed"
+  ],
+  "id": "7c1aeb99d4b65199",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:17Z",
+  "title": "Closed (completed): Weak unit tests in polkadot_transaction_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60843"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60843",
+    "url": "https://github.com/brave/brave-browser/issues/60843"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:17Z",
+   "state reason: completed"
+  ],
+  "id": "82ca7c95c414c3c0",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:17Z",
+  "title": "Closed (completed): Weak unit tests in solana_response_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60848"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60848",
+    "url": "https://github.com/brave/brave-browser/issues/60848"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:17Z",
+   "state reason: completed"
+  ],
+  "id": "9dc4aa7b2d665e72",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:16Z",
+  "title": "Closed (completed): Weak unit tests in simulation_response_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60844"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60844",
+    "url": "https://github.com/brave/brave-browser/issues/60844"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:16Z",
+   "state reason: completed"
+  ],
+  "id": "1f65518f35c1cec5",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:16Z",
+  "title": "Closed (completed): Weak unit tests in simulation_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60845"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60845",
+    "url": "https://github.com/brave/brave-browser/issues/60845"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:16Z",
+   "state reason: completed"
+  ],
+  "id": "80dc34488254dd7f",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:15Z",
+  "title": "Closed (completed): Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60847"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60847",
+    "url": "https://github.com/brave/brave-browser/issues/60847"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:15Z",
+   "state reason: completed"
+  ],
+  "id": "335d25d951124c8f",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:15Z",
+  "title": "Closed (completed): Weak unit tests in solana_transaction_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60849"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60849",
+    "url": "https://github.com/brave/brave-browser/issues/60849"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:15Z",
+   "state reason: completed"
+  ],
+  "id": "9ef39347ec8f5f10",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:15Z",
+  "title": "Closed (completed): Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60850"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60850",
+    "url": "https://github.com/brave/brave-browser/issues/60850"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:15Z",
+   "state reason: completed"
+  ],
+  "id": "ff4814a6133a39c7",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:14Z",
+  "title": "Closed (completed): Weak unit tests in btc_like_serializer_stream_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60851"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60851",
+    "url": "https://github.com/brave/brave-browser/issues/60851"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:14Z",
+   "state reason: completed"
+  ],
+  "id": "df32acb8f55cc1d8",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:13Z",
+  "title": "Closed (completed): Weak unit tests in eth_address_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60852"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60852",
+    "url": "https://github.com/brave/brave-browser/issues/60852"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:13Z",
+   "state reason: completed"
+  ],
+  "id": "4a7d6e69239394ce",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:13Z",
+  "title": "Closed (completed): Weak unit tests in value_conversion_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60854"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60854",
+    "url": "https://github.com/brave/brave-browser/issues/60854"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:13Z",
+   "state reason: completed"
+  ],
+  "id": "76f502e522eacc18",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-05T13:26:13Z",
+  "title": "Closed (completed): Weak unit tests in fil_address_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-05. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60853"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60853",
+    "url": "https://github.com/brave/brave-browser/issues/60853"
+   },
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-05T13:26:13Z",
+   "state reason: completed"
+  ],
+  "id": "f2ac39631634492d",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-11-05T13:26:10Z",
+  "title": "Merged: Improve brave_wallet unit test quality (30 test-quality issues)",
+  "impact": "Merged into brave-core master on 2026-11-05. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#41255"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#41255",
+    "url": "https://github.com/brave/brave-core/pull/41255"
+   }
+  ],
+  "evidence": [
+   "merged 2026-11-05T13:26:10Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "70def6564d97f923",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-04T18:56:17Z",
+  "title": "In Desktop Release 1.99.55: [iwyu] Remove unused includes in components (1/5)",
+  "impact": "The merged code (brave-core#40695) is now part of the Desktop Release build 1.99.55. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40695"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-core#40695",
+    "url": "https://github.com/brave/brave-core/pull/40695"
+   }
+  ],
+  "evidence": [
+   "in v1.99.32 (GitHub compare v1.99.32...5e268a04: behind); later builds of the same history include it"
+  ],
+  "id": "bfc48a1c6643af91",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "in-build",
   "sourceAt": "2026-11-04T13:30:26Z",
   "title": "In iOS Nightly 1.101.23: [Wallet] Cleanup dapp origin for transaction",
@@ -80,6 +1496,106 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:57:22Z",
+  "title": "New issue: Weak unit tests in value_conversion_utils_unittest.cc",
+  "impact": "Opened in brave-browser#60854. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60854"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60854",
+    "url": "https://github.com/brave/brave-browser/issues/60854"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:57:22Z"
+  ],
+  "id": "d66248dacc095386",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:56:54Z",
+  "title": "New issue: Weak unit tests in fil_address_unittest.cc",
+  "impact": "Opened in brave-browser#60853. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60853"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60853",
+    "url": "https://github.com/brave/brave-browser/issues/60853"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:56:54Z"
+  ],
+  "id": "3c426577983bae47",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:56:33Z",
+  "title": "New issue: Weak unit tests in eth_address_unittest.cc",
+  "impact": "Opened in brave-browser#60852. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60852"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60852",
+    "url": "https://github.com/brave/brave-browser/issues/60852"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:56:33Z"
+  ],
+  "id": "4a0e89aaef2c2d2a",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:56:06Z",
+  "title": "New issue: Weak unit tests in btc_like_serializer_stream_unittest.cc",
+  "impact": "Opened in brave-browser#60851. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60851"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60851",
+    "url": "https://github.com/brave/brave-browser/issues/60851"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:56:06Z"
+  ],
+  "id": "ec241590f5c00611",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-03T23:55:42Z",
   "title": "New issue: Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
   "impact": "Opened in brave-browser#60850. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -102,6 +1618,631 @@
   "id": "c249a0c00e60f688",
   "detectedAt": "2026-11-04T02:21:54.326Z",
   "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:55:11Z",
+  "title": "New issue: Weak unit tests in solana_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#60849. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60849"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60849",
+    "url": "https://github.com/brave/brave-browser/issues/60849"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:55:11Z"
+  ],
+  "id": "78849478561a64b7",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:54:41Z",
+  "title": "New issue: Weak unit tests in solana_response_parser_unittest.cc",
+  "impact": "Opened in brave-browser#60848. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60848"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60848",
+    "url": "https://github.com/brave/brave-browser/issues/60848"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:54:41Z"
+  ],
+  "id": "b36511deb93cb5d9",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:54:21Z",
+  "title": "New issue: Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+  "impact": "Opened in brave-browser#60847. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60847"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60847",
+    "url": "https://github.com/brave/brave-browser/issues/60847"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:54:21Z"
+  ],
+  "id": "34a8ec0d86948744",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:53:54Z",
+  "title": "New issue: Weak unit tests in simulation_service_unittest.cc",
+  "impact": "Opened in brave-browser#60845. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60845"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60845",
+    "url": "https://github.com/brave/brave-browser/issues/60845"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:53:54Z"
+  ],
+  "id": "f672c778e21264ab",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:53:22Z",
+  "title": "New issue: Weak unit tests in simulation_response_parser_unittest.cc",
+  "impact": "Opened in brave-browser#60844. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60844"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60844",
+    "url": "https://github.com/brave/brave-browser/issues/60844"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:53:22Z"
+  ],
+  "id": "35c7716b9e9b073a",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:52:53Z",
+  "title": "New issue: Weak unit tests in polkadot_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#60843. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60843"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60843",
+    "url": "https://github.com/brave/brave-browser/issues/60843"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:52:53Z"
+  ],
+  "id": "9463d7ace1afc5e6",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:52:15Z",
+  "title": "New issue: Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+  "impact": "Opened in brave-browser#60842. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60842"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60842",
+    "url": "https://github.com/brave/brave-browser/issues/60842"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:52:15Z"
+  ],
+  "id": "1514c84c1b41ed29",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:51:49Z",
+  "title": "New issue: Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+  "impact": "Opened in brave-browser#60841. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60841"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60841",
+    "url": "https://github.com/brave/brave-browser/issues/60841"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:51:49Z"
+  ],
+  "id": "32a87ac0f13afd79",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:51:17Z",
+  "title": "New issue: Weak unit tests in polkadot_provider_impl_unittest.cc",
+  "impact": "Opened in brave-browser#60840. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60840"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60840",
+    "url": "https://github.com/brave/brave-browser/issues/60840"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:51:17Z"
+  ],
+  "id": "eee674bce2607a48",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:50:55Z",
+  "title": "New issue: Weak unit tests in permission_utils_unittest.cc",
+  "impact": "Opened in brave-browser#60839. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60839"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60839",
+    "url": "https://github.com/brave/brave-browser/issues/60839"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:50:55Z"
+  ],
+  "id": "9d6ce1a8475791a6",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:50:19Z",
+  "title": "New issue: Weak unit tests in json_rpc_response_parser_unittest.cc",
+  "impact": "Opened in brave-browser#60838. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60838"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60838",
+    "url": "https://github.com/brave/brave-browser/issues/60838"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:50:19Z"
+  ],
+  "id": "6fa99ff36c948b55",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:49:44Z",
+  "title": "New issue: Weak unit tests in json_keystore_parser_unittest.cc",
+  "impact": "Opened in brave-browser#60837. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60837"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60837",
+    "url": "https://github.com/brave/brave-browser/issues/60837"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:49:44Z"
+  ],
+  "id": "977fcc2ef925b1c4",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:49:11Z",
+  "title": "New issue: Weak unit tests in fil_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#60836. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60836"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60836",
+    "url": "https://github.com/brave/brave-browser/issues/60836"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:49:11Z"
+  ],
+  "id": "ca33c42aae0db122",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:48:52Z",
+  "title": "New issue: Weak unit tests in fil_nonce_tracker_unittest.cc",
+  "impact": "Opened in brave-browser#60835. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60835"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60835",
+    "url": "https://github.com/brave/brave-browser/issues/60835"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:48:52Z"
+  ],
+  "id": "71f75630776162c7",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:48:33Z",
+  "title": "New issue: Weak unit tests in eth_gas_utils_unittest.cc",
+  "impact": "Opened in brave-browser#60834. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60834"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60834",
+    "url": "https://github.com/brave/brave-browser/issues/60834"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:48:33Z"
+  ],
+  "id": "3f3457661ff5cde8",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:48:11Z",
+  "title": "New issue: Weak unit tests in cardano_rpc_schema_unittest.cc",
+  "impact": "Opened in brave-browser#60833. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60833"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60833",
+    "url": "https://github.com/brave/brave-browser/issues/60833"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:48:11Z"
+  ],
+  "id": "f714e9365c8a1053",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:47:53Z",
+  "title": "New issue: Weak unit tests in cardano_provider_impl_unittest.cc",
+  "impact": "Opened in brave-browser#60832. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60832"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60832",
+    "url": "https://github.com/brave/brave-browser/issues/60832"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:47:53Z"
+  ],
+  "id": "4e5c2f49fda3c0c3",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:47:21Z",
+  "title": "New issue: Weak unit tests in brave_wallet_utils_unittest.cc",
+  "impact": "Opened in brave-browser#60831. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60831"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60831",
+    "url": "https://github.com/brave/brave-browser/issues/60831"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:47:21Z"
+  ],
+  "id": "e3fcc6064ab61444",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:46:45Z",
+  "title": "New issue: Weak unit tests in blockchain_registry_unittest.cc",
+  "impact": "Opened in brave-browser#60830. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60830"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60830",
+    "url": "https://github.com/brave/brave-browser/issues/60830"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:46:45Z"
+  ],
+  "id": "abb6ee2b282d5d95",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T23:46:16Z",
+  "title": "New issue: Weak unit tests in bitcoin_transaction_unittest.cc",
+  "impact": "Opened in brave-browser#60829. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60829"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60829",
+    "url": "https://github.com/brave/brave-browser/issues/60829"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T23:46:16Z"
+  ],
+  "id": "cf7b3d96e704c1d0",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:57:37Z",
+  "title": "New issue: Weak unit tests in eth_allowance_manager_unittest.cc",
+  "impact": "Opened in brave-browser#60736. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60736"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60736",
+    "url": "https://github.com/brave/brave-browser/issues/60736"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:57:37Z"
+  ],
+  "id": "e625c43030d31941",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:57:25Z",
+  "title": "New issue: Weak unit tests in brave_wallet_service_unittest.cc",
+  "impact": "Opened in brave-browser#60735. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60735"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60735",
+    "url": "https://github.com/brave/brave-browser/issues/60735"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:57:25Z"
+  ],
+  "id": "5e80ca175dbd005d",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:57:04Z",
+  "title": "New issue: Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+  "impact": "Opened in brave-browser#60734. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60734"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60734",
+    "url": "https://github.com/brave/brave-browser/issues/60734"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:57:04Z"
+  ],
+  "id": "31741150cc5ef7c5",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:48:41Z",
+  "title": "New issue: Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+  "impact": "Opened in brave-browser#60702. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60702"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60702",
+    "url": "https://github.com/brave/brave-browser/issues/60702"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:48:41Z"
+  ],
+  "id": "70fac58b703629cb",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-03T22:48:24Z",
+  "title": "New issue: Weak unit tests in eth_request_helper_unittest.cc",
+  "impact": "Opened in brave-browser#60701. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#60701"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#60701",
+    "url": "https://github.com/brave/brave-browser/issues/60701"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-03T22:48:24Z"
+  ],
+  "id": "8e3c02834c157684",
+  "detectedAt": "2026-11-05T18:03:15.345Z",
+  "basis": "backfill"
  },
  {
   "kind": "item-tracked",
