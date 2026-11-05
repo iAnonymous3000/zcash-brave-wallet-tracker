@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-11-05T18:03:15.345Z",
+ "retrievedAt": "2026-11-05T23:39:38.356Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,7 +2896,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-05T18:03:15.345Z"
+   "checkedAt": "2026-11-05T23:39:38.356Z"
   },
   "zips": {
    "2005": {
@@ -2943,9 +2943,9 @@
     "num": "0316",
     "title": "Unified Addresses and Unified Viewing Keys",
     "status": "[Revision 0] Active, [Revision 1] Withdrawn, [Revision 2] Draft",
-    "lastCommitAt": "2026-06-24T16:24:12Z",
-    "lastCommitMessage": "Fix the punctuation-after-math problem once and for all.",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/a9b838e8c90217fd5a94b2330d92d61cfb262459",
+    "lastCommitAt": "2026-11-04T00:03:48Z",
+    "lastCommitMessage": "Apply batched suggestions from code review",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/b50fbba4fe6c3294cd30d1e54de719282a314b64",
     "url": "https://zips.z.cash/zip-0316",
     "path": "zips/zip-0316.rst"
    },
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-05T18:03:15.345Z"
+   "checkedAt": "2026-11-05T23:39:38.356Z"
   }
  },
- "completeAt": "2026-11-05T18:03:15.345Z"
+ "completeAt": "2026-11-05T23:39:38.356Z"
 }

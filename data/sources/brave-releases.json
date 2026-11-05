@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-05T18:03:15.345Z",
+ "retrievedAt": "2026-11-05T23:39:38.356Z",
  "data": {
   "releases": [
    {
@@ -13,7 +13,10 @@
     "publishedAt": "2026-11-05T17:40:44Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.30",
     "assetPlatforms": [
-     "android"
+     "android",
+     "linux",
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": true
    },
@@ -41,6 +44,7 @@
     "assetPlatforms": [
      "ios",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": false
@@ -7939,5 +7943,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-05T18:03:15.345Z"
+ "completeAt": "2026-11-05T23:39:38.356Z"
 }

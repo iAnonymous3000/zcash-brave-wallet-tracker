@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-05T18:03:15.345Z",
+ "retrievedAt": "2026-11-05T23:39:38.356Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -44296,7 +44296,7 @@
     "milestone": {
      "title": "1.99.x - Release",
      "dueOn": "2026-11-03T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "Removes #includes from .cc files that clang-include-cleaner reports as unused, using the remove-unused-includes skill. Removals whose header declares a name used in code inactive on Linux were kept, and removals that broke the brave:all build were put back. Covers //brave/components/ subdirectories brave_wallet.",
     "bodyRefs": [],
@@ -44355,7 +44355,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-28T22:37:24.782Z"
+    "retrievedAt": "2026-11-05T23:39:38.356Z"
    },
    "brave/brave-core#39547": {
     "id": "brave/brave-core#39547",
@@ -97521,5 +97521,5 @@
    "mentionsDropped": 31
   }
  },
- "completeAt": "2026-11-05T18:03:15.345Z"
+ "completeAt": "2026-11-05T23:39:38.356Z"
 }
