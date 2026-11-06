@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-11-05T23:39:38.356Z",
+ "retrievedAt": "2026-11-06T06:48:56.568Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2896,16 +2896,16 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-05T23:39:38.356Z"
+   "checkedAt": "2026-11-06T06:48:56.568Z"
   },
   "zips": {
    "2005": {
     "num": "2005",
     "title": "Ironwood Quantum Recoverability",
-    "status": "Proposed",
-    "lastCommitAt": "2026-10-30T01:47:42Z",
-    "lastCommitMessage": "Protocol spec: Correct circuit identifier and quoted lead-byte rule",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/7cb2fdafe15978237e826cba58f63d51b4158f4e",
+    "status": "Final",
+    "lastCommitAt": "2026-11-06T01:48:42Z",
+    "lastCommitMessage": "ZIPs 229 and 2005: Promote to Final",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/13b8af0ef39562f030c1f3c258bf6a604c97273d",
     "url": "https://zips.z.cash/zip-2005",
     "path": "zips/zip-2005.md"
    },
@@ -2962,10 +2962,10 @@
    "0229": {
     "num": "0229",
     "title": "Version 6 Transaction Format",
-    "status": "Draft",
-    "lastCommitAt": "2026-10-22T14:45:43Z",
-    "lastCommitMessage": "ZIP 229: Apply ZIP 2006's wording for bit 2 of flagsOrchard",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/764e2374e0b7a46b0b908848d45a1608cfe3a849",
+    "status": "Final",
+    "lastCommitAt": "2026-11-06T01:48:42Z",
+    "lastCommitMessage": "ZIPs 229 and 2005: Promote to Final",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/13b8af0ef39562f030c1f3c258bf6a604c97273d",
     "url": "https://zips.z.cash/zip-0229",
     "path": "zips/zip-0229.md"
    },
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-05T23:39:38.356Z"
+   "checkedAt": "2026-11-06T06:48:56.568Z"
   }
  },
- "completeAt": "2026-11-05T23:39:38.356Z"
+ "completeAt": "2026-11-06T06:48:56.568Z"
 }
