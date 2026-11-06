@@ -1,5 +1,815 @@
 [
  {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in solana_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60849"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60849",
+    "url": "https://github.com/brave/brave-browser/issues/60849"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "00151fe74b3cebb8",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in blockchain_registry_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60830"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60830",
+    "url": "https://github.com/brave/brave-browser/issues/60830"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "00dce34352ed432d",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in simulation_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60845"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60845",
+    "url": "https://github.com/brave/brave-browser/issues/60845"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "09f9711fcdfd1b32",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in fil_nonce_tracker_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60835"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60835",
+    "url": "https://github.com/brave/brave-browser/issues/60835"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "0df13100a7849ce3",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in bitcoin_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60829"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60829",
+    "url": "https://github.com/brave/brave-browser/issues/60829"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "12b79f4f8c2b7166",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in fil_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60836"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60836",
+    "url": "https://github.com/brave/brave-browser/issues/60836"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "1adc0ecd3a5e0418",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in simulation_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60844"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60844",
+    "url": "https://github.com/brave/brave-browser/issues/60844"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "1f309bdfc19941e2",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in json_rpc_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60838"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60838",
+    "url": "https://github.com/brave/brave-browser/issues/60838"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "2e548607a668e64e",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in cardano_rpc_schema_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60833"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60833",
+    "url": "https://github.com/brave/brave-browser/issues/60833"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "2ebaa4e4778cd88c",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60841"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60841",
+    "url": "https://github.com/brave/brave-browser/issues/60841"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "2f40e53a95ee9eab",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in polkadot_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60840"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60840",
+    "url": "https://github.com/brave/brave-browser/issues/60840"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "4baf9bc2b46ddaba",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in brave_wallet_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60735"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60735",
+    "url": "https://github.com/brave/brave-browser/issues/60735"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "4ddc3c97ec295116",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in brave_wallet_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60831"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60831",
+    "url": "https://github.com/brave/brave-browser/issues/60831"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "569faeab6cf39cfc",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in fil_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60853"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60853",
+    "url": "https://github.com/brave/brave-browser/issues/60853"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "68d8e14253e32587",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in cardano_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60832"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60832",
+    "url": "https://github.com/brave/brave-browser/issues/60832"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "6ea718630eaccfeb",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in solana_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60848"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60848",
+    "url": "https://github.com/brave/brave-browser/issues/60848"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "74bccb542f7c122b",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60850"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60850",
+    "url": "https://github.com/brave/brave-browser/issues/60850"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "753d50078573c1b7",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in eth_allowance_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60736"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60736",
+    "url": "https://github.com/brave/brave-browser/issues/60736"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "82864327a2fd241e",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60842"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60842",
+    "url": "https://github.com/brave/brave-browser/issues/60842"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "886038d404f07144",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in value_conversion_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60854"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60854",
+    "url": "https://github.com/brave/brave-browser/issues/60854"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "8dcd89da7e79004d",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in btc_like_serializer_stream_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60851"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60851",
+    "url": "https://github.com/brave/brave-browser/issues/60851"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "912acbdeefcf2a5e",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60702"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60702",
+    "url": "https://github.com/brave/brave-browser/issues/60702"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "a2a10e63701101e9",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60847"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60847",
+    "url": "https://github.com/brave/brave-browser/issues/60847"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "bbcecb46df9676a9",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in permission_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60839"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60839",
+    "url": "https://github.com/brave/brave-browser/issues/60839"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "c241b740dd139540",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in eth_gas_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60834"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60834",
+    "url": "https://github.com/brave/brave-browser/issues/60834"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "c2b3e57f1dded83e",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in eth_request_helper_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60701"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60701",
+    "url": "https://github.com/brave/brave-browser/issues/60701"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "d52421592194613e",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in json_keystore_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60837"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60837",
+    "url": "https://github.com/brave/brave-browser/issues/60837"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "e8c832317ca99398",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60734"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60734",
+    "url": "https://github.com/brave/brave-browser/issues/60734"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "ef4daf73cdc72a57",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in polkadot_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60843"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60843",
+    "url": "https://github.com/brave/brave-browser/issues/60843"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "f02910621872f9c0",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-06T13:24:58Z",
+  "title": "In iOS Nightly 1.101.32: Weak unit tests in eth_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60852"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60852",
+    "url": "https://github.com/brave/brave-browser/issues/60852"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "fc2bffecb64505d4",
+  "detectedAt": "2026-11-06T15:57:01.364Z",
+  "basis": "observed"
+ },
+ {
   "kind": "item-tracked",
   "sourceAt": "2026-11-05T17:14:35Z",
   "title": "New issue: Test best-practice violations in zcash_verify_chain_state_task_unittest.cc",
