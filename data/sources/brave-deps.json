@@ -1,12 +1,12 @@
 {
  "sourceId": "brave-deps",
  "schema": 1,
- "retrievedAt": "2026-11-07T08:49:02.594Z",
+ "retrievedAt": "2026-11-07T16:28:17.322Z",
  "data": {
   "snapshots": {
    "master": {
     "ref": "master",
-    "commitSha": "bfff76b27c5b0c53fdda4ff600af39e84bca8b7f",
+    "commitSha": "bb812348699c8e4579007f7846ab725da1a0caf9",
     "channels": [
      "master"
     ],
@@ -386,11 +386,11 @@
      "GetTreeState",
      "SendTransaction"
     ],
-    "retrievedAt": "2026-11-07T08:49:02.594Z",
+    "retrievedAt": "2026-11-07T16:28:17.322Z",
     "links": {
-     "lockfile": "https://github.com/brave/brave-core/blob/bfff76b27c5b0c53fdda4ff600af39e84bca8b7f/third_party/rust/chromium_crates_io/Cargo.lock",
-     "deps": "https://github.com/brave/brave-core/blob/bfff76b27c5b0c53fdda4ff600af39e84bca8b7f/DEPS",
-     "cargo": "https://github.com/brave/brave-core/blob/bfff76b27c5b0c53fdda4ff600af39e84bca8b7f/components/brave_wallet/browser/zcash/rust/Cargo.toml"
+     "lockfile": "https://github.com/brave/brave-core/blob/bb812348699c8e4579007f7846ab725da1a0caf9/third_party/rust/chromium_crates_io/Cargo.lock",
+     "deps": "https://github.com/brave/brave-core/blob/bb812348699c8e4579007f7846ab725da1a0caf9/DEPS",
+     "cargo": "https://github.com/brave/brave-core/blob/bb812348699c8e4579007f7846ab725da1a0caf9/components/brave_wallet/browser/zcash/rust/Cargo.toml"
     },
     "resolver": 4,
     "resolution": {
@@ -11336,5 +11336,5 @@
    }
   }
  },
- "completeAt": "2026-11-07T08:49:02.594Z"
+ "completeAt": "2026-11-07T16:28:17.322Z"
 }
