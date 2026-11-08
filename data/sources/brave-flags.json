@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-flags",
  "schema": 1,
- "retrievedAt": "2026-11-07T21:52:28.852Z",
+ "retrievedAt": "2026-11-08T01:27:35.509Z",
  "data": {
   "snapshots": {
    "master": {
@@ -45,7 +45,7 @@
       }
      }
     ],
-    "retrievedAt": "2026-11-07T21:52:28.852Z",
+    "retrievedAt": "2026-11-08T01:27:35.509Z",
     "commitSha": "ec1ccfecca7103997ea03244e05506eb14f1cbd7"
    },
    "v1.100.44": {
@@ -2846,5 +2846,5 @@
    ]
   }
  },
- "completeAt": "2026-11-07T21:52:28.852Z"
+ "completeAt": "2026-11-08T01:27:35.509Z"
 }
