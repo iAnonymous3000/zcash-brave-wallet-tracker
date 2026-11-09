@@ -1,6 +1,816 @@
 [
  {
   "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in polkadot_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60840"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60840",
+    "url": "https://github.com/brave/brave-browser/issues/60840"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "03ee48e14bec8a93",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in json_keystore_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60837"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60837",
+    "url": "https://github.com/brave/brave-browser/issues/60837"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "086f8089eb7dceee",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in fil_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60853"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60853",
+    "url": "https://github.com/brave/brave-browser/issues/60853"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "15ce1adfdf009dcc",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in json_rpc_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60838"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60838",
+    "url": "https://github.com/brave/brave-browser/issues/60838"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "2095f5d17993356c",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in eth_gas_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60834"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60834",
+    "url": "https://github.com/brave/brave-browser/issues/60834"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "22ea74bcb6f2f80b",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in polkadot_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60843"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60843",
+    "url": "https://github.com/brave/brave-browser/issues/60843"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "2402c2720d6c3c98",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in brave_wallet_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60831"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60831",
+    "url": "https://github.com/brave/brave-browser/issues/60831"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "44295d1aa92301fe",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60734"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60734",
+    "url": "https://github.com/brave/brave-browser/issues/60734"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "4b8c034bdfee565b",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in blockchain_registry_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60830"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60830",
+    "url": "https://github.com/brave/brave-browser/issues/60830"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "4ecafd45c4f6f287",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in eth_request_helper_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60701"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60701",
+    "url": "https://github.com/brave/brave-browser/issues/60701"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "57d557a49a614504",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60702"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60702",
+    "url": "https://github.com/brave/brave-browser/issues/60702"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "5f546130c524baf5",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in brave_wallet_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60735"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60735",
+    "url": "https://github.com/brave/brave-browser/issues/60735"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "6a5f0cb130bd4d32",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in simulation_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60844"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60844",
+    "url": "https://github.com/brave/brave-browser/issues/60844"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "6b4d9fab19531a0a",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60850"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60850",
+    "url": "https://github.com/brave/brave-browser/issues/60850"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "737e12b617b2fa15",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in cardano_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60832"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60832",
+    "url": "https://github.com/brave/brave-browser/issues/60832"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "7793f1596aee7570",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in solana_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60849"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60849",
+    "url": "https://github.com/brave/brave-browser/issues/60849"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "7d39a03fdb70c752",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in permission_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60839"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60839",
+    "url": "https://github.com/brave/brave-browser/issues/60839"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "83828242a3026df7",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in eth_allowance_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60736"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60736",
+    "url": "https://github.com/brave/brave-browser/issues/60736"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "858a90e081d09dc8",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in eth_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60852"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60852",
+    "url": "https://github.com/brave/brave-browser/issues/60852"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "94331e64acc16091",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in value_conversion_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60854"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60854",
+    "url": "https://github.com/brave/brave-browser/issues/60854"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "9993330c3d57119f",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in cardano_rpc_schema_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60833"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60833",
+    "url": "https://github.com/brave/brave-browser/issues/60833"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "abf8529b0dad4e0b",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60842"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60842",
+    "url": "https://github.com/brave/brave-browser/issues/60842"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "b1393d2fd11b8d9f",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in fil_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60836"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60836",
+    "url": "https://github.com/brave/brave-browser/issues/60836"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "cd0bcbc28e6159e4",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in solana_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60848"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60848",
+    "url": "https://github.com/brave/brave-browser/issues/60848"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "cd8e848f612688c3",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in fil_nonce_tracker_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60835"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60835",
+    "url": "https://github.com/brave/brave-browser/issues/60835"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "d0a7766bac085888",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in simulation_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60845"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60845",
+    "url": "https://github.com/brave/brave-browser/issues/60845"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "da81c6dca359c362",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in btc_like_serializer_stream_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60851"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60851",
+    "url": "https://github.com/brave/brave-browser/issues/60851"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "e833dfcba63cc1ea",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in bitcoin_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60829"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60829",
+    "url": "https://github.com/brave/brave-browser/issues/60829"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "ebbaa7a6150ca8ae",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60841"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60841",
+    "url": "https://github.com/brave/brave-browser/issues/60841"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "f587a57da1a755e9",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-09T13:36:43Z",
+  "title": "In Android Nightly 1.101.37: Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Android Nightly build 1.101.37. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60847"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60847",
+    "url": "https://github.com/brave/brave-browser/issues/60847"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "f790c5ed618db6bf",
+  "detectedAt": "2026-11-09T20:45:37.712Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
   "sourceAt": "2026-11-06T13:24:58Z",
   "title": "In iOS Nightly 1.101.32: Weak unit tests in solana_transaction_unittest.cc",
   "impact": "The merged code (brave-core#41255) is now part of the iOS Nightly build 1.101.32. This shows the code is in the build, not that every platform exposes the feature.",
