@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-11-10T12:41:03.005Z",
+ "retrievedAt": "2026-11-10T20:50:45.651Z",
  "data": {
   "crates": {
    "orchard": {
@@ -76,9 +76,14 @@
    "zcash_primitives": {
     "crate": "zcash_primitives",
     "maxStable": "0.31.0",
-    "newest": "0.31.0",
-    "updatedAt": "2026-10-21T20:27:05.293348Z",
+    "newest": "0.31.0-keystone.0",
+    "updatedAt": "2026-11-10T16:34:01.630722Z",
     "recent": [
+     {
+      "version": "0.31.0-keystone.0",
+      "createdAt": "2026-11-10T16:34:01.630722Z",
+      "yanked": false
+     },
      {
       "version": "0.31.0",
       "createdAt": "2026-10-21T20:27:05.293348Z",
@@ -132,11 +137,6 @@
      {
       "version": "0.27.0",
       "createdAt": "2026-04-24T04:26:38.794712Z",
-      "yanked": false
-     },
-     {
-      "version": "0.26.4",
-      "createdAt": "2025-12-18T01:00:28.255396Z",
       "yanked": false
      }
     ],
@@ -857,6 +857,17 @@
    }
   },
   "releases": [
+   {
+    "id": "crates.io/zcash_primitives@0.31.0-keystone.0",
+    "project": "zcash_primitives",
+    "repo": "zcash/librustzcash",
+    "version": "0.31.0-keystone.0",
+    "publishedAt": "2026-11-10T16:34:01.630722Z",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-keystone.0",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": true
+   },
    {
     "id": "zcash/lightwalletd@v0.6.1",
     "project": "lightwalletd",
@@ -1917,17 +1928,6 @@
     "prerelease": false
    },
    {
-    "id": "crates.io/zcash_primitives@0.26.4",
-    "project": "zcash_primitives",
-    "repo": "zcash/librustzcash",
-    "version": "0.26.4",
-    "publishedAt": "2025-12-18T01:00:28.255396Z",
-    "url": "https://crates.io/crates/zcash_primitives/0.26.4",
-    "source": "crates.io",
-    "yanked": false,
-    "prerelease": false
-   },
-   {
     "id": "crates.io/halo2_gadgets@0.4.0",
     "project": "halo2_gadgets",
     "repo": "zcash/halo2",
@@ -2892,11 +2892,11 @@
    "repo": "brave/librustzcash",
    "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
    "aheadBy": 2,
-   "behindBy": 1145,
+   "behindBy": 1154,
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-10T12:41:03.005Z"
+   "checkedAt": "2026-11-10T20:50:45.651Z"
   },
   "zips": {
    "2005": {
@@ -3023,8 +3023,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-10T12:41:03.005Z"
+   "checkedAt": "2026-11-10T20:50:45.651Z"
   }
  },
- "completeAt": "2026-11-10T12:41:03.005Z"
+ "completeAt": "2026-11-10T20:50:45.651Z"
 }

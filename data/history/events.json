@@ -1,5 +1,893 @@
 [
  {
+  "kind": "upstream-release",
+  "sourceAt": "2026-11-10T16:34:01.630722Z",
+  "title": "Upstream: zcash_primitives 0.31.0-keystone.0",
+  "impact": "zcash_primitives 0.31.0-keystone.0 was published upstream. Brave master still resolves 0.29.0 (from Brave’s librustzcash fork), so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/zcash_primitives/0.31.0-keystone.0"
+   }
+  ],
+  "evidence": [
+   "published 2026-11-10T16:34:01.630722Z",
+   "Brave master: 0.29.0"
+  ],
+  "id": "0b7ea20d64faefd8",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in polkadot_substrate_rpc_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60841"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60841",
+    "url": "https://github.com/brave/brave-browser/issues/60841"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "03edbc4116daa4dc",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in polkadot_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60843"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60843",
+    "url": "https://github.com/brave/brave-browser/issues/60843"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "0624b0df4de48b60",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in polkadot_transaction_status_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60842"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60842",
+    "url": "https://github.com/brave/brave-browser/issues/60842"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "08cd1e1e1f6d9831",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in solana_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60849"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60849",
+    "url": "https://github.com/brave/brave-browser/issues/60849"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "097bad8943c61d0d",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in bitcoin_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60829"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60829",
+    "url": "https://github.com/brave/brave-browser/issues/60829"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "0a6445c5acf07b96",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in brave_wallet_hid_chooser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60734"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60734",
+    "url": "https://github.com/brave/brave-browser/issues/60734"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "0d174247ff1a7caf",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in json_rpc_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60838"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60838",
+    "url": "https://github.com/brave/brave-browser/issues/60838"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "1a2b83b711de86eb",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in eth_request_helper_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60701"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60701",
+    "url": "https://github.com/brave/brave-browser/issues/60701"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "1e9998756e329ca0",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in btc_like_serializer_stream_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60851"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60851",
+    "url": "https://github.com/brave/brave-browser/issues/60851"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "4018e28592a8a42f",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in fil_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60853"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60853",
+    "url": "https://github.com/brave/brave-browser/issues/60853"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "44f5c1bb2310663e",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in fil_nonce_tracker_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60835"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60835",
+    "url": "https://github.com/brave/brave-browser/issues/60835"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "526e987dfedd83d6",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60850"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60850",
+    "url": "https://github.com/brave/brave-browser/issues/60850"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "54cf3e9d4def65ba",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in wallet_page_snap_host_bridge_controller_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60847"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60847",
+    "url": "https://github.com/brave/brave-browser/issues/60847"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "5dad8e3851b251a2",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in value_conversion_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60854"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60854",
+    "url": "https://github.com/brave/brave-browser/issues/60854"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "5e4bd5199d7ac696",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in cardano_rpc_schema_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60833"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60833",
+    "url": "https://github.com/brave/brave-browser/issues/60833"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "678253b9222149da",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in simulation_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60845"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60845",
+    "url": "https://github.com/brave/brave-browser/issues/60845"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "67983b3dcc18c698",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in permission_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60839"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60839",
+    "url": "https://github.com/brave/brave-browser/issues/60839"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "71f7986a987e4710",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in brave_wallet_service_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60735"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60735",
+    "url": "https://github.com/brave/brave-browser/issues/60735"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "81ab2d283fad0aad",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in solana_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60848"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60848",
+    "url": "https://github.com/brave/brave-browser/issues/60848"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "8d715ba93a21df3a",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in brave_wallet_response_helpers_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60702"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60702",
+    "url": "https://github.com/brave/brave-browser/issues/60702"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "8d7def5c234c1d8b",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in fil_transaction_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60836"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60836",
+    "url": "https://github.com/brave/brave-browser/issues/60836"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "93e27153a4ed2fc8",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in blockchain_registry_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60830"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60830",
+    "url": "https://github.com/brave/brave-browser/issues/60830"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "a17e6967d1cd6fc7",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in brave_wallet_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60831"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60831",
+    "url": "https://github.com/brave/brave-browser/issues/60831"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "b1022587cbc0f1f9",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in polkadot_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60840"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60840",
+    "url": "https://github.com/brave/brave-browser/issues/60840"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "b9c4bf3d3d3f325d",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in eth_gas_utils_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60834"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60834",
+    "url": "https://github.com/brave/brave-browser/issues/60834"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "cd2976391596af7a",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in eth_allowance_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60736"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60736",
+    "url": "https://github.com/brave/brave-browser/issues/60736"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "cdf09c4c94b96404",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: [Wallet] Cleanup dapp origin for transaction",
+  "impact": "The merged code (brave-core#41066) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#41066"
+  ],
+  "topic": "transactions",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-core#41066",
+    "url": "https://github.com/brave/brave-core/pull/41066"
+   }
+  ],
+  "evidence": [
+   "in v1.101.11 (GitHub compare v1.101.11...35cefbed: behind); later builds of the same history include it"
+  ],
+  "id": "d334c34f1dc04726",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in eth_address_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60852"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60852",
+    "url": "https://github.com/brave/brave-browser/issues/60852"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "d6f91ba56753da41",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Wallet - Remove vestigial default base cryptocurrency setting",
+  "impact": "The merged code (brave-core#40863) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#59539"
+  ],
+  "topic": "general",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#59539",
+    "url": "https://github.com/brave/brave-browser/issues/59539"
+   }
+  ],
+  "evidence": [
+   "in v1.101.18 (GitHub compare v1.101.18...373505e5: behind); later builds of the same history include it"
+  ],
+  "id": "d869716e638dbae2",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in cardano_provider_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60832"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60832",
+    "url": "https://github.com/brave/brave-browser/issues/60832"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "e9a3ed1e36d68a95",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in simulation_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60844"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60844",
+    "url": "https://github.com/brave/brave-browser/issues/60844"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "f11e5a489353432d",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-10T13:21:26Z",
+  "title": "In Desktop Nightly 1.101.40: Weak unit tests in json_keystore_parser_unittest.cc",
+  "impact": "The merged code (brave-core#41255) is now part of the Desktop Nightly build 1.101.40. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#60837"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#60837",
+    "url": "https://github.com/brave/brave-browser/issues/60837"
+   }
+  ],
+  "evidence": [
+   "in v1.101.30 (GitHub compare v1.101.30...c26d7530: behind); later builds of the same history include it"
+  ],
+  "id": "fcc8b89a4d74fef8",
+  "detectedAt": "2026-11-10T20:50:45.651Z",
+  "basis": "observed"
+ },
+ {
   "kind": "in-build",
   "sourceAt": "2026-11-09T13:36:43Z",
   "title": "In Android Nightly 1.101.37: Weak unit tests in polkadot_provider_impl_unittest.cc",
@@ -19076,67 +19964,6 @@
    "created 2025-11-11T14:12:39Z"
   ],
   "id": "afff95601f84a6a9",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-11-10T19:12:20Z",
-  "title": "Closed (completed): [ZCash] Show shielded inputs on the tx details page",
-  "impact": "Closed as completed; linked PR merged 2025-11-10. Code is in current Release builds for Desktop, Android, iOS.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-browser#50392"
-  ],
-  "topic": "shielded",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50392",
-    "url": "https://github.com/brave/brave-browser/issues/50392"
-   },
-   {
-    "label": "brave-core#32204",
-    "url": "https://github.com/brave/brave-core/pull/32204"
-   }
-  ],
-  "evidence": [
-   "closed by cypt4 at 2025-11-10T19:12:20Z",
-   "state reason: completed"
-  ],
-  "id": "68c48e2074f711ef",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-10T19:12:19Z",
-  "title": "Merged: [ZCash] Add orchard input to ZecTxData",
-  "impact": "Merged into brave-core master on 2025-11-10. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": "fix",
-  "itemIds": [
-   "brave/brave-core#32204"
-  ],
-  "topic": "shielded",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32204",
-    "url": "https://github.com/brave/brave-core/pull/32204"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-10T19:12:19Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "8f8c164b2d25e489",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

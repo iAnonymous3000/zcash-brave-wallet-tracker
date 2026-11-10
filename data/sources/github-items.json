@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-10T12:41:03.005Z",
+ "retrievedAt": "2026-11-10T20:50:45.651Z",
  "data": {
   "items": {
    "brave/brave-browser#59828": {
@@ -43310,12 +43310,12 @@
     "kind": "issue",
     "title": "Test best-practice violations in orchard_block_scanner_unittest.cc",
     "url": "https://github.com/brave/brave-browser/issues/61165",
-    "state": "open",
-    "stateReason": null,
+    "state": "closed",
+    "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:10:53Z",
-    "updatedAt": "2026-11-05T15:10:53Z",
-    "closedAt": null,
+    "updatedAt": "2026-11-10T19:23:51Z",
+    "closedAt": "2026-11-10T19:23:51Z",
     "mergedAt": null,
     "mergeCommitSha": null,
     "baseRef": null,
@@ -43384,7 +43384,14 @@
       "actor": "netzenbot",
       "detail": "PullRequest",
       "ref": "brave/brave-core#41400",
-      "willClose": true
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-10T19:23:51Z",
+      "actor": "bbondy",
+      "detail": "completed",
+      "ref": "brave/brave-core#41400"
      }
     ],
     "timelineTruncated": false,
@@ -43396,7 +43403,7 @@
     "matchedTerms": [
      "body:ironwood"
     ],
-    "retrievedAt": "2026-11-09T20:45:37.712Z"
+    "retrievedAt": "2026-11-10T20:50:45.651Z"
    },
    "brave/brave-browser#60671": {
     "id": "brave/brave-browser#60671",
@@ -83832,20 +83839,24 @@
     "kind": "pr",
     "title": "Fix test best-practice violations in Brave Wallet unit tests",
     "url": "https://github.com/brave/brave-core/pull/41400",
-    "state": "open",
+    "state": "merged",
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-08T23:31:39Z",
-    "updatedAt": "2026-11-10T08:10:12Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
+    "updatedAt": "2026-11-10T19:23:44Z",
+    "closedAt": "2026-11-10T19:23:38Z",
+    "mergedAt": "2026-11-10T19:23:38Z",
+    "mergeCommitSha": "3ad4b5cdddbf41bb7ede33e696e6ea115ba27a9c",
     "baseRef": "master",
     "headRef": "netzenbot/wallet-test-best-practices",
     "author": "netzenbot",
     "assignees": [],
     "labels": [],
-    "milestone": null,
+    "milestone": {
+     "title": "1.101.x - Nightly",
+     "dueOn": "2026-12-08T00:00:00Z",
+     "state": "OPEN"
+    },
     "bodyExcerpt": "Fix test best-practice violations in Brave Wallet unit tests (50 issues, one initial commit each, plus review follow-ups). Mostly mechanical test-quality changes: assert before dereferencing optionals/pointers, ASSERT for preconditions, TestFuture / condition waits instead of RunLoop / RunUntilIdle, public getters instead of private test access, malformed-input cases, and interceptors that fail on unexpected RPCs. Production behavior is unchanged. Test friend declarations…",
     "bodyRefs": [
      "brave/brave-browser#61123",
@@ -83998,6 +84009,25 @@
       "detail": "PullRequest",
       "ref": "brave/brave-core#41422",
       "willClose": false
+     },
+     {
+      "type": "merged",
+      "at": "2026-11-10T19:23:38Z",
+      "actor": "bbondy",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-10T19:23:38Z",
+      "actor": "bbondy",
+      "detail": null,
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-10T19:23:44Z",
+      "actor": "brave-builds",
+      "detail": "1.101.x - Nightly"
      }
     ],
     "timelineTruncated": false,
@@ -84006,7 +84036,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-10T12:41:03.005Z"
+    "retrievedAt": "2026-11-10T20:50:45.651Z"
    },
    "brave/brave-browser#58567": {
     "id": "brave/brave-browser#58567",
@@ -97610,14 +97640,14 @@
    "brave/brave-browser#24108": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#20554": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#21588": "discovered via search:zec but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-browser#61168": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#61166": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-browser#61168": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
-   "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41257": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41231": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41098": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#34309": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -97716,5 +97746,5 @@
    "mentionsDropped": 31
   }
  },
- "completeAt": "2026-11-10T12:41:03.005Z"
+ "completeAt": "2026-11-10T20:50:45.651Z"
 }

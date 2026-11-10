@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-10T12:41:03.005Z",
+ "retrievedAt": "2026-11-10T20:50:45.651Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3636,6 +3636,17 @@
      "checkedAt": "2026-11-05T23:39:38.356Z",
      "basis": "GitHub compare v1.101.28...c26d7530: ahead"
     }
+   },
+   "brave/brave-core#41400": {
+    "sha": "3ad4b5cdddbf41bb7ede33e696e6ea115ba27a9c",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.101.41",
+     "tag": "v1.101.41",
+     "checkedAt": "2026-11-10T20:50:45.651Z",
+     "basis": "merged 2026-11-10T19:23Z, after v1.101.41 was published"
+    }
    }
   },
   "targets": [
@@ -3644,7 +3655,6 @@
     "version": "1.99.55",
     "publishedAt": "2026-11-04T18:56:17Z",
     "usedBy": [
-     "desktop/release",
      "android/release"
     ]
    },
@@ -3653,6 +3663,7 @@
     "version": "1.99.56",
     "publishedAt": "2026-11-10T03:53:58Z",
     "usedBy": [
+     "desktop/release",
      "github/release"
     ]
    },
@@ -3682,22 +3693,6 @@
     ]
    },
    {
-    "tag": "v1.101.3",
-    "version": "1.101.3",
-    "publishedAt": "2026-10-29T13:26:29Z",
-    "usedBy": [
-     "desktop/nightly"
-    ]
-   },
-   {
-    "tag": "v1.101.36",
-    "version": "1.101.36",
-    "publishedAt": "2026-11-09T13:22:15Z",
-    "usedBy": [
-     "ios/nightly"
-    ]
-   },
-   {
     "tag": "v1.101.37",
     "version": "1.101.37",
     "publishedAt": "2026-11-09T13:36:43Z",
@@ -3706,9 +3701,18 @@
     ]
    },
    {
-    "tag": "v1.101.39",
-    "version": "1.101.39",
-    "publishedAt": "2026-11-10T01:09:28Z",
+    "tag": "v1.101.40",
+    "version": "1.101.40",
+    "publishedAt": "2026-11-10T13:21:26Z",
+    "usedBy": [
+     "desktop/nightly",
+     "ios/nightly"
+    ]
+   },
+   {
+    "tag": "v1.101.41",
+    "version": "1.101.41",
+    "publishedAt": "2026-11-10T13:39:17Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3717,5 +3721,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-10T12:41:03.005Z"
+ "completeAt": "2026-11-10T20:50:45.651Z"
 }

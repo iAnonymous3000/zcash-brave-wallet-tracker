@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-10T12:41:03.005Z",
+ "retrievedAt": "2026-11-10T20:50:45.651Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-10T12:41:03.005Z"
+   "checkedAt": "2026-11-10T20:50:45.651Z"
   },
   "studies": [
    {
@@ -40,12 +40,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.99.55 (157.1.99.55)",
+      "build": "Desktop release 1.99.56 (157.1.99.56)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.99.55",
-      "reason": "157.1.99.55 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.99.56",
+      "reason": "157.1.99.56 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android release 1.99.55 (157.1.99.55)",
@@ -64,12 +64,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.49 (157.1.100.49) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "157.1.100.52 (Windows, macOS arm64, Linux arm64) and 157.1.100.49 (macOS x64) and 156.1.100.44 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      "reason": "157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android beta 1.100.49 (157.1.100.49)",
@@ -88,12 +88,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.100.52 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.36 (158.1.101.36) / 1.101.38 (158.1.101.38)",
+      "build": "Desktop nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.101.3",
-      "reason": "158.1.101.38 (macOS arm64) and 158.1.101.36 (Windows, macOS x64, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      "version": "1.101.40",
+      "reason": "158.1.101.40 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android nightly 1.101.37 (158.1.101.37)",
@@ -104,15 +104,15 @@
       "reason": "158.1.101.37 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.36 (158.1.101.36)",
+      "build": "iOS nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.36",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.36 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.101.40",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.40 is outside the version range 139.1.81.129 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/a86dd1a4cfb75a054d8098d60871009bd641d3c6/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/936653c9cac8d8bf94c4ef00c498afe8b07ea707/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -150,8 +150,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-05T23:39:38.356Z",
-    "verifiedAt": "2026-11-10T12:41:03.005Z"
+    "readAt": "2026-11-10T20:50:45.651Z",
+    "verifiedAt": "2026-11-10T20:50:45.651Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -179,12 +179,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.99.55 (157.1.99.55)",
+      "build": "Desktop release 1.99.56 (157.1.99.56)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.99.55",
-      "reason": "157.1.99.55 is outside the version range any – 139.1.81.128"
+      "version": "1.99.56",
+      "reason": "157.1.99.56 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android release 1.99.55 (157.1.99.55)",
@@ -203,12 +203,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.49 (157.1.100.49) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "157.1.100.52 (Windows, macOS arm64, Linux arm64) and 157.1.100.49 (macOS x64) and 156.1.100.44 (Linux x64) are outside the version range any – 139.1.81.128"
+      "reason": "157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android beta 1.100.49 (157.1.100.49)",
@@ -227,12 +227,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 157.1.100.52 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.36 (158.1.101.36) / 1.101.38 (158.1.101.38)",
+      "build": "Desktop nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.101.3",
-      "reason": "158.1.101.38 (macOS arm64) and 158.1.101.36 (Windows, macOS x64, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range any – 139.1.81.128"
+      "version": "1.101.40",
+      "reason": "158.1.101.40 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android nightly 1.101.37 (158.1.101.37)",
@@ -243,15 +243,15 @@
       "reason": "158.1.101.37 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "iOS nightly 1.101.36 (158.1.101.36)",
+      "build": "iOS nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.36",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.36 is outside the version range any – 139.1.81.128"
+      "version": "1.101.40",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.40 is outside the version range any – 139.1.81.128"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/a86dd1a4cfb75a054d8098d60871009bd641d3c6/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/936653c9cac8d8bf94c4ef00c498afe8b07ea707/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "Disabled",
@@ -286,8 +286,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-05T23:39:38.356Z",
-    "verifiedAt": "2026-11-10T12:41:03.005Z"
+    "readAt": "2026-11-10T20:50:45.651Z",
+    "verifiedAt": "2026-11-10T20:50:45.651Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -313,12 +313,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.99.55 (157.1.99.55)",
+      "build": "Desktop release 1.99.56 (157.1.99.56)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.99.55",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 157.1.99.55 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.99.56",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 157.1.99.56 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android release 1.99.55 (157.1.99.55)",
@@ -337,12 +337,12 @@
       "reason": "channel filter (NIGHTLY, BETA) excludes release"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.49 (157.1.100.49) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.100.52 (Windows, macOS arm64, Linux arm64) and 157.1.100.49 (macOS x64) and 156.1.100.44 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android beta 1.100.49 (157.1.100.49)",
@@ -361,12 +361,12 @@
       "reason": "157.1.100.52 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.36 (158.1.101.36) / 1.101.38 (158.1.101.38)",
+      "build": "Desktop nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.101.3",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 158.1.101.38 (macOS arm64) and 158.1.101.36 (Windows, macOS x64, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      "version": "1.101.40",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 158.1.101.40 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android nightly 1.101.37 (158.1.101.37)",
@@ -377,15 +377,15 @@
       "reason": "platform filter (IOS) excludes Android; 158.1.101.37 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.36 (158.1.101.36)",
+      "build": "iOS nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.36",
-      "reason": "158.1.101.36 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.101.40",
+      "reason": "158.1.101.40 is outside the version range 146.1.89.116 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/a86dd1a4cfb75a054d8098d60871009bd641d3c6/studies/iOSWalletWebUIStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/936653c9cac8d8bf94c4ef00c498afe8b07ea707/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -419,8 +419,8 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-05T23:39:38.356Z",
-    "verifiedAt": "2026-11-10T12:41:03.005Z"
+    "readAt": "2026-11-10T20:50:45.651Z",
+    "verifiedAt": "2026-11-10T20:50:45.651Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -445,12 +445,12 @@
     "probability": 100,
     "appliesTo": [
      {
-      "build": "Desktop release 1.99.55 (157.1.99.55)",
+      "build": "Desktop release 1.99.56 (157.1.99.56)",
       "applies": false,
       "platform": "desktop",
       "channel": "release",
-      "version": "1.99.55",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.99.55 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.99.56",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.99.56 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android release 1.99.55 (157.1.99.55)",
@@ -461,12 +461,12 @@
       "reason": "platform filter (IOS) excludes Android; 157.1.99.55 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.49 (157.1.100.49) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
       "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 157.1.100.52 (Windows, macOS arm64, Linux arm64) and 157.1.100.49 (macOS x64) and 156.1.100.44 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android beta 1.100.49 (157.1.100.49)",
@@ -485,12 +485,12 @@
       "reason": "channel filter (RELEASE) excludes beta; 157.1.100.52 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.101.3 (156.1.101.3) / 1.101.36 (158.1.101.36) / 1.101.38 (158.1.101.38)",
+      "build": "Desktop nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.101.3",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 158.1.101.38 (macOS arm64) and 158.1.101.36 (Windows, macOS x64, Linux arm64) and 156.1.101.3 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      "version": "1.101.40",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 158.1.101.40 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android nightly 1.101.37 (158.1.101.37)",
@@ -501,15 +501,24 @@
       "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes nightly; 158.1.101.37 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "iOS nightly 1.101.36 (158.1.101.36)",
+      "build": "iOS nightly 1.101.40 (158.1.101.40)",
       "applies": false,
       "platform": "ios",
       "channel": "nightly",
-      "version": "1.101.36",
-      "reason": "channel filter (RELEASE) excludes nightly; 158.1.101.36 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.101.40",
+      "reason": "channel filter (RELEASE) excludes nightly; 158.1.101.40 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/a86dd1a4cfb75a054d8098d60871009bd641d3c6/studies/iOSWalletWebUIStudy.json5",
+    "appliesUnknown": [
+     {
+      "build": "iOS release 1.98",
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.98",
+      "reason": "the Chromium-based version of 1.98 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/936653c9cac8d8bf94c4ef00c498afe8b07ea707/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -542,22 +551,13 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-05T23:39:38.356Z",
-    "verifiedAt": "2026-11-10T12:41:03.005Z",
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.98",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.98",
-      "reason": "the Chromium-based version of 1.98 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ]
+    "readAt": "2026-11-10T20:50:45.651Z",
+    "verifiedAt": "2026-11-10T20:50:45.651Z"
    }
   ],
-  "studiesCommit": "a86dd1a4cfb75a054d8098d60871009bd641d3c6",
-  "studiesReadAt": "2026-11-10T12:41:03.005Z",
-  "studiesDigest": "3159f6f63f08fbc0bf4a37561eff1a35de7eb479257deb4a5acb03b457e05299"
+  "studiesCommit": "936653c9cac8d8bf94c4ef00c498afe8b07ea707",
+  "studiesReadAt": "2026-11-10T20:50:45.651Z",
+  "studiesDigest": "fd0eb41ac862042f0c1692b7efef7f9d17a7885ef07d48adeffa28ec15a8620b"
  },
- "completeAt": "2026-11-10T12:41:03.005Z"
+ "completeAt": "2026-11-10T20:50:45.651Z"
 }
