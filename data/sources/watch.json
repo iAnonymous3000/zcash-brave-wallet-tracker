@@ -1,7 +1,7 @@
 {
  "sourceId": "watch",
  "schema": 1,
- "retrievedAt": "2026-11-11T01:57:34.315Z",
+ "retrievedAt": "2026-11-11T09:27:52.485Z",
  "data": {
   "items": [
    {
@@ -17,7 +17,7 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.8.6.",
-    "metadataReadAt": "2026-11-11T01:57:34.315Z"
+    "metadataReadAt": "2026-11-11T09:27:52.485Z"
    },
    {
     "id": "watch-wallet-libraries",
@@ -32,7 +32,7 @@
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
     "latest": " Last commit: chore(deps): update Common dependency family to 5.4.0 (#397).",
-    "metadataReadAt": "2026-11-11T01:57:34.315Z"
+    "metadataReadAt": "2026-11-11T09:27:52.485Z"
    },
    {
     "id": "watch-zkdragon",
@@ -55,8 +55,8 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-11T01:57:34.315Z",
-    "searchCheckedAt": "2026-11-11T01:57:34.315Z"
+    "checkedAt": "2026-11-11T09:27:52.485Z",
+    "searchCheckedAt": "2026-11-11T09:27:52.485Z"
    },
    {
     "term": "wallet-libraries",
@@ -64,8 +64,8 @@
     "depsHits": false,
     "issueHits": 3,
     "prHits": 2,
-    "checkedAt": "2026-11-11T01:57:34.315Z",
-    "searchCheckedAt": "2026-11-11T01:57:34.315Z"
+    "checkedAt": "2026-11-11T09:27:52.485Z",
+    "searchCheckedAt": "2026-11-11T09:27:52.485Z"
    },
    {
     "term": "zkdragon",
@@ -73,10 +73,10 @@
     "depsHits": false,
     "issueHits": 0,
     "prHits": 0,
-    "checkedAt": "2026-11-11T01:57:34.315Z",
-    "searchCheckedAt": "2026-11-11T01:57:34.315Z"
+    "checkedAt": "2026-11-11T09:27:52.485Z",
+    "searchCheckedAt": "2026-11-11T09:27:52.485Z"
    }
   ]
  },
- "completeAt": "2026-11-11T01:57:34.315Z"
+ "completeAt": "2026-11-11T09:27:52.485Z"
 }
