@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-11T09:27:52.485Z",
+ "retrievedAt": "2026-11-11T17:54:47.657Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-11T09:27:52.485Z"
+   "checkedAt": "2026-11-11T17:54:47.657Z"
   },
   "studies": [
    {
@@ -64,20 +64,20 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
-      "version": "1.100.44",
-      "reason": "157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      "version": "1.100.52",
+      "reason": "157.1.100.52 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Android beta 1.100.49 (157.1.100.49)",
+      "build": "Android beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "android",
       "channel": "beta",
-      "version": "1.100.49",
-      "reason": "157.1.100.49 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.100.52",
+      "reason": "157.1.100.52 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "iOS beta 1.100.52 (157.1.100.52)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-10T20:50:45.651Z",
-    "verifiedAt": "2026-11-11T09:27:52.485Z"
+    "verifiedAt": "2026-11-11T17:54:47.657Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -203,20 +203,20 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
-      "version": "1.100.44",
-      "reason": "157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range any – 139.1.81.128"
+      "version": "1.100.52",
+      "reason": "157.1.100.52 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Android beta 1.100.49 (157.1.100.49)",
+      "build": "Android beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "android",
       "channel": "beta",
-      "version": "1.100.49",
-      "reason": "157.1.100.49 is outside the version range any – 139.1.81.128"
+      "version": "1.100.52",
+      "reason": "157.1.100.52 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "iOS beta 1.100.52 (157.1.100.52)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-10T20:50:45.651Z",
-    "verifiedAt": "2026-11-11T09:27:52.485Z"
+    "verifiedAt": "2026-11-11T17:54:47.657Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -337,20 +337,20 @@
       "reason": "channel filter (NIGHTLY, BETA) excludes release"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
-      "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      "version": "1.100.52",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.100.52 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Android beta 1.100.49 (157.1.100.49)",
+      "build": "Android beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "android",
       "channel": "beta",
-      "version": "1.100.49",
-      "reason": "platform filter (IOS) excludes Android; 157.1.100.49 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.100.52",
+      "reason": "platform filter (IOS) excludes Android; 157.1.100.52 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "iOS beta 1.100.52 (157.1.100.52)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-10T20:50:45.651Z",
-    "verifiedAt": "2026-11-11T09:27:52.485Z"
+    "verifiedAt": "2026-11-11T17:54:47.657Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -461,20 +461,20 @@
       "reason": "platform filter (IOS) excludes Android; 157.1.99.55 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop beta 1.100.44 (156.1.100.44) / 1.100.52 (157.1.100.52)",
+      "build": "Desktop beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "desktop",
       "channel": "beta",
-      "version": "1.100.44",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 157.1.100.52 (Windows, macOS, Linux arm64) and 156.1.100.44 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      "version": "1.100.52",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes beta; 157.1.100.52 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Android beta 1.100.49 (157.1.100.49)",
+      "build": "Android beta 1.100.52 (157.1.100.52)",
       "applies": false,
       "platform": "android",
       "channel": "beta",
-      "version": "1.100.49",
-      "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes beta; 157.1.100.49 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.100.52",
+      "reason": "platform filter (IOS) excludes Android; channel filter (RELEASE) excludes beta; 157.1.100.52 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "iOS beta 1.100.52 (157.1.100.52)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-11-10T20:50:45.651Z",
-    "verifiedAt": "2026-11-11T09:27:52.485Z",
+    "verifiedAt": "2026-11-11T17:54:47.657Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.98",
@@ -555,9 +555,9 @@
     ]
    }
   ],
-  "studiesCommit": "936653c9cac8d8bf94c4ef00c498afe8b07ea707",
-  "studiesReadAt": "2026-11-11T09:27:52.485Z",
+  "studiesCommit": "6599ef63bbedec0734110392312b9ab07fa7e085",
+  "studiesReadAt": "2026-11-11T17:54:47.657Z",
   "studiesDigest": "fd0eb41ac862042f0c1692b7efef7f9d17a7885ef07d48adeffa28ec15a8620b"
  },
- "completeAt": "2026-11-11T09:27:52.485Z"
+ "completeAt": "2026-11-11T17:54:47.657Z"
 }

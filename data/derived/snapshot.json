@@ -1,7 +1,17 @@
 {
- "at": "2026-11-11T09:27:52.485Z",
+ "at": "2026-11-11T17:54:47.657Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-browser#58752": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/brave-browser#61165": {
    "desktop/release": false,
    "android/release": false,
@@ -1163,16 +1173,6 @@
    "ios/nightly": null
   },
   "brave/brave-browser#58753": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#58752": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -5201,7 +5201,7 @@
    }
   },
   "desktop/beta": {
-   "tag": "v1.100.44",
+   "tag": "v1.100.52",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -5209,7 +5209,7 @@
    }
   },
   "android/beta": {
-   "tag": "v1.100.49",
+   "tag": "v1.100.52",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,

@@ -19939,32 +19939,5 @@
   "id": "96fa57832decc913",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-11-11T14:12:39Z",
-  "title": "New issue: [ZCash] Add ZCashTransaction validation checks",
-  "impact": "Opened in brave-browser#50762. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50762"
-  ],
-  "topic": "security",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50762",
-    "url": "https://github.com/brave/brave-browser/issues/50762"
-   }
-  ],
-  "evidence": [
-   "created 2025-11-11T14:12:39Z"
-  ],
-  "id": "afff95601f84a6a9",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]

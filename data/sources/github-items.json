@@ -1,9 +1,134 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-11T09:27:52.485Z",
+ "retrievedAt": "2026-11-11T17:54:47.657Z",
  "data": {
   "items": {
+   "brave/brave-browser#58752": {
+    "id": "brave/brave-browser#58752",
+    "repo": "brave/brave-browser",
+    "number": 58752,
+    "kind": "issue",
+    "title": "fix: reject malformed Zcash unified addresses before choosing a receiver",
+    "url": "https://github.com/brave/brave-browser/issues/58752",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-09-05T03:09:29Z",
+    "updatedAt": "2026-11-11T13:53:09Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "iAnonymous3000",
+    "assignees": [
+     "cypt4"
+    ],
+    "labels": [
+     "bug",
+     "OS/macOS",
+     "priority/P2",
+     "QA/Yes",
+     "release-notes/include",
+     "feature/web3/wallet",
+     "OS/Desktop",
+     "feature/web3/wallet/core",
+     "feature/web3/wallet/zcash"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "On macOS Nightly 1.97.1, unified addresses with duplicate or out-of-order receivers reach the migration restriction instead of a malformed-address error, while an address with an invalid shielded receiver is accepted as a transparent recipient. Validate the entire unified address before choosing a receiver; the migration restriction still blocks the duplicate and out-of-order cases, and no transaction was sent. cc @kdenhartog",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:30Z",
+      "actor": "iAnonymous3000",
+      "detail": "bug"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "OS/macOS"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "priority/P3"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "QA/Yes"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "release-notes/include"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:31Z",
+      "actor": "iAnonymous3000",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:32Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-09-05T03:09:32Z",
+      "actor": "iAnonymous3000",
+      "detail": "feature/web3/wallet/zcash"
+     },
+     {
+      "type": "unlabeled",
+      "at": "2026-11-11T13:53:09Z",
+      "actor": "jamesmudgett",
+      "detail": "priority/P3"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-11T13:53:09Z",
+      "actor": "jamesmudgett",
+      "detail": "priority/P2"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "label:feature/web3/wallet/zcash",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "label:feature/web3/wallet/zcash",
+     "title:zcash",
+     "title:unified addresses",
+     "body:unified addresses"
+    ],
+    "retrievedAt": "2026-11-11T17:54:47.657Z"
+   },
    "brave/brave-browser#59828": {
     "id": "brave/brave-browser#59828",
     "repo": "brave/brave-browser",
@@ -2507,117 +2632,6 @@
      "title:zcash",
      "title:unified addresses",
      "body:unified address"
-    ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
-   "brave/brave-browser#58752": {
-    "id": "brave/brave-browser#58752",
-    "repo": "brave/brave-browser",
-    "number": 58752,
-    "kind": "issue",
-    "title": "fix: reject malformed Zcash unified addresses before choosing a receiver",
-    "url": "https://github.com/brave/brave-browser/issues/58752",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": null,
-    "createdAt": "2026-09-05T03:09:29Z",
-    "updatedAt": "2026-09-05T03:09:29Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "iAnonymous3000",
-    "assignees": [],
-    "labels": [
-     "bug",
-     "OS/macOS",
-     "priority/P3",
-     "QA/Yes",
-     "release-notes/include",
-     "feature/web3/wallet",
-     "OS/Desktop",
-     "feature/web3/wallet/core",
-     "feature/web3/wallet/zcash"
-    ],
-    "milestone": null,
-    "bodyExcerpt": "On macOS Nightly 1.97.1, unified addresses with duplicate or out-of-order receivers reach the migration restriction instead of a malformed-address error, while an address with an invalid shielded receiver is accepted as a transparent recipient. Validate the entire unified address before choosing a receiver; the migration restriction still blocks the duplicate and out-of-order cases, and no transaction was sent. cc @kdenhartog",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:30Z",
-      "actor": "iAnonymous3000",
-      "detail": "bug"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "OS/macOS"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "priority/P3"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "QA/Yes"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "release-notes/include"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:31Z",
-      "actor": "iAnonymous3000",
-      "detail": "OS/Desktop"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:32Z",
-      "actor": "iAnonymous3000",
-      "detail": "feature/web3/wallet/core"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-09-05T03:09:32Z",
-      "actor": "iAnonymous3000",
-      "detail": "feature/web3/wallet/zcash"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "label:feature/web3/wallet/zcash",
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "label:feature/web3/wallet/zcash",
-     "title:zcash",
-     "title:unified addresses",
-     "body:unified addresses"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
@@ -84028,6 +84042,14 @@
       "at": "2026-11-10T19:23:44Z",
       "actor": "brave-builds",
       "detail": "1.101.x - Nightly"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T14:52:30Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -84036,7 +84058,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-11T01:57:34.315Z"
+    "retrievedAt": "2026-11-11T17:54:47.657Z"
    },
    "brave/brave-browser#58567": {
     "id": "brave/brave-browser#58567",
@@ -97644,9 +97666,10 @@
    "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#61168": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
+   "brave/brave-core#41534": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
-   "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41257": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41231": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41098": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -97736,15 +97759,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 889,
-   "searchHits": 1286,
+   "discovered": 890,
+   "searchHits": 1287,
    "tracked": 873,
    "direct": 667,
    "mention": 74,
    "linked": 132,
-   "excluded": 148,
+   "excluded": 149,
    "mentionsDropped": 31
   }
  },
- "completeAt": "2026-11-11T09:27:52.485Z"
+ "completeAt": "2026-11-11T17:54:47.657Z"
 }

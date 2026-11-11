@@ -1,7 +1,7 @@
 {
  "sourceId": "docs",
  "schema": 1,
- "retrievedAt": "2026-11-11T09:27:52.485Z",
+ "retrievedAt": "2026-11-11T17:54:47.657Z",
  "data": {
   "pages": [
    {
@@ -60,13 +60,13 @@
     "source": "brave.com",
     "title": "Brave Wallet - Secure Crypto Wallet | Brave",
     "url": "https://brave.com/wallet/",
-    "updatedAt": "Sat, 24 Oct 2026 00:15:44 GMT",
+    "updatedAt": "Wed, 11 Nov 2026 17:03:30 GMT",
     "contentHash": "b1071b84443a85d8",
     "zcashStatements": [
      "Private transactions with Zcash",
      "Brave Wallet supports transparent and private shielded Zcash transactions, providing accountability without sacrificing user privacy."
     ],
-    "retrievedAt": "2026-10-24T04:39:08.067Z"
+    "retrievedAt": "2026-11-11T17:54:47.657Z"
    },
    {
     "id": "bravecom-blog/shielded-zcash",
@@ -127,5 +127,5 @@
   ],
   "history": []
  },
- "completeAt": "2026-11-11T09:27:52.485Z"
+ "completeAt": "2026-11-11T17:54:47.657Z"
 }
