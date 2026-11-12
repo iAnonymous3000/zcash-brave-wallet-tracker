@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-12T09:52:00.047Z",
+ "retrievedAt": "2026-11-12T18:21:26.613Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3652,23 +3652,31 @@
      "checkedAt": "2026-11-10T20:50:45.651Z",
      "basis": "merged 2026-11-10T19:23Z, after v1.101.41 was published"
     }
+   },
+   "brave/brave-core#41534": {
+    "sha": "c819797bb1ccbba875657c1d6bf35138c8f7124b",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.102.4",
+     "tag": "v1.102.4",
+     "checkedAt": "2026-11-12T18:21:26.613Z",
+     "basis": "GitHub compare v1.102.4...c819797b: behind"
+    },
+    "maxExcluded": {
+     "version": "1.102.2",
+     "tag": "v1.102.2",
+     "checkedAt": "2026-11-12T18:21:26.613Z",
+     "basis": "GitHub compare v1.102.2...c819797b: ahead"
+    }
    }
   },
   "targets": [
-   {
-    "tag": "v1.99.55",
-    "version": "1.99.55",
-    "publishedAt": "2026-11-04T18:56:17Z",
-    "usedBy": [
-     "android/release"
-    ]
-   },
    {
     "tag": "v1.99.56",
     "version": "1.99.56",
     "publishedAt": "2026-11-10T03:53:58Z",
     "usedBy": [
-     "desktop/release"
+     "android/release"
     ]
    },
    {
@@ -3676,6 +3684,7 @@
     "version": "1.99.57",
     "publishedAt": "2026-11-12T04:08:44Z",
     "usedBy": [
+     "desktop/release",
      "github/release"
     ]
    },
@@ -3684,8 +3693,7 @@
     "version": "1.100.52",
     "publishedAt": "2026-11-10T05:16:27Z",
     "usedBy": [
-     "desktop/beta",
-     "android/beta"
+     "desktop/beta"
     ]
    },
    {
@@ -3697,19 +3705,11 @@
     ]
    },
    {
-    "tag": "v1.101.40",
-    "version": "1.101.40",
-    "publishedAt": "2026-11-10T13:21:26Z",
-    "usedBy": [
-     "desktop/nightly",
-     "ios/nightly"
-    ]
-   },
-   {
     "tag": "v1.101.47",
     "version": "1.101.47",
     "publishedAt": "2026-11-12T05:08:45Z",
     "usedBy": [
+     "android/beta",
      "ios/beta",
      "github/beta"
     ]
@@ -3719,12 +3719,28 @@
     "version": "1.102.1",
     "publishedAt": "2026-11-12T01:30:24Z",
     "usedBy": [
+     "desktop/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.2",
+    "version": "1.102.2",
+    "publishedAt": "2026-11-12T13:23:36Z",
+    "usedBy": [
+     "ios/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.4",
+    "version": "1.102.4",
+    "publishedAt": "2026-11-12T17:10:37Z",
+    "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 2
  },
- "completeAt": "2026-11-12T09:52:00.047Z"
+ "completeAt": "2026-11-12T18:21:26.613Z"
 }
