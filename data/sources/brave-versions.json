@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-11-11T17:54:47.657Z",
+ "retrievedAt": "2026-11-12T00:46:06.876Z",
  "data": {
   "current": [
    {
@@ -141,7 +141,7 @@
     "title": "Release Notes for iOS Release 1.97",
     "marketing": "1.97",
     "build": "1.97.60",
-    "updatedAt": "2026-11-09T22:55:56Z",
+    "updatedAt": "2026-11-11T19:53:25Z",
     "body": "## [1.97.60](https://github.com/brave/brave-browser/releases/tag/v1.97.60)\n\n - Added support for self-service account deletion in Brave Accounts. ([#58719](https://github.com/brave/brave-browser/issues/58719))\n - [Security] Fixed XSS vulnerability when using Reader Mode as reported on HackerOne by miauuu. ([#58735](https://github.com/brave/brave-browser/issues/58735))\n - Enabled opening links with open URL params disposition in new tabs. ([#58839](https://github.com/brave/brave-browser/issues/58839))\n - Enabled background downloading support on iOS 26+. ([#58098](https://github.com/brave/brave-browser/issues/58098))\n - Updated shields panel UI. ([#56479](https://github.com/brave/brave-browser/issues/56479))\n - Updated New Tab Page (NTP) UI. ([#37314](https://github.com/brave/brave-browser/issues/37214))\n - Fixed downloads not being initiated when using QuickView. ([#59093](https://github.com/brave/brave-browser/issues/59093))\n - Upgraded Chromium to 155.0.8059.85. ([#59971](https://github.com/brave/brave-browser/issues/59971))([Changelog for 155.0.8059.85](https://chromium.googlesource.com/chromium/src/+log/154.0.8037.98..155.0.8059.85?pretty=fuller&n=10000))",
     "authorAssociation": "CONTRIBUTOR",
     "authorId": 17885425,
@@ -523,114 +523,114 @@
   "pointers": {
    "release-windows-x64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-windows-x86": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-windows-arm64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-macos-x64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-macos-arm64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-linux-x64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-linux-arm64": {
     "version": "1.99.56",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-android-google-play": {
     "version": "1.99.55",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "release-ios-app-store": {
     "version": "1.98",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-windows-x64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-windows-x86": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-windows-arm64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-macos-x64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-macos-arm64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-linux-x64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-linux-arm64": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-android-google-play": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "beta-ios": {
     "version": "1.100.52",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-windows-x64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-windows-x86": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-windows-arm64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-macos-x64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-macos-arm64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-linux-x64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-linux-arm64": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-android-google-play": {
     "version": "1.101.37",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    },
    "nightly-ios": {
     "version": "1.101.40",
-    "readAt": "2026-11-11T17:54:47.657Z"
+    "readAt": "2026-11-12T00:46:06.876Z"
    }
   },
-  "iosNotesReadAt": "2026-11-11T17:54:47.657Z"
+  "iosNotesReadAt": "2026-11-12T00:46:06.876Z"
  },
- "completeAt": "2026-11-11T17:54:47.657Z"
+ "completeAt": "2026-11-12T00:46:06.876Z"
 }

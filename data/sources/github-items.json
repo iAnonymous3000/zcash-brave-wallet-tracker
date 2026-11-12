@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-11T17:54:47.657Z",
+ "retrievedAt": "2026-11-12T00:46:06.876Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -27188,6 +27188,14 @@
       "at": "2026-11-05T17:14:38Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -27199,7 +27207,7 @@
      "title:zcash_verify_chain_state_task_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61396": {
     "id": "brave/brave-browser#61396",
@@ -27282,6 +27290,14 @@
       "at": "2026-11-05T17:14:00Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -27293,7 +27309,7 @@
      "title:zcash_auto_sync_manager_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61395": {
     "id": "brave/brave-browser#61395",
@@ -28087,6 +28103,14 @@
       "at": "2026-11-05T15:34:32Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28098,7 +28122,7 @@
      "title:zcash_scan_blocks_task_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61214": {
     "id": "brave/brave-browser#61214",
@@ -28181,6 +28205,14 @@
       "at": "2026-11-05T15:34:05Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28193,7 +28225,7 @@
      "title:zcash_resolve_transaction_status_task_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61213": {
     "id": "brave/brave-browser#61213",
@@ -28450,6 +28482,14 @@
       "at": "2026-11-05T15:32:29Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28461,7 +28501,7 @@
      "title:zcash_get_chaintip_status_task_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61210": {
     "id": "brave/brave-browser#61210",
@@ -29161,6 +29201,14 @@
       "at": "2026-11-05T15:28:17Z",
       "actor": "netzenbot",
       "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -29172,7 +29220,7 @@
      "title:zcash_blocks_batch_scan_task_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#61202": {
     "id": "brave/brave-browser#61202",
@@ -40997,7 +41045,7 @@
      "feature/web3/wallet/core"
     ],
     "milestone": {
-     "title": "1.101.x - Nightly",
+     "title": "1.101.x - Beta",
      "dueOn": "2026-12-08T00:00:00Z",
      "state": "OPEN"
     },
@@ -41182,7 +41230,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-03T16:16:59.525Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#54171": {
     "id": "brave/brave-browser#54171",
@@ -43956,7 +44004,7 @@
      "pr/risk/security"
     ],
     "milestone": {
-     "title": "1.101.x - Nightly",
+     "title": "1.101.x - Beta",
      "dueOn": "2026-12-08T00:00:00Z",
      "state": "OPEN"
     },
@@ -44035,7 +44083,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-02T06:06:06.236Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-core#40325": {
     "id": "brave/brave-core#40325",
@@ -44065,7 +44113,7 @@
      "puLL-Merge"
     ],
     "milestone": {
-     "title": "1.100.x - Beta",
+     "title": "1.100.x - Release",
      "dueOn": "2026-11-17T00:00:00Z",
      "state": "OPEN"
     },
@@ -44143,7 +44191,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-10-28T22:37:24.782Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-core#34256": {
     "id": "brave/brave-core#34256",
@@ -82379,6 +82427,276 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#41534": {
+    "id": "brave/brave-core#41534",
+    "repo": "brave/brave-core",
+    "number": 41534,
+    "kind": "pr",
+    "title": "Remove RunUntilIdle from tests (TA-005)",
+    "url": "https://github.com/brave/brave-core/pull/41534",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-11-11T14:52:29Z",
+    "updatedAt": "2026-11-12T00:40:35Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "netzenbot/fix-rununtilidle-test-violations",
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "pr/chromium-overrides"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Summary Removes RunUntilIdle()-style draining (TA-005, docs/best-practices/testing-async.md) from the tests named in the tests/best-practice-violation issues that cite it, replacing it with TestFuture, base::test::RunUntil or observer-driven RunLoop quits. One commit per issue: 90 commits for 93 issues (62 resolved, 28 partial, 3 without a commit). Some commits also fix other best-practice findings in the same file. Review feedback and independent-review findings were…",
+    "bodyRefs": [
+     "brave/brave-browser#61303",
+     "brave/brave-browser#61240",
+     "brave/brave-browser#61044",
+     "brave/brave-browser#61057",
+     "brave/brave-browser#61042",
+     "brave/brave-browser#61073",
+     "brave/brave-browser#61061",
+     "brave/brave-browser#61072",
+     "brave/brave-browser#61188",
+     "brave/brave-browser#61203",
+     "brave/brave-browser#61211",
+     "brave/brave-browser#61214",
+     "brave/brave-browser#61200",
+     "brave/brave-browser#61215",
+     "brave/brave-browser#61246",
+     "brave/brave-browser#61250",
+     "brave/brave-browser#61273",
+     "brave/brave-browser#61326",
+     "brave/brave-browser#61324",
+     "brave/brave-browser#61327",
+     "brave/brave-browser#61358",
+     "brave/brave-browser#61357",
+     "brave/brave-browser#61371",
+     "brave/brave-browser#61379",
+     "brave/brave-browser#61393",
+     "brave/brave-browser#61396",
+     "brave/brave-browser#61411",
+     "brave/brave-browser#61372",
+     "brave/brave-browser#61416",
+     "brave/brave-browser#61417",
+     "brave/brave-browser#61418",
+     "brave/brave-browser#61397",
+     "brave/brave-browser#61419",
+     "brave/brave-browser#61421",
+     "brave/brave-browser#61394",
+     "brave/brave-browser#61426",
+     "brave/brave-browser#61425",
+     "brave/brave-browser#61427",
+     "brave/brave-browser#61450",
+     "brave/brave-browser#61428",
+     "brave/brave-browser#61451",
+     "brave/brave-browser#61460",
+     "brave/brave-browser#61465",
+     "brave/brave-browser#61463",
+     "brave/brave-browser#61444",
+     "brave/brave-browser#61462",
+     "brave/brave-browser#61473",
+     "brave/brave-browser#61476",
+     "brave/brave-browser#61464",
+     "brave/brave-browser#61467",
+     "brave/brave-browser#61495",
+     "brave/brave-browser#61487",
+     "brave/brave-browser#61500",
+     "brave/brave-browser#61506",
+     "brave/brave-browser#61466",
+     "brave/brave-browser#61547",
+     "brave/brave-browser#61481",
+     "brave/brave-browser#61477",
+     "brave/brave-browser#61551",
+     "brave/brave-browser#61469",
+     "brave/brave-browser#61566",
+     "brave/brave-browser#61532",
+     "brave/brave-core#41548",
+     "brave/brave-core#41400",
+     "brave/brave-core#41028"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#61303",
+     "brave/brave-browser#61240",
+     "brave/brave-browser#61044",
+     "brave/brave-browser#61057",
+     "brave/brave-browser#61042",
+     "brave/brave-browser#61073",
+     "brave/brave-browser#61061",
+     "brave/brave-browser#61072",
+     "brave/brave-browser#61188",
+     "brave/brave-browser#61203",
+     "brave/brave-browser#61211",
+     "brave/brave-browser#61214",
+     "brave/brave-browser#61200",
+     "brave/brave-browser#61215",
+     "brave/brave-browser#61246",
+     "brave/brave-browser#61250",
+     "brave/brave-browser#61273",
+     "brave/brave-browser#61326",
+     "brave/brave-browser#61324",
+     "brave/brave-browser#61327",
+     "brave/brave-browser#61358",
+     "brave/brave-browser#61357",
+     "brave/brave-browser#61371",
+     "brave/brave-browser#61379",
+     "brave/brave-browser#61393",
+     "brave/brave-browser#61396",
+     "brave/brave-browser#61411",
+     "brave/brave-browser#61372",
+     "brave/brave-browser#61416",
+     "brave/brave-browser#61417",
+     "brave/brave-browser#61418",
+     "brave/brave-browser#61397",
+     "brave/brave-browser#61419",
+     "brave/brave-browser#61421",
+     "brave/brave-browser#61394",
+     "brave/brave-browser#61426",
+     "brave/brave-browser#61425",
+     "brave/brave-browser#61427",
+     "brave/brave-browser#61450",
+     "brave/brave-browser#61428",
+     "brave/brave-browser#61451",
+     "brave/brave-browser#61460",
+     "brave/brave-browser#61465",
+     "brave/brave-browser#61463",
+     "brave/brave-browser#61444",
+     "brave/brave-browser#61462",
+     "brave/brave-browser#61473",
+     "brave/brave-browser#61476",
+     "brave/brave-browser#61464",
+     "brave/brave-browser#61467",
+     "brave/brave-browser#61495",
+     "brave/brave-browser#61487",
+     "brave/brave-browser#61500",
+     "brave/brave-browser#61506",
+     "brave/brave-browser#61466",
+     "brave/brave-browser#61547",
+     "brave/brave-browser#61481",
+     "brave/brave-browser#61477",
+     "brave/brave-browser#61551",
+     "brave/brave-browser#61469",
+     "brave/brave-browser#61566",
+     "brave/brave-browser#61532"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#61042",
+     "brave/brave-browser#61044",
+     "brave/brave-browser#61057",
+     "brave/brave-browser#61061",
+     "brave/brave-browser#61072",
+     "brave/brave-browser#61073",
+     "brave/brave-browser#61188",
+     "brave/brave-browser#61200",
+     "brave/brave-browser#61203",
+     "brave/brave-browser#61211",
+     "brave/brave-browser#61214",
+     "brave/brave-browser#61215",
+     "brave/brave-browser#61240",
+     "brave/brave-browser#61246",
+     "brave/brave-browser#61250",
+     "brave/brave-browser#61273",
+     "brave/brave-browser#61303",
+     "brave/brave-browser#61324",
+     "brave/brave-browser#61326",
+     "brave/brave-browser#61327",
+     "brave/brave-browser#61357",
+     "brave/brave-browser#61358",
+     "brave/brave-browser#61371",
+     "brave/brave-browser#61372",
+     "brave/brave-browser#61379",
+     "brave/brave-browser#61393",
+     "brave/brave-browser#61394",
+     "brave/brave-browser#61396",
+     "brave/brave-browser#61397",
+     "brave/brave-browser#61411",
+     "brave/brave-browser#61416",
+     "brave/brave-browser#61417",
+     "brave/brave-browser#61418",
+     "brave/brave-browser#61419",
+     "brave/brave-browser#61421",
+     "brave/brave-browser#61425",
+     "brave/brave-browser#61426",
+     "brave/brave-browser#61427",
+     "brave/brave-browser#61428",
+     "brave/brave-browser#61444",
+     "brave/brave-browser#61450",
+     "brave/brave-browser#61451",
+     "brave/brave-browser#61460",
+     "brave/brave-browser#61462",
+     "brave/brave-browser#61463",
+     "brave/brave-browser#61464",
+     "brave/brave-browser#61465",
+     "brave/brave-browser#61466",
+     "brave/brave-browser#61467",
+     "brave/brave-browser#61469",
+     "brave/brave-browser#61473",
+     "brave/brave-browser#61476",
+     "brave/brave-browser#61477",
+     "brave/brave-browser#61481",
+     "brave/brave-browser#61487",
+     "brave/brave-browser#61495",
+     "brave/brave-browser#61500",
+     "brave/brave-browser#61506",
+     "brave/brave-browser#61532",
+     "brave/brave-browser#61547",
+     "brave/brave-browser#61551",
+     "brave/brave-browser#61566"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-11T15:02:24Z",
+      "actor": "netzenbot-reviewer",
+      "detail": "pr/chromium-overrides"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T20:57:41Z",
+      "actor": "brave-builds",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41548",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T23:24:41Z",
+      "actor": "netzenbot",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#61752",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-12T00:33:48Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41559",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-browser#61203",
+     "linked:brave/brave-browser#61211",
+     "linked:brave/brave-browser#61214",
+     "linked:brave/brave-browser#61215",
+     "linked:brave/brave-browser#61396",
+     "linked:brave/brave-browser#61397"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
+   },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
     "repo": "brave/brave-core",
@@ -83342,7 +83660,7 @@
     "assignees": [],
     "labels": [],
     "milestone": {
-     "title": "1.101.x - Nightly",
+     "title": "1.101.x - Beta",
      "dueOn": "2026-12-08T00:00:00Z",
      "state": "OPEN"
     },
@@ -83406,7 +83724,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-03T16:16:59.525Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -83867,7 +84185,7 @@
     "assignees": [],
     "labels": [],
     "milestone": {
-     "title": "1.101.x - Nightly",
+     "title": "1.101.x - Beta",
      "dueOn": "2026-12-08T00:00:00Z",
      "state": "OPEN"
     },
@@ -84058,7 +84376,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-11T17:54:47.657Z"
+    "retrievedAt": "2026-11-12T00:46:06.876Z"
    },
    "brave/brave-browser#58567": {
     "id": "brave/brave-browser#58567",
@@ -97668,6 +97986,7 @@
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#41534": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41548": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41257": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -97759,15 +98078,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 890,
-   "searchHits": 1287,
-   "tracked": 873,
+   "discovered": 891,
+   "searchHits": 1288,
+   "tracked": 874,
    "direct": 667,
    "mention": 74,
-   "linked": 132,
-   "excluded": 149,
+   "linked": 133,
+   "excluded": 150,
    "mentionsDropped": 31
   }
  },
- "completeAt": "2026-11-11T17:54:47.657Z"
+ "completeAt": "2026-11-12T00:46:06.876Z"
 }
