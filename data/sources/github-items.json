@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-13T17:46:54.198Z",
+ "retrievedAt": "2026-11-13T23:36:13.033Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -28201,6 +28201,14 @@
       "at": "2026-11-05T15:48:05Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28212,7 +28220,7 @@
      "title:zcash_decoder_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61223": {
     "id": "brave/brave-browser#61223",
@@ -28288,6 +28296,14 @@
       "at": "2026-11-05T15:38:32Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28300,7 +28316,7 @@
      "title:zcash_utils_unittest",
      "body:zcash_utils_unittest"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61221": {
     "id": "brave/brave-browser#61221",
@@ -28473,6 +28489,14 @@
       "at": "2026-11-05T15:36:06Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28484,7 +28508,7 @@
      "title:zcash_transaction_utils_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61217": {
     "id": "brave/brave-browser#61217",
@@ -28744,6 +28768,14 @@
       "at": "2026-11-05T15:33:42Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28755,7 +28787,7 @@
      "title:zcash_keyring_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61212": {
     "id": "brave/brave-browser#61212",
@@ -28831,6 +28863,14 @@
       "at": "2026-11-05T15:33:05Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -28842,7 +28882,7 @@
      "title:zcash_grpc_utils_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61210": {
     "id": "brave/brave-browser#61210",
@@ -29448,6 +29488,14 @@
       "at": "2026-11-05T15:27:41Z",
       "actor": "netzenbot",
       "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -29459,7 +29507,7 @@
     "matchedTerms": [
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-05T18:03:15.345Z"
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
    },
    "brave/brave-browser#61179": {
     "id": "brave/brave-browser#61179",
@@ -83156,6 +83204,224 @@
     "matchedTerms": [],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#41668": {
+    "id": "brave/brave-core#41668",
+    "repo": "brave/brave-core",
+    "number": 41668,
+    "kind": "pr",
+    "title": "Assert before dependent access in tests (TI-025/TI-034)",
+    "url": "https://github.com/brave/brave-core/pull/41668",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-11-13T19:42:10Z",
+    "updatedAt": "2026-11-13T21:06:40Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "tests-assert-before-dependent-access",
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "pr/risk/dependencies"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Test best-practice cleanup across 52 Brave test files (unit and browser tests), mainly TI-025 (\"ASSERT has_value/non-null before dereferencing optional/pointer/expected; no value_or fallbacks\") and TI-034 (\"ASSERT when later code depends on the check\"). The same files' remaining CS-061 (death tests in DeathTest suites), CSA-051 (compare dicts with base::test value helpers) and BS-033 (component test moved out of //brave/browser) findings are fixed too, so each issue below…",
+    "bodyRefs": [
+     "brave/brave-browser#61035",
+     "brave/brave-browser#61048",
+     "brave/brave-browser#61075",
+     "brave/brave-browser#61091",
+     "brave/brave-browser#61093",
+     "brave/brave-browser#61102",
+     "brave/brave-browser#61109",
+     "brave/brave-browser#61110",
+     "brave/brave-browser#61119",
+     "brave/brave-browser#61122",
+     "brave/brave-browser#61169",
+     "brave/brave-browser#61170",
+     "brave/brave-browser#61175",
+     "brave/brave-browser#61180",
+     "brave/brave-browser#61184",
+     "brave/brave-browser#61186",
+     "brave/brave-browser#61189",
+     "brave/brave-browser#61190",
+     "brave/brave-browser#61193",
+     "brave/brave-browser#61194",
+     "brave/brave-browser#61196",
+     "brave/brave-browser#61197",
+     "brave/brave-browser#61202",
+     "brave/brave-browser#61212",
+     "brave/brave-browser#61213",
+     "brave/brave-browser#61218",
+     "brave/brave-browser#61223",
+     "brave/brave-browser#61224",
+     "brave/brave-browser#61229",
+     "brave/brave-browser#61236",
+     "brave/brave-browser#61241",
+     "brave/brave-browser#61243",
+     "brave/brave-browser#61244",
+     "brave/brave-browser#61253",
+     "brave/brave-browser#61256",
+     "brave/brave-browser#61267",
+     "brave/brave-browser#61274",
+     "brave/brave-browser#61385",
+     "brave/brave-browser#61399",
+     "brave/brave-browser#61400",
+     "brave/brave-browser#61401",
+     "brave/brave-browser#61402",
+     "brave/brave-browser#61405",
+     "brave/brave-browser#61409",
+     "brave/brave-browser#61410",
+     "brave/brave-browser#61423",
+     "brave/brave-browser#61448",
+     "brave/brave-browser#61492",
+     "brave/brave-browser#61496",
+     "brave/brave-browser#61518",
+     "brave/brave-browser#61534",
+     "brave/brave-browser#61046",
+     "brave/brave-core#61046",
+     "brave/brave-core#61035",
+     "brave/brave-core#61274",
+     "brave/brave-core#61048",
+     "brave/brave-core#61190",
+     "brave/brave-core#61253",
+     "brave/brave-core#61402"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#61035",
+     "brave/brave-browser#61048",
+     "brave/brave-browser#61075",
+     "brave/brave-browser#61091",
+     "brave/brave-browser#61093",
+     "brave/brave-browser#61102",
+     "brave/brave-browser#61109",
+     "brave/brave-browser#61110",
+     "brave/brave-browser#61119",
+     "brave/brave-browser#61122",
+     "brave/brave-browser#61169",
+     "brave/brave-browser#61170",
+     "brave/brave-browser#61175",
+     "brave/brave-browser#61180",
+     "brave/brave-browser#61184",
+     "brave/brave-browser#61186",
+     "brave/brave-browser#61189",
+     "brave/brave-browser#61190",
+     "brave/brave-browser#61193",
+     "brave/brave-browser#61194",
+     "brave/brave-browser#61196",
+     "brave/brave-browser#61197",
+     "brave/brave-browser#61202",
+     "brave/brave-browser#61212",
+     "brave/brave-browser#61213",
+     "brave/brave-browser#61218",
+     "brave/brave-browser#61223",
+     "brave/brave-browser#61224",
+     "brave/brave-browser#61229",
+     "brave/brave-browser#61236",
+     "brave/brave-browser#61241",
+     "brave/brave-browser#61243",
+     "brave/brave-browser#61244",
+     "brave/brave-browser#61253",
+     "brave/brave-browser#61256",
+     "brave/brave-browser#61267",
+     "brave/brave-browser#61274",
+     "brave/brave-browser#61385",
+     "brave/brave-browser#61399",
+     "brave/brave-browser#61400",
+     "brave/brave-browser#61401",
+     "brave/brave-browser#61402",
+     "brave/brave-browser#61405",
+     "brave/brave-browser#61409",
+     "brave/brave-browser#61410",
+     "brave/brave-browser#61423",
+     "brave/brave-browser#61448",
+     "brave/brave-browser#61492",
+     "brave/brave-browser#61496",
+     "brave/brave-browser#61518",
+     "brave/brave-browser#61534"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#61035",
+     "brave/brave-browser#61048",
+     "brave/brave-browser#61075",
+     "brave/brave-browser#61091",
+     "brave/brave-browser#61093",
+     "brave/brave-browser#61102",
+     "brave/brave-browser#61109",
+     "brave/brave-browser#61110",
+     "brave/brave-browser#61119",
+     "brave/brave-browser#61122",
+     "brave/brave-browser#61169",
+     "brave/brave-browser#61170",
+     "brave/brave-browser#61175",
+     "brave/brave-browser#61180",
+     "brave/brave-browser#61184",
+     "brave/brave-browser#61186",
+     "brave/brave-browser#61189",
+     "brave/brave-browser#61190",
+     "brave/brave-browser#61193",
+     "brave/brave-browser#61194",
+     "brave/brave-browser#61196",
+     "brave/brave-browser#61197",
+     "brave/brave-browser#61202",
+     "brave/brave-browser#61212",
+     "brave/brave-browser#61213",
+     "brave/brave-browser#61218",
+     "brave/brave-browser#61223",
+     "brave/brave-browser#61224",
+     "brave/brave-browser#61229",
+     "brave/brave-browser#61236",
+     "brave/brave-browser#61241",
+     "brave/brave-browser#61243",
+     "brave/brave-browser#61244",
+     "brave/brave-browser#61253",
+     "brave/brave-browser#61256",
+     "brave/brave-browser#61267",
+     "brave/brave-browser#61274",
+     "brave/brave-browser#61385",
+     "brave/brave-browser#61399",
+     "brave/brave-browser#61400",
+     "brave/brave-browser#61401",
+     "brave/brave-browser#61402",
+     "brave/brave-browser#61405",
+     "brave/brave-browser#61409",
+     "brave/brave-browser#61410",
+     "brave/brave-browser#61423",
+     "brave/brave-browser#61448",
+     "brave/brave-browser#61492",
+     "brave/brave-browser#61496",
+     "brave/brave-browser#61518",
+     "brave/brave-browser#61534"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-13T19:47:09Z",
+      "actor": "netzenbot-reviewer",
+      "detail": "pr/risk/dependencies"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "linked:brave/brave-browser#61202",
+     "linked:brave/brave-browser#61212",
+     "linked:brave/brave-browser#61213",
+     "linked:brave/brave-browser#61218",
+     "linked:brave/brave-browser#61223",
+     "linked:brave/brave-browser#61244"
+    ],
+    "relevance": "linked",
+    "matchedTerms": [],
+    "retrievedAt": "2026-11-13T23:36:13.033Z"
+   },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
     "repo": "brave/brave-core",
@@ -111423,13 +111689,13 @@
   "stats": {
    "discovered": 894,
    "searchHits": 1291,
-   "tracked": 994,
+   "tracked": 995,
    "direct": 669,
    "mention": 74,
-   "linked": 251,
+   "linked": 252,
    "excluded": 151,
    "mentionsDropped": 34
   }
  },
- "completeAt": "2026-11-13T17:46:54.198Z"
+ "completeAt": "2026-11-13T23:36:13.033Z"
 }

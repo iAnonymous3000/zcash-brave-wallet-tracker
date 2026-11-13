@@ -1,14 +1,74 @@
 {
- "at": "2026-11-13T17:46:54.198Z",
+ "at": "2026-11-13T23:36:13.033Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-browser#61244": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#61223": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#61218": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#61213": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#61212": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-browser#61202": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/brave-browser#61219": {
    "desktop/release": false,
    "android/release": false,
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -18,7 +78,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -28,7 +88,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -38,7 +98,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -48,7 +108,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -58,7 +118,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -68,7 +128,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -78,7 +138,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -88,7 +148,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -98,7 +158,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -108,7 +168,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -118,7 +178,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -128,7 +188,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -138,7 +198,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -148,7 +208,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -158,7 +218,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -168,7 +228,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -178,7 +238,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -188,7 +248,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -198,7 +258,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -208,7 +268,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -218,7 +278,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -228,7 +288,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -238,7 +298,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -248,7 +308,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -258,7 +318,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -268,7 +328,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -278,7 +338,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -288,7 +348,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -298,7 +358,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -308,7 +368,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -318,7 +378,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -328,7 +388,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -338,7 +398,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -348,7 +408,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -358,7 +418,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -368,7 +428,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -378,7 +438,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -388,7 +448,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -398,7 +458,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -408,7 +468,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -418,7 +478,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -428,7 +488,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -438,7 +498,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -448,7 +508,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -458,7 +518,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -468,7 +528,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -478,7 +538,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -488,7 +548,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -498,7 +558,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -508,7 +568,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -518,7 +578,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -528,7 +588,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -538,7 +598,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -548,7 +608,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -558,7 +618,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -568,7 +628,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -578,7 +638,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -588,7 +648,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -598,7 +658,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -608,7 +668,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -618,7 +678,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -628,7 +688,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -638,7 +698,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -648,7 +708,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": false,
    "ios/nightly": true
   },
@@ -668,7 +728,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -678,7 +738,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -688,7 +748,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -698,7 +758,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -708,7 +768,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -718,7 +778,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -728,7 +788,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -738,7 +798,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -748,7 +808,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -758,7 +818,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -768,7 +828,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -778,7 +838,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -788,7 +848,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -798,7 +858,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -808,7 +868,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -818,7 +878,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -828,7 +888,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -838,7 +898,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -848,7 +908,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -858,7 +918,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -868,7 +928,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -878,7 +938,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -888,7 +948,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -898,7 +958,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -908,7 +968,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -918,7 +978,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -928,7 +988,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -938,7 +998,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -948,7 +1008,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -958,7 +1018,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -968,7 +1028,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -978,7 +1038,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -988,7 +1048,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -998,7 +1058,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1008,7 +1068,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1018,7 +1078,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1028,7 +1088,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1038,7 +1098,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1048,7 +1108,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1058,7 +1118,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1068,7 +1128,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1078,7 +1138,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1088,7 +1148,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1098,7 +1158,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1108,7 +1168,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1118,7 +1178,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1128,7 +1188,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1138,7 +1198,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1148,7 +1208,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1158,7 +1218,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1168,7 +1228,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1178,7 +1238,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1188,7 +1248,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1198,7 +1258,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1208,7 +1268,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1218,7 +1278,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1228,7 +1288,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1238,7 +1298,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1248,7 +1308,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1258,7 +1318,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1268,7 +1328,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1278,7 +1338,7 @@
    "desktop/beta": false,
    "android/beta": false,
    "ios/beta": false,
-   "desktop/nightly": false,
+   "desktop/nightly": true,
    "android/nightly": true,
    "ios/nightly": true
   },
@@ -1612,37 +1672,7 @@
    "android/nightly": true,
    "ios/nightly": true
   },
-  "brave/brave-browser#61244": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#61223": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
   "brave/brave-browser#61221": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#61218": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -1663,26 +1693,6 @@
    "ios/nightly": null
   },
   "brave/brave-browser#61216": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#61213": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#61212": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -1743,16 +1753,6 @@
    "ios/nightly": null
   },
   "brave/brave-browser#61205": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-browser#61202": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -6415,7 +6415,7 @@
    }
   },
   "desktop/nightly": {
-   "tag": "v1.102.2",
+   "tag": "v1.102.6",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,

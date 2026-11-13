@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-13T17:46:54.198Z",
+ "retrievedAt": "2026-11-13T23:36:13.033Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3730,14 +3730,6 @@
     ]
    },
    {
-    "tag": "v1.102.2",
-    "version": "1.102.2",
-    "publishedAt": "2026-11-12T13:23:36Z",
-    "usedBy": [
-     "desktop/nightly"
-    ]
-   },
-   {
     "tag": "v1.102.3",
     "version": "1.102.3",
     "publishedAt": "2026-11-12T13:38:43Z",
@@ -3750,6 +3742,7 @@
     "version": "1.102.6",
     "publishedAt": "2026-11-13T13:25:44Z",
     "usedBy": [
+     "desktop/nightly",
      "ios/nightly"
     ]
    },
@@ -3763,7 +3756,7 @@
    }
   ],
   "pending": 0,
-  "calls": 1
+  "calls": 0
  },
- "completeAt": "2026-11-13T17:46:54.198Z"
+ "completeAt": "2026-11-13T23:36:13.033Z"
 }

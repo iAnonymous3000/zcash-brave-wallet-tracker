@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-13T17:46:54.198Z",
+ "retrievedAt": "2026-11-13T23:36:13.033Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-13T17:46:54.198Z"
+   "checkedAt": "2026-11-13T23:36:13.033Z"
   },
   "studies": [
    {
@@ -88,12 +88,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.47 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.2 (158.1.102.2) / 1.102.6 (158.1.102.6)",
+      "build": "Desktop nightly 1.102.6 (158.1.102.6)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.102.2",
-      "reason": "158.1.102.6 (Windows, Linux) and 158.1.102.2 (macOS) are outside the version range 139.1.81.129 – 152.*"
+      "version": "1.102.6",
+      "reason": "158.1.102.6 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android nightly 1.102.3 (158.1.102.3)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T17:46:54.198Z"
+    "verifiedAt": "2026-11-13T23:36:13.033Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -227,12 +227,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.47 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Desktop nightly 1.102.2 (158.1.102.2) / 1.102.6 (158.1.102.6)",
+      "build": "Desktop nightly 1.102.6 (158.1.102.6)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.102.2",
-      "reason": "158.1.102.6 (Windows, Linux) and 158.1.102.2 (macOS) are outside the version range any – 139.1.81.128"
+      "version": "1.102.6",
+      "reason": "158.1.102.6 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android nightly 1.102.3 (158.1.102.3)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T17:46:54.198Z"
+    "verifiedAt": "2026-11-13T23:36:13.033Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -361,12 +361,12 @@
       "reason": "158.1.101.47 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.2 (158.1.102.2) / 1.102.6 (158.1.102.6)",
+      "build": "Desktop nightly 1.102.6 (158.1.102.6)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.102.2",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 158.1.102.6 (Windows, Linux) and 158.1.102.2 (macOS) are outside the version range 146.1.89.116 – 152.*"
+      "version": "1.102.6",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 158.1.102.6 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android nightly 1.102.3 (158.1.102.3)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T17:46:54.198Z"
+    "verifiedAt": "2026-11-13T23:36:13.033Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -485,12 +485,12 @@
       "reason": "channel filter (RELEASE) excludes beta; 158.1.101.47 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.2 (158.1.102.2) / 1.102.6 (158.1.102.6)",
+      "build": "Desktop nightly 1.102.6 (158.1.102.6)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
-      "version": "1.102.2",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 158.1.102.6 (Windows, Linux) and 158.1.102.2 (macOS) are outside the version range 147.1.89.144 – 152.*"
+      "version": "1.102.6",
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 158.1.102.6 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android nightly 1.102.3 (158.1.102.3)",
@@ -543,7 +543,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T17:46:54.198Z",
+    "verifiedAt": "2026-11-13T23:36:13.033Z",
     "appliesUnknown": [
      {
       "build": "iOS release 1.98",
@@ -556,8 +556,8 @@
    }
   ],
   "studiesCommit": "9654aa3e97ad7859f3df3a935aff618d98e30fd1",
-  "studiesReadAt": "2026-11-13T17:46:54.198Z",
+  "studiesReadAt": "2026-11-13T23:36:13.033Z",
   "studiesDigest": "205c4a8a68ecb1b00c9a98b3263ef6a006f8998928da12c119070a7a7971223e"
  },
- "completeAt": "2026-11-13T17:46:54.198Z"
+ "completeAt": "2026-11-13T23:36:13.033Z"
 }

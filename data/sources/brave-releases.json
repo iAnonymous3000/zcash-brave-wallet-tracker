@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-13T17:46:54.198Z",
+ "retrievedAt": "2026-11-13T23:36:13.033Z",
  "data": {
   "releases": [
    {
@@ -14,7 +14,9 @@
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.8",
     "assetPlatforms": [
      "android",
-     "linux"
+     "linux",
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": true
    },
@@ -42,6 +44,7 @@
     "assetPlatforms": [
      "ios",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": false
@@ -8476,5 +8479,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-13T17:46:54.198Z"
+ "completeAt": "2026-11-13T23:36:13.033Z"
 }
