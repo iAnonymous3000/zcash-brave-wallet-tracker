@@ -1,5 +1,1802 @@
 [
  {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:41Z",
+  "title": "Closed (completed): Test best-practice violations in ad_block_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61360"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61360",
+    "url": "https://github.com/brave/brave-browser/issues/61360"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:41Z",
+   "state reason: completed"
+  ],
+  "id": "334faf69399cbecf",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:41Z",
+  "title": "Closed (completed): Test best-practice violations in solana_address_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61408"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61408",
+    "url": "https://github.com/brave/brave-browser/issues/61408"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:41Z",
+   "state reason: completed"
+  ],
+  "id": "3bcac60dfb9d9743",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:41Z",
+  "title": "Closed (completed): Test best-practice violations in brave_visit_database_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61413"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61413",
+    "url": "https://github.com/brave/brave-browser/issues/61413"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:41Z",
+   "state reason: completed"
+  ],
+  "id": "74474822a297977c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:40Z",
+  "title": "Closed (completed): Test best-practice violations in click_tool_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61269"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61269",
+    "url": "https://github.com/brave/brave-browser/issues/61269"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:40Z",
+   "state reason: completed"
+  ],
+  "id": "17d714497903c3ed",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:40Z",
+  "title": "Closed (completed): Test best-practice violations in brave_sync_client_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61304"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61304",
+    "url": "https://github.com/brave/brave-browser/issues/61304"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:40Z",
+   "state reason: completed"
+  ],
+  "id": "402da6e2f05b0cdf",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:39Z",
+  "title": "Closed (completed): Test best-practice violations in brave_external_process_importer_host_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61290"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61290",
+    "url": "https://github.com/brave/brave-browser/issues/61290"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:39Z",
+   "state reason: completed"
+  ],
+  "id": "e3921732248f2319",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:39Z",
+  "title": "Closed (completed): Test best-practice violations in content_agent_tool_provider_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61265"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61265",
+    "url": "https://github.com/brave/brave-browser/issues/61265"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:39Z",
+   "state reason: completed"
+  ],
+  "id": "e7cb772801492ea0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:38Z",
+  "title": "Closed (completed): Test best-practice violations in partitioned_host_state_map_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61259"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61259",
+    "url": "https://github.com/brave/brave-browser/issues/61259"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:38Z",
+   "state reason: completed"
+  ],
+  "id": "16ba45e057d9016f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:38Z",
+  "title": "Closed (completed): Test best-practice violations in configured_proxy_resolution_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61261"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61261",
+    "url": "https://github.com/brave/brave-browser/issues/61261"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:38Z",
+   "state reason: completed"
+  ],
+  "id": "84384cd34c620f4c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:37Z",
+  "title": "Closed (completed): Test best-practice violations in patterns_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61252"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61252",
+    "url": "https://github.com/brave/brave-browser/issues/61252"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:37Z",
+   "state reason: completed"
+  ],
+  "id": "07b627870069e725",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:37Z",
+  "title": "Closed (completed): Test best-practice violations in commander_provider_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61239"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61239",
+    "url": "https://github.com/brave/brave-browser/issues/61239"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:37Z",
+   "state reason: completed"
+  ],
+  "id": "5acab14ffd8ea60c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:37Z",
+  "title": "Closed (completed): Test best-practice violations in webcompat_report_uploader_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61255"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61255",
+    "url": "https://github.com/brave/brave-browser/issues/61255"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:37Z",
+   "state reason: completed"
+  ],
+  "id": "f02043b6949b0610",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:36Z",
+  "title": "Closed (completed): Test best-practice violations in oblivious_http_chunk_processor_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61235"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61235",
+    "url": "https://github.com/brave/brave-browser/issues/61235"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:36Z",
+   "state reason: completed"
+  ],
+  "id": "02a457e7dd054fb0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:36Z",
+  "title": "Closed (completed): Test best-practice violations in brave_bookmark_provider_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61237"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61237",
+    "url": "https://github.com/brave/brave-browser/issues/61237"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:36Z",
+   "state reason: completed"
+  ],
+  "id": "6900f512fadd9756",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:35Z",
+  "title": "Closed (completed): Test best-practice violations in de_amp_util_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61228"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61228",
+    "url": "https://github.com/brave/brave-browser/issues/61228"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:35Z",
+   "state reason: completed"
+  ],
+  "id": "621eb068ee001430",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:35Z",
+  "title": "Closed (completed): Test best-practice violations in on_device_speech_models_component_installer_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61232"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61232",
+    "url": "https://github.com/brave/brave-browser/issues/61232"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:35Z",
+   "state reason: completed"
+  ],
+  "id": "8cd325889827a0d9",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:34Z",
+  "title": "Closed (completed): Test best-practice violations in zcash_tx_meta_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61219"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61219",
+    "url": "https://github.com/brave/brave-browser/issues/61219"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:34Z",
+   "state reason: completed"
+  ],
+  "id": "4edaf1133a61795e",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:34Z",
+  "title": "Closed (completed): Test best-practice violations in zcash_complete_transaction_task_v6_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61204"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61204",
+    "url": "https://github.com/brave/brave-browser/issues/61204"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:34Z",
+   "state reason: completed"
+  ],
+  "id": "56f0e3ee1449d78c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:34Z",
+  "title": "Closed (completed): Test best-practice violations in solana_instruction_builder_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61192"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61192",
+    "url": "https://github.com/brave/brave-browser/issues/61192"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:34Z",
+   "state reason: completed"
+  ],
+  "id": "fd9d528d0a29a2f0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:33Z",
+  "title": "Closed (completed): Test best-practice violations in polkadot_tx_meta_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61183"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61183",
+    "url": "https://github.com/brave/brave-browser/issues/61183"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:33Z",
+   "state reason: completed"
+  ],
+  "id": "0eefa89c029c1839",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:32Z",
+  "title": "Closed (completed): Test best-practice violations in traffic_control_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61545"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61545",
+    "url": "https://github.com/brave/brave-browser/issues/61545"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:32Z",
+   "state reason: completed"
+  ],
+  "id": "170476377f5460e4",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:32Z",
+  "title": "Closed (completed): Test best-practice violations in meld_integration_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61178"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61178",
+    "url": "https://github.com/brave/brave-browser/issues/61178"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:32Z",
+   "state reason: completed"
+  ],
+  "id": "2ebc6db4a1a906ff",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:31Z",
+  "title": "Closed (completed): Test best-practice violations in brave_wallet_policy_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61524"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61524",
+    "url": "https://github.com/brave/brave-browser/issues/61524"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:31Z",
+   "state reason: completed"
+  ],
+  "id": "01c2d9a2c77b4363",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:31Z",
+  "title": "Closed (completed): Test best-practice violations in brave_shields_web_contents_observer_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61519"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61519",
+    "url": "https://github.com/brave/brave-browser/issues/61519"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:31Z",
+   "state reason: completed"
+  ],
+  "id": "05165885ac816a28",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:31Z",
+  "title": "Closed (completed): Test best-practice violations in meld_integration_response_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61177"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61177",
+    "url": "https://github.com/brave/brave-browser/issues/61177"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:31Z",
+   "state reason: completed"
+  ],
+  "id": "4b7e7a764178836f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:30Z",
+  "title": "Closed (completed): Test best-practice violations in orchard_sync_state_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61168"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61168",
+    "url": "https://github.com/brave/brave-browser/issues/61168"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:30Z",
+   "state reason: completed"
+  ],
+  "id": "1da159439d36ba00",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:30Z",
+  "title": "Closed (completed): Test best-practice violations in rewards_ofac_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61515"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61515",
+    "url": "https://github.com/brave/brave-browser/issues/61515"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:30Z",
+   "state reason: completed"
+  ],
+  "id": "221ca1828d7afcf4",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:30Z",
+  "title": "Closed (completed): Test best-practice violations in rewards_policy_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61517"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61517",
+    "url": "https://github.com/brave/brave-browser/issues/61517"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:30Z",
+   "state reason: completed"
+  ],
+  "id": "9b24700c0f9ecd2c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:29Z",
+  "title": "Closed (completed): Test best-practice violations in page_content_extractor_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61509"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61509",
+    "url": "https://github.com/brave/brave-browser/issues/61509"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:29Z",
+   "state reason: completed"
+  ],
+  "id": "312c608bd771778a",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:29Z",
+  "title": "Closed (completed): Test best-practice violations in time_limited_words_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61116"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61116",
+    "url": "https://github.com/brave/brave-browser/issues/61116"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:29Z",
+   "state reason: completed"
+  ],
+  "id": "51ee0de8b8e20c87",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:29Z",
+  "title": "Closed (completed): Test best-practice violations in brave_content_browser_client_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61514"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61514",
+    "url": "https://github.com/brave/brave-browser/issues/61514"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:29Z",
+   "state reason: completed"
+  ],
+  "id": "c99bae88c74b1089",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:28Z",
+  "title": "Closed (completed): Test best-practice violations in permission_prompt_bubble_base_view_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61499"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61499",
+    "url": "https://github.com/brave/brave-browser/issues/61499"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:28Z",
+   "state reason: completed"
+  ],
+  "id": "477bc85c18196ca7",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:27Z",
+  "title": "Closed (completed): Test best-practice violations in brave_tab_menu_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61491"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61491",
+    "url": "https://github.com/brave/brave-browser/issues/61491"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:27Z",
+   "state reason: completed"
+  ],
+  "id": "00cb1d8d91d535c6",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:27Z",
+  "title": "Closed (completed): Test best-practice violations in darker_theme_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61489"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61489",
+    "url": "https://github.com/brave/brave-browser/issues/61489"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:27Z",
+   "state reason: completed"
+  ],
+  "id": "1565b929361d9aff",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:27Z",
+  "title": "Closed (completed): Test best-practice violations in signer_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61111"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61111",
+    "url": "https://github.com/brave/brave-browser/issues/61111"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:27Z",
+   "state reason: completed"
+  ],
+  "id": "4c058da57511c626",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:26Z",
+  "title": "Closed (completed): Test best-practice violations in get_parameters_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61108"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61108",
+    "url": "https://github.com/brave/brave-browser/issues/61108"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:26Z",
+   "state reason: completed"
+  ],
+  "id": "127dd36dd522a984",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:26Z",
+  "title": "Closed (completed): Test best-practice violations in decentralized_dns_navigation_throttle_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61470"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61470",
+    "url": "https://github.com/brave/brave-browser/issues/61470"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:26Z",
+   "state reason: completed"
+  ],
+  "id": "3116dd6cca3fcfb9",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:26Z",
+  "title": "Closed (completed): Test best-practice violations in tor_profile_manager_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61486"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61486",
+    "url": "https://github.com/brave/brave-browser/issues/61486"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:26Z",
+   "state reason: completed"
+  ],
+  "id": "c8cf8c9c70115587",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:25Z",
+  "title": "Closed (completed): Test best-practice violations in oai_parsing_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61083"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61083",
+    "url": "https://github.com/brave/brave-browser/issues/61083"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:25Z",
+   "state reason: completed"
+  ],
+  "id": "561f8b2bf7b1c460",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:25Z",
+  "title": "Closed (completed): Test best-practice violations in brave_wallet_permission_context_browsertest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61441"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61441",
+    "url": "https://github.com/brave/brave-browser/issues/61441"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:25Z",
+   "state reason: completed"
+  ],
+  "id": "da7c865cefb231f8",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:24Z",
+  "title": "Closed (completed): Test best-practice violations in associated_web_contents_content_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61069"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61069",
+    "url": "https://github.com/brave/brave-browser/issues/61069"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:24Z",
+   "state reason: completed"
+  ],
+  "id": "4e50eaa5b1b2e065",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:24Z",
+  "title": "Closed (completed): Test best-practice violations in brave_canonical_cookie_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61067"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61067",
+    "url": "https://github.com/brave/brave-browser/issues/61067"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:24Z",
+   "state reason: completed"
+  ],
+  "id": "d2a89abd1121b505",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:23Z",
+  "title": "Closed (completed): Test best-practice violations in chrome_importer_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61068"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61068",
+    "url": "https://github.com/brave/brave-browser/issues/61068"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:23Z",
+   "state reason: completed"
+  ],
+  "id": "49829b9495aa7c55",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:23Z",
+  "title": "Closed (completed): Test best-practice violations in request_sender_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61066"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61066",
+    "url": "https://github.com/brave/brave-browser/issues/61066"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:23Z",
+   "state reason: completed"
+  ],
+  "id": "bf6a1459062f17a0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:22Z",
+  "title": "Closed (completed): Test best-practice violations in brave_install_util_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61064"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61064",
+    "url": "https://github.com/brave/brave-browser/issues/61064"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:22Z",
+   "state reason: completed"
+  ],
+  "id": "3554392d24fe0a3b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:22Z",
+  "title": "Closed (completed): Test best-practice violations in brave_template_url_service_util_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61065"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61065",
+    "url": "https://github.com/brave/brave-browser/issues/61065"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:22Z",
+   "state reason: completed"
+  ],
+  "id": "5fb5009dbc20f583",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:21Z",
+  "title": "Closed (completed): Test best-practice violations in credentials_util_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61106"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61106",
+    "url": "https://github.com/brave/brave-browser/issues/61106"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:21Z",
+   "state reason: completed"
+  ],
+  "id": "02165835a68a29b7",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:21Z",
+  "title": "Closed (completed): Test best-practice violations in database_migration_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61107"
+  ],
+  "topic": "sync",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61107",
+    "url": "https://github.com/brave/brave-browser/issues/61107"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:21Z",
+   "state reason: completed"
+  ],
+  "id": "24f42a9e771fb814",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:21Z",
+  "title": "Closed (completed): Test best-practice violations in site_settings_handler_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61063"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61063",
+    "url": "https://github.com/brave/brave-browser/issues/61063"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:21Z",
+   "state reason: completed"
+  ],
+  "id": "695fbe6a191b72c0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:20Z",
+  "title": "Closed (completed): Test best-practice violations in suggestions_controller_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61103"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61103",
+    "url": "https://github.com/brave/brave-browser/issues/61103"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:20Z",
+   "state reason: completed"
+  ],
+  "id": "4254acd407205a7e",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:20Z",
+  "title": "Closed (completed): Test best-practice violations in profile_avatar_icon_util_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61062"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61062",
+    "url": "https://github.com/brave/brave-browser/issues/61062"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:20Z",
+   "state reason: completed"
+  ],
+  "id": "6534f13b833e5c4a",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:20Z",
+  "title": "Closed (completed): Test best-practice violations in topics_fetcher_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61104"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61104",
+    "url": "https://github.com/brave/brave-browser/issues/61104"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:20Z",
+   "state reason: completed"
+  ],
+  "id": "f49c1643b8138bb2",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:19Z",
+  "title": "Closed (completed): Test best-practice violations in combined_feed_parsing_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61100"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61100",
+    "url": "https://github.com/brave/brave-browser/issues/61100"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:19Z",
+   "state reason: completed"
+  ],
+  "id": "19217c0af0fd1964",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:18Z",
+  "title": "Closed (completed): Test best-practice violations in brave_news_pref_manager_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61099"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61099",
+    "url": "https://github.com/brave/brave-browser/issues/61099"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:18Z",
+   "state reason: completed"
+  ],
+  "id": "3de78d601f5b44ce",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:18Z",
+  "title": "Closed (completed): Test best-practice violations in brave_vpn_menu_model_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61055"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61055",
+    "url": "https://github.com/brave/brave-browser/issues/61055"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:18Z",
+   "state reason: completed"
+  ],
+  "id": "6e12bf8592186964",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:18Z",
+  "title": "Closed (completed): Test best-practice violations in eligible_notification_ads_v2_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61097"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61097",
+    "url": "https://github.com/brave/brave-browser/issues/61097"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:18Z",
+   "state reason: completed"
+  ],
+  "id": "e897ff2d9ab1f9aa",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:17Z",
+  "title": "Closed (completed): Test best-practice violations in eligible_new_tab_page_ads_v2_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61096"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61096",
+    "url": "https://github.com/brave/brave-browser/issues/61096"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:17Z",
+   "state reason: completed"
+  ],
+  "id": "ccefddfcc366e475",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:17Z",
+  "title": "Closed (completed): Test best-practice violations in containers_icon_generator_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61051"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61051",
+    "url": "https://github.com/brave/brave-browser/issues/61051"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:17Z",
+   "state reason: completed"
+  ],
+  "id": "e38d69c35a1f8780",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:17Z",
+  "title": "Closed (completed): Test best-practice violations in hash_vectorizer_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61095"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61095",
+    "url": "https://github.com/brave/brave-browser/issues/61095"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:17Z",
+   "state reason: completed"
+  ],
+  "id": "ef8d376606539db7",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:16Z",
+  "title": "Closed (completed): Test best-practice violations in psst_tab_web_contents_observer_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61050"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61050",
+    "url": "https://github.com/brave/brave-browser/issues/61050"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:16Z",
+   "state reason: completed"
+  ],
+  "id": "399cf9f8a1e55509",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:16Z",
+  "title": "Closed (completed): Test best-practice violations in proto_conversion_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61090"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61090",
+    "url": "https://github.com/brave/brave-browser/issues/61090"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:16Z",
+   "state reason: completed"
+  ],
+  "id": "871c803fe38de334",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:16Z",
+  "title": "Closed (completed): Test best-practice violations in distribution_transformation_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61094"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61094",
+    "url": "https://github.com/brave/brave-browser/issues/61094"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:16Z",
+   "state reason: completed"
+  ],
+  "id": "a0495839d25fc5db",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:15Z",
+  "title": "Closed (completed): Test best-practice violations in prefs_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61089"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61089",
+    "url": "https://github.com/brave/brave-browser/issues/61089"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:15Z",
+   "state reason: completed"
+  ],
+  "id": "814e51bc34acf079",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:14Z",
+  "title": "Closed (completed): Test best-practice violations in oai_serialization_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61084"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61084",
+    "url": "https://github.com/brave/brave-browser/issues/61084"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:14Z",
+   "state reason: completed"
+  ],
+  "id": "a8b917d3701afbb5",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-13T03:52:14Z",
+  "title": "Closed (completed): Test best-practice violations in mv2_warning_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-13. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61041"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61041",
+    "url": "https://github.com/brave/brave-browser/issues/61041"
+   },
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "closed by brian-brave at 2026-11-13T03:52:14Z",
+   "state reason: completed"
+  ],
+  "id": "b6d8a1e6879bedbd",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-11-13T03:52:11Z",
+  "title": "Merged: Use ASSERT for test preconditions (TI-034, 65 issues)",
+  "impact": "Merged into brave-core master on 2026-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#41583"
+  ],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#41583",
+    "url": "https://github.com/brave/brave-core/pull/41583"
+   }
+  ],
+  "evidence": [
+   "merged 2026-11-13T03:52:11Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "c73ff869f4dc9d1b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "observed"
+ },
+ {
   "kind": "upstream-release",
   "sourceAt": "2026-11-12T20:20:48.821304Z",
   "title": "Upstream: zcash_primitives 0.31.1",
@@ -8751,6 +10548,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:52:14Z",
+  "title": "New issue: Test best-practice violations in traffic_control_browsertest.cc",
+  "impact": "Opened in brave-browser#61545. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61545"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61545",
+    "url": "https://github.com/brave/brave-browser/issues/61545"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:52:14Z"
+  ],
+  "id": "6b599aa7d73e3f07",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T21:46:12Z",
   "title": "New issue: Test best-practice violations in brave_base_local_data_files_browsertest.cc",
   "impact": "Opened in brave-browser#61532. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -8772,6 +10594,156 @@
   ],
   "id": "945a89dcb427f121",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:42:26Z",
+  "title": "New issue: Test best-practice violations in brave_wallet_policy_browsertest.cc",
+  "impact": "Opened in brave-browser#61524. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61524"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61524",
+    "url": "https://github.com/brave/brave-browser/issues/61524"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:42:26Z"
+  ],
+  "id": "8c77ac3f03cbbd6f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:40:11Z",
+  "title": "New issue: Test best-practice violations in brave_shields_web_contents_observer_browsertest.cc",
+  "impact": "Opened in brave-browser#61519. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61519"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61519",
+    "url": "https://github.com/brave/brave-browser/issues/61519"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:40:11Z"
+  ],
+  "id": "468fdfa8f45b75ff",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:39:19Z",
+  "title": "New issue: Test best-practice violations in rewards_policy_browsertest.cc",
+  "impact": "Opened in brave-browser#61517. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61517"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61517",
+    "url": "https://github.com/brave/brave-browser/issues/61517"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:39:19Z"
+  ],
+  "id": "7b6d29eb94cd8df1",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:38:31Z",
+  "title": "New issue: Test best-practice violations in rewards_ofac_browsertest.cc",
+  "impact": "Opened in brave-browser#61515. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61515"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61515",
+    "url": "https://github.com/brave/brave-browser/issues/61515"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:38:31Z"
+  ],
+  "id": "190c19f5987c5bfd",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:37:58Z",
+  "title": "New issue: Test best-practice violations in brave_content_browser_client_browsertest.cc",
+  "impact": "Opened in brave-browser#61514. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61514"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61514",
+    "url": "https://github.com/brave/brave-browser/issues/61514"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:37:58Z"
+  ],
+  "id": "29c0cd538d7736e0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:35:46Z",
+  "title": "New issue: Test best-practice violations in page_content_extractor_browsertest.cc",
+  "impact": "Opened in brave-browser#61509. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61509"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61509",
+    "url": "https://github.com/brave/brave-browser/issues/61509"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:35:46Z"
+  ],
+  "id": "1ce950862d23059a",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -8826,6 +10798,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:31:12Z",
+  "title": "New issue: Test best-practice violations in permission_prompt_bubble_base_view_browsertest.cc",
+  "impact": "Opened in brave-browser#61499. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61499"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61499",
+    "url": "https://github.com/brave/brave-browser/issues/61499"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:31:12Z"
+  ],
+  "id": "0884b65d9b7a84e7",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T21:29:12Z",
   "title": "New issue: Test best-practice violations in brave_actions_container_browsertest.cc",
   "impact": "Opened in brave-browser#61495. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -8851,6 +10848,56 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:27:29Z",
+  "title": "New issue: Test best-practice violations in brave_tab_menu_browsertest.cc",
+  "impact": "Opened in brave-browser#61491. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61491"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61491",
+    "url": "https://github.com/brave/brave-browser/issues/61491"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:27:29Z"
+  ],
+  "id": "9bf566e9121b163b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:26:27Z",
+  "title": "New issue: Test best-practice violations in darker_theme_browsertest.cc",
+  "impact": "Opened in brave-browser#61489. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61489"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61489",
+    "url": "https://github.com/brave/brave-browser/issues/61489"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:26:27Z"
+  ],
+  "id": "acb960e3d1569d92",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T21:25:33Z",
   "title": "New issue: Test best-practice violations in brave_browser_browsertest.cc",
   "impact": "Opened in brave-browser#61487. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -8872,6 +10919,31 @@
   ],
   "id": "f2058a52d6d0f5d6",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:25:01Z",
+  "title": "New issue: Test best-practice violations in tor_profile_manager_browsertest.cc",
+  "impact": "Opened in brave-browser#61486. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61486"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61486",
+    "url": "https://github.com/brave/brave-browser/issues/61486"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:25:01Z"
+  ],
+  "id": "f2f7a39a221047da",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -8972,6 +11044,31 @@
   ],
   "id": "2ee806409e999c7f",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T21:17:35Z",
+  "title": "New issue: Test best-practice violations in decentralized_dns_navigation_throttle_browsertest.cc",
+  "impact": "Opened in brave-browser#61470. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61470"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61470",
+    "url": "https://github.com/brave/brave-browser/issues/61470"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T21:17:35Z"
+  ],
+  "id": "e5538de50dfc2d3b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -9251,6 +11348,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T20:48:31Z",
+  "title": "New issue: Test best-practice violations in brave_wallet_permission_context_browsertest.cc",
+  "impact": "Opened in brave-browser#61441. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61441"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61441",
+    "url": "https://github.com/brave/brave-browser/issues/61441"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T20:48:31Z"
+  ],
+  "id": "e4a6c089942a9a0f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T17:27:36Z",
   "title": "New issue: Test best-practice violations in server_config_loader_unittest.cc",
   "impact": "Opened in brave-browser#61428. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -9476,6 +11598,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:20:38Z",
+  "title": "New issue: Test best-practice violations in brave_visit_database_unittest.cc",
+  "impact": "Opened in brave-browser#61413. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61413"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61413",
+    "url": "https://github.com/brave/brave-browser/issues/61413"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:20:38Z"
+  ],
+  "id": "b886a9316202b87b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T17:19:41Z",
   "title": "New issue: Test best-practice violations in brave_captive_portal_service_unittest.cc",
   "impact": "Opened in brave-browser#61411. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -9497,6 +11644,31 @@
   ],
   "id": "8b7d0d4fe50ceb92",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:18:27Z",
+  "title": "New issue: Test best-practice violations in solana_address_unittest.cc",
+  "impact": "Opened in brave-browser#61408. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61408"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61408",
+    "url": "https://github.com/brave/brave-browser/issues/61408"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:18:27Z"
+  ],
+  "id": "9fdc8543991a222a",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -9676,6 +11848,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T16:55:38Z",
+  "title": "New issue: Test best-practice violations in ad_block_service_unittest.cc",
+  "impact": "Opened in brave-browser#61360. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61360"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61360",
+    "url": "https://github.com/brave/brave-browser/issues/61360"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T16:55:38Z"
+  ],
+  "id": "2ff4347718029d91",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T16:54:32Z",
   "title": "New issue: Test best-practice violations in solana_wallet_provider_unittest.cc",
   "impact": "Opened in brave-browser#61358. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -9801,6 +11998,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T16:28:06Z",
+  "title": "New issue: Test best-practice violations in brave_sync_client_unittest.cc",
+  "impact": "Opened in brave-browser#61304. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61304"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61304",
+    "url": "https://github.com/brave/brave-browser/issues/61304"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T16:28:06Z"
+  ],
+  "id": "492e518d671d50f7",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T16:27:45Z",
   "title": "New issue: Test best-practice violations in brandcode_config_fetcher_unittest.cc",
   "impact": "Opened in brave-browser#61303. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -9826,6 +12048,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T16:21:19Z",
+  "title": "New issue: Test best-practice violations in brave_external_process_importer_host_unittest.cc",
+  "impact": "Opened in brave-browser#61290. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61290"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61290",
+    "url": "https://github.com/brave/brave-browser/issues/61290"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T16:21:19Z"
+  ],
+  "id": "4b939fd7079164a6",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T16:00:03Z",
   "title": "New issue: Test best-practice violations in vpn_dns_handler_unittest.cc",
   "impact": "Opened in brave-browser#61273. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -9847,6 +12094,156 @@
   ],
   "id": "0ff74d506accf717",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:57:58Z",
+  "title": "New issue: Test best-practice violations in click_tool_unittest.cc",
+  "impact": "Opened in brave-browser#61269. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61269"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61269",
+    "url": "https://github.com/brave/brave-browser/issues/61269"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:57:58Z"
+  ],
+  "id": "d6b4e01cdda20e35",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:56:30Z",
+  "title": "New issue: Test best-practice violations in content_agent_tool_provider_unittest.cc",
+  "impact": "Opened in brave-browser#61265. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61265"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61265",
+    "url": "https://github.com/brave/brave-browser/issues/61265"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:56:30Z"
+  ],
+  "id": "ae11dbea459bd969",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:54:24Z",
+  "title": "New issue: Test best-practice violations in configured_proxy_resolution_service_unittest.cc",
+  "impact": "Opened in brave-browser#61261. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61261"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61261",
+    "url": "https://github.com/brave/brave-browser/issues/61261"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:54:24Z"
+  ],
+  "id": "c35c8807cdeff4e9",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:53:48Z",
+  "title": "New issue: Test best-practice violations in partitioned_host_state_map_unittest.cc",
+  "impact": "Opened in brave-browser#61259. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61259"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61259",
+    "url": "https://github.com/brave/brave-browser/issues/61259"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:53:48Z"
+  ],
+  "id": "545426c8ea887c27",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:51:51Z",
+  "title": "New issue: Test best-practice violations in webcompat_report_uploader_unittest.cc",
+  "impact": "Opened in brave-browser#61255. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61255"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61255",
+    "url": "https://github.com/brave/brave-browser/issues/61255"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:51:51Z"
+  ],
+  "id": "e622cd2a0ccabf20",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:51:01Z",
+  "title": "New issue: Test best-practice violations in patterns_unittest.cc",
+  "impact": "Opened in brave-browser#61252. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61252"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61252",
+    "url": "https://github.com/brave/brave-browser/issues/61252"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:51:01Z"
+  ],
+  "id": "34795446a3e1b507",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -9947,6 +12344,131 @@
   ],
   "id": "cc3f3c5862d257b0",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:45:45Z",
+  "title": "New issue: Test best-practice violations in commander_provider_unittest.cc",
+  "impact": "Opened in brave-browser#61239. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61239"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61239",
+    "url": "https://github.com/brave/brave-browser/issues/61239"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:45:45Z"
+  ],
+  "id": "eabe53639bfd5055",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:44:44Z",
+  "title": "New issue: Test best-practice violations in brave_bookmark_provider_unittest.cc",
+  "impact": "Opened in brave-browser#61237. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61237"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61237",
+    "url": "https://github.com/brave/brave-browser/issues/61237"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:44:44Z"
+  ],
+  "id": "b865326a5c44f180",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:43:49Z",
+  "title": "New issue: Test best-practice violations in oblivious_http_chunk_processor_unittest.cc",
+  "impact": "Opened in brave-browser#61235. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61235"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61235",
+    "url": "https://github.com/brave/brave-browser/issues/61235"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:43:49Z"
+  ],
+  "id": "db68d7e6ccf15861",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:42:20Z",
+  "title": "New issue: Test best-practice violations in on_device_speech_models_component_installer_unittest.cc",
+  "impact": "Opened in brave-browser#61232. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61232"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61232",
+    "url": "https://github.com/brave/brave-browser/issues/61232"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:42:20Z"
+  ],
+  "id": "71a267932ffab9cb",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:40:40Z",
+  "title": "New issue: Test best-practice violations in de_amp_util_unittest.cc",
+  "impact": "Opened in brave-browser#61228. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61228"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61228",
+    "url": "https://github.com/brave/brave-browser/issues/61228"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:40:40Z"
+  ],
+  "id": "a54e5a62192213d8",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -10451,6 +12973,31 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:23:11Z",
+  "title": "New issue: Test best-practice violations in solana_instruction_builder_unittest.cc",
+  "impact": "Opened in brave-browser#61192. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61192"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61192",
+    "url": "https://github.com/brave/brave-browser/issues/61192"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:23:11Z"
+  ],
+  "id": "6839f2275f64884f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T15:21:23Z",
   "title": "New issue: Test best-practice violations in simulation_service_unittest.cc",
   "impact": "Opened in brave-browser#61188. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -10472,6 +13019,531 @@
   ],
   "id": "3c2aa3d8fb0acfe0",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:19:10Z",
+  "title": "New issue: Test best-practice violations in polkadot_tx_meta_unittest.cc",
+  "impact": "Opened in brave-browser#61183. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61183"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61183",
+    "url": "https://github.com/brave/brave-browser/issues/61183"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:19:10Z"
+  ],
+  "id": "cc993297b4c42d1f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:17:16Z",
+  "title": "New issue: Test best-practice violations in meld_integration_service_unittest.cc",
+  "impact": "Opened in brave-browser#61178. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61178"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61178",
+    "url": "https://github.com/brave/brave-browser/issues/61178"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:17:16Z"
+  ],
+  "id": "27429661081ba9a5",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:16:49Z",
+  "title": "New issue: Test best-practice violations in meld_integration_response_parser_unittest.cc",
+  "impact": "Opened in brave-browser#61177. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61177"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61177",
+    "url": "https://github.com/brave/brave-browser/issues/61177"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:16:49Z"
+  ],
+  "id": "9d24c21ce1647982",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:12:30Z",
+  "title": "New issue: Test best-practice violations in orchard_sync_state_unittest.cc",
+  "impact": "Opened in brave-browser#61168. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61168"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61168",
+    "url": "https://github.com/brave/brave-browser/issues/61168"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:12:30Z"
+  ],
+  "id": "d91ee9b0f7663502",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:46:57Z",
+  "title": "New issue: Test best-practice violations in time_limited_words_unittest.cc",
+  "impact": "Opened in brave-browser#61116. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61116"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61116",
+    "url": "https://github.com/brave/brave-browser/issues/61116"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:46:57Z"
+  ],
+  "id": "8f725eca2c263962",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:44:34Z",
+  "title": "New issue: Test best-practice violations in signer_unittest.cc",
+  "impact": "Opened in brave-browser#61111. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61111"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61111",
+    "url": "https://github.com/brave/brave-browser/issues/61111"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:44:34Z"
+  ],
+  "id": "763d295aab4fd87b",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:43:17Z",
+  "title": "New issue: Test best-practice violations in get_parameters_unittest.cc",
+  "impact": "Opened in brave-browser#61108. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61108"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61108",
+    "url": "https://github.com/brave/brave-browser/issues/61108"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:43:17Z"
+  ],
+  "id": "541d5a535f4684b3",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:42:39Z",
+  "title": "New issue: Test best-practice violations in database_migration_unittest.cc",
+  "impact": "Opened in brave-browser#61107. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61107"
+  ],
+  "topic": "sync",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61107",
+    "url": "https://github.com/brave/brave-browser/issues/61107"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:42:39Z"
+  ],
+  "id": "bafc1d52e4ea38cc",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:42:10Z",
+  "title": "New issue: Test best-practice violations in credentials_util_unittest.cc",
+  "impact": "Opened in brave-browser#61106. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61106"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61106",
+    "url": "https://github.com/brave/brave-browser/issues/61106"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:42:10Z"
+  ],
+  "id": "d343edcfac7cbee0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:41:08Z",
+  "title": "New issue: Test best-practice violations in topics_fetcher_unittest.cc",
+  "impact": "Opened in brave-browser#61104. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61104"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61104",
+    "url": "https://github.com/brave/brave-browser/issues/61104"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:41:08Z"
+  ],
+  "id": "af94d5c7f813f5f8",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:40:35Z",
+  "title": "New issue: Test best-practice violations in suggestions_controller_unittest.cc",
+  "impact": "Opened in brave-browser#61103. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61103"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61103",
+    "url": "https://github.com/brave/brave-browser/issues/61103"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:40:35Z"
+  ],
+  "id": "da2e3fcdc49e5ad1",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:39:21Z",
+  "title": "New issue: Test best-practice violations in combined_feed_parsing_unittest.cc",
+  "impact": "Opened in brave-browser#61100. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61100"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61100",
+    "url": "https://github.com/brave/brave-browser/issues/61100"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:39:21Z"
+  ],
+  "id": "581475cb2104aa76",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:38:45Z",
+  "title": "New issue: Test best-practice violations in brave_news_pref_manager_unittest.cc",
+  "impact": "Opened in brave-browser#61099. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61099"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61099",
+    "url": "https://github.com/brave/brave-browser/issues/61099"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:38:45Z"
+  ],
+  "id": "215a5e5538287233",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:37:54Z",
+  "title": "New issue: Test best-practice violations in eligible_notification_ads_v2_unittest.cc",
+  "impact": "Opened in brave-browser#61097. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61097"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61097",
+    "url": "https://github.com/brave/brave-browser/issues/61097"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:37:54Z"
+  ],
+  "id": "195a946019cc5183",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:37:23Z",
+  "title": "New issue: Test best-practice violations in eligible_new_tab_page_ads_v2_unittest.cc",
+  "impact": "Opened in brave-browser#61096. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61096"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61096",
+    "url": "https://github.com/brave/brave-browser/issues/61096"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:37:23Z"
+  ],
+  "id": "dd608f8cb7d11cbe",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:36:54Z",
+  "title": "New issue: Test best-practice violations in hash_vectorizer_unittest.cc",
+  "impact": "Opened in brave-browser#61095. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61095"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61095",
+    "url": "https://github.com/brave/brave-browser/issues/61095"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:36:54Z"
+  ],
+  "id": "e28e7421423f0226",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:36:20Z",
+  "title": "New issue: Test best-practice violations in distribution_transformation_unittest.cc",
+  "impact": "Opened in brave-browser#61094. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61094"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61094",
+    "url": "https://github.com/brave/brave-browser/issues/61094"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:36:20Z"
+  ],
+  "id": "a40deb7e9188a11d",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:34:27Z",
+  "title": "New issue: Test best-practice violations in proto_conversion_unittest.cc",
+  "impact": "Opened in brave-browser#61090. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61090"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61090",
+    "url": "https://github.com/brave/brave-browser/issues/61090"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:34:27Z"
+  ],
+  "id": "d042de15dfbd2591",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:33:50Z",
+  "title": "New issue: Test best-practice violations in prefs_unittest.cc",
+  "impact": "Opened in brave-browser#61089. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61089"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61089",
+    "url": "https://github.com/brave/brave-browser/issues/61089"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:33:50Z"
+  ],
+  "id": "2c67b42283726139",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:32:09Z",
+  "title": "New issue: Test best-practice violations in oai_serialization_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61084. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61084"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61084",
+    "url": "https://github.com/brave/brave-browser/issues/61084"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:32:09Z"
+  ],
+  "id": "54a24b9677af4a8d",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:31:34Z",
+  "title": "New issue: Test best-practice violations in oai_parsing_unittest.cc",
+  "impact": "Opened in brave-browser#61083. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61083"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61083",
+    "url": "https://github.com/brave/brave-browser/issues/61083"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:31:34Z"
+  ],
+  "id": "9cd3a5068d7caecb",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -10526,6 +13598,206 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:25:31Z",
+  "title": "New issue: Test best-practice violations in associated_web_contents_content_unittest.cc",
+  "impact": "Opened in brave-browser#61069. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61069"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61069",
+    "url": "https://github.com/brave/brave-browser/issues/61069"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:25:31Z"
+  ],
+  "id": "3b9362b762949d04",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:25:05Z",
+  "title": "New issue: Test best-practice violations in chrome_importer_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61068. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61068"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61068",
+    "url": "https://github.com/brave/brave-browser/issues/61068"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:25:05Z"
+  ],
+  "id": "94a3a67c38253f16",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:24:32Z",
+  "title": "New issue: Test best-practice violations in brave_canonical_cookie_unittest.cc",
+  "impact": "Opened in brave-browser#61067. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61067"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61067",
+    "url": "https://github.com/brave/brave-browser/issues/61067"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:24:32Z"
+  ],
+  "id": "7e4c88d588099f64",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:24:03Z",
+  "title": "New issue: Test best-practice violations in request_sender_unittest.cc",
+  "impact": "Opened in brave-browser#61066. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61066"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61066",
+    "url": "https://github.com/brave/brave-browser/issues/61066"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:24:03Z"
+  ],
+  "id": "5fd86618feb87224",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:23:26Z",
+  "title": "New issue: Test best-practice violations in brave_template_url_service_util_unittest.cc",
+  "impact": "Opened in brave-browser#61065. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61065"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61065",
+    "url": "https://github.com/brave/brave-browser/issues/61065"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:23:26Z"
+  ],
+  "id": "52c16f3f82c9415d",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:22:48Z",
+  "title": "New issue: Test best-practice violations in brave_install_util_unittest.cc",
+  "impact": "Opened in brave-browser#61064. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61064"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61064",
+    "url": "https://github.com/brave/brave-browser/issues/61064"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:22:48Z"
+  ],
+  "id": "1bea127764bd5e26",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:22:18Z",
+  "title": "New issue: Test best-practice violations in site_settings_handler_unittest.cc",
+  "impact": "Opened in brave-browser#61063. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61063"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61063",
+    "url": "https://github.com/brave/brave-browser/issues/61063"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:22:18Z"
+  ],
+  "id": "365dabbb18afc8f0",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:21:49Z",
+  "title": "New issue: Test best-practice violations in profile_avatar_icon_util_unittest.cc",
+  "impact": "Opened in brave-browser#61062. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61062"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61062",
+    "url": "https://github.com/brave/brave-browser/issues/61062"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:21:49Z"
+  ],
+  "id": "5046b4dfa092857f",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T14:21:28Z",
   "title": "New issue: Test best-practice violations in widevine_permission_android_unittest.cc",
   "impact": "Opened in brave-browser#61061. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -10576,6 +13848,81 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:18:25Z",
+  "title": "New issue: Test best-practice violations in brave_vpn_menu_model_unittest.cc",
+  "impact": "Opened in brave-browser#61055. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61055"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61055",
+    "url": "https://github.com/brave/brave-browser/issues/61055"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:18:25Z"
+  ],
+  "id": "a06eb3b9f93fee23",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:16:34Z",
+  "title": "New issue: Test best-practice violations in containers_icon_generator_unittest.cc",
+  "impact": "Opened in brave-browser#61051. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61051"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61051",
+    "url": "https://github.com/brave/brave-browser/issues/61051"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:16:34Z"
+  ],
+  "id": "36b7e0472d4d8862",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:15:55Z",
+  "title": "New issue: Test best-practice violations in psst_tab_web_contents_observer_unittest.cc",
+  "impact": "Opened in brave-browser#61050. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61050"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61050",
+    "url": "https://github.com/brave/brave-browser/issues/61050"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:15:55Z"
+  ],
+  "id": "780a6675707e357c",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T14:13:15Z",
   "title": "New issue: Test best-practice violations in decentralized_dns_network_delegate_helper_unittest.cc",
   "impact": "Opened in brave-browser#61044. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -10622,6 +13969,31 @@
   ],
   "id": "214105576d28d023",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:11:41Z",
+  "title": "New issue: Test best-practice violations in mv2_warning_unittest.cc",
+  "impact": "Opened in brave-browser#61041. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61041"
+  ],
+  "topic": "testing",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61041",
+    "url": "https://github.com/brave/brave-browser/issues/61041"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:11:41Z"
+  ],
+  "id": "88673055d56fd1a6",
+  "detectedAt": "2026-11-13T09:32:10.030Z",
   "basis": "backfill"
  },
  {
@@ -27328,128 +30700,6 @@
    "base branch master"
   ],
   "id": "9c6b797a116f44d0",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-11-13T08:35:08Z",
-  "title": "Closed (completed): [ZCash] Allow empty outputs for Orchard bundle",
-  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android, iOS.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50785"
-  ],
-  "topic": "shielded",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50785",
-    "url": "https://github.com/brave/brave-browser/issues/50785"
-   },
-   {
-    "label": "brave-core#32273",
-    "url": "https://github.com/brave/brave-core/pull/32273"
-   }
-  ],
-  "evidence": [
-   "closed by cypt4 at 2025-11-13T08:35:08Z",
-   "state reason: completed"
-  ],
-  "id": "38df5bb336ae3d30",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-13T08:35:07Z",
-  "title": "Merged: [ZCash] Allow empty Orchard outputs",
-  "impact": "Merged into brave-core master on 2025-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32273"
-  ],
-  "topic": "shielded",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32273",
-    "url": "https://github.com/brave/brave-core/pull/32273"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-13T08:35:07Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "28e4cecbbb743399",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-11-13T08:22:14Z",
-  "title": "Closed (completed): [ZCash] Refactor tx fee calculation",
-  "impact": "Closed as completed; linked PR merged 2025-11-13. Code is in current Release builds for Desktop, Android, iOS.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50537"
-  ],
-  "topic": "transactions",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50537",
-    "url": "https://github.com/brave/brave-browser/issues/50537"
-   },
-   {
-    "label": "brave-core#32090",
-    "url": "https://github.com/brave/brave-core/pull/32090"
-   }
-  ],
-  "evidence": [
-   "closed by cypt4 at 2025-11-13T08:22:14Z",
-   "state reason: completed"
-  ],
-  "id": "981f3b917c64b914",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-13T08:22:13Z",
-  "title": "Merged: [ZCash] Refactor zcash fee calculation",
-  "impact": "Merged into brave-core master on 2025-11-13. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32090"
-  ],
-  "topic": "transactions",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32090",
-    "url": "https://github.com/brave/brave-core/pull/32090"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-13T08:22:13Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "3bc7e3f57f18f620",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

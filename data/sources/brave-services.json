@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-13T01:06:32.737Z",
+ "retrievedAt": "2026-11-13T09:32:10.030Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-13T01:06:32.737Z"
+   "checkedAt": "2026-11-13T09:32:10.030Z"
   },
   "studies": [
    {
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T01:06:32.737Z"
+    "verifiedAt": "2026-11-13T09:32:10.030Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T01:06:32.737Z"
+    "verifiedAt": "2026-11-13T09:32:10.030Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T01:06:32.737Z"
+    "verifiedAt": "2026-11-13T09:32:10.030Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -509,15 +509,6 @@
       "reason": "channel filter (RELEASE) excludes nightly; 158.1.102.2 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.98",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.98",
-      "reason": "the Chromium-based version of 1.98 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ],
     "url": "https://github.com/brave/brave-variations/blob/9654aa3e97ad7859f3df3a935aff618d98e30fd1/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
@@ -552,12 +543,21 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T01:06:32.737Z"
+    "verifiedAt": "2026-11-13T09:32:10.030Z",
+    "appliesUnknown": [
+     {
+      "build": "iOS release 1.98",
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.98",
+      "reason": "the Chromium-based version of 1.98 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+     }
+    ]
    }
   ],
   "studiesCommit": "9654aa3e97ad7859f3df3a935aff618d98e30fd1",
-  "studiesReadAt": "2026-11-13T01:06:32.737Z",
+  "studiesReadAt": "2026-11-13T09:32:10.030Z",
   "studiesDigest": "205c4a8a68ecb1b00c9a98b3263ef6a006f8998928da12c119070a7a7971223e"
  },
- "completeAt": "2026-11-13T01:06:32.737Z"
+ "completeAt": "2026-11-13T09:32:10.030Z"
 }
