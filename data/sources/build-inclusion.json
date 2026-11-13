@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-12T18:21:26.613Z",
+ "retrievedAt": "2026-11-13T01:06:32.737Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3657,10 +3657,10 @@
     "sha": "c819797bb1ccbba875657c1d6bf35138c8f7124b",
     "domain": "master",
     "minIncluded": {
-     "version": "1.102.4",
-     "tag": "v1.102.4",
-     "checkedAt": "2026-11-12T18:21:26.613Z",
-     "basis": "GitHub compare v1.102.4...c819797b: behind"
+     "version": "1.102.3",
+     "tag": "v1.102.3",
+     "checkedAt": "2026-11-13T01:06:32.737Z",
+     "basis": "GitHub compare v1.102.3...c819797b: behind"
     },
     "maxExcluded": {
      "version": "1.102.2",
@@ -3684,24 +3684,15 @@
     "version": "1.99.57",
     "publishedAt": "2026-11-12T04:08:44Z",
     "usedBy": [
-     "desktop/release",
+     "desktop/release"
+    ]
+   },
+   {
+    "tag": "v1.100.54",
+    "version": "1.100.54",
+    "publishedAt": "2026-11-12T20:26:31Z",
+    "usedBy": [
      "github/release"
-    ]
-   },
-   {
-    "tag": "v1.100.52",
-    "version": "1.100.52",
-    "publishedAt": "2026-11-10T05:16:27Z",
-    "usedBy": [
-     "desktop/beta"
-    ]
-   },
-   {
-    "tag": "v1.101.37",
-    "version": "1.101.37",
-    "publishedAt": "2026-11-09T13:36:43Z",
-    "usedBy": [
-     "android/nightly"
     ]
    },
    {
@@ -3709,17 +3700,10 @@
     "version": "1.101.47",
     "publishedAt": "2026-11-12T05:08:45Z",
     "usedBy": [
+     "desktop/beta",
      "android/beta",
      "ios/beta",
      "github/beta"
-    ]
-   },
-   {
-    "tag": "v1.102.1",
-    "version": "1.102.1",
-    "publishedAt": "2026-11-12T01:30:24Z",
-    "usedBy": [
-     "desktop/nightly"
     ]
    },
    {
@@ -3727,7 +3711,16 @@
     "version": "1.102.2",
     "publishedAt": "2026-11-12T13:23:36Z",
     "usedBy": [
+     "desktop/nightly",
      "ios/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.3",
+    "version": "1.102.3",
+    "publishedAt": "2026-11-12T13:38:43Z",
+    "usedBy": [
+     "android/nightly"
     ]
    },
    {
@@ -3740,7 +3733,7 @@
    }
   ],
   "pending": 0,
-  "calls": 2
+  "calls": 1
  },
- "completeAt": "2026-11-12T18:21:26.613Z"
+ "completeAt": "2026-11-13T01:06:32.737Z"
 }

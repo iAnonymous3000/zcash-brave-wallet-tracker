@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-12T18:21:26.613Z",
+ "retrievedAt": "2026-11-13T01:06:32.737Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -82847,7 +82847,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-12T13:08:29Z",
-    "updatedAt": "2026-11-12T17:46:35Z",
+    "updatedAt": "2026-11-13T01:06:52Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -83098,7 +83098,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-13T01:06:32.737Z"
    },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
@@ -104654,6 +104654,7 @@
    "brave/brave-browser#61168": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41597": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41548": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41247": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -104746,15 +104747,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 891,
-   "searchHits": 1288,
+   "discovered": 892,
+   "searchHits": 1290,
    "tracked": 931,
    "direct": 668,
    "mention": 74,
    "linked": 189,
-   "excluded": 149,
+   "excluded": 150,
    "mentionsDropped": 33
   }
  },
- "completeAt": "2026-11-12T18:21:26.613Z"
+ "completeAt": "2026-11-13T01:06:32.737Z"
 }
