@@ -1,297 +1,7 @@
 {
- "at": "2026-11-13T09:32:10.030Z",
+ "at": "2026-11-13T17:46:54.198Z",
  "rulesVersion": 17,
  "builds": {
-  "brave/brave-browser#61545": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61524": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61519": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61517": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61515": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61514": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61509": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61499": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61491": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61489": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61486": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61470": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61441": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61413": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61408": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61360": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61304": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61290": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61269": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61265": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61261": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61259": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61255": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61252": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61239": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61237": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61235": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61232": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61228": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
   "brave/brave-browser#61219": {
    "desktop/release": false,
    "android/release": false,
@@ -300,7 +10,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61204": {
    "desktop/release": false,
@@ -310,337 +20,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61192": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61183": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61178": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61177": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61168": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61116": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61111": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61108": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61107": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61106": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61104": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61103": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61100": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61099": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61097": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61096": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61095": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61094": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61090": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61089": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61084": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61083": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61069": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61068": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61067": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61066": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61065": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61064": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61063": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61062": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61055": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61051": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
-  },
-  "brave/brave-browser#61050": {
-   "desktop/release": false,
-   "android/release": false,
-   "desktop/beta": false,
-   "android/beta": false,
-   "ios/beta": false,
-   "desktop/nightly": false,
-   "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61041": {
    "desktop/release": false,
@@ -650,7 +30,627 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61050": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61051": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61055": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61062": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61063": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61064": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61065": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61066": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61067": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61068": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61069": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61083": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61084": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61089": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61090": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61094": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61095": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61096": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61097": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61099": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61100": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61103": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61104": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61106": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61107": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61108": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61111": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61116": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61168": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61177": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61178": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61183": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61192": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61228": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61232": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61235": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61237": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61239": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61252": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61255": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61259": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61261": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61265": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61269": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61290": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61304": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61360": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61408": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61413": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61441": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61470": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61486": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61489": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61491": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61499": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61509": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61514": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61515": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61517": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61519": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61524": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
+  },
+  "brave/brave-browser#61545": {
+   "desktop/release": false,
+   "android/release": false,
+   "desktop/beta": false,
+   "android/beta": false,
+   "ios/beta": false,
+   "desktop/nightly": false,
+   "android/nightly": false,
+   "ios/nightly": true
   },
   "brave/brave-browser#59539": {
    "desktop/release": false,
@@ -670,7 +670,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61396": {
    "desktop/release": false,
@@ -680,7 +680,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61215": {
    "desktop/release": false,
@@ -690,7 +690,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61214": {
    "desktop/release": false,
@@ -700,7 +700,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61211": {
    "desktop/release": false,
@@ -710,7 +710,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61203": {
    "desktop/release": false,
@@ -720,7 +720,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61042": {
    "desktop/release": false,
@@ -730,7 +730,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61044": {
    "desktop/release": false,
@@ -740,7 +740,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61057": {
    "desktop/release": false,
@@ -750,7 +750,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61061": {
    "desktop/release": false,
@@ -760,7 +760,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61072": {
    "desktop/release": false,
@@ -770,7 +770,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61073": {
    "desktop/release": false,
@@ -780,7 +780,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61188": {
    "desktop/release": false,
@@ -790,7 +790,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61200": {
    "desktop/release": false,
@@ -800,7 +800,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61240": {
    "desktop/release": false,
@@ -810,7 +810,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61246": {
    "desktop/release": false,
@@ -820,7 +820,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61250": {
    "desktop/release": false,
@@ -830,7 +830,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61273": {
    "desktop/release": false,
@@ -840,7 +840,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61303": {
    "desktop/release": false,
@@ -850,7 +850,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61324": {
    "desktop/release": false,
@@ -860,7 +860,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61326": {
    "desktop/release": false,
@@ -870,7 +870,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61327": {
    "desktop/release": false,
@@ -880,7 +880,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61357": {
    "desktop/release": false,
@@ -890,7 +890,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61358": {
    "desktop/release": false,
@@ -900,7 +900,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61371": {
    "desktop/release": false,
@@ -910,7 +910,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61372": {
    "desktop/release": false,
@@ -920,7 +920,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61379": {
    "desktop/release": false,
@@ -930,7 +930,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61393": {
    "desktop/release": false,
@@ -940,7 +940,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61394": {
    "desktop/release": false,
@@ -950,7 +950,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61411": {
    "desktop/release": false,
@@ -960,7 +960,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61416": {
    "desktop/release": false,
@@ -970,7 +970,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61417": {
    "desktop/release": false,
@@ -980,7 +980,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61418": {
    "desktop/release": false,
@@ -990,7 +990,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61419": {
    "desktop/release": false,
@@ -1000,7 +1000,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61421": {
    "desktop/release": false,
@@ -1010,7 +1010,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61425": {
    "desktop/release": false,
@@ -1020,7 +1020,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61426": {
    "desktop/release": false,
@@ -1030,7 +1030,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61427": {
    "desktop/release": false,
@@ -1040,7 +1040,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61428": {
    "desktop/release": false,
@@ -1050,7 +1050,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61444": {
    "desktop/release": false,
@@ -1060,7 +1060,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61450": {
    "desktop/release": false,
@@ -1070,7 +1070,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61451": {
    "desktop/release": false,
@@ -1080,7 +1080,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61460": {
    "desktop/release": false,
@@ -1090,7 +1090,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61462": {
    "desktop/release": false,
@@ -1100,7 +1100,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61463": {
    "desktop/release": false,
@@ -1110,7 +1110,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61464": {
    "desktop/release": false,
@@ -1120,7 +1120,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61465": {
    "desktop/release": false,
@@ -1130,7 +1130,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61466": {
    "desktop/release": false,
@@ -1140,7 +1140,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61467": {
    "desktop/release": false,
@@ -1150,7 +1150,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61469": {
    "desktop/release": false,
@@ -1160,7 +1160,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61473": {
    "desktop/release": false,
@@ -1170,7 +1170,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61476": {
    "desktop/release": false,
@@ -1180,7 +1180,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61477": {
    "desktop/release": false,
@@ -1190,7 +1190,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61481": {
    "desktop/release": false,
@@ -1200,7 +1200,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61487": {
    "desktop/release": false,
@@ -1210,7 +1210,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61495": {
    "desktop/release": false,
@@ -1220,7 +1220,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61500": {
    "desktop/release": false,
@@ -1230,7 +1230,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61506": {
    "desktop/release": false,
@@ -1240,7 +1240,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61532": {
    "desktop/release": false,
@@ -1250,7 +1250,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61547": {
    "desktop/release": false,
@@ -1260,7 +1260,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61551": {
    "desktop/release": false,
@@ -1270,7 +1270,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61566": {
    "desktop/release": false,
@@ -1280,7 +1280,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": true,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#58752": {
    "desktop/release": null,
@@ -6431,7 +6431,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.102.2",
+   "tag": "v1.102.6",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
