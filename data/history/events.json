@@ -1,5 +1,205 @@
 [
  {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Deposit addresses (unified, shielded, transparent) on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "0a4fe3e3ad2ff4bf",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Ironwood pool (NU6.3) on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "11d7fa5af67c3e70",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Orchard → Ironwood migration on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "330431dddea02765",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Shield transparent funds on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "41f4aaa4191f0630",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "4636b5226eda018e",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Memos on shielded sends on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "5b79d5ac2dddc004",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Zcash testnet on iOS Release: not-verified → hidden",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → hidden"
+  ],
+  "id": "9de6f65407da005d",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Sync, birthday & recovery tools on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "cfc7e84db28745c5",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "e6d2efa0c67da579",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Automatic ZIP-317 fees on iOS Release: not-verified → in-build",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "not-verified → in-build"
+  ],
+  "id": "e8240ee7935b2256",
+  "detectedAt": "2026-11-14T06:25:21.564Z",
+  "basis": "observed"
+ },
+ {
   "kind": "in-build",
   "sourceAt": "2026-11-13T13:25:44Z",
   "title": "In Desktop Nightly 1.102.6: Test best-practice violations in rewards_policy_browsertest.cc",

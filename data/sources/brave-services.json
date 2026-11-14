@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-13T23:36:13.033Z",
+ "retrievedAt": "2026-11-14T06:25:21.564Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-13T23:36:13.033Z"
+   "checkedAt": "2026-11-14T06:25:21.564Z"
   },
   "studies": [
    {
@@ -56,12 +56,12 @@
       "reason": "157.1.99.56 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "iOS release 1.98",
+      "build": "iOS release 1.98.64 (156.1.98.64)",
       "applies": false,
       "platform": "ios",
       "channel": "release",
-      "version": "1.98",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
+      "version": "1.98.64",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.98.64 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Desktop beta 1.101.47 (158.1.101.47)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T23:36:13.033Z"
+    "verifiedAt": "2026-11-14T06:25:21.564Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -195,12 +195,12 @@
       "reason": "157.1.99.56 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "iOS release 1.98",
+      "build": "iOS release 1.98.64 (156.1.98.64)",
       "applies": false,
       "platform": "ios",
       "channel": "release",
-      "version": "1.98",
-      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS"
+      "version": "1.98.64",
+      "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 156.1.98.64 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "Desktop beta 1.101.47 (158.1.101.47)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T23:36:13.033Z"
+    "verifiedAt": "2026-11-14T06:25:21.564Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -329,12 +329,12 @@
       "reason": "platform filter (IOS) excludes Android; channel filter (NIGHTLY, BETA) excludes release; 157.1.99.56 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "iOS release 1.98",
+      "build": "iOS release 1.98.64 (156.1.98.64)",
       "applies": false,
       "platform": "ios",
       "channel": "release",
-      "version": "1.98",
-      "reason": "channel filter (NIGHTLY, BETA) excludes release"
+      "version": "1.98.64",
+      "reason": "channel filter (NIGHTLY, BETA) excludes release; 156.1.98.64 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Desktop beta 1.101.47 (158.1.101.47)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T23:36:13.033Z"
+    "verifiedAt": "2026-11-14T06:25:21.564Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -459,6 +459,14 @@
       "channel": "release",
       "version": "1.99.56",
       "reason": "platform filter (IOS) excludes Android; 157.1.99.56 is outside the version range 147.1.89.144 – 152.*"
+     },
+     {
+      "build": "iOS release 1.98.64 (156.1.98.64)",
+      "applies": false,
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.98.64",
+      "reason": "156.1.98.64 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Desktop beta 1.101.47 (158.1.101.47)",
@@ -543,21 +551,12 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-13T23:36:13.033Z",
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.98",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.98",
-      "reason": "the Chromium-based version of 1.98 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ]
+    "verifiedAt": "2026-11-14T06:25:21.564Z"
    }
   ],
   "studiesCommit": "9654aa3e97ad7859f3df3a935aff618d98e30fd1",
-  "studiesReadAt": "2026-11-13T23:36:13.033Z",
+  "studiesReadAt": "2026-11-14T06:25:21.564Z",
   "studiesDigest": "205c4a8a68ecb1b00c9a98b3263ef6a006f8998928da12c119070a7a7971223e"
  },
- "completeAt": "2026-11-13T23:36:13.033Z"
+ "completeAt": "2026-11-14T06:25:21.564Z"
 }
