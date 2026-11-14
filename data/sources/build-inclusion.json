@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-14T15:06:27.700Z",
+ "retrievedAt": "2026-11-14T20:44:31.799Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3684,6 +3684,17 @@
      "checkedAt": "2026-11-13T09:32:10.030Z",
      "basis": "merged 2026-11-13T03:52Z, after v1.102.5 was published"
     }
+   },
+   "brave/brave-core#41668": {
+    "sha": "d36e8c924b742f48fdf42f1f2c44641619136578",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.102.8",
+     "tag": "v1.102.8",
+     "checkedAt": "2026-11-14T20:44:31.799Z",
+     "basis": "merged 2026-11-14T18:05Z, after v1.102.8 was published"
+    }
    }
   },
   "targets": [
@@ -3759,5 +3770,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-14T15:06:27.700Z"
+ "completeAt": "2026-11-14T20:44:31.799Z"
 }
