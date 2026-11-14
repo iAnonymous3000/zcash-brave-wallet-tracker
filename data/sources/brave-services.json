@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-14T06:25:21.564Z",
+ "retrievedAt": "2026-11-14T15:06:27.700Z",
  "data": {
   "gate3": {
    "commitSha": "612d6a1f21c630e81c296448c22eea495dd9eceb",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/612d6a1f21c630e81c296448c22eea495dd9eceb/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-14T06:25:21.564Z"
+   "checkedAt": "2026-11-14T15:06:27.700Z"
   },
   "studies": [
    {
@@ -48,12 +48,12 @@
       "reason": "157.1.99.57 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Android release 1.99.56 (157.1.99.56)",
+      "build": "Android release 1.99.57 (157.1.99.57)",
       "applies": false,
       "platform": "android",
       "channel": "release",
-      "version": "1.99.56",
-      "reason": "157.1.99.56 is outside the version range 139.1.81.129 – 152.*"
+      "version": "1.99.57",
+      "reason": "157.1.99.57 is outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "iOS release 1.98.64 (156.1.98.64)",
@@ -151,7 +151,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-14T06:25:21.564Z"
+    "verifiedAt": "2026-11-14T15:06:27.700Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -187,12 +187,12 @@
       "reason": "157.1.99.57 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Android release 1.99.56 (157.1.99.56)",
+      "build": "Android release 1.99.57 (157.1.99.57)",
       "applies": false,
       "platform": "android",
       "channel": "release",
-      "version": "1.99.56",
-      "reason": "157.1.99.56 is outside the version range any – 139.1.81.128"
+      "version": "1.99.57",
+      "reason": "157.1.99.57 is outside the version range any – 139.1.81.128"
      },
      {
       "build": "iOS release 1.98.64 (156.1.98.64)",
@@ -287,7 +287,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-14T06:25:21.564Z"
+    "verifiedAt": "2026-11-14T15:06:27.700Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -321,12 +321,12 @@
       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (NIGHTLY, BETA) excludes release; 157.1.99.57 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Android release 1.99.56 (157.1.99.56)",
+      "build": "Android release 1.99.57 (157.1.99.57)",
       "applies": false,
       "platform": "android",
       "channel": "release",
-      "version": "1.99.56",
-      "reason": "platform filter (IOS) excludes Android; channel filter (NIGHTLY, BETA) excludes release; 157.1.99.56 is outside the version range 146.1.89.116 – 152.*"
+      "version": "1.99.57",
+      "reason": "platform filter (IOS) excludes Android; channel filter (NIGHTLY, BETA) excludes release; 157.1.99.57 is outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "iOS release 1.98.64 (156.1.98.64)",
@@ -420,7 +420,7 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-14T06:25:21.564Z"
+    "verifiedAt": "2026-11-14T15:06:27.700Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -453,12 +453,12 @@
       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 157.1.99.57 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Android release 1.99.56 (157.1.99.56)",
+      "build": "Android release 1.99.57 (157.1.99.57)",
       "applies": false,
       "platform": "android",
       "channel": "release",
-      "version": "1.99.56",
-      "reason": "platform filter (IOS) excludes Android; 157.1.99.56 is outside the version range 147.1.89.144 – 152.*"
+      "version": "1.99.57",
+      "reason": "platform filter (IOS) excludes Android; 157.1.99.57 is outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "iOS release 1.98.64 (156.1.98.64)",
@@ -551,12 +551,12 @@
      ]
     },
     "readAt": "2026-11-13T01:06:32.737Z",
-    "verifiedAt": "2026-11-14T06:25:21.564Z"
+    "verifiedAt": "2026-11-14T15:06:27.700Z"
    }
   ],
   "studiesCommit": "9654aa3e97ad7859f3df3a935aff618d98e30fd1",
-  "studiesReadAt": "2026-11-14T06:25:21.564Z",
+  "studiesReadAt": "2026-11-14T15:06:27.700Z",
   "studiesDigest": "205c4a8a68ecb1b00c9a98b3263ef6a006f8998928da12c119070a7a7971223e"
  },
- "completeAt": "2026-11-14T06:25:21.564Z"
+ "completeAt": "2026-11-14T15:06:27.700Z"
 }

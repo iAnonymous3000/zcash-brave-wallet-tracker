@@ -37668,32 +37668,5 @@
   "id": "c7adafb149265d0e",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-11-14T12:17:00Z",
-  "title": "New issue: [ZCash] Present zcash_create_orchard_to_transparent_transaction_task",
-  "impact": "Opened in brave-browser#50841. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50841"
-  ],
-  "topic": "deps",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50841",
-    "url": "https://github.com/brave/brave-browser/issues/50841"
-   }
-  ],
-  "evidence": [
-   "created 2025-11-14T12:17:00Z"
-  ],
-  "id": "e5fa13bd5a1b2ec0",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
