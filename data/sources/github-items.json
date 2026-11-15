@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-14T20:44:31.799Z",
+ "retrievedAt": "2026-11-15T01:57:11.509Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -41209,6 +41209,60 @@
      "title:zcash"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-browser#61869": {
+    "id": "brave/brave-browser#61869",
+    "repo": "brave/brave-browser",
+    "number": 61869,
+    "kind": "issue",
+    "title": "[Wallet] Resolve ENS multichain addresses (ENSIP-9/11)",
+    "url": "https://github.com/brave/brave-browser/issues/61869",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-14T21:17:38Z",
+    "updatedAt": "2026-11-14T21:17:38Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "arbuthnot-eth",
+    "assignees": [],
+    "labels": [
+     "feature-request"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Platforms all Description Brave Wallet only resolves an ENS name to its Ethereum mainnet address. MakeAddrCall builds addr(bytes32), and the send screen only looks up ENS names for ETH-coin sends (select_address_modal.tsx). As a result: - You can't send SOL, BTC, ZEC, ADA, DOT or FIL to an ENS name, even when the name has a record for that coin. - Sends on EVM L2s (Base, Arbitrum, Optimism and others) get the mainnet record rather than the chain-specific one. The ENSv2…",
+    "bodyRefs": [
+     "brave/brave-core#40950",
+     "brave/brave-browser#59590"
+    ],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-14T21:17:39Z",
+      "actor": "arbuthnot-eth",
+      "detail": "feature-request"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zec"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-15T01:57:11.509Z"
    },
    "brave/brave-browser#59539": {
     "id": "brave/brave-browser#59539",
@@ -116654,15 +116708,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 896,
-   "searchHits": 1292,
-   "tracked": 1040,
+   "discovered": 897,
+   "searchHits": 1293,
+   "tracked": 1041,
    "direct": 670,
-   "mention": 74,
+   "mention": 75,
    "linked": 296,
    "excluded": 152,
    "mentionsDropped": 36
   }
  },
- "completeAt": "2026-11-14T20:44:31.799Z"
+ "completeAt": "2026-11-15T01:57:11.509Z"
 }
