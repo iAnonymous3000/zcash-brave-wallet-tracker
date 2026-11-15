@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-15T17:12:45.537Z",
+ "retrievedAt": "2026-11-15T22:50:05.085Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -44610,6 +44610,14 @@
       "at": "2026-11-12T12:23:34Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-15T22:25:31Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41702",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -44619,7 +44627,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-15T22:50:05.085Z"
    },
    "brave/brave-core#41066": {
     "id": "brave/brave-core#41066",
@@ -116715,8 +116723,8 @@
    "mention": 75,
    "linked": 296,
    "excluded": 152,
-   "mentionsDropped": 36
+   "mentionsDropped": 37
   }
  },
- "completeAt": "2026-11-15T17:12:45.537Z"
+ "completeAt": "2026-11-15T22:50:05.085Z"
 }

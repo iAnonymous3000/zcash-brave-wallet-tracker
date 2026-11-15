@@ -40184,29 +40184,5 @@
   "id": "244bedf1fff81867",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "community-report",
-  "sourceAt": "2025-11-15T22:36:50.370Z",
-  "title": "Community report: Best Authenticator for Brave",
-  "impact": "A user reported this on the Brave Community forum. It is reported behavior, not a confirmed defect.",
-  "highlight": null,
-  "itemIds": [],
-  "topic": null,
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "Community thread",
-    "url": "https://community.brave.app/t/best-authenticator-for-brave/645757"
-   }
-  ],
-  "evidence": [
-   "posted 2025-11-15T22:36:50.370Z",
-   "2 post(s), closed"
-  ],
-  "id": "f2814fdbdaaef9aa",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]
