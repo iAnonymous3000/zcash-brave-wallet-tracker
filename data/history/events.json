@@ -46137,29 +46137,5 @@
   "id": "7b88d0ba96adc90a",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "community-report",
-  "sourceAt": "2025-11-17T07:22:17.983Z",
-  "title": "Community report: Zec wallet How to recover a subwallet created under the same seed phrase?",
-  "impact": "A user reported this on the Brave Community forum. It is reported behavior, not a confirmed defect.",
-  "highlight": null,
-  "itemIds": [],
-  "topic": null,
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "Community thread",
-    "url": "https://community.brave.app/t/zec-wallet-how-to-recover-a-subwallet-created-under-the-same-seed-phrase/645799"
-   }
-  ],
-  "evidence": [
-   "posted 2025-11-17T07:22:17.983Z",
-   "9 post(s), closed"
-  ],
-  "id": "244bedf1fff81867",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]

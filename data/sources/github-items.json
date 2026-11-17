@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-17T02:57:18.860Z",
+ "retrievedAt": "2026-11-17T13:28:36.670Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -41407,6 +41407,68 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#61869": {
+    "id": "brave/brave-browser#61869",
+    "repo": "brave/brave-browser",
+    "number": 61869,
+    "kind": "issue",
+    "title": "[Wallet] Resolve ENS multichain addresses (ENSIP-9/11)",
+    "url": "https://github.com/brave/brave-browser/issues/61869",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-14T21:17:38Z",
+    "updatedAt": "2026-11-17T08:00:56Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "arbuthnot-eth",
+    "assignees": [],
+    "labels": [
+     "feature-request"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Platforms all Description Brave Wallet only resolves an ENS name to its Ethereum mainnet address. MakeAddrCall builds addr(bytes32), and the send screen only looks up ENS names for ETH-coin sends (select_address_modal.tsx). As a result: - You can't send SOL, BTC, ZEC, ADA, DOT or FIL to an ENS name, even when the name has a record for that coin. - Sends on EVM L2s (Base, Arbitrum, Optimism and others) get the mainnet record rather than the chain-specific one. The ENSv2…",
+    "bodyRefs": [
+     "brave/brave-core#40950",
+     "brave/brave-browser#59590"
+    ],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-14T21:17:39Z",
+      "actor": "arbuthnot-eth",
+      "detail": "feature-request"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-17T06:39:25Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41748",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zec"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-17T13:28:36.670Z"
+   },
    "brave/brave-browser#61891": {
     "id": "brave/brave-browser#61891",
     "repo": "brave/brave-browser",
@@ -41485,60 +41547,6 @@
      "body:zec"
     ],
     "retrievedAt": "2026-11-17T02:57:18.860Z"
-   },
-   "brave/brave-browser#61869": {
-    "id": "brave/brave-browser#61869",
-    "repo": "brave/brave-browser",
-    "number": 61869,
-    "kind": "issue",
-    "title": "[Wallet] Resolve ENS multichain addresses (ENSIP-9/11)",
-    "url": "https://github.com/brave/brave-browser/issues/61869",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": null,
-    "createdAt": "2026-11-14T21:17:38Z",
-    "updatedAt": "2026-11-14T21:17:38Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "arbuthnot-eth",
-    "assignees": [],
-    "labels": [
-     "feature-request"
-    ],
-    "milestone": null,
-    "bodyExcerpt": "Platforms all Description Brave Wallet only resolves an ENS name to its Ethereum mainnet address. MakeAddrCall builds addr(bytes32), and the send screen only looks up ENS names for ETH-coin sends (select_address_modal.tsx). As a result: - You can't send SOL, BTC, ZEC, ADA, DOT or FIL to an ENS name, even when the name has a record for that coin. - Sends on EVM L2s (Base, Arbitrum, Optimism and others) get the mainnet record rather than the chain-specific one. The ENSv2…",
-    "bodyRefs": [
-     "brave/brave-core#40950",
-     "brave/brave-browser#59590"
-    ],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-14T21:17:39Z",
-      "actor": "arbuthnot-eth",
-      "detail": "feature-request"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zec"
-    ],
-    "relevance": "mention",
-    "matchedTerms": [
-     "body:zec"
-    ],
-    "retrievedAt": "2026-11-15T01:57:11.509Z"
    },
    "brave/brave-browser#59539": {
     "id": "brave/brave-browser#59539",
@@ -73388,6 +73396,59 @@
      "body:zcash"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-core#41748": {
+    "id": "brave/brave-core#41748",
+    "repo": "brave/brave-core",
+    "number": 41748,
+    "kind": "pr",
+    "title": "[Wallet] Add ENS multichain coin type and address record helpers",
+    "url": "https://github.com/brave/brave-core/pull/41748",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-11-17T06:39:24Z",
+    "updatedAt": "2026-11-17T07:03:51Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "ens-multichain-addr-utils",
+    "author": "arbuthnot-eth",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "- Part of https://github.com/brave/brave-browser/issues/61869 Adds two helpers for ENS multichain address resolution (ENSIP-9/11). This is the first of three small PRs from the design doc. Nothing calls them yet. The next PR adds EnsGetAddr to JsonRpcService and uses them. - GetEnsCoinType(coin, chain_id) returns 60 for Ethereum mainnet, 0x80000000 | chainId for other EVM chains (ENSIP-11), and the SLIP-44 number for non-EVM mainnets. mojom::CoinType values are already…",
+    "bodyRefs": [
+     "brave/brave-browser#61869"
+    ],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-17T08:00:57Z",
+      "actor": "arbuthnot-eth",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#61869",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zec is:pr"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-17T13:28:36.670Z"
    },
    "brave/brave-core#35523": {
     "id": "brave/brave-core#35523",
@@ -117963,6 +118024,7 @@
    "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41751": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41675": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41597": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41548": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -118058,15 +118120,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 901,
-   "searchHits": 1302,
-   "tracked": 1044,
+   "discovered": 903,
+   "searchHits": 1304,
+   "tracked": 1045,
    "direct": 672,
-   "mention": 76,
+   "mention": 77,
    "linked": 296,
-   "excluded": 153,
+   "excluded": 154,
    "mentionsDropped": 37
   }
  },
- "completeAt": "2026-11-17T02:57:18.860Z"
+ "completeAt": "2026-11-17T13:28:36.670Z"
 }
