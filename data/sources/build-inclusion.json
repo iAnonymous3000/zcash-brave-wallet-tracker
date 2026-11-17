@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-16T06:31:44.041Z",
+ "retrievedAt": "2026-11-17T02:57:18.860Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3700,6 +3700,22 @@
      "checkedAt": "2026-11-14T20:44:31.799Z",
      "basis": "merged 2026-11-14T18:05Z, after v1.102.8 was published"
     }
+   },
+   "brave/brave-core#41715": {
+    "sha": "b7cef2395be549efa53406b6a5b432f33df7fab5",
+    "domain": "master",
+    "minIncluded": {
+     "version": "1.102.13",
+     "tag": "v1.102.13",
+     "checkedAt": "2026-11-17T02:57:18.860Z",
+     "basis": "GitHub compare v1.102.13...b7cef239: behind"
+    },
+    "maxExcluded": {
+     "version": "1.102.11",
+     "tag": "v1.102.11",
+     "checkedAt": "2026-11-17T02:57:18.860Z",
+     "basis": "merged 2026-11-16T21:00Z, after v1.102.11 was published"
+    }
    }
   },
   "targets": [
@@ -3747,26 +3763,26 @@
     ]
    },
    {
-    "tag": "v1.102.3",
-    "version": "1.102.3",
-    "publishedAt": "2026-11-12T13:38:43Z",
-    "usedBy": [
-     "android/nightly"
-    ]
-   },
-   {
-    "tag": "v1.102.6",
-    "version": "1.102.6",
-    "publishedAt": "2026-11-13T13:25:44Z",
+    "tag": "v1.102.10",
+    "version": "1.102.10",
+    "publishedAt": "2026-11-16T13:24:23Z",
     "usedBy": [
      "desktop/nightly",
      "ios/nightly"
     ]
    },
    {
-    "tag": "v1.102.9",
-    "version": "1.102.9",
-    "publishedAt": "2026-11-16T01:05:35Z",
+    "tag": "v1.102.11",
+    "version": "1.102.11",
+    "publishedAt": "2026-11-16T13:39:35Z",
+    "usedBy": [
+     "android/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.13",
+    "version": "1.102.13",
+    "publishedAt": "2026-11-17T01:09:26Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3775,5 +3791,5 @@
   "pending": 0,
   "calls": 1
  },
- "completeAt": "2026-11-16T06:31:44.041Z"
+ "completeAt": "2026-11-17T02:57:18.860Z"
 }

@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-16T06:31:44.041Z",
+ "retrievedAt": "2026-11-17T02:57:18.860Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -27107,6 +27107,666 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#61901": {
+    "id": "brave/brave-browser#61901",
+    "repo": "brave/brave-browser",
+    "number": 61901,
+    "kind": "issue",
+    "title": "[Wallet]: Unable to Hide Zcash (Shielded Legacy) Token",
+    "url": "https://github.com/brave/brave-browser/issues/61901",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-16T18:00:03Z",
+    "updatedAt": "2026-11-16T21:01:13Z",
+    "closedAt": "2026-11-16T21:00:39Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "Douglashdaniel",
+    "assignees": [
+     "Douglashdaniel"
+    ],
+    "labels": [
+     "bug",
+     "QA/Yes",
+     "release-notes/include",
+     "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "feature/web3/wallet/core"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Description If you attempt to hide your Zcash (Shielded Legacy) token in the Wallet, nothing happens. Steps to reproduce 1. Open the Wallet and navigate to the Portfolio page 2. Open the more menu for your Zcash (Shielded Legacy) token and click Hide 3. The token does not get hidden Actual result [GitHub link omitted] Expected result The token should get hidden Reproduces how often Easily reproduced Desktop Brave version (brave://version info) 1.92.139 Chromium:…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": "Bug",
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:04Z",
+      "actor": "Douglashdaniel",
+      "detail": "bug"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:05Z",
+      "actor": "Douglashdaniel",
+      "detail": "QA/Yes"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:05Z",
+      "actor": "Douglashdaniel",
+      "detail": "release-notes/include"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:05Z",
+      "actor": "Douglashdaniel",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:05Z",
+      "actor": "Douglashdaniel",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:06Z",
+      "actor": "Douglashdaniel",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:00:06Z",
+      "actor": "Douglashdaniel",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-16T18:15:38Z",
+      "actor": "Douglashdaniel",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41715",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-16T21:00:40Z",
+      "actor": "Douglashdaniel",
+      "detail": "completed",
+      "ref": "brave/brave-core#41715"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:shielded wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "title:shielded",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
+   "brave/brave-browser#61213": {
+    "id": "brave/brave-browser#61213",
+    "repo": "brave/brave-browser",
+    "number": 61213,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_keyring_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61213",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:33:40Z",
+    "updatedAt": "2026-11-16T12:49:54Z",
+    "closedAt": "2026-11-14T18:05:34Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": {
+     "title": "1.102.x - Nightly",
+     "dueOn": "2027-01-05T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_keyring_unittest.cc break test best practices documented in docs/best-practices. ZCashKeyringUnitTest.GetPubKey, ZCashKeyringUnitTest.GetPubkey, ZCashKeyringUnitTest.GetUnifiedAddress, ZCashKeyringUnitTest.GetUnifiedAddress_Testnet, ZCashKeyringUnitTest.GetTransparentAddress (medium severity) L44 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: GetPubKey, GetPubkey, GetTransparentAddress,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:41Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:33:42Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-14T18:05:34Z",
+      "actor": "brian-brave",
+      "detail": "completed",
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-14T18:06:23Z",
+      "actor": "brave-builds",
+      "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_keyring_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
+   "brave/brave-browser#61223": {
+    "id": "brave/brave-browser#61223",
+    "repo": "brave/brave-browser",
+    "number": 61223,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_utils_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61223",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-05T15:38:28Z",
+    "updatedAt": "2026-11-16T12:49:52Z",
+    "closedAt": "2026-11-14T18:05:35Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
+     "tests/test-quality",
+     "tests/best-practice-violation"
+    ],
+    "milestone": {
+     "title": "1.102.x - Nightly",
+     "dueOn": "2027-01-05T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "Unit tests in components/brave_wallet/common/zcash_utils_unittest.cc break test best practices documented in docs/best-practices. ZCashUtilsUnitTest.ValidateOrchardRecipientAddress, ZCashUtilsUnitTest.PubkeyToTransparentAddress, ZCashUtilsUnitTest.PubkeyHashToTransparentAddress, ZCashUtilsUnitTest.GetTransparentRawBytes, ZCashUtilsUnitTest.OrchardAddress, ZCashUtilsUnitTest.GetMergedUnifiedAddress, ZCashUtilsUnitTest.RevertHex, ZCashUtilsUnitTest.OrchardMemo,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:30Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:30Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:31Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T15:38:32Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-13T19:42:12Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41668",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-14T18:05:35Z",
+      "actor": "brian-brave",
+      "detail": "completed",
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-14T18:06:27Z",
+      "actor": "brave-builds",
+      "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:52Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:52Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:52Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:orchard wallet",
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_utils_unittest",
+     "body:zcash_utils_unittest"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
+   "brave/brave-browser#61396": {
+    "id": "brave/brave-browser#61396",
+    "repo": "brave/brave-browser",
+    "number": 61396,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_auto_sync_manager_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61396",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-05T17:13:57Z",
+    "updatedAt": "2026-11-16T12:49:35Z",
+    "closedAt": "2026-11-12T12:23:38Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": {
+     "title": "1.102.x - Nightly",
+     "dueOn": "2027-01-05T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_auto_sync_manager_unittest.cc break test best practices documented in docs/best-practices. ZCashAutoSyncManagerTest.InitialSync, ZCashAutoSyncManagerTest.TimerHit (low severity) L105 - Rule: TA-005: NEVER Use RunUntilIdle() - Problem: ZCashAutoSyncManagerTest.InitialSync and TimerHit call task_environment().RunUntilIdle(). The first StartShieldSync happens synchronously inside Start(), because the mocked…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:58Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:13:59Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:00Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-12T12:23:38Z",
+      "actor": "brian-brave",
+      "detail": "completed",
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-12T12:24:56Z",
+      "actor": "brave-builds",
+      "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:35Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:35Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:35Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_auto_sync_manager_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
+   "brave/brave-browser#61397": {
+    "id": "brave/brave-browser#61397",
+    "repo": "brave/brave-browser",
+    "number": 61397,
+    "kind": "issue",
+    "title": "Test best-practice violations in zcash_verify_chain_state_task_unittest.cc",
+    "url": "https://github.com/brave/brave-browser/issues/61397",
+    "state": "closed",
+    "stateReason": "completed",
+    "isDraft": null,
+    "createdAt": "2026-11-05T17:14:35Z",
+    "updatedAt": "2026-11-16T12:49:33Z",
+    "closedAt": "2026-11-12T12:23:41Z",
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "netzenbot",
+    "assignees": [],
+    "labels": [
+     "tests",
+     "QA/No",
+     "release-notes/exclude",
+     "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
+     "tests/test-quality",
+     "tests/best-practice-violation",
+     "tests/flaky-risk"
+    ],
+    "milestone": {
+     "title": "1.102.x - Nightly",
+     "dueOn": "2027-01-05T00:00:00Z",
+     "state": "OPEN"
+    },
+    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_verify_chain_state_task_unittest.cc break test best practices documented in docs/best-practices. ZCashVerifyChainStateTaskTest.NoReorg, ZCashVerifyChainStateTaskTest.Reorg_ChainTipBeforeLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_ChainTipAfterLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_LatestBlockHashChanged, ZCashVerifyChainStateTaskTest.Error_CheckpointIdFailed,…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:36Z",
+      "actor": "netzenbot",
+      "detail": "tests"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "QA/No"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:37Z",
+      "actor": "netzenbot",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/test-quality"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/best-practice-violation"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-05T17:14:38Z",
+      "actor": "netzenbot",
+      "detail": "tests/flaky-risk"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-11T19:36:27Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41534",
+      "willClose": false
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-12T12:23:41Z",
+      "actor": "brian-brave",
+      "detail": "completed",
+      "ref": null
+     },
+     {
+      "type": "milestoned",
+      "at": "2026-11-12T12:24:58Z",
+      "actor": "brave-builds",
+      "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:33Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:33Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:33Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash_verify_chain_state_task_unittest",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
    "brave/brave-browser#61244": {
     "id": "brave/brave-browser#61244",
     "repo": "brave/brave-browser",
@@ -27209,119 +27869,6 @@
     "matchedTerms": [
      "title:zcash_decoder_unittest",
      "body:zcash"
-    ],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
-   },
-   "brave/brave-browser#61223": {
-    "id": "brave/brave-browser#61223",
-    "repo": "brave/brave-browser",
-    "number": 61223,
-    "kind": "issue",
-    "title": "Test best-practice violations in zcash_utils_unittest.cc",
-    "url": "https://github.com/brave/brave-browser/issues/61223",
-    "state": "closed",
-    "stateReason": "completed",
-    "isDraft": null,
-    "createdAt": "2026-11-05T15:38:28Z",
-    "updatedAt": "2026-11-14T18:06:27Z",
-    "closedAt": "2026-11-14T18:05:35Z",
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "tests",
-     "QA/No",
-     "release-notes/exclude",
-     "feature/web3/wallet",
-     "tests/test-quality",
-     "tests/best-practice-violation"
-    ],
-    "milestone": {
-     "title": "1.102.x - Nightly",
-     "dueOn": "2027-01-05T00:00:00Z",
-     "state": "OPEN"
-    },
-    "bodyExcerpt": "Unit tests in components/brave_wallet/common/zcash_utils_unittest.cc break test best practices documented in docs/best-practices. ZCashUtilsUnitTest.ValidateOrchardRecipientAddress, ZCashUtilsUnitTest.PubkeyToTransparentAddress, ZCashUtilsUnitTest.PubkeyHashToTransparentAddress, ZCashUtilsUnitTest.GetTransparentRawBytes, ZCashUtilsUnitTest.OrchardAddress, ZCashUtilsUnitTest.GetMergedUnifiedAddress, ZCashUtilsUnitTest.RevertHex, ZCashUtilsUnitTest.OrchardMemo,…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:30Z",
-      "actor": "netzenbot",
-      "detail": "tests"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:30Z",
-      "actor": "netzenbot",
-      "detail": "QA/No"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:31Z",
-      "actor": "netzenbot",
-      "detail": "release-notes/exclude"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:31Z",
-      "actor": "netzenbot",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:31Z",
-      "actor": "netzenbot",
-      "detail": "tests/test-quality"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:38:32Z",
-      "actor": "netzenbot",
-      "detail": "tests/best-practice-violation"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-13T19:42:12Z",
-      "actor": "netzenbot",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41668",
-      "willClose": false
-     },
-     {
-      "type": "closed",
-      "at": "2026-11-14T18:05:35Z",
-      "actor": "brian-brave",
-      "detail": "completed",
-      "ref": null
-     },
-     {
-      "type": "milestoned",
-      "at": "2026-11-14T18:06:27Z",
-      "actor": "brave-builds",
-      "detail": "1.102.x - Nightly"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:orchard wallet",
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash_utils_unittest",
-     "body:zcash_utils_unittest"
     ],
     "retrievedAt": "2026-11-14T20:44:31.799Z"
    },
@@ -27433,118 +27980,6 @@
     "relevance": "direct",
     "matchedTerms": [
      "title:zcash_transaction_utils_unittest",
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
-   },
-   "brave/brave-browser#61213": {
-    "id": "brave/brave-browser#61213",
-    "repo": "brave/brave-browser",
-    "number": 61213,
-    "kind": "issue",
-    "title": "Test best-practice violations in zcash_keyring_unittest.cc",
-    "url": "https://github.com/brave/brave-browser/issues/61213",
-    "state": "closed",
-    "stateReason": "completed",
-    "isDraft": null,
-    "createdAt": "2026-11-05T15:33:40Z",
-    "updatedAt": "2026-11-14T18:06:23Z",
-    "closedAt": "2026-11-14T18:05:34Z",
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "tests",
-     "QA/No",
-     "release-notes/exclude",
-     "feature/web3/wallet",
-     "tests/test-quality",
-     "tests/best-practice-violation"
-    ],
-    "milestone": {
-     "title": "1.102.x - Nightly",
-     "dueOn": "2027-01-05T00:00:00Z",
-     "state": "OPEN"
-    },
-    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_keyring_unittest.cc break test best practices documented in docs/best-practices. ZCashKeyringUnitTest.GetPubKey, ZCashKeyringUnitTest.GetPubkey, ZCashKeyringUnitTest.GetUnifiedAddress, ZCashKeyringUnitTest.GetUnifiedAddress_Testnet, ZCashKeyringUnitTest.GetTransparentAddress (medium severity) L44 - Rule: TI-025: Use ASSERT_TRUE Before Accessing Optional Values - Problem: GetPubKey, GetPubkey, GetTransparentAddress,…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:41Z",
-      "actor": "netzenbot",
-      "detail": "tests"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:41Z",
-      "actor": "netzenbot",
-      "detail": "QA/No"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:41Z",
-      "actor": "netzenbot",
-      "detail": "release-notes/exclude"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:42Z",
-      "actor": "netzenbot",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:42Z",
-      "actor": "netzenbot",
-      "detail": "tests/test-quality"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T15:33:42Z",
-      "actor": "netzenbot",
-      "detail": "tests/best-practice-violation"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-13T19:42:12Z",
-      "actor": "netzenbot",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41668",
-      "willClose": false
-     },
-     {
-      "type": "closed",
-      "at": "2026-11-14T18:05:34Z",
-      "actor": "brian-brave",
-      "detail": "completed",
-      "ref": null
-     },
-     {
-      "type": "milestoned",
-      "at": "2026-11-14T18:06:23Z",
-      "actor": "brave-builds",
-      "detail": "1.102.x - Nightly"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash_keyring_unittest",
      "body:zcash"
     ],
     "retrievedAt": "2026-11-14T20:44:31.799Z"
@@ -27997,244 +28432,6 @@
      "body:zcash"
     ],
     "retrievedAt": "2026-11-13T09:32:10.030Z"
-   },
-   "brave/brave-browser#61397": {
-    "id": "brave/brave-browser#61397",
-    "repo": "brave/brave-browser",
-    "number": 61397,
-    "kind": "issue",
-    "title": "Test best-practice violations in zcash_verify_chain_state_task_unittest.cc",
-    "url": "https://github.com/brave/brave-browser/issues/61397",
-    "state": "closed",
-    "stateReason": "completed",
-    "isDraft": null,
-    "createdAt": "2026-11-05T17:14:35Z",
-    "updatedAt": "2026-11-12T12:24:58Z",
-    "closedAt": "2026-11-12T12:23:41Z",
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "tests",
-     "QA/No",
-     "release-notes/exclude",
-     "feature/web3/wallet",
-     "tests/test-quality",
-     "tests/best-practice-violation",
-     "tests/flaky-risk"
-    ],
-    "milestone": {
-     "title": "1.102.x - Nightly",
-     "dueOn": "2027-01-05T00:00:00Z",
-     "state": "OPEN"
-    },
-    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_verify_chain_state_task_unittest.cc break test best practices documented in docs/best-practices. ZCashVerifyChainStateTaskTest.NoReorg, ZCashVerifyChainStateTaskTest.Reorg_ChainTipBeforeLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_ChainTipAfterLatestScannedBlock, ZCashVerifyChainStateTaskTest.Reorg_LatestBlockHashChanged, ZCashVerifyChainStateTaskTest.Error_CheckpointIdFailed,…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:36Z",
-      "actor": "netzenbot",
-      "detail": "tests"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:37Z",
-      "actor": "netzenbot",
-      "detail": "QA/No"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:37Z",
-      "actor": "netzenbot",
-      "detail": "release-notes/exclude"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:37Z",
-      "actor": "netzenbot",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:38Z",
-      "actor": "netzenbot",
-      "detail": "tests/test-quality"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:38Z",
-      "actor": "netzenbot",
-      "detail": "tests/best-practice-violation"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:38Z",
-      "actor": "netzenbot",
-      "detail": "tests/flaky-risk"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-11T19:36:27Z",
-      "actor": "netzenbot",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41534",
-      "willClose": false
-     },
-     {
-      "type": "closed",
-      "at": "2026-11-12T12:23:41Z",
-      "actor": "brian-brave",
-      "detail": "completed",
-      "ref": null
-     },
-     {
-      "type": "milestoned",
-      "at": "2026-11-12T12:24:58Z",
-      "actor": "brave-builds",
-      "detail": "1.102.x - Nightly"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash_verify_chain_state_task_unittest",
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
-   },
-   "brave/brave-browser#61396": {
-    "id": "brave/brave-browser#61396",
-    "repo": "brave/brave-browser",
-    "number": 61396,
-    "kind": "issue",
-    "title": "Test best-practice violations in zcash_auto_sync_manager_unittest.cc",
-    "url": "https://github.com/brave/brave-browser/issues/61396",
-    "state": "closed",
-    "stateReason": "completed",
-    "isDraft": null,
-    "createdAt": "2026-11-05T17:13:57Z",
-    "updatedAt": "2026-11-12T12:24:56Z",
-    "closedAt": "2026-11-12T12:23:38Z",
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "netzenbot",
-    "assignees": [],
-    "labels": [
-     "tests",
-     "QA/No",
-     "release-notes/exclude",
-     "feature/web3/wallet",
-     "tests/test-quality",
-     "tests/best-practice-violation",
-     "tests/flaky-risk"
-    ],
-    "milestone": {
-     "title": "1.102.x - Nightly",
-     "dueOn": "2027-01-05T00:00:00Z",
-     "state": "OPEN"
-    },
-    "bodyExcerpt": "Unit tests in components/brave_wallet/browser/zcash/zcash_auto_sync_manager_unittest.cc break test best practices documented in docs/best-practices. ZCashAutoSyncManagerTest.InitialSync, ZCashAutoSyncManagerTest.TimerHit (low severity) L105 - Rule: TA-005: NEVER Use RunUntilIdle() - Problem: ZCashAutoSyncManagerTest.InitialSync and TimerHit call task_environment().RunUntilIdle(). The first StartShieldSync happens synchronously inside Start(), because the mocked…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:13:58Z",
-      "actor": "netzenbot",
-      "detail": "tests"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:13:59Z",
-      "actor": "netzenbot",
-      "detail": "QA/No"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:13:59Z",
-      "actor": "netzenbot",
-      "detail": "release-notes/exclude"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:13:59Z",
-      "actor": "netzenbot",
-      "detail": "feature/web3/wallet"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:00Z",
-      "actor": "netzenbot",
-      "detail": "tests/test-quality"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:00Z",
-      "actor": "netzenbot",
-      "detail": "tests/best-practice-violation"
-     },
-     {
-      "type": "labeled",
-      "at": "2026-11-05T17:14:00Z",
-      "actor": "netzenbot",
-      "detail": "tests/flaky-risk"
-     },
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-11T19:36:27Z",
-      "actor": "netzenbot",
-      "detail": "PullRequest",
-      "ref": "brave/brave-core#41534",
-      "willClose": false
-     },
-     {
-      "type": "closed",
-      "at": "2026-11-12T12:23:38Z",
-      "actor": "brian-brave",
-      "detail": "completed",
-      "ref": null
-     },
-     {
-      "type": "milestoned",
-      "at": "2026-11-12T12:24:56Z",
-      "actor": "brave-builds",
-      "detail": "1.102.x - Nightly"
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash_auto_sync_manager_unittest",
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
    },
    "brave/brave-browser#61215": {
     "id": "brave/brave-browser#61215",
@@ -41210,6 +41407,85 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#61891": {
+    "id": "brave/brave-browser#61891",
+    "repo": "brave/brave-browser",
+    "number": 61891,
+    "kind": "issue",
+    "title": "fix: show DOT account name in the connect-with-site panel like Cardano",
+    "url": "https://github.com/brave/brave-browser/issues/61891",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-16T06:47:57Z",
+    "updatedAt": "2026-11-16T06:47:57Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "kdenhartog",
+    "assignees": [],
+    "labels": [
+     "bug",
+     "priority/P4",
+     "QA/Yes",
+     "release-notes/exclude",
+     "feature/web3/wallet"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "In the connect-with-site account list, Polkadot accounts show an empty line where the inline address should be. Cardano accounts in the same list show their account name, and other chains show a truncated address with the full address on hover — Polkadot should follow the Cardano pattern since both use the same index-based account model. Agent context Ternary in…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-16T06:47:58Z",
+      "actor": "kdenhartog",
+      "detail": "bug"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T06:47:59Z",
+      "actor": "kdenhartog",
+      "detail": "priority/P4"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T06:47:59Z",
+      "actor": "kdenhartog",
+      "detail": "QA/Yes"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T06:47:59Z",
+      "actor": "kdenhartog",
+      "detail": "release-notes/exclude"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T06:48:00Z",
+      "actor": "kdenhartog",
+      "detail": "feature/web3/wallet"
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zec"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
+   },
    "brave/brave-browser#61869": {
     "id": "brave/brave-browser#61869",
     "repo": "brave/brave-browser",
@@ -44331,6 +44607,91 @@
      "body:orchard"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-core#41715": {
+    "id": "brave/brave-core#41715",
+    "repo": "brave/brave-core",
+    "number": 41715,
+    "kind": "pr",
+    "title": "[Wallet]: Fix Hiding Shielded Zcash Tokens",
+    "url": "https://github.com/brave/brave-core/pull/41715",
+    "state": "merged",
+    "stateReason": null,
+    "isDraft": false,
+    "createdAt": "2026-11-16T18:15:36Z",
+    "updatedAt": "2026-11-17T00:05:06Z",
+    "closedAt": "2026-11-16T21:00:37Z",
+    "mergedAt": "2026-11-16T21:00:37Z",
+    "mergeCommitSha": "b7cef2395be549efa53406b6a5b432f33df7fab5",
+    "baseRef": "master",
+    "headRef": "wallet-fix-hiding-shielded-zcash-tokens",
+    "author": "Douglashdaniel",
+    "assignees": [
+     "Douglashdaniel"
+    ],
+    "labels": [
+     "feature/web3/wallet",
+     "feature/web3/wallet/core"
+    ],
+    "milestone": null,
+    "bodyExcerpt": "Description - Hiding Zcash (Shielded Legacy) from the portfolio asset menu did not stick. The same failure affected Ironwood shielded ZEC. - Shielded ZEC is not in the default user-asset list. TokenMatchesDict rejected every shielded token, so SetUserAssetVisible never wrote a pref. The next GetUserAssets call injected a fresh token with visible: true. - Match native ZEC by zcash_token_type so transparent, Orchard, and Ironwood stay distinct despite sharing an empty…",
+    "bodyRefs": [
+     "brave/brave-browser#61901"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#61901"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#61901"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:16:08Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T18:16:08Z",
+      "actor": "github-actions",
+      "detail": "feature/web3/wallet/core"
+     },
+     {
+      "type": "merged",
+      "at": "2026-11-16T21:00:37Z",
+      "actor": "Douglashdaniel",
+      "detail": "master"
+     },
+     {
+      "type": "closed",
+      "at": "2026-11-16T21:00:37Z",
+      "actor": "Douglashdaniel",
+      "detail": null,
+      "ref": null
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:ironwood is:pr",
+     "search:orchard is:pr",
+     "search:shielded is:pr",
+     "search:zcash is:pr",
+     "search:zec is:pr"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "title:shielded",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-core#41534": {
     "id": "brave/brave-core#41534",
@@ -84574,7 +84935,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-10-16T08:45:02Z",
-    "updatedAt": "2026-11-03T12:06:00Z",
+    "updatedAt": "2026-11-16T07:59:36Z",
     "closedAt": "2026-11-03T10:21:53Z",
     "mergedAt": "2026-11-03T10:21:53Z",
     "mergeCommitSha": "373505e5cb7ac92663a3f973ae0f8ea2004da99a",
@@ -84648,7 +85009,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T00:46:06.876Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-core#34108": {
     "id": "brave/brave-core#34108",
@@ -85640,7 +86001,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:21:28Z",
-    "updatedAt": "2026-11-12T12:23:47Z",
+    "updatedAt": "2026-11-16T12:50:17Z",
     "closedAt": "2026-11-12T12:23:28Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -85652,6 +86013,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -85728,6 +86090,12 @@
       "at": "2026-11-12T12:23:47Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:17Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
      }
     ],
     "timelineTruncated": false,
@@ -85736,7 +86104,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61072": {
     "id": "brave/brave-browser#61072",
@@ -86083,7 +86451,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:26:46Z",
-    "updatedAt": "2026-11-12T12:23:59Z",
+    "updatedAt": "2026-11-16T12:49:56Z",
     "closedAt": "2026-11-12T12:23:31Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -86096,6 +86464,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -86178,6 +86549,24 @@
       "at": "2026-11-12T12:23:59Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:56Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:56Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:56Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -86186,7 +86575,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61240": {
     "id": "brave/brave-browser#61240",
@@ -86656,7 +87045,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T16:27:45Z",
-    "updatedAt": "2026-11-12T12:24:24Z",
+    "updatedAt": "2026-11-16T12:49:44Z",
     "closedAt": "2026-11-12T12:23:23Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -86668,6 +87057,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -86744,6 +87134,12 @@
       "at": "2026-11-12T12:24:24Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:43Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -86752,7 +87148,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61324": {
     "id": "brave/brave-browser#61324",
@@ -87092,7 +87488,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T16:54:08Z",
-    "updatedAt": "2026-11-12T12:24:37Z",
+    "updatedAt": "2026-11-16T12:49:41Z",
     "closedAt": "2026-11-12T12:23:36Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -87105,6 +87501,9 @@
      "feature/rewards",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -87187,6 +87586,24 @@
       "at": "2026-11-12T12:24:37Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:41Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:41Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:41Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -87195,7 +87612,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61358": {
     "id": "brave/brave-browser#61358",
@@ -87788,7 +88205,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:12:54Z",
-    "updatedAt": "2026-11-12T12:24:53Z",
+    "updatedAt": "2026-11-16T12:49:37Z",
     "closedAt": "2026-11-12T12:23:42Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -87801,6 +88218,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -87883,6 +88303,24 @@
       "at": "2026-11-12T12:24:53Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:37Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:37Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:37Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -87891,7 +88329,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61411": {
     "id": "brave/brave-browser#61411",
@@ -87904,7 +88342,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:19:41Z",
-    "updatedAt": "2026-11-12T12:25:01Z",
+    "updatedAt": "2026-11-16T12:49:15Z",
     "closedAt": "2026-11-12T12:23:38Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -87916,6 +88354,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -87992,6 +88431,12 @@
       "at": "2026-11-12T12:25:01Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:15Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -88000,7 +88445,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61416": {
     "id": "brave/brave-browser#61416",
@@ -88013,7 +88458,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:22:12Z",
-    "updatedAt": "2026-11-12T12:25:05Z",
+    "updatedAt": "2026-11-16T12:49:11Z",
     "closedAt": "2026-11-12T12:23:39Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88025,6 +88470,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88101,6 +88549,24 @@
       "at": "2026-11-12T12:25:05Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88109,7 +88575,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61417": {
     "id": "brave/brave-browser#61417",
@@ -88122,7 +88588,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:22:39Z",
-    "updatedAt": "2026-11-12T12:25:07Z",
+    "updatedAt": "2026-11-16T12:49:09Z",
     "closedAt": "2026-11-12T12:23:40Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88134,6 +88600,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88210,6 +88679,24 @@
       "at": "2026-11-12T12:25:07Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:09Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88218,7 +88705,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61418": {
     "id": "brave/brave-browser#61418",
@@ -88231,7 +88718,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:23:10Z",
-    "updatedAt": "2026-11-12T12:25:10Z",
+    "updatedAt": "2026-11-16T12:49:06Z",
     "closedAt": "2026-11-12T12:23:41Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88243,6 +88730,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88319,6 +88809,24 @@
       "at": "2026-11-12T12:25:10Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88327,7 +88835,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61419": {
     "id": "brave/brave-browser#61419",
@@ -88340,7 +88848,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:23:34Z",
-    "updatedAt": "2026-11-12T12:25:12Z",
+    "updatedAt": "2026-11-16T12:49:04Z",
     "closedAt": "2026-11-12T12:23:42Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88352,6 +88860,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88428,6 +88939,24 @@
       "at": "2026-11-12T12:25:12Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:03Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88436,7 +88965,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61421": {
     "id": "brave/brave-browser#61421",
@@ -88449,7 +88978,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:24:31Z",
-    "updatedAt": "2026-11-12T12:25:16Z",
+    "updatedAt": "2026-11-16T12:49:02Z",
     "closedAt": "2026-11-12T12:23:42Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88461,7 +88990,10 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
      "features/P3A",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88544,6 +89076,24 @@
       "at": "2026-11-12T12:25:16Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:01Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:01Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:02Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88552,7 +89102,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61425": {
     "id": "brave/brave-browser#61425",
@@ -88565,7 +89115,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:26:17Z",
-    "updatedAt": "2026-11-12T12:25:19Z",
+    "updatedAt": "2026-11-16T12:48:58Z",
     "closedAt": "2026-11-12T12:23:44Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88577,6 +89127,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88653,6 +89206,24 @@
       "at": "2026-11-12T12:25:19Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -88661,7 +89232,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61426": {
     "id": "brave/brave-browser#61426",
@@ -88674,7 +89245,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:26:41Z",
-    "updatedAt": "2026-11-12T12:25:21Z",
+    "updatedAt": "2026-11-16T12:48:56Z",
     "closedAt": "2026-11-12T12:23:43Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88686,6 +89257,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -88762,6 +89334,12 @@
       "at": "2026-11-12T12:25:21Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:56Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -88770,7 +89348,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61427": {
     "id": "brave/brave-browser#61427",
@@ -88783,7 +89361,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:27:04Z",
-    "updatedAt": "2026-11-12T12:25:24Z",
+    "updatedAt": "2026-11-16T12:48:55Z",
     "closedAt": "2026-11-12T12:23:44Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88795,6 +89373,8 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
      "feature/web-discovery",
      "tests/test-quality",
      "tests/best-practice-violation",
@@ -88878,6 +89458,18 @@
       "at": "2026-11-12T12:25:24Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -88886,7 +89478,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61428": {
     "id": "brave/brave-browser#61428",
@@ -88899,7 +89491,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:27:36Z",
-    "updatedAt": "2026-11-12T12:25:27Z",
+    "updatedAt": "2026-11-16T12:48:53Z",
     "closedAt": "2026-11-12T12:23:45Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -88911,6 +89503,8 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
      "feature/web-discovery",
      "tests/test-quality",
      "tests/best-practice-violation",
@@ -88994,6 +89588,18 @@
       "at": "2026-11-12T12:25:27Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:53Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:53Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89002,7 +89608,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61444": {
     "id": "brave/brave-browser#61444",
@@ -89015,7 +89621,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:06:47Z",
-    "updatedAt": "2026-11-12T12:25:29Z",
+    "updatedAt": "2026-11-16T12:48:49Z",
     "closedAt": "2026-11-12T12:23:47Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89027,6 +89633,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89103,6 +89710,12 @@
       "at": "2026-11-12T12:25:29Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:49Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89111,7 +89724,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61450": {
     "id": "brave/brave-browser#61450",
@@ -89124,7 +89737,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:09:24Z",
-    "updatedAt": "2026-11-12T12:25:31Z",
+    "updatedAt": "2026-11-16T12:48:46Z",
     "closedAt": "2026-11-12T12:23:44Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89134,6 +89747,7 @@
     "assignees": [],
     "labels": [
      "tests",
+     "OS/macOS",
      "QA/No",
      "release-notes/exclude",
      "tests/test-quality",
@@ -89212,6 +89826,12 @@
       "at": "2026-11-12T12:25:31Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:46Z",
+      "actor": "netzenbot",
+      "detail": "OS/macOS"
      }
     ],
     "timelineTruncated": false,
@@ -89220,7 +89840,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61451": {
     "id": "brave/brave-browser#61451",
@@ -89233,7 +89853,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:09:47Z",
-    "updatedAt": "2026-11-12T12:25:34Z",
+    "updatedAt": "2026-11-16T12:48:44Z",
     "closedAt": "2026-11-12T12:23:45Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89245,6 +89865,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89321,6 +89942,12 @@
       "at": "2026-11-12T12:25:34Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:44Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89329,7 +89956,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61460": {
     "id": "brave/brave-browser#61460",
@@ -89342,7 +89969,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:13:27Z",
-    "updatedAt": "2026-11-12T12:25:37Z",
+    "updatedAt": "2026-11-16T12:48:43Z",
     "closedAt": "2026-11-12T12:23:46Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89355,6 +89982,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89437,6 +90065,12 @@
       "at": "2026-11-12T12:25:37Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:43Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89445,7 +90079,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61462": {
     "id": "brave/brave-browser#61462",
@@ -89458,7 +90092,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:14:23Z",
-    "updatedAt": "2026-11-12T12:25:39Z",
+    "updatedAt": "2026-11-16T12:48:41Z",
     "closedAt": "2026-11-12T12:23:47Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89471,6 +90105,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89553,6 +90188,12 @@
       "at": "2026-11-12T12:25:39Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:41Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89561,7 +90202,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61463": {
     "id": "brave/brave-browser#61463",
@@ -89574,7 +90215,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:14:46Z",
-    "updatedAt": "2026-11-12T12:25:42Z",
+    "updatedAt": "2026-11-16T12:48:40Z",
     "closedAt": "2026-11-12T12:23:47Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89587,6 +90228,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89669,6 +90311,12 @@
       "at": "2026-11-12T12:25:42Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:40Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89677,7 +90325,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61464": {
     "id": "brave/brave-browser#61464",
@@ -89690,7 +90338,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:15:11Z",
-    "updatedAt": "2026-11-12T12:25:45Z",
+    "updatedAt": "2026-11-16T12:48:38Z",
     "closedAt": "2026-11-12T12:23:49Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89703,6 +90351,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89785,6 +90434,12 @@
       "at": "2026-11-12T12:25:45Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:38Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89793,7 +90448,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61465": {
     "id": "brave/brave-browser#61465",
@@ -89806,7 +90461,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:15:43Z",
-    "updatedAt": "2026-11-12T12:25:48Z",
+    "updatedAt": "2026-11-16T12:48:36Z",
     "closedAt": "2026-11-12T12:23:46Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89819,6 +90474,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -89901,6 +90557,12 @@
       "at": "2026-11-12T12:25:48Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:36Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -89909,7 +90571,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61466": {
     "id": "brave/brave-browser#61466",
@@ -89922,7 +90584,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:16:15Z",
-    "updatedAt": "2026-11-12T12:25:51Z",
+    "updatedAt": "2026-11-16T12:48:35Z",
     "closedAt": "2026-11-12T12:23:52Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -89935,6 +90597,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90017,6 +90680,12 @@
       "at": "2026-11-12T12:25:51Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:35Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90025,7 +90694,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61467": {
     "id": "brave/brave-browser#61467",
@@ -90038,7 +90707,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:16:39Z",
-    "updatedAt": "2026-11-12T12:25:53Z",
+    "updatedAt": "2026-11-16T12:48:33Z",
     "closedAt": "2026-11-12T12:23:50Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90051,6 +90720,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90133,6 +90803,12 @@
       "at": "2026-11-12T12:25:53Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:33Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90141,7 +90817,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61469": {
     "id": "brave/brave-browser#61469",
@@ -90154,7 +90830,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:17:09Z",
-    "updatedAt": "2026-11-12T12:25:56Z",
+    "updatedAt": "2026-11-16T12:48:32Z",
     "closedAt": "2026-11-12T12:23:54Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90167,6 +90843,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90249,6 +90926,12 @@
       "at": "2026-11-12T12:25:56Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:32Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90257,7 +90940,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61473": {
     "id": "brave/brave-browser#61473",
@@ -90270,7 +90953,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:19:03Z",
-    "updatedAt": "2026-11-12T12:25:58Z",
+    "updatedAt": "2026-11-16T12:48:28Z",
     "closedAt": "2026-11-12T12:23:48Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90282,6 +90965,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90358,6 +91042,12 @@
       "at": "2026-11-12T12:25:58Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:28Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90366,7 +91056,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61476": {
     "id": "brave/brave-browser#61476",
@@ -90379,7 +91069,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:20:33Z",
-    "updatedAt": "2026-11-12T12:26:01Z",
+    "updatedAt": "2026-11-16T12:48:27Z",
     "closedAt": "2026-11-12T12:23:49Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90391,6 +91081,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90467,6 +91158,12 @@
       "at": "2026-11-12T12:26:01Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:26Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90475,7 +91172,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61477": {
     "id": "brave/brave-browser#61477",
@@ -90488,7 +91185,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:20:56Z",
-    "updatedAt": "2026-11-12T12:26:03Z",
+    "updatedAt": "2026-11-16T12:48:25Z",
     "closedAt": "2026-11-12T12:23:53Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90500,6 +91197,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90576,6 +91274,12 @@
       "at": "2026-11-12T12:26:03Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:25Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90584,7 +91288,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61481": {
     "id": "brave/brave-browser#61481",
@@ -90597,7 +91301,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:22:50Z",
-    "updatedAt": "2026-11-12T12:26:06Z",
+    "updatedAt": "2026-11-16T12:48:23Z",
     "closedAt": "2026-11-12T12:23:53Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90609,6 +91313,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90685,6 +91390,12 @@
       "at": "2026-11-12T12:26:06Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:23Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90693,7 +91404,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61487": {
     "id": "brave/brave-browser#61487",
@@ -90706,7 +91417,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:25:33Z",
-    "updatedAt": "2026-11-12T12:26:09Z",
+    "updatedAt": "2026-11-16T12:48:20Z",
     "closedAt": "2026-11-12T12:23:51Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90718,6 +91429,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90794,6 +91506,12 @@
       "at": "2026-11-12T12:26:09Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:20Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90802,7 +91520,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61495": {
     "id": "brave/brave-browser#61495",
@@ -90815,7 +91533,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:29:12Z",
-    "updatedAt": "2026-11-12T12:26:11Z",
+    "updatedAt": "2026-11-16T12:48:13Z",
     "closedAt": "2026-11-12T12:23:50Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90827,6 +91545,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -90903,6 +91622,12 @@
       "at": "2026-11-12T12:26:11Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -90911,7 +91636,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61500": {
     "id": "brave/brave-browser#61500",
@@ -90924,7 +91649,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:31:36Z",
-    "updatedAt": "2026-11-12T12:26:14Z",
+    "updatedAt": "2026-11-16T12:48:08Z",
     "closedAt": "2026-11-12T12:23:51Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -90936,6 +91661,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91012,6 +91738,12 @@
       "at": "2026-11-12T12:26:14Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91020,7 +91752,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61506": {
     "id": "brave/brave-browser#61506",
@@ -91033,7 +91765,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:34:22Z",
-    "updatedAt": "2026-11-12T12:26:17Z",
+    "updatedAt": "2026-11-16T12:48:06Z",
     "closedAt": "2026-11-12T12:23:52Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -91045,6 +91777,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91121,6 +91854,12 @@
       "at": "2026-11-12T12:26:17Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91129,7 +91868,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61532": {
     "id": "brave/brave-browser#61532",
@@ -91142,7 +91881,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:46:12Z",
-    "updatedAt": "2026-11-12T12:26:20Z",
+    "updatedAt": "2026-11-16T12:47:52Z",
     "closedAt": "2026-11-12T12:23:55Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -91154,6 +91893,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91230,6 +91970,12 @@
       "at": "2026-11-12T12:26:20Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:52Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91238,7 +91984,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61547": {
     "id": "brave/brave-browser#61547",
@@ -91251,7 +91997,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:53:15Z",
-    "updatedAt": "2026-11-12T12:26:22Z",
+    "updatedAt": "2026-11-16T12:47:47Z",
     "closedAt": "2026-11-12T12:23:52Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -91263,6 +92009,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91339,6 +92086,12 @@
       "at": "2026-11-12T12:26:23Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:47Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91347,7 +92100,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61551": {
     "id": "brave/brave-browser#61551",
@@ -91360,7 +92113,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:55:11Z",
-    "updatedAt": "2026-11-12T12:26:25Z",
+    "updatedAt": "2026-11-16T12:47:46Z",
     "closedAt": "2026-11-12T12:23:54Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -91372,6 +92125,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91448,6 +92202,12 @@
       "at": "2026-11-12T12:26:25Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:46Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91456,7 +92216,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61566": {
     "id": "brave/brave-browser#61566",
@@ -91469,7 +92229,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T22:02:22Z",
-    "updatedAt": "2026-11-12T12:26:27Z",
+    "updatedAt": "2026-11-16T12:44:59Z",
     "closedAt": "2026-11-12T12:23:55Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -91481,6 +92241,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation",
      "tests/flaky-risk"
@@ -91557,6 +92318,12 @@
       "at": "2026-11-12T12:26:27Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:44:59Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -91565,7 +92332,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T18:21:26.613Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#58567": {
     "id": "brave/brave-browser#58567",
@@ -103710,7 +104477,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:24:03Z",
-    "updatedAt": "2026-11-13T03:52:46Z",
+    "updatedAt": "2026-11-16T12:50:15Z",
     "closedAt": "2026-11-13T03:52:22Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -103722,6 +104489,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -103791,6 +104559,12 @@
       "at": "2026-11-13T03:52:46Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:15Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -103799,7 +104573,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61067": {
     "id": "brave/brave-browser#61067",
@@ -104969,7 +105743,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:38:45Z",
-    "updatedAt": "2026-11-13T03:53:14Z",
+    "updatedAt": "2026-11-16T12:50:08Z",
     "closedAt": "2026-11-13T03:52:18Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -104981,6 +105755,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "feature/brave-news",
      "tests/test-quality",
      "tests/best-practice-violation"
@@ -105057,6 +105834,24 @@
       "at": "2026-11-13T03:53:14Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:08Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -105065,7 +105860,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61100": {
     "id": "brave/brave-browser#61100",
@@ -105405,7 +106200,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:42:10Z",
-    "updatedAt": "2026-11-13T03:53:23Z",
+    "updatedAt": "2026-11-16T12:50:06Z",
     "closedAt": "2026-11-13T03:52:21Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -105418,6 +106213,9 @@
      "feature/rewards",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -105493,6 +106291,24 @@
       "at": "2026-11-13T03:53:23Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:06Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -105501,7 +106317,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61107": {
     "id": "brave/brave-browser#61107",
@@ -105732,7 +106548,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:44:34Z",
-    "updatedAt": "2026-11-13T03:53:30Z",
+    "updatedAt": "2026-11-16T12:50:04Z",
     "closedAt": "2026-11-13T03:52:27Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -105745,6 +106561,9 @@
      "feature/rewards",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -105820,6 +106639,24 @@
       "at": "2026-11-13T03:53:30Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -105828,7 +106665,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61116": {
     "id": "brave/brave-browser#61116",
@@ -106277,7 +107114,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:19:10Z",
-    "updatedAt": "2026-11-13T03:53:42Z",
+    "updatedAt": "2026-11-16T12:50:00Z",
     "closedAt": "2026-11-13T03:52:32Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -106290,6 +107127,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -106365,6 +107205,24 @@
       "at": "2026-11-13T03:53:42Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:00Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:00Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:00Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -106373,7 +107231,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61192": {
     "id": "brave/brave-browser#61192",
@@ -106386,7 +107244,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:23:11Z",
-    "updatedAt": "2026-11-13T03:53:44Z",
+    "updatedAt": "2026-11-16T12:49:58Z",
     "closedAt": "2026-11-13T03:52:33Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -106399,6 +107257,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -106474,6 +107335,24 @@
       "at": "2026-11-13T03:53:44Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:58Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -106482,7 +107361,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61228": {
     "id": "brave/brave-browser#61228",
@@ -106699,7 +107578,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:43:49Z",
-    "updatedAt": "2026-11-13T03:53:55Z",
+    "updatedAt": "2026-11-16T12:49:50Z",
     "closedAt": "2026-11-13T03:52:35Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -106711,6 +107590,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -106780,6 +107660,12 @@
       "at": "2026-11-13T03:53:55Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:50Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -106788,7 +107674,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61237": {
     "id": "brave/brave-browser#61237",
@@ -107420,7 +108306,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:56:30Z",
-    "updatedAt": "2026-11-13T03:54:11Z",
+    "updatedAt": "2026-11-16T12:49:45Z",
     "closedAt": "2026-11-13T03:52:38Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -107432,6 +108318,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -107501,6 +108388,12 @@
       "at": "2026-11-13T03:54:11Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:45Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -107509,7 +108402,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61269": {
     "id": "brave/brave-browser#61269",
@@ -107944,7 +108837,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:18:27Z",
-    "updatedAt": "2026-11-13T03:54:22Z",
+    "updatedAt": "2026-11-16T12:49:20Z",
     "closedAt": "2026-11-13T03:52:41Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -107957,6 +108850,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108032,6 +108928,24 @@
       "at": "2026-11-13T03:54:23Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:20Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:20Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:20Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -108040,7 +108954,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61413": {
     "id": "brave/brave-browser#61413",
@@ -108053,7 +108967,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:20:38Z",
-    "updatedAt": "2026-11-13T03:54:25Z",
+    "updatedAt": "2026-11-16T12:49:13Z",
     "closedAt": "2026-11-13T03:52:41Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108065,6 +108979,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108134,6 +109051,24 @@
       "at": "2026-11-13T03:54:25Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -108142,7 +109077,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61441": {
     "id": "brave/brave-browser#61441",
@@ -108155,7 +109090,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T20:48:31Z",
-    "updatedAt": "2026-11-13T03:54:27Z",
+    "updatedAt": "2026-11-16T12:48:51Z",
     "closedAt": "2026-11-13T03:52:25Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108167,6 +109102,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108236,6 +109172,12 @@
       "at": "2026-11-13T03:54:27Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:51Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108244,7 +109186,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61470": {
     "id": "brave/brave-browser#61470",
@@ -108257,7 +109199,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:17:35Z",
-    "updatedAt": "2026-11-13T03:54:30Z",
+    "updatedAt": "2026-11-16T12:48:30Z",
     "closedAt": "2026-11-13T03:52:25Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108269,6 +109211,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108338,6 +109281,12 @@
       "at": "2026-11-13T03:54:30Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:30Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108346,7 +109295,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61486": {
     "id": "brave/brave-browser#61486",
@@ -108359,7 +109308,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:25:01Z",
-    "updatedAt": "2026-11-13T03:54:32Z",
+    "updatedAt": "2026-11-16T12:48:21Z",
     "closedAt": "2026-11-13T03:52:26Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108371,6 +109320,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108440,6 +109390,12 @@
       "at": "2026-11-13T03:54:32Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:21Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108448,7 +109404,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61489": {
     "id": "brave/brave-browser#61489",
@@ -108461,7 +109417,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:26:27Z",
-    "updatedAt": "2026-11-13T03:54:34Z",
+    "updatedAt": "2026-11-16T12:48:18Z",
     "closedAt": "2026-11-13T03:52:27Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108473,6 +109429,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108542,6 +109499,12 @@
       "at": "2026-11-13T03:54:34Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:18Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108550,7 +109513,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61491": {
     "id": "brave/brave-browser#61491",
@@ -108563,7 +109526,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:27:29Z",
-    "updatedAt": "2026-11-13T03:54:37Z",
+    "updatedAt": "2026-11-16T12:48:17Z",
     "closedAt": "2026-11-13T03:52:27Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108575,6 +109538,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108644,6 +109608,12 @@
       "at": "2026-11-13T03:54:37Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:17Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108652,7 +109622,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61499": {
     "id": "brave/brave-browser#61499",
@@ -108665,7 +109635,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:31:12Z",
-    "updatedAt": "2026-11-13T03:54:39Z",
+    "updatedAt": "2026-11-16T12:48:10Z",
     "closedAt": "2026-11-13T03:52:28Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108677,6 +109647,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108746,6 +109717,12 @@
       "at": "2026-11-13T03:54:39Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:10Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108754,7 +109731,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61509": {
     "id": "brave/brave-browser#61509",
@@ -108767,7 +109744,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:35:46Z",
-    "updatedAt": "2026-11-13T03:54:41Z",
+    "updatedAt": "2026-11-16T12:48:04Z",
     "closedAt": "2026-11-13T03:52:28Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108779,6 +109756,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108856,6 +109834,12 @@
       "at": "2026-11-13T03:54:41Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:04Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108864,7 +109848,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61514": {
     "id": "brave/brave-browser#61514",
@@ -108877,7 +109861,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:37:58Z",
-    "updatedAt": "2026-11-13T03:54:43Z",
+    "updatedAt": "2026-11-16T12:48:02Z",
     "closedAt": "2026-11-13T03:52:29Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108889,6 +109873,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -108958,6 +109943,12 @@
       "at": "2026-11-13T03:54:43Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:02Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -108966,7 +109957,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61515": {
     "id": "brave/brave-browser#61515",
@@ -108979,7 +109970,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:38:31Z",
-    "updatedAt": "2026-11-13T03:54:46Z",
+    "updatedAt": "2026-11-16T12:48:01Z",
     "closedAt": "2026-11-13T03:52:29Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -108991,6 +109982,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109060,6 +110052,12 @@
       "at": "2026-11-13T03:54:46Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:01Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109068,7 +110066,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61517": {
     "id": "brave/brave-browser#61517",
@@ -109081,7 +110079,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:39:19Z",
-    "updatedAt": "2026-11-13T03:54:48Z",
+    "updatedAt": "2026-11-16T12:47:59Z",
     "closedAt": "2026-11-13T03:52:30Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109093,6 +110091,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109162,6 +110161,12 @@
       "at": "2026-11-13T03:54:48Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:59Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109170,7 +110175,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61519": {
     "id": "brave/brave-browser#61519",
@@ -109183,7 +110188,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:40:11Z",
-    "updatedAt": "2026-11-13T03:54:50Z",
+    "updatedAt": "2026-11-16T12:47:56Z",
     "closedAt": "2026-11-13T03:52:31Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109196,6 +110201,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109271,6 +110277,12 @@
       "at": "2026-11-13T03:54:50Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:56Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109279,7 +110291,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61524": {
     "id": "brave/brave-browser#61524",
@@ -109292,7 +110304,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:42:26Z",
-    "updatedAt": "2026-11-13T03:54:52Z",
+    "updatedAt": "2026-11-16T12:47:54Z",
     "closedAt": "2026-11-13T03:52:31Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109305,6 +110317,7 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109380,6 +110393,12 @@
       "at": "2026-11-13T03:54:52Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:54Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109388,7 +110407,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61545": {
     "id": "brave/brave-browser#61545",
@@ -109401,7 +110420,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:52:14Z",
-    "updatedAt": "2026-11-13T03:54:55Z",
+    "updatedAt": "2026-11-16T12:47:49Z",
     "closedAt": "2026-11-13T03:52:32Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109413,6 +110432,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109482,6 +110502,12 @@
       "at": "2026-11-13T03:54:55Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:49Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109490,7 +110516,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-13T09:32:10.030Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61035": {
     "id": "brave/brave-browser#61035",
@@ -109612,7 +110638,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:14:55Z",
-    "updatedAt": "2026-11-14T18:05:32Z",
+    "updatedAt": "2026-11-16T12:50:18Z",
     "closedAt": "2026-11-14T18:05:22Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109625,6 +110651,7 @@
      "QA/No",
      "release-notes/exclude",
      "features/playlist",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109700,6 +110727,12 @@
       "at": "2026-11-14T18:05:32Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:18Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -109708,7 +110741,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61075": {
     "id": "brave/brave-browser#61075",
@@ -109721,7 +110754,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:28:28Z",
-    "updatedAt": "2026-11-14T18:05:35Z",
+    "updatedAt": "2026-11-16T12:50:13Z",
     "closedAt": "2026-11-14T18:05:23Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109733,6 +110766,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109802,6 +110838,24 @@
       "at": "2026-11-14T18:05:35Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:13Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -109810,7 +110864,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61091": {
     "id": "brave/brave-browser#61091",
@@ -109823,7 +110877,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T14:34:54Z",
-    "updatedAt": "2026-11-14T18:05:37Z",
+    "updatedAt": "2026-11-16T12:50:11Z",
     "closedAt": "2026-11-14T18:05:24Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -109835,6 +110889,9 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -109904,6 +110961,24 @@
       "at": "2026-11-14T18:05:37Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -109912,7 +110987,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61093": {
     "id": "brave/brave-browser#61093",
@@ -110681,7 +111756,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:13:20Z",
-    "updatedAt": "2026-11-14T18:05:55Z",
+    "updatedAt": "2026-11-16T12:50:02Z",
     "closedAt": "2026-11-14T18:05:28Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -110694,6 +111769,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -110769,6 +111847,24 @@
       "at": "2026-11-14T18:05:55Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:02Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:02Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:50:02Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -110777,7 +111873,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61175": {
     "id": "brave/brave-browser#61175",
@@ -112302,7 +113398,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:47:37Z",
-    "updatedAt": "2026-11-14T18:06:38Z",
+    "updatedAt": "2026-11-16T12:49:49Z",
     "closedAt": "2026-11-14T18:05:37Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -112314,6 +113410,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "privacy/psst",
      "tests/test-quality",
      "tests/best-practice-violation"
@@ -112390,6 +113487,12 @@
       "at": "2026-11-14T18:06:38Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:48Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -112398,7 +113501,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61253": {
     "id": "brave/brave-browser#61253",
@@ -112411,7 +113514,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T15:51:22Z",
-    "updatedAt": "2026-11-14T18:06:43Z",
+    "updatedAt": "2026-11-16T12:49:47Z",
     "closedAt": "2026-11-14T18:05:37Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -112423,6 +113526,8 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
+     "OS/Desktop",
      "feature/web-discovery",
      "tests/test-quality",
      "tests/best-practice-violation"
@@ -112499,6 +113604,18 @@
       "at": "2026-11-14T18:06:43Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:47Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:47Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -112507,7 +113624,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61256": {
     "id": "brave/brave-browser#61256",
@@ -112833,7 +113950,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:08:13Z",
-    "updatedAt": "2026-11-14T18:06:52Z",
+    "updatedAt": "2026-11-16T12:49:39Z",
     "closedAt": "2026-11-14T18:05:40Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -112846,6 +113963,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -112921,6 +114041,24 @@
       "at": "2026-11-14T18:06:52Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:39Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:39Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:39Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -112929,7 +114067,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61399": {
     "id": "brave/brave-browser#61399",
@@ -112942,7 +114080,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:15:28Z",
-    "updatedAt": "2026-11-14T18:06:55Z",
+    "updatedAt": "2026-11-16T12:49:31Z",
     "closedAt": "2026-11-14T18:05:40Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -112955,6 +114093,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113030,6 +114171,24 @@
       "at": "2026-11-14T18:06:55Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:31Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:31Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:31Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113038,7 +114197,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61400": {
     "id": "brave/brave-browser#61400",
@@ -113051,7 +114210,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:16:00Z",
-    "updatedAt": "2026-11-14T18:06:58Z",
+    "updatedAt": "2026-11-16T12:49:29Z",
     "closedAt": "2026-11-14T18:05:40Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113064,6 +114223,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113139,6 +114301,24 @@
       "at": "2026-11-14T18:06:58Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:29Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:29Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:29Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113147,7 +114327,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61401": {
     "id": "brave/brave-browser#61401",
@@ -113160,7 +114340,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:16:20Z",
-    "updatedAt": "2026-11-14T18:07:00Z",
+    "updatedAt": "2026-11-16T12:49:27Z",
     "closedAt": "2026-11-14T18:05:41Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113173,6 +114353,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113248,6 +114431,24 @@
       "at": "2026-11-14T18:07:00Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:27Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:27Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:27Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113256,7 +114457,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61402": {
     "id": "brave/brave-browser#61402",
@@ -113269,7 +114470,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:16:43Z",
-    "updatedAt": "2026-11-14T18:07:02Z",
+    "updatedAt": "2026-11-16T12:49:25Z",
     "closedAt": "2026-11-14T18:05:42Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113282,6 +114483,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113357,6 +114561,24 @@
       "at": "2026-11-14T18:07:02Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:24Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:25Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:25Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113365,7 +114587,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61405": {
     "id": "brave/brave-browser#61405",
@@ -113378,7 +114600,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:18:06Z",
-    "updatedAt": "2026-11-14T18:07:05Z",
+    "updatedAt": "2026-11-16T12:49:22Z",
     "closedAt": "2026-11-14T18:05:42Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113391,6 +114613,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113466,6 +114691,24 @@
       "at": "2026-11-14T18:07:05Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:22Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:22Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:22Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113474,7 +114717,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61409": {
     "id": "brave/brave-browser#61409",
@@ -113487,7 +114730,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:18:53Z",
-    "updatedAt": "2026-11-14T18:07:07Z",
+    "updatedAt": "2026-11-16T12:49:18Z",
     "closedAt": "2026-11-14T18:05:43Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113500,6 +114743,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113575,6 +114821,24 @@
       "at": "2026-11-14T18:07:07Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:18Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:18Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:18Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113583,7 +114847,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61410": {
     "id": "brave/brave-browser#61410",
@@ -113596,7 +114860,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:19:20Z",
-    "updatedAt": "2026-11-14T18:07:09Z",
+    "updatedAt": "2026-11-16T12:49:16Z",
     "closedAt": "2026-11-14T18:05:43Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113609,6 +114873,9 @@
      "QA/No",
      "release-notes/exclude",
      "feature/web3/wallet",
+     "OS/Android",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113684,6 +114951,24 @@
       "at": "2026-11-14T18:07:09Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:16Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:16Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:16Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113692,7 +114977,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61423": {
     "id": "brave/brave-browser#61423",
@@ -113705,7 +114990,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T17:25:27Z",
-    "updatedAt": "2026-11-14T18:07:13Z",
+    "updatedAt": "2026-11-16T12:49:00Z",
     "closedAt": "2026-11-14T18:05:43Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113717,7 +115002,10 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Android",
      "features/P3A",
+     "OS/Desktop",
+     "OS/iOS",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113793,6 +115081,24 @@
       "at": "2026-11-14T18:07:13Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:59Z",
+      "actor": "netzenbot",
+      "detail": "OS/Android"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:00Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:49:00Z",
+      "actor": "netzenbot",
+      "detail": "OS/iOS"
      }
     ],
     "timelineTruncated": false,
@@ -113801,7 +115107,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61448": {
     "id": "brave/brave-browser#61448",
@@ -113814,7 +115120,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:08:30Z",
-    "updatedAt": "2026-11-14T18:07:16Z",
+    "updatedAt": "2026-11-16T12:48:48Z",
     "closedAt": "2026-11-14T18:05:44Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113826,6 +115132,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113895,6 +115202,12 @@
       "at": "2026-11-14T18:07:16Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:48Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -113903,7 +115216,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61492": {
     "id": "brave/brave-browser#61492",
@@ -113916,7 +115229,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:27:58Z",
-    "updatedAt": "2026-11-14T18:07:18Z",
+    "updatedAt": "2026-11-16T12:48:15Z",
     "closedAt": "2026-11-14T18:05:44Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -113928,6 +115241,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -113997,6 +115311,12 @@
       "at": "2026-11-14T18:07:18Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:15Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -114005,7 +115325,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61496": {
     "id": "brave/brave-browser#61496",
@@ -114018,7 +115338,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:29:37Z",
-    "updatedAt": "2026-11-14T18:07:20Z",
+    "updatedAt": "2026-11-16T12:48:12Z",
     "closedAt": "2026-11-14T18:05:45Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -114030,6 +115350,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -114099,6 +115420,12 @@
       "at": "2026-11-14T18:07:20Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:48:11Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -114107,7 +115434,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61518": {
     "id": "brave/brave-browser#61518",
@@ -114120,7 +115447,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:39:45Z",
-    "updatedAt": "2026-11-14T18:07:22Z",
+    "updatedAt": "2026-11-16T12:47:57Z",
     "closedAt": "2026-11-14T18:05:45Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -114133,6 +115460,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -114208,6 +115536,12 @@
       "at": "2026-11-14T18:07:22Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:57Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -114216,7 +115550,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-browser#61534": {
     "id": "brave/brave-browser#61534",
@@ -114229,7 +115563,7 @@
     "stateReason": "completed",
     "isDraft": null,
     "createdAt": "2026-11-05T21:46:59Z",
-    "updatedAt": "2026-11-14T18:07:25Z",
+    "updatedAt": "2026-11-16T12:47:51Z",
     "closedAt": "2026-11-14T18:05:46Z",
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -114241,6 +115575,7 @@
      "tests",
      "QA/No",
      "release-notes/exclude",
+     "OS/Desktop",
      "tests/test-quality",
      "tests/best-practice-violation"
     ],
@@ -114310,6 +115645,12 @@
       "at": "2026-11-14T18:07:25Z",
       "actor": "brave-builds",
       "detail": "1.102.x - Nightly"
+     },
+     {
+      "type": "labeled",
+      "at": "2026-11-16T12:47:51Z",
+      "actor": "netzenbot",
+      "detail": "OS/Desktop"
      }
     ],
     "timelineTruncated": false,
@@ -114318,7 +115659,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-14T20:44:31.799Z"
+    "retrievedAt": "2026-11-17T02:57:18.860Z"
    },
    "brave/brave-core#26997": {
     "id": "brave/brave-core#26997",
@@ -116557,6 +117898,7 @@
    }
   },
   "excluded": {
+   "brave/brave-browser#61914": "discovered via search:zcash but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#59793": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-browser#59720": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-browser#58567": "discovered via search:zcash, search:shielded wallet but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -116716,15 +118058,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 897,
-   "searchHits": 1293,
-   "tracked": 1041,
-   "direct": 670,
-   "mention": 75,
+   "discovered": 901,
+   "searchHits": 1302,
+   "tracked": 1044,
+   "direct": 672,
+   "mention": 76,
    "linked": 296,
-   "excluded": 152,
+   "excluded": 153,
    "mentionsDropped": 37
   }
  },
- "completeAt": "2026-11-16T06:31:44.041Z"
+ "completeAt": "2026-11-17T02:57:18.860Z"
 }

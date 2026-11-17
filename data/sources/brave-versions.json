@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-11-16T06:31:44.041Z",
+ "retrievedAt": "2026-11-17T02:57:18.860Z",
  "data": {
   "current": [
    {
@@ -94,43 +94,43 @@
    {
     "channel": "nightly",
     "platform": "desktop",
-    "version": "1.102.6",
-    "tag": "v1.102.6",
+    "version": "1.102.10",
+    "tag": "v1.102.10",
     "publishedAt": null,
     "basis": "lowest of 7 desktop OS pointers on versions.brave.com (nightly-windows-x64)",
     "url": "https://versions.brave.com/latest/nightly-windows-x64.version",
     "detail": {
-     "nightly-windows-x64": "1.102.6",
-     "nightly-windows-x86": "1.102.6",
-     "nightly-windows-arm64": "1.102.6",
-     "nightly-macos-x64": "1.102.6",
-     "nightly-macos-arm64": "1.102.6",
-     "nightly-linux-x64": "1.102.6",
-     "nightly-linux-arm64": "1.102.6"
+     "nightly-windows-x64": "1.102.10",
+     "nightly-windows-x86": "1.102.10",
+     "nightly-windows-arm64": "1.102.10",
+     "nightly-macos-x64": "1.102.10",
+     "nightly-macos-arm64": "1.102.12",
+     "nightly-linux-x64": "1.102.10",
+     "nightly-linux-arm64": "1.102.10"
     }
    },
    {
     "channel": "nightly",
     "platform": "android",
-    "version": "1.102.3",
-    "tag": "v1.102.3",
+    "version": "1.102.11",
+    "tag": "v1.102.11",
     "publishedAt": null,
     "basis": "versions.brave.com/latest/nightly-android-google-play.version",
     "url": "https://versions.brave.com/latest/nightly-android-google-play.version",
     "detail": {
-     "nightly-android-google-play": "1.102.3"
+     "nightly-android-google-play": "1.102.11"
     }
    },
    {
     "channel": "nightly",
     "platform": "ios",
-    "version": "1.102.6",
-    "tag": "v1.102.6",
+    "version": "1.102.10",
+    "tag": "v1.102.10",
     "publishedAt": null,
     "basis": "versions.brave.com/latest/nightly-ios.version",
     "url": "https://versions.brave.com/latest/nightly-ios.version",
     "detail": {
-     "nightly-ios": "1.102.6"
+     "nightly-ios": "1.102.10"
     }
    }
   ],
@@ -536,114 +536,114 @@
   "pointers": {
    "release-windows-x64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-windows-x86": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-windows-arm64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-macos-x64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-macos-arm64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-linux-x64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-linux-arm64": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-android-google-play": {
     "version": "1.99.57",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "release-ios-app-store": {
     "version": "1.98",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-windows-x64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-windows-x86": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-windows-arm64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-macos-x64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-macos-arm64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-linux-x64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-linux-arm64": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-android-google-play": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "beta-ios": {
     "version": "1.101.47",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-windows-x64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-windows-x86": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-windows-arm64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-macos-x64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-macos-arm64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.12",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-linux-x64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-linux-arm64": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-android-google-play": {
-    "version": "1.102.3",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.11",
+    "readAt": "2026-11-17T02:57:18.860Z"
    },
    "nightly-ios": {
-    "version": "1.102.6",
-    "readAt": "2026-11-16T06:31:44.041Z"
+    "version": "1.102.10",
+    "readAt": "2026-11-17T02:57:18.860Z"
    }
   },
-  "iosNotesReadAt": "2026-11-16T06:31:44.041Z"
+  "iosNotesReadAt": "2026-11-17T02:57:18.860Z"
  },
- "completeAt": "2026-11-16T06:31:44.041Z"
+ "completeAt": "2026-11-17T02:57:18.860Z"
 }
