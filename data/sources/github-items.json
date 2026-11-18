@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-18T07:30:47.074Z",
+ "retrievedAt": "2026-11-18T17:17:40.774Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -27107,6 +27107,51 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-browser#61975": {
+    "id": "brave/brave-browser#61975",
+    "repo": "brave/brave-browser",
+    "number": 61975,
+    "kind": "issue",
+    "title": "Brave Wallet (Zcash): support sending to TEX addresses (ZIP 320)",
+    "url": "https://github.com/brave/brave-browser/issues/61975",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-18T09:45:34Z",
+    "updatedAt": "2026-11-18T09:45:34Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "Anirudh-712",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "Brave Wallet can't send ZEC to a tex1… address. ValidateTransparentRecipientAddress in brave-core (components/brave_wallet/common/zcash_utils.cc, L127-152 and L351-375) accepts a unified address with a transparent receiver or a Base58Check address only, so a TEX address returns kInvalidTransparentAddress. TEX addresses (ZIP 320) are what Binance gives ZEC users as deposit addresses, and THORChain's current ZEC inbound address is one…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash",
+     "search:zec"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "title:zip 320",
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-18T17:17:40.774Z"
+   },
    "brave/brave-browser#61901": {
     "id": "brave/brave-browser#61901",
     "repo": "brave/brave-browser",
@@ -41418,7 +41463,7 @@
     "stateReason": null,
     "isDraft": null,
     "createdAt": "2026-11-14T21:17:38Z",
-    "updatedAt": "2026-11-17T08:00:56Z",
+    "updatedAt": "2026-11-18T15:17:36Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -41457,6 +41502,22 @@
       "detail": "PullRequest",
       "ref": "brave/brave-core#41748",
       "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:17Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41825",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:27Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41826",
+      "willClose": true
      }
     ],
     "timelineTruncated": false,
@@ -41467,7 +41528,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-17T13:28:36.670Z"
+    "retrievedAt": "2026-11-18T17:17:40.774Z"
    },
    "brave/brave-browser#61891": {
     "id": "brave/brave-browser#61891",
@@ -44615,6 +44676,67 @@
      "body:orchard"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
+   },
+   "brave/brave-core#41826": {
+    "id": "brave/brave-core#41826",
+    "repo": "brave/brave-core",
+    "number": 41826,
+    "kind": "pr",
+    "title": "[Wallet] Resolve ENS names for the send network's coin",
+    "url": "https://github.com/brave/brave-core/pull/41826",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": true,
+    "createdAt": "2026-11-18T15:17:26Z",
+    "updatedAt": "2026-11-18T15:17:51Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "ens-multichain-send-ui-ur",
+    "author": "arbuthnot-eth",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "- Resolves https://github.com/brave/brave-browser/issues/61869 Depends on brave/brave-core#40950 (ENSIP-23 Universal Resolver), brave/brave-core#41748 and brave/brave-core#41825, and includes their commits until they merge. Only the last commit, \"Resolve ENS names for the send network's coin\", is new here. Opened as a draft until those land. PR 3 of 3 from the design doc. Today the send screen only resolves .eth recipients when sending on an Ethereum network, and always…",
+    "bodyRefs": [
+     "brave/brave-browser#61869",
+     "brave/brave-core#40950",
+     "brave/brave-core#41748",
+     "brave/brave-core#41825"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#61869"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#61869"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:37Z",
+      "actor": "arbuthnot-eth",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#61869",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash is:pr",
+     "search:zec is:pr"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-18T17:17:40.774Z"
    },
    "brave/brave-core#41715": {
     "id": "brave/brave-core#41715",
@@ -73438,6 +73560,22 @@
       "detail": "Issue",
       "ref": "brave/brave-browser#61869",
       "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:17Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41825",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:27Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41826",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -73448,7 +73586,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-18T07:30:47.074Z"
+    "retrievedAt": "2026-11-18T17:17:40.774Z"
    },
    "brave/brave-core#35523": {
     "id": "brave/brave-core#35523",
@@ -118120,15 +118258,15 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 903,
-   "searchHits": 1304,
-   "tracked": 1045,
-   "direct": 672,
-   "mention": 77,
+   "discovered": 905,
+   "searchHits": 1308,
+   "tracked": 1047,
+   "direct": 673,
+   "mention": 78,
    "linked": 296,
    "excluded": 154,
-   "mentionsDropped": 37
+   "mentionsDropped": 38
   }
  },
- "completeAt": "2026-11-18T07:30:47.074Z"
+ "completeAt": "2026-11-18T17:17:40.774Z"
 }

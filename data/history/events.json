@@ -1,5 +1,104 @@
 [
  {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on Desktop Release: in-build → absent",
+  "impact": "The evidence for this capability changed for Desktop Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → absent"
+  ],
+  "id": "c32d3ec00ddc762c",
+  "detectedAt": "2026-11-18T17:17:40.774Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-18T13:25:26Z",
+  "title": "In iOS Nightly 1.102.18: [Wallet]: Unable to Hide Zcash (Shielded Legacy) Token",
+  "impact": "The merged code (brave-core#41715) is now part of the iOS Nightly build 1.102.18. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61901"
+  ],
+  "topic": "shielded",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61901",
+    "url": "https://github.com/brave/brave-browser/issues/61901"
+   }
+  ],
+  "evidence": [
+   "in v1.102.13 (GitHub compare v1.102.13...b7cef239: behind); later builds of the same history include it"
+  ],
+  "id": "6fb4c85682370956",
+  "detectedAt": "2026-11-18T17:17:40.774Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-18T09:45:34Z",
+  "title": "New issue: Brave Wallet (Zcash): support sending to TEX addresses (ZIP 320)",
+  "impact": "Opened in brave-browser#61975. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61975"
+  ],
+  "topic": "addresses",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61975",
+    "url": "https://github.com/brave/brave-browser/issues/61975"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-18T09:45:34Z"
+  ],
+  "id": "6966c8887886d65c",
+  "detectedAt": "2026-11-18T17:17:40.774Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-18T05:20:44Z",
+  "title": "In Desktop Release 1.100.58: [Wallet] Use JSTime instead of TimeDelta in mojom",
+  "impact": "The merged code (brave-core#40325) is now part of the Desktop Release build 1.100.58. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-core#40325"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "release",
+  "links": [
+   {
+    "label": "brave-core#40325",
+    "url": "https://github.com/brave/brave-core/pull/40325"
+   }
+  ],
+  "evidence": [
+   "in v1.100.9 (GitHub compare v1.100.9...dbb35190: behind); later builds of the same history include it"
+  ],
+  "id": "8297ffaa4ce398f0",
+  "detectedAt": "2026-11-18T17:17:40.774Z",
+  "basis": "observed"
+ },
+ {
   "kind": "advisory",
   "sourceAt": "2026-11-18T00:38:32Z",
   "title": "Security advisory GHSA-p4pq-3cf7-45rv: Post-decode cardinality caps allow unauthenticated protobuf requests to OOM-kill lightwalletd",
@@ -46400,33 +46499,6 @@
    "2 post(s), closed"
   ],
   "id": "2736f6a3552bf415",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-18T15:14:07Z",
-  "title": "Merged: [cr144-cherry-pick] Use `base::HexEncodeLower`",
-  "impact": "Merged into brave-core master on 2025-11-18. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32384"
-  ],
-  "topic": "general",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32384",
-    "url": "https://github.com/brave/brave-core/pull/32384"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-18T15:14:07Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "2674c07e34a26eaa",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }
