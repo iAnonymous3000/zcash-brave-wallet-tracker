@@ -1,9 +1,275 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-11-17T22:26:09.627Z",
+ "retrievedAt": "2026-11-18T07:30:47.074Z",
  "data": {
   "advisories": [
+   {
+    "id": "GHSA-p4pq-3cf7-45rv",
+    "aliases": [],
+    "summary": "Post-decode cardinality caps allow unauthenticated protobuf requests to OOM-kill lightwalletd",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:32Z",
+    "updatedAt": "2026-11-18T00:38:32Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-p4pq-3cf7-45rv"
+   },
+   {
+    "id": "GHSA-5xg7-x58j-m5vr",
+    "aliases": [],
+    "summary": "Unbounded zero-message client streams allow unauthenticated clients to OOM-kill lightwalletd",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:30Z",
+    "updatedAt": "2026-11-18T00:38:30Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-5xg7-x58j-m5vr"
+   },
+   {
+    "id": "GHSA-xrx5-jc6q-9h8r",
+    "aliases": [],
+    "summary": "Incomplete GHSA-6ppp remediation: concurrent in-limit SendTransaction requests OOM lightwalletd",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:29Z",
+    "updatedAt": "2026-11-18T00:38:29Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-xrx5-jc6q-9h8r"
+   },
+   {
+    "id": "GHSA-8vh8-6jg3-8f5v",
+    "aliases": [],
+    "summary": "Repeated poolTypes in GetBlockRange saturate lightwalletd CPU and slow wallet scans",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:28Z",
+    "updatedAt": "2026-11-18T00:38:28Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-8vh8-6jg3-8f5v"
+   },
+   {
+    "id": "GHSA-w64p-hjp5-3mj7",
+    "aliases": [],
+    "summary": "Cancelled GetMempoolTx refreshes advance freshness timestamp and keep healthy clients on stale snapshots",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:27Z",
+    "updatedAt": "2026-11-18T00:38:27Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-w64p-hjp5-3mj7"
+   },
+   {
+    "id": "GHSA-hp3q-vfr4-v8m6",
+    "aliases": [],
+    "summary": "GetMempoolStream Global Mutex Held During Uncancellable RPC",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:26Z",
+    "updatedAt": "2026-11-18T00:38:26Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-hp3q-vfr4-v8m6"
+   },
+   {
+    "id": "GHSA-pp3p-5vmm-3cvw",
+    "aliases": [],
+    "summary": "Unchecked 32-byte slice-to-array conversion in hash32.FromSlice lets one unauthenticated AddAddressUtxo gRPC request panic and terminate the entire lightwalletd process",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:25Z",
+    "updatedAt": "2026-11-18T00:38:25Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-pp3p-5vmm-3cvw"
+   },
+   {
+    "id": "GHSA-pj5c-jx29-gmxr",
+    "aliases": [],
+    "summary": "A cancelled GetMempoolStream request hides new mempool transactions from every client until the next block",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:24Z",
+    "updatedAt": "2026-11-18T00:38:24Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-pj5c-jx29-gmxr"
+   },
+   {
+    "id": "GHSA-jcrq-vv43-968c",
+    "aliases": [],
+    "summary": "Unhandled slice index panic in Block.GetHeight() when a block contains zero transactions (or a first transaction with zero transparent inputs)",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:22Z",
+    "updatedAt": "2026-11-18T00:38:22Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-jcrq-vv43-968c"
+   },
+   {
+    "id": "GHSA-4wjx-vhhv-vc8c",
+    "aliases": [],
+    "summary": "Zero-message GetTaddressBalanceStream calls retain unbounded lightwalletd handlers and goroutines",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:21Z",
+    "updatedAt": "2026-11-18T00:38:21Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-4wjx-vhhv-vc8c"
+   },
+   {
+    "id": "GHSA-w24w-x7vw-f2w8",
+    "aliases": [],
+    "summary": "Timeout-free metrics HTTP listener permits Slowloris descriptor exhaustion and denial of wallet gRPC service",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:20Z",
+    "updatedAt": "2026-11-18T01:03:02Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-w24w-x7vw-f2w8"
+   },
+   {
+    "id": "GHSA-j79f-98gc-33jw",
+    "aliases": [],
+    "summary": "lightwalletd metrics listener exposes command-line RPC passwords via /debug/vars",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:19Z",
+    "updatedAt": "2026-11-18T00:38:19Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-j79f-98gc-33jw"
+   },
+   {
+    "id": "GHSA-gq9m-j9cv-6w9p",
+    "aliases": [],
+    "summary": "Five HTTP/2 denial-of-service issues in the golang.org/x/net dependency",
+    "severity": "high",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:18Z",
+    "updatedAt": "2026-11-18T00:38:18Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-gq9m-j9cv-6w9p"
+   },
+   {
+    "id": "GHSA-x943-ghgq-v675",
+    "aliases": [],
+    "summary": "Public transparent-address lists repeatedly compile a constant regexp and degrade unrelated wallet RPCs",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.1"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.2"
+    ],
+    "publishedAt": "2026-11-18T00:38:17Z",
+    "updatedAt": "2026-11-18T00:38:17Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-x943-ghgq-v675"
+   },
    {
     "id": "GHSA-xq7v-jj38-pcwr",
     "aliases": [],
@@ -384,5 +650,5 @@
   ],
   "rustsecCrates": []
  },
- "completeAt": "2026-11-17T22:26:09.627Z"
+ "completeAt": "2026-11-18T07:30:47.074Z"
 }

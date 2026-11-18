@@ -1,5 +1,358 @@
 [
  {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:32Z",
+  "title": "Security advisory GHSA-p4pq-3cf7-45rv: Post-decode cardinality caps allow unauthenticated protobuf requests to OOM-kill lightwalletd",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-p4pq-3cf7-45rv",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-p4pq-3cf7-45rv"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "4816ca06c9f78281",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:30Z",
+  "title": "Security advisory GHSA-5xg7-x58j-m5vr: Unbounded zero-message client streams allow unauthenticated clients to OOM-kill lightwalletd",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-5xg7-x58j-m5vr",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-5xg7-x58j-m5vr"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "e0cc8996b0a4048d",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:29Z",
+  "title": "Security advisory GHSA-xrx5-jc6q-9h8r: Incomplete GHSA-6ppp remediation: concurrent in-limit SendTransaction requests OOM lightwalletd",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns SendTransaction; Brave Wallet’s Zcash client calls SendTransaction.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-xrx5-jc6q-9h8r",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-xrx5-jc6q-9h8r"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "c025029e28d67d1b",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:28Z",
+  "title": "Security advisory GHSA-8vh8-6jg3-8f5v: Repeated poolTypes in GetBlockRange saturate lightwalletd CPU and slow wallet scans",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetBlockRange; Brave Wallet’s Zcash client calls GetBlockRange.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-8vh8-6jg3-8f5v",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-8vh8-6jg3-8f5v"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "e1305f5e8e834210",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:27Z",
+  "title": "Security advisory GHSA-w64p-hjp5-3mj7: Cancelled GetMempoolTx refreshes advance freshness timestamp and keep healthy clients on stale snapshots",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolTx, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-w64p-hjp5-3mj7",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-w64p-hjp5-3mj7"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "9b0c07e5f13a2129",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:26Z",
+  "title": "Security advisory GHSA-hp3q-vfr4-v8m6: GetMempoolStream Global Mutex Held During Uncancellable RPC",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolStream, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-hp3q-vfr4-v8m6",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-hp3q-vfr4-v8m6"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "e8e1e6e415d1b9cd",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:25Z",
+  "title": "Security advisory GHSA-pp3p-5vmm-3cvw: Unchecked 32-byte slice-to-array conversion in hash32.FromSlice lets one unauthenticated AddAddressUtxo gRPC request panic and terminate the entire lightwalletd process",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-pp3p-5vmm-3cvw",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-pp3p-5vmm-3cvw"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "9e90756a2dc8faa0",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:24Z",
+  "title": "Security advisory GHSA-pj5c-jx29-gmxr: A cancelled GetMempoolStream request hides new mempool transactions from every client until the next block",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolStream, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-pj5c-jx29-gmxr",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-pj5c-jx29-gmxr"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "8cbbea6faa11b090",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:22Z",
+  "title": "Security advisory GHSA-jcrq-vv43-968c: Unhandled slice index panic in Block.GetHeight() when a block contains zero transactions (or a first transaction with zero transparent inputs)",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetHeight, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-jcrq-vv43-968c",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-jcrq-vv43-968c"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "742a48085b4ec824",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:21Z",
+  "title": "Security advisory GHSA-4wjx-vhhv-vc8c: Zero-message GetTaddressBalanceStream calls retain unbounded lightwalletd handlers and goroutines",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetTaddressBalanceStream, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-4wjx-vhhv-vc8c",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-4wjx-vhhv-vc8c"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "78193db63155bcbc",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:20Z",
+  "title": "Security advisory GHSA-w24w-x7vw-f2w8: Timeout-free metrics HTTP listener permits Slowloris descriptor exhaustion and denial of wallet gRPC service",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-w24w-x7vw-f2w8",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-w24w-x7vw-f2w8"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "639ced44ea48646e",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:19Z",
+  "title": "Security advisory GHSA-j79f-98gc-33jw: lightwalletd metrics listener exposes command-line RPC passwords via /debug/vars",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-j79f-98gc-33jw",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-j79f-98gc-33jw"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "afadc13b59ae0a17",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:18Z",
+  "title": "Security advisory GHSA-gq9m-j9cv-6w9p: Five HTTP/2 denial-of-service issues in the golang.org/x/net dependency",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-gq9m-j9cv-6w9p",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-gq9m-j9cv-6w9p"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "c5c15f7c6a7bce02",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T00:38:17Z",
+  "title": "Security advisory GHSA-x943-ghgq-v675: Public transparent-address lists repeatedly compile a constant regexp and degrade unrelated wallet RPCs",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.1). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-x943-ghgq-v675",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-x943-ghgq-v675"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.1"
+  ],
+  "id": "3d38d6e30bbeaa4c",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-11-18T00:04:38Z",
+  "title": "Upstream: lightwalletd v0.6.2",
+  "impact": "lightwalletd v0.6.2 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.2"
+   }
+  ],
+  "evidence": [
+   "published 2026-11-18T00:04:38Z",
+   "not in Brave lockfile"
+  ],
+  "id": "cd772a079144fcc4",
+  "detectedAt": "2026-11-18T07:30:47.074Z",
+  "basis": "observed"
+ },
+ {
   "kind": "issue-closed",
   "sourceAt": "2026-11-16T21:00:40Z",
   "title": "Closed (completed): [Wallet]: Unable to Hide Zcash (Shielded Legacy) Token",

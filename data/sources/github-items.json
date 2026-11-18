@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-17T22:26:09.627Z",
+ "retrievedAt": "2026-11-18T07:30:47.074Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -73408,7 +73408,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-17T06:39:24Z",
-    "updatedAt": "2026-11-17T07:03:51Z",
+    "updatedAt": "2026-11-18T00:52:22Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -73418,7 +73418,7 @@
     "assignees": [],
     "labels": [],
     "milestone": null,
-    "bodyExcerpt": "- Part of https://github.com/brave/brave-browser/issues/61869 Adds two helpers for ENS multichain address resolution (ENSIP-9/11). This is the first of three small PRs from the design doc. Nothing calls them yet. The next PR adds EnsGetAddr to JsonRpcService and uses them. - GetEnsCoinType(coin, chain_id) returns 60 for Ethereum mainnet, 0x80000000 | chainId for other EVM chains (ENSIP-11), and the SLIP-44 number for non-EVM mainnets. mojom::CoinType values are already…",
+    "bodyExcerpt": "- Part of https://github.com/brave/brave-browser/issues/61869 Adds two helpers for ENS multichain address resolution (ENSIP-9/11). This is the first of three small PRs from the design doc. Nothing calls them yet. The next PR adds EnsGetAddr to JsonRpcService and uses them. - GetEnsCoinType(coin, chain_id) returns 60 for Ethereum mainnet and its L1 testnets, 0x80000000 | chainId for other EVM chains (ENSIP-11), and the SLIP-44 number for non-EVM mainnets. mojom::CoinType…",
     "bodyRefs": [
      "brave/brave-browser#61869"
     ],
@@ -73448,7 +73448,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-17T13:28:36.670Z"
+    "retrievedAt": "2026-11-18T07:30:47.074Z"
    },
    "brave/brave-core#35523": {
     "id": "brave/brave-core#35523",
@@ -118130,5 +118130,5 @@
    "mentionsDropped": 37
   }
  },
- "completeAt": "2026-11-17T22:26:09.627Z"
+ "completeAt": "2026-11-18T07:30:47.074Z"
 }
