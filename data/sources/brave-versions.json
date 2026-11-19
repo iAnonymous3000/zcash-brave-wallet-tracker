@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-versions",
  "schema": 1,
- "retrievedAt": "2026-11-18T17:17:40.774Z",
+ "retrievedAt": "2026-11-19T00:24:33.476Z",
  "data": {
   "current": [
    {
@@ -37,17 +37,16 @@
    {
     "channel": "release",
     "platform": "ios",
-    "version": "1.98.64",
-    "tag": "v1.98.64",
+    "version": "1.99",
+    "tag": null,
     "publishedAt": null,
-    "basis": "App Store version 1.98 (release-ios-app-store) = build 1.98.64 per Brave’s draft iOS release-notes issue #61851, opened by GitHub user id 17885425 (Uni-verse), a listed Brave iOS release-notes author; GitHub release v1.98.64 carries the iOS build",
+    "basis": "App Store marketing version (release-ios-app-store); the matching build number is not published",
     "url": "https://versions.brave.com/latest/release-ios-app-store.version",
     "detail": {
-     "release-ios-app-store": "1.98",
-     "ios-release-notes-issue": "https://github.com/brave/brave-browser/issues/61851"
+     "release-ios-app-store": "1.99"
     },
-    "inferredTag": null,
-    "inferredBasis": null
+    "inferredTag": "v1.99.58",
+    "inferredBasis": "newest 1.99.x Release on GitHub with iOS assets (5 candidate builds); Brave does not publish which build the App Store 1.99 is"
    },
    {
     "channel": "beta",
@@ -94,17 +93,17 @@
    {
     "channel": "nightly",
     "platform": "desktop",
-    "version": "1.102.10",
-    "tag": "v1.102.10",
+    "version": "1.102.18",
+    "tag": "v1.102.18",
     "publishedAt": null,
-    "basis": "lowest of 7 desktop OS pointers on versions.brave.com (nightly-macos-x64)",
-    "url": "https://versions.brave.com/latest/nightly-macos-x64.version",
+    "basis": "lowest of 7 desktop OS pointers on versions.brave.com (nightly-windows-x64)",
+    "url": "https://versions.brave.com/latest/nightly-windows-x64.version",
     "detail": {
      "nightly-windows-x64": "1.102.18",
      "nightly-windows-x86": "1.102.18",
      "nightly-windows-arm64": "1.102.18",
-     "nightly-macos-x64": "1.102.10",
-     "nightly-macos-arm64": "1.102.17",
+     "nightly-macos-x64": "1.102.18",
+     "nightly-macos-arm64": "1.102.18",
      "nightly-linux-x64": "1.102.18",
      "nightly-linux-arm64": "1.102.18"
     }
@@ -142,7 +141,7 @@
     "title": "Release Notes for iOS Release 1.98 [changelog]",
     "marketing": "1.98",
     "build": "1.98.64",
-    "updatedAt": "2026-11-14T00:38:57Z",
+    "updatedAt": "2026-11-19T00:24:35Z",
     "body": "## [1.98.64](https://github.com/brave/brave-browser/releases/tag/v1.98.64)\n\n - Added Brave shortcuts to the custom controls area. ([#58091](https://github.com/brave/brave-browser/issues/58091))\n - Added \"new tab\" button to the toolbar for iPad. ([#59312](https://github.com/brave/brave-browser/issues/59312))\n - [Security] Fixed CSP meta tag parsing in Reader Mode as reported on HackerOne by miauuu. ([#59269](https://github.com/brave/brave-browser/issues/59269))\n - Enabled new Shields panel UI by default. ([#59147](https://github.com/brave/brave-browser/issues/59147))\n - Updated Night Mode to exclude WebUI screens. ([#59117](https://github.com/brave/brave-browser/issues/59117))\n - Updated AI Chat models. ([#58477](https://github.com/brave/brave-browser/issues/58477))\n - Fixed automatically closed tabs not being shred when Auto Shred is set to \"Site Tabs Closed\". ([#59461](https://github.com/brave/brave-browser/issues/59461))\n - Fixed site data not being shred for \"Site Tabs Closed” Auto Shred option when app terminates. ([#59578](https://github.com/brave/brave-browser/issues/59578))\n - Upgraded Chromium to 156.0.8078.80. ([#60306](https://github.com/brave/brave-browser/issues/60306)) ([Changelog for 156.0.8078.80](https://chromium.googlesource.com/chromium/src/+log/155.0.8059.85..156.0.8078.80?pretty=fuller&n=1000))",
     "authorAssociation": "CONTRIBUTOR",
     "authorId": 17885425,
@@ -536,114 +535,114 @@
   "pointers": {
    "release-windows-x64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-windows-x86": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-windows-arm64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-macos-x64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-macos-arm64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-linux-x64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-linux-arm64": {
     "version": "1.100.58",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-android-google-play": {
     "version": "1.99.57",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "release-ios-app-store": {
-    "version": "1.98",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "version": "1.99",
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-windows-x64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-windows-x86": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-windows-arm64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-macos-x64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-macos-arm64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-linux-x64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-linux-arm64": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-android-google-play": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "beta-ios": {
     "version": "1.101.50",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-windows-x64": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-windows-x86": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-windows-arm64": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-macos-x64": {
-    "version": "1.102.10",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "version": "1.102.18",
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-macos-arm64": {
-    "version": "1.102.17",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "version": "1.102.18",
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-linux-x64": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-linux-arm64": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-android-google-play": {
     "version": "1.102.11",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    },
    "nightly-ios": {
     "version": "1.102.18",
-    "readAt": "2026-11-18T17:17:40.774Z"
+    "readAt": "2026-11-19T00:24:33.476Z"
    }
   },
-  "iosNotesReadAt": "2026-11-18T17:17:40.774Z"
+  "iosNotesReadAt": "2026-11-19T00:24:33.476Z"
  },
- "completeAt": "2026-11-18T17:17:40.774Z"
+ "completeAt": "2026-11-19T00:24:33.476Z"
 }

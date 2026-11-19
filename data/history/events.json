@@ -2,6 +2,233 @@
  {
   "kind": "capability-changed",
   "sourceAt": null,
+  "title": "Buy ZEC (on-ramp via Meld) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "05464c222638d312",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Shield transparent funds on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "15a28ac0eaf3a1be",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Deposit addresses (unified, shielded, transparent) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "1d30a72b0c7d2817",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Orchard → Ironwood migration on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "2aee4e1e99e79f4d",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Cross-chain swaps / bridge (NEAR Intents) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "3f1c7f09aabea0d6",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Sync, birthday & recovery tools on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "56cb56661219c893",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Ironwood pool (NU6.3) on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "574031188a62aa6e",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Automatic ZIP-317 fees on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "645768b9178a502b",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Zcash testnet on iOS Release: hidden → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "hidden → not-verified"
+  ],
+  "id": "675d84340d67ecee",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
+  "title": "Memos on shielded sends on iOS Release: in-build → not-verified",
+  "impact": "The evidence for this capability changed for iOS Release. See the capability matrix for the supporting evidence.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": null,
+  "platforms": [
+   "ios"
+  ],
+  "channel": "release",
+  "links": [],
+  "evidence": [
+   "in-build → not-verified"
+  ],
+  "id": "d41f9bcc35310bdd",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-18T23:35:48Z",
+  "title": "Security advisory GHSA-4q7w-cx94-55pc: sighash computation has quadratic complexity",
+  "impact": "Affects rust:zcash_primitives. At least one checked Brave build resolves a version inside the vulnerable range (master, v1.99.57, v1.102.11, v1.101.50, v1.100.58, v1.101.51, v1.102.18, v1.102.20) — see details. Not everything could be checked: iOS Release 1.99 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-4q7w-cx94-55pc",
+    "url": "https://github.com/zcash/librustzcash/security/advisories/GHSA-4q7w-cx94-55pc"
+   }
+  ],
+  "evidence": [
+   "zcash_primitives <=0.30.1",
+   "master: zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
+   "v1.99.57 (android/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
+   "v1.102.11 (android/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
+   "v1.101.50 (desktop/beta, android/beta, ios/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1"
+  ],
+  "id": "b47592547921b096",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "capability-changed",
+  "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on Desktop Release: in-build → absent",
   "impact": "The evidence for this capability changed for Desktop Release. See the capability matrix for the supporting evidence.",
   "highlight": null,
@@ -44,6 +271,33 @@
   ],
   "id": "6fb4c85682370956",
   "detectedAt": "2026-11-18T17:17:40.774Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-18T13:25:26Z",
+  "title": "In Desktop Nightly 1.102.18: [Wallet]: Unable to Hide Zcash (Shielded Legacy) Token",
+  "impact": "The merged code (brave-core#41715) is now part of the Desktop Nightly build 1.102.18. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61901"
+  ],
+  "topic": "shielded",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61901",
+    "url": "https://github.com/brave/brave-browser/issues/61901"
+   }
+  ],
+  "evidence": [
+   "in v1.102.13 (GitHub compare v1.102.13...b7cef239: behind); later builds of the same history include it"
+  ],
+  "id": "ce7a0f5012f057ac",
+  "detectedAt": "2026-11-19T00:24:33.476Z",
   "basis": "observed"
  },
  {

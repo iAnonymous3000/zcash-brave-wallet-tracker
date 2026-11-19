@@ -1,9 +1,28 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-11-18T17:17:40.774Z",
+ "retrievedAt": "2026-11-19T00:24:33.476Z",
  "data": {
   "advisories": [
+   {
+    "id": "GHSA-4q7w-cx94-55pc",
+    "aliases": [],
+    "summary": "sighash computation has quadratic complexity",
+    "severity": "low",
+    "packages": [
+     "rust:zcash_primitives"
+    ],
+    "vulnerableRanges": [
+     "zcash_primitives <=0.30.1"
+    ],
+    "patched": [
+     "zcash_primitives 0.31.0"
+    ],
+    "publishedAt": "2026-11-18T23:35:48Z",
+    "updatedAt": "2026-11-18T23:35:48Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/librustzcash/security/advisories/GHSA-4q7w-cx94-55pc"
+   },
    {
     "id": "GHSA-p4pq-3cf7-45rv",
     "aliases": [],
@@ -650,5 +669,5 @@
   ],
   "rustsecCrates": []
  },
- "completeAt": "2026-11-18T17:17:40.774Z"
+ "completeAt": "2026-11-19T00:24:33.476Z"
 }

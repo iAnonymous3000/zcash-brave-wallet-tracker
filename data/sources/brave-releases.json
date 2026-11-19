@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-18T17:17:40.774Z",
+ "retrievedAt": "2026-11-19T00:24:33.476Z",
  "data": {
   "releases": [
    {
@@ -12,7 +12,11 @@
     "chromium": "158.0.8127.42",
     "publishedAt": "2026-11-18T17:09:25Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.20",
-    "assetPlatforms": [],
+    "assetPlatforms": [
+     "linux",
+     "macos",
+     "windows"
+    ],
     "prereleaseFlag": true
    },
    {
@@ -39,6 +43,7 @@
     "assetPlatforms": [
      "ios",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": false
@@ -8738,5 +8743,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-18T17:17:40.774Z"
+ "completeAt": "2026-11-19T00:24:33.476Z"
 }

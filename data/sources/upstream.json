@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-11-18T17:17:40.774Z",
+ "retrievedAt": "2026-11-19T00:24:33.476Z",
  "data": {
   "crates": {
    "orchard": {
@@ -2912,7 +2912,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-18T17:17:40.774Z"
+   "checkedAt": "2026-11-19T00:24:33.476Z"
   },
   "zips": {
    "2005": {
@@ -2979,9 +2979,9 @@
     "num": "0229",
     "title": "Version 6 Transaction Format",
     "status": "Final",
-    "lastCommitAt": "2026-11-06T01:48:42Z",
-    "lastCommitMessage": "ZIPs 229 and 2005: Promote to Final",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/13b8af0ef39562f030c1f3c258bf6a604c97273d",
+    "lastCommitAt": "2026-11-18T00:21:25Z",
+    "lastCommitMessage": "ZIP 229: Subtract the Ironwood balancing value in the coinbase total output value",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/76277923978855251cf356f5dc95a1a2978ceaff",
     "url": "https://zips.z.cash/zip-0229",
     "path": "zips/zip-0229.md"
    },
@@ -3018,10 +3018,10 @@
    "0259": {
     "num": "0259",
     "title": "Deployment of the NU7 Network Upgrade",
-    "status": "Proposed",
-    "lastCommitAt": "2026-11-06T15:44:25Z",
-    "lastCommitMessage": "Protocol spec: Apply ZIP 237",
-    "lastCommitUrl": "https://github.com/zcash/zips/commit/9cd3f87dc877bee109aa863ff56411a8b6696631",
+    "status": "Final",
+    "lastCommitAt": "2026-11-18T22:47:58Z",
+    "lastCommitMessage": "ZIPs 207, 214, 218, 235, 237, 259, 2003 and 2008: Promote to Final",
+    "lastCommitUrl": "https://github.com/zcash/zips/commit/89836c52fac37e32fdbfdf0bed8a150ab5c427cf",
     "url": "https://zips.z.cash/zip-0259",
     "path": "zips/zip-0259.md"
    }
@@ -3029,7 +3029,7 @@
   "nextUpgrade": {
    "name": "NU7",
    "zip": "0259",
-   "zipStatus": "Proposed",
+   "zipStatus": "Final",
    "testnetHeight": "4465026",
    "mainnetHeight": "3543405",
    "branchId": "0x77190AD9",
@@ -3039,8 +3039,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-18T17:17:40.774Z"
+   "checkedAt": "2026-11-19T00:24:33.476Z"
   }
  },
- "completeAt": "2026-11-18T17:17:40.774Z"
+ "completeAt": "2026-11-19T00:24:33.476Z"
 }
