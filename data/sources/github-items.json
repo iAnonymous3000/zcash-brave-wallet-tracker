@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-19T10:22:29.192Z",
+ "retrievedAt": "2026-11-19T20:39:43.781Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -51126,7 +51126,7 @@
     "updatedAt": "2026-06-14T07:17:43Z",
     "closedAt": "2026-06-10T18:59:30Z",
     "mergedAt": "2026-06-10T18:59:30Z",
-    "mergeCommitSha": "22e7f4a137c3f7b5b1e308916afec82e02659f2e",
+    "mergeCommitSha": null,
     "baseRef": "update_orchard_14",
     "headRef": "update_orchard_14_1",
     "author": "cypt4",
@@ -51227,7 +51227,7 @@
      "title:orchard",
      "body:librustzcash"
     ],
-    "retrievedAt": "2026-10-08T15:20:14.214Z"
+    "retrievedAt": "2026-11-19T20:39:43.781Z"
    },
    "brave/brave-core#37116": {
     "id": "brave/brave-core#37116",
@@ -117901,7 +117901,7 @@
   },
   "pathHistory": {
    "components/brave_wallet/browser/zcash": {
-    "lastCommitAt": "2026-11-14T18:05:19Z",
+    "lastCommitAt": "2026-11-19T15:00:35Z",
     "prs": [
      19783,
      20351,
@@ -118070,7 +118070,7 @@
      41583,
      41668
     ],
-    "commitsWithoutPr": 21,
+    "commitsWithoutPr": 23,
     "shasWithoutPr": [
      "09feab1a3f0876223a4b88f483603b94d0dd9469",
      "10727642d9aef6ec659a62a2c05d68f648b58450",
@@ -118085,10 +118085,12 @@
      "92a8341c61eecbb96da4eaf98df4355815c66a79",
      "a19c44fed1bddeef4a609f5055d7e32075ca4af4",
      "a8e6269ddc8e114f5e10e57f761eb03eb974765d",
+     "bbb536083179dcb5cd2cc2a47fc1425c93ace4a7",
      "c164d6759c8ae7daf74f0ec997a7f7b0236e4ad2",
      "d2231dd4c80a5b3c56f12c495bdd813341d0407a",
      "d9fd06e9df0e14dd3f231198904299e0f549ba4f",
      "dc611e393c16c05aa3ed5985e45ecc01b676468d",
+     "e3a47d4d8c32f67c89e81c056b42f8845de78c01",
      "e750304bae6067fc639eac2c5f920a03112eb2cc",
      "eb21b0f9fdce69dbd20968c3149f193dcd4ad3f2",
      "ef8636fe9903f691533b36d94b037b2d6eef6a1b",

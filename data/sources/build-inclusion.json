@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-19T10:22:29.192Z",
+ "retrievedAt": "2026-11-19T20:39:43.781Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3737,19 +3737,12 @@
     ]
    },
    {
-    "tag": "v1.101.50",
-    "version": "1.101.50",
-    "publishedAt": "2026-11-17T05:09:21Z",
-    "usedBy": [
-     "desktop/beta",
-     "android/beta"
-    ]
-   },
-   {
     "tag": "v1.101.52",
     "version": "1.101.52",
     "publishedAt": "2026-11-19T05:08:21Z",
     "usedBy": [
+     "desktop/beta",
+     "android/beta",
      "ios/beta",
      "github/beta"
     ]
@@ -3763,18 +3756,18 @@
     ]
    },
    {
-    "tag": "v1.102.18",
-    "version": "1.102.18",
-    "publishedAt": "2026-11-18T13:25:26Z",
+    "tag": "v1.102.22",
+    "version": "1.102.22",
+    "publishedAt": "2026-11-19T13:25:41Z",
     "usedBy": [
      "desktop/nightly",
      "ios/nightly"
     ]
    },
    {
-    "tag": "v1.102.21",
-    "version": "1.102.21",
-    "publishedAt": "2026-11-19T01:11:32Z",
+    "tag": "v1.102.24",
+    "version": "1.102.24",
+    "publishedAt": "2026-11-19T17:09:49Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3783,5 +3776,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-19T10:22:29.192Z"
+ "completeAt": "2026-11-19T20:39:43.781Z"
 }
