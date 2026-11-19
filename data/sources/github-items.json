@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-19T00:24:33.476Z",
+ "retrievedAt": "2026-11-19T10:22:29.192Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -27106,51 +27106,6 @@
      "title:zcash"
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
-   },
-   "brave/brave-browser#61975": {
-    "id": "brave/brave-browser#61975",
-    "repo": "brave/brave-browser",
-    "number": 61975,
-    "kind": "issue",
-    "title": "Brave Wallet (Zcash): support sending to TEX addresses (ZIP 320)",
-    "url": "https://github.com/brave/brave-browser/issues/61975",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": null,
-    "createdAt": "2026-11-18T09:45:34Z",
-    "updatedAt": "2026-11-18T22:04:14Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "Anirudh-712",
-    "assignees": [],
-    "labels": [],
-    "milestone": null,
-    "bodyExcerpt": "Brave Wallet can't send ZEC to a tex1… address. ValidateTransparentRecipientAddress in brave-core (components/brave_wallet/common/zcash_utils.cc, L127-152 and L351-375) accepts a unified address with a transparent receiver or a Base58Check address only, so a TEX address returns kInvalidTransparentAddress. TEX addresses (ZIP 320) are what Binance gives ZEC users as deposit addresses, and THORChain's current ZEC inbound address is one…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash",
-     "search:zec"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash",
-     "title:zip 320",
-     "body:zec"
-    ],
-    "retrievedAt": "2026-11-19T00:24:33.476Z"
    },
    "brave/brave-browser#61901": {
     "id": "brave/brave-browser#61901",
@@ -78155,49 +78110,6 @@
     ],
     "retrievedAt": "2026-10-26T15:13:42.118Z"
    },
-   "brave/gate3#341": {
-    "id": "brave/gate3#341",
-    "repo": "brave/gate3",
-    "number": 341,
-    "kind": "issue",
-    "title": "NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
-    "url": "https://github.com/brave/gate3/issues/341",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": null,
-    "createdAt": "2026-10-19T02:31:21Z",
-    "updatedAt": "2026-10-19T02:31:21Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": null,
-    "headRef": null,
-    "author": "Anirudh-712",
-    "assignees": [],
-    "labels": [],
-    "milestone": null,
-    "bodyExcerpt": "to_near_intents_request sets the 1Click deadline to now + 10 minutes for every source chain (app/api/swap/providers/near_intents/transformations.py L124-L126 at 173a240), including Bitcoin, Zcash and Cardano deposits (L174-L203). 1Click's API says this deadline \"must exceed the time required for the deposit transaction to be mined. For example, Bitcoin may require around one hour\", and that the refund begins if the swap isn't completed by then (QuoteRequest.deadline in…",
-    "bodyRefs": [],
-    "resolvesRefs": [],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash"
-    ],
-    "relevance": "direct",
-    "matchedTerms": [
-     "title:zcash",
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-10-19T04:43:30.819Z"
-   },
    "brave/gate3#335": {
     "id": "brave/gate3#335",
     "repo": "brave/gate3",
@@ -83302,6 +83214,94 @@
     "relevance": "direct",
     "matchedTerms": [],
     "retrievedAt": "2026-11-16T06:31:44.041Z"
+   },
+   "brave/brave-browser#61975": {
+    "id": "brave/brave-browser#61975",
+    "repo": "brave/brave-browser",
+    "number": 61975,
+    "kind": "issue",
+    "title": "Brave Wallet (Zcash): support sending to TEX addresses (ZIP 320)",
+    "url": "https://github.com/brave/brave-browser/issues/61975",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-11-18T09:45:34Z",
+    "updatedAt": "2026-11-18T22:04:14Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "Anirudh-712",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "Brave Wallet can't send ZEC to a tex1… address. ValidateTransparentRecipientAddress in brave-core (components/brave_wallet/common/zcash_utils.cc, L127-152 and L351-375) accepts a unified address with a transparent receiver or a Base58Check address only, so a TEX address returns kInvalidTransparentAddress. TEX addresses (ZIP 320) are what Binance gives ZEC users as deposit addresses, and THORChain's current ZEC inbound address is one…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash",
+     "search:zec"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "title:zip 320",
+     "body:zec"
+    ],
+    "retrievedAt": "2026-11-19T00:24:33.476Z"
+   },
+   "brave/gate3#341": {
+    "id": "brave/gate3#341",
+    "repo": "brave/gate3",
+    "number": 341,
+    "kind": "issue",
+    "title": "NEAR Intents: the 10-minute 1Click deadline also applies to Bitcoin, Zcash and Cardano deposits",
+    "url": "https://github.com/brave/gate3/issues/341",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": null,
+    "createdAt": "2026-10-19T02:31:21Z",
+    "updatedAt": "2026-10-19T02:31:21Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": null,
+    "headRef": null,
+    "author": "Anirudh-712",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "to_near_intents_request sets the 1Click deadline to now + 10 minutes for every source chain (app/api/swap/providers/near_intents/transformations.py L124-L126 at 173a240), including Bitcoin, Zcash and Cardano deposits (L174-L203). 1Click's API says this deadline \"must exceed the time required for the deposit transaction to be mined. For example, Bitcoin may require around one hour\", and that the refund begins if the swap isn't completed by then (QuoteRequest.deadline in…",
+    "bodyRefs": [],
+    "resolvesRefs": [],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash"
+    ],
+    "relevance": "direct",
+    "matchedTerms": [
+     "title:zcash",
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-10-19T04:43:30.819Z"
    },
    "brave/brave-core#24655": {
     "id": "brave/brave-core#24655",
@@ -118162,6 +118162,7 @@
    "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41872": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41751": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41675": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41597": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -118258,15 +118259,16 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 905,
-   "searchHits": 1308,
+   "discovered": 906,
+   "searchHits": 1306,
    "tracked": 1047,
    "direct": 673,
    "mention": 78,
    "linked": 296,
-   "excluded": 154,
+   "excluded": 155,
    "mentionsDropped": 38
   }
  },
+ "partial": true,
  "completeAt": "2026-11-19T00:24:33.476Z"
 }
