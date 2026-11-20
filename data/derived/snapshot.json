@@ -1,5 +1,5 @@
 {
- "at": "2026-11-20T12:55:11.076Z",
+ "at": "2026-11-20T21:50:52.966Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#61975": {
@@ -6915,7 +6915,7 @@
    }
   },
   "desktop/nightly": {
-   "tag": "v1.102.22",
+   "tag": "v1.102.26",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -6931,7 +6931,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.102.22",
+   "tag": "v1.102.26",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,

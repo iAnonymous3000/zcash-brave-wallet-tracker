@@ -1,9 +1,54 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-20T12:55:11.076Z",
+ "retrievedAt": "2026-11-20T21:50:52.966Z",
  "data": {
   "releases": [
+   {
+    "tag": "v1.102.28",
+    "version": "1.102.28",
+    "channel": "nightly",
+    "name": "Nightly v1.102.28 (Chromium 159.0.8154.18)",
+    "chromium": "159.0.8154.18",
+    "publishedAt": "2026-11-20T17:11:15Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.28",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.102.27",
+    "version": "1.102.27",
+    "channel": "nightly",
+    "name": "Nightly v1.102.27 (Chromium 159.0.8154.18)",
+    "chromium": "159.0.8154.18",
+    "publishedAt": "2026-11-20T13:49:46Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.27",
+    "assetPlatforms": [
+     "android"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.102.26",
+    "version": "1.102.26",
+    "channel": "nightly",
+    "name": "Nightly v1.102.26 (Chromium 159.0.8154.18)",
+    "chromium": "159.0.8154.18",
+    "publishedAt": "2026-11-20T13:23:08Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.26",
+    "assetPlatforms": [
+     "ios",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": false
+   },
    {
     "tag": "v1.102.25",
     "version": "1.102.25",
@@ -8844,14 +8889,14 @@
    {
     "channel": "nightly",
     "platform": "all",
-    "version": "1.102.25",
-    "tag": "v1.102.25",
-    "publishedAt": "2026-11-20T01:11:33Z",
-    "basis": "GitHub release name \"Nightly v1.102.25 (Chromium 159.0.8154.18)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.25"
+    "version": "1.102.28",
+    "tag": "v1.102.28",
+    "publishedAt": "2026-11-20T17:11:15Z",
+    "basis": "GitHub release name \"Nightly v1.102.28 (Chromium 159.0.8154.18)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.28"
    }
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-20T12:55:11.076Z"
+ "completeAt": "2026-11-20T21:50:52.966Z"
 }
