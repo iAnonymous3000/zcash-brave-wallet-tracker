@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-19T20:39:43.781Z",
+ "retrievedAt": "2026-11-20T03:17:47.955Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -45216,7 +45216,7 @@
     "milestone": {
      "title": "1.100.x - Release",
      "dueOn": "2026-11-17T00:00:00Z",
-     "state": "OPEN"
+     "state": "CLOSED"
     },
     "bodyExcerpt": "- Switch AssetTimePrice.date and TransactionInfo's time fields from mojo_base.mojom.TimeDelta to JSTime, so they carry a real epoch-ms timestamp instead of a raw delta callers had to convert by hand. Updates all wallet backends and frontend consumers accordingly, dropping several now-unneeded conversion helpers.",
     "bodyRefs": [],
@@ -45292,7 +45292,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-12T00:46:06.876Z"
+    "retrievedAt": "2026-11-20T03:17:47.955Z"
    },
    "brave/brave-core#34256": {
     "id": "brave/brave-core#34256",

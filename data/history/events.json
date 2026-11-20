@@ -1,5 +1,32 @@
 [
  {
+  "kind": "in-build",
+  "sourceAt": "2026-11-19T13:43:42Z",
+  "title": "In Android Nightly 1.102.23: [Wallet]: Unable to Hide Zcash (Shielded Legacy) Token",
+  "impact": "The merged code (brave-core#41715) is now part of the Android Nightly build 1.102.23. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61901"
+  ],
+  "topic": "shielded",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61901",
+    "url": "https://github.com/brave/brave-browser/issues/61901"
+   }
+  ],
+  "evidence": [
+   "in v1.102.13 (GitHub compare v1.102.13...b7cef239: behind); later builds of the same history include it"
+  ],
+  "id": "755f18e5957660c9",
+  "detectedAt": "2026-11-20T03:17:47.955Z",
+  "basis": "backfill"
+ },
+ {
   "kind": "capability-changed",
   "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on iOS Release: in-build → not-verified",
