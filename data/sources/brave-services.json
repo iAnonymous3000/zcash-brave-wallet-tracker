@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-20T03:17:47.955Z",
+ "retrievedAt": "2026-11-20T12:55:11.076Z",
  "data": {
   "gate3": {
    "commitSha": "35cb43b85901f661a9da015f1a4642716cf6c9d5",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/35cb43b85901f661a9da015f1a4642716cf6c9d5/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-20T03:17:47.955Z"
+   "checkedAt": "2026-11-20T12:55:11.076Z"
   },
   "studies": [
    {
@@ -112,7 +112,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.102.22 is outside the version range 139.1.81.129 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/7b272a20ece102e294335f8c85075be09ef28418/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/7f1c5f4118171fc8b8e452b55ecde6ac711661bb/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -150,8 +150,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-20T03:17:47.955Z",
-    "verifiedAt": "2026-11-20T03:17:47.955Z"
+    "readAt": "2026-11-20T12:55:11.076Z",
+    "verifiedAt": "2026-11-20T12:55:11.076Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -251,7 +251,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.102.22 is outside the version range any – 139.1.81.128"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/7b272a20ece102e294335f8c85075be09ef28418/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/7f1c5f4118171fc8b8e452b55ecde6ac711661bb/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "Disabled",
@@ -286,8 +286,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-20T03:17:47.955Z",
-    "verifiedAt": "2026-11-20T03:17:47.955Z"
+    "readAt": "2026-11-20T12:55:11.076Z",
+    "verifiedAt": "2026-11-20T12:55:11.076Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -385,7 +385,7 @@
       "reason": "158.1.102.22 is outside the version range 146.1.89.116 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/7b272a20ece102e294335f8c85075be09ef28418/studies/iOSWalletWebUIStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/7f1c5f4118171fc8b8e452b55ecde6ac711661bb/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -419,8 +419,8 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-20T03:17:47.955Z",
-    "verifiedAt": "2026-11-20T03:17:47.955Z"
+    "readAt": "2026-11-20T12:55:11.076Z",
+    "verifiedAt": "2026-11-20T12:55:11.076Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -518,7 +518,7 @@
       "reason": "the Chromium-based version of 1.99 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/7b272a20ece102e294335f8c85075be09ef28418/studies/iOSWalletWebUIStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/7f1c5f4118171fc8b8e452b55ecde6ac711661bb/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -551,13 +551,13 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-20T03:17:47.955Z",
-    "verifiedAt": "2026-11-20T03:17:47.955Z"
+    "readAt": "2026-11-20T12:55:11.076Z",
+    "verifiedAt": "2026-11-20T12:55:11.076Z"
    }
   ],
-  "studiesCommit": "7b272a20ece102e294335f8c85075be09ef28418",
-  "studiesReadAt": "2026-11-20T03:17:47.955Z",
-  "studiesDigest": "7a264297122d66823f84fccc70358a7e54fe0cb7b0e9429373781567e81c4dd6"
+  "studiesCommit": "7f1c5f4118171fc8b8e452b55ecde6ac711661bb",
+  "studiesReadAt": "2026-11-20T12:55:11.076Z",
+  "studiesDigest": "1d101827c0db621c9cef27056efdc1581ad353b38c0571b1adb7907d0c79e9ff"
  },
- "completeAt": "2026-11-20T03:17:47.955Z"
+ "completeAt": "2026-11-20T12:55:11.076Z"
 }

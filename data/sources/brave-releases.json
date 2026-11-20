@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-20T03:17:47.955Z",
+ "retrievedAt": "2026-11-20T12:55:11.076Z",
  "data": {
   "releases": [
    {
@@ -15,6 +15,7 @@
     "assetPlatforms": [
      "android",
      "linux",
+     "macos",
      "windows"
     ],
     "prereleaseFlag": true
@@ -382,6 +383,22 @@
      "windows"
     ],
     "prereleaseFlag": false
+   },
+   {
+    "tag": "v1.101.53",
+    "version": "1.101.53",
+    "channel": "beta",
+    "name": "Beta v1.101.53 (Chromium 158.0.8127.42)",
+    "chromium": "158.0.8127.42",
+    "publishedAt": "2026-11-20T05:08:02Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.53",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
    },
    {
     "tag": "v1.101.52",
@@ -8818,11 +8835,11 @@
    {
     "channel": "beta",
     "platform": "all",
-    "version": "1.101.52",
-    "tag": "v1.101.52",
-    "publishedAt": "2026-11-19T05:08:21Z",
-    "basis": "GitHub release name \"Beta v1.101.52 (Chromium 158.0.8127.42)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.52"
+    "version": "1.101.53",
+    "tag": "v1.101.53",
+    "publishedAt": "2026-11-20T05:08:02Z",
+    "basis": "GitHub release name \"Beta v1.101.53 (Chromium 158.0.8127.42)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.53"
    },
    {
     "channel": "nightly",
@@ -8836,5 +8853,5 @@
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-20T03:17:47.955Z"
+ "completeAt": "2026-11-20T12:55:11.076Z"
 }
