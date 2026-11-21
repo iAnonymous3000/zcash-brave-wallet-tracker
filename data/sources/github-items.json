@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-21T03:14:44.134Z",
+ "retrievedAt": "2026-11-21T12:40:52.450Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -44699,7 +44699,7 @@
     "stateReason": null,
     "isDraft": true,
     "createdAt": "2026-11-18T15:17:26Z",
-    "updatedAt": "2026-11-18T15:17:51Z",
+    "updatedAt": "2026-11-21T06:06:17Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -44747,7 +44747,7 @@
     "matchedTerms": [
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-18T17:17:40.774Z"
+    "retrievedAt": "2026-11-21T12:40:52.450Z"
    },
    "brave/brave-core#41715": {
     "id": "brave/brave-core#41715",
@@ -84246,9 +84246,9 @@
     "url": "https://github.com/brave/brave-core/pull/41953",
     "state": "open",
     "stateReason": null,
-    "isDraft": false,
+    "isDraft": true,
     "createdAt": "2026-11-21T01:42:19Z",
-    "updatedAt": "2026-11-21T01:48:53Z",
+    "updatedAt": "2026-11-21T04:35:37Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -84406,6 +84406,12 @@
       "at": "2026-11-21T01:48:53Z",
       "actor": "netzenbot-reviewer",
       "detail": "pr/risk/dependencies"
+     },
+     {
+      "type": "converted_to_draft",
+      "at": "2026-11-21T04:35:37Z",
+      "actor": "bbondy",
+      "detail": null
      }
     ],
     "timelineTruncated": false,
@@ -84420,7 +84426,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-21T03:14:44.134Z"
+    "retrievedAt": "2026-11-21T12:40:52.450Z"
    },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
