@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-flags",
  "schema": 1,
- "retrievedAt": "2026-11-22T23:38:12.290Z",
+ "retrievedAt": "2026-11-23T07:40:50.541Z",
  "data": {
   "snapshots": {
    "master": {
@@ -9,7 +9,7 @@
     "channel": "nightly",
     "version": "master",
     "file": "components/brave_wallet/common/features.cc",
-    "permalink": "https://github.com/brave/brave-core/blob/c3c2240ce521c009276c66ccc625b7115c2124b3/components/brave_wallet/common/features.cc",
+    "permalink": "https://github.com/brave/brave-core/blob/89d7419b40e907125dc4713e81cd4af4211beb71/components/brave_wallet/common/features.cc",
     "flags": [
      {
       "name": "kBraveWalletZCashFeature",
@@ -45,8 +45,8 @@
       }
      }
     ],
-    "retrievedAt": "2026-11-22T23:38:12.290Z",
-    "commitSha": "c3c2240ce521c009276c66ccc625b7115c2124b3"
+    "retrievedAt": "2026-11-23T07:40:50.541Z",
+    "commitSha": "89d7419b40e907125dc4713e81cd4af4211beb71"
    },
    "v1.99.57": {
     "tag": "v1.99.57",
@@ -90,50 +90,6 @@
      }
     ],
     "retrievedAt": "2026-11-12T09:52:00.047Z",
-    "commitSha": null
-   },
-   "v1.102.10": {
-    "tag": "v1.102.10",
-    "channel": "nightly",
-    "version": "1.102.10",
-    "file": "components/brave_wallet/common/features.cc",
-    "permalink": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/common/features.cc",
-    "flags": [
-     {
-      "name": "kBraveWalletZCashFeature",
-      "kind": "feature",
-      "feature": null,
-      "key": "BraveWalletZCash",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     },
-     {
-      "name": "kZCashIronwoodEnabled",
-      "kind": "param",
-      "feature": "kBraveWalletZCashFeature",
-      "key": "zcash_ironwood_enabled",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     },
-     {
-      "name": "kZCashShieldedTransactionsEnabled",
-      "kind": "param",
-      "feature": "kBraveWalletZCashFeature",
-      "key": "zcash_shielded_transactions_enabled",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     }
-    ],
-    "retrievedAt": "2026-11-17T02:57:18.860Z",
     "commitSha": null
    },
    "v1.102.11": {
@@ -796,50 +752,6 @@
     "retrievedAt": "2026-11-20T03:17:47.955Z",
     "commitSha": null
    },
-   "v1.101.53": {
-    "tag": "v1.101.53",
-    "channel": "beta",
-    "version": "1.101.53",
-    "file": "components/brave_wallet/common/features.cc",
-    "permalink": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/common/features.cc",
-    "flags": [
-     {
-      "name": "kBraveWalletZCashFeature",
-      "kind": "feature",
-      "feature": null,
-      "key": "BraveWalletZCash",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     },
-     {
-      "name": "kZCashIronwoodEnabled",
-      "kind": "param",
-      "feature": "kBraveWalletZCashFeature",
-      "key": "zcash_ironwood_enabled",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     },
-     {
-      "name": "kZCashShieldedTransactionsEnabled",
-      "kind": "param",
-      "feature": "kBraveWalletZCashFeature",
-      "key": "zcash_shielded_transactions_enabled",
-      "defaults": {
-       "desktop": true,
-       "android": true,
-       "ios": true
-      }
-     }
-    ],
-    "retrievedAt": "2026-11-20T12:55:11.076Z",
-    "commitSha": null
-   },
    "v1.102.26": {
     "tag": "v1.102.26",
     "channel": "nightly",
@@ -927,6 +839,94 @@
     ],
     "retrievedAt": "2026-11-20T21:50:52.966Z",
     "commitSha": null
+   },
+   "v1.101.54": {
+    "tag": "v1.101.54",
+    "channel": "beta",
+    "version": "1.101.54",
+    "file": "components/brave_wallet/common/features.cc",
+    "permalink": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/common/features.cc",
+    "flags": [
+     {
+      "name": "kBraveWalletZCashFeature",
+      "kind": "feature",
+      "feature": null,
+      "key": "BraveWalletZCash",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     },
+     {
+      "name": "kZCashIronwoodEnabled",
+      "kind": "param",
+      "feature": "kBraveWalletZCashFeature",
+      "key": "zcash_ironwood_enabled",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     },
+     {
+      "name": "kZCashShieldedTransactionsEnabled",
+      "kind": "param",
+      "feature": "kBraveWalletZCashFeature",
+      "key": "zcash_shielded_transactions_enabled",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     }
+    ],
+    "retrievedAt": "2026-11-23T07:40:50.541Z",
+    "commitSha": null
+   },
+   "v1.102.29": {
+    "tag": "v1.102.29",
+    "channel": "nightly",
+    "version": "1.102.29",
+    "file": "components/brave_wallet/common/features.cc",
+    "permalink": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/common/features.cc",
+    "flags": [
+     {
+      "name": "kBraveWalletZCashFeature",
+      "kind": "feature",
+      "feature": null,
+      "key": "BraveWalletZCash",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     },
+     {
+      "name": "kZCashIronwoodEnabled",
+      "kind": "param",
+      "feature": "kBraveWalletZCashFeature",
+      "key": "zcash_ironwood_enabled",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     },
+     {
+      "name": "kZCashShieldedTransactionsEnabled",
+      "kind": "param",
+      "feature": "kBraveWalletZCashFeature",
+      "key": "zcash_shielded_transactions_enabled",
+      "defaults": {
+       "desktop": true,
+       "android": true,
+       "ios": true
+      }
+     }
+    ],
+    "retrievedAt": "2026-11-23T07:40:50.541Z",
+    "commitSha": null
    }
   },
   "checks": {
@@ -1010,89 +1010,6 @@
      "file": "components/brave_wallet/browser/zcash/zcash_wallet_service.cc",
      "line": 870,
      "url": "https://github.com/brave/brave-core/blob/v1.99.57/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
-     "sig": "e4f72d9220fa"
-    }
-   ],
-   "v1.102.10": [
-    {
-     "id": "ironwood-option-desktop-android",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "browser/about_flags.cc",
-     "line": 189,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/browser/about_flags.cc#L189",
-     "sig": "2acd1965583c"
-    },
-    {
-     "id": "ironwood-option-ios",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "ios/browser/flags/about_flags.mm",
-     "line": 52,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/ios/browser/flags/about_flags.mm#L52",
-     "sig": "f41618fb5cab"
-    },
-    {
-     "id": "zip317-constants",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "components/brave_wallet/common/zcash_utils.h",
-     "line": 34,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/common/zcash_utils.h#L34",
-     "sig": "1779248d4f93"
-    },
-    {
-     "id": "orchard-to-ironwood-task",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc",
-     "line": 6,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
-     "sig": "883216b986c5"
-    },
-    {
-     "id": "meld-zec",
-     "tag": "v1.102.10",
-     "present": false,
-     "file": "components/brave_wallet/browser/meld_integration_service.cc",
-     "line": null,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/browser/meld_integration_service.cc",
-     "sig": "7a765a1c7d6d"
-    },
-    {
-     "id": "bridge-hidden-ios",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx",
-     "line": 522,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx#L522",
-     "sig": "355aeb5b0bb0"
-    },
-    {
-     "id": "testnet-ios-debug-only",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift",
-     "line": 84,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift#L84",
-     "sig": "43ecb71e1e28"
-    },
-    {
-     "id": "near-intents-zec",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "components/brave_wallet/browser/swap_service.cc",
-     "line": 113,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/browser/swap_service.cc#L113",
-     "sig": "21ca4cdb93e2"
-    },
-    {
-     "id": "shield-all-requires-ironwood",
-     "tag": "v1.102.10",
-     "present": true,
-     "file": "components/brave_wallet/browser/zcash/zcash_wallet_service.cc",
-     "line": 870,
-     "url": "https://github.com/brave/brave-core/blob/v1.102.10/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
      "sig": "e4f72d9220fa"
     }
    ],
@@ -2341,89 +2258,6 @@
      "sig": "e4f72d9220fa"
     }
    ],
-   "v1.101.53": [
-    {
-     "id": "ironwood-option-desktop-android",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "browser/about_flags.cc",
-     "line": 189,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/browser/about_flags.cc#L189",
-     "sig": "2acd1965583c"
-    },
-    {
-     "id": "ironwood-option-ios",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "ios/browser/flags/about_flags.mm",
-     "line": 52,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/ios/browser/flags/about_flags.mm#L52",
-     "sig": "f41618fb5cab"
-    },
-    {
-     "id": "zip317-constants",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "components/brave_wallet/common/zcash_utils.h",
-     "line": 34,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/common/zcash_utils.h#L34",
-     "sig": "1779248d4f93"
-    },
-    {
-     "id": "orchard-to-ironwood-task",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc",
-     "line": 6,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
-     "sig": "883216b986c5"
-    },
-    {
-     "id": "meld-zec",
-     "tag": "v1.101.53",
-     "present": false,
-     "file": "components/brave_wallet/browser/meld_integration_service.cc",
-     "line": null,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/browser/meld_integration_service.cc",
-     "sig": "7a765a1c7d6d"
-    },
-    {
-     "id": "bridge-hidden-ios",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx",
-     "line": 522,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx#L522",
-     "sig": "355aeb5b0bb0"
-    },
-    {
-     "id": "testnet-ios-debug-only",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift",
-     "line": 84,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift#L84",
-     "sig": "43ecb71e1e28"
-    },
-    {
-     "id": "near-intents-zec",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "components/brave_wallet/browser/swap_service.cc",
-     "line": 113,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/browser/swap_service.cc#L113",
-     "sig": "21ca4cdb93e2"
-    },
-    {
-     "id": "shield-all-requires-ironwood",
-     "tag": "v1.101.53",
-     "present": true,
-     "file": "components/brave_wallet/browser/zcash/zcash_wallet_service.cc",
-     "line": 870,
-     "url": "https://github.com/brave/brave-core/blob/v1.101.53/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
-     "sig": "e4f72d9220fa"
-    }
-   ],
    "v1.102.26": [
     {
      "id": "ironwood-option-desktop-android",
@@ -2589,8 +2423,174 @@
      "url": "https://github.com/brave/brave-core/blob/v1.102.28/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
      "sig": "e4f72d9220fa"
     }
+   ],
+   "v1.101.54": [
+    {
+     "id": "ironwood-option-desktop-android",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "browser/about_flags.cc",
+     "line": 189,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/browser/about_flags.cc#L189",
+     "sig": "2acd1965583c"
+    },
+    {
+     "id": "ironwood-option-ios",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "ios/browser/flags/about_flags.mm",
+     "line": 52,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/ios/browser/flags/about_flags.mm#L52",
+     "sig": "f41618fb5cab"
+    },
+    {
+     "id": "zip317-constants",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "components/brave_wallet/common/zcash_utils.h",
+     "line": 34,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/common/zcash_utils.h#L34",
+     "sig": "1779248d4f93"
+    },
+    {
+     "id": "orchard-to-ironwood-task",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc",
+     "line": 6,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
+     "sig": "883216b986c5"
+    },
+    {
+     "id": "meld-zec",
+     "tag": "v1.101.54",
+     "present": false,
+     "file": "components/brave_wallet/browser/meld_integration_service.cc",
+     "line": null,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/browser/meld_integration_service.cc",
+     "sig": "7a765a1c7d6d"
+    },
+    {
+     "id": "bridge-hidden-ios",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx",
+     "line": 522,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx#L522",
+     "sig": "355aeb5b0bb0"
+    },
+    {
+     "id": "testnet-ios-debug-only",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift",
+     "line": 84,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift#L84",
+     "sig": "43ecb71e1e28"
+    },
+    {
+     "id": "near-intents-zec",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "components/brave_wallet/browser/swap_service.cc",
+     "line": 113,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/browser/swap_service.cc#L113",
+     "sig": "21ca4cdb93e2"
+    },
+    {
+     "id": "shield-all-requires-ironwood",
+     "tag": "v1.101.54",
+     "present": true,
+     "file": "components/brave_wallet/browser/zcash/zcash_wallet_service.cc",
+     "line": 870,
+     "url": "https://github.com/brave/brave-core/blob/v1.101.54/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
+     "sig": "e4f72d9220fa"
+    }
+   ],
+   "v1.102.29": [
+    {
+     "id": "ironwood-option-desktop-android",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "browser/about_flags.cc",
+     "line": 189,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/browser/about_flags.cc#L189",
+     "sig": "2acd1965583c"
+    },
+    {
+     "id": "ironwood-option-ios",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "ios/browser/flags/about_flags.mm",
+     "line": 54,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/ios/browser/flags/about_flags.mm#L54",
+     "sig": "f41618fb5cab"
+    },
+    {
+     "id": "zip317-constants",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "components/brave_wallet/common/zcash_utils.h",
+     "line": 34,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/common/zcash_utils.h#L34",
+     "sig": "1779248d4f93"
+    },
+    {
+     "id": "orchard-to-ironwood-task",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc",
+     "line": 6,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/browser/zcash/zcash_create_orchard_to_ironwood_transaction_task.cc#L6",
+     "sig": "883216b986c5"
+    },
+    {
+     "id": "meld-zec",
+     "tag": "v1.102.29",
+     "present": false,
+     "file": "components/brave_wallet/browser/meld_integration_service.cc",
+     "line": null,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/browser/meld_integration_service.cc",
+     "sig": "7a765a1c7d6d"
+    },
+    {
+     "id": "bridge-hidden-ios",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx",
+     "line": 522,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet_ui/page/screens/fungible_asset_details/fungible_asset_details.tsx#L522",
+     "sig": "355aeb5b0bb0"
+    },
+    {
+     "id": "testnet-ios-debug-only",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift",
+     "line": 84,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/ios/brave-ios/Sources/BraveWallet/WalletPreferences.swift#L84",
+     "sig": "43ecb71e1e28"
+    },
+    {
+     "id": "near-intents-zec",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "components/brave_wallet/browser/swap_service.cc",
+     "line": 113,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/browser/swap_service.cc#L113",
+     "sig": "21ca4cdb93e2"
+    },
+    {
+     "id": "shield-all-requires-ironwood",
+     "tag": "v1.102.29",
+     "present": true,
+     "file": "components/brave_wallet/browser/zcash/zcash_wallet_service.cc",
+     "line": 870,
+     "url": "https://github.com/brave/brave-core/blob/v1.102.29/components/brave_wallet/browser/zcash/zcash_wallet_service.cc#L870",
+     "sig": "e4f72d9220fa"
+    }
    ]
   }
  },
- "completeAt": "2026-11-22T23:38:12.290Z"
+ "completeAt": "2026-11-23T07:40:50.541Z"
 }

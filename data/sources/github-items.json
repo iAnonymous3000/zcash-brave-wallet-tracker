@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-22T23:38:12.290Z",
+ "retrievedAt": "2026-11-23T07:40:50.541Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -84296,7 +84296,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-22T02:25:04Z",
-    "updatedAt": "2026-11-22T22:47:48Z",
+    "updatedAt": "2026-11-23T04:23:11Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -84427,7 +84427,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-22T23:38:12.290Z"
+    "retrievedAt": "2026-11-23T07:40:50.541Z"
    },
    "brave/brave-core#41953": {
     "id": "brave/brave-core#41953",
@@ -84440,7 +84440,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-21T01:42:19Z",
-    "updatedAt": "2026-11-22T18:11:40Z",
+    "updatedAt": "2026-11-23T04:23:27Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -84578,7 +84578,7 @@
     ],
     "relevance": "linked",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-22T23:38:12.290Z"
+    "retrievedAt": "2026-11-23T07:40:50.541Z"
    },
    "brave/brave-core#35466": {
     "id": "brave/brave-core#35466",
@@ -118562,8 +118562,8 @@
    "brave/brave-browser#61166": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
-   "brave/brave-core#41960": "discovered via search:zcash is:pr, search:ironwood is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41957": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
+   "brave/brave-core#41960": "discovered via search:zcash is:pr, search:ironwood is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41074": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41872": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41751": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
