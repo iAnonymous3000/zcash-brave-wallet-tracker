@@ -1,17 +1,17 @@
 {
  "sourceId": "brave-changelogs",
  "schema": 1,
- "retrievedAt": "2026-11-24T04:50:25.267Z",
+ "retrievedAt": "2026-11-24T17:47:58.086Z",
  "data": {
   "files": [
    {
     "file": "CHANGELOG_DESKTOP.md",
     "platform": "desktop",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "commitDate": "2026-11-18T15:56:16Z",
-    "latestVersion": "1.100.58",
-    "versions": 143,
-    "entries": 1161
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "commitDate": "2026-11-24T16:06:18Z",
+    "latestVersion": "1.100.59",
+    "versions": 144,
+    "entries": 1163
    },
    {
     "file": "CHANGELOG_DESKTOP_ARCHIVE.md",
@@ -50,10 +50,10 @@
     "issueRefs": [
      "brave/brave-browser#56872"
     ],
-    "line": 86,
+    "line": 91,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L86",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L91",
     "zcashRelated": true
    },
    {
@@ -64,10 +64,10 @@
     "issueRefs": [
      "brave/brave-browser#58757"
     ],
-    "line": 87,
+    "line": 92,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L87",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L92",
     "zcashRelated": true
    },
    {
@@ -78,10 +78,10 @@
     "issueRefs": [
      "brave/brave-browser#58755"
     ],
-    "line": 88,
+    "line": 93,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L88",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L93",
     "zcashRelated": true
    },
    {
@@ -92,10 +92,10 @@
     "issueRefs": [
      "brave/brave-browser#58493"
     ],
-    "line": 158,
+    "line": 163,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L158",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L163",
     "zcashRelated": true
    },
    {
@@ -106,10 +106,10 @@
     "issueRefs": [
      "brave/brave-browser#55611"
     ],
-    "line": 204,
+    "line": 209,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L204",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L209",
     "zcashRelated": true
    },
    {
@@ -120,10 +120,10 @@
     "issueRefs": [
      "brave/brave-browser#56490"
     ],
-    "line": 329,
+    "line": 334,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L329",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L334",
     "zcashRelated": false
    },
    {
@@ -134,10 +134,10 @@
     "issueRefs": [
      "brave/brave-browser#56404"
     ],
-    "line": 381,
+    "line": 386,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L381",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L386",
     "zcashRelated": true
    },
    {
@@ -149,10 +149,10 @@
      "brave/brave-browser#44991",
      "brave/brave-browser#55374"
     ],
-    "line": 436,
+    "line": 441,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L436",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L441",
     "zcashRelated": true
    },
    {
@@ -163,10 +163,10 @@
     "issueRefs": [
      "brave/brave-browser#53718"
     ],
-    "line": 509,
+    "line": 514,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L509",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L514",
     "zcashRelated": true
    },
    {
@@ -177,10 +177,10 @@
     "issueRefs": [
      "brave/brave-browser#51720"
     ],
-    "line": 571,
+    "line": 576,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L571",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L576",
     "zcashRelated": false
    },
    {
@@ -191,10 +191,10 @@
     "issueRefs": [
      "brave/brave-browser#52555"
     ],
-    "line": 573,
+    "line": 578,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L573",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L578",
     "zcashRelated": true
    },
    {
@@ -205,10 +205,10 @@
     "issueRefs": [
      "brave/brave-browser#51936"
     ],
-    "line": 574,
+    "line": 579,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L574",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L579",
     "zcashRelated": false
    },
    {
@@ -219,10 +219,10 @@
     "issueRefs": [
      "brave/brave-browser#52229"
     ],
-    "line": 577,
+    "line": 582,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L577",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L582",
     "zcashRelated": false
    },
    {
@@ -233,10 +233,10 @@
     "issueRefs": [
      "brave/brave-browser#51964"
     ],
-    "line": 580,
+    "line": 585,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L580",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L585",
     "zcashRelated": true
    },
    {
@@ -247,10 +247,10 @@
     "issueRefs": [
      "brave/brave-browser#45875"
     ],
-    "line": 635,
+    "line": 640,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L635",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L640",
     "zcashRelated": true
    },
    {
@@ -261,10 +261,10 @@
     "issueRefs": [
      "brave/brave-browser#51762"
     ],
-    "line": 648,
+    "line": 653,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L648",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L653",
     "zcashRelated": true
    },
    {
@@ -275,10 +275,10 @@
     "issueRefs": [
      "brave/brave-browser#52303"
     ],
-    "line": 686,
+    "line": 691,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L686",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L691",
     "zcashRelated": true
    },
    {
@@ -289,10 +289,10 @@
     "issueRefs": [
      "brave/brave-browser#50116"
     ],
-    "line": 713,
+    "line": 718,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L713",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L718",
     "zcashRelated": true
    },
    {
@@ -303,10 +303,10 @@
     "issueRefs": [
      "brave/brave-browser#51540"
     ],
-    "line": 751,
+    "line": 756,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L751",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L756",
     "zcashRelated": false
    },
    {
@@ -317,10 +317,10 @@
     "issueRefs": [
      "brave/brave-browser#50001"
     ],
-    "line": 775,
+    "line": 780,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L775",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L780",
     "zcashRelated": true
    },
    {
@@ -331,10 +331,10 @@
     "issueRefs": [
      "brave/brave-browser#49235"
     ],
-    "line": 826,
+    "line": 831,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L826",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L831",
     "zcashRelated": false
    },
    {
@@ -345,10 +345,10 @@
     "issueRefs": [
      "brave/brave-browser#49621"
     ],
-    "line": 830,
+    "line": 835,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L830",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L835",
     "zcashRelated": true
    },
    {
@@ -359,10 +359,10 @@
     "issueRefs": [
      "brave/brave-browser#49978"
     ],
-    "line": 877,
+    "line": 882,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L877",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L882",
     "zcashRelated": true
    },
    {
@@ -373,10 +373,10 @@
     "issueRefs": [
      "brave/brave-browser#46596"
     ],
-    "line": 1051,
+    "line": 1056,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1051",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1056",
     "zcashRelated": true
    },
    {
@@ -387,10 +387,10 @@
     "issueRefs": [
      "brave/brave-browser#46598"
     ],
-    "line": 1052,
+    "line": 1057,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1052",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1057",
     "zcashRelated": true
    },
    {
@@ -401,10 +401,10 @@
     "issueRefs": [
      "brave/brave-browser#46266"
     ],
-    "line": 1053,
+    "line": 1058,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1053",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1058",
     "zcashRelated": true
    },
    {
@@ -415,10 +415,10 @@
     "issueRefs": [
      "brave/brave-browser#45748"
     ],
-    "line": 1119,
+    "line": 1124,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1119",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1124",
     "zcashRelated": true
    },
    {
@@ -429,10 +429,10 @@
     "issueRefs": [
      "brave/brave-browser#44782"
     ],
-    "line": 1181,
+    "line": 1186,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1181",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1186",
     "zcashRelated": true
    },
    {
@@ -443,10 +443,10 @@
     "issueRefs": [
      "brave/brave-browser#45185"
     ],
-    "line": 1182,
+    "line": 1187,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1182",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1187",
     "zcashRelated": true
    },
    {
@@ -457,10 +457,10 @@
     "issueRefs": [
      "brave/brave-browser#46306"
     ],
-    "line": 1185,
+    "line": 1190,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1185",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1190",
     "zcashRelated": true
    },
    {
@@ -471,10 +471,10 @@
     "issueRefs": [
      "brave/brave-browser#41315"
     ],
-    "line": 1224,
+    "line": 1229,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1224",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1229",
     "zcashRelated": true
    },
    {
@@ -485,10 +485,10 @@
     "issueRefs": [
      "brave/brave-browser#44432"
     ],
-    "line": 1277,
+    "line": 1282,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1277",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1282",
     "zcashRelated": true
    },
    {
@@ -499,10 +499,10 @@
     "issueRefs": [
      "brave/brave-browser#42851"
     ],
-    "line": 1338,
+    "line": 1343,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1338",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1343",
     "zcashRelated": true
    },
    {
@@ -513,10 +513,10 @@
     "issueRefs": [
      "brave/brave-browser#43278"
     ],
-    "line": 1340,
+    "line": 1345,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1340",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1345",
     "zcashRelated": true
    },
    {
@@ -527,10 +527,10 @@
     "issueRefs": [
      "brave/brave-browser#42221"
     ],
-    "line": 1386,
+    "line": 1391,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1386",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1391",
     "zcashRelated": true
    },
    {
@@ -541,10 +541,10 @@
     "issueRefs": [
      "brave/brave-browser#42285"
     ],
-    "line": 1387,
+    "line": 1392,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1387",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1392",
     "zcashRelated": true
    },
    {
@@ -555,10 +555,10 @@
     "issueRefs": [
      "brave/brave-browser#42078"
     ],
-    "line": 1390,
+    "line": 1395,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1390",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1395",
     "zcashRelated": true
    },
    {
@@ -569,10 +569,10 @@
     "issueRefs": [
      "brave/brave-browser#41986"
     ],
-    "line": 1391,
+    "line": 1396,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1391",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1396",
     "zcashRelated": true
    },
    {
@@ -583,10 +583,10 @@
     "issueRefs": [
      "brave/brave-browser#38447"
     ],
-    "line": 1458,
+    "line": 1463,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1458",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1463",
     "zcashRelated": false
    },
    {
@@ -597,10 +597,10 @@
     "issueRefs": [
      "brave/brave-browser#41780"
     ],
-    "line": 1463,
+    "line": 1468,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1463",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1468",
     "zcashRelated": true
    },
    {
@@ -611,10 +611,10 @@
     "issueRefs": [
      "brave/brave-browser#42951"
     ],
-    "line": 1485,
+    "line": 1490,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1485",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1490",
     "zcashRelated": false
    },
    {
@@ -625,10 +625,10 @@
     "issueRefs": [
      "brave/brave-browser#40635"
     ],
-    "line": 1685,
+    "line": 1690,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1685",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1690",
     "zcashRelated": true
    },
    {
@@ -639,10 +639,10 @@
     "issueRefs": [
      "brave/brave-browser#39655"
     ],
-    "line": 1703,
+    "line": 1708,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1703",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1708",
     "zcashRelated": false
    },
    {
@@ -653,10 +653,10 @@
     "issueRefs": [
      "brave/brave-browser#38931"
     ],
-    "line": 1705,
+    "line": 1710,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1705",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1710",
     "zcashRelated": true
    },
    {
@@ -667,10 +667,10 @@
     "issueRefs": [
      "brave/brave-browser#35827"
     ],
-    "line": 1717,
+    "line": 1722,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1717",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1722",
     "zcashRelated": true
    },
    {
@@ -681,10 +681,10 @@
     "issueRefs": [
      "brave/brave-browser#38970"
     ],
-    "line": 1725,
+    "line": 1730,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1725",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1730",
     "zcashRelated": false
    },
    {
@@ -695,10 +695,10 @@
     "issueRefs": [
      "brave/brave-browser#38446"
     ],
-    "line": 1796,
+    "line": 1801,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1796",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1801",
     "zcashRelated": false
    },
    {
@@ -709,10 +709,10 @@
     "issueRefs": [
      "brave/brave-browser#38782"
     ],
-    "line": 1861,
+    "line": 1866,
     "file": "CHANGELOG_DESKTOP.md",
-    "commitSha": "cd381e6be267451b57c5f87b7db1f571640b0f4b",
-    "permalink": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md#L1861",
+    "commitSha": "653f093e76e47cfb3ec853bc7f78e769823d7bc5",
+    "permalink": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md#L1866",
     "zcashRelated": true
    },
    {
@@ -944,11 +944,11 @@
    {
     "channel": "release",
     "platform": "desktop",
-    "version": "1.100.58",
-    "tag": "v1.100.58",
+    "version": "1.100.59",
+    "tag": "v1.100.59",
     "publishedAt": null,
-    "basis": "top entry of CHANGELOG_DESKTOP.md at cd381e6b",
-    "url": "https://github.com/brave/brave-browser/blob/cd381e6be267451b57c5f87b7db1f571640b0f4b/CHANGELOG_DESKTOP.md"
+    "basis": "top entry of CHANGELOG_DESKTOP.md at 653f093e",
+    "url": "https://github.com/brave/brave-browser/blob/653f093e76e47cfb3ec853bc7f78e769823d7bc5/CHANGELOG_DESKTOP.md"
    },
    {
     "channel": "release",
@@ -979,7 +979,7 @@
     "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -991,7 +991,7 @@
     "text": "Enabled Zcash by default. (#48171)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L770",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1003,7 +1003,7 @@
     "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1015,7 +1015,7 @@
     "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1027,7 +1027,7 @@
     "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L885",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1039,7 +1039,7 @@
     "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1051,7 +1051,7 @@
     "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1063,7 +1063,7 @@
     "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1075,7 +1075,7 @@
     "text": "Updated ZCash endpoint URL. (#38782)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1087,7 +1087,7 @@
     "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1099,7 +1099,7 @@
     "text": "Added support for Zcash Testnet. (#50116)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1111,7 +1111,7 @@
     "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1123,7 +1123,7 @@
     "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1135,7 +1135,7 @@
     "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1147,7 +1147,7 @@
     "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1159,7 +1159,7 @@
     "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
     "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1171,7 +1171,7 @@
     "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L408",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1183,7 +1183,7 @@
     "text": "Added support for BTC Ledger hardware accounts. (#38447)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1195,7 +1195,7 @@
     "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1207,7 +1207,7 @@
     "text": "Enabled ZCash feature flag by default. (#48171)",
     "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1219,7 +1219,7 @@
     "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L790",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1231,7 +1231,7 @@
     "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1243,7 +1243,7 @@
     "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L669",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1255,7 +1255,7 @@
     "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L460",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1267,7 +1267,7 @@
     "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1279,7 +1279,7 @@
     "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1291,7 +1291,7 @@
     "text": "Added Zcash Ironwood migration banner. (#58493)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1303,7 +1303,7 @@
     "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1315,7 +1315,7 @@
     "text": "Implemented ZCash Shielded account modal. (#41780)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1327,7 +1327,7 @@
     "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1339,7 +1339,7 @@
     "text": "Updated Zcash library to 0.14. (#56404)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1351,7 +1351,7 @@
     "text": "Added Zcash Ironwood migration banner. (#58493)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1363,7 +1363,7 @@
     "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1375,7 +1375,7 @@
     "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1387,7 +1387,7 @@
     "text": "Added Zcash shielded support. (#44432)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1399,7 +1399,7 @@
     "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
     "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1411,7 +1411,7 @@
     "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1423,7 +1423,7 @@
     "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1435,7 +1435,7 @@
     "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
     "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1447,7 +1447,7 @@
     "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L792",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1459,7 +1459,7 @@
     "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1471,7 +1471,7 @@
     "text": "Fixed ZCash balance resolution issue. (#40635)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1483,7 +1483,7 @@
     "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1495,7 +1495,7 @@
     "text": "Enabled Zcash support by default. (#36613)",
     "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1507,7 +1507,7 @@
     "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1519,7 +1519,7 @@
     "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1531,7 +1531,7 @@
     "text": "Enabled Zcash Ironwood support by default. (#56872)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1555,7 +1555,7 @@
     "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1567,7 +1567,7 @@
     "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
     "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1579,7 +1579,7 @@
     "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1591,7 +1591,7 @@
     "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1603,7 +1603,7 @@
     "text": "Added Zcash \"Deposit\" modal. (#42221)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1615,7 +1615,7 @@
     "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1627,7 +1627,7 @@
     "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1639,7 +1639,7 @@
     "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1651,7 +1651,7 @@
     "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1663,7 +1663,7 @@
     "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1675,7 +1675,7 @@
     "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1687,7 +1687,7 @@
     "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1699,7 +1699,7 @@
     "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1711,7 +1711,7 @@
     "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
     "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L1281",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1723,7 +1723,7 @@
     "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
     "firstSeenAt": "2026-10-08T14:35:45.102Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1735,7 +1735,7 @@
     "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
     "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
     "firstSeenAt": "2026-10-08T14:46:50.765Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    },
    {
@@ -1759,10 +1759,10 @@
     "text": "Added Zcash Ironwood migration banner. (#58493)",
     "permalink": "https://github.com/brave/brave-browser/blob/464668bb1f02ac7d0414e639ec98e61df2bf3892/CHANGELOG_iOS.md#L26",
     "firstSeenAt": "2026-10-14T23:16:08.055Z",
-    "lastSeenAt": "2026-11-24T04:50:25.267Z",
+    "lastSeenAt": "2026-11-24T17:47:58.086Z",
     "goneSince": null
    }
   ]
  },
- "completeAt": "2026-11-24T04:50:25.267Z"
+ "completeAt": "2026-11-24T17:47:58.086Z"
 }

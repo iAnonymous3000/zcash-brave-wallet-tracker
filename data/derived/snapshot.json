@@ -1,5 +1,5 @@
 {
- "at": "2026-11-24T04:50:25.267Z",
+ "at": "2026-11-24T17:47:58.086Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#61210": {
@@ -10,7 +10,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61209": {
    "desktop/release": false,
@@ -20,7 +20,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61208": {
    "desktop/release": false,
@@ -30,7 +30,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61207": {
    "desktop/release": false,
@@ -40,7 +40,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61206": {
    "desktop/release": false,
@@ -50,7 +50,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61205": {
    "desktop/release": false,
@@ -60,7 +60,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61049": {
    "desktop/release": false,
@@ -70,7 +70,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61059": {
    "desktop/release": false,
@@ -80,7 +80,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61071": {
    "desktop/release": false,
@@ -90,7 +90,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61078": {
    "desktop/release": false,
@@ -100,7 +100,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61118": {
    "desktop/release": false,
@@ -110,7 +110,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61120": {
    "desktop/release": false,
@@ -120,7 +120,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61121": {
    "desktop/release": false,
@@ -130,7 +130,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61182": {
    "desktop/release": false,
@@ -140,7 +140,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61185": {
    "desktop/release": false,
@@ -150,7 +150,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61201": {
    "desktop/release": false,
@@ -160,7 +160,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61233": {
    "desktop/release": false,
@@ -170,7 +170,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61295": {
    "desktop/release": false,
@@ -180,7 +180,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61297": {
    "desktop/release": false,
@@ -190,7 +190,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61298": {
    "desktop/release": false,
@@ -200,7 +200,7 @@
    "ios/beta": false,
    "desktop/nightly": false,
    "android/nightly": false,
-   "ios/nightly": false
+   "ios/nightly": true
   },
   "brave/brave-browser#61393": {
    "desktop/release": false,
@@ -2654,7 +2654,7 @@
   },
   "brave/brave-core#40325": {
    "desktop/release": true,
-   "android/release": false,
+   "android/release": true,
    "desktop/beta": true,
    "android/beta": true,
    "ios/beta": true,
@@ -7015,7 +7015,7 @@
  },
  "flags": {
   "desktop/release": {
-   "tag": "v1.100.58",
+   "tag": "v1.100.59",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7023,7 +7023,7 @@
    }
   },
   "android/release": {
-   "tag": "v1.99.57",
+   "tag": "v1.100.58",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7031,7 +7031,7 @@
    }
   },
   "desktop/beta": {
-   "tag": "v1.101.52",
+   "tag": "v1.101.55",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7039,7 +7039,7 @@
    }
   },
   "android/beta": {
-   "tag": "v1.101.52",
+   "tag": "v1.101.55",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7047,7 +7047,7 @@
    }
   },
   "ios/beta": {
-   "tag": "v1.101.52",
+   "tag": "v1.101.55",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7071,7 +7071,7 @@
    }
   },
   "ios/nightly": {
-   "tag": "v1.102.30",
+   "tag": "v1.102.34",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7222,7 +7222,7 @@
    "desktop/release": "absent",
    "desktop/beta": "absent",
    "desktop/nightly": "absent",
-   "android/release": "in-build",
+   "android/release": "absent",
    "android/beta": "absent",
    "android/nightly": "absent",
    "ios/release": "not-verified",
