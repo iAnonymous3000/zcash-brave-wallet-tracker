@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-23T20:15:02.998Z",
+ "retrievedAt": "2026-11-24T04:50:25.267Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3720,7 +3720,12 @@
    "brave/brave-core#41957": {
     "sha": "9a00fe81acbfcebfa6bdc6db0799b2ef0133959d",
     "domain": "master",
-    "minIncluded": null,
+    "minIncluded": {
+     "version": "1.102.33",
+     "tag": "v1.102.33",
+     "checkedAt": "2026-11-24T04:50:25.267Z",
+     "basis": "GitHub compare v1.102.33...9a00fe81: behind"
+    },
     "maxExcluded": {
      "version": "1.102.32",
      "tag": "v1.102.32",
@@ -3766,14 +3771,6 @@
     ]
    },
    {
-    "tag": "v1.102.23",
-    "version": "1.102.23",
-    "publishedAt": "2026-11-19T13:43:42Z",
-    "usedBy": [
-     "android/nightly"
-    ]
-   },
-   {
     "tag": "v1.102.30",
     "version": "1.102.30",
     "publishedAt": "2026-11-23T13:22:49Z",
@@ -3783,9 +3780,17 @@
     ]
    },
    {
-    "tag": "v1.102.32",
-    "version": "1.102.32",
-    "publishedAt": "2026-11-23T17:12:28Z",
+    "tag": "v1.102.31",
+    "version": "1.102.31",
+    "publishedAt": "2026-11-23T13:42:07Z",
+    "usedBy": [
+     "android/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.33",
+    "version": "1.102.33",
+    "publishedAt": "2026-11-24T01:14:48Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3794,5 +3799,5 @@
   "pending": 0,
   "calls": 1
  },
- "completeAt": "2026-11-23T20:15:02.998Z"
+ "completeAt": "2026-11-24T04:50:25.267Z"
 }
