@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-24T17:47:58.086Z",
+ "retrievedAt": "2026-11-25T02:31:15.349Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3788,9 +3788,9 @@
     ]
    },
    {
-    "tag": "v1.102.36",
-    "version": "1.102.36",
-    "publishedAt": "2026-11-24T17:13:19Z",
+    "tag": "v1.102.37",
+    "version": "1.102.37",
+    "publishedAt": "2026-11-25T01:08:44Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3799,5 +3799,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-24T17:47:58.086Z"
+ "completeAt": "2026-11-25T02:31:15.349Z"
 }

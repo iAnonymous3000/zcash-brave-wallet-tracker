@@ -1,7 +1,7 @@
 {
  "sourceId": "brave-services",
  "schema": 1,
- "retrievedAt": "2026-11-24T17:47:58.086Z",
+ "retrievedAt": "2026-11-25T02:31:15.349Z",
  "data": {
   "gate3": {
    "commitSha": "35cb43b85901f661a9da015f1a4642716cf6c9d5",
@@ -9,7 +9,7 @@
    "zcashDisabled": false,
    "line": 11,
    "url": "https://github.com/brave/gate3/blob/35cb43b85901f661a9da015f1a4642716cf6c9d5/app/api/swap/constants.py#L11",
-   "checkedAt": "2026-11-24T17:47:58.086Z"
+   "checkedAt": "2026-11-25T02:31:15.349Z"
   },
   "studies": [
    {
@@ -88,12 +88,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.55 is outside the version range 139.1.81.129 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.32 (159.1.102.32) / 1.102.34 (159.1.102.34)",
+      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.34 (159.1.102.34) / 1.102.36 (159.1.102.36)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.102.30",
-      "reason": "159.1.102.34 (Windows, Linux arm64) and 159.1.102.32 (macOS x64) and 159.1.102.30 (macOS arm64, Linux x64) are outside the version range 139.1.81.129 – 152.*"
+      "reason": "159.1.102.36 (macOS arm64) and 159.1.102.34 (Windows, macOS x64, Linux arm64) and 159.1.102.30 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
      },
      {
       "build": "Android nightly 1.102.31 (159.1.102.31)",
@@ -112,7 +112,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 159.1.102.34 is outside the version range 139.1.81.129 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/fda2e3e827b75e4582185492cb75a5052469a7b4/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -150,8 +150,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-23T20:15:02.998Z",
-    "verifiedAt": "2026-11-24T17:47:58.086Z"
+    "readAt": "2026-11-25T02:31:15.349Z",
+    "verifiedAt": "2026-11-25T02:31:15.349Z"
    },
    {
     "file": "ZCashStudy.json5",
@@ -227,12 +227,12 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 158.1.101.55 is outside the version range any – 139.1.81.128"
      },
      {
-      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.32 (159.1.102.32) / 1.102.34 (159.1.102.34)",
+      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.34 (159.1.102.34) / 1.102.36 (159.1.102.36)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.102.30",
-      "reason": "159.1.102.34 (Windows, Linux arm64) and 159.1.102.32 (macOS x64) and 159.1.102.30 (macOS arm64, Linux x64) are outside the version range any – 139.1.81.128"
+      "reason": "159.1.102.36 (macOS arm64) and 159.1.102.34 (Windows, macOS x64, Linux arm64) and 159.1.102.30 (Linux x64) are outside the version range any – 139.1.81.128"
      },
      {
       "build": "Android nightly 1.102.31 (159.1.102.31)",
@@ -251,7 +251,7 @@
       "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 159.1.102.34 is outside the version range any – 139.1.81.128"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/fda2e3e827b75e4582185492cb75a5052469a7b4/studies/ZCashStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07/studies/ZCashStudy.json5",
     "experiments": [
      {
       "name": "Disabled",
@@ -286,8 +286,8 @@
       "ANDROID"
      ]
     },
-    "readAt": "2026-11-23T20:15:02.998Z",
-    "verifiedAt": "2026-11-24T17:47:58.086Z"
+    "readAt": "2026-11-25T02:31:15.349Z",
+    "verifiedAt": "2026-11-25T02:31:15.349Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -361,12 +361,12 @@
       "reason": "158.1.101.55 is outside the version range 146.1.89.116 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.32 (159.1.102.32) / 1.102.34 (159.1.102.34)",
+      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.34 (159.1.102.34) / 1.102.36 (159.1.102.36)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.102.30",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 159.1.102.34 (Windows, Linux arm64) and 159.1.102.32 (macOS x64) and 159.1.102.30 (macOS arm64, Linux x64) are outside the version range 146.1.89.116 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 159.1.102.36 (macOS arm64) and 159.1.102.34 (Windows, macOS x64, Linux arm64) and 159.1.102.30 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
      },
      {
       "build": "Android nightly 1.102.31 (159.1.102.31)",
@@ -385,7 +385,7 @@
       "reason": "159.1.102.34 is outside the version range 146.1.89.116 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/fda2e3e827b75e4582185492cb75a5052469a7b4/studies/iOSWalletWebUIStudy.json5",
+    "url": "https://github.com/brave/brave-variations/blob/9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -419,8 +419,8 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-23T20:15:02.998Z",
-    "verifiedAt": "2026-11-24T17:47:58.086Z"
+    "readAt": "2026-11-25T02:31:15.349Z",
+    "verifiedAt": "2026-11-25T02:31:15.349Z"
    },
    {
     "file": "iOSWalletWebUIStudy.json5",
@@ -485,12 +485,12 @@
       "reason": "channel filter (RELEASE) excludes beta; 158.1.101.55 is outside the version range 147.1.89.144 – 152.*"
      },
      {
-      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.32 (159.1.102.32) / 1.102.34 (159.1.102.34)",
+      "build": "Desktop nightly 1.102.30 (159.1.102.30) / 1.102.34 (159.1.102.34) / 1.102.36 (159.1.102.36)",
       "applies": false,
       "platform": "desktop",
       "channel": "nightly",
       "version": "1.102.30",
-      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 159.1.102.34 (Windows, Linux arm64) and 159.1.102.32 (macOS x64) and 159.1.102.30 (macOS arm64, Linux x64) are outside the version range 147.1.89.144 – 152.*"
+      "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 159.1.102.36 (macOS arm64) and 159.1.102.34 (Windows, macOS x64, Linux arm64) and 159.1.102.30 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
      },
      {
       "build": "Android nightly 1.102.31 (159.1.102.31)",
@@ -509,7 +509,16 @@
       "reason": "channel filter (RELEASE) excludes nightly; 159.1.102.34 is outside the version range 147.1.89.144 – 152.*"
      }
     ],
-    "url": "https://github.com/brave/brave-variations/blob/fda2e3e827b75e4582185492cb75a5052469a7b4/studies/iOSWalletWebUIStudy.json5",
+    "appliesUnknown": [
+     {
+      "build": "iOS release 1.99",
+      "platform": "ios",
+      "channel": "release",
+      "version": "1.99",
+      "reason": "the Chromium-based version of 1.99 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
+     }
+    ],
+    "url": "https://github.com/brave/brave-variations/blob/9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07/studies/iOSWalletWebUIStudy.json5",
     "experiments": [
      {
       "name": "EnabledWithShielding",
@@ -542,22 +551,13 @@
       "IOS"
      ]
     },
-    "readAt": "2026-11-23T20:15:02.998Z",
-    "verifiedAt": "2026-11-24T17:47:58.086Z",
-    "appliesUnknown": [
-     {
-      "build": "iOS release 1.99",
-      "platform": "ios",
-      "channel": "release",
-      "version": "1.99",
-      "reason": "the Chromium-based version of 1.99 is not known, so the version range 147.1.89.144 – 152.* cannot be checked"
-     }
-    ]
+    "readAt": "2026-11-25T02:31:15.349Z",
+    "verifiedAt": "2026-11-25T02:31:15.349Z"
    }
   ],
-  "studiesCommit": "fda2e3e827b75e4582185492cb75a5052469a7b4",
-  "studiesReadAt": "2026-11-24T17:47:58.086Z",
-  "studiesDigest": "7317718e403d5d89bbba8d25de9bebbd79a648baf77d34676ba8f778153e5f97"
+  "studiesCommit": "9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07",
+  "studiesReadAt": "2026-11-25T02:31:15.349Z",
+  "studiesDigest": "34ebb4235e99322a6bfb3b2414f312fb15a651732fe88deaec9dc111f93613c0"
  },
- "completeAt": "2026-11-24T17:47:58.086Z"
+ "completeAt": "2026-11-25T02:31:15.349Z"
 }
