@@ -49,6 +49,60 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in ntp_background_images_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61233"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61233",
+    "url": "https://github.com/brave/brave-browser/issues/61233"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "04c1e8dd09b73c33",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in brave_wallet_handler_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61059"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61059",
+    "url": "https://github.com/brave/brave-browser/issues/61059"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "11c4f3de61451ab3",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in tx_state_manager_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -99,6 +153,33 @@
   "id": "3aa171ca7edb1dff",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in brave_vpn_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61120"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61120",
+    "url": "https://github.com/brave/brave-browser/issues/61120"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "3d145e4a37f36da3",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "in-build",
@@ -238,6 +319,87 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in polkadot_tx_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61182"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61182",
+    "url": "https://github.com/brave/brave-browser/issues/61182"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "56f2aee95c4c8ece",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in playlist_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61049"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61049",
+    "url": "https://github.com/brave/brave-browser/issues/61049"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "5b088328b903c91a",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61205"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61205",
+    "url": "https://github.com/brave/brave-browser/issues/61205"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "6121077dfe351d7d",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in onboarding_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -261,6 +423,33 @@
   "id": "6755ef2cfdee1edf",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in polkadot_wallet_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61185"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61185",
+    "url": "https://github.com/brave/brave-browser/issues/61185"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "83020983436e45be",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "in-build",
@@ -292,6 +481,33 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in playlist_background_web_contents_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61298"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61298",
+    "url": "https://github.com/brave/brave-browser/issues/61298"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "973f5de86c5f3ddc",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in system_vpn_connection_api_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -315,6 +531,33 @@
   "id": "9772b44df38f5ca3",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61208"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61208",
+    "url": "https://github.com/brave/brave-browser/issues/61208"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "a1d871380edd607d",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "in-build",
@@ -373,6 +616,33 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61206"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61206",
+    "url": "https://github.com/brave/brave-browser/issues/61206"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "b2c350fbd9baef71",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in playlist_service_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -396,6 +666,33 @@
   "id": "b76d5a0abee4c968",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in playlist_background_web_contents_helper_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61297"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61297",
+    "url": "https://github.com/brave/brave-browser/issues/61297"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "ca7572f22cab194e",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "in-build",
@@ -427,6 +724,33 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61207"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61207",
+    "url": "https://github.com/brave/brave-browser/issues/61207"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "d1d75a677b698a49",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -454,6 +778,60 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in tx_state_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61201"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61201",
+    "url": "https://github.com/brave/brave-browser/issues/61201"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "d4a7a876d0909815",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61209"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61209",
+    "url": "https://github.com/brave/brave-browser/issues/61209"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "da0c0c5674c15a31",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in zcash_create_transparent_transaction_task_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -477,6 +855,33 @@
   "id": "da9c4abf53f026cb",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in zcash_create_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61210"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61210",
+    "url": "https://github.com/brave/brave-browser/issues/61210"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "dc0c310e2d7b764b",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "in-build",
@@ -535,6 +940,60 @@
  {
   "kind": "in-build",
   "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in v2/brave_vpn_service_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61121"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61121",
+    "url": "https://github.com/brave/brave-browser/issues/61121"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "df2051f053277387",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in ai_chat_credential_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61071"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61071",
+    "url": "https://github.com/brave/brave-browser/issues/61071"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "e9c35d3b0e44690f",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
   "title": "In iOS Nightly 1.102.34: Test best-practice violations in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
   "impact": "The merged code (brave-core#41957) is now part of the iOS Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
   "highlight": "release",
@@ -558,6 +1017,87 @@
   "id": "f5e38dfa3d35386b",
   "detectedAt": "2026-11-24T17:47:58.086Z",
   "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in conversation_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61078"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61078",
+    "url": "https://github.com/brave/brave-browser/issues/61078"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "faa9e47be8034039",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in system_vpn_connection_api_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61118"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61118",
+    "url": "https://github.com/brave/brave-browser/issues/61118"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "fcf852fd06caca1f",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-24T13:23:15Z",
+  "title": "In Desktop Nightly 1.102.34: Test best-practice violations in onboarding_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Desktop Nightly build 1.102.34. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61295"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61295",
+    "url": "https://github.com/brave/brave-browser/issues/61295"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "fdb556d9bcb6219f",
+  "detectedAt": "2026-11-25T14:24:52.839Z",
+  "basis": "backfill"
  },
  {
   "kind": "issue-closed",
@@ -48259,67 +48799,6 @@
    "base branch master"
   ],
   "id": "f0c04950ffa59347",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "issue-closed",
-  "sourceAt": "2025-11-25T13:07:28Z",
-  "title": "Closed (completed): [ZCash] ZCashSerializer improvements for s->t tansactions",
-  "impact": "Closed as completed; linked PR merged 2025-11-25. Code is in current Release builds for Desktop, Android, iOS.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#50786"
-  ],
-  "topic": "transactions",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#50786",
-    "url": "https://github.com/brave/brave-browser/issues/50786"
-   },
-   {
-    "label": "brave-core#32274",
-    "url": "https://github.com/brave/brave-core/pull/32274"
-   }
-  ],
-  "evidence": [
-   "closed by cypt4 at 2025-11-25T13:07:28Z",
-   "state reason: completed"
-  ],
-  "id": "aa690c1a49c891a3",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-25T13:07:27Z",
-  "title": "Merged: [ZCash] ZCashSerializer improvements to support s->t transactions",
-  "impact": "Merged into brave-core master on 2025-11-25. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32274"
-  ],
-  "topic": "transactions",
-  "platforms": [
-   "desktop"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32274",
-    "url": "https://github.com/brave/brave-core/pull/32274"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-25T13:07:27Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "173e3d8bbcaa7404",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

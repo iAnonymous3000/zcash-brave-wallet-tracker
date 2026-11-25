@@ -1,9 +1,9 @@
 {
- "updatedAt": "2026-11-25T02:35:13.789Z",
+ "updatedAt": "2026-11-25T14:28:54.677Z",
  "lastRun": {
-  "id": "824c4d96136e",
-  "startedAt": "2026-11-25T02:31:15.349Z",
-  "finishedAt": "2026-11-25T02:35:13.789Z",
+  "id": "eb1051e168e5",
+  "startedAt": "2026-11-25T14:24:52.839Z",
+  "finishedAt": "2026-11-25T14:28:54.677Z",
   "trigger": "schedule",
   "outcome": "partial",
   "sources": {
@@ -21,10 +21,10 @@
    "community": "ok",
    "docs": "ok"
   },
-  "requests": 368,
-  "events": 0,
+  "requests": 269,
+  "events": 20,
   "notes": [
-   "701 work groups, 1062 items, 0 new events"
+   "701 work groups, 1062 items, 20 new events"
   ],
   "derive": {
    "outcome": "ok",
@@ -35,17 +35,17 @@
   "core": {
    "remaining": 4958,
    "limit": 5000,
-   "resetAt": "2026-11-25T03:31:15.000Z"
+   "resetAt": "2026-11-25T15:24:52.000Z"
   },
   "search": {
    "remaining": 24,
    "limit": 30,
-   "resetAt": "2026-11-25T02:35:31.000Z"
+   "resetAt": "2026-11-25T14:29:22.000Z"
   },
   "graphql": {
-   "remaining": 4970,
+   "remaining": 4918,
    "limit": 5000,
-   "resetAt": "2026-11-25T03:32:28.000Z"
+   "resetAt": "2026-11-25T15:25:59.000Z"
   }
  },
  "sources": {
@@ -53,38 +53,38 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 591,
+   "itemCount": 595,
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
    ],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "brave-versions": {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 9,
    "requests": 28,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "github-items": {
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "partial",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -96,112 +96,112 @@
     "some items could not be refreshed this run; their last good copy was kept"
    ],
    "lastCompleteAt": "2026-11-19T00:24:33.476Z",
-   "lastPartialAt": "2026-11-25T02:31:15.349Z"
+   "lastPartialAt": "2026-11-25T14:24:52.839Z"
   },
   "brave-changelogs": {
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 64,
    "requests": 8,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "build-inclusion": {
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 363,
    "requests": 0,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "brave-flags": {
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 21,
-   "requests": 13,
+   "itemCount": 22,
+   "requests": 35,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "brave-deps": {
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 20,
-   "requests": 11,
+   "itemCount": 21,
+   "requests": 21,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "upstream": {
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 191,
    "requests": 32,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "advisories": {
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 33,
    "requests": 23,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "watch": {
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 3,
    "requests": 10,
    "limitations": [],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "community": {
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -210,14 +210,14 @@
    "limitations": [
     "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
    ],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "docs": {
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -226,29 +226,29 @@
    "limitations": [
     "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
    ],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   },
   "brave-services": {
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-   "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+   "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+   "lastSuccessAt": "2026-11-25T14:24:52.839Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 5,
-   "requests": 135,
+   "requests": 4,
    "limitations": [
     "Repository state is shown; the deployed service could differ and its deployment time is not public",
     "1 study has builds whose eligibility cannot be determined from public data"
    ],
-   "lastCompleteAt": "2026-11-25T02:31:15.349Z"
+   "lastCompleteAt": "2026-11-25T14:24:52.839Z"
   }
  },
  "derive": {
-  "lastAttemptAt": "2026-11-25T02:31:15.349Z",
-  "lastSuccessAt": "2026-11-25T02:31:15.349Z",
+  "lastAttemptAt": "2026-11-25T14:24:52.839Z",
+  "lastSuccessAt": "2026-11-25T14:24:52.839Z",
   "lastError": null,
   "consecutiveFailures": 0
  }

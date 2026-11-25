@@ -1,9 +1,35 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-25T02:31:15.349Z",
+ "retrievedAt": "2026-11-25T14:24:52.839Z",
  "data": {
   "releases": [
+   {
+    "tag": "v1.102.39",
+    "version": "1.102.39",
+    "channel": "nightly",
+    "name": "Nightly v1.102.39 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-25T13:39:44Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.39",
+    "assetPlatforms": [
+     "android"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.102.38",
+    "version": "1.102.38",
+    "channel": "nightly",
+    "name": "Nightly v1.102.38 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-25T13:23:16Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.38",
+    "assetPlatforms": [
+     "linux"
+    ],
+    "prereleaseFlag": false
+   },
    {
     "tag": "v1.102.37",
     "version": "1.102.37",
@@ -14,7 +40,9 @@
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.37",
     "assetPlatforms": [
      "android",
-     "linux"
+     "linux",
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": true
    },
@@ -564,6 +592,22 @@
      "windows"
     ],
     "prereleaseFlag": false
+   },
+   {
+    "tag": "v1.101.56",
+    "version": "1.101.56",
+    "channel": "beta",
+    "name": "Beta v1.101.56 (Chromium 159.0.8154.18)",
+    "chromium": "159.0.8154.18",
+    "publishedAt": "2026-11-25T05:15:52Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.56",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": true
    },
    {
     "tag": "v1.101.55",
@@ -1355,6 +1399,19 @@
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.1",
     "assetPlatforms": [
      "android"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.100.60",
+    "version": "1.100.60",
+    "channel": "release",
+    "name": "Release v1.100.60 (Chromium 158.0.8127.92)",
+    "chromium": "158.0.8127.92",
+    "publishedAt": "2026-11-25T05:49:44Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.60",
+    "assetPlatforms": [
+     "ios"
     ],
     "prereleaseFlag": true
    },
@@ -9057,32 +9114,32 @@
    {
     "channel": "release",
     "platform": "all",
-    "version": "1.100.59",
-    "tag": "v1.100.59",
-    "publishedAt": "2026-11-24T07:26:03Z",
-    "basis": "GitHub release name \"Release v1.100.59 (Chromium 158.0.8127.92)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.59"
+    "version": "1.100.60",
+    "tag": "v1.100.60",
+    "publishedAt": "2026-11-25T05:49:44Z",
+    "basis": "GitHub release name \"Release v1.100.60 (Chromium 158.0.8127.92)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.100.60"
    },
    {
     "channel": "beta",
     "platform": "all",
-    "version": "1.101.55",
-    "tag": "v1.101.55",
-    "publishedAt": "2026-11-24T05:11:14Z",
-    "basis": "GitHub release name \"Beta v1.101.55 (Chromium 158.0.8127.42)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.55"
+    "version": "1.101.56",
+    "tag": "v1.101.56",
+    "publishedAt": "2026-11-25T05:15:52Z",
+    "basis": "GitHub release name \"Beta v1.101.56 (Chromium 159.0.8154.18)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.101.56"
    },
    {
     "channel": "nightly",
     "platform": "all",
-    "version": "1.102.37",
-    "tag": "v1.102.37",
-    "publishedAt": "2026-11-25T01:08:44Z",
-    "basis": "GitHub release name \"Nightly v1.102.37 (Chromium 159.0.8154.18)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.37"
+    "version": "1.102.39",
+    "tag": "v1.102.39",
+    "publishedAt": "2026-11-25T13:39:44Z",
+    "basis": "GitHub release name \"Nightly v1.102.39 (Chromium 159.0.8154.34)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.39"
    }
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-25T02:31:15.349Z"
+ "completeAt": "2026-11-25T14:24:52.839Z"
 }
