@@ -1,9 +1,47 @@
 {
  "sourceId": "advisories",
  "schema": 1,
- "retrievedAt": "2026-11-25T14:24:52.839Z",
+ "retrievedAt": "2026-11-26T00:22:22.397Z",
  "data": {
   "advisories": [
+   {
+    "id": "GHSA-jjjw-r66r-mjgf",
+    "aliases": [],
+    "summary": "Nested poolTypes in TransparentAddressBlockFilter -> bypasses the pre-decode element limit in lightwalletd 0.6.2",
+    "severity": "low",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.2"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.3"
+    ],
+    "publishedAt": "2026-11-25T22:56:25Z",
+    "updatedAt": "2026-11-25T22:56:25Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-jjjw-r66r-mjgf"
+   },
+   {
+    "id": "GHSA-fhv5-hm8v-q7fw",
+    "aliases": [],
+    "summary": "Tip hash returning to a previous value -> process exit (<= 0.6.1) or permanently blocked GetMempoolStream (0.6.2) in lightwalletd",
+    "severity": "medium",
+    "packages": [
+     "go:github.com/zcash/lightwalletd"
+    ],
+    "vulnerableRanges": [
+     "github.com/zcash/lightwalletd <= 0.6.2"
+    ],
+    "patched": [
+     "github.com/zcash/lightwalletd 0.6.3"
+    ],
+    "publishedAt": "2026-11-25T22:56:24Z",
+    "updatedAt": "2026-11-25T22:56:24Z",
+    "withdrawnAt": null,
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-fhv5-hm8v-q7fw"
+   },
    {
     "id": "GHSA-4q7w-cx94-55pc",
     "aliases": [],
@@ -669,5 +707,5 @@
   ],
   "rustsecCrates": []
  },
- "completeAt": "2026-11-25T14:24:52.839Z"
+ "completeAt": "2026-11-26T00:22:22.397Z"
 }

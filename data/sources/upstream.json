@@ -1,7 +1,7 @@
 {
  "sourceId": "upstream",
  "schema": 1,
- "retrievedAt": "2026-11-25T14:24:52.839Z",
+ "retrievedAt": "2026-11-26T00:22:22.397Z",
  "data": {
   "crates": {
    "orchard": {
@@ -390,10 +390,15 @@
    },
    "shardtree": {
     "crate": "shardtree",
-    "maxStable": "0.8.0",
-    "newest": "0.8.0",
-    "updatedAt": "2026-09-30T19:38:58.517072Z",
+    "maxStable": "0.8.1",
+    "newest": "0.8.1",
+    "updatedAt": "2026-11-25T22:11:29.356085Z",
     "recent": [
+     {
+      "version": "0.8.1",
+      "createdAt": "2026-11-25T22:11:29.356085Z",
+      "yanked": false
+     },
      {
       "version": "0.8.0",
       "createdAt": "2026-09-30T19:38:58.517072Z",
@@ -448,21 +453,21 @@
       "version": "0.3.0",
       "createdAt": "2024-03-25T02:14:41.716575Z",
       "yanked": false
-     },
-     {
-      "version": "0.2.0",
-      "createdAt": "2023-11-07T18:26:37.758163Z",
-      "yanked": false
      }
     ],
     "url": "https://crates.io/crates/shardtree"
    },
    "incrementalmerkletree": {
     "crate": "incrementalmerkletree",
-    "maxStable": "0.9.0",
-    "newest": "0.9.0",
-    "updatedAt": "2026-09-30T04:18:34.586867Z",
+    "maxStable": "0.9.1",
+    "newest": "0.9.1",
+    "updatedAt": "2026-11-25T22:11:07.956244Z",
     "recent": [
+     {
+      "version": "0.9.1",
+      "createdAt": "2026-11-25T22:11:07.956244Z",
+      "yanked": false
+     },
      {
       "version": "0.9.0",
       "createdAt": "2026-09-30T04:18:34.586867Z",
@@ -516,11 +521,6 @@
      {
       "version": "0.3.1",
       "createdAt": "2023-02-28T21:10:35.156214Z",
-      "yanked": false
-     },
-     {
-      "version": "0.3.0",
-      "createdAt": "2022-05-10T15:40:08.625465Z",
       "yanked": false
      }
     ],
@@ -862,6 +862,38 @@
    }
   },
   "releases": [
+   {
+    "id": "zcash/lightwalletd@v0.6.3",
+    "project": "lightwalletd",
+    "repo": "zcash/lightwalletd",
+    "version": "v0.6.3",
+    "publishedAt": "2026-11-25T22:51:24Z",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.3",
+    "source": "github-release",
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/shardtree@0.8.1",
+    "project": "shardtree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.8.1",
+    "publishedAt": "2026-11-25T22:11:29.356085Z",
+    "url": "https://crates.io/crates/shardtree/0.8.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
+   {
+    "id": "crates.io/incrementalmerkletree@0.9.1",
+    "project": "incrementalmerkletree",
+    "repo": "zcash/incrementalmerkletree",
+    "version": "0.9.1",
+    "publishedAt": "2026-11-25T22:11:07.956244Z",
+    "url": "https://crates.io/crates/incrementalmerkletree/0.9.1",
+    "source": "crates.io",
+    "yanked": false,
+    "prerelease": false
+   },
    {
     "id": "crates.io/pasta_curves@0.6.4",
     "project": "pasta_curves",
@@ -2345,17 +2377,6 @@
     "prerelease": false
    },
    {
-    "id": "crates.io/shardtree@0.2.0",
-    "project": "shardtree",
-    "repo": "zcash/incrementalmerkletree",
-    "version": "0.2.0",
-    "publishedAt": "2023-11-07T18:26:37.758163Z",
-    "url": "https://crates.io/crates/shardtree/0.2.0",
-    "source": "crates.io",
-    "yanked": false,
-    "prerelease": false
-   },
-   {
     "id": "crates.io/incrementalmerkletree@0.5.0",
     "project": "incrementalmerkletree",
     "repo": "zcash/incrementalmerkletree",
@@ -2560,16 +2581,6 @@
     "prerelease": false
    },
    {
-    "id": "zcash/lightwalletd@v0.4.13",
-    "project": "lightwalletd",
-    "repo": "zcash/lightwalletd",
-    "version": "v0.4.13",
-    "publishedAt": "2022-07-21T17:59:25Z",
-    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.4.13",
-    "source": "github-release",
-    "prerelease": false
-   },
-   {
     "id": "zcash/lightwallet-protocol@v0.3.4",
     "project": "lightwallet-protocol",
     "repo": "zcash/lightwallet-protocol",
@@ -2649,17 +2660,6 @@
     "version": "0.1.0",
     "publishedAt": "2022-05-10T22:32:01.740487Z",
     "url": "https://crates.io/crates/halo2_proofs/0.1.0",
-    "source": "crates.io",
-    "yanked": false,
-    "prerelease": false
-   },
-   {
-    "id": "crates.io/incrementalmerkletree@0.3.0",
-    "project": "incrementalmerkletree",
-    "repo": "zcash/incrementalmerkletree",
-    "version": "0.3.0",
-    "publishedAt": "2022-05-10T15:40:08.625465Z",
-    "url": "https://crates.io/crates/incrementalmerkletree/0.3.0",
     "source": "crates.io",
     "yanked": false,
     "prerelease": false
@@ -2908,11 +2908,11 @@
    "repo": "brave/librustzcash",
    "sha": "f01f50d64214278552edbe4a34b9049244ce03c1",
    "aheadBy": 2,
-   "behindBy": 1223,
+   "behindBy": 1229,
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-25T14:24:52.839Z"
+   "checkedAt": "2026-11-26T00:22:22.397Z"
   },
   "zips": {
    "2005": {
@@ -3039,8 +3039,8 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-25T14:24:52.839Z"
+   "checkedAt": "2026-11-26T00:22:22.397Z"
   }
  },
- "completeAt": "2026-11-25T14:24:52.839Z"
+ "completeAt": "2026-11-26T00:22:22.397Z"
 }

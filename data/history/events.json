@@ -1,5 +1,100 @@
 [
  {
+  "kind": "advisory",
+  "sourceAt": "2026-11-25T22:56:25Z",
+  "title": "Security advisory GHSA-jjjw-r66r-mjgf: Nested poolTypes in TransparentAddressBlockFilter -> bypasses the pre-decode element limit in lightwalletd 0.6.2",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.2). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-jjjw-r66r-mjgf",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-jjjw-r66r-mjgf"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.2"
+  ],
+  "id": "d57985258dd4cd87",
+  "detectedAt": "2026-11-26T00:22:22.397Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "advisory",
+  "sourceAt": "2026-11-25T22:56:24Z",
+  "title": "Security advisory GHSA-fhv5-hm8v-q7fw: Tip hash returning to a previous value -> process exit (<= 0.6.1) or permanently blocked GetMempoolStream (0.6.2) in lightwalletd",
+  "impact": "Affects lightwalletd servers (github.com/zcash/lightwalletd <= 0.6.2). Brave Wallet does not ship lightwalletd; it connects to a Brave-operated proxy (zcash.wallet.brave.com) whose backend software and version are not public. The advisory concerns GetMempoolStream, which Brave Wallet’s Zcash client does not call (it calls 9 CompactTxStreamer methods), so Brave Wallet’s own requests do not use the affected method; effects on a shared backend cannot be ruled out.",
+  "highlight": "security",
+  "itemIds": [],
+  "topic": "security",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "GHSA-fhv5-hm8v-q7fw",
+    "url": "https://github.com/zcash/lightwalletd/security/advisories/GHSA-fhv5-hm8v-q7fw"
+   }
+  ],
+  "evidence": [
+   "github.com/zcash/lightwalletd <= 0.6.2",
+   "Brave master calls: GetAddressUtxos, GetBlockRange, GetLatestBlock, GetLatestTreeState, GetLightdInfo, GetTaddressTxids, GetTransaction, GetTreeState, SendTransaction"
+  ],
+  "id": "a94617bd7a72d38a",
+  "detectedAt": "2026-11-26T00:22:22.397Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-11-25T22:51:24Z",
+  "title": "Upstream: lightwalletd v0.6.3",
+  "impact": "lightwalletd v0.6.3 was released upstream. Brave talks to light-client servers over this protocol; the operator of Brave's mainnet proxy decides when to upgrade, which is not public.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "Release",
+    "url": "https://github.com/zcash/lightwalletd/releases/tag/v0.6.3"
+   }
+  ],
+  "evidence": [
+   "published 2026-11-25T22:51:24Z",
+   "not in Brave lockfile"
+  ],
+  "id": "7f2c2dfc287d4ef5",
+  "detectedAt": "2026-11-26T00:22:22.397Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "upstream-release",
+  "sourceAt": "2026-11-25T22:11:29.356085Z",
+  "title": "Upstream: shardtree 0.8.1",
+  "impact": "shardtree 0.8.1 was published upstream. Brave master still resolves 0.7.0, so it has not adopted this release.",
+  "highlight": null,
+  "itemIds": [],
+  "topic": "deps",
+  "platforms": [],
+  "channel": null,
+  "links": [
+   {
+    "label": "crates.io",
+    "url": "https://crates.io/crates/shardtree/0.8.1"
+   }
+  ],
+  "evidence": [
+   "published 2026-11-25T22:11:29.356085Z",
+   "Brave master: 0.7.0"
+  ],
+  "id": "f962f1c75690ce12",
+  "detectedAt": "2026-11-26T00:22:22.397Z",
+  "basis": "observed"
+ },
+ {
   "kind": "capability-changed",
   "sourceAt": null,
   "title": "Buy ZEC (on-ramp via Meld) on Android Release: in-build → absent",
@@ -48748,57 +48843,6 @@
    "base branch master"
   ],
   "id": "a96e7d736a36fee2",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "community-report",
-  "sourceAt": "2025-11-25T18:12:15.242Z",
-  "title": "Community report: Brave wallet not showing Shielded Zcash",
-  "impact": "A user reported this on the Brave Community forum. It is reported behavior, not a confirmed defect.",
-  "highlight": null,
-  "itemIds": [],
-  "topic": null,
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "Community thread",
-    "url": "https://community.brave.app/t/brave-wallet-not-showing-shielded-zcash/646112"
-   }
-  ],
-  "evidence": [
-   "posted 2025-11-25T18:12:15.242Z",
-   "6 post(s), closed"
-  ],
-  "id": "18899b0b8c5db582",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "pr-merged",
-  "sourceAt": "2025-11-25T15:49:40Z",
-  "title": "Merged: Fix ZCashSerializer unittest",
-  "impact": "Merged into brave-core master on 2025-11-25. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-core#32528"
-  ],
-  "topic": "testing",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-core#32528",
-    "url": "https://github.com/brave/brave-core/pull/32528"
-   }
-  ],
-  "evidence": [
-   "merged 2025-11-25T15:49:40Z",
-   "repository brave/brave-core",
-   "base branch master"
-  ],
-  "id": "f0c04950ffa59347",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }
