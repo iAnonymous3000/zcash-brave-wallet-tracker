@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-26T10:55:58.810Z",
+ "retrievedAt": "2026-11-26T21:34:05.789Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3732,6 +3732,17 @@
      "checkedAt": "2026-11-23T20:15:02.998Z",
      "basis": "GitHub compare v1.102.32...9a00fe81: ahead"
     }
+   },
+   "brave/brave-core#42088": {
+    "sha": "1080265328f48ecc57fee94860700f5e7a7b08b4",
+    "domain": "master",
+    "minIncluded": null,
+    "maxExcluded": {
+     "version": "1.102.44",
+     "tag": "v1.102.44",
+     "checkedAt": "2026-11-26T21:34:05.789Z",
+     "basis": "merged 2026-11-26T18:21Z, after v1.102.44 was published"
+    }
    }
   },
   "targets": [
@@ -3753,29 +3764,14 @@
     ]
    },
    {
-    "tag": "v1.101.55",
-    "version": "1.101.55",
-    "publishedAt": "2026-11-24T05:11:14Z",
-    "usedBy": [
-     "desktop/beta"
-    ]
-   },
-   {
     "tag": "v1.101.57",
     "version": "1.101.57",
     "publishedAt": "2026-11-26T05:08:05Z",
     "usedBy": [
+     "desktop/beta",
      "android/beta",
      "ios/beta",
      "github/beta"
-    ]
-   },
-   {
-    "tag": "v1.102.31",
-    "version": "1.102.31",
-    "publishedAt": "2026-11-23T13:42:07Z",
-    "usedBy": [
-     "android/nightly"
     ]
    },
    {
@@ -3783,14 +3779,29 @@
     "version": "1.102.38",
     "publishedAt": "2026-11-25T13:23:16Z",
     "usedBy": [
-     "desktop/nightly",
+     "desktop/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.42",
+    "version": "1.102.42",
+    "publishedAt": "2026-11-26T13:24:14Z",
+    "usedBy": [
      "ios/nightly"
     ]
    },
    {
-    "tag": "v1.102.41",
-    "version": "1.102.41",
-    "publishedAt": "2026-11-26T01:08:23Z",
+    "tag": "v1.102.43",
+    "version": "1.102.43",
+    "publishedAt": "2026-11-26T13:39:47Z",
+    "usedBy": [
+     "android/nightly"
+    ]
+   },
+   {
+    "tag": "v1.102.44",
+    "version": "1.102.44",
+    "publishedAt": "2026-11-26T17:11:27Z",
     "usedBy": [
      "github/nightly"
     ]
@@ -3799,5 +3810,5 @@
   "pending": 0,
   "calls": 0
  },
- "completeAt": "2026-11-26T10:55:58.810Z"
+ "completeAt": "2026-11-26T21:34:05.789Z"
 }

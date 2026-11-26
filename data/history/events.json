@@ -1,5 +1,952 @@
 [
  {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:37Z",
+  "title": "Closed (completed): Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61404"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61404",
+    "url": "https://github.com/brave/brave-browser/issues/61404"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:37Z",
+   "state reason: completed"
+  ],
+  "id": "41ba13c0a419f9c1",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:36Z",
+  "title": "Closed (completed): Test best-practice violations in oblivious_http_api_client_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61328"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61328",
+    "url": "https://github.com/brave/brave-browser/issues/61328"
+   },
+   {
+    "label": "brave-core#42088",
+    "url": "https://github.com/brave/brave-core/pull/42088"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:36Z",
+   "state reason: completed"
+  ],
+  "id": "217019e2004226bd",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:36Z",
+  "title": "Closed (completed): Test best-practice violations in eth_request_helper_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61403"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61403",
+    "url": "https://github.com/brave/brave-browser/issues/61403"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:36Z",
+   "state reason: completed"
+  ],
+  "id": "e744ea7febdb80b5",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:35Z",
+  "title": "Closed (completed): Test best-practice violations in simple_hash_client_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61187"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61187",
+    "url": "https://github.com/brave/brave-browser/issues/61187"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:35Z",
+   "state reason: completed"
+  ],
+  "id": "8b30f5b383502f13",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:34Z",
+  "title": "Closed (completed): Test best-practice violations in json_rpc_response_parser_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61171"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61171",
+    "url": "https://github.com/brave/brave-browser/issues/61171"
+   },
+   {
+    "label": "brave-core#42088",
+    "url": "https://github.com/brave/brave-core/pull/42088"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:34Z",
+   "state reason: completed"
+  ],
+  "id": "169839bb8e46b54a",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:34Z",
+  "title": "Closed (completed): Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61172"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61172",
+    "url": "https://github.com/brave/brave-browser/issues/61172"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:34Z",
+   "state reason: completed"
+  ],
+  "id": "b3fb3b0469eb174e",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:33Z",
+  "title": "Closed (completed): Test best-practice violations in cardano_api_impl_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61136"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61136",
+    "url": "https://github.com/brave/brave-browser/issues/61136"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:33Z",
+   "state reason: completed"
+  ],
+  "id": "205f96a882b78d50",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:32Z",
+  "title": "Closed (completed): Test best-practice violations in brave_referrals_service_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61105"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61105",
+    "url": "https://github.com/brave/brave-browser/issues/61105"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:32Z",
+   "state reason: completed"
+  ],
+  "id": "34a1f7346bd37d5c",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:32Z",
+  "title": "Closed (completed): Test best-practice violations in oai_api_client_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61082"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61082",
+    "url": "https://github.com/brave/brave-browser/issues/61082"
+   },
+   {
+    "label": "brave-core#42088",
+    "url": "https://github.com/brave/brave-core/pull/42088"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:32Z",
+   "state reason: completed"
+  ],
+  "id": "7780e4963d373c88",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:32Z",
+  "title": "Closed (completed): Test best-practice violations in engine_consumer_oai_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61080"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61080",
+    "url": "https://github.com/brave/brave-browser/issues/61080"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:32Z",
+   "state reason: completed"
+  ],
+  "id": "dd9ed4d17bbe3838",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:31Z",
+  "title": "Closed (completed): Test best-practice violations in page_content_fetcher_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61070"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61070",
+    "url": "https://github.com/brave/brave-browser/issues/61070"
+   },
+   {
+    "label": "brave-core#42088",
+    "url": "https://github.com/brave/brave-core/pull/42088"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:31Z",
+   "state reason: completed"
+  ],
+  "id": "cbeb676bd331aba9",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "issue-closed",
+  "sourceAt": "2026-11-26T18:21:31Z",
+  "title": "Closed (completed): Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
+  "impact": "Closed as completed; linked PR merged 2026-11-26. Not yet confirmed in a Release build.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61079"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61079",
+    "url": "https://github.com/brave/brave-browser/issues/61079"
+   }
+  ],
+  "evidence": [
+   "closed by bbondy at 2026-11-26T18:21:31Z",
+   "state reason: completed"
+  ],
+  "id": "d7e767ed4aac782a",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "pr-merged",
+  "sourceAt": "2026-11-26T18:21:28Z",
+  "title": "Merged: Fix test best-practice violations across 26 unit-test files",
+  "impact": "Merged into brave-core master on 2026-11-26. Only builds cut from master after this merge (Nightly first) can contain it; whether a published build does is checked per build (see build presence on the item). Beta and Release get it only after a branch cut or an uplift.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-core#42088"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-core#42088",
+    "url": "https://github.com/brave/brave-core/pull/42088"
+   }
+  ],
+  "evidence": [
+   "merged 2026-11-26T18:21:28Z",
+   "repository brave/brave-core",
+   "base branch master"
+  ],
+  "id": "291a181536430a46",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in system_vpn_connection_api_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61118"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61118",
+    "url": "https://github.com/brave/brave-browser/issues/61118"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "115467617b0a3de0",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in playlist_background_web_contents_helper_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61297"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61297",
+    "url": "https://github.com/brave/brave-browser/issues/61297"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "12fff758120bd1c9",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in brave_vpn_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61120"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61120",
+    "url": "https://github.com/brave/brave-browser/issues/61120"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "1edba52524c3a4be",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in onboarding_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61295"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61295",
+    "url": "https://github.com/brave/brave-browser/issues/61295"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "333193e6a0910b5e",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in ai_chat_credential_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61071"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61071",
+    "url": "https://github.com/brave/brave-browser/issues/61071"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "348b8f1fd9dd8c17",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_ironwood_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61205"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61205",
+    "url": "https://github.com/brave/brave-browser/issues/61205"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "4cd4c6c23bf64484",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in conversation_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61078"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61078",
+    "url": "https://github.com/brave/brave-browser/issues/61078"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "4f8d9ba58f477753",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in ntp_background_images_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61233"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61233",
+    "url": "https://github.com/brave/brave-browser/issues/61233"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "62366bb88502cf2b",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in v2/brave_vpn_service_impl_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61121"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61121",
+    "url": "https://github.com/brave/brave-browser/issues/61121"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "63ebf843a95def6d",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in polkadot_wallet_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61185"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61185",
+    "url": "https://github.com/brave/brave-browser/issues/61185"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "817baf73f4d1cd58",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61210"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61210",
+    "url": "https://github.com/brave/brave-browser/issues/61210"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "846d8e21ff7795d0",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in playlist_background_web_contents_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61298"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61298",
+    "url": "https://github.com/brave/brave-browser/issues/61298"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "941a38b99e7b2ad1",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_orchard_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61208"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61208",
+    "url": "https://github.com/brave/brave-browser/issues/61208"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "a1584fa88ea453db",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in playlist_service_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61049"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61049",
+    "url": "https://github.com/brave/brave-browser/issues/61049"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "b2a9a94166789af2",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in brave_wallet_handler_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61059"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61059",
+    "url": "https://github.com/brave/brave-browser/issues/61059"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "b3b3fef0bf0a0c08",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in tx_state_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61201"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61201",
+    "url": "https://github.com/brave/brave-browser/issues/61201"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "b6d0391230de816f",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_transparent_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61209"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61209",
+    "url": "https://github.com/brave/brave-browser/issues/61209"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "bad3ecd756d535b7",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_orchard_to_ironwood_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61207"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61207",
+    "url": "https://github.com/brave/brave-browser/issues/61207"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "ca94d6cbbb141592",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in zcash_create_ironwood_to_transparent_transaction_task_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61206"
+  ],
+  "topic": "deps",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61206",
+    "url": "https://github.com/brave/brave-browser/issues/61206"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "cbea363d4150807b",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-26T13:39:47Z",
+  "title": "In Android Nightly 1.102.43: Test best-practice violations in polkadot_tx_manager_unittest.cc",
+  "impact": "The merged code (brave-core#41957) is now part of the Android Nightly build 1.102.43. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61182"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61182",
+    "url": "https://github.com/brave/brave-browser/issues/61182"
+   }
+  ],
+  "evidence": [
+   "in v1.102.33 (GitHub compare v1.102.33...9a00fe81: behind); later builds of the same history include it"
+  ],
+  "id": "d76b1522c46a7c6b",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "observed"
+ },
+ {
   "kind": "advisory",
   "sourceAt": "2026-11-25T22:56:25Z",
   "title": "Security advisory GHSA-jjjw-r66r-mjgf: Nested poolTypes in TransparentAddressBlockFilter -> bypasses the pre-decode element limit in lightwalletd 0.6.2",
@@ -28943,6 +29890,64 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:17:43Z",
+  "title": "New issue: Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
+  "impact": "Opened in brave-browser#61404. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61404"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61404",
+    "url": "https://github.com/brave/brave-browser/issues/61404"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:17:43Z"
+  ],
+  "id": "79fe5580529597af",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T17:17:04Z",
+  "title": "New issue: Test best-practice violations in eth_request_helper_unittest.cc",
+  "impact": "Opened in brave-browser#61403. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61403"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61403",
+    "url": "https://github.com/brave/brave-browser/issues/61403"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T17:17:04Z"
+  ],
+  "id": "dbef2387d2ba860f",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T17:16:43Z",
   "title": "New issue: Test best-practice violations in eth_address_unittest.cc",
   "impact": "Opened in brave-browser#61402. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -29314,6 +30319,35 @@
   ],
   "id": "02fe68560502d125",
   "detectedAt": "2026-11-12T18:21:26.613Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T16:40:15Z",
+  "title": "New issue: Test best-practice violations in oblivious_http_api_client_unittest.cc",
+  "impact": "Opened in brave-browser#61328. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61328"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61328",
+    "url": "https://github.com/brave/brave-browser/issues/61328"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T16:40:15Z"
+  ],
+  "id": "229eac6dfe01249b",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
   "basis": "backfill"
  },
  {
@@ -30958,6 +31992,35 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:20:56Z",
+  "title": "New issue: Test best-practice violations in simple_hash_client_unittest.cc",
+  "impact": "Opened in brave-browser#61187. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61187"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61187",
+    "url": "https://github.com/brave/brave-browser/issues/61187"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:20:56Z"
+  ],
+  "id": "cab1f159f7f36d38",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T15:20:28Z",
   "title": "New issue: Test best-practice violations in scrypt_utils_unittest.cc",
   "impact": "Opened in brave-browser#61186. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -31191,6 +32254,64 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:14:16Z",
+  "title": "New issue: Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
+  "impact": "Opened in brave-browser#61172. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61172"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61172",
+    "url": "https://github.com/brave/brave-browser/issues/61172"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:14:16Z"
+  ],
+  "id": "852911798f1dffb9",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T15:13:57Z",
+  "title": "New issue: Test best-practice violations in json_rpc_response_parser_unittest.cc",
+  "impact": "Opened in brave-browser#61171. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61171"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61171",
+    "url": "https://github.com/brave/brave-browser/issues/61171"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T15:13:57Z"
+  ],
+  "id": "9a36c13a60c1dbae",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T15:13:20Z",
   "title": "New issue: Test best-practice violations in json_keystore_parser_unittest.cc",
   "impact": "Opened in brave-browser#61170. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -31262,6 +32383,35 @@
   ],
   "id": "d91ee9b0f7663502",
   "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:56:31Z",
+  "title": "New issue: Test best-practice violations in cardano_api_impl_unittest.cc",
+  "impact": "Opened in brave-browser#61136. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61136"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61136",
+    "url": "https://github.com/brave/brave-browser/issues/61136"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:56:31Z"
+  ],
+  "id": "3210a363d547df52",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
   "basis": "backfill"
  },
  {
@@ -31571,6 +32721,35 @@
   ],
   "id": "d343edcfac7cbee0",
   "detectedAt": "2026-11-13T09:32:10.030Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:41:31Z",
+  "title": "New issue: Test best-practice violations in brave_referrals_service_unittest.cc",
+  "impact": "Opened in brave-browser#61105. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61105"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61105",
+    "url": "https://github.com/brave/brave-browser/issues/61105"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:41:31Z"
+  ],
+  "id": "2f2b69fc1ad9f8b7",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
   "basis": "backfill"
  },
  {
@@ -31950,6 +33129,93 @@
  },
  {
   "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:31:03Z",
+  "title": "New issue: Test best-practice violations in oai_api_client_unittest.cc",
+  "impact": "Opened in brave-browser#61082. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61082"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61082",
+    "url": "https://github.com/brave/brave-browser/issues/61082"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:31:03Z"
+  ],
+  "id": "fe3362e81ef0f12e",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:30:37Z",
+  "title": "New issue: Test best-practice violations in engine_consumer_oai_unittest.cc",
+  "impact": "Opened in brave-browser#61080. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61080"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61080",
+    "url": "https://github.com/brave/brave-browser/issues/61080"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:30:37Z"
+  ],
+  "id": "77dc3cea6a86258f",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:30:07Z",
+  "title": "New issue: Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
+  "impact": "Opened in brave-browser#61079. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61079"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61079",
+    "url": "https://github.com/brave/brave-browser/issues/61079"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:30:07Z"
+  ],
+  "id": "5338e48b11131cba",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
   "sourceAt": "2026-11-05T14:29:45Z",
   "title": "New issue: Test best-practice violations in conversation_api_client_unittest.cc",
   "impact": "Opened in brave-browser#61078. This is a report or request, not a confirmed change to Brave Wallet.",
@@ -32077,6 +33343,35 @@
   ],
   "id": "dc1a3b2137fe4196",
   "detectedAt": "2026-11-23T20:15:02.998Z",
+  "basis": "backfill"
+ },
+ {
+  "kind": "item-tracked",
+  "sourceAt": "2026-11-05T14:26:02Z",
+  "title": "New issue: Test best-practice violations in page_content_fetcher_unittest.cc",
+  "impact": "Opened in brave-browser#61070. This is a report or request, not a confirmed change to Brave Wallet.",
+  "highlight": null,
+  "itemIds": [
+   "brave/brave-browser#61070"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "android",
+   "desktop",
+   "ios"
+  ],
+  "channel": null,
+  "links": [
+   {
+    "label": "brave-browser#61070",
+    "url": "https://github.com/brave/brave-browser/issues/61070"
+   }
+  ],
+  "evidence": [
+   "created 2026-11-05T14:26:02Z"
+  ],
+  "id": "aa5463dfdc47e98a",
+  "detectedAt": "2026-11-26T21:34:05.789Z",
   "basis": "backfill"
  },
  {
@@ -48693,34 +49988,6 @@
    "created 2025-11-27T07:22:00Z"
   ],
   "id": "fefbcbd0bf3902a1",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-11-26T13:29:28Z",
-  "title": "New issue: Replace std::unique_ptr<std::string> with std::optional<std::string> in SimpleURLLoader::DownloadToString* callbacks",
-  "impact": "Opened in brave-browser#51098. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#51098"
-  ],
-  "topic": "general",
-  "platforms": [
-   "desktop",
-   "ios"
-  ],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#51098",
-    "url": "https://github.com/brave/brave-browser/issues/51098"
-   }
-  ],
-  "evidence": [
-   "created 2025-11-26T13:29:28Z"
-  ],
-  "id": "81637b627f48a639",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
  }

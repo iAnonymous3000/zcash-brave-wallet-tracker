@@ -1,9 +1,53 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-26T10:55:58.810Z",
+ "retrievedAt": "2026-11-26T21:34:05.789Z",
  "data": {
   "releases": [
+   {
+    "tag": "v1.102.44",
+    "version": "1.102.44",
+    "channel": "nightly",
+    "name": "Nightly v1.102.44 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-26T17:11:27Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.44",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "windows"
+    ],
+    "prereleaseFlag": true
+   },
+   {
+    "tag": "v1.102.43",
+    "version": "1.102.43",
+    "channel": "nightly",
+    "name": "Nightly v1.102.43 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-26T13:39:47Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.43",
+    "assetPlatforms": [
+     "android"
+    ],
+    "prereleaseFlag": false
+   },
+   {
+    "tag": "v1.102.42",
+    "version": "1.102.42",
+    "channel": "nightly",
+    "name": "Nightly v1.102.42 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-26T13:24:14Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.42",
+    "assetPlatforms": [
+     "ios",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": false
+   },
    {
     "tag": "v1.102.41",
     "version": "1.102.41",
@@ -9184,14 +9228,14 @@
    {
     "channel": "nightly",
     "platform": "all",
-    "version": "1.102.41",
-    "tag": "v1.102.41",
-    "publishedAt": "2026-11-26T01:08:23Z",
-    "basis": "GitHub release name \"Nightly v1.102.41 (Chromium 159.0.8154.34)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.41"
+    "version": "1.102.44",
+    "tag": "v1.102.44",
+    "publishedAt": "2026-11-26T17:11:27Z",
+    "basis": "GitHub release name \"Nightly v1.102.44 (Chromium 159.0.8154.34)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.44"
    }
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-26T10:55:58.810Z"
+ "completeAt": "2026-11-26T21:34:05.789Z"
 }
