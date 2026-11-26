@@ -1,5 +1,5 @@
 {
- "at": "2026-11-26T00:22:22.397Z",
+ "at": "2026-11-26T10:55:58.810Z",
  "rulesVersion": 17,
  "builds": {
   "brave/brave-browser#61210": {
@@ -7023,7 +7023,7 @@
    }
   },
   "android/release": {
-   "tag": "v1.100.58",
+   "tag": "v1.100.59",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7039,7 +7039,7 @@
    }
   },
   "android/beta": {
-   "tag": "v1.101.55",
+   "tag": "v1.101.57",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
@@ -7047,7 +7047,7 @@
    }
   },
   "ios/beta": {
-   "tag": "v1.101.55",
+   "tag": "v1.101.57",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,
