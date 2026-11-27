@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-11-26T21:34:05.789Z",
+ "generatedAt": "2026-11-27T04:16:35.729Z",
  "mode": "live",
  "site": {
   "title": "Zcash × Brave Wallet Tracker",
@@ -108,7 +108,7 @@
     "nightly-windows-x86": "1.102.42",
     "nightly-windows-arm64": "1.102.42",
     "nightly-macos-x64": "1.102.42",
-    "nightly-macos-arm64": "1.102.42",
+    "nightly-macos-arm64": "1.102.44",
     "nightly-linux-x64": "1.102.38",
     "nightly-linux-arm64": "1.102.42"
    }
@@ -144,6 +144,1568 @@
   "1.102": "Nightly"
  },
  "groups": [
+  {
+   "id": "brave/brave-browser#61070",
+   "lead": "brave/brave-browser#61070",
+   "title": "Test best-practice violations in page_content_fetcher_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61070",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61070"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61079",
+   "lead": "brave/brave-browser#61079",
+   "title": "Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61079",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61079"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61080",
+   "lead": "brave/brave-browser#61080",
+   "title": "Test best-practice violations in engine_consumer_oai_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61080",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61080"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61082",
+   "lead": "brave/brave-browser#61082",
+   "title": "Test best-practice violations in oai_api_client_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61082",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61082"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61105",
+   "lead": "brave/brave-browser#61105",
+   "title": "Test best-practice violations in brave_referrals_service_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61105",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61105"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61136",
+   "lead": "brave/brave-browser#61136",
+   "title": "Test best-practice violations in cardano_api_impl_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61136",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61136"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [
+     "brave/brave-core#41400"
+    ],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61171",
+   "lead": "brave/brave-browser#61171",
+   "title": "Test best-practice violations in json_rpc_response_parser_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61171",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61171"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61172",
+   "lead": "brave/brave-browser#61172",
+   "title": "Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61172",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61172"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61187",
+   "lead": "brave/brave-browser#61187",
+   "title": "Test best-practice violations in simple_hash_client_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61187",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61187"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61328",
+   "lead": "brave/brave-browser#61328",
+   "title": "Test best-practice violations in oblivious_http_api_client_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61328",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61328"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61403",
+   "lead": "brave/brave-browser#61403",
+   "title": "Test best-practice violations in eth_request_helper_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61403",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61403"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
+  {
+   "id": "brave/brave-browser#61404",
+   "lead": "brave/brave-browser#61404",
+   "title": "Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
+   "url": "https://github.com/brave/brave-browser/issues/61404",
+   "topic": {
+    "id": "testing",
+    "name": "Testnet, tests & tooling"
+   },
+   "relevance": "direct",
+   "mobileOnly": false,
+   "members": {
+    "issues": [
+     "brave/brave-browser#61404"
+    ],
+    "masterPrs": [
+     "brave/brave-core#42088"
+    ],
+    "uplifts": [],
+    "duplicates": [],
+    "mentions": [],
+    "children": [],
+    "epic": null
+   },
+   "status": {
+    "kind": "issue",
+    "issueState": {
+     "state": "closed",
+     "reason": "completed",
+     "label": "Closed (completed)"
+    },
+    "duplicate": null,
+    "implementation": {
+     "state": "merged",
+     "mergedAt": "2026-11-26T18:21:28Z",
+     "prs": [
+      "brave/brave-core#42088"
+     ]
+    },
+    "uplifts": [],
+    "builds": [
+     {
+      "platform": "desktop",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "release",
+      "version": "1.100.59",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "beta",
+      "version": "1.101.57",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "desktop",
+      "channel": "nightly",
+      "version": "1.102.38",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "android",
+      "channel": "nightly",
+      "version": "1.102.43",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     },
+     {
+      "platform": "ios",
+      "channel": "nightly",
+      "version": "1.102.42",
+      "included": false,
+      "via": "brave/brave-core#42088",
+      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
+     }
+    ],
+    "releaseNotes": [],
+    "qa": {
+     "required": false,
+     "passed": [],
+     "failed": [],
+     "blocked": false
+    },
+    "milestone": null,
+    "platforms": [
+     "android",
+     "desktop",
+     "ios"
+    ],
+    "owners": [],
+    "authors": [
+     "netzenbot"
+    ],
+    "lastUpdated": "2026-11-27T00:05:50Z",
+    "regression": false,
+    "security": false,
+    "stage": "merged",
+    "stageLabel": "Merged, not yet in a checked build"
+   }
+  },
   {
    "id": "brave/brave-browser#61221",
    "lead": "brave/brave-browser#61221",
@@ -646,1568 +2208,6 @@
     "security": false,
     "stage": "open",
     "stageLabel": "Open"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61070",
-   "lead": "brave/brave-browser#61070",
-   "title": "Test best-practice violations in page_content_fetcher_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61070",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61070"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61079",
-   "lead": "brave/brave-browser#61079",
-   "title": "Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61079",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61079"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61080",
-   "lead": "brave/brave-browser#61080",
-   "title": "Test best-practice violations in engine_consumer_oai_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61080",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61080"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61082",
-   "lead": "brave/brave-browser#61082",
-   "title": "Test best-practice violations in oai_api_client_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61082",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61082"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61105",
-   "lead": "brave/brave-browser#61105",
-   "title": "Test best-practice violations in brave_referrals_service_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61105",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61105"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61136",
-   "lead": "brave/brave-browser#61136",
-   "title": "Test best-practice violations in cardano_api_impl_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61136",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61136"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [
-     "brave/brave-core#41400"
-    ],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61171",
-   "lead": "brave/brave-browser#61171",
-   "title": "Test best-practice violations in json_rpc_response_parser_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61171",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61171"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61172",
-   "lead": "brave/brave-browser#61172",
-   "title": "Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61172",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61172"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61187",
-   "lead": "brave/brave-browser#61187",
-   "title": "Test best-practice violations in simple_hash_client_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61187",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61187"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61328",
-   "lead": "brave/brave-browser#61328",
-   "title": "Test best-practice violations in oblivious_http_api_client_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61328",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61328"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61403",
-   "lead": "brave/brave-browser#61403",
-   "title": "Test best-practice violations in eth_request_helper_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61403",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61403"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
-   }
-  },
-  {
-   "id": "brave/brave-browser#61404",
-   "lead": "brave/brave-browser#61404",
-   "title": "Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
-   "url": "https://github.com/brave/brave-browser/issues/61404",
-   "topic": {
-    "id": "testing",
-    "name": "Testnet, tests & tooling"
-   },
-   "relevance": "direct",
-   "mobileOnly": false,
-   "members": {
-    "issues": [
-     "brave/brave-browser#61404"
-    ],
-    "masterPrs": [
-     "brave/brave-core#42088"
-    ],
-    "uplifts": [],
-    "duplicates": [],
-    "mentions": [],
-    "children": [],
-    "epic": null
-   },
-   "status": {
-    "kind": "issue",
-    "issueState": {
-     "state": "closed",
-     "reason": "completed",
-     "label": "Closed (completed)"
-    },
-    "duplicate": null,
-    "implementation": {
-     "state": "merged",
-     "mergedAt": "2026-11-26T18:21:28Z",
-     "prs": [
-      "brave/brave-core#42088"
-     ]
-    },
-    "uplifts": [],
-    "builds": [
-     {
-      "platform": "desktop",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "release",
-      "version": "1.100.59",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "beta",
-      "version": "1.101.57",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "desktop",
-      "channel": "nightly",
-      "version": "1.102.38",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "android",
-      "channel": "nightly",
-      "version": "1.102.43",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     },
-     {
-      "platform": "ios",
-      "channel": "nightly",
-      "version": "1.102.42",
-      "included": false,
-      "via": "brave/brave-core#42088",
-      "basis": "not in v1.102.44 (merged 2026-11-26T18:21Z, after v1.102.44 was published); earlier builds cannot include it"
-     }
-    ],
-    "releaseNotes": [],
-    "qa": {
-     "required": false,
-     "passed": [],
-     "failed": [],
-     "blocked": false
-    },
-    "milestone": null,
-    "platforms": [
-     "android",
-     "desktop",
-     "ios"
-    ],
-    "owners": [],
-    "authors": [
-     "netzenbot"
-    ],
-    "lastUpdated": "2026-11-26T18:29:58Z",
-    "regression": false,
-    "security": false,
-    "stage": "merged",
-    "stageLabel": "Merged, not yet in a checked build"
    }
   },
   {
@@ -116629,7 +116629,7 @@
    "stateReason": null,
    "isDraft": false,
    "createdAt": "2026-11-26T04:01:03Z",
-   "updatedAt": "2026-11-26T18:21:28Z",
+   "updatedAt": "2026-11-27T00:05:50Z",
    "closedAt": "2026-11-26T18:21:28Z",
    "mergedAt": "2026-11-26T18:21:28Z",
    "mergeCommitSha": "1080265328f48ecc57fee94860700f5e7a7b08b4",
@@ -116710,7 +116710,7 @@
    ],
    "relevance": "direct",
    "matchedTerms": [],
-   "retrievedAt": "2026-11-26T21:34:05.789Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "timelineCount": 3
   },
   "brave/brave-core#41957": {
@@ -220557,7 +220557,7 @@
      "text": "Updated UI for \"Confirm Send\" panel. (#49235)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L747",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220569,7 +220569,7 @@
      "text": "Enabled Zcash by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L770",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220581,7 +220581,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L494",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220593,7 +220593,7 @@
      "text": "Fixed token visibility changes between the \"Portfolio\" page and panel views. (#51540)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L672",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220605,7 +220605,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L885",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220617,7 +220617,7 @@
      "text": "Added \"Out of sync\" alert and \"Sync Account Status\" warning to allow users to sync their shielded Zcash account. (#42851)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1259",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220629,7 +220629,7 @@
      "text": "Added Zcash shielded support on the \"Deposit\" screen. (#45185)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1103",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220641,7 +220641,7 @@
      "text": "Fixed issue where disabling the Zcash flag disabled Cardano account creation in the \"Create Account\" modal. (#50001)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L696",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220653,7 +220653,7 @@
      "text": "Updated ZCash endpoint URL. (#38782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1782",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220665,7 +220665,7 @@
      "text": "Updated \"Confirm Shield\" panel UI for ZEC Shield transactions. (#49621)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L751",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220677,7 +220677,7 @@
      "text": "Added support for Zcash Testnet. (#50116)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L634",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220689,7 +220689,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1717",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220701,7 +220701,7 @@
      "text": "Updated wallet to reject negative Zcash \"Send\" amounts before review. (#58755)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L9",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220713,7 +220713,7 @@
      "text": "Added an \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L430",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220725,7 +220725,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Send\" screen. (#41986)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1312",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220737,7 +220737,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L304",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220749,7 +220749,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L408",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220761,7 +220761,7 @@
      "text": "Added support for BTC Ledger hardware accounts. (#38447)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1379",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220773,7 +220773,7 @@
      "text": "Improved display of ZEC addresses and additional details when using dark theme. (#35827)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1638",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220785,7 +220785,7 @@
      "text": "Enabled ZCash feature flag by default. (#48171)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L305",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220797,7 +220797,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L790",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220809,7 +220809,7 @@
      "text": "Added a \"Shield Funds\" button to the token list item dropdown for ZEC tokens. (#46596)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L972",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220821,7 +220821,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L669",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220833,7 +220833,7 @@
      "text": "Added \"Bridge\" buttons for BTC, ZEC and ADA. (#52555)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L460",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220845,7 +220845,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L973",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220857,7 +220857,7 @@
      "text": "Fixed casing for Zcash on the \"Accounts\" page. (#43278)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1261",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220869,7 +220869,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L66",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220881,7 +220881,7 @@
      "text": "Implemented status checks for \"Gate3\" swaps. (#52229)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L498",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220893,7 +220893,7 @@
      "text": "Implemented ZCash Shielded account modal. (#41780)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1384",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220905,7 +220905,7 @@
      "text": "Fixed issue where Zcash Transparent address was the only address copied on the \"Deposit\" screen. (#49978)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L798",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220917,7 +220917,7 @@
      "text": "Updated Zcash library to 0.14. (#56404)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L302",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220929,7 +220929,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L79",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220941,7 +220941,7 @@
      "text": "Added a \"Memo\" field to the Zcash transaction's \"Confirm Transaction\" screen. (#42078)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1311",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220953,7 +220953,7 @@
      "text": "Updated wallet to reject incorrect Zcash account birthday height. (#58757)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L8",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220965,7 +220965,7 @@
      "text": "Added Zcash shielded support. (#44432)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1198",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220977,7 +220977,7 @@
      "text": "Added \"Unshield funds\" button on the token menu. (#53718)",
      "permalink": "https://github.com/brave/brave-browser/blob/e7c75b7be38cf68d67b41226396bcd840476dae2/CHANGELOG_iOS.md#L139",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -220989,7 +220989,7 @@
      "text": "Added \"Shielded\" label to all shielded ZEC tokens in Brave Wallet. (#42285)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1308",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221001,7 +221001,7 @@
      "text": "Removed the \"Edit\" gas button for Zcash transactions. (#45748)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1040",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221013,7 +221013,7 @@
      "text": "Removed \"NFT\" tab for Filecoin account view. (#33992)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L367",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221025,7 +221025,7 @@
      "text": "Added a \"Shield Account\" alert on the \"Account Details\" panel for Zcash accounts. (#46598)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L792",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221037,7 +221037,7 @@
      "text": "Fixed issue where transactions could be stuck in pending state in certain cases. (#56490)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L250",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221049,7 +221049,7 @@
      "text": "Fixed ZCash balance resolution issue. (#40635)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1606",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221061,7 +221061,7 @@
      "text": "Added \"SafeSign\" for \"Gate3\" swaps. (#51936)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L495",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221073,7 +221073,7 @@
      "text": "Enabled Zcash support by default. (#36613)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L169",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221085,7 +221085,7 @@
      "text": "Fixed unnecessary \"Shield\" and \"Unshield\" warnings. (#51762)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L569",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221097,7 +221097,7 @@
      "text": "Added support for \"NEAR Intents\" swap provider via \"Gate3\". (#51720)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L492",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221109,7 +221109,7 @@
      "text": "Enabled Zcash Ironwood support by default. (#56872)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L7",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221133,7 +221133,7 @@
      "text": "Added a Brave proxy for Zcash mainnet endpoint. (#46266)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L974",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221145,7 +221145,7 @@
      "text": "Removed \"Export\" option for both Zcash and BTC accounts. (#35849)",
      "permalink": "https://github.com/brave/brave-browser/blob/4771aa10a14b5f8cfb6448e60b3d4648d9d7eaf5/CHANGELOG_DESKTOP_ARCHIVE.md#L248",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221157,7 +221157,7 @@
      "text": "Added \"Reset ZCash sync state\" setting under brave://settings/web3. (#44782)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1102",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221169,7 +221169,7 @@
      "text": "Fixed panel crash which occurred when attempting to lookup EIP1159 estimates for non EVM or FIL transactions. (#38970)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1646",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221181,7 +221181,7 @@
      "text": "Added Zcash \"Deposit\" modal. (#42221)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1307",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221193,7 +221193,7 @@
      "text": "Added the ability to \"Reset account birthday\" for Zcash Shielded account. (#55611)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L125",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221205,7 +221205,7 @@
      "text": "Added \"View on block explorer\" option to the \"Account Details\" menu. (#39655)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1624",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221217,7 +221217,7 @@
      "text": "Fixed \"Send\" transactions not working for transparent address in certain scenarios. (#42951)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1406",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221229,7 +221229,7 @@
      "text": "Updated Zcash to work in multiple profiles. (#44991 & #55374)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L357",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221241,7 +221241,7 @@
      "text": "Fixed clicking on the Zcash address loading the transaction page instead of address page on the block explorer. (#51964)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L501",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221253,7 +221253,7 @@
      "text": "Fixed missing header for BTC and Zcash on the \"Deposit\" screen. (#41315)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1145",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221265,7 +221265,7 @@
      "text": "Added a loading spinner to the \"Select account\" prompt when address is being generated for BTC or ZCash. (#38931)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1626",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221277,7 +221277,7 @@
      "text": "Fixed issue where Zcash native token may not be displayed on some wallets. (#46306)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L1106",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221289,7 +221289,7 @@
      "text": "Added the ability to import BTC accounts (BIP84) into Brave Wallet. (#38446)",
      "permalink": "https://github.com/brave/brave-browser/blob/3bad81d31bbc0ebf994d21083166f248e49fa183/CHANGELOG_ANDROID.md#L1281",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221301,7 +221301,7 @@
      "text": "Fixed missing \"Memo\" field on the \"Confirm Send\" screen for Zcash. (#52303)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L607",
      "firstSeenAt": "2026-10-08T14:35:45.102Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221313,7 +221313,7 @@
      "text": "Added support for Zcash deshielding (Shielded -> Transparent) transactions. (#45875)",
      "permalink": "https://github.com/brave/brave-browser/blob/23d9de6dbaa115d4d77d400dd56277da48895fca/CHANGELOG_DESKTOP.md#L556",
      "firstSeenAt": "2026-10-08T14:46:50.765Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     },
     {
@@ -221337,7 +221337,7 @@
      "text": "Added Zcash Ironwood migration banner. (#58493)",
      "permalink": "https://github.com/brave/brave-browser/blob/464668bb1f02ac7d0414e639ec98e61df2bf3892/CHANGELOG_iOS.md#L26",
      "firstSeenAt": "2026-10-14T23:16:08.055Z",
-     "lastSeenAt": "2026-11-26T21:34:05.789Z",
+     "lastSeenAt": "2026-11-27T04:16:35.729Z",
      "goneSince": null
     }
    ],
@@ -227598,7 +227598,7 @@
       "version": "0.15.0",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.15.0",
       "source": "crates.io"
      }
@@ -227643,7 +227643,7 @@
       "version": "0.29.0",
       "source": "path"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.29.0",
       "source": "path"
      }
@@ -227688,7 +227688,7 @@
       "version": "0.10.0",
       "source": "path"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.10.0",
       "source": "path"
      }
@@ -227733,7 +227733,7 @@
       "version": "0.24.0-rc.1",
       "source": "path"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.24.0-rc.1",
       "source": "path"
      }
@@ -227778,7 +227778,7 @@
       "version": "0.4.0",
       "source": "path"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.4.0",
       "source": "path"
      }
@@ -227823,7 +227823,7 @@
       "version": "0.4.1",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.4.1",
       "source": "crates.io"
      }
@@ -227868,7 +227868,7 @@
       "version": "0.7.0",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.7.0",
       "source": "crates.io"
      }
@@ -227913,7 +227913,7 @@
       "version": "0.8.2",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.8.2",
       "source": "crates.io"
      }
@@ -227958,7 +227958,7 @@
       "version": "0.2.1",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.2.1",
       "source": "crates.io"
      }
@@ -228003,7 +228003,7 @@
       "version": "0.3.2",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.3.2",
       "source": "crates.io"
      }
@@ -228048,7 +228048,7 @@
       "version": "0.5.0",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.5.0",
       "source": "crates.io"
      }
@@ -228093,7 +228093,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -228138,7 +228138,7 @@
       "version": "0.5.1",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.5.1",
       "source": "crates.io"
      }
@@ -228183,7 +228183,7 @@
       "version": "0.1.0",
       "source": "crates.io"
      },
-     "v1.102.44 (github/nightly)": {
+     "v1.102.45 (github/nightly)": {
       "version": "0.1.0",
       "source": "crates.io"
      }
@@ -228203,7 +228203,7 @@
    "mergeBase": "54efc30cd63252e9d0de69dd14cfcb983eace4c8",
    "mergeBaseDate": "2026-07-12T15:45:08Z",
    "compareUrl": "https://github.com/zcash/librustzcash/compare/main...brave:librustzcash:f01f50d64214278552edbe4a34b9049244ce03c1",
-   "checkedAt": "2026-11-26T21:34:05.789Z"
+   "checkedAt": "2026-11-27T04:16:35.729Z"
   },
   "forkPin": {
    "repo": "brave/librustzcash",
@@ -229678,7 +229678,7 @@
     "updatedAt": "2026-11-18T23:35:48Z",
     "withdrawnAt": null,
     "url": "https://github.com/zcash/librustzcash/security/advisories/GHSA-4q7w-cx94-55pc",
-    "verdict": "Affects rust:zcash_primitives. At least one checked Brave build resolves a version inside the vulnerable range (master, v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.44) — see details. Not everything could be checked: iOS Release 1.99 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+    "verdict": "Affects rust:zcash_primitives. At least one checked Brave build resolves a version inside the vulnerable range (master, v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.45) — see details. Not everything could be checked: iOS Release 1.99 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
     "verdictDetails": [
      "master: zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
      "v1.100.59 (desktop/release, android/release): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
@@ -229687,7 +229687,7 @@
      "v1.101.57 (desktop/beta, android/beta, ios/beta, github/beta): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
      "v1.102.43 (android/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
      "v1.102.42 (ios/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1",
-     "v1.102.44 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1"
+     "v1.102.45 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is in the vulnerable range <=0.30.1"
     ],
     "affected": true
    },
@@ -230346,7 +230346,7 @@
     "updatedAt": "2026-07-06T21:23:42Z",
     "withdrawnAt": null,
     "url": "https://github.com/advisories/GHSA-ww9q-8r59-xv46",
-    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 7 channel builds (v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.44)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 7 channel builds (v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.44)), but the assessment is incomplete: iOS Release 1.99 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
+    "verdict": "Affects rust:zebrad, rust:halo2_gadgets, rust:orchard, rust:zcash_primitives. Brave's pins of halo2_gadgets, orchard, zcash_primitives are outside the vulnerable ranges at every checked build (master and 7 channel builds (v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.45)); zebrad is not present in Brave's Cargo.lock at any checked build (master and 7 channel builds (v1.100.59, v1.100.60, v1.102.38, v1.101.57, v1.102.43, v1.102.42, v1.102.45)), but the assessment is incomplete: iOS Release 1.99 is not pinned to a brave-core tag (marketing version only), so its Cargo.lock cannot be read. Whether Brave is exposed is unknown. zcash_primitives 0.29.0 is a version label in Brave's librustzcash fork, so comparing it with the vulnerable ranges is nominal: the code need not match the upstream release with that number.",
     "verdictDetails": [
      "master: halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "master: orchard 0.15.0 is outside the vulnerable range < 0.14.0",
@@ -230369,10 +230369,10 @@
      "v1.102.42 (ios/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
      "v1.102.42 (ios/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
      "v1.102.42 (ios/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "v1.102.44 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
-     "v1.102.44 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
-     "v1.102.44 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
-     "zebrad: not present in Brave's Cargo.lock at master; v1.100.59 (desktop/release, android/release); v1.100.60 (github/release); v1.102.38 (desktop/nightly); v1.101.57 (desktop/beta, android/beta, ios/beta, github/beta); v1.102.43 (android/nightly); v1.102.42 (ios/nightly); v1.102.44 (github/nightly)"
+     "v1.102.45 (github/nightly): halo2_gadgets 0.5.0 is outside the vulnerable range < 0.5.0",
+     "v1.102.45 (github/nightly): orchard 0.15.0 is outside the vulnerable range < 0.14.0",
+     "v1.102.45 (github/nightly): zcash_primitives 0.29.0 (version label in Brave's librustzcash fork) is outside the vulnerable range < 0.28.0",
+     "zebrad: not present in Brave's Cargo.lock at master; v1.100.59 (desktop/release, android/release); v1.100.60 (github/release); v1.102.38 (desktop/nightly); v1.101.57 (desktop/beta, android/beta, ios/beta, github/beta); v1.102.43 (android/nightly); v1.102.42 (ios/nightly); v1.102.45 (github/nightly)"
     ],
     "affected": null
    },
@@ -230483,22 +230483,22 @@
      "No zakura packages in brave-core Cargo.lock or DEPS (master); 0 brave-browser/brave-core issue or PR search hit(s) for \"zakura\"."
     ],
     "latest": " Latest release: v1.9.0-rc2.",
-    "metadataReadAt": "2026-11-26T21:34:05.789Z"
+    "metadataReadAt": "2026-11-27T04:16:35.729Z"
    },
    {
     "id": "watch-wallet-libraries",
     "topic": "wallet-libraries",
     "title": "zakura-core/wallet-libraries (pczt, client backend, client sqlite forks)",
     "url": "https://github.com/zakura-core/wallet-libraries",
-    "updatedAt": "2026-11-25T02:18:38Z",
-    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: fix(client-sqlite): owe no memo for notes a one-time key received.",
+    "updatedAt": "2026-11-27T01:18:53Z",
+    "summary": "Renamed forks of librustzcash wallet crates rewired onto Zakura Common; published as release candidates on crates.io. Last commit: deps: rewire shardtree onto the zcashlabs-shardtree fork.",
     "attribution": "Description from the repository README.",
     "braveAdoption": "none-found",
     "braveEvidence": [
      "No wallet-libraries packages in brave-core Cargo.lock or DEPS (master); 5 brave-browser/brave-core issue or PR search hit(s) for \"wallet-libraries\"."
     ],
-    "latest": " Last commit: fix(client-sqlite): owe no memo for notes a one-time key received.",
-    "metadataReadAt": "2026-11-26T21:34:05.789Z"
+    "latest": " Last commit: deps: rewire shardtree onto the zcashlabs-shardtree fork.",
+    "metadataReadAt": "2026-11-27T04:16:35.729Z"
    },
    {
     "id": "watch-zkdragon",
@@ -230544,7 +230544,7 @@
     "zcashDisabled": false,
     "line": 11,
     "url": "https://github.com/brave/gate3/blob/35cb43b85901f661a9da015f1a4642716cf6c9d5/app/api/swap/constants.py#L11",
-    "checkedAt": "2026-11-26T21:34:05.789Z"
+    "checkedAt": "2026-11-27T04:16:35.729Z"
    },
    "studies": [
     {
@@ -230623,12 +230623,12 @@
        "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 159.1.101.57 is outside the version range 139.1.81.129 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42)",
+       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42) / 1.102.44 (159.1.102.44)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.102.38",
-       "reason": "159.1.102.42 (Windows, macOS, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
+       "reason": "159.1.102.44 (macOS arm64) and 159.1.102.42 (Windows, macOS x64, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 139.1.81.129 – 152.*"
       },
       {
        "build": "Android nightly 1.102.43 (159.1.102.43)",
@@ -230686,7 +230686,7 @@
       ]
      },
      "readAt": "2026-11-25T02:31:15.349Z",
-     "verifiedAt": "2026-11-26T21:34:05.789Z"
+     "verifiedAt": "2026-11-27T04:16:35.729Z"
     },
     {
      "file": "ZCashStudy.json5",
@@ -230762,12 +230762,12 @@
        "reason": "platform filter (WINDOWS, MAC, LINUX, ANDROID) excludes iOS; 159.1.101.57 is outside the version range any – 139.1.81.128"
       },
       {
-       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42)",
+       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42) / 1.102.44 (159.1.102.44)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.102.38",
-       "reason": "159.1.102.42 (Windows, macOS, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range any – 139.1.81.128"
+       "reason": "159.1.102.44 (macOS arm64) and 159.1.102.42 (Windows, macOS x64, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range any – 139.1.81.128"
       },
       {
        "build": "Android nightly 1.102.43 (159.1.102.43)",
@@ -230822,7 +230822,7 @@
       ]
      },
      "readAt": "2026-11-25T02:31:15.349Z",
-     "verifiedAt": "2026-11-26T21:34:05.789Z"
+     "verifiedAt": "2026-11-27T04:16:35.729Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -230896,12 +230896,12 @@
        "reason": "159.1.101.57 is outside the version range 146.1.89.116 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42)",
+       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42) / 1.102.44 (159.1.102.44)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.102.38",
-       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 159.1.102.42 (Windows, macOS, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); 159.1.102.44 (macOS arm64) and 159.1.102.42 (Windows, macOS x64, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 146.1.89.116 – 152.*"
       },
       {
        "build": "Android nightly 1.102.43 (159.1.102.43)",
@@ -230955,7 +230955,7 @@
       ]
      },
      "readAt": "2026-11-25T02:31:15.349Z",
-     "verifiedAt": "2026-11-26T21:34:05.789Z"
+     "verifiedAt": "2026-11-27T04:16:35.729Z"
     },
     {
      "file": "iOSWalletWebUIStudy.json5",
@@ -231020,12 +231020,12 @@
        "reason": "channel filter (RELEASE) excludes beta; 159.1.101.57 is outside the version range 147.1.89.144 – 152.*"
       },
       {
-       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42)",
+       "build": "Desktop nightly 1.102.38 (159.1.102.38) / 1.102.42 (159.1.102.42) / 1.102.44 (159.1.102.44)",
        "applies": false,
        "platform": "desktop",
        "channel": "nightly",
        "version": "1.102.38",
-       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 159.1.102.42 (Windows, macOS, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
+       "reason": "platform filter (IOS) excludes Desktop (all 7 OS builds); channel filter (RELEASE) excludes nightly; 159.1.102.44 (macOS arm64) and 159.1.102.42 (Windows, macOS x64, Linux arm64) and 159.1.102.38 (Linux x64) are outside the version range 147.1.89.144 – 152.*"
       },
       {
        "build": "Android nightly 1.102.43 (159.1.102.43)",
@@ -231078,7 +231078,7 @@
       ]
      },
      "readAt": "2026-11-25T02:31:15.349Z",
-     "verifiedAt": "2026-11-26T21:34:05.789Z",
+     "verifiedAt": "2026-11-27T04:16:35.729Z",
      "appliesUnknown": [
       {
        "build": "iOS release 1.99",
@@ -231091,7 +231091,7 @@
     }
    ],
    "studiesCommit": "9fe5620a3eb15da8658f52a6d0fcef0b95e7ee07",
-   "studiesReadAt": "2026-11-26T21:34:05.789Z",
+   "studiesReadAt": "2026-11-27T04:16:35.729Z",
    "studiesDigest": "34ebb4235e99322a6bfb3b2414f312fb15a651732fe88deaec9dc111f93613c0"
   },
   "nextUpgrade": {
@@ -231107,7 +231107,7 @@
    "braveUrl": "https://github.com/brave/librustzcash/blob/f01f50d64214278552edbe4a34b9049244ce03c1/components/zcash_protocol/src/consensus.rs",
    "upstreamHasBranchId": true,
    "upstreamUrl": "https://github.com/zcash/librustzcash/blob/main/components/zcash_protocol/src/consensus.rs",
-   "checkedAt": "2026-11-26T21:34:05.789Z"
+   "checkedAt": "2026-11-27T04:16:35.729Z"
   }
  },
  "community": [
@@ -231121,7 +231121,7 @@
    "lastPostedAt": "2026-09-22T18:01:00.384Z",
    "postsCount": 4,
    "replyCount": 1,
-   "views": 98,
+   "views": 100,
    "closed": false,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231131,7 +231131,7 @@
    "matchedTerms": [
     "zcash"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -231144,7 +231144,7 @@
    "lastPostedAt": "2026-09-22T17:59:20.102Z",
    "postsCount": 4,
    "replyCount": 1,
-   "views": 63,
+   "views": 65,
    "closed": false,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231158,7 +231158,7 @@
     "zcash",
     "ironwood"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -231171,7 +231171,7 @@
    "lastPostedAt": "2026-09-03T13:03:11.396Z",
    "postsCount": 2,
    "replyCount": 0,
-   "views": 45,
+   "views": 46,
    "closed": false,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231185,7 +231185,7 @@
     "zec",
     "ironwood"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -231249,7 +231249,7 @@
    "lastPostedAt": "2026-08-12T13:25:03.012Z",
    "postsCount": 7,
    "replyCount": 4,
-   "views": 144,
+   "views": 147,
    "closed": true,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231263,7 +231263,7 @@
     "zec",
     "ironwood"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": [
     "brave/brave-browser#57861"
    ]
@@ -231309,7 +231309,7 @@
    "lastPostedAt": "2026-06-17T01:40:22.817Z",
    "postsCount": 1,
    "replyCount": 0,
-   "views": 57,
+   "views": 60,
    "closed": true,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231320,7 +231320,7 @@
     "zcash",
     "zec"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -231333,7 +231333,7 @@
    "lastPostedAt": "2026-06-11T14:36:58.120Z",
    "postsCount": 1,
    "replyCount": 0,
-   "views": 49,
+   "views": 50,
    "closed": true,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231343,7 +231343,7 @@
    "matchedTerms": [
     "zcash"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -231356,7 +231356,7 @@
    "lastPostedAt": "2026-06-09T15:50:47.324Z",
    "postsCount": 3,
    "replyCount": 0,
-   "views": 192,
+   "views": 193,
    "closed": true,
    "archived": false,
    "hasAcceptedAnswer": false,
@@ -231370,7 +231370,7 @@
     "zcash",
     "zec"
    ],
-   "retrievedAt": "2026-11-20T03:17:47.955Z",
+   "retrievedAt": "2026-11-27T04:16:35.729Z",
    "linkedTracked": []
   },
   {
@@ -232162,54 +232162,54 @@
    "id": "brave-releases",
    "name": "Brave browser GitHub releases",
    "url": "https://github.com/brave/brave-browser/releases",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
-   "itemCount": 601,
+   "itemCount": 602,
    "requests": 4,
    "limitations": [
     "only the 400 most recent GitHub releases are read each run"
    ],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "community",
    "name": "Brave Community (Discourse) Zcash reports",
    "url": "https://community.brave.app/c/wallet/131",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 36,
-   "requests": 14,
+   "requests": 21,
    "limitations": [
     "Discourse search is relevance-ranked and capped at 10 pages × 50 results per term; topics outside wallet categories are kept only with wallet context"
    ],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "brave-changelogs",
    "name": "Brave platform changelogs (Desktop, Android, iOS)",
    "url": "https://github.com/brave/brave-browser/blob/master/CHANGELOG_DESKTOP.md",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 64,
    "requests": 8,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "brave-services",
    "name": "Brave server-side signals (gate3 swap routing, brave-variations studies)",
    "url": "https://github.com/brave/gate3",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -232219,42 +232219,42 @@
     "Repository state is shown; the deployed service could differ and its deployment time is not public",
     "1 study has builds whose eligibility cannot be determined from public data"
    ],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "brave-deps",
    "name": "Brave Zcash dependency pins (Cargo.lock, DEPS) at channel tags",
    "url": "https://github.com/brave/brave-core/blob/master/third_party/rust/chromium_crates_io/Cargo.lock",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 20,
-   "requests": 21,
+   "requests": 11,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "build-inclusion",
    "name": "Build inclusion (brave-core tag ancestry)",
    "url": "https://github.com/brave/brave-core/tags",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 364,
-   "requests": 0,
+   "requests": 1,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "github-items",
    "name": "GitHub issues & pull requests (brave-browser, brave-core)",
    "url": "https://github.com/brave/brave-browser/issues?q=label%3Afeature%2Fweb3%2Fwallet%2Fzcash",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "partial",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -232266,14 +232266,14 @@
     "some items could not be refreshed this run; their last good copy was kept"
    ],
    "lastCompleteAt": "2026-11-19T00:24:33.476Z",
-   "lastPartialAt": "2026-11-26T21:34:05.789Z"
+   "lastPartialAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "docs",
    "name": "Official docs (Brave Help Center, brave.com)",
    "url": "https://support.brave.app/hc/en-us/categories/360001062531-Wallet",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
@@ -232282,77 +232282,77 @@
    "limitations": [
     "Help Center HTML is behind a Cloudflare challenge for automated clients; the public Zendesk JSON API is used instead"
    ],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "advisories",
    "name": "Security advisories (GitHub Advisory Database, RustSec)",
    "url": "https://github.com/advisories?query=ecosystem%3Arust+zcash",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 35,
    "requests": 23,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "upstream",
    "name": "Upstream Zcash releases (crates.io, lightwalletd, Zaino, lightwallet-protocol, ZIPs)",
    "url": "https://crates.io/crates/orchard",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 192,
    "requests": 32,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "brave-versions",
    "name": "versions.brave.com current version pointers",
    "url": "https://versions.brave.com/",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 9,
    "requests": 28,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "watch",
    "name": "Watch topics (Zakura, wallet-libraries, zkDragon) and Brave adoption checks",
    "url": "https://github.com/zakura-core",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 3,
    "requests": 10,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   },
   {
    "id": "brave-flags",
    "name": "Zcash feature flags in brave-core (features.cc at channel tags)",
    "url": "https://github.com/brave/brave-core/blob/master/components/brave_wallet/common/features.cc",
-   "lastAttemptAt": "2026-11-26T21:34:05.789Z",
-   "lastSuccessAt": "2026-11-26T21:34:05.789Z",
+   "lastAttemptAt": "2026-11-27T04:16:35.729Z",
+   "lastSuccessAt": "2026-11-27T04:16:35.729Z",
    "lastOutcome": "ok",
    "lastError": null,
    "consecutiveFailures": 0,
    "itemCount": 21,
-   "requests": 35,
+   "requests": 13,
    "limitations": [],
-   "lastCompleteAt": "2026-11-26T21:34:05.789Z"
+   "lastCompleteAt": "2026-11-27T04:16:35.729Z"
   }
  ],
  "coverage": {

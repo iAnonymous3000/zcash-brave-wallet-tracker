@@ -1,7 +1,7 @@
 {
  "sourceId": "build-inclusion",
  "schema": 2,
- "retrievedAt": "2026-11-26T21:34:05.789Z",
+ "retrievedAt": "2026-11-27T04:16:35.729Z",
  "data": {
   "byPr": {
    "brave/brave-core#40152": {
@@ -3736,7 +3736,12 @@
    "brave/brave-core#42088": {
     "sha": "1080265328f48ecc57fee94860700f5e7a7b08b4",
     "domain": "master",
-    "minIncluded": null,
+    "minIncluded": {
+     "version": "1.102.45",
+     "tag": "v1.102.45",
+     "checkedAt": "2026-11-27T04:16:35.729Z",
+     "basis": "GitHub compare v1.102.45...10802653: behind"
+    },
     "maxExcluded": {
      "version": "1.102.44",
      "tag": "v1.102.44",
@@ -3799,16 +3804,16 @@
     ]
    },
    {
-    "tag": "v1.102.44",
-    "version": "1.102.44",
-    "publishedAt": "2026-11-26T17:11:27Z",
+    "tag": "v1.102.45",
+    "version": "1.102.45",
+    "publishedAt": "2026-11-27T01:10:53Z",
     "usedBy": [
      "github/nightly"
     ]
    }
   ],
   "pending": 0,
-  "calls": 0
+  "calls": 1
  },
- "completeAt": "2026-11-26T21:34:05.789Z"
+ "completeAt": "2026-11-27T04:16:35.729Z"
 }
