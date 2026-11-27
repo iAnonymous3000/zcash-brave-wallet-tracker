@@ -1,7 +1,27 @@
 {
- "at": "2026-11-27T04:16:35.729Z",
+ "at": "2026-11-27T13:58:21.796Z",
  "rulesVersion": 17,
  "builds": {
+  "brave/brave-browser#61869": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
+  "brave/brave-core#41748": {
+   "desktop/release": null,
+   "android/release": null,
+   "desktop/beta": null,
+   "android/beta": null,
+   "ios/beta": null,
+   "desktop/nightly": null,
+   "android/nightly": null,
+   "ios/nightly": null
+  },
   "brave/brave-browser#61070": {
    "desktop/release": false,
    "android/release": false,
@@ -2462,27 +2482,7 @@
    "android/nightly": true,
    "ios/nightly": true
   },
-  "brave/brave-browser#61869": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
   "brave/brave-browser#61975": {
-   "desktop/release": null,
-   "android/release": null,
-   "desktop/beta": null,
-   "android/beta": null,
-   "ios/beta": null,
-   "desktop/nightly": null,
-   "android/nightly": null,
-   "ios/nightly": null
-  },
-  "brave/brave-core#41748": {
    "desktop/release": null,
    "android/release": null,
    "desktop/beta": null,
@@ -7175,7 +7175,7 @@
    }
   },
   "desktop/nightly": {
-   "tag": "v1.102.38",
+   "tag": "v1.102.42",
    "values": {
     "kBraveWalletZCashFeature": true,
     "kZCashIronwoodEnabled": true,

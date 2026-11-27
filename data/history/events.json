@@ -49965,30 +49965,5 @@
   "id": "5cd1b3d34931c6e5",
   "detectedAt": "2026-10-08T14:35:45.102Z",
   "basis": "backfill"
- },
- {
-  "kind": "item-tracked",
-  "sourceAt": "2025-11-27T07:22:00Z",
-  "title": "New issue: remove unnecessary Brave Wallet flags now that BTC and ZEC have base level support",
-  "impact": "Opened in brave-browser#51116. This is a report or request, not a confirmed change to Brave Wallet.",
-  "highlight": null,
-  "itemIds": [
-   "brave/brave-browser#51116"
-  ],
-  "topic": "general",
-  "platforms": [],
-  "channel": null,
-  "links": [
-   {
-    "label": "brave-browser#51116",
-    "url": "https://github.com/brave/brave-browser/issues/51116"
-   }
-  ],
-  "evidence": [
-   "created 2025-11-27T07:22:00Z"
-  ],
-  "id": "fefbcbd0bf3902a1",
-  "detectedAt": "2026-10-08T14:35:45.102Z",
-  "basis": "backfill"
  }
 ]

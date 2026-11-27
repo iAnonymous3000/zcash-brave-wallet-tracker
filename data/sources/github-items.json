@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-27T04:16:35.729Z",
+ "retrievedAt": "2026-11-27T13:58:21.796Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -45363,6 +45363,75 @@
     ],
     "retrievedAt": "2026-10-08T15:20:14.214Z"
    },
+   "brave/brave-core#41826": {
+    "id": "brave/brave-core#41826",
+    "repo": "brave/brave-core",
+    "number": 41826,
+    "kind": "pr",
+    "title": "[Wallet] Resolve ENS names for the send network's coin",
+    "url": "https://github.com/brave/brave-core/pull/41826",
+    "state": "open",
+    "stateReason": null,
+    "isDraft": true,
+    "createdAt": "2026-11-18T15:17:26Z",
+    "updatedAt": "2026-11-27T05:44:32Z",
+    "closedAt": null,
+    "mergedAt": null,
+    "mergeCommitSha": null,
+    "baseRef": "master",
+    "headRef": "ens-multichain-send-ui-ur",
+    "author": "arbuthnot-eth",
+    "assignees": [],
+    "labels": [],
+    "milestone": null,
+    "bodyExcerpt": "- Resolves https://github.com/brave/brave-browser/issues/61869 Depends on brave/brave-core#41748 and brave/brave-core#41825, and includes their commits until they merge. Only the last commit, \"Resolve ENS names for the send network's coin\", is new here. Opened as a draft until those land. Update: brave/brave-core#40950 (ENSIP-23 Universal Resolver) has merged, so this branch is now rebased onto master and no longer carries its commits. PR 3 of 3 from the design doc. Today…",
+    "bodyRefs": [
+     "brave/brave-browser#61869",
+     "brave/brave-core#41748",
+     "brave/brave-core#41825",
+     "brave/brave-core#40950"
+    ],
+    "resolvesRefs": [
+     "brave/brave-browser#61869"
+    ],
+    "upliftOfRefs": [],
+    "issueType": null,
+    "branchRefs": [],
+    "commentDuplicateOf": null,
+    "closingRefs": [
+     "brave/brave-browser#61869"
+    ],
+    "subIssues": [],
+    "parent": null,
+    "timeline": [
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-18T15:17:37Z",
+      "actor": "arbuthnot-eth",
+      "detail": "Issue",
+      "ref": "brave/brave-browser#61869",
+      "willClose": false
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-27T05:05:23Z",
+      "actor": "arbuthnot-eth",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#41748",
+      "willClose": false
+     }
+    ],
+    "timelineTruncated": false,
+    "discovery": [
+     "search:zcash is:pr",
+     "search:zec is:pr"
+    ],
+    "relevance": "mention",
+    "matchedTerms": [
+     "body:zcash"
+    ],
+    "retrievedAt": "2026-11-27T13:58:21.796Z"
+   },
    "brave/brave-core#42088": {
     "id": "brave/brave-core#42088",
     "repo": "brave/brave-core",
@@ -45967,67 +46036,6 @@
     "relevance": "direct",
     "matchedTerms": [],
     "retrievedAt": "2026-11-23T20:15:02.998Z"
-   },
-   "brave/brave-core#41826": {
-    "id": "brave/brave-core#41826",
-    "repo": "brave/brave-core",
-    "number": 41826,
-    "kind": "pr",
-    "title": "[Wallet] Resolve ENS names for the send network's coin",
-    "url": "https://github.com/brave/brave-core/pull/41826",
-    "state": "open",
-    "stateReason": null,
-    "isDraft": true,
-    "createdAt": "2026-11-18T15:17:26Z",
-    "updatedAt": "2026-11-21T06:06:17Z",
-    "closedAt": null,
-    "mergedAt": null,
-    "mergeCommitSha": null,
-    "baseRef": "master",
-    "headRef": "ens-multichain-send-ui-ur",
-    "author": "arbuthnot-eth",
-    "assignees": [],
-    "labels": [],
-    "milestone": null,
-    "bodyExcerpt": "- Resolves https://github.com/brave/brave-browser/issues/61869 Depends on brave/brave-core#40950 (ENSIP-23 Universal Resolver), brave/brave-core#41748 and brave/brave-core#41825, and includes their commits until they merge. Only the last commit, \"Resolve ENS names for the send network's coin\", is new here. Opened as a draft until those land. PR 3 of 3 from the design doc. Today the send screen only resolves .eth recipients when sending on an Ethereum network, and always…",
-    "bodyRefs": [
-     "brave/brave-browser#61869",
-     "brave/brave-core#40950",
-     "brave/brave-core#41748",
-     "brave/brave-core#41825"
-    ],
-    "resolvesRefs": [
-     "brave/brave-browser#61869"
-    ],
-    "upliftOfRefs": [],
-    "issueType": null,
-    "branchRefs": [],
-    "commentDuplicateOf": null,
-    "closingRefs": [
-     "brave/brave-browser#61869"
-    ],
-    "subIssues": [],
-    "parent": null,
-    "timeline": [
-     {
-      "type": "cross_referenced",
-      "at": "2026-11-18T15:17:37Z",
-      "actor": "arbuthnot-eth",
-      "detail": "Issue",
-      "ref": "brave/brave-browser#61869",
-      "willClose": false
-     }
-    ],
-    "timelineTruncated": false,
-    "discovery": [
-     "search:zcash is:pr",
-     "search:zec is:pr"
-    ],
-    "relevance": "mention",
-    "matchedTerms": [
-     "body:zcash"
-    ],
-    "retrievedAt": "2026-11-21T12:40:52.450Z"
    },
    "brave/brave-core#41715": {
     "id": "brave/brave-core#41715",
@@ -74524,7 +74532,7 @@
     "stateReason": null,
     "isDraft": false,
     "createdAt": "2026-11-17T06:39:24Z",
-    "updatedAt": "2026-11-18T00:52:22Z",
+    "updatedAt": "2026-11-27T05:44:32Z",
     "closedAt": null,
     "mergedAt": null,
     "mergeCommitSha": null,
@@ -74580,7 +74588,7 @@
     "matchedTerms": [
      "body:zec"
     ],
-    "retrievedAt": "2026-11-18T17:17:40.774Z"
+    "retrievedAt": "2026-11-27T13:58:21.796Z"
    },
    "brave/brave-core#35523": {
     "id": "brave/brave-core#35523",
