@@ -1,9 +1,25 @@
 {
  "sourceId": "brave-releases",
  "schema": 1,
- "retrievedAt": "2026-11-27T13:58:21.796Z",
+ "retrievedAt": "2026-11-27T22:44:00.870Z",
  "data": {
   "releases": [
+   {
+    "tag": "v1.102.48",
+    "version": "1.102.48",
+    "channel": "nightly",
+    "name": "Nightly v1.102.48 (Chromium 159.0.8154.34)",
+    "chromium": "159.0.8154.34",
+    "publishedAt": "2026-11-27T17:10:23Z",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.48",
+    "assetPlatforms": [
+     "android",
+     "linux",
+     "macos",
+     "windows"
+    ],
+    "prereleaseFlag": false
+   },
    {
     "tag": "v1.102.47",
     "version": "1.102.47",
@@ -26,7 +42,10 @@
     "publishedAt": "2026-11-27T13:20:17Z",
     "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.46",
     "assetPlatforms": [
-     "linux"
+     "ios",
+     "linux",
+     "macos",
+     "windows"
     ],
     "prereleaseFlag": false
    },
@@ -9287,14 +9306,14 @@
    {
     "channel": "nightly",
     "platform": "all",
-    "version": "1.102.47",
-    "tag": "v1.102.47",
-    "publishedAt": "2026-11-27T13:40:16Z",
-    "basis": "GitHub release name \"Nightly v1.102.47 (Chromium 159.0.8154.34)\"",
-    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.47"
+    "version": "1.102.48",
+    "tag": "v1.102.48",
+    "publishedAt": "2026-11-27T17:10:23Z",
+    "basis": "GitHub release name \"Nightly v1.102.48 (Chromium 159.0.8154.34)\"",
+    "url": "https://github.com/brave/brave-browser/releases/tag/v1.102.48"
    }
   ],
   "unrecognized": []
  },
- "completeAt": "2026-11-27T13:58:21.796Z"
+ "completeAt": "2026-11-27T22:44:00.870Z"
 }

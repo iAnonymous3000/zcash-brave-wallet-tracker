@@ -1,5 +1,653 @@
 [
  {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in simple_hash_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61187"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61187",
+    "url": "https://github.com/brave/brave-browser/issues/61187"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "0dcc6a47bc487037",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in page_content_fetcher_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61070"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61070",
+    "url": "https://github.com/brave/brave-browser/issues/61070"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "24a5d6618569bb02",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in json_rpc_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61171"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61171",
+    "url": "https://github.com/brave/brave-browser/issues/61171"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "2b0a52f9bce518b1",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in brave_referrals_service_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61105"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61105",
+    "url": "https://github.com/brave/brave-browser/issues/61105"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "3535dcbb6f2bbecc",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in oai_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61082"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61082",
+    "url": "https://github.com/brave/brave-browser/issues/61082"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "47c39d03e812ac9b",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in page_content_fetcher_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61070"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61070",
+    "url": "https://github.com/brave/brave-browser/issues/61070"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "4c94e5ad985ec71d",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in cardano_api_impl_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61136"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61136",
+    "url": "https://github.com/brave/brave-browser/issues/61136"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "4d0187d353690545",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61079"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61079",
+    "url": "https://github.com/brave/brave-browser/issues/61079"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "4f2a2a3249966eae",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in engine_consumer_conversation_api_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61079"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61079",
+    "url": "https://github.com/brave/brave-browser/issues/61079"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "54b43d5ad0896d1a",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in brave_referrals_service_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61105"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61105",
+    "url": "https://github.com/brave/brave-browser/issues/61105"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "62038f0f1475e94d",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in oblivious_http_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61328"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61328",
+    "url": "https://github.com/brave/brave-browser/issues/61328"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "64e238e3e1bfbe5f",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in engine_consumer_oai_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61080"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61080",
+    "url": "https://github.com/brave/brave-browser/issues/61080"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "6bf11a4cdec4f613",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in cardano_api_impl_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61136"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61136",
+    "url": "https://github.com/brave/brave-browser/issues/61136"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "7c3e27ce83211290",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61404"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61404",
+    "url": "https://github.com/brave/brave-browser/issues/61404"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "8ff8e10a09e28e20",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in eth_request_helper_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61403"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61403",
+    "url": "https://github.com/brave/brave-browser/issues/61403"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "9b1b4bb2fde5ee0c",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in engine_consumer_oai_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61080"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61080",
+    "url": "https://github.com/brave/brave-browser/issues/61080"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "9b54e9b02cc54ae2",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in oai_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61082"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61082",
+    "url": "https://github.com/brave/brave-browser/issues/61082"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "a8e107a1acebb6f5",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61404"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61404",
+    "url": "https://github.com/brave/brave-browser/issues/61404"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "cf0cf46b798f658f",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in simple_hash_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61187"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61187",
+    "url": "https://github.com/brave/brave-browser/issues/61187"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "d267fe8c5d1c3448",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in oblivious_http_api_client_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61328"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61328",
+    "url": "https://github.com/brave/brave-browser/issues/61328"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "dd0fdb9aa1ee3f34",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61172"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61172",
+    "url": "https://github.com/brave/brave-browser/issues/61172"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "e96b9c1692197b79",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in eth_request_helper_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61403"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61403",
+    "url": "https://github.com/brave/brave-browser/issues/61403"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "f2f853bd0dfef8bb",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In iOS Nightly 1.102.46: Test best-practice violations in json_rpc_response_parser_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the iOS Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61171"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "ios"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61171",
+    "url": "https://github.com/brave/brave-browser/issues/61171"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "f9b35e2bc7b21f05",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
+  "kind": "in-build",
+  "sourceAt": "2026-11-27T13:20:17Z",
+  "title": "In Desktop Nightly 1.102.46: Test best-practice violations in json_rpc_service_test_utils_unittest.cc",
+  "impact": "The merged code (brave-core#42088) is now part of the Desktop Nightly build 1.102.46. This shows the code is in the build, not that every platform exposes the feature.",
+  "highlight": "release",
+  "itemIds": [
+   "brave/brave-browser#61172"
+  ],
+  "topic": "testing",
+  "platforms": [
+   "desktop"
+  ],
+  "channel": "nightly",
+  "links": [
+   {
+    "label": "brave-browser#61172",
+    "url": "https://github.com/brave/brave-browser/issues/61172"
+   }
+  ],
+  "evidence": [
+   "in v1.102.45 (GitHub compare v1.102.45...10802653: behind); later builds of the same history include it"
+  ],
+  "id": "ff2c713bd9e3405e",
+  "detectedAt": "2026-11-27T22:44:00.870Z",
+  "basis": "observed"
+ },
+ {
   "kind": "issue-closed",
   "sourceAt": "2026-11-26T18:21:37Z",
   "title": "Closed (completed): Test best-practice violations in eth_sign_typed_data_helper_unittest.cc",

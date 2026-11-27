@@ -1,7 +1,7 @@
 {
  "sourceId": "github-items",
  "schema": 1,
- "retrievedAt": "2026-11-27T13:58:21.796Z",
+ "retrievedAt": "2026-11-27T22:44:00.870Z",
  "data": {
   "items": {
    "brave/brave-browser#58752": {
@@ -27217,6 +27217,14 @@
       "at": "2026-11-26T18:29:58Z",
       "actor": "netzenbot",
       "detail": "OS/iOS"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-27T22:03:00Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#42171",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -27231,7 +27239,7 @@
      "title:zcash_wallet_service_unittest",
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-26T21:34:05.789Z"
+    "retrievedAt": "2026-11-27T22:44:00.870Z"
    },
    "brave/brave-browser#61217": {
     "id": "brave/brave-browser#61217",
@@ -27576,6 +27584,14 @@
       "at": "2026-11-26T18:29:58Z",
       "actor": "netzenbot",
       "detail": "OS/iOS"
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-27T22:03:00Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#42171",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -27586,7 +27602,7 @@
     "matchedTerms": [
      "body:zcash"
     ],
-    "retrievedAt": "2026-11-26T21:34:05.789Z"
+    "retrievedAt": "2026-11-27T22:44:00.870Z"
    },
    "brave/brave-browser#61244": {
     "id": "brave/brave-browser#61244",
@@ -45538,6 +45554,14 @@
       "actor": "bbondy",
       "detail": null,
       "ref": null
+     },
+     {
+      "type": "cross_referenced",
+      "at": "2026-11-27T22:03:00Z",
+      "actor": "netzenbot",
+      "detail": "PullRequest",
+      "ref": "brave/brave-core#42171",
+      "willClose": false
      }
     ],
     "timelineTruncated": false,
@@ -45547,7 +45571,7 @@
     ],
     "relevance": "direct",
     "matchedTerms": [],
-    "retrievedAt": "2026-11-27T04:16:35.729Z"
+    "retrievedAt": "2026-11-27T22:44:00.870Z"
    },
    "brave/brave-core#41957": {
     "id": "brave/brave-core#41957",
@@ -124351,6 +124375,7 @@
    "brave/brave-browser#61167": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#61166": "discovered via search:orchard wallet but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-browser#58443": "Brave release-notes or verification meta issue (release evidence is read from the platform changelogs instead)",
+   "brave/brave-core#42171": "discovered via search:zcash is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#42104": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41445": "discovered via search:zcash is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
    "brave/brave-core#41960": "discovered via search:zcash is:pr, search:ironwood is:pr, search:orchard is:pr but no Zcash term in title, labels or description (likely a comment-only match)",
@@ -124451,14 +124476,14 @@
    "zcash/zips#1102"
   ],
   "stats": {
-   "discovered": 910,
-   "searchHits": 1312,
+   "discovered": 911,
+   "searchHits": 1314,
    "tracked": 1075,
    "direct": 675,
    "mention": 78,
    "linked": 322,
-   "excluded": 157,
-   "mentionsDropped": 42
+   "excluded": 158,
+   "mentionsDropped": 43
   }
  },
  "partial": true,
